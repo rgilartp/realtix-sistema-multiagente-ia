@@ -25,6 +25,8 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
         case_sensitive=False,
+        # Un valor vacío (como los de .env.example) cuenta como variable faltante.
+        env_ignore_empty=True,
     )
 
     # Modelos (ADR-02). La clave nunca se llama ANTHROPIC_API_KEY: se pasa explícita al cliente.

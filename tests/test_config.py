@@ -1,11 +1,14 @@
 """Prueba de humo de la configuración (RNF-14)."""
 
 from datetime import time
+from pathlib import Path
 
 import pytest
 
 from src.config import ConfiguracionIncompletaError, cargar_configuracion
 from src.container import Contenedor
+
+ENV_EXAMPLE = Path(__file__).resolve().parents[1] / ".env.example"
 
 pytestmark = [pytest.mark.unit, pytest.mark.req("RNF-14 · Configuración por entorno")]
 
@@ -45,6 +48,25 @@ def test_falta_una_obligatoria_da_un_mensaje_claro(entorno_valido: pytest.Monkey
     mensaje = str(error.value)
     assert "Faltan variables de entorno obligatorias: REALTIX_ANTHROPIC_API_KEY." in mensaje
     assert ".env.example" in mensaje
+
+
+def test_un_valor_vacio_cuenta_como_faltante(entorno_valido: pytest.MonkeyPatch) -> None:
+    entorno_valido.setenv("OPENAI_API_KEY", "")
+    entorno_valido.setenv("LANGSMITH_API_KEY", "")
+
+    with pytest.raises(ConfiguracionIncompletaError, match="OPENAI_API_KEY"):
+        cargar_configuracion(env_file=None)
+
+
+def test_env_example_copiado_sin_llenar_falla_con_mensaje_claro(
+    entorno_limpio: pytest.MonkeyPatch,
+) -> None:
+    with pytest.raises(ConfiguracionIncompletaError) as error:
+        cargar_configuracion(env_file=ENV_EXAMPLE)
+
+    for nombre in ("REALTIX_ANTHROPIC_API_KEY", "OPENAI_API_KEY", "OVT_HMAC_SECRET"):
+        assert nombre in str(error.value)
+    assert "DATABASE_URL" not in str(error.value)
 
 
 def test_sin_entorno_lista_todas_las_faltantes(entorno_limpio: pytest.MonkeyPatch) -> None:
