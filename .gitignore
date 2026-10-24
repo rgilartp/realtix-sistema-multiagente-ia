@@ -1,0 +1,36 @@
+# Secretos: solo en .env, nunca en git
+.env
+.env.*
+!.env.example
+
+# Python y uv
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Bases de datos generadas (la huella SHA-256 sí se versiona)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Descargas de la curaduría (las normas se bajan de su enlace oficial)
+scripts/curaduria/descargas/
+
+# Web
+node_modules/
+web/dist/
+
+# Editores y sistema
+.vscode/
+.idea/
+.DS_Store
+
+# Claude Code: ajustes locales de cada máquina
+.claude/settings.local.json

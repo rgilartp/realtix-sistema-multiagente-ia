@@ -1,0 +1,74 @@
+[project]
+name = "realtix-sistema-multiagente-ia"
+version = "0.1.0.dev0"
+description = "Sistema multiagente de IA para el soporte del proceso de facturación de Realtix"
+readme = "README.md"
+requires-python = "==3.12.*"
+authors = [
+    { name = "Rodolfo Angel Gilart Pulido" },
+    { name = "Dayanna Liceth Varón Puerto" },
+]
+dependencies = [
+    "anthropic==1.15.0",
+    "bm25s==0.3.13",
+    "chromadb==1.5.9",
+    "faker==40.43.0",
+    "fastapi==0.143.3",
+    "holidays==0.106",
+    "httpx==0.28.1",
+    "langchain-anthropic==1.7.6",
+    "langchain-chroma==1.1.0",
+    "langchain-openai==1.7.2",
+    "langgraph==1.2.16",
+    "langgraph-checkpoint-postgres==3.2.0",
+    "langsmith==0.14.11",
+    "pillow==13.0.0",
+    "psycopg[binary]==3.3.6",
+    "pydantic-settings==2.16.0",
+    "pypdfium2==5.14.0",
+    "PyStemmer==3.1.0",
+    "pyyaml==6.0.3",
+    "sqlalchemy==2.1.5",
+    "uvicorn==0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit==4.7.0",
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "ruff==0.17.1",
+]
+eval = [
+    "matplotlib==3.11.2",
+    "ragas==0.4.3",
+    "scikit-learn==1.9.1",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+# Material de referencia: ruff no lo revisa ni lo formatea.
+extend-exclude = [
+    "docs/paquete",
+    "docs/06_ADENDA_MARCO_JURIDICO_Y_PRUEBAS.md",
+    "docs/ESPECIFICACION_TECNICA.md",
+]
+# La exclusión vale también cuando pre-commit le pasa los archivos uno por uno.
+force-exclude = true
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = [
+    "unit: prueba unitaria, sin red ni servicios externos",
+    "integration: prueba de integración (servicios de Compose o API real)",
+    "req(*ids): requerimientos que verifica la prueba, con su nombre corto",
+]
