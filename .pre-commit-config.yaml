@@ -1,0 +1,50 @@
+# Ganchos de pre-commit. Instalación: uv run pre-commit install
+#
+# Material de referencia que los ganchos de estilo no tocan (sí lo revisa gitleaks):
+# docs/paquete/, docs/06_ADENDA_MARCO_JURIDICO_Y_PRUEBAS.md y docs/ESPECIFICACION_TECNICA.md.
+# No hay `exclude` global, para que gitleaks revise todo el repositorio.
+default_install_hook_types: [pre-commit, commit-msg]
+default_stages: [pre-commit]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: no-commit-to-branch
+        args: [--branch, main]
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: trailing-whitespace
+        exclude: &referencia >-
+          ^docs/(paquete/|06_ADENDA_MARCO_JURIDICO_Y_PRUEBAS\.md$|ESPECIFICACION_TECNICA\.md$)
+      - id: end-of-file-fixer
+        exclude: *referencia
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        exclude: *referencia
+      - id: check-yaml
+        exclude: *referencia
+      - id: check-toml
+        exclude: *referencia
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        exclude: *referencia
+      - id: ruff-format
+        exclude: *referencia
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [feat, fix, test, docs, refactor, build, ci, chore]
