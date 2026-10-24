@@ -1,0 +1,41 @@
+# Servicios del sistema multiagente de IA (RNF-13 · Orquestación con Compose).
+# En desarrollo: docker compose up -d postgres chromadb
+# El backend y el proxy se agregan en B13. Los puertos se publican solo en 127.0.0.1:
+# Chroma y PostgreSQL no se exponen fuera del host (sección 3.11).
+
+name: realtix
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-realtix}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-realtix_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-realtix}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  chromadb:
+    image: chromadb/chroma:1.5.9
+    restart: unless-stopped
+    environment:
+      IS_PERSISTENT: "TRUE"
+      ANONYMIZED_TELEMETRY: "FALSE"
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - chroma-data:/data
+    # La imagen no trae curl, wget ni shell para un healthcheck interno; su salud se verifica
+    # desde el host con: curl -s localhost:8000/api/v2/heartbeat
+
+volumes:
+  postgres-data:
+  chroma-data:
