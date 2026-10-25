@@ -1,16 +1,21 @@
-fuente: Resolución SDH-000194 de 2025 (rangos del predial de 2026), arts. 1 y 2; Acuerdos 780 de 2020, art. 3, y
-  105 de 2003, art. 2
+fuente: Resolución SDH-000194 de 2025 (rangos del predial de 2026), arts. 1, 2 y 3; Acuerdos 780 de 2020, art. 3,
+  y 105 de 2003, art. 2
 url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
 mes_consulta: octubre de 2026
 vigencia_desde: 2026
 vigencia_hasta: 2026
 verificado_por: ''
 contraste:
-  con: texto del PDF de la resolución
+  con: texto del PDF de la resolución, fila por fila
   script: scripts/curaduria/contrastar_rangos.py
   rangos_residenciales: 30
   tarifas_no_residenciales: 6
+  rangos_clubes_destino_66: 10
   diferencias: 0
+otras_categorias_no_transcritas: Las demás categorías de 2026 (industrial, financiero, dotacional, rural y otras)
+  tienen tarifa fija del art. 2 del Acuerdo 105 de 2003 en su texto anterior al Acuerdo 1084 (Acuerdo 648 de 2016,
+  art. 1, y Acuerdo 897 de 2023, según la nota del Régimen Legal). No se transcriben porque el MVP usa residencial,
+  comercial y lote.
 residencial_urbano:
 - desde: 0
   hasta: 194307000
@@ -127,3 +132,34 @@ no_residencial:
   desde: 63048001
   hasta: null
   tarifa_por_mil: '33'
+clubes_destino_66:
+- desde: 0
+  hasta: 11602529000
+  tarifa_por_mil: '6.5'
+- desde: 11602529001
+  hasta: 22351916000
+  tarifa_por_mil: '7.64'
+- desde: 22351916001
+  hasta: 33101304000
+  tarifa_por_mil: '7.83'
+- desde: 33101304001
+  hasta: 43850740000
+  tarifa_por_mil: '8.02'
+- desde: 43850740001
+  hasta: 54600127000
+  tarifa_por_mil: '8.2'
+- desde: 54600127001
+  hasta: 68250183000
+  tarifa_por_mil: '8.39'
+- desde: 68250183001
+  hasta: 81900239000
+  tarifa_por_mil: '8.58'
+- desde: 81900239001
+  hasta: 95550247000
+  tarifa_por_mil: '8.77'
+- desde: 95550247001
+  hasta: 109200303000
+  tarifa_por_mil: '8.96'
+- desde: 109200303001
+  hasta: null
+  tarifa_por_mil: '9.15'

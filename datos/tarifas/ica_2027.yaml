@@ -1,5 +1,5 @@
 fuente: Acuerdo 1084 de 2026, art. 21 (modifica el art. 3 del Acuerdo 65 de 2002)
-url: https://incp.org.co/?p=136894
+url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
 mes_consulta: octubre de 2026
 vigencia_desde: 2027
 vigencia_hasta: null
@@ -15,8 +15,8 @@ aplicacion:
     declarantes_bimestrales: desde el bimestre 6 de 2026 (noviembre-diciembre, que se declara a más tardar el 12
       de febrero de 2027); la aprobación y la fecha del acuerdo caen en el bimestre 5 (septiembre-octubre)
   tabla_anterior: ica_2026.yaml cubre el año gravable 2026 de los anuales y los bimestres 1 a 5 de 2026 de los bimestrales
-lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 27 a 45 del PDF, y el texto digital del
-  Régimen Legal; las diferencias se listan en docs/verificacion/.'
+lectura: 'Doble lectura: texto digital del Régimen Legal de Bogotá (el art. 21 también está como art. 3 del Acuerdo
+  65), OCR e imagen de las páginas 27 a 45 del PDF; las diferencias se listan en docs/verificacion/.'
 por_actividad:
 - ciiu: '161'
   actividad: Actividades de apoyo a la agricultura
@@ -2054,3 +2054,24 @@ progresiva_financiera:
   en_2028: '19'
   desde_2029: '18'
   pagina_pdf: 45
+regimen_simple_2027:
+  fuente: Acuerdo 1084 de 2026, art. 24 (ICA consolidado del régimen SIMPLE)
+  vigencia_desde: 1 de enero de 2027
+  descripcion: Tarifas del impuesto de industria y comercio consolidado aplicables a los contribuyentes del régimen
+    SIMPLE en el Distrito Capital, según las actividades definidas en el art. 908 del Estatuto Tributario Nacional
+  paragrafo: Los contribuyentes del régimen SIMPLE liquidan el impuesto conforme a las reglas y categorías tarifarias
+    del art. 908 del Estatuto Tributario Nacional.
+  lectura: Texto digital del Régimen Legal e imagen de la página 47 del PDF coinciden; el OCR dejó incompletas las
+    filas de los numerales 2 y 3.
+  pagina_pdf: 47
+  tarifas_por_mil:
+  - numeral: '1'
+    tarifa_por_mil: '10'
+  - numeral: '2'
+    tarifa_por_mil: '14'
+  - numeral: '3'
+    tarifa_por_mil: '29'
+  - numeral: 3 (sic)
+    tarifa_por_mil: '30'
+  - numeral: '6'
+    tarifa_por_mil: '14'

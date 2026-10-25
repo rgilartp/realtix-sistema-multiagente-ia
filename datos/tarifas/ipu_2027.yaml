@@ -1,11 +1,11 @@
 fuente: Acuerdo 1084 de 2026, art. 20 (modifica el art. 2 del Acuerdo 105 de 2003)
-url: https://incp.org.co/?p=136894
+url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
 mes_consulta: octubre de 2026
-verificado_por: ''
 vigencia_desde: 2027
 vigencia_hasta: null
-lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 21 a 25 del PDF, y para el texto, el Régimen
-  Legal de Bogotá; ver diferencias.'
+verificado_por: ''
+lectura: Texto digital del Régimen Legal de Bogotá, contrastado con el OCR y con la imagen de las páginas 21 a 25
+  del PDF.
 diferencias_ocr:
 - pagina: 22
   ocr: estarán excluidos los predios de estratos 1 y 2 con base gravable inferior a 186 SMMLV
@@ -255,3 +255,23 @@ generales:
   nota_pequena_propiedad_rural: La comercialización total o parcial de los excedentes de la producción agropecuaria
     destinada al sostenimiento de la unidad familiar no excluye por sí misma la categoría, si el predio corresponde
     a una unidad de producción a niveles de subsistencia.
+reglas:
+- articulo: 20, parágrafo 1
+  regla: Las categorías de predios urbanizables no urbanizados, urbanizados no edificados y no urbanizables solo
+    aplican a predios dentro del perímetro urbano.
+- articulo: 20, parágrafo 1
+  regla: 'Usos mixtos: se aplica la tarifa de cada uso en este orden: dotacional con cualquier otro uso aplica tarifa
+    dotacional; industrial con cualquier otro uso excepto dotacional, tarifa industrial; comercial con cualquier
+    otro uso excepto dotacional o industrial, tarifa comercial; residencial con depósitos y parqueaderos, tarifa
+    residencial.'
+- articulo: 20, parágrafo 1
+  regla: Los predios con usos mixtos exclusivamente comercial y residencial, con un área dedicada al comercio no
+    superior a 30 metros cuadrados, ubicados en estratos 1, 2 y 3, reciben tratamiento como residencial; no aplica
+    a los ubicados en las categorías de uso definidas por Catastro como comercio en corredor comercial.
+- articulo: 20, parágrafo 2
+  regla: En los predios donde funcionen Unidades de Servicio en Primera Infancia del ICBF, modalidad comunitaria,
+    prevalece el uso residencial sobre cualquier otro.
+- articulo: 20 (art. 2 del Acuerdo 105, texto nuevo)
+  regla: Desde 2027 los rangos que determinan la tarifa se actualizan cada año, por acto de la Secretaría Distrital
+    de Hacienda, con la variación anual del IVIUR de la vigencia anterior a la causación, aprobado por el CONFIS
+    distrital.
