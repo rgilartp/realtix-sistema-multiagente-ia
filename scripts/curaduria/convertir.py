@@ -26,20 +26,32 @@ _CAPITULOS = {
 }
 
 
-def texto_de(fuente: dict) -> str | None:
-    """Devuelve el texto de la fuente descargada, o None si no hay archivo."""
+def textos_de(fuente: dict) -> list[str]:
+    """Devuelve el texto de cada parte descargada de la fuente (vacío si no hay archivo)."""
+    if fuente["formato"] == "pdf_escaneado":  # el texto sale del OCR de ocr_1084.py
+        paginas = sorted((DESCARGAS / "ocr_1084").glob("pagina_*.txt"))
+        return ["\n".join(p.read_text(encoding="utf-8") for p in paginas)] if paginas else []
     ext = "html" if fuente["formato"] == "html" else "pdf"
-    ruta = DESCARGAS / f"{fuente['id']}.{ext}"
-    if not ruta.exists():
-        return None
-    if ext == "html":
+    nombre = fuente.get("archivo", fuente["id"])
+    rutas = sorted(DESCARGAS.glob(f"{nombre}.{ext}")) + sorted(DESCARGAS.glob(f"{nombre}__*.{ext}"))
+    return [_leer(ruta, fuente) for ruta in rutas]
+
+
+def _leer(ruta, fuente: dict) -> str:
+    if ruta.suffix == ".html":
         sopa = BeautifulSoup(ruta.read_bytes(), "html.parser")
         for etiqueta in sopa(["script", "style", "nav", "header", "footer"]):
             etiqueta.decompose()
+        if "alcaldiabogota.gov.co" in str(fuente["url"]):  # el Régimen Legal pone todo en una tabla
+            texto = sopa.get_text("\n").replace("\xa0", " ")
+            return re.sub(r"(Art[íi]culo)\s*\n+\s*(?=\d)", r"\1 ", texto, flags=re.IGNORECASE)
         return markdownify(str(sopa), heading_style="ATX")
     pdf = pypdfium2.PdfDocument(ruta)
-    paginas = [pdf[i].get_textpage().get_text_range() for i in range(len(pdf))]
-    return "\n".join(paginas)
+    return "\n".join(pdf[i].get_textpage().get_text_range() for i in range(len(pdf)))
+
+
+def _principal(fuente: dict) -> str:
+    return fuente["url"][0] if isinstance(fuente["url"], list) else fuente["url"]
 
 
 def recortar_capitulos(texto: str, clave: str) -> str:
@@ -59,22 +71,33 @@ def convertir() -> dict[str, dict]:
     resultado: dict[str, dict] = {}
     por_coleccion: dict[str, list[dict]] = {}
     for fuente in catalogo["fuentes"]:
-        texto = texto_de(fuente)
-        if texto is None:
+        partes = textos_de(fuente)
+        if not partes:
             resultado[fuente["id"]] = {"estado": "sin_archivo", "articulos": 0}
             continue
         seleccion = fuente["articulos"]
-        if isinstance(seleccion, str) and seleccion in _CAPITULOS:
-            texto = recortar_capitulos(texto, seleccion)
-        cortes = cortar_por_articulo(texto)
-        if isinstance(seleccion, list):
-            cortes = filtrar_articulos(cortes, seleccion)
+        cortes: list[tuple[str, str]] = []
+        for (
+            texto
+        ) in partes:  # cada parte se corta aparte: las páginas de una norma no vienen en orden
+            if isinstance(seleccion, str) and seleccion in _CAPITULOS:
+                texto = recortar_capitulos(texto, seleccion)
+            nuevos = cortar_por_articulo(texto)
+            if isinstance(seleccion, list):
+                nuevos = filtrar_articulos(nuevos, seleccion)
+            vistos = {n for n, _ in cortes}
+            cortes += [(n, t) for n, t in nuevos if n not in vistos]
         if not cortes:
             resultado[fuente["id"]] = {"estado": "sin_articulos", "articulos": 0}
             continue
         destino = KNOWLEDGE_BASE / fuente["coleccion"]
         destino.mkdir(parents=True, exist_ok=True)
-        cuerpo = [f"# {fuente['norma']}", "", f"Fuente: {fuente['url']} (consultada en {mes})", ""]
+        cuerpo = [
+            f"# {fuente['norma']}",
+            "",
+            f"Fuente: {_principal(fuente)} (consultada en {mes})",
+            "",
+        ]
         for numero, contenido in cortes:
             cuerpo += [f"## Artículo {numero}", "", contenido, ""]
         (destino / f"{fuente['id']}.md").write_text("\n".join(cuerpo), encoding="utf-8")

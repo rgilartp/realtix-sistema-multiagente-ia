@@ -19,7 +19,7 @@ fuentes:
   - id: ley_44_1990
     norma: Ley 44 de 1990
     coleccion: normativa_ipu
-    url: https://www.cancilleria.gov.co/sites/default/files/Normograma/docs/ley_0044_1990.htm
+    url: https://normativa.colpensiones.gov.co/colpens/docs/ley_0044_1990.htm
     formato: html
     articulos: todos
     nota: Verificar la modificación de la Ley 1450 de 2011, art. 23.
@@ -38,13 +38,17 @@ fuentes:
   - id: ley_1819_2016
     norma: Ley 1819 de 2016, art. 354
     coleccion: normativa_ipu
-    url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=79140
+    url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html
     formato: html
     articulos: ["354"]
   - id: decreto_ley_1421_1993
     norma: Decreto Ley 1421 de 1993
     coleccion: normativa_ipu
-    url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=106394
+    url:
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993.html
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr001.html
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr002.html
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr003.html
     formato: html
     articulos: ["12", "155", "162"]
   - id: decreto_474_2016
@@ -56,10 +60,10 @@ fuentes:
   - id: acuerdo_648_2016
     norma: Acuerdo 648 de 2016
     coleccion: normativa_ipu
-    url: null
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67557&dt=S
     formato: html
     articulos: todos
-    nota: Sin enlace en la adenda; tomarlo del Régimen Legal de Bogotá.
+    nota: Sin enlace en la adenda; tomado del Régimen Legal de Bogotá.
   - id: decreto_352_2002_cap1
     norma: Decreto Distrital 352 de 2002, cap. I
     coleccion: normativa_ipu
@@ -76,40 +80,56 @@ fuentes:
   - id: acuerdo_105_2003
     norma: Acuerdo 105 de 2003, art. 2
     coleccion: normativa_ipu
-    url: null
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=11030
     formato: html
     articulos: ["2"]
   - id: acuerdo_780_2020
     norma: Acuerdo 780 de 2020, art. 3
     coleccion: normativa_ipu
-    url: null
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965
     formato: html
     articulos: ["3"]
-  - id: resolucion_rangos_2026
-    norma: Resolución de rangos del predial de 2026
+  - id: resolucion_000194_2025_rangos
+    norma: Resolución SDH-000194 de 2025 (rangos del predial de 2026)
     coleccion: normativa_ipu
-    url: null
+    url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
     formato: pdf
     articulos: todos
-    nota: Sin enlace en la adenda; tomarla de la Secretaría Distrital de Hacienda o del INCP.
+    nota: Descargada a mano por Rodolfo desde el INCP.
   - id: resolucion_sdh_000195_2025
     norma: Resolución SDH-000195 de 2025
     coleccion: normativa_ipu
-    url: https://www.haciendabogota.gov.co/es/normatividad/resolucion-sdh-000195-del-12-de-diciembre-de-2025
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
     formato: html
-    articulos: ["1", "3", "4", "5", "6"]
-    nota: Arts. 3 a 6 al predial y art. 1 al ICA (se copia a ambas colecciones).
+    articulos: ["3", "4", "5", "6"]
+    nota: Arts. 3 a 6 (predial). El texto sale del Régimen Legal de Bogotá.
+  - id: resolucion_sdh_000195_2025_ica
+    norma: Resolución SDH-000195 de 2025
+    coleccion: normativa_ica
+    archivo: resolucion_sdh_000195_2025
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
+    formato: html
+    articulos: ["1", "2"]
+    nota: Artículos del ICA de la resolución (adenda, sección 3.1). Mismo archivo.
   - id: acuerdo_1084_2026
     norma: Acuerdo 1084 de 2026
     coleccion: normativa_ipu
-    url: https://incp.org.co/wp-content/uploads/2026/10/Acuerdo-1084-de-2026-a-Consejo-de-BogotA¡-a-INCP.pdf
+    url: https://incp.org.co/?p=136894
     formato: pdf_escaneado
-    articulos: ["1", "2", "3", "4", "5", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "21", "24", "25", "26", "27", "28", "35", "52"]
-    nota: Reparto de la adenda, sección 3.1. El art. 6 queda fuera.
+    articulos: ["3", "4", "5", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "27", "28", "35", "52"]
+    nota: Reparto de la adenda, sección 3.1. El art. 6 queda fuera. Los arts. 3, 4, 7 y 52 aplican a ambos impuestos y se cargan también en normativa_ica.
+  - id: acuerdo_1084_2026_ica
+    norma: Acuerdo 1084 de 2026
+    coleccion: normativa_ica
+    archivo: acuerdo_1084_2026
+    url: https://incp.org.co/?p=136894
+    formato: pdf_escaneado
+    articulos: ["1", "2", "3", "4", "7", "21", "24", "25", "26", "52"]
+    nota: Reparto de la adenda, sección 3.1 (arts. 21, 24, 25 y 26 e incentivos del ICA). Mismo PDF y OCR.
   - id: ley_14_1983
     norma: Ley 14 de 1983
     coleccion: normativa_ica
-    url: https://www.dane.gov.co/files/acerca/Normatividad/decreto-1170-2015/Ley-14-de-1983.pdf
+    url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma_pdf.php?i=3645
     formato: pdf
     articulos: todos
     nota: Ese enlace es el texto original; se necesita la versión compilada vigente.
@@ -128,6 +148,6 @@ fuentes:
   - id: acuerdo_65_2002
     norma: Acuerdo 65 de 2002, art. 3
     coleccion: normativa_ica
-    url: null
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156
     formato: html
     articulos: ["3"]

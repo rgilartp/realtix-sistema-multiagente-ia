@@ -11,8 +11,8 @@ DESCARGAS = Path(__file__).with_name("descargas")
 KNOWLEDGE_BASE = RAIZ / "knowledge_base"
 
 _ARTICULO = re.compile(
-    r"^\s*(?:#+\s*)?(?:\*\*)?ART[ÍI]CULO\s+(\d+[A-Za-z]?(?:\.\d+)*)\s*[º°o.\-–:]*",
-    re.IGNORECASE | re.MULTILINE,
+    r"^\s*(?:#+\s*)?(?:\*\*)?(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+(?:\.\d+)*)[º°o]?\s*[.\-–:]*",
+    re.MULTILINE,
 )
 
 
@@ -24,17 +24,40 @@ def cargar_catalogo() -> dict:
     return yaml.safe_load(CATALOGO.read_text(encoding="utf-8"))
 
 
+def _sigue(previa: tuple[int, ...], clave: tuple[int, ...]) -> bool:
+    if clave <= previa:
+        return False
+    return len(clave) > 1 or len(previa) > 1 or clave[0] - previa[0] <= _SALTO_MAXIMO
+
+
+def _cadena_mas_larga(candidatas: list) -> list:
+    """Elige la sucesión creciente más larga de encabezados y descarta las referencias sueltas."""
+    mejor: list[int] = []  # longitud de la cadena que termina en cada candidata
+    anterior: list[int] = []
+    for i, (_, clave) in enumerate(candidatas):
+        largo, previo = 1, -1
+        for j in range(i):
+            if mejor[j] + 1 > largo and _sigue(candidatas[j][1], clave):
+                largo, previo = mejor[j] + 1, j
+        mejor.append(largo)
+        anterior.append(previo)
+    if not candidatas:
+        return []
+    i = max(range(len(candidatas)), key=lambda k: mejor[k])
+    cadena = []
+    while i != -1:
+        cadena.append(candidatas[i][0])
+        i = anterior[i]
+    return cadena[::-1]
+
+
 def cortar_por_articulo(texto: str) -> list[tuple[str, str]]:
     """Parte un texto en pares (número de artículo, contenido) según los encabezados «ARTÍCULO»."""
-    marcas = []
-    ultimo: tuple[int, ...] = ()
-    for marca in _ARTICULO.finditer(texto):
-        clave = tuple(int(n) for n in re.findall(r"\d+", marca.group(1)))
-        salto = clave[0] - (ultimo[0] if ultimo else 0)
-        # descarta las referencias cruzadas que empiezan una línea: el número no sube o salta mucho
-        if clave > ultimo and (len(clave) > 1 or not ultimo or 0 < salto <= _SALTO_MAXIMO):
-            marcas.append(marca)
-            ultimo = clave
+    candidatas = [
+        (m, tuple(int(n) for n in re.findall(r"\d+", m.group(1))))
+        for m in _ARTICULO.finditer(texto)
+    ]
+    marcas = _cadena_mas_larga(candidatas)
     cortes = []
     for i, marca in enumerate(marcas):
         fin = marcas[i + 1].start() if i + 1 < len(marcas) else len(texto)
