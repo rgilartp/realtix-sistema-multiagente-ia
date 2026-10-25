@@ -41,7 +41,6 @@ dev = [
 ]
 curaduria = [
     "beautifulsoup4==4.15.0",
-    "markdownify==1.2.3",
 ]
 eval = [
     "matplotlib==3.11.2",
