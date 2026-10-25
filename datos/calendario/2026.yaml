@@ -1,0 +1,43 @@
+fuente: Resolución SDH-000195 de 2025, arts. 1 y 3 a 6
+url: https://www.haciendabogota.gov.co/es/normatividad/resolucion-sdh-000195-del-12-de-diciembre-de-2025
+mes_consulta: octubre de 2026
+vigencia_desde: 2026
+vigencia_hasta: 2026
+verificado_por: "Rodolfo Angel Gilart Pulido"
+plazos:
+- concepto: predial_pronto_pago_10
+  fechas:
+  - '2026-04-17'
+  articulo: 6
+- concepto: predial_facturas_expedidas_a_mas_tardar
+  fechas:
+  - '2026-04-30'
+  articulo: 4
+- concepto: predial_sin_descuento
+  fechas:
+  - '2026-07-10'
+  articulo: 3
+- concepto: spac_declaracion_inicial
+  fechas:
+  - '2026-05-08'
+  articulo: 5
+- concepto: spac_cuotas
+  fechas:
+  - '2026-06-05'
+  - '2026-08-14'
+  - '2026-10-02'
+  - '2026-12-04'
+  articulo: 5
+- concepto: ica_bimestral_comun_mayor_391_uvt
+  fechas:
+  - '2026-04-10'
+  - '2026-06-12'
+  - '2026-08-21'
+  - '2026-10-09'
+  - '2026-12-11'
+  - '2027-02-12'
+  articulo: 1
+- concepto: ica_anual_comun_hasta_391_uvt_y_preferencial
+  fechas:
+  - '2027-02-26'
+  articulo: 1

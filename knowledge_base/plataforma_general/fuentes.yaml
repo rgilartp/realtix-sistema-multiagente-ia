@@ -1,0 +1,11 @@
+fuentes:
+- archivo: manual_ovt_simulada.md
+  norma: Manual de uso de la OVT simulada (sintético)
+  url: null
+  origen: redactado por los autores para el entorno simulado (ADR-19)
+  mes_consulta: octubre de 2026
+- archivo: glosario.md
+  norma: Glosario con fuentes (sintético)
+  url: null
+  origen: redactado por los autores con términos de las normas cargadas (ADR-19)
+  mes_consulta: octubre de 2026

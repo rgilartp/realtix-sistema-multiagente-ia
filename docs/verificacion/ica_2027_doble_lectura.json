@@ -1,0 +1,3131 @@
+[
+ {
+  "ciiu": "161",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "162",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "164",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "240",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "510",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "520",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "610",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "620",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "710",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "721",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "722",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "723",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "729",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "811",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "812",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "820",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "891",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "892",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "899",
+  "tarifa": "11",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "910",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "990",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1011",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1012",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1030",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1051",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1052",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1061",
+  "tarifa": "10",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1062",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1063",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1071",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1072",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1081",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1082",
+  "tarifa": "4",
+  "pagina_pdf": 27,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1083",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1084",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1089",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1090",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1101",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1102",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1103",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1104",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1200",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1311",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1312",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1313",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1391",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1392",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1393",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1394",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1399",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1410",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1511",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1512",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1513",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1521",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1522",
+  "tarifa": "4",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1523",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1610",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1620",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1630",
+  "tarifa": "11",
+  "pagina_pdf": 28,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1640",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1690",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1701",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1702",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1709",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1811",
+  "tarifa": "10",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1812",
+  "tarifa": "10",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1820",
+  "tarifa": "10",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1910",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1921",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "1922",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2011",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2012",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2013",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2014",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2021",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2022",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2023",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2029",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2030",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2100",
+  "tarifa": "12",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2211",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2212",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2219",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2221",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2229",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2310",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2391",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2392",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2393",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2394",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2395",
+  "tarifa": "11",
+  "pagina_pdf": 29,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2396",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2399",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2410",
+  "tarifa": "7",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2421",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2429",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2431",
+  "tarifa": "7",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2432",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2511",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2512",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2513",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "tarifa_distinta",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2520",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2591",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2592",
+  "tarifa": "10",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2593",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2599",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2610",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2620",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2630",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2640",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2651",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2652",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2660",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2670",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2680",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2711",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2712",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2720",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2731",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2732",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2740",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2750",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2790",
+  "tarifa": "11",
+  "pagina_pdf": 30,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2811",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2812",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2813",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2814",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2815",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2816",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2817",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2818",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2819",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2821",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2822",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2823",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2824",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2825",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2826",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2829",
+  "tarifa": "11",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2910",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2920",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "2930",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3011",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3012",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3020",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3030",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3040",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3091",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3092",
+  "tarifa": "7",
+  "pagina_pdf": 31,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3099",
+  "tarifa": "7",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3110",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3120",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3210",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3220",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3230",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3240",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3250",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3290",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3311",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3312",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3313",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3314",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3315",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3319",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3320",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3511",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3512",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3513",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3514",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3530",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3700",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3811",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3812",
+  "tarifa": "10",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3821",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3822",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "3830",
+  "tarifa": "11",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4111",
+  "tarifa": "7",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4112",
+  "tarifa": "7",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4210",
+  "tarifa": "8",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4220",
+  "tarifa": "8",
+  "pagina_pdf": 32,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4290",
+  "tarifa": "8",
+  "pagina_pdf": 32,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4311",
+  "tarifa": "7",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4312",
+  "tarifa": "7",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4321",
+  "tarifa": "7",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4322",
+  "tarifa": "7",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4329",
+  "tarifa": "7",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4330",
+  "tarifa": "8",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4390",
+  "tarifa": "8",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45111",
+  "tarifa": "8",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45112",
+  "tarifa": "10",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45113",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45121",
+  "tarifa": "8",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45122",
+  "tarifa": "10",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45123",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4520",
+  "tarifa": "10",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4530",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4542",
+  "tarifa": "10",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4610",
+  "tarifa": "10",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4631",
+  "tarifa": "4",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4641",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4642",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4643",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4644",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4651",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4652",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4653",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4659",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4662",
+  "tarifa": "11",
+  "pagina_pdf": 33,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4664",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4665",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4669",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4690",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47191",
+  "tarifa": "4",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4721",
+  "tarifa": "4",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4722",
+  "tarifa": "4",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4723",
+  "tarifa": "4",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4729",
+  "tarifa": "4",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4731",
+  "tarifa": "13",
+  "pagina_pdf": 34,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4732",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4741",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4742",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4751",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4753",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4754",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4755",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4759",
+  "tarifa": "11",
+  "pagina_pdf": 34,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4762",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4769",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4771",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4772",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4774",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4775",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4782",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4789",
+  "tarifa": "11",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4911",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4912",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4921",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4922",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4923",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "4930",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5011",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5012",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5021",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5022",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5111",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5112",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5121",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5122",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5210",
+  "tarifa": "10",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5221",
+  "tarifa": "10",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5222",
+  "tarifa": "4",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5223",
+  "tarifa": "10",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5224",
+  "tarifa": "10",
+  "pagina_pdf": 35,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5229",
+  "tarifa": "10",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5310",
+  "tarifa": "10",
+  "pagina_pdf": 35,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5320",
+  "tarifa": "10",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5330",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5511",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5512",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5513",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5514",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5519",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5520",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5530",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5590",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5611",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5612",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5613",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5619",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5621",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5629",
+  "tarifa": "12",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5630",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5812",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5813",
+  "tarifa": "4",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5819",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5820",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5911",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5912",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5913",
+  "tarifa": "10",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5914",
+  "tarifa": "7",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "5920",
+  "tarifa": "11",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6010",
+  "tarifa": "4",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6110",
+  "tarifa": "10",
+  "pagina_pdf": 36,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6120",
+  "tarifa": "10",
+  "pagina_pdf": 36,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6130",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6190",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6201",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6202",
+  "tarifa": "7",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6209",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6311",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6312",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6391",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6399",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "tarifa_distinta",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6424",
+  "tarifa": "13",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6492",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6629",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6810",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6820",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6910",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "6920",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7010",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7020",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7111",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7112",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7120",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7210",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7220",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7310",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7320",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7410",
+  "tarifa": "8",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7420",
+  "tarifa": "10",
+  "pagina_pdf": 37,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7490",
+  "tarifa": "8",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7500",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7710",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7721",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7722",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7729",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7730",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7740",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7810",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7820",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7830",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7911",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7912",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "7990",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8010",
+  "tarifa": "13",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8020",
+  "tarifa": "13",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8030",
+  "tarifa": "13",
+  "pagina_pdf": 38,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8110",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8121",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8129",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8130",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8211",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8219",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8220",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8230",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8291",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8292",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8299",
+  "tarifa": "10",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8511",
+  "tarifa": "7",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8512",
+  "tarifa": "7",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8513",
+  "tarifa": "7",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8521",
+  "tarifa": "7",
+  "pagina_pdf": 38,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8522",
+  "tarifa": "7",
+  "pagina_pdf": 38,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8523",
+  "tarifa": "7",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8530",
+  "tarifa": "7",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8541",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8542",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8543",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8544",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8551",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8552",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8553",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8559",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8560",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8610",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "86211",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "86221",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "86911",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "86921",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "86991",
+  "tarifa": "10",
+  "pagina_pdf": 39,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "87101",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8720",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8730",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8790",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8810",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8891",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "8899",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "92001",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9321",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "93291",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9411",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9499",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9511",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9512",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9521",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9522",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9523",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9524",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9529",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9601",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9602",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9603",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "tarifa_distinta",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "9609",
+  "tarifa": "10",
+  "pagina_pdf": 40,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "10201",
+  "tarifa": "4",
+  "pagina_pdf": 40,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "10202",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "10401",
+  "tarifa": "4",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "10402",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "14201",
+  "tarifa": "4",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "14202",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "14301",
+  "tarifa": "4",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "14302",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "35202",
+  "tarifa": "10",
+  "pagina_pdf": 41,
+  "estado": "tarifa_distinta",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "35201",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "36002",
+  "tarifa": "10",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "36001",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "39001",
+  "tarifa": "10",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "39002",
+  "tarifa": "7",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "454111",
+  "tarifa": "8",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "454112",
+  "tarifa": "10",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "454113",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "45412",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46201",
+  "tarifa": "4",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46202",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46321",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46322",
+  "tarifa": "19",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46451",
+  "tarifa": "4",
+  "pagina_pdf": 41,
+  "estado": "sin_lectura_ocr",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46452",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46491",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46492",
+  "tarifa": "13",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46612",
+  "tarifa": "13",
+  "pagina_pdf": 41,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46611",
+  "tarifa": "11",
+  "pagina_pdf": 41,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46631",
+  "tarifa": "7",
+  "pagina_pdf": 42,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "46632",
+  "tarifa": "11",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47111",
+  "tarifa": "4",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47112",
+  "tarifa": "19",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47241",
+  "tarifa": "11",
+  "pagina_pdf": 42,
+  "estado": "tarifa_distinta",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47242",
+  "tarifa": "19",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47521",
+  "tarifa": "7",
+  "pagina_pdf": 42,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47522",
+  "tarifa": "11",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47611",
+  "tarifa": "4",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47612",
+  "tarifa": "11",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47731",
+  "tarifa": "4",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47732",
+  "tarifa": "11",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47811",
+  "tarifa": "4",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47812",
+  "tarifa": "11",
+  "pagina_pdf": 42,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47813",
+  "tarifa": "19",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47911",
+  "tarifa": "4",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47912",
+  "tarifa": "7",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47913",
+  "tarifa": "19",
+  "pagina_pdf": 43,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47914",
+  "tarifa": "13",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47915",
+  "tarifa": "11",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47921",
+  "tarifa": "4",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47922",
+  "tarifa": "7",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47923",
+  "tarifa": "19",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47924",
+  "tarifa": "13",
+  "pagina_pdf": 43,
+  "estado": "tarifa_distinta",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47925",
+  "tarifa": "11",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47991",
+  "tarifa": "4",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47992",
+  "tarifa": "7",
+  "pagina_pdf": 43,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47993",
+  "tarifa": "13",
+  "pagina_pdf": 44,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47994",
+  "tarifa": "19",
+  "pagina_pdf": 44,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "47995",
+  "tarifa": "11",
+  "pagina_pdf": 44,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "58111",
+  "tarifa": "4",
+  "pagina_pdf": 44,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "58112",
+  "tarifa": "4",
+  "pagina_pdf": 44,
+  "estado": "ocr_sin_tarifa",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "60201",
+  "tarifa": "4",
+  "pagina_pdf": 44,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ },
+ {
+  "ciiu": "60202",
+  "tarifa": "10",
+  "pagina_pdf": 44,
+  "estado": "coincide",
+  "regimen_legal": "coincide"
+ }
+]

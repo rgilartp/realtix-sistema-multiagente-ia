@@ -1,0 +1,9 @@
+fuentes:
+- archivo: ley_1581_2012.md
+  norma: Ley 1581 de 2012
+  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html
+  mes_consulta: octubre de 2026
+- archivo: decreto_1074_2015.md
+  norma: Decreto 1074 de 2015, caps. 25 y 26
+  url: https://normativa.colpensiones.gov.co/colpens/docs/decreto_1074_2015.htm
+  mes_consulta: octubre de 2026

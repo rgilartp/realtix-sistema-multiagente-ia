@@ -1,0 +1,66 @@
+fuentes:
+- archivo: ley_44_1990.md
+  norma: Ley 44 de 1990
+  url: https://normativa.colpensiones.gov.co/colpens/docs/ley_0044_1990.htm
+  mes_consulta: octubre de 2026
+- archivo: ley_1995_2019.md
+  norma: Ley 1995 de 2019
+  url: https://www.igac.gov.co/sites/default/files/transparencia/normograma/ley_1995_de_2019.pdf
+  mes_consulta: octubre de 2026
+- archivo: ley_2294_2023.md
+  norma: Ley 2294 de 2023, art. 49
+  url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/ley_2294_2023.htm
+  mes_consulta: octubre de 2026
+- archivo: ley_1819_2016.md
+  norma: Ley 1819 de 2016, art. 354
+  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html
+  mes_consulta: octubre de 2026
+- archivo: decreto_ley_1421_1993.md
+  norma: Decreto Ley 1421 de 1993
+  url:
+  - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993.html
+  - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr001.html
+  - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr002.html
+  - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr003.html
+  mes_consulta: octubre de 2026
+- archivo: decreto_474_2016.md
+  norma: Decreto 474 de 2016
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67262&dt=S
+  mes_consulta: octubre de 2026
+- archivo: decreto_639_2025.md
+  norma: Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan
+    el Decreto 474 de 2016
+  url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
+  mes_consulta: octubre de 2026
+- archivo: acuerdo_648_2016.md
+  norma: Acuerdo 648 de 2016
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67557&dt=S
+  mes_consulta: octubre de 2026
+- archivo: decreto_352_2002_cap1.md
+  norma: Decreto Distrital 352 de 2002, cap. I
+  url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
+  mes_consulta: octubre de 2026
+- archivo: decreto_807_1993_ipu.md
+  norma: Decreto Distrital 807 de 1993
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=1637
+  mes_consulta: octubre de 2026
+- archivo: acuerdo_105_2003.md
+  norma: Acuerdo 105 de 2003, art. 2
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=11030
+  mes_consulta: octubre de 2026
+- archivo: acuerdo_780_2020.md
+  norma: Acuerdo 780 de 2020, art. 3
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965
+  mes_consulta: octubre de 2026
+- archivo: resolucion_000194_2025_rangos.md
+  norma: Resolución SDH-000194 de 2025 (rangos del predial de 2026)
+  url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
+  mes_consulta: octubre de 2026
+- archivo: resolucion_sdh_000195_2025.md
+  norma: Resolución SDH-000195 de 2025
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
+  mes_consulta: octubre de 2026
+- archivo: acuerdo_1084_2026.md
+  norma: Acuerdo 1084 de 2026
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+  mes_consulta: octubre de 2026

@@ -1,0 +1,81 @@
+"""Compara `knowledge_base/` con un commit: filas de datos de las tablas y caracteres por artículo.
+
+Uso: uv run python scripts/curaduria/comparar_kb.py 77f588c
+"""
+
+import re
+import subprocess
+import sys
+
+from comun import KNOWLEDGE_BASE, RAIZ
+
+
+def _articulos(texto: str) -> dict[str, str]:
+    partes = re.split(r"(?m)^## Artículo ([\d.]+)$", texto)
+    return dict(zip(partes[1::2], partes[2::2], strict=True))
+
+
+def _filas_de_datos(texto: str) -> int:
+    """Filas de datos de todas las tablas Markdown (sin encabezado ni separador)."""
+    total, en_tabla = 0, 0
+    for linea in [*texto.splitlines(), ""]:
+        if linea.startswith("|"):
+            en_tabla += 1
+        else:
+            total += max(en_tabla - 2, 0)
+            en_tabla = 0
+    return total
+
+
+_FORMATO = re.compile(r"[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]")
+
+
+def _celdas(texto: str) -> set[str]:
+    celdas = set()
+    for linea in texto.splitlines():
+        if linea.startswith("|"):
+            for celda in linea.strip().strip("|").split("|"):
+                celda = _FORMATO.sub("", celda).strip()
+                if celda and not re.fullmatch(r"-+|—", celda):
+                    celdas.add(celda)
+    return celdas
+
+
+def _celdas_perdidas(antes: str, ahora: str) -> list[str]:
+    """Celdas de tabla del commit que ya no están ni en una celda ni en el texto de la norma."""
+    plano = _FORMATO.sub("", re.sub(r"\s+", " ", ahora))
+    return sorted(c for c in _celdas(antes) - _celdas(ahora) if re.sub(r"\s+", " ", c) not in plano)
+
+
+def _antes(commit: str, ruta: str) -> str | None:
+    salida = subprocess.run(
+        ["git", "show", f"{commit}:{ruta}"], cwd=RAIZ, capture_output=True, text=True, check=False
+    )
+    return salida.stdout if salida.returncode == 0 else None
+
+
+def main(commit: str) -> None:
+    for ruta in sorted(KNOWLEDGE_BASE.rglob("*.md")):
+        relativa = ruta.relative_to(RAIZ).as_posix()
+        antes = _antes(commit, relativa)
+        if antes is None:
+            print(f"{relativa}: archivo nuevo")
+            continue
+        ahora = ruta.read_text(encoding="utf-8")
+        art_antes, art_ahora = _articulos(antes), _articulos(ahora)
+        cambios = []
+        for numero in art_antes.keys() | art_ahora.keys():
+            a, b = art_antes.get(numero, ""), art_ahora.get(numero, "")
+            fa, fb = _filas_de_datos(a), _filas_de_datos(b)
+            if fa != fb or abs(len(a) - len(b)) > 200:
+                cambios.append(f"  art. {numero}: filas {fa}→{fb}; caracteres {len(a)}→{len(b)}")
+        perdidas = _celdas_perdidas(antes, ahora)
+        if cambios or perdidas:
+            print(f"{relativa}: filas {_filas_de_datos(antes)}→{_filas_de_datos(ahora)}")
+            print("\n".join(sorted(cambios, key=lambda c: float(c.split()[1].rstrip(":")))))
+            if perdidas:
+                print(f"  celdas que ya no están: {[c[:50] for c in perdidas]}")
+
+
+if __name__ == "__main__":
+    main(sys.argv[1] if len(sys.argv) > 1 else "77f588c")

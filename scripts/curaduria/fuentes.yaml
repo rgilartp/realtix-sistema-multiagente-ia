@@ -1,0 +1,344 @@
+# Catálogo de fuentes de la sección 5.1 (adenda, sección 8). `articulos: todos` conserva la norma
+# completa; una lista conserva solo esos artículos. `url: null` = sin enlace en la adenda (se anota
+# como pendiente en docs/verificacion_curaduria.md hasta ubicarlo en una fuente oficial).
+mes_consulta: octubre de 2026
+# Fuentes que solo sirven para contrastar (no van a knowledge_base)
+verificacion:
+  - id: registro_distrital_7103
+    norma: Registro Distrital 7103 (publica la Resolución SDH-000265 de 2021)
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/verNormaPDF?i=109475
+    formato: pdf
+  - id: acuerdo_1084_2026_pdf
+    norma: Acuerdo 1084 de 2026, copia escaneada del texto firmado (INCP)
+    url: https://incp.org.co/?p=136894
+    formato: pdf
+    manual: true  # el PDF lo guardó Rodolfo desde el navegador; el OCR sale de ocr_1084.py
+fuentes:
+  - id: ley_1581_2012
+    norma: Ley 1581 de 2012
+    coleccion: normativa_datos
+    url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html
+    formato: html
+    articulos: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"]
+    nota: Arts. 1 a 30; los «artículos» 31 a 34 del texto de Secretaría del Senado son del proyecto que citan las notas de jurisprudencia.
+  - id: decreto_1074_2015
+    norma: Decreto 1074 de 2015, caps. 25 y 26
+    coleccion: normativa_datos
+    url: https://normativa.colpensiones.gov.co/colpens/docs/decreto_1074_2015.htm
+    formato: html
+    articulos: capitulos_25_26
+    nota: El cap. 25 lleva el metadato de origen «Decreto 1377 de 2013».
+  - id: ley_44_1990
+    norma: Ley 44 de 1990
+    coleccion: normativa_ipu
+    url: https://normativa.colpensiones.gov.co/colpens/docs/ley_0044_1990.htm
+    formato: html
+    articulos: todos
+    nota: Verificar la modificación de la Ley 1450 de 2011, art. 23.
+  - id: ley_1995_2019
+    norma: Ley 1995 de 2019
+    coleccion: normativa_ipu
+    url: https://www.igac.gov.co/sites/default/files/transparencia/normograma/ley_1995_de_2019.pdf
+    formato: pdf
+    articulos: todos
+  - id: ley_2294_2023
+    norma: Ley 2294 de 2023, art. 49
+    coleccion: normativa_ipu
+    url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/ley_2294_2023.htm
+    formato: html
+    articulos: ["49"]
+  - id: ley_1819_2016
+    norma: Ley 1819 de 2016, art. 354
+    coleccion: normativa_ipu
+    url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html
+    formato: html
+    articulos: ["354"]
+  - id: decreto_ley_1421_1993
+    norma: Decreto Ley 1421 de 1993
+    coleccion: normativa_ipu
+    url:
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993.html
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr001.html
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr002.html
+      - http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993_pr003.html
+    formato: html
+    articulos: ["12", "155", "162"]
+  - id: decreto_474_2016
+    norma: Decreto 474 de 2016
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67262&dt=S
+    formato: html
+    articulos: todos
+    nota: Régimen Legal de Bogotá. El Decreto 639 de 2025 (Decreto Único Distrital Tributario) lo compiló y lo derogó (art. 263); sus artículos están en decreto_639_2025 y los del 474 quedan marcados como texto anterior, no vigente.
+    texto_anterior:
+      "1": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 217
+      "2": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 218
+      "3": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 219
+      "4": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 220
+      "5": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 221
+      "6": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 222
+      "7": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 223
+      "8": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 224
+      "9": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 225
+      "10": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 226
+      "11": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 227
+      "12": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 231
+      "13": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 232
+      "14": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 233
+      "15": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205
+      "16": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 206
+      "17": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 207
+      "18": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 43
+      "19": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 44
+      "20": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 45
+      "21": lo derogó el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 263
+  - id: decreto_639_2025
+    norma: Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016
+    coleccion: normativa_ipu
+    url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
+    formato: html
+    articulos: ["43", "44", "45", "205", "206", "207", "217", "218", "219", "220", "221", "222", "223", "224", "225", "226", "227", "231", "232", "233", "263"]
+    nota: Compilación de la Secretaría de Hacienda. Cada artículo cita el del Decreto 474 de 2016 que compila; el art. 263 es la derogatoria expresa.
+    notas_de_articulo:
+      "45": >-
+        Este artículo remite a los incisos de incrementos máximos del Acuerdo 648 de 2016, derogados por el
+        parágrafo del art. 285 del Acuerdo 927 de 2024; los topes vigentes son los de la Ley 1995 de 2019,
+        art. 2, vigente por la Ley 2294 de 2023, art. 49, parágrafo 3.
+      "207": >-
+        El art. 52 del Acuerdo 1084 de 2026 derogó el Acuerdo 77 de 2002, que este artículo cita. El predial
+        se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15), de modo que para 2026 rige
+        este texto y desde 2027 la exclusión de los estratos 1 y 2 está en el art. 20 del Acuerdo 1084.
+      "205": >-
+        Rige para el año gravable 2026. Desde el 1 de enero de 2027 los regímenes del ICA son los del art. 26
+        del Acuerdo 1084 de 2026.
+  - id: acuerdo_648_2016
+    norma: Acuerdo 648 de 2016
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67557&dt=S
+    formato: html
+    articulos: todos
+    nota: Sin enlace en la adenda; tomado del Régimen Legal de Bogotá.
+    vigencia: >-
+      Los rangos en pesos de este acuerdo no son los de 2026, que están en la Resolución SDH-000194 de 2025
+      (el art. 1 los ajusta cada año). Las tarifas preferenciales del art. 1 siguen vigentes (Acuerdo 780 de
+      2020, art. 3, parágrafo 2). Los incisos de incrementos máximos están derogados por el parágrafo del
+      art. 285 del Acuerdo 927 de 2024, según la nota del Régimen Legal. Desde el predial de 2027, el art. 20
+      del Acuerdo 1084 de 2026 reemplaza las tablas de su art. 1.
+  - id: decreto_352_2002_cap1
+    norma: Decreto Distrital 352 de 2002, cap. I
+    coleccion: normativa_ipu
+    url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
+    formato: html
+    articulos: capitulo_1
+    notas_de_articulo:
+      "25": >-
+        Estas tarifas son las de 2002. Las del predial de 2026 y 2027 están en el art. 2 del Acuerdo 105 de
+        2003: para 2026, su texto anterior (Acuerdo 648 de 2016, art. 1; Acuerdo 780 de 2020, art. 3, para los
+        residenciales urbanos, y Acuerdo 897 de 2023, con los rangos de la Resolución SDH-000194 de 2025) y desde el predial de 2027, el art. 20 del Acuerdo 1084 de 2026.
+  - id: decreto_807_1993_ipu
+    norma: Decreto Distrital 807 de 1993
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=1637
+    formato: html
+    articulos: todos
+    nota: Régimen Legal de Bogotá, con las modificaciones y las notas de vigencia; el Acuerdo 1084 derogó los arts. 7 y 8.
+  - id: acuerdo_105_2003
+    norma: Acuerdo 105 de 2003, art. 2
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=11030
+    formato: html
+    articulos: ["2"]
+    vigencia: >-
+      El texto nuevo del art. 2 es el del art. 20 del Acuerdo 1084 de 2026 y rige desde el predial de 2027:
+      el predial se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15) y el acuerdo
+      rige desde su publicación (art. 52). El texto original de 2003, que aparece más abajo, no rige. Para
+      el predial de 2026 rige el texto anterior del artículo: el art. 3 de la Resolución SDH-000194 de 2025
+      cita «el artículo 2° del Acuerdo Distrital 105 de 2003, modificado por el artículo 1° del Acuerdo
+      Distrital 648 de 2016 y el artículo 2° del Acuerdo Distrital 897 de 2023», con los rangos de esa
+      resolución. Para los residenciales urbanos, el art. 1 de la misma resolución se apoya en el inciso 4
+      del art. 1 del Acuerdo 648 de 2016 y en el art. 3 del Acuerdo 780 de 2020.
+  - id: acuerdo_780_2020
+    norma: Acuerdo 780 de 2020, art. 3
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965
+    formato: html
+    articulos: ["3"]
+    vigencia: >-
+      Los rangos en pesos del art. 3 son de 2020 (parágrafo 1); para 2026 rigen los de la Resolución
+      SDH-000194 de 2025. Fuente: el parágrafo 1 del art. 3.
+  - id: resolucion_000194_2025_rangos
+    norma: Resolución SDH-000194 de 2025 (rangos del predial de 2026)
+    coleccion: normativa_ipu
+    url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
+    formato: pdf
+    articulos: todos
+    tablas_transcritas:
+      "2": sdh_194_art_2.md
+      "3": sdh_194_art_3.md
+    nota: Descargada a mano por Rodolfo desde el INCP. Las tablas de los arts. 2 y 3 salen como texto suelto del PDF y se transcriben desde ipu_2026.yaml.
+  - id: resolucion_sdh_000195_2025
+    norma: Resolución SDH-000195 de 2025
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
+    formato: html
+    articulos: ["3", "4", "5", "6"]
+    insertar:
+      "5": sdh_195_art_5.md
+    nota: Arts. 3 a 6 (predial). El texto sale del Régimen Legal de Bogotá; las cuatro cuotas del SPAC están en una imagen y se transcriben.
+  - id: resolucion_sdh_000195_2025_ica
+    norma: Resolución SDH-000195 de 2025
+    coleccion: normativa_ica
+    archivo: resolucion_sdh_000195_2025
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
+    formato: html
+    articulos: ["1", "2"]
+    insertar:
+      "1": sdh_195_art_1.md
+    nota: Artículos del ICA de la resolución (adenda, sección 3.1). Mismo archivo; las fechas bimestrales están en imágenes y se transcriben.
+  - id: acuerdo_1084_2026
+    norma: Acuerdo 1084 de 2026
+    coleccion: normativa_ipu
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+    formato: html
+    articulos: ["3", "4", "5", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "27", "28", "35", "52"]
+    notas_de_articulo:
+      "20": >-
+        Las tarifas de este artículo rigen desde el predial de 2027: el predial se causa el 1 de enero de cada
+        año gravable (Decreto 352 de 2002, art. 15) y este acuerdo rige desde su publicación (art. 52). Para el
+        predial de 2026 rigen los rangos de la Resolución SDH-000194 de 2025 y las tarifas preferenciales del
+        art. 1 del Acuerdo 648 de 2016, que mantuvo el parágrafo 2 del art. 3 del Acuerdo 780 de 2020.
+    nota: Texto digital del Régimen Legal de Bogotá (en vigor desde el 9 de octubre de 2026). El PDF escaneado del INCP queda como contraste. Reparto de la adenda, sección 3.1; el art. 6 queda fuera. Los arts. 3, 4, 7 y 52 aplican a ambos impuestos y se cargan también en normativa_ica.
+  - id: acuerdo_1084_2026_ica
+    norma: Acuerdo 1084 de 2026
+    coleccion: normativa_ica
+    archivo: acuerdo_1084_2026
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+    formato: html
+    articulos: ["1", "2", "3", "4", "7", "21", "24", "25", "26", "52"]
+    nota: Reparto de la adenda, sección 3.1 (arts. 21, 24, 25 y 26 e incentivos del ICA). Mismo texto digital del Régimen Legal.
+    vigencia: >-
+      Las tarifas del art. 21 del Acuerdo 1084 de 2026 (texto nuevo del art. 3 del Acuerdo 65) se aplican, según
+      el parágrafo del art. 21, a los declarantes anuales desde el 1 de enero de 2027 y a los bimestrales desde
+      el bimestre siguiente a la aprobación del acuerdo (se aprobó en el bimestre 5 de 2026, por eso desde el
+      bimestre 6 de 2026). Hasta esos periodos rigen el texto original del art. 3 y sus modificaciones
+      (Acuerdos 780 de 2020 y 816 de 2021).
+  - id: ley_14_1983
+    norma: Ley 14 de 1983
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=267
+    formato: html
+    articulos: todos
+    nota: Texto del Régimen Legal de Bogotá con sus notas de vigencia. Los arts. 33 y 36 muestran el texto de 1983, que la Ley 1819 de 2016 modificó.
+    texto_anterior:
+      "33": lo modificó la Ley 1819 de 2016, art. 342 (base gravable y tarifa del impuesto de industria y comercio)
+      "36": lo modificó la Ley 1819 de 2016, art. 345 (actividades de servicios)
+  - id: decreto_352_2002_cap2
+    norma: Decreto Distrital 352 de 2002, cap. II
+    coleccion: normativa_ica
+    url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
+    formato: html
+    articulos: capitulo_2
+    notas_de_articulo:
+      "53": >-
+        Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Para el año gravable 2026
+        de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales rigen las del art. 3
+        del Acuerdo 65 de 2002 con sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021); las del art. 21 del
+        Acuerdo 1084 de 2026 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales desde el
+        bimestre 6 de 2026 (parágrafo del art. 21).
+      "55": >-
+        Los rangos en pesos de este artículo son los de 2002. Las fechas del régimen de 2026 están en el art. 1
+        de la Resolución SDH-000195 de 2025 y desde 2027 los regímenes son los del art. 26 del Acuerdo 1084
+        de 2026.
+    reemplazos:
+      - de: "RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS\n\n| AÑO | DIARIOS | DIARIOS |"
+        a: "| Rango de ingresos netos, desde | Rango de ingresos netos, hasta | Número de salarios mínimos diarios |"
+  - id: decreto_807_1993_ica
+    norma: Decreto Distrital 807 de 1993
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=1637
+    formato: html
+    articulos: todos
+    nota: Régimen Legal de Bogotá, con las modificaciones y las notas de vigencia; el Acuerdo 1084 derogó los arts. 7 y 8.
+  - id: acuerdo_65_2002
+    norma: Acuerdo 65 de 2002, art. 3
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156
+    formato: html
+    articulos: ["3"]
+    vigencia: >-
+      Las tarifas del art. 21 del Acuerdo 1084 de 2026 (texto nuevo del art. 3 del Acuerdo 65) se aplican, según
+      el parágrafo del art. 21, a los declarantes anuales desde el 1 de enero de 2027 y a los bimestrales desde
+      el bimestre siguiente a la aprobación del acuerdo (se aprobó en el bimestre 5 de 2026, por eso desde el
+      bimestre 6 de 2026). Hasta esos periodos rigen el texto original del art. 3 y sus modificaciones
+      (Acuerdos 780 de 2020 y 816 de 2021).
+  - id: acuerdo_780_2020_ica
+    norma: Acuerdo 780 de 2020, arts. 6 y 7
+    coleccion: normativa_ica
+    archivo: acuerdo_780_2020
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965
+    formato: html
+    articulos: ["6", "7"]
+    notas_de_articulo:
+      "7": >-
+        Rige para el año gravable 2026 de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los
+        bimestrales. El art. 52 del Acuerdo 1084 de 2026 lo derogó, y según el parágrafo del art. 21 de ese
+        acuerdo las tarifas del art. 21 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales
+        desde el bimestre 6 de 2026.
+      nota: Fuente del ICA de 2026 aprobada por Rodolfo en la parada de B2. El art. 7 lo derogó el art. 52 del Acuerdo 1084.
+  - id: acuerdo_816_2021
+    norma: Acuerdo 816 de 2021, art. 4
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=116160&dt=S
+    formato: html
+    articulos: ["4"]
+    nota: Fuente del ICA de 2026 aprobada por Rodolfo en la parada de B2. Fija 14 por mil para las actividades financieras.
+  - id: acuerdo_98_2003
+    norma: Acuerdo 98 de 2003
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=10597
+    formato: html
+    articulos: ["1", "2", "3"]
+    vigencia: >-
+      El art. 52 del Acuerdo 1084 de 2026 derogó este acuerdo completo. Rige para el año gravable 2026 de los
+      declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales; según el parágrafo del
+      art. 21 de ese acuerdo, las tarifas del art. 21 se aplican a los anuales desde el 1 de enero de 2027 y
+      a los bimestrales desde el bimestre 6 de 2026.
+    nota: Tarifa de la edición y publicación de libros; lo derogó el art. 52 del Acuerdo 1084. Fuente del ICA de 2026 aprobada por Rodolfo en la parada de B2.
+  - id: resolucion_sdh_000265_2021
+    norma: Resolución SDH-000265 de 2021, art. 1
+    coleccion: normativa_ica
+    url: https://compilacionjuridica.shd.gov.co/compilacion/docs/resolucion_sdh_0265_2021.htm
+    formato: html
+    articulos: ["1"]
+    nota: Compilación de la Secretaría de Hacienda; el PDF de bogota.gov.co trae el mismo texto. Da a cada CIIU su grupo y sus tarifas de 2021 a 2024. Fuente aprobada por Rodolfo en la parada de B2.
+  - id: ley_1819_2016_ica
+    norma: Ley 1819 de 2016, arts. 342 y 345
+    coleccion: normativa_ica
+    archivo: ley_1819_2016
+    url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html
+    formato: html
+    articulos: ["342", "345"]
+    nota: Modifican los arts. 33 y 36 de la Ley 14 de 1983 (base gravable y actividades de servicios del ICA). Misma parte de la ley que el art. 354.
+  - id: decreto_639_2025_ica
+    norma: Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205
+    coleccion: normativa_ica
+    archivo: decreto_639_2025
+    url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
+    formato: html
+    articulos: ["205"]
+    notas_de_articulo:
+      "205": >-
+        Rige para el año gravable 2026. Desde el 1 de enero de 2027 los regímenes del ICA son los del art. 26
+        del Acuerdo 1084 de 2026.
+    nota: Declaración anual del ICA de los contribuyentes con menos de 391 UVT. Fuente fuera de la tabla de la sección 5 de la especificación, copiada del art. 205 que ya está en normativa_ipu.
+  - id: acuerdo_1019_2025_ica
+    norma: Acuerdo 1019 de 2025, art. 44
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818
+    formato: html
+    articulos: ["44"]
+    vigencia: >-
+      El art. 44 fija las tarifas del ICA consolidado del régimen SIMPLE «para … la vigencia 2026», es decir,
+      para todo el año gravable 2026. El art. 52 del Acuerdo 1084 de 2026 lo derogó y el art. 24 de ese
+      acuerdo dice «A partir del 1° de enero de 2027»: desde esa fecha aplica el art. 24.
+    nota: Fuente fuera de la tabla de la sección 5 de la especificación; sirve para verificar el SIMPLE de 2026 con su texto.

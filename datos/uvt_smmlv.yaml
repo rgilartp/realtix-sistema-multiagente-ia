@@ -1,0 +1,30 @@
+mes_consulta: octubre de 2026
+verificado_por: "Rodolfo Angel Gilart Pulido"
+uvt:
+- anio: 2025
+  valor: 49799
+  fuente: Resolución DIAN 000193 de 2024
+  url: https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0193_2024.htm
+  comprobacion: 391 UVT = $19.471.409, el valor de la Resolución SDH-000195 de 2025, art. 1
+- anio: 2026
+  valor: 52374
+  fuente: Resolución DIAN 000238 de 2025
+  url: https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0238_2025.htm
+- anio: 2027
+  valor: pendiente
+  fuente: la DIAN la fija a finales de 2026; aún no se publica
+smmlv:
+- anio: 2025
+  valor: 1423500
+  fuente: Decreto 1572 de 2024
+  url: https://normativa.colpensiones.gov.co/compilacion/docs/decreto_1572_2024.htm
+- anio: 2026
+  valor: 1750905
+  fuente: Decreto 1469 de 2025
+  url: https://normativa.colpensiones.gov.co/compilacion/docs/decreto_1469_2025.htm
+  nota: 'El valor no cambió: el Decreto 159 de 2026, transitorio, fijó el mismo mientras el Consejo de Estado suspendió
+    el decreto; la Sección Segunda revocó la suspensión y el Decreto 1469 recuperó sus efectos. La demanda de nulidad
+    sigue sin fallo.'
+- anio: 2027
+  valor: pendiente
+  fuente: el Gobierno lo fija a finales de 2026; aún no se publica

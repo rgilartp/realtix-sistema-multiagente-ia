@@ -1,0 +1,67 @@
+fuente: Acuerdo 1084 de 2026, arts. 11 y 13 a 15 (sobretasa de alumbrado público)
+url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+mes_consulta: octubre de 2026
+vigencia_desde: 2027
+vigencia_hasta: null
+verificado_por: "Rodolfo Angel Gilart Pulido"
+lectura: Texto digital del Régimen Legal de Bogotá, contrastado con el OCR y con la imagen de las páginas 19 y 20
+  del PDF.
+diferencias_ocr:
+- pagina: 20
+  ocr: residenciales 500 UVT
+  imagen: residenciales 600 UVT
+  se_usa: imagen
+base_gravable: La misma del predial (art. 13); 100 % del avalúo catastral para los beneficiarios de las exenciones
+  de los arts. 3, 4, 5 y 8
+tarifas_por_mil:
+- categoria: residencial_123_hasta_20000_uvt_y_otros
+  descripcion: Residencial de estratos 1, 2 y 3 con base gravable menor o igual a 20.000 UVT; no urbanizables; sistema
+    de áreas protegidas; predios ubicados en suelo rural; depósitos y parqueaderos accesorios a un inmueble principal.
+  de_2027_a_2041: '0'
+  desde_2042: '0'
+- categoria: residencial_123_mas_de_20000_uvt_y_456
+  descripcion: Residencial de estratos 1, 2 y 3 con base gravable mayor a 20.000 UVT y todos los residenciales de
+    estratos 4, 5 y 6.
+  de_2027_a_2041: '0.4'
+  desde_2042: '0.2'
+- categoria: dotacional_y_urbanizables
+  descripcion: Dotacional; urbanizables no urbanizados o urbanizados no edificados.
+  de_2027_a_2041: '0.8'
+  desde_2042: '0.6'
+- categoria: comercial_financiero_industrial
+  descripcion: Comercial, financiero e industrial.
+  de_2027_a_2041: '1'
+  desde_2042: '0.8'
+topes_uvt:
+- categoria: residenciales
+  valor_limite_uvt: 600
+  descripcion: Residenciales
+- categoria: demas_predios
+  valor_limite_uvt: 1200
+  descripcion: Demás predios
+reglas:
+- articulo: 14, parágrafo
+  regla: No están sujetos a la sobretasa (1) los predios residenciales de los estratos 4, 5 y 6 con al menos un
+    propietario registrado en los grupos A, B o C del SISBÉN o el que haga sus veces, incluidos los registros administrativos
+    de población en exclusión extrema con que cuenta el distrito, ni (2) los predios comerciales, exclusivos o mixtos,
+    con al menos un propietario registrado en los grupos A o B del SISBÉN o el que haga sus veces. Esta exención
+    solo aplica a predios cuya titularidad esté totalmente en cabeza de personas naturales. La Secretaría Distrital
+    de Planeación dispone a más tardar el 30 de noviembre de cada año la información del SISBÉN para que Hacienda
+    identifique a los beneficiarios a 1 de enero de cada vigencia fiscal.
+- articulo: '14'
+  regla: Las tarifas se expresan por mil sobre la base gravable del art. 13. Las del periodo 2027 a 2041 se reducen
+    en 0,2 por mil desde el año gravable 2042. En predios con usos mixtos se aplican las reglas del art. 20 del
+    Acuerdo 1084 (ver reglas de ipu_2027.yaml).
+- articulo: 11, parágrafo 1
+  regla: Los contribuyentes excluidos del impuesto predial unificado no están sujetos a la declaración y el pago
+    de la sobretasa. En predios con exenciones equivalentes al 100 % del impuesto predial no hay lugar a declarar
+    ni pagar la sobretasa mientras dure la exención.
+- articulo: 11, parágrafo 2
+  regla: 'La exención del impuesto predial de los arts. 3, 4, 5 y 8 no se extiende a la sobretasa: esos contribuyentes
+    la liquidan y pagan por declaración o factura en los plazos de la Secretaría Distrital de Hacienda.'
+- articulo: '13'
+  regla: La base gravable es la del impuesto predial de la vigencia. En predios con exenciones parciales es la de
+    la declaración o factura del predial, y las exenciones se aplican en las mismas proporciones a la sobretasa;
+    para los beneficiarios de las exenciones de los arts. 3, 4, 5 y 8, la base es el 100 % del avalúo catastral.
+- articulo: 15, parágrafo
+  regla: Los límites de crecimiento de la sobretasa son los establecidos para el impuesto predial unificado.

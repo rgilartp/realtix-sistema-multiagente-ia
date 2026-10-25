@@ -1,0 +1,316 @@
+fuente: Acuerdo 1084 de 2026, art. 20 (modifica el art. 2 del Acuerdo 105 de 2003)
+url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+mes_consulta: octubre de 2026
+vigencia_desde: 2027
+vigencia_hasta: null
+verificado_por: "Rodolfo Angel Gilart Pulido"
+lectura: Texto digital del Régimen Legal de Bogotá, contrastado con el OCR y con la imagen de las páginas 21 a 25
+  del PDF.
+diferencias_ocr:
+- pagina: 22
+  ocr: estarán excluidos los predios de estratos 1 y 2 con base gravable inferior a 186 SMMLV
+  imagen: inferior a 16 SMMLV
+  se_usa: imagen
+advertencia: Los rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica; la estimación
+  de 2027 usa esta tabla tal como está.
+preferenciales:
+  unidad_base: SMMLV
+  residencial_urbano_y_rural_agropecuario:
+  - estratos:
+    - 1
+    - 2
+    desde: 16 SMMLV
+    hasta: 107 SMMLV
+    tarifa_por_mil: '1'
+    desde_valor: 16
+    unidad_desde: SMMLV
+    desde_exclusivo: false
+    hasta_valor: 107
+    unidad_hasta: SMMLV
+    unidad: SMMLV
+  - estratos:
+    - 1
+    - 2
+    desde: más de 107 SMMLV
+    hasta: 135 SMMLV
+    tarifa_por_mil: '3'
+    desde_valor: 107
+    unidad_desde: SMMLV
+    desde_exclusivo: true
+    hasta_valor: 135
+    unidad_hasta: SMMLV
+    unidad: SMMLV
+  - estratos:
+    - 3
+    desde: $1
+    hasta: 135 SMMLV
+    tarifa_por_mil: '3'
+    desde_valor: 1
+    unidad_desde: pesos
+    desde_exclusivo: false
+    hasta_valor: 135
+    unidad_hasta: SMMLV
+  residencial_rural:
+  - desde: 16 SMMLV
+    hasta: 107 SMMLV
+    tarifa_por_mil: '1'
+    desde_valor: 16
+    unidad_desde: SMMLV
+    desde_exclusivo: false
+    hasta_valor: 107
+    unidad_hasta: SMMLV
+    unidad: SMMLV
+  - desde: más de 107 SMMLV
+    hasta: 135 SMMLV
+    tarifa_por_mil: '3'
+    desde_valor: 107
+    unidad_desde: SMMLV
+    desde_exclusivo: true
+    hasta_valor: 135
+    unidad_hasta: SMMLV
+    unidad: SMMLV
+  - desde: más de 135 SMMLV
+    hasta: null
+    tarifa_por_mil: '6.5'
+    desde_valor: 135
+    unidad_desde: SMMLV
+    desde_exclusivo: true
+    hasta_valor: null
+    unidad_hasta: null
+  excluidos: Estratos 1 y 2 (urbanos, rurales agropecuarios y residenciales rurales) con base gravable inferior
+    a 16 SMMLV
+  limite_de_16_smmlv: En 2027 solo queda excluido lo «inferior a 16 SMMLV» (Acuerdo 1084, art. 20); 16 SMMLV exactos
+    pagan 1 por mil.
+  mantiene: 'Las preferenciales de 1 y 3 por mil no son nuevas: existen desde 2017 (Acuerdo 648 de 2016, art. 1)
+    y siguieron de 2021 a 2026 (Acuerdo 780 de 2020, art. 3, parágrafo 2). El Acuerdo 1084 las mantiene para 2027
+    y nombra además a los predios rurales con destino agropecuario y a los residenciales rurales.'
+generales:
+  residencial:
+  - desde: 1
+    hasta: 194307000
+    tarifa_por_mil: '5.5'
+  - desde: 194307001
+    hasta: 207062000
+    tarifa_por_mil: '5.6'
+  - desde: 207062001
+    hasta: 238375000
+    tarifa_por_mil: '5.7'
+  - desde: 238375001
+    hasta: 269690000
+    tarifa_por_mil: '5.8'
+  - desde: 269690001
+    hasta: 301005000
+    tarifa_por_mil: '5.9'
+  - desde: 301005001
+    hasta: 332318000
+    tarifa_por_mil: '6'
+  - desde: 332318001
+    hasta: 363632000
+    tarifa_por_mil: '6.1'
+  - desde: 363632001
+    hasta: 394946000
+    tarifa_por_mil: '6.2'
+  - desde: 394946001
+    hasta: 447136000
+    tarifa_por_mil: '6.3'
+  - desde: 447136001
+    hasta: 499330000
+    tarifa_por_mil: '6.4'
+  - desde: 499330001
+    hasta: 551518000
+    tarifa_por_mil: '6.5'
+  - desde: 551518001
+    hasta: 603709000
+    tarifa_por_mil: '6.6'
+  - desde: 603709001
+    hasta: 655899000
+    tarifa_por_mil: '6.8'
+  - desde: 655899001
+    hasta: 708090000
+    tarifa_por_mil: '7'
+  - desde: 708090001
+    hasta: 760279000
+    tarifa_por_mil: '7.2'
+  - desde: 760279001
+    hasta: 812470000
+    tarifa_por_mil: '7.4'
+  - desde: 812470001
+    hasta: 864660000
+    tarifa_por_mil: '7.6'
+  - desde: 864660001
+    hasta: 937727000
+    tarifa_por_mil: '7.8'
+  - desde: 937727001
+    hasta: 1010794000
+    tarifa_por_mil: '8'
+  - desde: 1010794001
+    hasta: 1083859000
+    tarifa_por_mil: '8.2'
+  - desde: 1083859001
+    hasta: 1156929000
+    tarifa_por_mil: '8.4'
+  - desde: 1156929001
+    hasta: 1229992000
+    tarifa_por_mil: '8.6'
+  - desde: 1229992001
+    hasta: 1303058000
+    tarifa_por_mil: '8.8'
+  - desde: 1303058001
+    hasta: 1376126000
+    tarifa_por_mil: '9'
+  - desde: 1376126001
+    hasta: 1449192000
+    tarifa_por_mil: '9.2'
+  - desde: 1449192001
+    hasta: 1710142000
+    tarifa_por_mil: '9.5'
+  - desde: 1710142001
+    hasta: 1971099000
+    tarifa_por_mil: '10.1'
+  - desde: 1971099001
+    hasta: 2232051000
+    tarifa_por_mil: '10.8'
+  - desde: 2232051001
+    hasta: 2505139000
+    tarifa_por_mil: '11.5'
+  - desde: 2505139001
+    hasta: 3188881000
+    tarifa_por_mil: '12.3'
+  - desde: 3188881001
+    hasta: 4411881000
+    tarifa_por_mil: '13.1'
+  - desde: 4411881001
+    hasta: null
+    tarifa_por_mil: '13.9'
+  no_residencial:
+  - destino: comercial
+    tarifa_por_mil: '8'
+    desde: 1
+    hasta: 363264000
+  - destino: comercial
+    tarifa_por_mil: '9.5'
+    desde: 363264001
+    hasta: null
+  - destino: financiero
+    tarifa_por_mil: '16'
+    desde: 1
+    hasta: null
+  - destino: industrial
+    tarifa_por_mil: '10'
+    desde: 1
+    hasta: null
+  - destino: depositos_y_parqueaderos_accesorios_hasta_30_m2
+    tarifa_por_mil: '5'
+    desde: 1
+    hasta: 6832000
+  - destino: depositos_y_parqueaderos_accesorios_hasta_30_m2
+    tarifa_por_mil: '8'
+    desde: 6832001
+    hasta: null
+  - destino: urbanizables_no_urbanizados_y_urbanizables_no_edificados
+    tarifa_por_mil: '12'
+    desde: 1
+    hasta: 63048000
+  - destino: urbanizables_no_urbanizados_y_urbanizables_no_edificados
+    tarifa_por_mil: '33'
+    desde: 63048001
+    hasta: null
+  - destino: pequena_propiedad_rural_produccion_agropecuaria
+    tarifa_por_mil: '4'
+    desde: 1
+    hasta: null
+  - destino: no_urbanizables
+    tarifa_por_mil: '5'
+    desde: 1
+    hasta: null
+  - destino: rural
+    tarifa_por_mil: '4'
+    desde: 1
+    hasta: 135
+    unidad: SMMLV
+  - destino: rural
+    tarifa_por_mil: '6.5'
+    desde: 135
+    hasta: null
+    unidad: SMMLV
+    desde_exclusivo: true
+  - destino: dotacional_entes_publicos
+    tarifa_por_mil: '5'
+    desde: 1
+    hasta: null
+  - destino: dotacional_particulares
+    tarifa_por_mil: '6.5'
+    desde: 1
+    hasta: null
+  dotacional_clubes_de_particulares:
+    categoria: Dotacional de propiedad de particulares destinado a clubes campestres, sociales, deportivos y/o recreativos
+      (art. 2, num. 2.3)
+    rangos:
+    - desde: 1
+      hasta: 11529762000
+      tarifa_por_mil_2027: '6.5'
+      tarifa_por_mil_desde_2028: '6.5'
+    - desde: 11529762001
+      hasta: 22211734000
+      tarifa_por_mil_2027: '7.82'
+      tarifa_por_mil_desde_2028: '8'
+    - desde: 22211734001
+      hasta: 32893706000
+      tarifa_por_mil_2027: '8.04'
+      tarifa_por_mil_desde_2028: '8.25'
+    - desde: 32893706001
+      hasta: 43575726000
+      tarifa_por_mil_2027: '8.26'
+      tarifa_por_mil_desde_2028: '8.5'
+    - desde: 43575726001
+      hasta: 54257698000
+      tarifa_por_mil_2027: '8.48'
+      tarifa_por_mil_desde_2028: '8.75'
+    - desde: 54257698001
+      hasta: 67822146000
+      tarifa_por_mil_2027: '8.7'
+      tarifa_por_mil_desde_2028: '9'
+    - desde: 67822146001
+      hasta: 81386595000
+      tarifa_por_mil_2027: '8.92'
+      tarifa_por_mil_desde_2028: '9.25'
+    - desde: 81386595001
+      hasta: 94950995000
+      tarifa_por_mil_2027: '9.14'
+      tarifa_por_mil_desde_2028: '9.5'
+    - desde: 94950995001
+      hasta: 108515443000
+      tarifa_por_mil_2027: '9.36'
+      tarifa_por_mil_desde_2028: '9.75'
+    - desde: 108515443001
+      hasta: null
+      tarifa_por_mil_2027: '9.58'
+      tarifa_por_mil_desde_2028: '10'
+    reglas:
+    - 'Clubes de entidades educativas, cajas de compensación familiar y empresas industriales y comerciales del
+      Estado, usados para su objeto social: tarifa de los predios dotacionales según la naturaleza del propietario.'
+    - 'Clubes de las Fuerzas Militares y de la Policía Nacional, usados para su objeto social, de entes públicos
+      y de particulares: 5 por mil.'
+  nota_pequena_propiedad_rural: La comercialización total o parcial de los excedentes de la producción agropecuaria
+    destinada al sostenimiento de la unidad familiar no excluye por sí misma la categoría, si el predio corresponde
+    a una unidad de producción a niveles de subsistencia.
+reglas:
+- articulo: 20, parágrafo 1
+  regla: Las categorías de predios urbanizables no urbanizados, urbanizados no edificados y no urbanizables solo
+    aplican a predios dentro del perímetro urbano.
+- articulo: 20, parágrafo 1
+  regla: 'Usos mixtos: se aplica la tarifa de cada uso en este orden: dotacional con cualquier otro uso aplica tarifa
+    dotacional; industrial con cualquier otro uso excepto dotacional, tarifa industrial; comercial con cualquier
+    otro uso excepto dotacional o industrial, tarifa comercial; residencial con depósitos y parqueaderos, tarifa
+    residencial.'
+- articulo: 20, parágrafo 1
+  regla: Los predios con usos mixtos exclusivamente comercial y residencial, con un área dedicada al comercio no
+    superior a 30 metros cuadrados, ubicados en estratos 1, 2 y 3, reciben tratamiento como residencial; no aplica
+    a los ubicados en las categorías de uso definidas por Catastro como comercio en corredor comercial.
+- articulo: 20, parágrafo 2
+  regla: En los predios donde funcionen Unidades de Servicio en Primera Infancia del ICBF, modalidad comunitaria,
+    prevalece el uso residencial sobre cualquier otro.
+- articulo: 20 (art. 2 del Acuerdo 105, texto nuevo)
+  regla: Desde 2027 los rangos que determinan la tarifa se actualizan cada año, por acto de la Secretaría Distrital
+    de Hacienda, con la variación anual del IVIUR de la vigencia anterior a la causación, aprobado por el CONFIS
+    distrital.
