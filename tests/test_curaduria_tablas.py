@@ -196,3 +196,27 @@ def test_el_art_2_del_acuerdo_105_conserva_sus_tablas_y_el_texto_original() -> N
     assert 32 in filas  # residenciales generales: 32 rangos
     assert 10 in filas  # clubes
     assert "El texto original del artículo era el siguiente:" in articulo
+
+
+def test_la_resolucion_194_trae_transcritas_las_tablas_de_los_arts_2_y_3_sin_la_nota_al_pie() -> (
+    None
+):
+    texto = (KB / "normativa_ipu" / "resolucion_000194_2025_rangos.md").read_text(encoding="utf-8")
+    articulos = _articulos(texto)
+    assert "dane.gov.co" not in texto
+    for numero, filas in (("2", 6), ("3", 10)):
+        assert "**Tabla transcrita.**" in articulos[numero]
+        assert [len(t) - 1 for t in _tablas(articulos[numero])] == [filas]
+    assert "| Comercial (62) | 9,5 | $ 363.264.001 | $ - |" in articulos["2"]
+    assert articulos["4"].strip().endswith("PUBLÍQUESE Y CÚMPLASE")  # cierre sin firmas
+
+
+def test_el_decreto_352_une_las_filas_partidas_y_pone_el_encabezado_del_art_55_en_la_tabla() -> (
+    None
+):
+    texto = (KB / "normativa_ica" / "decreto_352_2002_cap2.md").read_text(encoding="utf-8")
+    assert "constructores y urbanizadores; y presentación de películas" in texto
+    assert not re.search(r"(?m)^\| urbanizadores;", texto)
+    assert "| Rango de ingresos netos, desde | Rango de ingresos netos, hasta |" in texto
+    assert "RANGO DE INGRESOS NETOS NÚMERO" not in texto
+    assert "| $ 60.000.001 | $ 77.900.000 | 60 |" in texto

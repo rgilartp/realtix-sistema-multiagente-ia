@@ -7,7 +7,6 @@ Fuente: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025
 Artículo 1°. Ajuste de rangos de avalúo catastral de los predios residenciales
 urbanos. De conformidad con lo establecido en el inciso 4° del artículo 1° del Acuerdo
 Distrital 648 de 2016 y en el artículo 3° del Acuerdo Distrital 780 de 2020, los rangos de
-1 https://www.dane.gov.co/files/operaciones/IPVN/bol-IPVN-IItrim2025.pdf
 avalúo catastral aplicables a los predios residenciales urbanos, para efectos tarifarios y para
 la liquidación del impuesto predial unificado correspondiente al año gravable 2026, son los
 siguientes:
@@ -50,32 +49,17 @@ conformidad con lo establecido en el inciso 4° del artículo 1° del Acuerdo Di
 2016, los rangos de avalúo catastral aplicables a los predios no residenciales, para efectos
 tarifarios y para la liquidación del impuesto predial unificado correspondiente al año
 gravable 2026, son los siguientes:
-Categoría
-del predio
-Destino
-Hacendario
-Tarifa
-por mil
-Avalúo Catastral
-Desde Hasta
-Comercial 62 8 $ 0 $ 363.264.000
-9,5 $ 363.264.001
-Depósitos y
-parqueaderos
-accesorios a un
-predio principal
-hasta de 30 m2 de
-construcción
-65
-5 $ 1 $ 6.832.000
-8 $ 6.832.001
-Urbanizables no
-urbanizados y
-urbanizados no
-edificados
-67
-12 $ 0 $ 63.048.000
-33 $ 63.048.001
+
+> **Tabla transcrita.** El PDF trae esta tabla como texto suelto; se transcribió desde `datos/tarifas/ipu_2026.yaml`, que se contrastó con el PDF fila por fila (`scripts/curaduria/contrastar_rangos.py`).
+
+| Categoría y destino hacendario | Tarifa por mil | Desde | Hasta |
+|---|---|---|---|
+| Comercial (62) | 8 | $ 0 | $ 363.264.000 |
+| Comercial (62) | 9,5 | $ 363.264.001 | $ - |
+| Depósitos y parqueaderos accesorios de hasta 30 m² (65) | 5 | $ 1 | $ 6.832.000 |
+| Depósitos y parqueaderos accesorios de hasta 30 m² (65) | 8 | $ 6.832.001 | $ - |
+| Urbanizables no urbanizados y urbanizados no edificados (67) | 12 | $ 0 | $ 63.048.000 |
+| Urbanizables no urbanizados y urbanizados no edificados (67) | 33 | $ 63.048.001 | $ - |
 
 ## Artículo 3
 
@@ -85,32 +69,21 @@ de 2016 y el artículo 2° del Acuerdo Distrital 897 de 2023, los rangos de aval
 los predios de propiedad de los clubes sociales, campestres, deportivos o recreativos, para
 efectos tarifarios y de liquidación del impuesto predial unificado del año gravable 2026,
 serán los siguientes:
-Categoría
-del predio
-Destino
-Hacendario
-Tarifa
-por mil
-Avalúo Catastral
-Desde Hasta
-Dotacional de
-propiedad de
-particulares
-destinados a clubes
-campestres,
-sociales, deportivos
-y/o recreativos
-66
-6,50 $ 0 $ 11.602.529.000
-7,64 $ 11.602.529.001 $ 22.351.916.000
-7,83 $ 22.351.916.001 $ 33.101.304.000
-8,02 $ 33.101.304.001 $ 43.850.740.000
-8,20 $ 43.850.740.001 $ 54.600.127.000
-8,39 $ 54.600.127.001 $ 68.250.183.000
-8,58 $ 68.250.183.001 $ 81.900.239.000
-8,77 $ 81.900.239.001 $ 95.550.247.000
-8,96 $ 95.550.247.001 $ 109.200.303.000
-9,15 $ 109.200.303.001
+
+> **Tabla transcrita.** El PDF trae esta tabla como texto suelto; se transcribió desde `datos/tarifas/ipu_2026.yaml`, que se contrastó con el PDF fila por fila (`scripts/curaduria/contrastar_rangos.py`).
+
+| Tarifa por mil (destino 66) | Desde | Hasta |
+|---|---|---|
+| 6,5 | $ 0 | $ 11.602.529.000 |
+| 7,64 | $ 11.602.529.001 | $ 22.351.916.000 |
+| 7,83 | $ 22.351.916.001 | $ 33.101.304.000 |
+| 8,02 | $ 33.101.304.001 | $ 43.850.740.000 |
+| 8,2 | $ 43.850.740.001 | $ 54.600.127.000 |
+| 8,39 | $ 54.600.127.001 | $ 68.250.183.000 |
+| 8,58 | $ 68.250.183.001 | $ 81.900.239.000 |
+| 8,77 | $ 81.900.239.001 | $ 95.550.247.000 |
+| 8,96 | $ 95.550.247.001 | $ 109.200.303.000 |
+| 9,15 | $ 109.200.303.001 | $ - |
 
 ## Artículo 4
 

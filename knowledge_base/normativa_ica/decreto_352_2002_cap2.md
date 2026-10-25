@@ -290,9 +290,7 @@ ARTÍCULO 54. TARIFAS POR VARIAS ACTIVIDADES. Cuando un mismo contribuyente real
 
 ARTÍCULO 55. SISTEMA PREFERENCIAL DEL IMPUESTO DE INDUSTRIA, COMERCIO, AVISOS Y TABLEROS PARA LOS CONTRIBUYENTES DEL RÉGIMEN SIMPLIFICADO. De conformidad con lo previsto en el artículo 4 del Acuerdo 65 de 2002, hasta el 31 de diciembre de 2002, para los contribuyentes que cumplan con las condiciones para pertenecer al régimen simplificado del impuesto de industria, comercio, avisos y tableros, el valor de su impuesto será en salarios mínimos diarios vigentes, según sus ingresos netos anuales, conforme a la siguiente tabla:
 
-RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS
-
-| AÑO | DIARIOS | DIARIOS |
+| Rango de ingresos netos, desde | Rango de ingresos netos, hasta | Número de salarios mínimos diarios |
 |---|---|---|
 | $ 0 | $ 15.000.000 | 0 |
 | $ 15.000.001 | $ 20.000.000 | 8 |

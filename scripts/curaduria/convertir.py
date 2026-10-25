@@ -439,6 +439,7 @@ def limpiar(texto: str) -> str:
     texto = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", texto)
     texto = re.sub(r"\[([^\]]*)\]\((?:[^()]|\([^)]*\))*\)", r"\1", texto)
     texto = re.sub(r"(?m)^.*(?:javascript:|Ir al inicio).*$\n?", "", texto)
+    texto = re.sub(r"(?m)^\d{1,2} https?://\S+[ \t]*$\n?", "", texto)  # nota al pie con un enlace
     texto = re.sub(r"(?m)^[ \t]*Jurisprudencia Vigencia[ \t]*$\n?", "", texto)
     texto = re.sub(r"<Ver en Jurisprudencia Vigencia[^>]*>[ \t]*", "", texto)
     texto = re.sub(r"[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]", "", texto)  # formato Unicode
@@ -472,6 +473,24 @@ def recortar_capitulos(texto: str, clave: str) -> str:
     return "\n".join(trozos)
 
 
+_LISTA_SIGUE = re.compile(r"(?:son|serán) los siguientes:\s*$", re.MULTILINE)
+
+
+def _con_tabla_transcrita(contenido: str, archivo: str) -> str:
+    """Cambia la tabla en texto suelto del PDF por la tabla transcrita de `datos/`."""
+    corte = _LISTA_SIGUE.search(contenido)
+    if corte is None:
+        raise ValueError(f"no se encontró dónde empieza la tabla: {contenido[:60]!r}")
+    tabla = (INSERCIONES / archivo).read_text(encoding="utf-8").strip()
+    return (
+        f"{contenido[: corte.end()].rstrip()}\n\n"
+        "> **Tabla transcrita.** El PDF trae esta tabla como texto suelto; se transcribió desde "
+        "`datos/tarifas/ipu_2026.yaml`, que se contrastó con el PDF fila por fila "
+        "(`scripts/curaduria/contrastar_rangos.py`).\n\n"
+        f"{tabla}"
+    )
+
+
 def convertir() -> dict[str, dict]:
     catalogo = cargar_catalogo()
     mes = catalogo["mes_consulta"]
@@ -498,6 +517,8 @@ def convertir() -> dict[str, dict]:
             continue
         cortes[-1] = (cortes[-1][0], recortar_cierre(cortes[-1][1]))
         cortes = mover_divisiones(cortes)
+        for cambio in fuente.get("reemplazos", []):
+            cortes = [(n, x.replace(cambio["de"], cambio["a"])) for n, x in cortes]
         cortes = [(n, sin_titulos_finales(t)) for n, t in cortes]
         destino = KNOWLEDGE_BASE / fuente["coleccion"]
         destino.mkdir(parents=True, exist_ok=True)
@@ -512,6 +533,7 @@ def convertir() -> dict[str, dict]:
         anteriores = fuente.get("texto_anterior", {})
         inserciones = fuente.get("insertar", {})
         notas_de_articulo = fuente.get("notas_de_articulo", {})
+        transcritas = fuente.get("tablas_transcritas", {})
         for numero, contenido in cortes:
             cuerpo += [f"## Artículo {numero}", ""]
             if numero in anteriores:
@@ -522,7 +544,10 @@ def convertir() -> dict[str, dict]:
                 ]
             if numero in notas_de_articulo:
                 cuerpo += [f"> **Vigencia.** {notas_de_articulo[numero]}", ""]
-            cuerpo += [contenido, ""]
+            if numero in transcritas:
+                cuerpo += [_con_tabla_transcrita(contenido, transcritas[numero]), ""]
+            else:
+                cuerpo += [contenido, ""]
             if numero in inserciones:
                 tabla = (INSERCIONES / inserciones[numero]).read_text(encoding="utf-8")
                 cuerpo += [

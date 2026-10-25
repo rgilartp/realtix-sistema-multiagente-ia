@@ -164,7 +164,10 @@ fuentes:
     url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
     formato: pdf
     articulos: todos
-    nota: Descargada a mano por Rodolfo desde el INCP.
+    tablas_transcritas:
+      "2": sdh_194_art_2.md
+      "3": sdh_194_art_3.md
+    nota: Descargada a mano por Rodolfo desde el INCP. Las tablas de los arts. 2 y 3 salen como texto suelto del PDF y se transcriben desde ipu_2026.yaml.
   - id: resolucion_sdh_000195_2025
     norma: Resolución SDH-000195 de 2025
     coleccion: normativa_ipu
@@ -221,6 +224,9 @@ fuentes:
     url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
     formato: html
     articulos: capitulo_2
+    reemplazos:
+      - de: "RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS\n\n| AÑO | DIARIOS | DIARIOS |"
+        a: "| Rango de ingresos netos, desde | Rango de ingresos netos, hasta | Número de salarios mínimos diarios |"
   - id: decreto_807_1993_ica
     norma: Decreto Distrital 807 de 1993
     coleccion: normativa_ica
