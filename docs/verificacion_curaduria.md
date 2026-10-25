@@ -232,3 +232,37 @@ Resolución SDH-000195, arts. 1 y 5) y se marcan «tabla en imagen en la fuente,
 El art. 7 permite descontar el 60 % de los intereses y las sanciones causados si se paga el 100 % del
 capital y el 40 % de los intereses y sanciones hasta el 21 de diciembre de 2026. Eso confirma el dato que
 la especificación dejaba «por verificar».
+
+## Base de conocimiento: corrección de la cuarta ronda
+
+El conversor nuevo del commit `dfeab4b` dañó la base; se corrigió así:
+
+- **Encabezado por estructura.** El encabezado de una tabla es su primera fila; solo suma filas cuando la
+  primera trae celdas combinadas (rowspan, o colspan sobre un segundo nivel cuya fila siguiente no trae
+  valores). Antes lo decidía por el contenido, y las tablas de texto o de porcentajes quedaban como un
+  encabezado sin filas. Los encabezados de dos niveles unen rótulo y subrótulo («Año 1» … «Año 10» en la
+  exención de 88.073 y de 352.291 UVT). Las tablas sin encabezado en la fuente (las ocho de tarifas del
+  art. 25 del Decreto 352, «Rurales | 16%o») llevan un encabezado vacío y conservan todas sus filas.
+- **Celdas combinadas.** En las filas de datos, la celda que ocupa varias columnas lleva el texto en la
+  primera y «—» en las demás («Más de $ 4.411.881.000 | — | 13,9»).
+- **Cierre.** Las firmas se buscan solo desde la fórmula de cierre, la fecha de expedición o la línea de un
+  cargo; antes, un encabezado de tabla en mayúsculas («ESTRATO | BASE GRAVABLE DESDE…») o un rótulo como
+  «PARÁGRAFO TRANSITORIO» cortaba el artículo (el art. 2 del Acuerdo 105 pasaba de 14.531 a 715
+  caracteres). La fórmula «PUBLÍQUESE Y CÚMPLASE» ya no se toma por un título final.
+- **Otros.** Las filas partidas del art. 53 del Decreto 352 se unen; el art. 55 trae su encabezado dentro de
+  la tabla y la última fila separa «$ 77.900.000» de «60»; la Ley 14 lleva cada capítulo al inicio de su
+  artículo; la Resolución SDH-000194 trae transcritas, desde `ipu_2026.yaml` (contrastado con el PDF, 0
+  diferencias), las tablas de los arts. 2 y 3, sin la nota al pie con el enlace del DANE.
+- **Notas de vigencia.** Acuerdo 1019 (rige todo 2026; desde 2027, art. 24), Acuerdo 648 (desde 2027, art.
+  20 del 1084 reemplaza sus tablas), Acuerdo 105 (para 2026 rige el texto anterior), Decreto 639 arts. 205 y
+  207 y `ipu_2026.yaml` (el art. 52 derogó el Acuerdo 77 de 2002, el predial se causa el 1 de enero).
+
+**Comparación con `77f588c`** (`uv run python scripts/curaduria/comparar_kb.py 77f588c`): por archivo, filas de
+datos de las tablas y caracteres de cada artículo, y las celdas de tabla que ya no están ni en una celda ni
+en el texto. Las únicas celdas que dejaron de estar: «Años de la exención» (ahora «Año 1» … «Año 10»), los
+nombres y cargos de las firmas del Acuerdo 98, el encabezado roto «AÑO | DIARIOS» y «$ 77.900.000 60» del
+art. 55 del Decreto 352 (ahora separados) y las tres celdas partidas de la Resolución 265 (corregidas). Las
+filas de datos bajan en 1 por tabla porque el encabezado unido y los subtítulos ya no cuentan como datos
+(por ejemplo, el art. 2 del Acuerdo 105 pasa de 117 a 97 porque los subtítulos y los encabezados de dos filas ya no cuentan como datos); suben en
+el Decreto 352 (26 a 33) y la Resolución 194 (0 a 16, transcritas). Los caracteres bajan por las firmas, el
+membrete de la Resolución 194, los caracteres de formato y el texto ajeno de la Ley 1581.

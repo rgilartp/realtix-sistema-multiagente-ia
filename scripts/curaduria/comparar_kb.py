@@ -27,6 +27,26 @@ def _filas_de_datos(texto: str) -> int:
     return total
 
 
+_FORMATO = re.compile(r"[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]")
+
+
+def _celdas(texto: str) -> set[str]:
+    celdas = set()
+    for linea in texto.splitlines():
+        if linea.startswith("|"):
+            for celda in linea.strip().strip("|").split("|"):
+                celda = _FORMATO.sub("", celda).strip()
+                if celda and not re.fullmatch(r"-+|—", celda):
+                    celdas.add(celda)
+    return celdas
+
+
+def _celdas_perdidas(antes: str, ahora: str) -> list[str]:
+    """Celdas de tabla del commit que ya no están ni en una celda ni en el texto de la norma."""
+    plano = _FORMATO.sub("", re.sub(r"\s+", " ", ahora))
+    return sorted(c for c in _celdas(antes) - _celdas(ahora) if re.sub(r"\s+", " ", c) not in plano)
+
+
 def _antes(commit: str, ruta: str) -> str | None:
     salida = subprocess.run(
         ["git", "show", f"{commit}:{ruta}"], cwd=RAIZ, capture_output=True, text=True, check=False
@@ -49,9 +69,12 @@ def main(commit: str) -> None:
             fa, fb = _filas_de_datos(a), _filas_de_datos(b)
             if fa != fb or abs(len(a) - len(b)) > 200:
                 cambios.append(f"  art. {numero}: filas {fa}→{fb}; caracteres {len(a)}→{len(b)}")
-        if cambios:
+        perdidas = _celdas_perdidas(antes, ahora)
+        if cambios or perdidas:
             print(f"{relativa}: filas {_filas_de_datos(antes)}→{_filas_de_datos(ahora)}")
             print("\n".join(sorted(cambios, key=lambda c: float(c.split()[1].rstrip(":")))))
+            if perdidas:
+                print(f"  celdas que ya no están: {[c[:50] for c in perdidas]}")
 
 
 if __name__ == "__main__":
