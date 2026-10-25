@@ -1,12 +1,16 @@
-fuente: Resolución de rangos del predial de 2026, arts. 1 y 2; Acuerdos 780 de 2020,
-  art. 3, y 105 de 2003, art. 2
-url: null
+fuente: Resolución SDH-000194 de 2025 (rangos del predial de 2026), arts. 1 y 2; Acuerdos 780 de 2020, art. 3, y
+  105 de 2003, art. 2
+url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
 mes_consulta: octubre de 2026
 vigencia_desde: 2026
 vigencia_hasta: 2026
 verificado_por: ''
-nota: Tabla transcrita de la sección 4.4 de la especificación (copia del PDF del INCP);
-  pendiente contrastar con el PDF.
+contraste:
+  con: texto del PDF de la resolución
+  script: scripts/curaduria/contrastar_rangos.py
+  rangos_residenciales: 30
+  tarifas_no_residenciales: 6
+  diferencias: 0
 residencial_urbano:
 - desde: 0
   hasta: 194307000
