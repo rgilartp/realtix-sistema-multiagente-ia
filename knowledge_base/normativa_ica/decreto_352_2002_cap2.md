@@ -275,12 +275,9 @@ ARTÍCULO 53. TARIFAS DEL IMPUESTO DE INDUSTRIA Y COMERCIO. Las tarifas del impu
 | Demás actividades comerciales | 9,6 | 11,04 |
 | c. Actividades de servicios |  |  |
 | Transporte; publicación de revistas, libros y periódicos; radiodifusión y programación de televisión. | 3,6 | 4,14 |
-| Consultoría profesional; servicios prestados por contratistas de construcción, constructores y |  |  |
-| urbanizadores; y presentación de películas en salas de cine. | 6,0 | 6,9 |
-| Servicios de restaurante, cafetería, bar, grill, discoteca y similares; servicios de hotel, motel, |  |  |
-| hospedaje, amoblado y similares; servicio de casas de empeño y servicios de vigilancia. | 12 | 13,8 |
-| Servicios de educación prestados por establecimientos privados en los niveles de educación |  |  |
-| inicial, preescolar, básica primaria, básica secundaria y media | 7 | 7 |
+| Consultoría profesional; servicios prestados por contratistas de construcción, constructores y urbanizadores; y presentación de películas en salas de cine. | 6,0 | 6,9 |
+| Servicios de restaurante, cafetería, bar, grill, discoteca y similares; servicios de hotel, motel, hospedaje, amoblado y similares; servicio de casas de empeño y servicios de vigilancia. | 12 | 13,8 |
+| Servicios de educación prestados por establecimientos privados en los niveles de educación inicial, preescolar, básica primaria, básica secundaria y media | 7 | 7 |
 | Demás actividades de servicios | 8,4 | 9,66 |
 | d. Actividades financieras |  |  |
 | Actividades financieras. | 9,6 | 11,04 |
@@ -302,7 +299,7 @@ RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS
 | $ 20.000.001 | $ 30.000.000 | 12 |
 | $ 30.000.001 | $ 45.000.000 | 24 |
 | $ 45.000.001 | $ 60.000.000 | 36 |
-| $ 60.000.001 | $ 77.900.000 60 | $ 77.900.000 60 |
+| $ 60.000.001 | $ 77.900.000 | 60 |
 
 Los contribuyentes previstos en el inciso anterior no presentarán declaración tributaria ni serán sujetos de retención y su impuesto será igual a la suma cancelada de acuerdo con el monto del pago aquí fijado en los recibos oficiales de pago que para el efecto prescriba la Dirección Distrital de Impuestos.
 

@@ -78,10 +78,8 @@ def test_la_ley_1581_termina_en_el_art_30_y_el_art_26_no_arrastra_el_titulo_ix()
 
 def test_el_ultimo_articulo_no_trae_nombres_ni_cargos_de_quienes_firman() -> None:
     for ruta in NORMAS:
-        ultimo = _articulos(ruta.read_text(encoding="utf-8"))[-1][1]
-        lineas = ultimo.strip().splitlines()
-        firmas = [linea for linea in lineas[1:] if convertir._es_firma(linea)]
-        assert firmas == [], (ruta.name, firmas[:2])
+        ultimo = _articulos(ruta.read_text(encoding="utf-8"))[-1][1].strip()
+        assert convertir.recortar_cierre(ultimo) == ultimo, ruta.name
 
 
 def test_el_cierre_conserva_la_formula_y_la_fecha_de_expedicion() -> None:
@@ -150,7 +148,8 @@ def test_la_tabla_preferencial_del_art_20_tiene_el_encabezado_unido() -> None:
     assert "| BASE GRAVABLE DESDE | BASE GRAVABLE HASTA | TARIFA POR MIL |" in texto
     assert "**Predios residenciales rurales**" in texto
     assert "| Desde | Hasta | Tarifa por mil |" in texto
-    assert "| Más de $ 4.411.881.000 | Más de $ 4.411.881.000 | 13,9 |" in texto
+    assert "| Más de $ 4.411.881.000 | — | 13,9 |" in texto
+    assert "| Más de $ 4.411.881.000 | Más de $ 4.411.881.000 |" not in texto
     assert "Base gravable Desde | Base gravable Hasta | Tarifas por mil 2027" in texto
 
 

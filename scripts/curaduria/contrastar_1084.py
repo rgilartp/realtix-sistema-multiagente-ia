@@ -68,7 +68,7 @@ def _rango(desde: str, hasta: str | None = None) -> tuple:
 
     if desde.lower().startswith("cualquier"):
         return (1, None)
-    return (punta(desde, True), punta(hasta, False) if hasta else None)
+    return (punta(desde, True), punta(hasta, False) if hasta and hasta != "—" else None)
 
 
 def _comparar(nombre: str, del_texto: list, del_yaml: list) -> dict:

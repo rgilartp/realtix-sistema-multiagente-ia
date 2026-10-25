@@ -12,8 +12,100 @@ Artículo 1°. Exención en el Impuesto de Industria y Comercio por atracción d
 
 2. Realizar con posterioridad a la entrada en vigencia del presente acuerdo, cualquiera de las siguientes actividades en el Distrito Capital:
 
-| Sector de actividad Industria Servicios | Descripción Procesamiento y conservación de carne y productos cárnicos Elaboración de cacao, chocolate y productos de confitería Elaboración de otros productos alimenticios n.c.p. Preparación e hilatura de fibras textiles Tejeduría de productos textiles Confección de artículos con materiales textiles, excepto prendas de vestir Fabricación de tapetes y alfombras para pisos Fabricación de otros artículos textiles n.c.p. Confección de prendas de vestir, excepto prendas de piel Fabricación de hojas de madera para enchapado; fabricación de tableros contrachapados, tableros laminados, tableros de partículas y otros tableros y paneles Fabricación de sustancias y productos químicos básicos Fabricación de abonos y compuestos inorgánicos nitrogenados Fabricación de plásticos en formas primarias Fabricación de caucho sintético en formas primarias Fabricación de otros productos químicos n.c.p. Fabricación de fibras sintéticas y artificiales Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso farmacéutico Fabricación de formas básicas de caucho y otros productos de caucho n.c.p. Fabricación de vidrio y productos de vidrio Fabricación de productos refractarios Fabricación de otros productos minerales no metálicos n.c.p. Fabricación de artículos de cuchillería, herramientas de mano y artículos de ferretería Fabricación de otros productos elaborados de metal n.c.p. Fabricación de componentes y tableros electrónicos Fabricación de computadoras y de equipo periférico Fabricación de equipos de comunicación Fabricación de aparatos electrónicos de consumo Fabricación de equipo de medición, prueba, navegación y control Fabricación de relojes Fabricación de instrumentos ópticos y equipo fotográfico Fabricación de medios magnéticos y ópticos para almacenamiento de datos Fabricación de motores, generadores y transformadores eléctricos Fabricación de aparatos de distribución y control de la energía eléctrica Fabricación de pilas, baterías y acumuladores eléctricos Fabricación de otros tipos de equipo eléctrico n.c.p. Fabricación de equipos de potencia hidráulica y neumática Fabricación de otras bombas, compresores, grifos y válvulas Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión Fabricación de equipo de elevación y manipulación Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p. Fabricación de maquinaria agropecuaria y forestal Fabricación de máquinas formadoras de metal y de máquinas herramienta Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p. Fabricación de vehículos automotores y sus motores Fabricación de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores Fabricación de locomotoras y de material rodante para ferrocarriles Fabricación de aeronaves, naves espaciales y de maquinaria conexa Fabricación de joyas, bisutería y artículos conexos Fabricación de instrumentos musicales Fabricación de artículos y equipo para la práctica del deporte Fabricación de juegos, juguetes y rompecabezas Fabricación de instrumentos, aparatos y materiales médicos y odontológicos (incluido mobiliario) Otras industrias manufactureras n.c.p. Generación de energía eléctrica Tratamiento y disposición de desechos no peligrosos Edición de programas de informática (software) Actividades de producción de películas cinematográficas, videos, programas, anuncios y comerciales de televisión Actividades de postproducción de películas cinematográficas, videos, programas, anuncios y comerciales de televisión Actividades de distribución de películas cinematográficas, videos, programas, anuncios y comerciales de televisión Actividades de grabación de sonido y edición de música Actividades de programación y transmisión en el servicio de radiodifusión sonora Actividades de programación y transmisión de televisión Actividades de telecomunicación satelital Otras actividades de telecomunicaciones Otras actividades de tecnologías de información y actividades de servicios informáticos Procesamiento de datos, alojamiento (hosting) y actividades relacionadas Portales web Actividades de agencias de noticias Otras actividades de servicios de información n.c.p. Actividades de ingeniería y otras actividades conexas de consultoría técnica Investigaciones y desarrollo experimental en el campo de las ciencias naturales y la ingeniería Alquiler y arrendamiento de otros tipos de maquinaria, equipo y bienes tangibles n.c.p. Actividades de centros de llamadas (call center) Fabricación de equipo de irradiación y equipo electrónico de uso médico y terapéutico Actividades de telecomunicaciones alámbricas Actividades de telecomunicaciones inalámbricas Actividades de consultoría informática y actividades de administración de instalaciones informáticas Investigaciones y desarrollo experimental en el campo de las ciencias sociales y las humanidades Otras actividades profesionales, científicas y técnicas n.c.p. Educación media técnica y de formación laboral Educación técnica profesional Educación tecnológica Educación de instituciones universitarias o de escuelas tecnológicas Educación de universidades Formación académica no formal Otros tipos de educación n.c.p. Actividades de apoyo a la educación Actividades de la práctica médica, sin internación Actividades de la práctica odontológica Actividades de apoyo diagnóstico Actividades de apoyo terapéutico Otras actividades de atención de la salud humana |
+| Sector de actividad | Descripción |
 |---|---|
+| Industria | Procesamiento y conservación de carne y productos cárnicos |
+| Industria | Elaboración de cacao, chocolate y productos de confitería |
+| Industria | Elaboración de otros productos alimenticios n.c.p. |
+| Industria | Preparación e hilatura de fibras textiles |
+| Industria | Tejeduría de productos textiles |
+| Industria | Confección de artículos con materiales textiles, excepto prendas de vestir |
+| Industria | Fabricación de tapetes y alfombras para pisos |
+| Industria | Fabricación de otros artículos textiles n.c.p. |
+| Industria | Confección de prendas de vestir, excepto prendas de piel |
+| Industria | Fabricación de hojas de madera para enchapado; fabricación de tableros contrachapados, tableros laminados, tableros de partículas y otros tableros y paneles |
+| Industria | Fabricación de sustancias y productos químicos básicos |
+| Industria | Fabricación de abonos y compuestos inorgánicos nitrogenados |
+| Industria | Fabricación de plásticos en formas primarias |
+| Industria | Fabricación de caucho sintético en formas primarias |
+| Industria | Fabricación de otros productos químicos n.c.p. |
+| Industria | Fabricación de fibras sintéticas y artificiales |
+| Industria | Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso farmacéutico |
+| Industria | Fabricación de formas básicas de caucho y otros productos de caucho n.c.p. |
+| Industria | Fabricación de vidrio y productos de vidrio |
+| Industria | Fabricación de productos refractarios |
+| Industria | Fabricación de otros productos minerales no metálicos n.c.p. |
+| Industria | Fabricación de artículos de cuchillería, herramientas de mano y artículos de ferretería |
+| Industria | Fabricación de otros productos elaborados de metal n.c.p. |
+| Industria | Fabricación de componentes y tableros electrónicos |
+| Industria | Fabricación de computadoras y de equipo periférico |
+| Industria | Fabricación de equipos de comunicación |
+| Industria | Fabricación de aparatos electrónicos de consumo |
+| Industria | Fabricación de equipo de medición, prueba, navegación y control |
+| Industria | Fabricación de relojes |
+| Industria | Fabricación de instrumentos ópticos y equipo fotográfico |
+| Industria | Fabricación de medios magnéticos y ópticos para almacenamiento de datos |
+| Industria | Fabricación de motores, generadores y transformadores eléctricos |
+| Industria | Fabricación de aparatos de distribución y control de la energía eléctrica |
+| Industria | Fabricación de pilas, baterías y acumuladores eléctricos |
+| Industria | Fabricación de otros tipos de equipo eléctrico n.c.p. |
+| Industria | Fabricación de equipos de potencia hidráulica y neumática |
+| Industria | Fabricación de otras bombas, compresores, grifos y válvulas |
+| Industria | Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión |
+| Industria | Fabricación de equipo de elevación y manipulación |
+| Industria | Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p. |
+| Industria | Fabricación de maquinaria agropecuaria y forestal |
+| Industria | Fabricación de máquinas formadoras de metal y de máquinas herramienta |
+| Industria | Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p. |
+| Industria | Fabricación de vehículos automotores y sus motores |
+| Industria | Fabricación de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores |
+| Industria | Fabricación de locomotoras y de material rodante para ferrocarriles |
+| Industria | Fabricación de aeronaves, naves espaciales y de maquinaria conexa |
+| Industria | Fabricación de joyas, bisutería y artículos conexos |
+| Industria | Fabricación de instrumentos musicales |
+| Industria | Fabricación de artículos y equipo para la práctica del deporte |
+| Industria | Fabricación de juegos, juguetes y rompecabezas |
+| Industria | Fabricación de instrumentos, aparatos y materiales médicos y odontológicos (incluido mobiliario) |
+| Industria | Otras industrias manufactureras n.c.p. |
+| Servicios | Generación de energía eléctrica |
+| Industria | Tratamiento y disposición de desechos no peligrosos |
+| Servicios | Edición de programas de informática (software) |
+| Servicios | Actividades de producción de películas cinematográficas, videos, programas, anuncios y comerciales de televisión |
+| Servicios | Actividades de postproducción de películas cinematográficas, videos, programas, anuncios y comerciales de televisión |
+| Servicios | Actividades de distribución de películas cinematográficas, videos, programas, anuncios y comerciales de televisión |
+| Servicios | Actividades de grabación de sonido y edición de música |
+| Servicios | Actividades de programación y transmisión en el servicio de radiodifusión sonora |
+| Servicios | Actividades de programación y transmisión de televisión |
+| Servicios | Actividades de telecomunicación satelital |
+| Servicios | Otras actividades de telecomunicaciones |
+| Servicios | Otras actividades de tecnologías de información y actividades de servicios informáticos |
+| Servicios | Procesamiento de datos, alojamiento (hosting) y actividades relacionadas |
+| Servicios | Portales web |
+| Servicios | Actividades de agencias de noticias |
+| Servicios | Otras actividades de servicios de información n.c.p. |
+| Servicios | Actividades de ingeniería y otras actividades conexas de consultoría técnica |
+| Servicios | Investigaciones y desarrollo experimental en el campo de las ciencias naturales y la ingeniería |
+| Servicios | Alquiler y arrendamiento de otros tipos de maquinaria, equipo y bienes tangibles n.c.p. |
+| Servicios | Actividades de centros de llamadas (call center) |
+| Industria | Fabricación de equipo de irradiación y equipo electrónico de uso médico y terapéutico |
+| Servicios | Actividades de telecomunicaciones alámbricas |
+| Servicios | Actividades de telecomunicaciones inalámbricas |
+| Servicios | Actividades de consultoría informática y actividades de administración de instalaciones informáticas |
+| Servicios | Investigaciones y desarrollo experimental en el campo de las ciencias sociales y las humanidades |
+| Servicios | Otras actividades profesionales, científicas y técnicas n.c.p. |
+| Servicios | Educación media técnica y de formación laboral |
+| Servicios | Educación técnica profesional |
+| Servicios | Educación tecnológica |
+| Servicios | Educación de instituciones universitarias o de escuelas tecnológicas |
+| Servicios | Educación de universidades |
+| Servicios | Formación académica no formal |
+| Servicios | Otros tipos de educación n.c.p. |
+| Servicios | Actividades de apoyo a la educación |
+| Servicios | Actividades de la práctica médica, sin internación |
+| Servicios | Actividades de la práctica odontológica |
+| Servicios | Actividades de apoyo diagnóstico |
+| Servicios | Actividades de apoyo terapéutico |
+| Servicios | Otras actividades de atención de la salud humana |
 
 3. Presentar a más tardar el 30 de junio de 2031 un proyecto de inversión en activos fijos productivos, para el desarrollo de una o más de las actividades señaladas en el numeral 2º de este artículo, en los términos que para el efecto reglamente la Administración Distrital.
 
@@ -25,8 +117,11 @@ El porcentaje de la exención progresiva en el impuesto de industria y comercio 
 
 **EXENCIÓN PROGRESIVA ICA**
 
-| Monto de la inversión en UVT Desde 88.073 hasta 440.364 Mas de 440.364 hasta 880.728 Mas de 880.728 | Requisito de empleos Al menos 30 empleos directos Al menos 50 empleos directos Al menos 100 empleos directos | Año 1  100% | Año 2 50% 80% 90% | Año 3 - 60% 80% | Año 4 - 40% 70% | Año 5 - 20% 60% | Año 6 - 50% | Año 7 - 40% | Año 8 - 30% | Año 9 - 20% | Año 10 - 10%  |
+| Monto de la inversión en UVT | Requisito de empleos | Año 1 | Año 2 | Año 3 | Año 4 | Año 5 | Año 6 | Año 7 | Año 8 | Año 9 | Año 10 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
+| Desde 88.073 hasta 440.364 | Al menos 30 empleos directos | 100% | 50% | - | - | - | - | - | - | - | - |
+| Mas de 440.364 hasta 880.728 | Al menos 50 empleos directos | 100% | 80% | 60% | 40% | 20% | - | - | - | - | - |
+| Mas de 880.728 | Al menos 100 empleos directos | 100% | 90% | 80% | 70% | 60% | 50% | 40% | 30% | 20% | 10% |
 
 Si en algún momento el contribuyente no logra mantener los empleos mínimos exigidos, deberá informar la novedad a la instancia que defina la Administración Distrital dentro de los cinco (5) días siguientes a la materialización de la disminución en los empleos. Desde ese momento el contribuyente tendrá dos (2) meses para completar los empleos mínimos directos requeridos, so pena de perder de forma inmediata la exención aplicable en el año correspondiente.
 
@@ -54,8 +149,9 @@ Dichos descuentos se calcularán sobre la diferencia entre el impuesto a cargo e
 
 El porcentaje de descuento aplicable en el impuesto de industria y comercio de cada año será el siguiente:
 
-| Monto de la inversión en UVT Desde 88.073 hasta 880.728 | Porcentaje descuento 60% |
+| Monto de la inversión en UVT | Porcentaje descuento |
 |---|---|
+| Desde 88.073 hasta 880.728 | 60% |
 | Más de 880.728 | 80% |
 
 Parágrafo 1º. La Administración Distrital, a través de la instancia definida para este fin, deberá decidir sobre la aprobación del proyecto de inversión a más tardar el 30 de junio de 2028.
@@ -76,8 +172,86 @@ a) No haber sido contribuyente del Impuesto de Industria y Comercio en el Distri
 
 b) Realizar con posterioridad a la entrada en vigencia del presente acuerdo, cualquiera de las siguientes actividades en el Distrito Capital:
 
-| Sector de actividad Industria Servicios Servicio Comercio | Descripción Fabricación de vehículos automotores y sus motores Fabricación de carrocerías para vehículos automotores; fabricación de remolques y semirremolques Fabricación de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores Fabricación de locomotoras y de material rodante para ferrocarriles Fabricación de aeronaves, naves espaciales y de maquinaria conexa Fabricación de vehículos militares de combate Fabricación de motocicletas Procesamiento y conservación de carne y productos cárnicos Elaboración de alimentos preparados para animales Fabricación de sustancias y productos químicos básicos Fabricación de otros productos químicos n.c.p. Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso farmacéutico Fabricación de componentes y tableros electrónicos Fabricación de computadoras y de equipo periférico Fabricación de equipos de comunicación Fabricación de aparatos electrónicos de consumo Fabricación de motores, generadores y transformadores eléctricos Fabricación de aparatos de distribución y control de la energía eléctrica Fabricación de pilas, baterías y acumuladores eléctricos Fabricación de hilos y cables eléctricos y de fibra óptica Fabricación de dispositivos de cableado Fabricación de equipos eléctricos de iluminación Fabricación de aparatos de uso doméstico Fabricación de otros tipos de equipo eléctrico n.c.p. Fabricación de equipos de potencia hidráulica y neumática Fabricación de otras bombas, compresores, grifos y válvulas Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión Fabricación de hornos, hogares y quemadores industriales Fabricación de maquinaria y equipo de oficina (excepto computadoras y equipo periférico) Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p. Fabricación de maquinaria para la elaboración de alimentos, bebidas y tabaco Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p. Otras industrias manufactureras n.c.p. Actividades de desarrollo de sistemas informáticos (planificación, análisis, diseño, programación, pruebas) Actividades de consultoría informática y actividades de administración de instalaciones informáticas Otras actividades de tecnologías de información y actividades de servicios informáticos Procesamiento de datos, alojamiento (hosting) y actividades relacionadas Portales web Otras actividades de servicios de información n.c.p. Transporte aéreo nacional de pasajeros Transporte aéreo internacional de pasajeros Transporte aéreo nacional de carga Transporte aéreo internacional de carga Almacenamiento y depósito Actividades de estaciones, vías y servicios complementarios para el transporte terrestre Actividades de aeropuertos, servicios de navegación aérea y demás actividades conexas al transporte aéreo Manipulación de carga Otras actividades complementarias al transporte Mantenimiento y reparación especializado de equipo de transporte, excepto los vehículos automotores, motocicletas y bicicletas Mantenimiento y reparación especializado de productos elaborados en metal Mantenimiento y reparación especializado de maquinaria y equipo Mantenimiento y reparación especializado de equipo electrónico y óptico Mantenimiento y reparación especializado de equipo eléctrico Mantenimiento y reparación de otros tipos de equipos y sus componentes n.c.p. Instalación especializada de maquinaria y equipo industrial Actividades postales nacionales Actividades de mensajería Alojamiento en hoteles Alojamiento en apartahoteles Otros tipos de alojamientos para visitantes Otros tipos de alojamiento n.c.p. Catering para eventos Actividades de las agencias de viaje Actividades de operadores turísticos Organización de convenciones y eventos comerciales Transporte de pasajeros Transporte mixto Transporte de carga por carretera Transporte por tuberías Actividades combinadas de servicios administrativos de oficina Formación para el trabajo Otros tipos de educación n.c.p. Actividades de apoyo a la educación Educación técnica profesional Educación tecnológica Educación de instituciones universitarias o de escuelas tecnológicas Educación de universidades Comercio al por menor realizado a través de internet |
+| Sector de actividad | Descripción |
 |---|---|
+| Industria | Fabricación de vehículos automotores y sus motores |
+| Industria | Fabricación de carrocerías para vehículos automotores; fabricación de remolques y semirremolques |
+| Industria | Fabricación de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores |
+| Industria | Fabricación de locomotoras y de material rodante para ferrocarriles |
+| Industria | Fabricación de aeronaves, naves espaciales y de maquinaria conexa |
+| Industria | Fabricación de vehículos militares de combate |
+| Industria | Fabricación de motocicletas |
+| Industria | Procesamiento y conservación de carne y productos cárnicos |
+| Industria | Elaboración de alimentos preparados para animales |
+| Industria | Fabricación de sustancias y productos químicos básicos |
+| Industria | Fabricación de otros productos químicos n.c.p. |
+| Industria | Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso farmacéutico |
+| Industria | Fabricación de componentes y tableros electrónicos |
+| Industria | Fabricación de computadoras y de equipo periférico |
+| Industria | Fabricación de equipos de comunicación |
+| Industria | Fabricación de aparatos electrónicos de consumo |
+| Industria | Fabricación de motores, generadores y transformadores eléctricos |
+| Industria | Fabricación de aparatos de distribución y control de la energía eléctrica |
+| Industria | Fabricación de pilas, baterías y acumuladores eléctricos |
+| Industria | Fabricación de hilos y cables eléctricos y de fibra óptica |
+| Industria | Fabricación de dispositivos de cableado |
+| Industria | Fabricación de equipos eléctricos de iluminación |
+| Industria | Fabricación de aparatos de uso doméstico |
+| Industria | Fabricación de otros tipos de equipo eléctrico n.c.p. |
+| Industria | Fabricación de equipos de potencia hidráulica y neumática |
+| Industria | Fabricación de otras bombas, compresores, grifos y válvulas |
+| Industria | Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión |
+| Industria | Fabricación de hornos, hogares y quemadores industriales |
+| Industria | Fabricación de maquinaria y equipo de oficina (excepto computadoras y equipo periférico) |
+| Industria | Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p. |
+| Industria | Fabricación de maquinaria para la elaboración de alimentos, bebidas y tabaco |
+| Industria | Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p. |
+| Industria | Otras industrias manufactureras n.c.p. |
+| Servicios | Actividades de desarrollo de sistemas informáticos (planificación, análisis, diseño, programación, pruebas) |
+| Servicios | Actividades de consultoría informática y actividades de administración de instalaciones informáticas |
+| Servicios | Otras actividades de tecnologías de información y actividades de servicios informáticos |
+| Servicios | Procesamiento de datos, alojamiento (hosting) y actividades relacionadas |
+| Servicios | Portales web |
+| Servicios | Otras actividades de servicios de información n.c.p. |
+| Servicios | Transporte aéreo nacional de pasajeros |
+| Servicios | Transporte aéreo internacional de pasajeros |
+| Servicios | Transporte aéreo nacional de carga |
+| Servicios | Transporte aéreo internacional de carga |
+| Servicios | Almacenamiento y depósito |
+| Servicios | Actividades de estaciones, vías y servicios complementarios para el transporte terrestre |
+| Servicios | Actividades de aeropuertos, servicios de navegación aérea y demás actividades conexas al transporte aéreo |
+| Servicios | Manipulación de carga |
+| Servicios | Otras actividades complementarias al transporte |
+| Servicios | Mantenimiento y reparación especializado de equipo de transporte, excepto los vehículos automotores, motocicletas y bicicletas |
+| Servicio | Mantenimiento y reparación especializado de productos elaborados en metal |
+| Servicio | Mantenimiento y reparación especializado de maquinaria y equipo |
+| Servicio | Mantenimiento y reparación especializado de equipo electrónico y óptico |
+| Servicio | Mantenimiento y reparación especializado de equipo eléctrico |
+| Servicio | Mantenimiento y reparación de otros tipos de equipos y sus componentes n.c.p. |
+| Servicio | Instalación especializada de maquinaria y equipo industrial |
+| Servicio | Actividades postales nacionales |
+| Servicio | Actividades de mensajería |
+| Servicio | Alojamiento en hoteles |
+| Servicio | Alojamiento en apartahoteles |
+| Servicio | Otros tipos de alojamientos para visitantes |
+| Servicio | Otros tipos de alojamiento n.c.p. |
+| Servicio | Catering para eventos |
+| Servicio | Actividades de las agencias de viaje |
+| Servicio | Actividades de operadores turísticos |
+| Servicio | Organización de convenciones y eventos comerciales |
+| Servicio | Transporte de pasajeros |
+| Servicio | Transporte mixto |
+| Servicio | Transporte de carga por carretera |
+| Servicio | Transporte por tuberías |
+| Servicio | Actividades combinadas de servicios administrativos de oficina |
+| Servicio | Formación para el trabajo |
+| Servicio | Otros tipos de educación n.c.p. |
+| Servicio | Actividades de apoyo a la educación |
+| Servicio | Educación técnica profesional |
+| Servicio | Educación tecnológica |
+| Servicio | Educación de instituciones universitarias o de escuelas tecnológicas |
+| Servicio | Educación de universidades |
+| Comercio | Comercio al por menor realizado a través de internet |
 
 c) Presentar, ante la instancia que defina la Administración Distrital, a más tardar el 30 de junio de 2035 un proyecto de inversión en activos fijos productivos, para el desarrollo de una o más de las actividades señaladas en el literal b) de este numeral, de acuerdo con los requisitos y términos que para el efecto reglamente la Administración Distrital.
 
@@ -87,9 +261,8 @@ Cumplido lo anterior, el contribuyente podrá aplicar en sus declaraciones tribu
 
 El porcentaje de exención en el Impuesto de Industria y Comercio (ICA) estará determinado por el monto de la inversión realizada y la cantidad de nuevos empleos formales generados. Los empleos exigidos como condición para acceder a la exención deberán mantenerse durante todo el período de vigencia de esta; de lo contrario, se perderá el porcentaje correspondiente de exención en el año respectivo.
 
-| Monto de la inversión en UVT | Requisito de empleos | Años de la exención | Años de la exención | Años de la exención | Años de la exención | Años de la exención | Años de la exención | Años de la exención | Años de la exención | Años de la exención | Años de la exención |
+| Monto de la inversión en UVT | Requisito de empleos | Año 1 | Año 2 | Año 3 | Año 4 | Año 5 | Año 6 | Año 7 | Año 8 | Año 9 | Año 10 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Monto de la inversión en UVT | Requisito de empleos | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 | Desde de 352.291 hasta 2.642.185 | Al menos 30 empleos directos | 100% | 90% | 80% | 70% | 60% | 50% | 40% | 30% | 20% | 10% |
 | Más de 2.642.185 | Al menos 200 empleos directos | 100% | 100% | 100% | 100% | 100% | 80% | 60% | 40% | 20% | 10% |
 
@@ -115,8 +288,9 @@ El porcentaje de la exención en el Impuesto Predial Unificado será el siguient
 
 **Exención**
 
-| Año Predial  | 1 – 5 100% | 6 80% | 7 60% | 8 40% | 9 20% | 10 10% |
+| Año | 1 – 5 | 6 | 7 | 8 | 9 | 10 |
 |---|---|---|---|---|---|---|
+| Predial | 100% | 80% | 60% | 40% | 20% | 10% |
 
 3. Impuesto de Delineación Urbana
 

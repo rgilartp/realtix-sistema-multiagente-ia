@@ -506,8 +506,9 @@ El texto original del artículo era el siguiente:
 
 Artículo 3. Tarifas del impuesto de industria y comercio. Las tarifas del impuesto de industria y comercio según la actividad son las siguientes y serán aplicables a partir de la entrada en vigencia del presente Acuerdo:
 
-| a. Actividades Industriales | Tarifa 2002 (Por mil) | Tarifa 2003 y siguientes (Por mil) |
+| a. Actividades Industriales | Tarifa 2002 | Tarifa 2003 y |
 |---|---|---|
+|  | (Por mil) | siguientes (Por mil) |
 | Producción de alimentos, excepto bebidas; producción de calzado y prendas de vestir. | 3,6 | 4,14 |
 | Fabricación de productos primarios de hierro y acero; fabricación de material de transporte. | 6,0 | 6,9 |
 | Edición de libros | 8 | 8 |

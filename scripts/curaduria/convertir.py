@@ -67,45 +67,105 @@ def _es_valor(celda: str) -> bool:
     return bool(texto) and not _ANIO.match(texto) and bool(_VALOR.match(texto))
 
 
+_POR_MIL = re.compile(r"\d+(?:[.,]\d+)?\s*%o\b")  # «16%o»: tarifa de tablas sin encabezado
+_FORMATO = re.compile(r"[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]")
+
+
 def _limpiar_celda(texto: str) -> str:
+    texto = _FORMATO.sub("", texto).replace(_SEPARADOR, " ")
     texto = re.sub(r"\s+", " ", texto).strip().replace("|", "/")
     if re.fullmatch(r"\d[\d ]* ?, ?\d+|\d+ \d+", texto) and " " in texto:
         texto = texto.replace(" ", "")  # «1 1,04» y «6 ,9»: la fuente parte las cifras
     return re.sub(r"^,(\d+,\d+)$", r"\1", texto)  # «,9,66»
 
 
+_SEPARADOR = "\u2063"  # marca de la fuente: dos cifras separadas por espacios duros en una celda
+_SEPARADAS = re.compile(rf"\s*{_SEPARADOR}\s*")
+
+
+class _Grilla:
+    """Filas de una tabla con rowspan y colspan expandidos.
+
+    `filas` repite el texto de cada celda combinada; `continuacion` marca las posiciones que solo
+    existen porque una celda ocupa varias columnas; `cabecera[i]` guarda el rowspan más alto de la
+    fila i y si trae una celda combinada entre columnas que no sea un subtítulo.
+    """
+
+    def __init__(self, tabla) -> None:
+        ocupadas: dict[tuple[int, int], tuple[str, bool]] = {}
+        info: dict[int, tuple[int, bool]] = {}
+        for fila, tr in enumerate(tabla.find_all("tr")):
+            columna, alto, combinada = 0, 1, False
+            celdas = tr.find_all(["td", "th"])
+            textos = {_limpiar_celda(c.get_text(" ", strip=True)) for c in celdas} - {""}
+            for celda in celdas:
+                while (fila, columna) in ocupadas:
+                    columna += 1
+                texto = _limpiar_celda(celda.get_text(" ", strip=True))
+                filas_ocupadas = max(int(celda.get("rowspan") or 1), 1)
+                columnas_ocupadas = max(int(celda.get("colspan") or 1), 1)
+                partes = _SEPARADAS.split(celda.get_text(" ", strip=True))
+                if len(partes) == columnas_ocupadas > 1:  # dos valores en una celda combinada
+                    for dc, parte in enumerate(partes):
+                        ocupadas.setdefault((fila, columna + dc), (_limpiar_celda(parte), False))
+                    columna += columnas_ocupadas
+                    continue
+                alto = max(alto, filas_ocupadas)
+                combinada = combinada or (columnas_ocupadas > 1 and len(textos) > 1)
+                for df in range(filas_ocupadas):
+                    for dc in range(columnas_ocupadas):
+                        ocupadas.setdefault((fila + df, columna + dc), (texto, dc > 0))
+                columna += columnas_ocupadas
+            info[fila] = (alto, combinada)
+        self.filas: list[list[str]] = []
+        self.continuacion: list[list[bool]] = []
+        self.cabecera: list[tuple[int, bool]] = []
+        if not ocupadas:
+            return
+        largo, ancho = max(f for f, _ in ocupadas) + 1, max(c for _, c in ocupadas) + 1
+        for f in range(largo):
+            fila = [ocupadas.get((f, c), ("", False)) for c in range(ancho)]
+            if any(texto for texto, _ in fila):
+                self.filas.append([texto for texto, _ in fila])
+                self.continuacion.append([cont for _, cont in fila])
+                self.cabecera.append(info.get(f, (1, False)))
+        self._unir_filas_partidas()
+
+    def _unir_filas_partidas(self) -> None:
+        """Une «…constructores y» con «urbanizadores; …»: la fuente parte el rótulo en dos filas."""
+        i = 0
+        while i < len(self.filas) - 1:
+            fila, siguiente = self.filas[i], self.filas[i + 1]
+            sola = fila[0] and not any(fila[1:])
+            if sola and siguiente[0][:1].islower() and any(siguiente[1:]):
+                siguiente[0] = f"{fila[0]} {siguiente[0]}"
+                for lista in (self.filas, self.continuacion, self.cabecera):
+                    del lista[i]
+            else:
+                i += 1
+
+
 def _grilla(tabla) -> list[list[str]]:
     """Filas de la tabla con rowspan y colspan expandidos, repitiendo el valor de la celda."""
-    ocupadas: dict[tuple[int, int], str] = {}
-    for fila, tr in enumerate(tabla.find_all("tr")):
-        columna = 0
-        for celda in tr.find_all(["td", "th"]):
-            while (fila, columna) in ocupadas:
-                columna += 1
-            texto = _limpiar_celda(celda.get_text(" ", strip=True))
-            filas_ocupadas = max(int(celda.get("rowspan") or 1), 1)
-            columnas_ocupadas = max(int(celda.get("colspan") or 1), 1)
-            for df in range(filas_ocupadas):
-                for dc in range(columnas_ocupadas):
-                    ocupadas.setdefault((fila + df, columna + dc), texto)
-            columna += columnas_ocupadas
-    if not ocupadas:
-        return []
-    alto, ancho = max(f for f, _ in ocupadas) + 1, max(c for _, c in ocupadas) + 1
-    grilla = [[ocupadas.get((f, c), "") for c in range(ancho)] for f in range(alto)]
-    return [fila for fila in grilla if any(fila)]
+    return _Grilla(tabla).filas
 
 
-def _colapsar_columnas_gemelas(filas: list[list[str]]) -> list[list[str]]:
-    """Quita las columnas vacías y las idénticas a la anterior en todas las filas (maquetación)."""
+def _columnas_utiles(filas: list[list[str]]) -> list[int]:
+    """Columnas que no están vacías ni son idénticas a la anterior en todas las filas."""
     ancho = max(len(f) for f in filas)
     filas = [f + [""] * (ancho - len(f)) for f in filas]
-    conservar = [
+    return [
         c
         for c in range(ancho)
         if any(f[c] for f in filas) and (c == 0 or any(f[c] != f[c - 1] for f in filas))
     ]
-    return [[f[c] for c in conservar] for f in filas]
+
+
+def _colapsar_columnas_gemelas(filas: list[list[str]]) -> list[list[str]]:
+    """Quita las columnas vacías y las idénticas a la anterior en todas las filas (maquetación)."""
+    conservar = _columnas_utiles(filas)
+    ancho = max(len(f) for f in filas)
+    return [[(f + [""] * (ancho - len(f)))[c] for c in conservar] for f in filas]
 
 
 def _alinear_fila_corta(fila: list[str], ancho: int) -> list[str]:
@@ -116,15 +176,23 @@ def _alinear_fila_corta(fila: list[str], ancho: int) -> list[str]:
     return fila if primero is None else [*fila[:primero], "", *fila[primero:]]
 
 
+def _unir_celdas(rotulo: str, sub: str) -> str:
+    if re.fullmatch(r"\d+", sub) and re.match(r"(?i)años\b", rotulo):
+        return f"Año {sub}"  # «Años de la exención» sobre «1»…«10»
+    return f"{rotulo} {sub}"
+
+
 def _unir_encabezados(encabezados: list[list[str]]) -> list[str]:
     """Une las filas de encabezado en una: «BASE GRAVABLE» y «DESDE» dan «BASE GRAVABLE DESDE»."""
     unidos = []
     for columna in zip(*encabezados, strict=True):
         partes: list[str] = []
+        texto = ""
         for parte in columna:
             if parte and parte not in partes:
+                texto = _unir_celdas(texto, parte) if texto else parte
                 partes.append(parte)
-        unidos.append(" ".join(partes))
+        unidos.append(texto)
     return unidos
 
 
@@ -133,20 +201,41 @@ def _tabla_a_lineas(encabezado: list[str], filas: list[list[str]]) -> list[str]:
     return lineas + ["| " + " | ".join(f) + " |" for f in filas]
 
 
+def _filas_de_encabezado(info: list[tuple[int, bool]], filas: list[list[str]]) -> int:
+    """Filas del encabezado según la estructura: rowspan y celdas combinadas en la primera fila.
+
+    Una celda combinada entre columnas solo anuncia un segundo nivel si la fila siguiente no trae
+    valores: si los trae, es una fila de datos y la fuente armó mal el encabezado.
+    """
+    total = len(filas)
+    n, i = 1, 0
+    while i < n and i < total:
+        alto, combinada = info[i]
+        segundo_nivel = i == 0 and combinada and total > 1
+        if segundo_nivel and not any(_es_valor(c) for c in filas[1]):
+            n = max(n, 2)
+        n = max(n, i + alto)
+        i += 1
+    return min(n, max(total - 1, 1))
+
+
 def tabla_markdown(tabla) -> str | None:
     """Pasa una tabla de datos de HTML a Markdown; devuelve None si es de maquetación.
 
-    Expande rowspan y colspan, une las filas de encabezado en una, parte la tabla en las filas de
-    subtítulo («Predios residenciales rurales») y vuelve a poner cada subtítulo sobre su tabla.
+    El encabezado es la primera fila; solo suma filas cuando la primera trae celdas combinadas
+    (rowspan, o colspan sobre un segundo nivel). Las filas de subtítulo («Predios residenciales
+    rurales») parten la tabla y cada subtítulo vuelve a ponerse sobre su tabla. En las filas de
+    datos, la celda que ocupa varias columnas lleva el texto en la primera y «—» en las demás.
     """
-    filas = _grilla(tabla)
+    grilla = _Grilla(tabla)
+    filas = grilla.filas
     if not filas:
         return None
     if len(filas) < 2 or max(sum(bool(c) for c in f) for f in filas) < 2:
         return None
     ancho = max(len(f) for f in filas)
-    segmentos: list[tuple[str | None, list[list[str]]]] = []
-    for fila in filas:
+    segmentos: list[tuple[str | None, list[int]]] = []
+    for i, fila in enumerate(filas):
         if len({c for c in fila if c}) == 1 and sum(bool(c) for c in fila) > 1:
             segmentos.append((fila[0], []))  # fila de subtítulo: todas las celdas iguales
         elif fila == [fila[0]] + [""] * (ancho - 1) and not segmentos:
@@ -154,28 +243,47 @@ def tabla_markdown(tabla) -> str | None:
         else:
             if not segmentos:
                 segmentos.append((None, []))
-            segmentos[-1][1].append(fila)
+            segmentos[-1][1].append(i)
     bloques: list[str] = []
     encabezado_previo: list[str] | None = None
-    for subtitulo, cuerpo in segmentos:
-        if not cuerpo:
+    for posicion, (subtitulo, indices) in enumerate(segmentos):
+        if not indices:
             if subtitulo:
                 bloques.append(f"**{subtitulo}**")
             continue
-        cuerpo = _colapsar_columnas_gemelas(cuerpo)
-        n = next((i for i, f in enumerate(cuerpo) if any(_es_valor(c) for c in f)), len(cuerpo))
-        if n == 0 and encabezado_previo is not None:
-            encabezado, datos = encabezado_previo, cuerpo
+        cuerpo = [filas[i] for i in indices]
+        conservar = _columnas_utiles(cuerpo)
+        cuerpo = [[(f + [""] * (ancho - len(f)))[c] for c in conservar] for f in cuerpo]
+        guiones = [
+            [(grilla.continuacion[i] + [False] * ancho)[c] for c in conservar] for i in indices
+        ]
+        info = [grilla.cabecera[i] for i in indices]
+        con_valores = any(_es_valor(c) for f in cuerpo for c in f)
+        nuevo = encabezado_previo is None or (
+            not any(_es_valor(c) for c in cuerpo[0]) and con_valores
+        )
+        sin_encabezado = nuevo and any(_POR_MIL.search(c) for c in cuerpo[0])
+        n = _filas_de_encabezado(info, cuerpo) if nuevo and not sin_encabezado else 0
+        if sin_encabezado:
+            encabezado = [""] * len(cuerpo[0])
+        elif n:
+            encabezado = _unir_encabezados(cuerpo[:n])
+            if len(cuerpo) == n and any(s[1] for s in segmentos[posicion + 1 :]):
+                encabezado_previo = (
+                    encabezado  # solo el encabezado: los datos vienen tras el subtítulo
+                )
+                continue
         else:
-            n = max(n, 1)
-            encabezado, datos = _unir_encabezados(cuerpo[:n]), cuerpo[n:]
-            encabezado_previo = encabezado
-        etiquetas = {parte for parte in encabezado for parte in parte.split()}
-        datos = [
-            _alinear_fila_corta(f, len(encabezado))
-            for f in datos
-            if any(_es_valor(c) for c in f) or not all(p in etiquetas for c in f for p in c.split())
-        ]  # fuera las filas de encabezado repetidas en los cortes de página
+            encabezado = encabezado_previo or []
+        encabezado_previo = encabezado
+        etiquetas = {p for c in encabezado for p in c.split()}
+        datos = []
+        for fila, marca in zip(cuerpo[n:], guiones[n:], strict=True):
+            fila = [("—" if cont and c else c) for c, cont in zip(fila, marca, strict=True)]
+            if any(_es_valor(c) for c in fila) or not all(
+                p in etiquetas for c in fila for p in c.split()
+            ):  # fuera las filas de encabezado repetidas en los cortes de página
+                datos.append(_alinear_fila_corta(fila, len(encabezado)))
         bloque = "\n".join(_tabla_a_lineas(encabezado, datos))
         bloques.append(f"**{subtitulo}**\n\n{bloque}" if subtitulo else bloque)
     return "\n\n".join(bloques)
@@ -199,7 +307,10 @@ def _html_a_texto(contenido: bytes) -> str:
     hojas = [t for t in sopa.find_all("table") if t.find("table") is None]
     for nodo in sopa.find_all(string=True):  # los saltos del HTML son solo ajuste de línea
         if not isinstance(nodo, Comment):
-            nodo.replace_with(re.sub(r"\s+", " ", str(nodo).replace("\xa0", " ")))
+            texto = str(nodo)
+            if nodo.find_parent("td"):
+                texto = re.sub(r"\xa0{4,}", _SEPARADOR, texto)
+            nodo.replace_with(re.sub(r"\s+", " ", texto.replace("\xa0", " ")))
     for tabla in hojas:
         markdown = tabla_markdown(tabla)
         if markdown:
@@ -209,7 +320,7 @@ def _html_a_texto(contenido: bytes) -> str:
     for etiqueta in sopa.find_all(_BLOQUES):
         etiqueta.insert_before(NavigableString("\n"))
         etiqueta.insert_after(NavigableString("\n"))
-    return sopa.get_text("")
+    return sopa.get_text("").replace(_SEPARADOR, " ")
 
 
 def _leer(ruta) -> str:
@@ -230,6 +341,8 @@ _CARGO = re.compile(
 )
 _CARGO_SUELTO = re.compile(r"^(Presidente|Presidenta|Secretari[oa]|Alcalde|Alcaldesa|Director)\b")
 _NOMBRE = re.compile(r"^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ.'\- ]{5,}$")
+_ROTULO = re.compile(r"^(PAR[ÁA]GRAFO|ART[ÍI]CULO|T[ÍI]TULO|CAP[ÍI]TULO|SECCI[ÓO]N|TRANSITORIO)\b")
+_FECHA_DE_EXPEDICION = re.compile(r"^Dad[oa]\s+en\b")
 _PIE = re.compile(
     r"^(NOTA:|Aprobado por|Revisado por|Proyectado por|Disposiciones analizadas|ISSN|"
     r"Última actualización)",
@@ -250,15 +363,33 @@ def _es_firma(linea: str) -> bool:
     return bool(
         _CARGO.match(texto)
         or _PIE.match(texto)
-        or (_NOMBRE.match(texto) and len(texto.split()) >= 2)
+        or (_NOMBRE.match(texto) and len(texto.split()) >= 2 and not _ROTULO.match(texto))
+    )
+
+
+def _marca_el_cierre(linea: str) -> bool:
+    """Fórmula de cierre, fecha de expedición, cargo o pie: desde ahí puede haber firmas."""
+    texto = linea.strip()
+    return not texto.startswith("|") and bool(
+        _FORMULA.match(texto)
+        or _FECHA_DE_EXPEDICION.match(texto)
+        or _CARGO.match(texto)
+        or _PIE.match(texto)
     )
 
 
 def recortar_cierre(contenido: str) -> str:
-    """Conserva la fórmula de cierre y la fecha de expedición; quita las firmas y lo que sigue."""
+    """Conserva la fórmula de cierre y la fecha de expedición; quita las firmas y lo que sigue.
+
+    Solo busca firmas desde la fórmula de cierre, la fecha de expedición o la línea de un cargo:
+    antes de eso, una tabla o un rótulo en mayúsculas es texto de la norma.
+    """
     lineas = contenido.splitlines()
-    for i, linea in enumerate(lineas):
-        if i > 0 and _es_firma(linea):
+    cierre = next((i for i, linea in enumerate(lineas) if _marca_el_cierre(linea)), None)
+    if cierre is None:
+        return contenido
+    for i in range(max(cierre, 1), len(lineas)):
+        if _es_firma(lineas[i]):
             return "\n".join(lineas[:i]).rstrip()
     return contenido
 
@@ -268,8 +399,9 @@ def sin_titulos_finales(contenido: str) -> str:
     lineas = contenido.rstrip().splitlines()
     while len(lineas) > 1:
         ultima = lineas[-1].strip()
-        es_titulo = _DIVISION.match(ultima) or (
-            _TITULO_FINAL.match(ultima) and re.search(r"[A-ZÁÉÍÓÚÑ]{3}", ultima)
+        es_titulo = not _FORMULA.match(ultima) and (
+            _DIVISION.match(ultima)
+            or (_TITULO_FINAL.match(ultima) and re.search(r"[A-ZÁÉÍÓÚÑ]{3}", ultima))
         )
         if ultima and not es_titulo:
             break

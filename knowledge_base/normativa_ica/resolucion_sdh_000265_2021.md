@@ -493,4 +493,4 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 304 | 87101 | Actividades de atención residencial medical- izada de tipo general (excepto actividades de promoción y prevención que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.) | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 92001 | Actividades de juegos de destreza, habilidad, conocimiento y fuerza | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 93291 | Otras actividades recreativas y de esparcimiento n.c.p. (excepto juegos de suerte y azar, discotecas y similares) | 9,66 | 9,66 | 9,66 | 9,66 |
-| 304 | 5330 | Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones de contacto y que utilizan una red de domiciliarios | 10,14 | 10,14 | 10,63 | 11,04 |
+| 304 | 5330 | Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones de contacto y que utilizan una red de domiciliarios | 10,14 | — | 10,63 | 11,04 |

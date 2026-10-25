@@ -39,6 +39,3 @@ Artículo 3. Vigencia y derogatorias. El presente Acuerdo entrará en vigencia a
 PUBLÍQUESE Y CÚMPLASE
 
 Dado en Bogotá, D.C., a los treinta y uno (31) días del mes de octubre de 2003.
-
-| FERNANDO LOPEZ GUTIERREZ Presidente | MARIA ELENA CALVACHI Z. Secretaria General (E) |
-|---|---|

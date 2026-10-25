@@ -86,34 +86,53 @@ ARTÍCULO 24. IMPUESTO PREDIAL PARA LOS BIENES EN COPROPIEDAD. En los términos 
 
 ARTÍCULO 25. TARIFAS. En desarrollo de lo señalado en el artículo 4 de la Ley 44 de 1990, las tarifas del impuesto predial unificado, son las siguientes:
 
-| Rurales Rurales residenciales Rurales Institucionales ¿ Recreativo ¿ Zonas Verdes Metropolitanas Pequeña propiedad rural destinada a la producción agropecuaria Suburbanos Suburbanos residenciales | 16%o 5%o | (dieciséis por mil) (cinco por mil) |
+|  |  |  |
 |---|---|---|
+| Rurales | 16%o | (dieciséis por mil) |
+| Rurales residenciales | 16%o | (dieciséis por mil) |
+| Rurales Institucionales ¿ Recreativo ¿ Zonas Verdes Metropolitanas | 5%o | (cinco por mil) |
+| Pequeña propiedad rural destinada a la producción agropecuaria | 5%o | (cinco por mil) |
+| Suburbanos | 16%o | (dieciséis por mil) |
+| Suburbanos residenciales | 16%o | (dieciséis por mil) |
 
 Urbanos edificados residenciales estratos 1, 2 y 3
 
-| Hasta 70 metros cuadrados de construcción | 4%o (cuatro por mil) |
+|  |  |
 |---|---|
+| Hasta 70 metros cuadrados de construcción | 4%o (cuatro por mil) |
 | Más de 70 metros cuadrados de construcción | 5%o (cinco por mil) |
 
 Residenciales de los estratos 4, 5 y 6
 
-| Estrato 4 hasta 100 metros cuadrados de construcción Estrato 4 más de 100 y hasta 150 metros cuadrados de construcción Estrato 4 más de 150 metros cuadrados de construcción Estrato 5 y 6 hasta 220 metros cuadrados de construcción | 6%o (seis por mil) 7%o (siete por mil) |
+|  |  |
 |---|---|
+| Estrato 4 hasta 100 metros cuadrados de construcción | 6%o (seis por mil) |
+| Estrato 4 más de 100 y hasta 150 metros cuadrados de construcción | 6%o (seis por mil) |
+| Estrato 4 más de 150 metros cuadrados de construcción | 7%o (siete por mil) |
+| Estrato 5 y 6 hasta 220 metros cuadrados de construcción | 7%o (siete por mil) |
 
 Estrato 5 y 6 más de 220 metros cuadrados de construcción y hasta
 
-| 300 metros cuadrados de construcción Estrato 5 y 6 más de 300 metros cuadrados de construcción | 8%o (ocho por mil) 8.5%o (ocho y medio por mil) |
+|  |  |
 |---|---|
+| 300 metros cuadrados de construcción | 8%o (ocho por mil) |
+| Estrato 5 y 6 más de 300 metros cuadrados de construcción | 8.5%o (ocho y medio por mil) |
 
 Industriales
 
-| Alto Impacto Medio Impacto Bajo Impacto | 10%o (diez por mil) 9 %o (nueve por mil) 8.5 %o (ocho y medio por mil) |
+|  |  |
 |---|---|
+| Alto Impacto | 10%o (diez por mil) |
+| Medio Impacto | 9 %o (nueve por mil) |
+| Bajo Impacto | 8.5 %o (ocho y medio por mil) |
 
 Comerciales
 
-| Local Zonal Metropolitana | 8%o (ocho por mil) 8.5 %o (ocho y medio por mil) 9.5 %o (nueve y medio por mil) |
+|  |  |
 |---|---|
+| Local | 8%o (ocho por mil) |
+| Zonal | 8.5 %o (ocho y medio por mil) |
+| Metropolitana | 9.5 %o (nueve y medio por mil) |
 
 Entidades del sector financiero
 
@@ -133,8 +152,11 @@ Departamental y Nacional.
 
 Cívico Institucional
 
-| Local Zonal Metropolitano | 5%o (cinco por mil) 6%o (seis por mil) 6.5%o (seis y medio por mil) |
+|  |  |
 |---|---|
+| Local | 5%o (cinco por mil) |
+| Zonal | 6%o (seis por mil) |
+| Metropolitano | 6.5%o (seis y medio por mil) |
 
 Predios institucionales de propiedad de entidades educativas en donde
 
@@ -144,8 +166,10 @@ funcionen establecimientos aprobados por la Secretaría de Educación.
 
 Urbanizados no edificados y urbanizables no urbanizados
 
-| Con área igual o inferior a 100 metros cuadrados Con área superior a 100 metros cuadrados | 12%o (doce por mil) 33%o (treinta y tres por mil) |
+|  |  |
 |---|---|
+| Con área igual o inferior a 100 metros cuadrados | 12%o (doce por mil) |
+| Con área superior a 100 metros cuadrados | 33%o (treinta y tres por mil) |
 
 PARÁGRAFO PRIMERO. Las definiciones contenidas en el Acuerdo 6 de 1990 y sus Decretos Reglamentarios se aplicarán en lo pertinente.
 
