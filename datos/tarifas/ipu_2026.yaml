@@ -1,5 +1,6 @@
-fuente: Resolución SDH-000194 de 2025 (rangos del predial de 2026), arts. 1, 2 y 3; Acuerdos 780 de 2020, art. 3,
-  y 105 de 2003, art. 2
+fuente: 'Resolución SDH-000194 de 2025 (rangos del predial de 2026), arts. 1, 2 y 3; Acuerdos 780 de 2020, art.
+  3, y 105 de 2003, art. 2; tarifas preferenciales: Acuerdo 648 de 2016, art. 1, Acuerdo 780 de 2020, art. 3, parágrafo
+  2, y Decreto 639 de 2025, art. 207'
 url: https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf
 mes_consulta: octubre de 2026
 vigencia_desde: 2026
@@ -16,6 +17,64 @@ otras_categorias_no_transcritas: Las demás categorías de 2026 (industrial, fin
   tienen tarifa fija del art. 2 del Acuerdo 105 de 2003 en su texto anterior al Acuerdo 1084 (Acuerdo 648 de 2016,
   art. 1, y Acuerdo 897 de 2023, según la nota del Régimen Legal). No se transcriben porque el MVP usa residencial,
   comercial y lote.
+preferenciales:
+  fuentes:
+  - Acuerdo 648 de 2016, art. 1 (tarifas preferenciales de los residenciales de estratos 1, 2 y 3 con avalúo de
+    hasta 135 SMMLV)
+  - Acuerdo 780 de 2020, art. 3, parágrafo 2 («Se mantienen las tarifas preferenciales del 1 y 3 por mil, del Acuerdo
+    648 de 2016…»)
+  - Decreto 639 de 2025, art. 207 (estratos 1 y 2 con avalúo igual o menor a 16 SMMLV no declaran ni pagan)
+  aplica_a: Predios residenciales de los estratos 1, 2 y 3 cuyo avalúo catastral sea hasta 135 SMMLV
+  unidad_base: SMMLV
+  smmlv_del_anio_gravable:
+    anio: 2026
+    valor: 1750905
+    fuente: datos/uvt_smmlv.yaml (Decreto 1469 de 2025)
+  limites_en_pesos:
+    16_smmlv: 28014480
+    107_smmlv: 187346835
+    135_smmlv: 236372175
+  residencial:
+  - estratos:
+    - 1
+    - 2
+    desde: 16 smlmv
+    hasta: 107 smlmv
+    tarifa_por_mil: '1'
+    desde_valor: 16
+    unidad_desde: SMMLV
+    desde_exclusivo: true
+    hasta_valor: 107
+    unidad_hasta: SMMLV
+    unidad: SMMLV
+    nota: 'Decreto 639 de 2025, art. 207: en 2026, con 16 SMMLV o menos los estratos 1 y 2 no declaran ni pagan;
+      por eso la tarifa de 1 por mil empieza en «más de 16 SMMLV»'
+  - estratos:
+    - 1
+    - 2
+    desde: Más de 107 smlmv
+    hasta: 135 smlmv
+    tarifa_por_mil: '3'
+    desde_valor: 107
+    unidad_desde: SMMLV
+    desde_exclusivo: true
+    hasta_valor: 135
+    unidad_hasta: SMMLV
+    unidad: SMMLV
+  - estratos:
+    - 3
+    desde: '0'
+    hasta: 135 smlmv
+    tarifa_por_mil: '3'
+    desde_valor: 0
+    unidad_desde: pesos
+    desde_exclusivo: false
+    hasta_valor: 135
+    unidad_hasta: SMMLV
+  excluidos: 'Predios residenciales de estratos 1 y 2 con avalúo catastral igual o menor a 16 SMMLV: no están obligados
+    a declarar ni a pagar (Decreto 639 de 2025, art. 207).'
+  limite_de_16_smmlv: En 2026, «igual o menor» a 16 SMMLV no paga (Decreto 639 de 2025, art. 207); con más de 16
+    SMMLV paga 1 por mil.
 residencial_urbano:
 - desde: 0
   hasta: 194307000
