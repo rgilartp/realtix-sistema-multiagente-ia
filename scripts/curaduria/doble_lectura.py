@@ -26,32 +26,30 @@ def _lineas_ocr(pagina: int) -> list[str]:
     return ruta.read_text(encoding="utf-8").splitlines() if ruta.exists() else []
 
 
-def tarifas_regimen_legal() -> dict[str, str]:
-    """Lee del texto digital del Régimen Legal (art. 3 del Acuerdo 65) los pares CIIU y tarifa."""
-    lineas = (RAIZ / "knowledge_base/normativa_ica/acuerdo_65_2002.md").read_text(encoding="utf-8")
-    lineas = [x.strip() for x in lineas.splitlines() if x.strip()]
-    inicio = lineas.index("Tarifas por mil") + 1
-    fin = next(i for i, x in enumerate(lineas) if "tarifa progresiva" in x)
-    tramo = lineas[inicio:fin]
-    return {
-        a: b
-        for a, b in zip(tramo, tramo[1:], strict=False)
-        if re.fullmatch(r"\d{3,6}", a) and re.fullmatch(r"\d{1,2}", b)
+def _tablas_acuerdo_65() -> tuple[dict[str, str], dict[str, tuple[str, str, str]]]:
+    """Lee del texto digital del Régimen Legal (art. 3 del Acuerdo 65, con el art. 21 del 1084)."""
+    texto = (RAIZ / "knowledge_base/normativa_ica/acuerdo_65_2002.md").read_text(encoding="utf-8")
+    fijas = {
+        m.group(2): m.group(3)
+        for m in re.finditer(r"(?m)^\| (.+?) \| (\d{3,6}) \| (\d{1,2}) \|$", texto)
     }
+    progresivas = {
+        m.group(2): (m.group(3), m.group(4), m.group(5))
+        for m in re.finditer(
+            r"(?m)^\| (.+?) \| (\d{3,6}) \| (\d{1,2}) \| (\d{1,2}) \| (\d{1,2}) \|$", texto
+        )
+    }
+    return fijas, progresivas
+
+
+def tarifas_regimen_legal() -> dict[str, str]:
+    """CIIU y tarifa de las actividades de tarifa fija del art. 21 del Acuerdo 1084."""
+    return _tablas_acuerdo_65()[0]
 
 
 def progresivas_regimen_legal() -> dict[str, tuple[str, str, str]]:
-    """Lee del texto digital las actividades financieras de tarifa progresiva (CIIU y 3 tarifas)."""
-    lineas = (RAIZ / "knowledge_base/normativa_ica/acuerdo_65_2002.md").read_text(encoding="utf-8")
-    lineas = [x.strip() for x in lineas.splitlines() if x.strip()]
-    inicio = (
-        next(i for i, x in enumerate(lineas) if "tarifa progresiva" in x) + 7
-    )  # tras el encabezado
-    fin = next(i for i, x in enumerate(lineas) if i > inicio and x.startswith("Parágrafo."))
-    tramo = lineas[inicio:fin]
-    return {
-        tramo[i + 1]: (tramo[i + 2], tramo[i + 3], tramo[i + 4]) for i in range(0, len(tramo), 5)
-    }
+    """CIIU y tarifas (hasta 2027, 2028 y desde 2029) de las actividades financieras progresivas."""
+    return _tablas_acuerdo_65()[1]
 
 
 def comparar() -> list[dict]:
@@ -123,7 +121,7 @@ def tarifas_registro_distrital() -> dict[str, list[str]]:
 
 def comparar_resolucion_265() -> list[dict]:
     """Compara la tarifa de 2024 de cada CIIU entre la compilación de Hacienda y el Registro."""
-    from construir_ica_2026 import _filas_resolucion, _tarifa
+    from construir_ica_2026 import CIIU_CORREGIDO, _filas_resolucion, _tarifa
 
     _, filas = _filas_resolucion()
     registro = tarifas_registro_distrital()
@@ -132,7 +130,8 @@ def comparar_resolucion_265() -> list[dict]:
         if len(fila) < 6 or not all(re.fullmatch(r"[\d ,]+", x) for x in fila[3:]):
             continue
         codigo, hacienda = fila[1], _tarifa(fila[-1])
-        leida = registro.get(codigo)
+        leida = registro.get(codigo)  # los dos textos traen igual los códigos mal escritos
+        codigo = CIIU_CORREGIDO.get(codigo, (codigo,))[0]
         if leida is None:
             estado = "sin_lectura_en_el_registro"
         else:

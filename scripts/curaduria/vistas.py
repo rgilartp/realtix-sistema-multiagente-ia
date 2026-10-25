@@ -10,9 +10,12 @@ Uso: uv run python scripts/curaduria/vistas.py
 
 import html
 import json
+import re
 from collections.abc import Callable
+from decimal import Decimal
 
 import construir_ica_2026
+import contrastar_rangos
 import doble_lectura
 import pypdfium2
 import yaml
@@ -27,9 +30,11 @@ body{font:14px/1.4 system-ui,sans-serif;margin:16px;color:#1a1a1a}
 h1{font-size:20px}h2{font-size:16px;margin:24px 0 8px}
 .par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin:12px 0;
  padding-bottom:12px;border-bottom:1px solid #ccc}
+.par>div{min-width:0;overflow-x:auto}
 .par img{max-width:100%;border:1px solid #bbb}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
 table{border-collapse:collapse;width:100%;font-size:13px}
-td,th{border:1px solid #bbb;padding:3px 6px;text-align:left}
+td,th{border:1px solid #bbb;padding:3px 6px;text-align:left;overflow-wrap:anywhere}
 th{background:#eee}.dif{background:#ffe08a}.ok{background:#d9f2d9}.sin{background:#f6d5d5}
 .nota{background:#fff6d6;padding:6px 10px;border-left:4px solid #e0a800;margin:8px 0}
 @media (max-width:800px){.par{grid-template-columns:1fr}}
@@ -109,11 +114,30 @@ def _diferencias(datos: dict) -> str:
     )
 
 
+def _contraste_1084(*prefijos: str) -> str:
+    """Tabla con el resultado del contraste de los YAML con el texto digital del Acuerdo 1084."""
+    resultados = json.loads((SALIDA / "acuerdo_1084_contraste.json").read_text(encoding="utf-8"))
+    filas = [
+        [r["tabla"], r["filas_en_el_texto"], r["filas_en_el_yaml"], len(r["diferencias"])]
+        for r in resultados
+        if r["tabla"].startswith(prefijos)
+    ]
+    return tabla(
+        ["Tabla", "Filas en el texto digital", "Filas en el YAML", "Diferencias"],
+        filas,
+        lambda f: "ok" if f[3] == 0 else "dif",
+    )
+
+
+def _reglas(reglas: list[dict]) -> str:
+    return tabla(["Artículo", "Regla"], [[r["articulo"], r["regla"]] for r in reglas])
+
+
 def vista_sobretasa() -> None:
     d = _yaml("tarifas/sobretasa_alumbrado_2027.yaml")
     tarifas = tabla(
-        ["Categoría", "2027 a 2041", "Desde 2042"],
-        [[t["categoria"], t["de_2027_a_2041"], t["desde_2042"]] for t in d["tarifas_por_mil"]],
+        ["Categoría (texto del art. 14)", "2027 a 2041", "Desde 2042"],
+        [[t["descripcion"], t["de_2027_a_2041"], t["desde_2042"]] for t in d["tarifas_por_mil"]],
     )
     topes = tabla(
         ["Categoría", "Límite (UVT)"],
@@ -121,13 +145,18 @@ def vista_sobretasa() -> None:
         lambda f: "dif" if f[1] == 600 else "",
     )
     cuerpo = nota(
-        "Art. 14 (tarifas por mil) en la página 19 del PDF y art. 15 (topes) en la página 20."
+        "Art. 14 (tarifas por mil) en la página 19 del PDF y art. 15 (topes) en la página 20. El "
+        "texto digital del Régimen Legal coincide con el YAML fila por fila."
     ) + par(
         [imagen_ocr(19), imagen_ocr(20)],
         "<h2>Art. 14, tarifas por mil</h2>"
         + tarifas
         + "<h2>Art. 15, topes</h2>"
         + topes
+        + "<h2>Reglas (arts. 11, 13, 14 y 15)</h2>"
+        + _reglas(d["reglas"])
+        + "<h2>Contraste con el texto digital</h2>"
+        + _contraste_1084("sobretasa")
         + "<h2>Diferencias entre el OCR y la imagen</h2>"
         + _diferencias(d),
     )
@@ -138,10 +167,9 @@ def vista_ipu_2027() -> None:
     d = _yaml("tarifas/ipu_2027.yaml")
     pref = d["preferenciales"]
     cuerpo = nota(
-        "Art. 20 del Acuerdo 1084 en las páginas 21 a 25 del PDF. El texto digital del "
-        "Régimen Legal "
-        "(Acuerdo 105 de 2003, art. 2) coincide con las categorías no residenciales, las "
-        "preferenciales y los clubes."
+        "Art. 20 del Acuerdo 1084 en las páginas 21 a 25 del PDF. Las tablas se contrastaron, "
+        "fila por fila, con el texto digital del Régimen Legal; el resultado está al final de la "
+        "primera sección."
     )
     residencial = tabla(
         ["Desde ($)", "Hasta ($)", "Tarifa por mil"],
@@ -186,6 +214,10 @@ def vista_ipu_2027() -> None:
         "<h2>Preferenciales (SMMLV)</h2>"
         + preferenciales
         + f"<p>Excluidos: {html.escape(pref['excluidos'])}</p>"
+        + "<h2>Reglas del art. 20</h2>"
+        + _reglas(d["reglas"])
+        + "<h2>Contraste con el texto digital</h2>"
+        + _contraste_1084("predial")
         + "<h2>Diferencias entre el OCR y la imagen</h2>"
         + _diferencias(d),
     )
@@ -243,6 +275,11 @@ def vista_ica_2027() -> None:
         if numero in por_pagina:
             filas = [[f["ciiu"], f["actividad"], f["tarifa_por_mil"]] for f in por_pagina[numero]]
             derecha += tabla(["CIIU", "Actividad", "Tarifa por mil"], filas, marca)
+        if numero == 44:
+            derecha += "<h2>Demás actividades</h2>" + tabla(
+                ["Clase", "Tarifa por mil"],
+                [[f["clase"], f["tarifa_por_mil"]] for f in d["demas_actividades"]],
+            )
         progresivas_pagina = [f for f in progresivas if f["pagina_pdf"] == numero]
         if progresivas_pagina:
             derecha += "<h2>Tarifa progresiva (actividades financieras)</h2>" + tabla(
@@ -254,7 +291,19 @@ def vista_ica_2027() -> None:
                 marca_progresiva,
             )
         cuerpo += par([imagen_ocr(numero)], derecha)
-    pagina("ica_2027.html", "ICA 2027, Acuerdo 1084, art. 21", cuerpo)
+    simple = d["regimen_simple_2027"]
+    cuerpo += par(
+        [imagen_ocr(simple["pagina_pdf"])],
+        "<h2>ICA consolidado del régimen SIMPLE desde 2027 (art. 24)</h2>"
+        + nota(simple["lectura"])
+        + tabla(
+            ["Numeral del art. 908 del ET", "Tarifa por mil"],
+            [[t["numeral"], t["tarifa_por_mil"]] for t in simple["tarifas_por_mil"]],
+        )
+        + "<h2>Contraste con el texto digital</h2>"
+        + _contraste_1084("ICA consolidado"),
+    )
+    pagina("ica_2027.html", "ICA 2027, Acuerdo 1084, arts. 21 y 24", cuerpo)
 
 
 def _extracto(archivo: str, desde: str, hasta: str | None = None, largo: int = 3000) -> str:
@@ -274,16 +323,31 @@ def vista_ica_2026() -> None:
     filas = d["por_actividad"]
     pendientes = [f for f in filas if f["tarifa_por_mil"] == "pendiente"]
     decididas = [f for f in filas if "decision" in f]
-    resaltadas = {f["ciiu"] for f in pendientes + decididas}
+    _, filas_resolucion = construir_ica_2026._filas_resolucion()
+    res_2024 = {
+        construir_ica_2026.CIIU_CORREGIDO.get(f[1], (f[1],))[0]: construir_ica_2026._tarifa(f[-1])
+        for f in filas_resolucion
+        if len(f) >= 6 and all(re.fullmatch(r"[\d ,]+", x) for x in f[3:])
+    }
+
+    def distinta(f: dict) -> bool:
+        return f["tarifa_por_mil"] != "pendiente" and Decimal(f["tarifa_por_mil"]) != Decimal(
+            res_2024[f["ciiu"]]
+        )
+
+    cambiadas = [f for f in filas if distinta(f)]
+    resaltadas = {f["ciiu"] for f in pendientes + decididas + cambiadas}
     por_fuente = d["contraste"]["filas_por_fuente_de_la_tarifa"]
     coinciden = sum(1 for f in filas if lecturas.get(f["ciiu"]) == "coincide")
     cuerpo = nota(
         f"{len(filas)} actividades, {len(pendientes)} pendientes y {len(decididas)} decididas por "
         "Rodolfo. Segunda lectura de la resolución: "
         f"el Registro Distrital 7103 coincide en la tarifa de 2024 de {coinciden} filas. Verde: "
-        "coinciden las dos lecturas; amarillo: fila pendiente o decidida por Rodolfo; sin color: "
-        "la segunda lectura no pudo leer la fila."
+        "coinciden las dos lecturas; amarillo: la tarifa de 2026 es distinta de la columna de 2024 "
+        "de la resolución, o la fila quedó pendiente o la decidió Rodolfo; sin color: la segunda "
+        "lectura no pudo leer la fila."
     )
+    cuerpo += nota(d["criterio_de_la_resolucion_265"])
     cuerpo += nota(d["decision_de_rodolfo"]["decision"] + ".")
     cuerpo += nota(
         "Periodos que cubre esta tabla. Anuales: "
@@ -310,17 +374,25 @@ def vista_ica_2026() -> None:
     texto_derogadas = "<ul>" + "".join(
         f"<li>{html.escape(x)}</li>" for x in derogadas["fijaban_tarifas_del_ica_y_se_aplican_aqui"]
     )
-    texto_derogadas += f"</ul><p>{html.escape(derogadas['rigen_desde_y_hasta'])}</p>"
+    texto_derogadas += f"</ul><p>{html.escape(derogadas['rigen_para'])}</p>"
     texto_derogadas += (
         f"<p>No fijan tarifas: {html.escape(derogadas['no_fijan_tarifas_del_ica'])}</p>"
     )
     tabla_filas = tabla(
-        ["CIIU", "Actividad", "Grupo", "Tarifa por mil", "Fuente de la tarifa"],
+        [
+            "CIIU",
+            "Actividad",
+            "Grupo",
+            "Resolución 265, 2024",
+            "Tarifa 2026",
+            "Fuente de la tarifa",
+        ],
         [
             [
                 f["ciiu"],
                 f["actividad"],
                 f["grupo_resolucion_265"],
+                res_2024[f["ciiu"]],
                 f["tarifa_por_mil"],
                 f.get("fuente_tarifa", ""),
             ]
@@ -330,9 +402,16 @@ def vista_ica_2026() -> None:
             "dif" if f[0] in resaltadas else ("ok" if lecturas.get(f[0]) == "coincide" else "")
         ),
     )
+    demas = (
+        tabla(
+            ["Clase", "Tarifa por mil"],
+            [[f["clase"], f["tarifa_por_mil"]] for f in d["demas_actividades"]],
+        )
+        + f"<p>{html.escape(d['demas_actividades_fuente'])}</p>"
+    )
     izquierda = (
         "<h2>Art. 3 del Acuerdo 65, texto original</h2>"
-        + _extracto("acuerdo_65_2002.html", "El texto original del artículo era el", None, 3300)
+        + _extracto("acuerdo_65_2002.html", "El texto original del artículo era el", "\nArtículo 4")
         + "<h2>Acuerdo 780 de 2020, arts. 6 y 7</h2>"
         + _extracto("acuerdo_780_2020.html", "ARTÍCULO 6", "ARTÍCULO 8")
         + "<h2>Acuerdo 816 de 2021, art. 4</h2>"
@@ -343,6 +422,7 @@ def vista_ica_2026() -> None:
     cuerpo += (
         f'<div class="par"><div>{izquierda}</div><div><h2>Fuente de cada tarifa</h2>{resumen}'
         f"<h2>Filas que decidió Rodolfo</h2>{pend}"
+        f"<h2>Demás actividades</h2>{demas}"
         "<h2>Normas derogadas por el art. 52 del Acuerdo 1084</h2>"
         f"{texto_derogadas}<h2>ICA consolidado del régimen SIMPLE en 2026</h2>{tabla_simple}"
         "</div></div>"
@@ -369,17 +449,35 @@ def vista_ipu_2026() -> None:
             for f in d["no_residencial"]
         ],
     )
-    pdf = "resolucion_000194_2025_rangos.pdf"
-    paginas = [imagen_pdf(pdf, n, "resolucion_000194") for n in (1, 2)]
-    cuerpo = nota(
-        f"Contraste automático con el texto del PDF: {len(contraste['diferencias'])} diferencias "
-        f"en {contraste['rangos_en_el_pdf']} rangos. La resolución del PDF lleva el número "
-        "SDH-000194 "
-        "de 2025."
+    clubes = tabla(
+        ["Desde ($)", "Hasta ($)", "Tarifa por mil"],
+        [
+            [_valor(f["desde"]), _valor(f["hasta"]), f["tarifa_por_mil"]]
+            for f in d["clubes_destino_66"]
+        ],
+        lambda _: "ok" if not contraste["diferencias"] else "dif",
     )
+    pdf = "resolucion_000194_2025_rangos.pdf"
+    paginas = [
+        imagen_pdf(pdf, n, "resolucion_000194") for n in contrastar_rangos.paginas_con_tablas()
+    ]
+    filas_pdf = contraste["filas_en_el_pdf"]
+    cuerpo = nota(
+        "Contraste automático con el texto del PDF, fila por fila: "
+        f"{len(contraste['diferencias'])} diferencias en {filas_pdf['art_1']} rangos del art. 1, "
+        f"{filas_pdf['art_2']} del art. 2 y "
+        f"{filas_pdf['art_3']} del art. 3. La resolución del PDF lleva el número SDH-000194 de "
+        "2025. Se muestran las páginas del PDF que traen las tablas."
+    )
+    cuerpo += nota(d["otras_categorias_no_transcritas"])
     cuerpo += par(
         paginas,
-        "<h2>Residenciales urbanos</h2>" + residencial + "<h2>No residenciales</h2>" + no_res,
+        "<h2>Art. 1, residenciales urbanos</h2>"
+        + residencial
+        + "<h2>Art. 2, no residenciales</h2>"
+        + no_res
+        + "<h2>Art. 3, clubes (destino 66)</h2>"
+        + clubes,
     )
     pagina("ipu_2026.html", "Predial 2026, resolución de rangos", cuerpo)
 
@@ -404,23 +502,30 @@ def vista_regimenes() -> None:
     filas = [
         [a["anio_gravable"], a["fuente"], a["umbral_uvt"], a["base_del_umbral"]] for a in r["anios"]
     ]
+
+    def fuente(x: dict) -> str:
+        return f"{x['fuente']} ({x['url']})" if x.get("url") else x["fuente"]
+
     uvt = tabla(
-        ["Año", "UVT", "SMMLV", "Fuente"],
+        ["Año", "UVT", "Resolución de la DIAN", "SMMLV", "Decreto del salario mínimo"],
         [
             [
                 x["anio"],
                 x["valor"],
-                next(s["valor"] for s in u["smmlv"] if s["anio"] == x["anio"]),
-                x["fuente"],
+                fuente(x),
+                s["valor"],
+                fuente(s) + (f". {s['nota']}" if s.get("nota") else ""),
             ]
             for x in u["uvt"]
+            for s in u["smmlv"]
+            if s["anio"] == x["anio"]
         ],
-        lambda f: "sin" if "pendiente" in str(f[1]) or "pendiente" in str(f[2]) else "",
+        lambda f: "sin" if "pendiente" in str(f[1]) or "pendiente" in str(f[3]) else "",
     )
     cuerpo = nota(
         "Regímenes del ICA: art. 1 de la Resolución SDH-000195 (2026) y art. 26 del Acuerdo 1084 "
-        "(desde 2027, página 48 del PDF). UVT y SMMLV salen de fuentes secundarias y hay que "
-        "contrastarlos con la DIAN y el decreto."
+        "(desde 2027, página 48 del PDF). UVT y SMMLV salen de las resoluciones de la DIAN y de "
+        "los decretos del salario mínimo; los de 2027 aún no existen."
     )
     cuerpo += par(
         [imagen_ocr(48)],

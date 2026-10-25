@@ -3,9 +3,11 @@ body{font:14px/1.4 system-ui,sans-serif;margin:16px;color:#1a1a1a}
 h1{font-size:20px}h2{font-size:16px;margin:24px 0 8px}
 .par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin:12px 0;
  padding-bottom:12px;border-bottom:1px solid #ccc}
+.par>div{min-width:0;overflow-x:auto}
 .par img{max-width:100%;border:1px solid #bbb}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
 table{border-collapse:collapse;width:100%;font-size:13px}
-td,th{border:1px solid #bbb;padding:3px 6px;text-align:left}
+td,th{border:1px solid #bbb;padding:3px 6px;text-align:left;overflow-wrap:anywhere}
 th{background:#eee}.dif{background:#ffe08a}.ok{background:#d9f2d9}.sin{background:#f6d5d5}
 .nota{background:#fff6d6;padding:6px 10px;border-left:4px solid #e0a800;margin:8px 0}
 @media (max-width:800px){.par{grid-template-columns:1fr}}

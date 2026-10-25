@@ -1,0 +1,50 @@
+[
+ {
+  "tabla": "sobretasa, art. 14 (categoría y tarifas)",
+  "filas_en_el_texto": 4,
+  "filas_en_el_yaml": 4,
+  "diferencias": []
+ },
+ {
+  "tabla": "sobretasa, art. 15 (topes en UVT)",
+  "filas_en_el_texto": 2,
+  "filas_en_el_yaml": 2,
+  "diferencias": []
+ },
+ {
+  "tabla": "predial 2027, preferenciales urbanos y rurales con destino agropecuario",
+  "filas_en_el_texto": 3,
+  "filas_en_el_yaml": 3,
+  "diferencias": []
+ },
+ {
+  "tabla": "predial 2027, preferenciales residenciales rurales",
+  "filas_en_el_texto": 2,
+  "filas_en_el_yaml": 2,
+  "diferencias": []
+ },
+ {
+  "tabla": "predial 2027, residenciales generales",
+  "filas_en_el_texto": 32,
+  "filas_en_el_yaml": 32,
+  "diferencias": []
+ },
+ {
+  "tabla": "predial 2027, no residenciales",
+  "filas_en_el_texto": 14,
+  "filas_en_el_yaml": 14,
+  "diferencias": []
+ },
+ {
+  "tabla": "predial 2027, clubes campestres, sociales y deportivos",
+  "filas_en_el_texto": 10,
+  "filas_en_el_yaml": 10,
+  "diferencias": []
+ },
+ {
+  "tabla": "ICA consolidado del SIMPLE, art. 24",
+  "filas_en_el_texto": 5,
+  "filas_en_el_yaml": 5,
+  "diferencias": []
+ }
+]
