@@ -19,7 +19,7 @@ avalúo catastral aplicables a los predios residenciales urbanos, para efectos t
 la liquidación del impuesto predial unificado correspondiente al año gravable 2026, son los
 siguientes:
 Desde Hasta Tarifa por mil
- $ 0 $ 194.307.000 5,5
+$ 0 $ 194.307.000 5,5
 $ 194.307.001 $ 207.062.000 5,6
 $ 207.062.001 $ 238.375.000 5,7
 $ 238.375.001 $ 269.690.000 5,8
@@ -55,7 +55,6 @@ la tarifa del impuesto predial unificado”
 www.haciendabogota.gov.co
 Carrera 30 N.° 25-90 - Bogotá, D. C. Código postal: 111311
 PBX: (+57) 601 338 50 00 Información: Línea 195
-NIT. 899.999.061-9
 
 ## Artículo 2
 
@@ -132,7 +131,6 @@ la tarifa del impuesto predial unificado”
 www.haciendabogota.gov.co
 Carrera 30 N.° 25-90 - Bogotá, D. C. Código postal: 111311
 PBX: (+57) 601 338 50 00 Información: Línea 195
-NIT. 899.999.061-9
 
 ## Artículo 4
 

@@ -4,39 +4,27 @@ Fuente: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog
 
 ## Artículo 31
 
-ARTÍCULO 31. AUTORIZACIÓN LEGAL DEL IMPUESTO DE INDUSTRIA Y COMERCIO. El impuesto de industria y comercio a que se hace referencia en este decreto, comprende los impuestos de industria y comercio, y su complementario el impuesto de avisos y tableros, autorizados por la Ley 97 de 1913, la Ley 14 de 1983 y los Decretos Ley [1333](decreto_1333_1986.htm#1) de 1986 y 1421 de 1993.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
+ARTÍCULO 31. AUTORIZACIÓN LEGAL DEL IMPUESTO DE INDUSTRIA Y COMERCIO. El impuesto de industria y comercio a que se hace referencia en este decreto, comprende los impuestos de industria y comercio, y su complementario el impuesto de avisos y tableros, autorizados por la Ley 97 de 1913, la Ley 14 de 1983 y los Decretos Ley 1333 de 1986 y 1421 de 1993.
 
 ## Artículo 32
 
 ARTÍCULO 32. HECHO GENERADOR. El hecho generador del impuesto de industria y comercio está constituido por el ejercicio o realización directa o indirecta de cualquier actividad industrial, comercial o de servicios en la jurisdicción del Distrito Capital de Bogotá, ya sea que se cumplan de forma permanente u ocasional, en inmueble determinado, con establecimientos de comercio o sin ellos.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 33
 
 ARTÍCULO 33. ACTIVIDAD INDUSTRIAL. Es actividad industrial, la producción, extracción, fabricación, manufactura, confección, preparación, reparación, ensamblaje de cualquier clase de materiales y bienes y en general cualquier proceso de transformación por elemental que éste sea.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 34
 
 ARTÍCULO 34. ACTIVIDAD COMERCIAL. Es actividad comercial, la destinada al expendio, compraventa o distribución de bienes y mercancías, tanto al por mayor como al por menor y las demás actividades definidas como tales por el Código de Comercio, siempre y cuando no estén consideradas por la ley como actividades industriales o de servicios.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 35
 
 ARTÍCULO 35. ACTIVIDAD DE SERVICIO. Es actividad de servicio, toda tarea, labor o trabajo ejecutado por persona natural o jurídica o por sociedad de hecho, sin que medie relación laboral con quien lo contrata, que genere una contraprestación en dinero o en especie y que se concrete en la obligación de hacer, sin importar que en ella predomine el factor material o intelectual.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 36
 
 ARTÍCULO 36. PERÍODO GRAVABLE. Por período gravable se entiende el tiempo dentro del cual se causa la obligación tributaria del impuesto de industria y comercio y es bimestral.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 37
 
@@ -46,11 +34,9 @@ Se entienden percibidos en el Distrito Capital, los ingresos originados en activ
 
 Para el sector financiero, los ingresos operacionales generados por los servicios prestados a personas naturales o jurídicas, se entenderán realizados en el Distrito Capital, donde opera la principal, sucursal o agencia u oficina abierta al público. Para estos efectos, las entidades financieras deberán comunicar a la Superintendencia Bancaria el movimiento de sus operaciones discriminadas por las principales, sucursales, agencias u oficinas abiertas al público que operen en el Distrito Capital.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 38
 
-ARTÍCULO 38. CAUSACIÓN DEL IMPUESTO EN LAS EMPRESAS DE SERVICIOS PÚBLICOS DOMICILIARIOS. Para efectos del artículo [24-1](ley_0142_1994.htm#24-1) de la Ley 142 de 1994, el impuesto de industria y comercio en la prestación de los servicios públicos domiciliarios, se causa en el municipio en donde se preste el servicio al usuario final sobre el valor promedio mensual facturado.
+ARTÍCULO 38. CAUSACIÓN DEL IMPUESTO EN LAS EMPRESAS DE SERVICIOS PÚBLICOS DOMICILIARIOS. Para efectos del artículo 24-1 de la Ley 142 de 1994, el impuesto de industria y comercio en la prestación de los servicios públicos domiciliarios, se causa en el municipio en donde se preste el servicio al usuario final sobre el valor promedio mensual facturado.
 
 En los casos que a continuación se indica, se tendrán en cuenta las siguientes reglas:
 
@@ -63,8 +49,6 @@ En los casos que a continuación se indica, se tendrán en cuenta las siguientes
 PARÁGRAFO PRIMERO. En ningún caso los ingresos obtenidos por la prestación de los servicios públicos aquí mencionados, se gravarán más de una vez por la misma actividad.
 
 PARÁGRAFO SEGUNDO. Cuando el impuesto de industria y comercio causado por la prestación de los servicios públicos domiciliarios a que se refiere este artículo, se determine anualmente, se tomará el total de los ingresos mensuales promedio obtenidos en el año correspondiente. Para la determinación del impuesto por períodos inferiores a un año, se tomará el valor mensual promedio del respectivo período.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 39
 
@@ -80,7 +64,7 @@ d) La primera etapa de transformación realizada en predios rurales cuando se tr
 
 e) Las de tránsito de los artículos de cualquier género que atraviesen por el territorio del Distrito Capital, encaminados a un lugar diferente del Distrito, consagradas en la Ley 26 de 1904.
 
-f) La persona jurídica originada en la constitución de la propiedad horizontal, en relación con las actividades propias de su objeto social, de conformidad con lo establecido en el artículo [195](decreto_1333_1986.htm#195) del Decreto Ley 1333 de 1986.
+f) La persona jurídica originada en la constitución de la propiedad horizontal, en relación con las actividades propias de su objeto social, de conformidad con lo establecido en el artículo 195 del Decreto Ley 1333 de 1986.
 
 g) Los proyectos energéticos que presenten las entidades territoriales de las zonas no interconectadas del Sistema Eléctrico Nacional al Fondo Nacional de Regalías.
 
@@ -88,19 +72,13 @@ PARÁGRAFO PRIMERO. Cuando las entidades a que se refiere el literal c) de este 
 
 PARÁGRAFO SEGUNDO. Quienes realicen las actividades no sujetas de que trata el presente artículo no estarán obligados a registrarse, ni a presentar declaración del impuesto de industria y comercio.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 40
 
 ARTÍCULO 40. SUJETO ACTIVO. El Distrito Capital de Bogotá es el sujeto activo del impuesto de industria y comercio que se cause en su jurisdicción, y en él radican las potestades tributarias de administración, control, fiscalización, liquidación, discusión, recaudo, devolución y cobro.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 41
 
 ARTÍCULO 41. SUJETO PASIVO. Es sujeto pasivo del impuesto de industria y comercio la persona natural o jurídica o la sociedad de hecho, que realice el hecho generador de la obligación tributaria, consistente en el ejercicio de actividades industriales, comerciales o de servicios en la jurisdicción del Distrito Capital.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 42
 
@@ -111,8 +89,6 @@ Hacen parte de la base gravable, los ingresos obtenidos por rendimientos financi
 PARÁGRAFO PRIMERO. Para la determinación del impuesto de industria y comercio no se aplicarán los ajustes integrales por inflación.
 
 PARÁGRAFO SEGUNDO. Los contribuyentes que desarrollen actividades parcialmente exentas o no sujetas, deducirán de la base gravable de sus declaraciones, el monto de sus ingresos correspondiente con la parte exenta o no sujeta.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 43
 
@@ -133,8 +109,6 @@ Cuando las mercancías adquiridas por la sociedad de comercialización internaci
 ## Artículo 44
 
 ARTÍCULO 44. REQUISITOS PARA EXCLUIR DE LA BASE GRAVABLE INGRESOS PERCIBIDOS FUERA DEL DISTRITO CAPITAL. Para la procedencia de la exclusión de los ingresos obtenidos fuera del Distrito Capital en el caso de actividades comerciales y de servicios realizadas fuera de Bogotá, el contribuyente deberá demostrar mediante facturas de venta, soportes contables u otros medios probatorios el origen extraterritorial de los ingresos, tales como los recibos de pago de estos impuestos en otros municipios. En el caso de actividades industriales ejercidas en varios municipios, deberá acreditar el origen de los ingresos percibidos en cada actividad mediante registros contables separados por cada planta o sitio de producción, así como facturas de venta expedidas en cada municipio, u otras pruebas que permitan establecer la relación entre la actividad territorial y el ingreso derivado de ella.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 45
 
@@ -158,7 +132,7 @@ d) Rendimiento de inversiones de la sección de ahorros.
 
 e) Ingresos en operaciones con tarjeta de crédito.
 
-f) Ingresos varios, no integran la base, por la exclusión que de ellos hace el Decreto Ley [1333](decreto_1333_1986.htm#1) de 1986.
+f) Ingresos varios, no integran la base, por la exclusión que de ellos hace el Decreto Ley 1333 de 1986.
 
 2. Para las corporaciones financieras, los ingresos operacionales del bimestre representados en los siguientes rubros:
 
@@ -208,13 +182,9 @@ d) Otros rendimientos financieros.
 
 8. Para el Banco de la República, los ingresos operacionales del bimestre señalados en el numeral 1 de este artículo, con exclusión de los intereses percibidos por los cupos ordinarios y extraordinarios de crédito concedidos a los establecimientos financieros, otros cupos de crédito autorizados por la Junta Directiva del Banco, líneas especiales de crédito de fomento y préstamos otorgados al Gobierno Nacional.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 47
 
 ARTÍCULO 47. PAGO COMPLEMENTARIO PARA EL SECTOR FINANCIERO. Los establecimientos de crédito, instituciones financieras y compañías de seguros y reaseguros, de que tratan los artículos anteriores, que realicen sus operaciones en el Distrito Capital a través de más de un establecimiento, sucursal, agencia u oficina abierta al público, además de la cuantía que resulte liquidada como impuesto de industria y comercio, pagarán por cada unidad comercial adicional la suma equivalente a una sexta parte de diez mil pesos ($ 10.000) por bimestre. Valor año base 1983.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 48
 
@@ -224,13 +194,9 @@ Se entiende por margen bruto de comercialización de los combustibles, para el d
 
 Lo anterior se entiende sin perjuicio de la determinación de la base gravable respectiva, de conformidad con las normas generales, cuando los distribuidores desarrollen paralelamente otras actividades sometidas al impuesto.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 49
 
-ARTÍCULO 49. DISTRIBUCIÓN DE LOS INGRESOS EN EL TRANSPORTE TERRESTRE AUTOMOTOR.Cuando el transporte terrestre automotor se preste a través de vehículos de propiedad de terceros, diferentes de los de propiedad de la empresa transportadora, para propósitos de los impuestos nacionales y territoriales las empresas deberán registrar el ingreso así: Para el propietario del vehículo la parte que le corresponda en la negociación; para la empresa transportadora el valor que le corresponda una vez descontado el ingreso del propietario del vehículo.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
+ARTÍCULO 49. DISTRIBUCIÓN DE LOS INGRESOS EN EL TRANSPORTE TERRESTRE AUTOMOTOR. Cuando el transporte terrestre automotor se preste a través de vehículos de propiedad de terceros, diferentes de los de propiedad de la empresa transportadora, para propósitos de los impuestos nacionales y territoriales las empresas deberán registrar el ingreso así: Para el propietario del vehículo la parte que le corresponda en la negociación; para la empresa transportadora el valor que le corresponda una vez descontado el ingreso del propietario del vehículo.
 
 ## Artículo 50
 
@@ -242,17 +208,14 @@ El valor así obtenido se multiplicará por sesenta (60) y se le descontará el 
 
 La Dirección Distrital de Impuestos, ajustará anualmente con la variación porcentual del índice de precios al consumidor del año calendario anterior, el valor establecido como promedio diario por unidad de actividad, para aplicarlo en el año siguiente.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 51
 
-ARTÍCULO 51. PRESUNCIÓN DE INGRESOS POR UNIDAD EN CIERTAS ACTIVIDADES.Establécense las siguientes tablas de ingreso promedio mínimo diario por unidad de actividad:
+ARTÍCULO 51. PRESUNCIÓN DE INGRESOS POR UNIDAD EN CIERTAS ACTIVIDADES. Establécense las siguientes tablas de ingreso promedio mínimo diario por unidad de actividad:
 
 PARA LOS MOTELES, RESIDENCIAS Y HOSTALES:
 
-|  |  |
-| --- | --- |
 | CLASE | PROMEDIO DIARIO POR CAMA |
+|---|---|
 | A | $ 15.000 |
 | B | $ 8.000 |
 | C | $ 1.500 |
@@ -261,9 +224,8 @@ Son clase A, aquellos cuyo valor promedio ponderado de arriendo por cama es supe
 
 PARA LOS PARQUEADEROS:
 
-|  |  |
-| --- | --- |
 | CLASE | PROMEDIO DIARIO POR METRO CUADRADO |
+|---|---|
 | A | $ 202 |
 | B | $ 166 |
 | C | $ 152 |
@@ -272,9 +234,8 @@ Son clase A, aquellos cuya tarifa por vehículo - hora es superior a 0.25 salari
 
 PARA LOS BARES:
 
-|  |  |
-| --- | --- |
 | CLASE | PROMEDIO DIARIO POR SILLA O PUESTO |
+|---|---|
 | A | $ 8.000 |
 | B | $ 3.000 |
 | C | $ 1.500 |
@@ -283,9 +244,8 @@ Son clase A, los clasificados como grandes contribuyentes distritales del impues
 
 PARA LOS ESTABLECIMIENTOS QUE SE DEDIQUEN A LA EXPLOTACIÓN DE JUEGOS Y DE MÁQUINAS ELECTRÓNICAS:
 
-|  |  |
-| --- | --- |
 | CLASE | PROMEDIO DIARIO POR MÁQUINA |
+|---|---|
 | Tragamonedas | $ 8.000 |
 | Vídeo ficha | $ 4.000 |
 | Otros | $ 3.000 |
@@ -302,73 +262,63 @@ ARTÍCULO 52. PRESUNCIONES EN EL IMPUESTO DE INDUSTRIA Y COMERCIO. Para efectos 
 
 ARTÍCULO 53. TARIFAS DEL IMPUESTO DE INDUSTRIA Y COMERCIO. Las tarifas del impuesto de industria y comercio según la actividad son las siguientes y serán aplicables a partir de la entrada en vigencia del Acuerdo 65 de 2002:
 
-|  |  |  |
-| --- | --- | --- |
 | a. Actividades Industriales | Tarifa 2002 (Por mil) | Tarifa 2003 y siguientes (Por mil) |
+|---|---|---|
 | Producción de alimentos, excepto bebidas; producción de calzado y prendas de vestir. | 3,6 | 4,14 |
 | Fabricación de productos primarios de hierro y acero; fabricación de material de transporte. | 6,0 | 6,9 |
 | Edición de libros | 8 | 8 |
 | Demás actividades industriales | 9,6 | 11,04 |
-| b. Actividades Comerciales |  | |
+| b. Actividades Comerciales |  |  |
 | Venta de alimentos y productos agrícolas en bruto; venta de textos escolares y libros (incluye cuadernos escolares); venta de drogas y medicamentos | 3,6 | 4,14 |
 | Venta de madera y materiales para construcción; venta de automotores (incluidas motocicletas) | 6,0 | 6,9 |
 | Venta de cigarrillos y licores; venta de combustibles derivados del petróleo y venta de joyas. | 12 | 13,8 |
 | Demás actividades comerciales | 9,6 | 11,04 |
-| c. Actividades de servicios |  | |
+| c. Actividades de servicios |  |  |
 | Transporte; publicación de revistas, libros y periódicos; radiodifusión y programación de televisión. | 3,6 | 4,14 |
-| Consultoría profesional; servicios prestados por contratistas de construcción, constructores y |  | |
+| Consultoría profesional; servicios prestados por contratistas de construcción, constructores y |  |  |
 | urbanizadores; y presentación de películas en salas de cine. | 6,0 | 6,9 |
-| Servicios de restaurante, cafetería, bar, grill, discoteca y similares; servicios de hotel, motel, |  | |
+| Servicios de restaurante, cafetería, bar, grill, discoteca y similares; servicios de hotel, motel, |  |  |
 | hospedaje, amoblado y similares; servicio de casas de empeño y servicios de vigilancia. | 12 | 13,8 |
-| Servicios de educación prestados por establecimientos privados en los niveles de educación |  | |
+| Servicios de educación prestados por establecimientos privados en los niveles de educación |  |  |
 | inicial, preescolar, básica primaria, básica secundaria y media | 7 | 7 |
 | Demás actividades de servicios | 8,4 | 9,66 |
-| d. Actividades financieras |  | |
+| d. Actividades financieras |  |  |
 | Actividades financieras. | 9,6 | 11,04 |
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 54
 
 ARTÍCULO 54. TARIFAS POR VARIAS ACTIVIDADES. Cuando un mismo contribuyente realice varias actividades, ya sean varias comerciales, varias industriales, varias de servicios o industriales con comerciales, industriales con servicios, comerciales con servicios o cualquier otra combinación, a las que de conformidad con lo previsto en el presente decreto correspondan diversas tarifas, determinará la base gravable de cada una de ellas y aplicará la tarifa correspondiente. El resultado de cada operación se sumará para determinar el impuesto a cargo del contribuyente. La administración no podrá exigir la aplicación de tarifas sobre la base del sistema de actividad predominante.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 55
 
-ARTÍCULO 55. SISTEMA PREFERENCIAL DEL IMPUESTO DE INDUSTRIA, COMERCIO, AVISOS Y TABLEROS PARA LOS CONTRIBUYENTES DEL RÉGIMEN SIMPLIFICADO.De conformidad con lo previsto en el artículo 4 del Acuerdo 65 de 2002, hasta el 31 de diciembre de 2002, para los contribuyentes que cumplan con las condiciones para pertenecer al régimen simplificado del impuesto de industria, comercio, avisos y tableros, el valor de su impuesto será en salarios mínimos diarios vigentes, según sus ingresos netos anuales, conforme a la siguiente tabla:
+ARTÍCULO 55. SISTEMA PREFERENCIAL DEL IMPUESTO DE INDUSTRIA, COMERCIO, AVISOS Y TABLEROS PARA LOS CONTRIBUYENTES DEL RÉGIMEN SIMPLIFICADO. De conformidad con lo previsto en el artículo 4 del Acuerdo 65 de 2002, hasta el 31 de diciembre de 2002, para los contribuyentes que cumplan con las condiciones para pertenecer al régimen simplificado del impuesto de industria, comercio, avisos y tableros, el valor de su impuesto será en salarios mínimos diarios vigentes, según sus ingresos netos anuales, conforme a la siguiente tabla:
 
 RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS
 
-|  |  |  |
-| --- | --- | --- |
-| AÑO | DIARIOS | |
+| AÑO | DIARIOS |  |
+|---|---|---|
 | $ 0 | $ 15.000.000 | 0 |
 | $ 15.000.001 | $ 20.000.000 | 8 |
 | $ 20.000.001 | $ 30.000.000 | 12 |
 | $ 30.000.001 | $ 45.000.000 | 24 |
 | $ 45.000.001 | $ 60.000.000 | 36 |
-| $ 60.000.001 | $ 77.900.000                                            60 | |
+| $ 60.000.001 | $ 77.900.000 60 |  |
 
 Los contribuyentes previstos en el inciso anterior no presentarán declaración tributaria ni serán sujetos de retención y su impuesto será igual a la suma cancelada de acuerdo con el monto del pago aquí fijado en los recibos oficiales de pago que para el efecto prescriba la Dirección Distrital de Impuestos.
 
 PARÁGRAFO PRIMERO. Los contribuyentes del régimen simplificado podrán, si así lo prefieren, presentar una declaración anual de conformidad con el procedimiento previsto en la normatividad general vigente del impuesto de industria, comercio, avisos y tableros.
 
-PARÁGRAFO SEGUNDO. Los rangos de ingresos beneficiados con este tratamiento preferencial se ajustarán anualmente mediante resolución expedida por el Secretario de Hacienda Distrital, con base en la metodología legal vigente de ajuste de cifras. La cifra resultante será ajustada de acuerdo a lo establecido en el artículo [159](decreto_0807_1993.htm#159) del Decreto Distrital 807 de 1993.
+PARÁGRAFO SEGUNDO. Los rangos de ingresos beneficiados con este tratamiento preferencial se ajustarán anualmente mediante resolución expedida por el Secretario de Hacienda Distrital, con base en la metodología legal vigente de ajuste de cifras. La cifra resultante será ajustada de acuerdo a lo establecido en el artículo 159 del Decreto Distrital 807 de 1993.
 
 El Secretario de Hacienda mediante resolución ajustará al múltiplo de mil más cercano los valores absolutos a pagar en salarios mínimos diarios vigentes.
 
 PARÁGRAFO TERCERO. Los contribuyentes que perteneciendo al régimen simplificado obtengan en el año gravable ingresos superiores a los rangos establecidos para este régimen deberán presentar una declaración anual liquidando el impuesto a cargo de conformidad con el procedimiento previsto en la normatividad general vigente del impuesto de industria, comercio, avisos y tableros.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 56
 
 ARTÍCULO 56. EXENCIONES DEL IMPUESTO DE INDUSTRIA Y COMERCIO. Están exentas del impuesto de industria y comercio, en las condiciones señaladas en el respectivo literal, las siguientes actividades:
 
 a) Las personas naturales y jurídicas y las sociedades de hecho, damnificadas a consecuencia de los actos terroristas o catástrofes naturales ocurridos en el Distrito Capital, en las condiciones establecidas en el decreto reglamentario, expedido para el efecto.
-
-IMPUESTO COMPLEMENTARIO DE AVISOS Y TABLEROS
 
 ## Artículo 57
 
@@ -378,11 +328,9 @@ ARTÍCULO 57. HECHO GENERADOR DEL IMPUESTO COMPLEMENTARIO DE AVISOS Y TABLEROS. 
 
 2. La colocación de avisos en cualquier clase de vehículos.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 58
 
-ARTÍCULO 58. SUJETO PASIVO DEL IMPUESTO COMPLEMENTARIO DE AVISOS Y TABLEROS.Son sujetos pasivos del impuesto complementario de avisos y tableros los contribuyentes del impuesto de industria y comercio que realicen cualquiera de los hechos generadores del artículo anterior.
+ARTÍCULO 58. SUJETO PASIVO DEL IMPUESTO COMPLEMENTARIO DE AVISOS Y TABLEROS. Son sujetos pasivos del impuesto complementario de avisos y tableros los contribuyentes del impuesto de industria y comercio que realicen cualquiera de los hechos generadores del artículo anterior.
 
 ## Artículo 59
 

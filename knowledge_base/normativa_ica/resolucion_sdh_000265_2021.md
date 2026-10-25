@@ -6,9 +6,8 @@ Fuente: https://compilacionjuridica.shd.gov.co/compilacion/docs/resolucion_sdh_0
 
 ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económicas para efectos de la administración, control, cobro y determinación del Impuesto industria y comercio en el Distrito Capital de Bogotá:
 
-|  |  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- | --- |
 | Agrupación por Tarifa | Código de Actividad CIIU Resol | Descripción Actividad Económica | Tarifa 2021 (por mil) | Tarifa 2022 (por mil) | Tarifa 2023 (por mil) | Tarifa 2024 (por mil) |
+|---|---|---|---|---|---|---|
 | 304 | 161 | Actividades de apoyo a la agricultura | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 162 | Actividades de apoyo a la ganadería | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 164 | Tratamiento de semillas para propagación | 9,66 | 9,66 | 9,66 | 9,66 |
@@ -99,7 +98,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 103 | 2391 | Fabricación de productos refractarios | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2392 | Fabricación de materiales de arcilla para la construcción | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2393 | Fabricación de otros productos de cerámica y porcelana | 11,04 | 11,04 | 11,04 | 11,04 |
-| 103 | 2394 | Fabricación de cemento, cal y yeso | 11,04 | 11,04 | 11,04 | 11,04 |
+| 103 | 2394 | Fabricación de cemento, cal y yeso | 11,04 | 1 1,04 | 11,04 | 11,04 |
 | 103 | 2395 | Fabricación de artículos de hormigón, cemento y yeso | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2396 | Corte, tallado y acabado de la piedra | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2399 | Fabricación de otros productos minerales no metálicos n.c.p. | 11,04 | 11,04 | 11,04 | 11,04 |
@@ -138,7 +137,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 103 | 2813 | Fabricación de otras bombas, compresores, grifos y válvulas | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2814 | Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2815 | Fabricación de hornos, hogares y quemadores industriales | 11,04 | 11,04 | 11,04 | 11,04 |
-| 103 | 2816 | Fabricación de equipo de elevación y manipulación | 11,04 | 11,04 | 11,04 | 11,04 |
+| 103 | 2816 | Fabricación de equipo de elevación y manipulación | 11,04 | 11,04 | 11,04 | 1 1,04 |
 | 103 | 2817 | Fabricación de maquinaria y equipo de oficina (excepto computadoras y equipo periférico) | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2818 | Fabricación de herramientas manuales con motor | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2819 | Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p. | 11,04 | 11,04 | 11,04 | 11,04 |
@@ -192,7 +191,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 302 | 4220 | Construcción de proyectos de servicio público | 6,9 | 7,12 | 7,36 | 7,6 |
 | 302 | 4290 | Construcción de otras obras de ingeniería civil | 6,9 | 7,12 | 7,36 | 7,6 |
 | 302 | 4311 | Demolición | 6,9 | 6,9 | 6,9 | 6,9 |
-| 302 | 4312 | Preparación del terreno | 6,9 | 6,9 | 6,9 | 6,9 |
+| 302 | 4312 | Preparación del terreno | 6,9 | 6,9 | 6,9 | 6 ,9 |
 | 302 | 4321 | Instalaciones eléctricas de la construcción | 6,9 | 6,9 | 6,9 | 6,9 |
 | 302 | 4322 | Instalaciones de fontanería, calefacción y aire acondicionado de la construcción | 6,9 | 6,9 | 6,9 | 6,9 |
 | 302 | 4329 | Otras instalaciones especializadas de la construcción | 6,9 | 6,9 | 6,9 | 6,9 |
@@ -495,10 +494,4 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 304 | 87101 | Actividades de atención residencial medical- izada de tipo general (excepto actividades de promoción y prevención que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.) | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 92001 | Actividades de juegos de destreza, habilidad, conocimiento y fuerza | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 93291 | Otras actividades recreativas y de esparcimiento n.c.p. (excepto juegos de suerte y azar, discotecas y similares) | 9,66 | 9,66 | 9,66 | 9,66 |
-| 304 | 5330 | Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones de contacto y que utilizan una red de domiciliarios | 10,14 | | 10,63 | 11,04 |
-
-[Doctrina Concordante BOGOTÁ](javascript:insRow2())
-
-
-
-[![Ir al inicio](../images/noun-arrow-up-3137361-008000.svg)](#documento_top "Ir al inicio")
+| 304 | 5330 | Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones de contacto y que utilizan una red de domiciliarios | 10,14 | 10,63 | 11,04 |  |

@@ -6,13 +6,13 @@ Fuente: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog
 
 ARTÍCULO 13. AUTORIZACIÓN LEGAL. El impuesto predial unificado, está autorizado por la Ley 44 de 1990 y el Decreto Ley 1421 de 1993 y es el resultado de la fusión de los siguientes gravámenes:
 
-a) El impuesto predial regulado en el Código de Régimen Municipal adoptado por el Decreto Ley [1333](decreto_1333_1986.htm#1) de 1986 y demás normas complementarias, especialmente las Leyes 14 de 1983, 55 de 1985 y 75 de 1986.
+a) El impuesto predial regulado en el Código de Régimen Municipal adoptado por el Decreto Ley 1333 de 1986 y demás normas complementarias, especialmente las Leyes 14 de 1983, 55 de 1985 y 75 de 1986.
 
-b) El impuesto de parques y arborización, regulado en el Código de Régimen Municipal adoptado por el Decreto Ley [1333](decreto_1333_1986.htm#1) de 1986.
+b) El impuesto de parques y arborización, regulado en el Código de Régimen Municipal adoptado por el Decreto Ley 1333 de 1986.
 
-c) El impuesto de estratificación socio-económica creado por la Ley [9](ley_0009_1989.htm#1) de 1989.
+c) El impuesto de estratificación socio-económica creado por la Ley 9 de 1989.
 
-d) La sobretasa de levantamiento catastral a que se refieren las Leyes 128 de 1941, 50 de 1984 y [9](ley_0009_1989.htm#1) de 1989.
+d) La sobretasa de levantamiento catastral a que se refieren las Leyes 128 de 1941, 50 de 1984 y 9 de 1989.
 
 ## Artículo 14
 
@@ -26,25 +26,13 @@ ARTÍCULO 15. CAUSACIÓN. El impuesto predial unificado se causa el 1° de enero
 
 ARTÍCULO 16. PERÍODO GRAVABLE. El período gravable del impuesto predial unificado es anual, y está comprendido entre el 1° de enero y el 31 de diciembre del respectivo año.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 17
 
 ARTÍCULO 17. SUJETO ACTIVO. El Distrito Capital de Bogotá es el sujeto activo del impuesto predial unificado que se cause en su jurisdicción, y en él radican las potestades tributarias de administración, control, fiscalización, liquidación, discusión, recaudo, devolución y cobro.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 18
 
 ARTÍCULO 18. SUJETO PASIVO. <Artículo derogado por el artículo 27 del Acuerdo 469 de 22 de febrero de 2011 del Concejo de Bogotá.>
-
-[Notas de Vigencia](javascript:insRow2())
-
-
-
-[Legislación Anterior](javascript:insRow3())
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 19
 
@@ -62,13 +50,11 @@ e) Los inmuebles de propiedad de otras iglesias diferentes a la católica, recon
 
 PARÁGRAFO. Las demás propiedades de las iglesias serán gravadas en la misma forma que las de los particulares.
 
-f) En consideración a su especial destinación, los bienes de uso público de que trata el artículo [674](codigo_civil.htm#674) del Código Civil.
+f) En consideración a su especial destinación, los bienes de uso público de que trata el artículo 674 del Código Civil.
 
 g) Los predios de la Defensa Civil Colombiana siempre y cuando estén destinados al ejercicio de las funciones propias de esa entidad.
 
 h) Los predios que se encuentren definidos legalmente como parques naturales o como parques públicos de propiedad de entidades estatales, no podrán ser gravados con impuesto ni por la Nación ni por las entidades territoriales.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 20
 
@@ -96,15 +82,12 @@ PARÁGRAFO. Lo establecido en el presente artículo no impide al propietario o p
 
 ARTÍCULO 24. IMPUESTO PREDIAL PARA LOS BIENES EN COPROPIEDAD. En los términos de la Ley 675 de 2001 y de conformidad con lo establecido en el inciso 2º del artículo 16 de la misma, el impuesto predial sobre cada bien privado incorpora el correspondiente a los bienes comunes del edificio o conjunto, en proporción al coeficiente de copropiedad respectivo.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 25
 
 ARTÍCULO 25. TARIFAS. En desarrollo de lo señalado en el artículo 4 de la Ley 44 de 1990, las tarifas del impuesto predial unificado, son las siguientes:
 
-|  |  |  |
-| --- | --- | --- |
 | Rurales | 16%o | (dieciséis por mil) |
+|---|---|---|
 | Rurales residenciales | 16%o | (dieciséis por mil) |
 | Rurales Institucionales ¿ Recreativo ¿ Zonas Verdes Metropolitanas | 5%o | (cinco por mil) |
 | Pequeña propiedad rural destinada a la producción agropecuaria | 5%o | (cinco por mil) |
@@ -113,40 +96,35 @@ ARTÍCULO 25. TARIFAS. En desarrollo de lo señalado en el artículo 4 de la Ley
 
 Urbanos edificados residenciales estratos 1, 2 y 3
 
-|  |  |
-| --- | --- |
 | Hasta 70 metros cuadrados de construcción | 4%o (cuatro por mil) |
+|---|---|
 | Más de 70 metros cuadrados de construcción | 5%o (cinco por mil) |
 
 Residenciales de los estratos 4, 5 y 6
 
-|  |  |
-| --- | --- |
 | Estrato 4 hasta 100 metros cuadrados de construcción | 6%o (seis por mil) |
+|---|---|
 | Estrato 4 más de 100 y hasta 150 metros cuadrados de construcción | 6%o (seis por mil) |
 | Estrato 4 más de 150 metros cuadrados de construcción | 7%o (siete por mil) |
 | Estrato 5 y 6 hasta 220 metros cuadrados de construcción | 7%o (siete por mil) |
 
 Estrato 5 y 6 más de 220 metros cuadrados de construcción y hasta
 
-|  |  |
-| --- | --- |
 | 300 metros cuadrados de construcción | 8%o (ocho por mil) |
+|---|---|
 | Estrato 5 y 6 más de 300 metros cuadrados de construcción | 8.5%o (ocho y medio por mil) |
 
 Industriales
 
-|  |  |
-| --- | --- |
 | Alto Impacto | 10%o (diez por mil) |
+|---|---|
 | Medio Impacto | 9 %o (nueve por mil) |
 | Bajo Impacto | 8.5 %o (ocho y medio por mil) |
 
 Comerciales
 
-|  |  |
-| --- | --- |
 | Local | 8%o (ocho por mil) |
+|---|---|
 | Zonal | 8.5 %o (ocho y medio por mil) |
 | Metropolitana | 9.5 %o (nueve y medio por mil) |
 
@@ -154,37 +132,35 @@ Entidades del sector financiero
 
 Los predios en los que funcionen entidades del sector financiero, sometidas
 
-|  |  |
-| --- | --- |
-| al control de la Superintendencia Bancaria, o quien haga sus veces. | 15%o (quince por mil) |
+al control de la Superintendencia Bancaria, o quien haga sus veces.
+
+15%o (quince por mil)
 
 Empresas Industriales y Comerciales del Estado
 
 Las empresas industriales y comerciales del nivel Distrital,
 
-|  |  |
-| --- | --- |
-| Departamental y Nacional. | 8.5%o (ocho y medio por mil) |
+Departamental y Nacional.
+
+8.5%o (ocho y medio por mil)
 
 Cívico Institucional
 
-|  |  |
-| --- | --- |
 | Local | 5%o (cinco por mil) |
+|---|---|
 | Zonal | 6%o (seis por mil) |
 | Metropolitano | 6.5%o (seis y medio por mil) |
 
 Predios institucionales de propiedad de entidades educativas en donde
 
-|  |  |
-| --- | --- |
-| funcionen establecimientos aprobados por la Secretaría de Educación. | 5%o (cinco por mil) |
+funcionen establecimientos aprobados por la Secretaría de Educación.
+
+5%o (cinco por mil)
 
 Urbanizados no edificados y urbanizables no urbanizados
 
-|  |  |
-| --- | --- |
 | Con área igual o inferior a 100 metros cuadrados | 12%o (doce por mil) |
+|---|---|
 | Con área superior a 100 metros cuadrados | 33%o (treinta y tres por mil) |
 
 PARÁGRAFO PRIMERO. Las definiciones contenidas en el Acuerdo 6 de 1990 y sus Decretos Reglamentarios se aplicarán en lo pertinente.
@@ -193,16 +169,13 @@ PARÁGRAFO SEGUNDO. Para efectos de la clasificación de los predios industriale
 
 PARÁGRAFO TERCERO. Para efectos de la clasificación de predios comerciales, el Alcalde Local mediante Resolución establecerá que predios pueden ser considerados como locales y cuales como zonales.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 26
 
 ARTÍCULO 26. SISTEMA PREFERENCIAL DEL IMPUESTO PREDIAL UNIFICADO PARA PREDIOS RESIDENCIALES DE ESTRATOS 1 Y 2. Para los predios residenciales de los estratos 1 y 2 el impuesto predial unificado será el correspondiente en salarios mínimos diarios vigentes, según su avalúo catastral vigente, conforme a la siguiente tabla:
 
-|  |  |  |
-| --- | --- | --- |
-| Rango de avalúo catastral | salarios mínimos diarios vigentes | |
-| Primer plazo | Plazo sin descuento | |
+| Rango de avalúo catastral | salarios mínimos diarios vigentes |  |
+|---|---|---|
+| Primer plazo | Plazo sin descuento |  |
 | Hasta $3.000.000 | 0 | 0 |
 | $ 3.000.001 hasta $ 7.000.000 | 1 | 2 |
 | $ 7.000.001 hasta $ 10.000.000 | 2 | 3 |
@@ -216,11 +189,9 @@ Para los predios previstos en el inciso anterior la obligación tributaria se li
 
 PARÁGRAFO PRIMERO. Los contribuyentes de los estratos y rangos de avalúos aquí referidos podrán, si así lo prefieren, autoavaluar de conformidad con la normatividad general vigente del impuesto predial unificado.
 
-PARÁGRAFO SEGUNDO. Los rangos de avalúo catastral beneficiados con este tratamiento preferencial se ajustarán anualmente mediante resolución expedida por la Secretaría de Hacienda Distrital con base en la metodología legal vigente de ajuste de cifras. La cifra resultante será ajustada de acuerdo con lo establecido en el artículo [159](decreto_0807_1993.htm#159) del Decreto Distrital 807 de 1993. La Secretaría de Hacienda Distrital mediante resolución ajustará al múltiplo de mil más cercano los valores absolutos a pagar en salarios mínimos diarios vigentes.
+PARÁGRAFO SEGUNDO. Los rangos de avalúo catastral beneficiados con este tratamiento preferencial se ajustarán anualmente mediante resolución expedida por la Secretaría de Hacienda Distrital con base en la metodología legal vigente de ajuste de cifras. La cifra resultante será ajustada de acuerdo con lo establecido en el artículo 159 del Decreto Distrital 807 de 1993. La Secretaría de Hacienda Distrital mediante resolución ajustará al múltiplo de mil más cercano los valores absolutos a pagar en salarios mínimos diarios vigentes.
 
 PARÁGRAFO TERCERO. Los predios residenciales de los estratos 1 y 2 a los cuales el Departamento Administrativo de Catastro Distrital no les haya establecido avalúo catastral, pagarán como impuesto dos (2) salarios mínimos diarios vigentes. Una vez el Departamento Administrativo de Catastro Distrital fije el avalúo catastral, el propietario, poseedor o usufructuario continuará pagando de acuerdo con el rango que le corresponda.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 27
 
@@ -250,13 +221,9 @@ g) Las edificaciones nuevas que se construyan en el área urbana del Distrito Ca
 
 PARÁGRAFO. Las Empresas de Energía, Acueducto y Teléfonos del Distrito Capital de Bogotá son sujetos pasivos del impuesto predial unificado sin perjuicio de la exención prevista en el literal d) de este artículo.
 
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
-
 ## Artículo 29
 
 ARTÍCULO 29. EFECTO DEL AUTOAVALÚO EN EL IMPUESTO SOBRE LA RENTA. De conformidad con el Estatuto Tributario Nacional, el autoavalúo servirá como costo fiscal para la determinación de la renta o ganancia ocasional, que se produzca al momento de la enajenación del predio.
-
-[![Ir al inicio](../images/up_arrow.jpg)](d_alcabog_0352_2002.htm#top "Ir al inicio")
 
 ## Artículo 30
 

@@ -27,6 +27,11 @@ fuentes:
   norma: Decreto 474 de 2016
   url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67262&dt=S
   mes_consulta: octubre de 2026
+- archivo: decreto_639_2025.md
+  norma: Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan
+    el Decreto 474 de 2016
+  url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
+  mes_consulta: octubre de 2026
 - archivo: acuerdo_648_2016.md
   norma: Acuerdo 648 de 2016
   url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67557&dt=S
@@ -57,5 +62,5 @@ fuentes:
   mes_consulta: octubre de 2026
 - archivo: acuerdo_1084_2026.md
   norma: Acuerdo 1084 de 2026
-  url: https://incp.org.co/?p=136894
+  url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
   mes_consulta: octubre de 2026

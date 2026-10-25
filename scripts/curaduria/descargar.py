@@ -27,6 +27,10 @@ def descargar() -> dict[str, dict]:
             if fuente.get("archivo"):  # comparte el archivo de otra entrada
                 estado[fuente["id"]] = {"estado": "ok", "archivo": fuente["archivo"]}
                 continue
+            if fuente.get("manual"):  # el archivo lo guarda Rodolfo desde el navegador
+                guardado = DESCARGAS / f"{fuente['id']}.{_EXTENSION[fuente['formato']]}"
+                estado[fuente["id"]] = {"estado": "ok" if guardado.exists() else "falta_manual"}
+                continue
             tamano, falla = 0, None
             for n, url in enumerate(urls):
                 sufijo = "" if n == 0 else f"__{n + 1}"

@@ -8,6 +8,11 @@ verificacion:
     norma: Registro Distrital 7103 (publica la Resolución SDH-000265 de 2021)
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/verNormaPDF?i=109475
     formato: pdf
+  - id: acuerdo_1084_2026_pdf
+    norma: Acuerdo 1084 de 2026, copia escaneada del texto firmado (INCP)
+    url: https://incp.org.co/?p=136894
+    formato: pdf
+    manual: true  # el PDF lo guardó Rodolfo desde el navegador; el OCR sale de ocr_1084.py
 fuentes:
   - id: ley_1581_2012
     norma: Ley 1581 de 2012
@@ -64,7 +69,36 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67262&dt=S
     formato: html
     articulos: todos
-    nota: Régimen Legal de Bogotá; el decreto está compilado por el Decreto Único 639 de 2025, que no se carga.
+    nota: Régimen Legal de Bogotá. El Decreto 639 de 2025 (Decreto Único Distrital Tributario) lo compiló y lo derogó (art. 263); sus artículos están en decreto_639_2025 y los del 474 quedan marcados como texto anterior, no vigente.
+    texto_anterior:
+      "1": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 217
+      "2": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 218
+      "3": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 219
+      "4": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 220
+      "5": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 221
+      "6": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 222
+      "7": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 223
+      "8": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 224
+      "9": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 225
+      "10": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 226
+      "11": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 227
+      "12": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 231
+      "13": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 232
+      "14": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 233
+      "15": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205
+      "16": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 206
+      "17": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 207
+      "18": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 43
+      "19": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 44
+      "20": lo compiló el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 45
+      "21": lo derogó el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 263
+  - id: decreto_639_2025
+    norma: Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016
+    coleccion: normativa_ipu
+    url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
+    formato: html
+    articulos: ["43", "44", "45", "205", "206", "207", "217", "218", "219", "220", "221", "222", "223", "224", "225", "226", "227", "231", "232", "233", "263"]
+    nota: Compilación de la Secretaría de Hacienda. Cada artículo cita el del Decreto 474 de 2016 que compila; el art. 263 es la derogatoria expresa.
   - id: acuerdo_648_2016
     norma: Acuerdo 648 de 2016
     coleccion: normativa_ipu
@@ -110,7 +144,9 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
     formato: html
     articulos: ["3", "4", "5", "6"]
-    nota: Arts. 3 a 6 (predial). El texto sale del Régimen Legal de Bogotá.
+    insertar:
+      "5": sdh_195_art_5.md
+    nota: Arts. 3 a 6 (predial). El texto sale del Régimen Legal de Bogotá; las cuatro cuotas del SPAC están en una imagen y se transcriben.
   - id: resolucion_sdh_000195_2025_ica
     norma: Resolución SDH-000195 de 2025
     coleccion: normativa_ica
@@ -118,22 +154,24 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
     formato: html
     articulos: ["1", "2"]
-    nota: Artículos del ICA de la resolución (adenda, sección 3.1). Mismo archivo.
+    insertar:
+      "1": sdh_195_art_1.md
+    nota: Artículos del ICA de la resolución (adenda, sección 3.1). Mismo archivo; las fechas bimestrales están en imágenes y se transcriben.
   - id: acuerdo_1084_2026
     norma: Acuerdo 1084 de 2026
     coleccion: normativa_ipu
-    url: https://incp.org.co/?p=136894
-    formato: pdf_escaneado
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+    formato: html
     articulos: ["3", "4", "5", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "27", "28", "35", "52"]
-    nota: Reparto de la adenda, sección 3.1. El art. 6 queda fuera. Los arts. 3, 4, 7 y 52 aplican a ambos impuestos y se cargan también en normativa_ica.
+    nota: Texto digital del Régimen Legal de Bogotá (en vigor desde el 9 de octubre de 2026). El PDF escaneado del INCP queda como contraste. Reparto de la adenda, sección 3.1; el art. 6 queda fuera. Los arts. 3, 4, 7 y 52 aplican a ambos impuestos y se cargan también en normativa_ica.
   - id: acuerdo_1084_2026_ica
     norma: Acuerdo 1084 de 2026
     coleccion: normativa_ica
     archivo: acuerdo_1084_2026
-    url: https://incp.org.co/?p=136894
-    formato: pdf_escaneado
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
+    formato: html
     articulos: ["1", "2", "3", "4", "7", "21", "24", "25", "26", "52"]
-    nota: Reparto de la adenda, sección 3.1 (arts. 21, 24, 25 y 26 e incentivos del ICA). Mismo PDF y OCR.
+    nota: Reparto de la adenda, sección 3.1 (arts. 21, 24, 25 y 26 e incentivos del ICA). Mismo texto digital del Régimen Legal.
   - id: ley_14_1983
     norma: Ley 14 de 1983
     coleccion: normativa_ica
@@ -142,8 +180,8 @@ fuentes:
     articulos: todos
     nota: Texto del Régimen Legal de Bogotá con sus notas de vigencia. Los arts. 33 y 36 muestran el texto de 1983, que la Ley 1819 de 2016 modificó.
     texto_anterior:
-      "33": Ley 1819 de 2016, art. 342 (base gravable del impuesto de industria y comercio)
-      "36": Ley 1819 de 2016, art. 345 (actividades de servicios)
+      "33": lo modificó la Ley 1819 de 2016, art. 342 (base gravable y tarifa del impuesto de industria y comercio)
+      "36": lo modificó la Ley 1819 de 2016, art. 345 (actividades de servicios)
   - id: decreto_352_2002_cap2
     norma: Decreto Distrital 352 de 2002, cap. II
     coleccion: normativa_ica
