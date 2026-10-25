@@ -9,7 +9,7 @@ la pone Rodolfo con `scripts/curaduria/marcar_verificado.py` después de revisar
 - [ ] `datos/tarifas/ipu_2026.yaml` — predial 2026, 30 rangos y 6 tarifas no residenciales. Contraste automático con el PDF de la resolución SDH-000194 de 2025: 0 diferencias. Vista: `ipu_2026.html`.
 - [ ] `datos/tarifas/ipu_2027.yaml` — predial 2027, art. 20 del Acuerdo 1084. Doble lectura (OCR e imagen) y texto digital del Régimen Legal. Vista: `ipu_2027.html`.
 - [ ] `datos/tarifas/sobretasa_alumbrado_2027.yaml` — sobretasa de alumbrado, arts. 14 y 15. Doble lectura (OCR e imagen). Vista: `sobretasa_alumbrado_2027.html`.
-- [ ] `datos/tarifas/ica_2026.yaml` — ICA 2026: 486 actividades, 476 con tarifa y 10 pendientes. Armada con el texto original del art. 3 del Acuerdo 65, los Acuerdos 780 (arts. 6 y 7), 816 (art. 4) y 98 y la Resolución SDH-000265 de 2021. Segunda lectura de la resolución con el Registro Distrital 7103: 481 de 486 coinciden y 5 no se pudieron leer. Vista: `ica_2026.html`.
+- [ ] `datos/tarifas/ica_2026.yaml` — ICA 2026: 486 actividades con tarifa, 10 de ellas por decisión de Rodolfo. Armada con el texto original del art. 3 del Acuerdo 65, los Acuerdos 780 (arts. 6 y 7), 816 (art. 4) y 98 y la Resolución SDH-000265 de 2021. Segunda lectura de la resolución con el Registro Distrital 7103: 481 de 486 coinciden y 5 no se pudieron leer. Vista: `ica_2026.html`.
 - [ ] `datos/tarifas/ica_2027.yaml` — ICA 2027, art. 21: 447 actividades de tarifa fija y 28 de tarifa progresiva (475 en total). Doble lectura (imagen) y texto digital del Régimen Legal: 475 de 475 coinciden, en los dos sentidos. Vista: `ica_2027.html`.
 - [ ] `datos/calendario/2026.yaml` — calendario 2026. Las fechas del ICA bimestral y del SPAC se leyeron de las tablas incrustadas como imagen. Vista: `calendario_2026.html`.
 - [ ] `datos/regimenes_ica.yaml` — regímenes del ICA de 2026 y 2027. Vista: `regimenes_y_uvt.html`.
@@ -27,7 +27,7 @@ En la tabla del art. 21 el OCR no leyó la tarifa de 115 filas ni el código de 
 segunda lectura es la imagen y el texto digital del Régimen Legal, que ya trae el art. 21 como art. 3
 del Acuerdo 65 de 2002 y coincide en las 475 actividades (447 fijas y 28 progresivas).
 
-## ICA de 2026: cómo se armó y qué queda pendiente
+## ICA de 2026: cómo se armó y la decisión de Rodolfo
 
 El texto vigente en 2026 sale de estas fuentes, que Rodolfo aprobó en la parada de B2:
 
@@ -43,12 +43,25 @@ El texto vigente en 2026 sale de estas fuentes, que Rodolfo aprobó en la parada
 
 Cada tarifa se contrastó con el texto de los acuerdos: las de grupo con el texto original del art. 3
 del Acuerdo 65, y las que cambian con el art. 6 del Acuerdo 780. La página del ICA de Hacienda no se
-descarga como texto. Quedan **10 filas pendientes** (con la tarifa de la resolución como referencia):
+descarga como texto. Diez filas chocaban entre la resolución y el Acuerdo 780, y Rodolfo decidió en la
+parada de B2 cuál prevalece:
 
-| CIIU | Motivo |
-|---|---|
-| 4111, 4112, 4311, 4312, 4321, 4322, 4329, 39002 | El art. 6 del Acuerdo 780 sube a 8,66 a los «servicios prestados por contratistas de construcción, constructores y urbanizadores», y la resolución los deja en 6,9. |
-| 4330, 4390 | La resolución da 7,6, pero el art. 6 solo nombra carreteras, proyectos de servicio público y otras obras de ingeniería civil. |
+| CIIU | Choque | Tarifa que se aplica |
+|---|---|---|
+| 4111, 4112, 4311, 4312, 4321, 4322, 4329, 39002 | El art. 6 del Acuerdo 780 sube a 8,66 a los «servicios prestados por contratistas de construcción, constructores y urbanizadores», y la resolución los deja en 6,9. | 6,9 por mil |
+| 4330, 4390 | La resolución da 7,6, pero el art. 6 solo nombra carreteras, proyectos de servicio público y otras obras de ingeniería civil. | 7,6 por mil |
+
+**Decisión de Rodolfo:** prevalece la Resolución SDH-000265 de 2021, art. 1 («clasificación oficial por
+CIIU de la Secretaría de Hacienda»). Motivo: es la clasificación con la que Hacienda aplica el art. 6 del
+Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones ni nulidades; además, el art. 21
+del Acuerdo 1084 conserva la misma agrupación para 2027 (7 por mil para edificios, demolición,
+preparación del terreno e instalaciones, y 8 para obras civiles, terminación y acabados). Cada una de
+las 10 filas lleva la nota para el agente: «El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas
+de construcción, constructores y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de
+Hacienda clasificó esta actividad en la tarifa indicada, que es la que aplica».
+
+El CIIU 4930 trae el grupo «01» truncado en la compilación de Hacienda; por decisión de Rodolfo es el
+301, cuya tarifa (4,14 por mil) es la de la fila.
 
 Periodos: esta tabla cubre el año gravable 2026 de los declarantes anuales y los bimestres 1 a 5 de
 2026 de los bimestrales. El Acuerdo 1084 se aprobó en plenaria el 28 de septiembre de 2026 y se firmó el
@@ -90,6 +103,7 @@ notificaciones, regímenes, predial, publicidad exterior o azar y espectáculos.
 | Acuerdo 816 de 2021, art. 4 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá; aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=116160&dt=S |
 | Acuerdo 98 de 2003 | `normativa_ica` | 3 artículos | Régimen Legal de Bogotá; aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=10597 |
 | Resolución SDH-000265 de 2021, art. 1 | `normativa_ica` | 1 artículos | Compilación de la Secretaría de Hacienda; aprobada por Rodolfo en la parada de B2 | https://compilacionjuridica.shd.gov.co/compilacion/docs/resolucion_sdh_0265_2021.htm |
+| Ley 1819 de 2016, arts. 342 y 345 | `normativa_ica` | 2 artículos | Secretaría del Senado (parte 7 de la ley, la misma del art. 354) | http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html |
 
 Además, el Registro Distrital 7103 (`https://www.alcaldiabogota.gov.co/sisjur/normas/verNormaPDF?i=109475`)
 sirve solo para contrastar la tabla de la Resolución SDH-000265 y no va a `knowledge_base/`.
@@ -106,7 +120,10 @@ Markdown y el corte por artículo los hace `scripts/curaduria/convertir.py`.
 3. **Ley 1581 de 2012.** Se cargan los artículos 1 a 30; los «artículos» 31 a 34 del texto de la Secretaría
    del Senado son del proyecto que citan las notas de jurisprudencia.
 4. **Ley 14 de 1983.** Texto del Régimen Legal de Bogotá (`i=267`) con sus notas de vigencia, cortado en
-   90 artículos.
+   90 artículos. Los arts. 33 (base gravable) y 36 (actividades de servicios) traen la nota «Modificado
+   por el art. 342 (345), Ley 1819 de 2016» pero muestran el texto de 1983: en la base quedan marcados
+   como «texto anterior, no vigente», con una remisión a los arts. 342 y 345 de la Ley 1819 de 2016, que
+   se cargan en `normativa_ica`.
 5. **UVT y SMMLV de 2027.** No existen aún.
 6. **Resolución de rangos.** El PDF lleva el número SDH-000194 de 2025; la adenda y la especificación la
    llaman «resolución de rangos de 2026».
