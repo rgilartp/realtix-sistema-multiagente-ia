@@ -1,0 +1,23 @@
+fuente: Resolución SDH-000195 de 2025, art. 1; Acuerdo 1084 de 2026, art. 26
+url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S
+mes_consulta: octubre de 2026
+verificado_por: ''
+anios:
+  - anio_gravable: 2026
+    fuente: Resolución SDH-000195 de 2025, art. 1
+    umbral_uvt: 391
+    base_del_umbral: impuesto a cargo (FU) de todo el año gravable 2025
+    umbral_pesos: 19471409
+    comun_bimestral: impuesto a cargo de 2025 mayor a 391 UVT
+    comun_anual: impuesto a cargo de 2025 de hasta 391 UVT
+    preferencial: declaración anual única
+  - anio_gravable: 2027
+    fuente: Acuerdo 1084 de 2026, art. 26 (reemplaza el art. 27 del Decreto 807 de 1993)
+    umbral_uvt: 391
+    base_del_umbral: impuesto a cargo del año anterior
+    comun: impuesto a cargo del año anterior mayor a 391 UVT; declara y paga cada dos meses
+    preferencial: hasta 391 UVT; declara una vez al año
+    inicio_de_actividades: el primer año queda en el régimen preferencial
+    sin_declaracion:
+      ingresos_netos_menores_a_uvt: 1933
+      condicion: preferencial; su impuesto es igual a lo retenido

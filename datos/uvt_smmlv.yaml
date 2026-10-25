@@ -1,0 +1,30 @@
+# UVT y SMMLV por año. Las cifras salen de fuentes secundarias (INCP y prensa económica) porque el
+# texto oficial no se descargó; Rodolfo las contrasta con la resolución de la DIAN y el decreto.
+mes_consulta: octubre de 2026
+verificado_por: ''
+uvt:
+  - anio: 2025
+    valor: 49799
+    fuente: Resolución de la DIAN que fijó la UVT de 2025 (número de la resolución pendiente)
+    url: null
+    comprobacion: 391 UVT = $19.471.409, el valor de la Resolución SDH-000195 de 2025, art. 1
+  - anio: 2026
+    valor: 52374
+    fuente: Resolución DIAN 000238 de 2025
+    url: https://incp.org.co/agendatributariaincp/noticias/2025/12/dian-fijo-en-52-374-en-valor-de-la-uvt-para-el-ano-gravable-2026/
+  - anio: 2027
+    valor: pendiente
+    fuente: la DIAN la fija a finales de 2026; aún no está publicada en las fuentes consultadas
+smmlv:
+  - anio: 2025
+    valor: 1423500
+    fuente: Decreto del salario mínimo de 2025 (número del decreto pendiente)
+    url: https://consultorsalud.com/aumento-del-salario-minimo-en-colombia-2026/
+  - anio: 2026
+    valor: 1750905
+    fuente: Decreto 1469 de 2025
+    url: https://consultorsalud.com/aumento-del-salario-minimo-en-colombia-2026/
+    nota: El Consejo de Estado suspendió el decreto de forma provisional en febrero de 2026 y revocó la suspensión en julio de 2026; confirmar el estado antes de usar la cifra.
+  - anio: 2027
+    valor: pendiente
+    fuente: el Gobierno lo fija a finales de 2026; aún no se publica

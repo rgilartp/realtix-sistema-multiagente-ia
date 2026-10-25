@@ -4,14 +4,15 @@ mes_consulta: octubre de 2026
 verificado_por: ''
 vigencia_desde: 2027
 vigencia_hasta: null
-lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 21 a 24 del PDF; ver diferencias.'
+lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 21 a 25 del PDF, y para el texto, el Régimen
+  Legal de Bogotá; ver diferencias.'
 diferencias_ocr:
 - pagina: 22
   ocr: estarán excluidos los predios de estratos 1 y 2 con base gravable inferior a 186 SMMLV
   imagen: inferior a 16 SMMLV
   se_usa: imagen
-advertencia: Los rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica;
-  la estimación de 2027 usa esta tabla tal como está.
+advertencia: Los rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica; la estimación
+  de 2027 usa esta tabla tal como está.
 preferenciales:
   unidad_base: SMMLV
   residencial_urbano_y_rural_agropecuario:
@@ -42,8 +43,8 @@ preferenciales:
   - desde: más de 135 SMMLV
     hasta: null
     tarifa_por_mil: '6.5'
-  excluidos: Estratos 1 y 2 (urbanos, rurales agropecuarios y residenciales rurales) con base gravable
-    inferior a 16 SMMLV
+  excluidos: Estratos 1 y 2 (urbanos, rurales agropecuarios y residenciales rurales) con base gravable inferior
+    a 16 SMMLV
 generales:
   residencial:
   - desde: 1
@@ -202,3 +203,55 @@ generales:
     tarifa_por_mil: '6.5'
     desde: 1
     hasta: null
+  dotacional_clubes_de_particulares:
+    categoria: Dotacional de propiedad de particulares destinado a clubes campestres, sociales, deportivos y/o recreativos
+      (art. 2, num. 2.3)
+    rangos:
+    - desde: 1
+      hasta: 11529762000
+      tarifa_por_mil_2027: '6.5'
+      tarifa_por_mil_desde_2028: '6.5'
+    - desde: 11529762001
+      hasta: 22211734000
+      tarifa_por_mil_2027: '7.82'
+      tarifa_por_mil_desde_2028: '8'
+    - desde: 22211734001
+      hasta: 32893706000
+      tarifa_por_mil_2027: '8.04'
+      tarifa_por_mil_desde_2028: '8.25'
+    - desde: 32893706001
+      hasta: 43575726000
+      tarifa_por_mil_2027: '8.26'
+      tarifa_por_mil_desde_2028: '8.5'
+    - desde: 43575726001
+      hasta: 54257698000
+      tarifa_por_mil_2027: '8.48'
+      tarifa_por_mil_desde_2028: '8.75'
+    - desde: 54257698001
+      hasta: 67822146000
+      tarifa_por_mil_2027: '8.7'
+      tarifa_por_mil_desde_2028: '9'
+    - desde: 67822146001
+      hasta: 81386595000
+      tarifa_por_mil_2027: '8.92'
+      tarifa_por_mil_desde_2028: '9.25'
+    - desde: 81386595001
+      hasta: 94950995000
+      tarifa_por_mil_2027: '9.14'
+      tarifa_por_mil_desde_2028: '9.5'
+    - desde: 94950995001
+      hasta: 108515443000
+      tarifa_por_mil_2027: '9.36'
+      tarifa_por_mil_desde_2028: '9.75'
+    - desde: 108515443001
+      hasta: null
+      tarifa_por_mil_2027: '9.58'
+      tarifa_por_mil_desde_2028: '10'
+    reglas:
+    - 'Clubes de entidades educativas, cajas de compensación familiar y empresas industriales y comerciales del
+      Estado, usados para su objeto social: tarifa de los predios dotacionales según la naturaleza del propietario.'
+    - 'Clubes de las Fuerzas Militares y de la Policía Nacional, usados para su objeto social, de entes públicos
+      y de particulares: 5 por mil.'
+  nota_pequena_propiedad_rural: La comercialización total o parcial de los excedentes de la producción agropecuaria
+    destinada al sostenimiento de la unidad familiar no excluye por sí misma la categoría, si el predio corresponde
+    a una unidad de producción a niveles de subsistencia.
