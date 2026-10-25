@@ -75,11 +75,28 @@ def buscar_tarifa_ica(ciiu: str, periodo: PeriodoICA) -> TarifaICA:
     raise ActividadNoReconocidaError(ciiu)
 
 
-def actividades_de_la_tabla(anio: int) -> list[TarifaICA]:
-    """Todas las actividades de la tabla de 2026 (año gravable), para cargar `tarifa_ica`."""
+@dataclass(frozen=True)
+class FilaTablaICA:
+    ciiu: str
+    actividad: str
+    grupo: str | None
+    tarifa_por_mil: Decimal
+    vigencia: int
+    fuente: str
+
+
+def actividades_de_la_tabla(anio: int) -> list[FilaTablaICA]:
+    """Todas las actividades de la tabla del año, con la fuente de cada tarifa."""
     datos = cargar_datos(f"tarifas/ica_{anio}.yaml", anio, "tarifas del ICA")
-    fuente = str(datos["fuente"])
+    general = str(datos["fuente"])
     return [
-        TarifaICA(f["ciiu"], f["actividad"], Decimal(f["tarifa_por_mil"]), anio, fuente)
+        FilaTablaICA(
+            ciiu=f["ciiu"],
+            actividad=f["actividad"],
+            grupo=f.get("grupo_resolucion_265"),
+            tarifa_por_mil=Decimal(f["tarifa_por_mil"]),
+            vigencia=anio,
+            fuente=str(f.get("fuente_tarifa") or general),
+        )
         for f in datos["por_actividad"]
     ]

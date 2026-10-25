@@ -1,0 +1,74 @@
+# Usuarios de prueba fijos de RealSit simulado (sección 4.2). Son las ENTRADAS del generador:
+# perfil, estrato, avalúo de 2026 y estados. Los valores esperados (tarifa, base, valor en pesos)
+# están escritos a mano en tests/fixtures/usuarios_prueba.yaml y la prueba los cruza con esto.
+sintetico: true
+usuarios:
+  - id: U01
+    contribuyente: {id: CC-1000000001, nombre: Usuario de Prueba 01, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000101, chip: AAA9000101, destino: residencial, estrato: 4, localidad: Chapinero,
+         avaluo_2026: 280000000, ipu_2026: AL_DIA, pagada_con_descuento: true}
+  - id: U02
+    contribuyente: {id: CC-1000000002, nombre: Usuario de Prueba 02, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000201, chip: AAA9000201, destino: residencial, estrato: 4, localidad: Suba,
+         avaluo_2026: 180000000, ipu_2026: AL_DIA, pagada_con_descuento: false}
+      - {matricula: 50C-9000202, chip: AAA9000202, destino: residencial, estrato: 4, localidad: Engativá,
+         avaluo_2026: 420000000, ipu_2026: VENCIDO, mora_2025: true}
+  - id: U03
+    contribuyente: {id: CC-1000000003, nombre: Usuario de Prueba 03, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000301, chip: AAA9000301, destino: residencial, estrato: 4, localidad: Usaquén,
+         avaluo_2026: 350000000, ipu_2026: VENCIDO}
+  - id: U04
+    contribuyente: {id: NIT-9000000004, nombre: Empresa de Prueba 04 S.A.S., tipo_persona: juridica}
+    ica: {ciiu: "5611", regimen: comun_bimestral,
+          ingresos: {2023: 1300000000, 2024: 1400000000, 2025: 1500000000},
+          bimestre_2026: 250000000}
+    predios:
+      - {matricula: 50C-9000401, chip: AAA9000401, destino: comercial, estrato: null, localidad: Fontibón,
+         avaluo_2026: 300000000, ipu_2026: AL_DIA, pagada_con_descuento: false, ejerce_actividad: true}
+  - id: U05
+    contribuyente: {id: CC-1000000005, nombre: Usuario de Prueba 05, tipo_persona: natural}
+    ica: {ciiu: "6201", regimen: preferencial,
+          ingresos: {2023: 48000000, 2024: 52000000, 2025: 56000000, 2026: 60000000}}
+    predios:
+      - {matricula: 50C-9000501, chip: AAA9000501, destino: residencial, estrato: 4, localidad: Teusaquillo,
+         avaluo_2026: 220000000, ipu_2026: AL_DIA, pagada_con_descuento: false, ejerce_actividad: true}
+  - id: U06
+    contribuyente: {id: CC-1000000006, nombre: Usuario de Prueba 06, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000601, chip: AAA9000601, destino: lote, estrato: null, localidad: Bosa,
+         avaluo_2026: 50000000, ipu_2026: VENCIDO}
+  - id: U07
+    contribuyente: {id: CC-1000000007, nombre: Usuario de Prueba 07, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000701, chip: AAA9000701, destino: residencial, estrato: 3, localidad: Kennedy,
+         avaluo_2026: 300000000, ipu_2026: AL_DIA, pagada_con_descuento: true}
+  - id: U08
+    contribuyente: {id: CC-1000000008, nombre: Usuario de Prueba 08, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000801, chip: AAA9000801, destino: residencial, estrato: 5, localidad: Chapinero,
+         avaluo_2026: 520000000, ipu_2026: SPAC, cuotas_pagadas: 2}
+  - id: U09
+    contribuyente: {id: CC-1000000009, nombre: Usuario de Prueba 09, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9000901, chip: AAA9000901, destino: residencial, estrato: 2, localidad: Ciudad Bolívar,
+         avaluo_2026: 150000000, ipu_2026: AL_DIA, pagada_con_descuento: true}
+  - id: U10
+    contribuyente: {id: CC-1000000010, nombre: Usuario de Prueba 10, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9001001, chip: AAA9001001, destino: residencial, estrato: 3, localidad: Puente Aranda,
+         avaluo_2026: 200000000, ipu_2026: VENCIDO}
+  - id: U11
+    contribuyente: {id: CC-1000000011, nombre: Usuario de Prueba 11, tipo_persona: natural}
+    predios:
+      - {matricula: 50C-9001101, chip: AAA9001101, destino: residencial, estrato: 1, localidad: Usme,
+         avaluo_2026: 25000000, ipu_2026: NO_OBLIGADO}
+  - id: U12
+    contribuyente: {id: NIT-9000000012, nombre: Empresa de Prueba 12 S.A.S., tipo_persona: juridica}
+    ica: {ciiu: "6201", regimen: comun_anual,
+          ingresos: {2023: 780000000, 2024: 820000000, 2025: 850000000, 2026: 900000000}}
+    predios:
+      - {matricula: 50C-9001201, chip: AAA9001201, destino: residencial, estrato: 4, localidad: Barrios Unidos,
+         avaluo_2026: 410000000, ipu_2026: AL_DIA, pagada_con_descuento: false, ejerce_actividad: true}
