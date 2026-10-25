@@ -1,0 +1,2432 @@
+[
+ {
+  "ciiu": "161",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "162",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "164",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "240",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "510",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "520",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "610",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "620",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "710",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "721",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "722",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "723",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "729",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "811",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "812",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "sin_lectura_en_el_registro"
+ },
+ {
+  "ciiu": "820",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "891",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "892",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "899",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "910",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "990",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1011",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1012",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1030",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1051",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1052",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1061",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1062",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1063",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1071",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1072",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1081",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1082",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1083",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1084",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1089",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1090",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1101",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1102",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1103",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1104",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1200",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1311",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1312",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1313",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1391",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1392",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1393",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1394",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1399",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1410",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1511",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1512",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1513",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1521",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1522",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1523",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1610",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1620",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1630",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1640",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1690",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "sin_lectura_en_el_registro"
+ },
+ {
+  "ciiu": "1701",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1702",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1709",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1811",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1812",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1820",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1910",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1921",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "1922",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2011",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2012",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2013",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2014",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2021",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2022",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2023",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2029",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2030",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2100",
+  "tarifa_2024_hacienda": "12.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2211",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2212",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2219",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2221",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2229",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2310",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2391",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2392",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2393",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2394",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2395",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2396",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2399",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2410",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2421",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2429",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2431",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2432",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2511",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2512",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2513",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2520",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2591",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2592",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2593",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2599",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2610",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2620",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2630",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2640",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2651",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2652",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2660",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2670",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2680",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2711",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2712",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2720",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2731",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2732",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2740",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2750",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2790",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2811",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2812",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2813",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2814",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2815",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2816",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2817",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2818",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2819",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2821",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2822",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2823",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2824",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2825",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2826",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2829",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2910",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2920",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "2930",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3011",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3012",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3020",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3030",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3040",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3091",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3092",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3099",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3110",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3120",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3210",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3220",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3230",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3240",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3250",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3290",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3311",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3312",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3313",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3314",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3315",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3319",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3320",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3511",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3512",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3513",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3514",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3530",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3700",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "sin_lectura_en_el_registro"
+ },
+ {
+  "ciiu": "3811",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3812",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3821",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3822",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "3830",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4111",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4112",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4210",
+  "tarifa_2024_hacienda": "7.6",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4220",
+  "tarifa_2024_hacienda": "7.6",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4290",
+  "tarifa_2024_hacienda": "7.6",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4311",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4312",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4321",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4322",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4329",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4330",
+  "tarifa_2024_hacienda": "7.6",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4390",
+  "tarifa_2024_hacienda": "7.6",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4511",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4512",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4520",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4530",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4542",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4610",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4631",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4641",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4642",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4643",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4644",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4651",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4652",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4653",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4659",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4662",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4664",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4665",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4669",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4690",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4721",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4722",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4723",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4729",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4731",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4732",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4741",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4742",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4751",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4753",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4754",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4755",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4759",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4762",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4769",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4771",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4772",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4774",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4775",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4782",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4789",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4911",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4912",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4921",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4922",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4923",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "4930",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "sin_lectura_en_el_registro"
+ },
+ {
+  "ciiu": "5011",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5012",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5021",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5022",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5111",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5112",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5121",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5122",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5210",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5221",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5222",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5223",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5224",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5229",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5310",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5320",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5511",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5512",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5513",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5514",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5519",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5520",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5530",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5590",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5611",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5612",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5613",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5619",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5621",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5629",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5630",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5812",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5813",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5819",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5820",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5911",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5912",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5913",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5914",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5920",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6010",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6110",
+  "tarifa_2024_hacienda": "10.62",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6120",
+  "tarifa_2024_hacienda": "10.62",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6130",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6190",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6201",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6202",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6209",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6311",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6312",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6391",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6399",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6411",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6412",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6421",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6422",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6423",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6424",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6431",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6491",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6492",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6493",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6494",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6495",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6496",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6511",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6512",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6513",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6515",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6521",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6522",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6523",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6532",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6612",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6613",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6614",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6615",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6619",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6621",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6629",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6630",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6810",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "6820",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7310",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7420",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7500",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7710",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7721",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7722",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7729",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7730",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7740",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7810",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7820",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7830",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7911",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7912",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "7990",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8010",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8020",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8030",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8110",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8121",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8129",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8130",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8211",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8219",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8220",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8230",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8291",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8292",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8299",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8511",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8512",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8513",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8521",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8522",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8530",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8541",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8542",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8543",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8544",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8551",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8552",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8553",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "sin_lectura_en_el_registro"
+ },
+ {
+  "ciiu": "8559",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "85591",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "85592",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8560",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8610",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8720",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8730",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8790",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8810",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8891",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "8899",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9321",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9411",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9499",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9511",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9512",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9521",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9522",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9523",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9524",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9529",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9601",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9602",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9603",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "9609",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "10201",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "10202",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "10401",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "10402",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "14201",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "14202",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "14301",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "14302",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "35201",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "35202",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "36001",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "36002",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "39001",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "39002",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "45411",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "45412",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46201",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46202",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46321",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46322",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46451",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46452",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46491",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46492",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46611",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46612",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46631",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "46632",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47111",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47112",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47191",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47192",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47241",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47242",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47521",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47522",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47611",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47612",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47731",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47732",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47811",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47812",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47813",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47911",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47912",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47913",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47914",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47921",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47922",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47923",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47924",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47991",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47992",
+  "tarifa_2024_hacienda": "6.9",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47993",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "47994",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "58111",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "58112",
+  "tarifa_2024_hacienda": "8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "58113",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "60201",
+  "tarifa_2024_hacienda": "4.14",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "60202",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "64991",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "64992",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "64993",
+  "tarifa_2024_hacienda": "13.8",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "66111",
+  "tarifa_2024_hacienda": "13.1",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "66112",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "69101",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "69102",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "69201",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "69202",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "70101",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "70102",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "70201",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "70202",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "71111",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "71112",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "71121",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "71122",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "71201",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "71202",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "72101",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "72102",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "72201",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "72202",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "73201",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "73202",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "74101",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "74102",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "74901",
+  "tarifa_2024_hacienda": "8.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "74902",
+  "tarifa_2024_hacienda": "7.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "/ 8523",
+  "tarifa_2024_hacienda": "7",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "85232/8551",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "86211",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "86221",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "86911",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "86921",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "86991",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "87101",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "92001",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "93291",
+  "tarifa_2024_hacienda": "9.66",
+  "estado": "coincide"
+ },
+ {
+  "ciiu": "5330",
+  "tarifa_2024_hacienda": "11.04",
+  "estado": "coincide"
+ }
+]

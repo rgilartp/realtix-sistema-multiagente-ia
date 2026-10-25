@@ -12,10 +12,12 @@ Uso: uv run python scripts/curaduria/doble_lectura.py
 import json
 import re
 
+import pypdfium2
 import yaml
 from comun import DESCARGAS, RAIZ
 
 ICA_2027 = RAIZ / "datos" / "tarifas" / "ica_2027.yaml"
+SALIDA_265 = RAIZ / "docs" / "verificacion" / "ica_2026_doble_lectura.json"
 SALIDA = RAIZ / "docs" / "verificacion" / "ica_2027_doble_lectura.json"
 
 
@@ -35,6 +37,20 @@ def tarifas_regimen_legal() -> dict[str, str]:
         a: b
         for a, b in zip(tramo, tramo[1:], strict=False)
         if re.fullmatch(r"\d{3,6}", a) and re.fullmatch(r"\d{1,2}", b)
+    }
+
+
+def progresivas_regimen_legal() -> dict[str, tuple[str, str, str]]:
+    """Lee del texto digital las actividades financieras de tarifa progresiva (CIIU y 3 tarifas)."""
+    lineas = (RAIZ / "knowledge_base/normativa_ica/acuerdo_65_2002.md").read_text(encoding="utf-8")
+    lineas = [x.strip() for x in lineas.splitlines() if x.strip()]
+    inicio = (
+        next(i for i, x in enumerate(lineas) if "tarifa progresiva" in x) + 7
+    )  # tras el encabezado
+    fin = next(i for i, x in enumerate(lineas) if i > inicio and x.startswith("Parágrafo."))
+    tramo = lineas[inicio:fin]
+    return {
+        tramo[i + 1]: (tramo[i + 2], tramo[i + 3], tramo[i + 4]) for i in range(0, len(tramo), 5)
     }
 
 
@@ -80,6 +96,51 @@ def comparar() -> list[dict]:
     return resultados
 
 
+def tarifas_registro_distrital() -> dict[str, list[str]]:
+    """Lee del PDF del Registro Distrital 7103 la tabla de la Resolución SDH-000265 de 2021.
+
+    El texto del PDF a veces junta filas sin salto de línea; por eso se parte la tabla por el inicio
+    de cada fila (grupo, CIIU y descripción) y se toma la última serie de tarifas de cada tramo.
+    """
+    pdf = pypdfium2.PdfDocument(DESCARGAS / "registro_distrital_7103.pdf")
+    texto = "\n".join(pdf[i].get_textpage().get_text_range() for i in range(len(pdf)))
+    texto = texto.replace("\r", "")
+    tabla = texto[texto.index("304 161 Actividades de apoyo a la agricultura") :]
+    tabla = re.sub(r"(?m)^REGISTRO DISTRITAL[^\n]*\n?", "", tabla)
+    tabla = re.sub(r"\s+", " ", tabla.replace("\ufffe", "").replace("\uf0ad", ""))
+    inicios = list(
+        re.finditer(r"(?<![\d,])(\d{3}) ((?:/ )?\d{1,5}(?:/\s?\d{4})?) (?=[A-ZÁÉÍÓÚÑ¿(])", tabla)
+    )
+    serie = r"((?:\d{1,2}(?:,\d{1,2})? ){2,3}\d{1,2}(?:,\d{1,2})?)"
+    filas: dict[str, list[str]] = {}
+    for actual, siguiente in zip(inicios, [*inicios[1:], None], strict=True):
+        tramo = tabla[actual.end() : siguiente.start() if siguiente else len(tabla)]
+        tarifas = re.search(serie + r"\s*$", tramo.strip() + " ") or re.search(serie, tramo)
+        if tarifas:
+            filas[actual.group(2)] = [t.replace(",", ".") for t in tarifas.group(1).split()]
+    return filas
+
+
+def comparar_resolucion_265() -> list[dict]:
+    """Compara la tarifa de 2024 de cada CIIU entre la compilación de Hacienda y el Registro."""
+    from construir_ica_2026 import _filas_resolucion, _tarifa
+
+    _, filas = _filas_resolucion()
+    registro = tarifas_registro_distrital()
+    resultados = []
+    for fila in filas:
+        if len(fila) < 6 or not all(re.fullmatch(r"[\d ,]+", x) for x in fila[3:]):
+            continue
+        codigo, hacienda = fila[1], _tarifa(fila[-1])
+        leida = registro.get(codigo)
+        if leida is None:
+            estado = "sin_lectura_en_el_registro"
+        else:
+            estado = "coincide" if _tarifa(leida[-1]) == hacienda else "distinta"
+        resultados.append({"ciiu": codigo, "tarifa_2024_hacienda": hacienda, "estado": estado})
+    return resultados
+
+
 if __name__ == "__main__":
     resultados = comparar()
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
@@ -88,3 +149,9 @@ if __name__ == "__main__":
         print("OCR", estado, sum(r["estado"] == estado for r in resultados))
     for estado in ("coincide", "distinta", "ausente"):
         print("Régimen Legal", estado, sum(r["regimen_legal"] == estado for r in resultados))
+    res_265 = comparar_resolucion_265()
+    SALIDA_265.write_text(
+        json.dumps(res_265, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
+    )
+    for estado in ("coincide", "distinta", "sin_lectura_en_el_registro"):
+        print("Resolución 265", estado, sum(r["estado"] == estado for r in res_265))
