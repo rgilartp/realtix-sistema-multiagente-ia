@@ -1,0 +1,1945 @@
+fuente: Acuerdo 1084 de 2026, art. 21 (modifica el art. 3 del Acuerdo 65 de 2002)
+url: https://incp.org.co/?p=136894
+mes_consulta: octubre de 2026
+vigencia_desde: 2027
+vigencia_hasta: null
+verificado_por: ''
+aplicacion: Declarantes anuales desde el 1 de enero de 2027; bimestrales desde el bimestre siguiente a la aprobación
+  del acuerdo (fecha pendiente de confirmar).
+lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 27 a 44 del PDF; las diferencias se listan
+  en docs/verificacion/.'
+por_actividad:
+- ciiu: '161'
+  actividad: Actividades de apoyo a la agricultura
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '162'
+  actividad: Actividades de apoyo a la ganadería
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '164'
+  actividad: Tratamiento de semillas para propagación
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '240'
+  actividad: Servicios de apoyo a la silvicultura
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '510'
+  actividad: Extracción de hulla (carbón de piedra)
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '520'
+  actividad: Extracción de carbón lignito
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '610'
+  actividad: Extracción de petróleo crudo
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '620'
+  actividad: Extracción de gas natural
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '710'
+  actividad: Extracción de minerales de hierro
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '721'
+  actividad: Extracción de minerales de uranio y de torio
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '722'
+  actividad: Extracción de oro y otros metales preciosos
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '723'
+  actividad: Extracción de minerales de níquel
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '729'
+  actividad: Extracción de otros minerales metalíferos no ferrosos n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '811'
+  actividad: Extracción de piedra, arena, arcillas comunes, yeso y anhidrita
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '812'
+  actividad: Extracción de arcillas de uso industrial, caliza, caolín y bentonitas
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '820'
+  actividad: Extracción de esmeraldas, piedras preciosas y semipreciosas
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '891'
+  actividad: Extracción de minerales para la fabricación de abonos y productos químicos
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '892'
+  actividad: Extracción de halita (sal)
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '899'
+  actividad: Extracción de otros minerales no metálicos n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 27
+- ciiu: '910'
+  actividad: Actividades de apoyo para la extracción de petróleo y de gas natural
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '990'
+  actividad: Actividades de apoyo para otras actividades de explotación de minas y canteras
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '1011'
+  actividad: Procesamiento y conservación de carne y productos cárnicos
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1012'
+  actividad: Procesamiento y conservación de pescados, crustáceos y moluscos
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1030'
+  actividad: Elaboración de aceites y grasas de origen vegetal y animal
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1051'
+  actividad: Elaboración de productos de molinería
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1052'
+  actividad: Elaboración de almidones y productos derivados del almidón
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1061'
+  actividad: Trilla de café
+  tarifa_por_mil: '10'
+  pagina_pdf: 27
+- ciiu: '1062'
+  actividad: Descafeinado, tostión y molienda del café
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1063'
+  actividad: Elaboración de otros derivados del café
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1071'
+  actividad: Elaboración y refinación de azúcar
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1072'
+  actividad: Elaboración de panela
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1081'
+  actividad: Elaboración de productos de panadería
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1082'
+  actividad: Elaboración de cacao, chocolate y productos de confitería
+  tarifa_por_mil: '4'
+  pagina_pdf: 27
+- ciiu: '1083'
+  actividad: Elaboración de macarrones, fideos, alcuzcuz y productos farináceos similares
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1084'
+  actividad: Elaboración de comidas y platos preparados
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1089'
+  actividad: Elaboración de otros productos alimenticios n.c.p.
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1090'
+  actividad: Elaboración de alimentos preparados para animales
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1101'
+  actividad: Destilación, rectificación y mezcla de bebidas alcohólicas
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1102'
+  actividad: Elaboración de bebidas fermentadas no destiladas
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1103'
+  actividad: Producción de malta, elaboración de cervezas y otras bebidas malteadas
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1104'
+  actividad: Elaboración de bebidas no alcohólicas, producción de aguas minerales y de otras aguas embotelladas
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1200'
+  actividad: Elaboración de productos de tabaco
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1311'
+  actividad: Preparación e hilatura de fibras textiles
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1312'
+  actividad: Tejeduría de productos textiles
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1313'
+  actividad: Acabado de productos textiles
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1391'
+  actividad: Fabricación de tejidos de punto y ganchillo
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1392'
+  actividad: Confección de artículos con materiales textiles, excepto prendas de vestir
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1393'
+  actividad: Fabricación de tapetes y alfombras para pisos
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1394'
+  actividad: Fabricación de cuerdas, cordeles, cables, bramantes y redes
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1399'
+  actividad: Fabricación de otros artículos textiles n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1410'
+  actividad: Confección de prendas de vestir, excepto prendas de piel
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1511'
+  actividad: Curtido y recurtido de cueros; recurtido y teñido de pieles.
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1512'
+  actividad: Fabricación de artículos de viaje, bolsos de mano y artículos similares elaborados en cuero, y fabricación
+    de artículos de talabartería y guarnicionería.
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1513'
+  actividad: Fabricación de artículos de viaje, bolsos de mano y artículos similares; artículos de talabartería
+    y guarnicionería elaborados en otros materiales
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1521'
+  actividad: Fabricación de calzado de cuero y piel, con cualquier tipo de suela
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1522'
+  actividad: Fabricación de otros tipos de calzado, excepto calzado de cuero y piel
+  tarifa_por_mil: '4'
+  pagina_pdf: 28
+- ciiu: '1523'
+  actividad: Fabricación de partes del calzado
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1610'
+  actividad: Aserrado, acepillado e impregnación de la madera
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1620'
+  actividad: Fabricación de hojas de madera para enchapado; fabricación de tableros contrachapados, tableros laminados,
+    tableros de partículas y otros tableros y paneles
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1630'
+  actividad: Fabricación de partes y piezas de madera, de carpintería y ebanistería para la construcción y para
+    edificios
+  tarifa_por_mil: '11'
+  pagina_pdf: 28
+- ciiu: '1640'
+  actividad: Fabricación de recipientes de madera
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1690'
+  actividad: Fabricación de otros productos de madera; fabricación de artículos de corcho, cestería y espartería
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1701'
+  actividad: Fabricación de pulpas (pastas) celulósicas; papel y cartón
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1702'
+  actividad: Fabricación de papel y cartón ondulado (corrugado); fabricación de envases, empaques y de embalajes
+    de papel y cartón.
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1709'
+  actividad: Fabricación de otros artículos de papel y cartón
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1811'
+  actividad: Actividades de impresión
+  tarifa_por_mil: '10'
+  pagina_pdf: 29
+- ciiu: '1812'
+  actividad: Actividades de servicios relacionados con la impresión
+  tarifa_por_mil: '10'
+  pagina_pdf: 29
+- ciiu: '1820'
+  actividad: Producción de copias a partir de grabaciones originales
+  tarifa_por_mil: '10'
+  pagina_pdf: 29
+- ciiu: '1910'
+  actividad: Fabricación de productos de hornos de coque
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1921'
+  actividad: Fabricación de productos de la refinación del petróleo
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '1922'
+  actividad: Actividad de mezcla de combustibles
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2011'
+  actividad: Fabricación de sustancias y productos químicos básicos
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2012'
+  actividad: Fabricación de abonos y compuestos inorgánicos nitrogenados
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2013'
+  actividad: Fabricación de plásticos en formas primarias
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2014'
+  actividad: Fabricación de caucho sintético en formas primarias
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2021'
+  actividad: Fabricación de plaguicidas y otros productos químicos de uso agropecuario
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2022'
+  actividad: Fabricación de pinturas, barnices y revestimientos similares, tintas para impresión y masillas
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2023'
+  actividad: Fabricación de jabones y detergentes, preparados para limpiar y pulir; perfumes y preparados de tocador
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2029'
+  actividad: Fabricación de otros productos químicos n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2030'
+  actividad: Fabricación de fibras sintéticas y artificiales
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2100'
+  actividad: Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso
+    farmacéutico
+  tarifa_por_mil: '12'
+  pagina_pdf: 29
+- ciiu: '2211'
+  actividad: Fabricación de llantas y neumáticos de caucho
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2212'
+  actividad: Reencauche de llantas usadas
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2219'
+  actividad: Fabricación de formas básicas de caucho y otros productos de caucho n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2221'
+  actividad: Fabricación de formas básicas de plástico
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2229'
+  actividad: Fabricación de artículos de plástico n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2310'
+  actividad: Fabricación de vidrio y productos de vidrio
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2391'
+  actividad: Fabricación de productos refractarios
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2392'
+  actividad: Fabricación de materiales de arcilla para la construcción
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2393'
+  actividad: Fabricación de otros productos de cerámica y porcelana
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2394'
+  actividad: Fabricación de cemento, cal y yeso
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2395'
+  actividad: Fabricación de artículos de hormigón, cemento y yeso
+  tarifa_por_mil: '11'
+  pagina_pdf: 29
+- ciiu: '2396'
+  actividad: Corte, tallado y acabado de la piedra
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2399'
+  actividad: Fabricación de otros productos minerales no metálicos n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2410'
+  actividad: Industrias básicas de hierro y de acero
+  tarifa_por_mil: '7'
+  pagina_pdf: 30
+- ciiu: '2421'
+  actividad: Industrias básicas de metales preciosos
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2429'
+  actividad: Industrias básicas de otros metales no ferrosos
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2431'
+  actividad: Fundición de hierro y de acero
+  tarifa_por_mil: '7'
+  pagina_pdf: 30
+- ciiu: '2432'
+  actividad: Fundición de metales no ferrosos
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2511'
+  actividad: Fabricación de productos metálicos para uso estructural
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2512'
+  actividad: Fabricación de tanques, depósitos y recipientes de metal, excepto los utilizados para el envase o transporte
+    de mercancías
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2513'
+  actividad: Fabricación de generadores de vapor, excepto calderas de agua caliente para calefacción central
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2520'
+  actividad: Fabricación de armas y municiones
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2591'
+  actividad: Forja, prensado, estampado y laminado de metal; pulvimetalurgia
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2592'
+  actividad: Tratamiento y revestimiento de metales; mecanizado
+  tarifa_por_mil: '10'
+  pagina_pdf: 30
+- ciiu: '2593'
+  actividad: Fabricación de artículos de cuchillería, herramientas de mano y artículos de ferretería
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2599'
+  actividad: Fabricación de otros productos elaborados de metal n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2610'
+  actividad: Fabricación de componentes y tableros electrónicos
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2620'
+  actividad: Fabricación de computadoras y de equipo periférico
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2630'
+  actividad: Fabricación de equipos de comunicación
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2640'
+  actividad: Fabricación de aparatos electrónicos de consumo
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2651'
+  actividad: Fabricación de equipo de medición, prueba, navegación y control
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2652'
+  actividad: Fabricación de relojes
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2660'
+  actividad: Fabricación de equipo de irradiación y equipo electrónico de uso médico y terapéutico
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2670'
+  actividad: Fabricación de instrumentos ópticos y equipo fotográfico
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2680'
+  actividad: Fabricación de soportes magnéticos y ópticos
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2711'
+  actividad: Fabricación de motores, generadores y transformadores eléctricos.
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2712'
+  actividad: Fabricación de aparatos de distribución y control de la energía eléctrica
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2720'
+  actividad: Fabricación de pilas, baterías y acumuladores eléctricos
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2731'
+  actividad: Fabricación de hilos y cables eléctricos y de fibra óptica
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2732'
+  actividad: Fabricación de dispositivos de cableado
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2740'
+  actividad: Fabricación de equipos eléctricos de iluminación
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2750'
+  actividad: Fabricación de aparatos de uso doméstico
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2790'
+  actividad: Fabricación de otros tipos de equipo eléctrico n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 30
+- ciiu: '2811'
+  actividad: Fabricación de motores, turbinas, y partes para motores de combustión interna
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2812'
+  actividad: Fabricación de equipos de potencia hidráulica y neumática
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2813'
+  actividad: Fabricación de otras bombas, compresores, grifos y válvulas
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2814'
+  actividad: Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2815'
+  actividad: Fabricación de hornos, hogares y quemadores industriales
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2816'
+  actividad: Fabricación de equipo de elevación y manipulación
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2817'
+  actividad: Fabricación de maquinaria y equipo de oficina (excepto computadoras y equipo periférico)
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2818'
+  actividad: Fabricación de herramientas manuales con motor
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2819'
+  actividad: Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2821'
+  actividad: Fabricación de maquinaria agropecuaria y forestal
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2822'
+  actividad: Fabricación de máquinas formadoras de metal y de máquinas herramienta
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2823'
+  actividad: Fabricación de maquinaria para la metalurgia
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2824'
+  actividad: Fabricación de maquinaria para explotación de minas y canteras y para obras de construcción
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2825'
+  actividad: Fabricación de maquinaria para la elaboración de alimentos, bebidas y tabaco
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2826'
+  actividad: Fabricación de maquinaria para la elaboración de productos textiles, prendas de vestir y cueros
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2829'
+  actividad: Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 31
+- ciiu: '2910'
+  actividad: Fabricación de vehículos automotores y sus motores
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '2920'
+  actividad: Fabricación de carrocerías para vehículos automotores; fabricación de remolques y semirremolques
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '2930'
+  actividad: Fabricación de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3011'
+  actividad: Construcción de barcos y de estructuras flotantes
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3012'
+  actividad: Construcción de embarcaciones de recreo y deporte
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3020'
+  actividad: Fabricación de locomotoras y de material rodante para ferrocarriles
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3030'
+  actividad: Fabricación de aeronaves, naves espaciales y de maquinaria conexa
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3040'
+  actividad: Fabricación de vehículos militares de combate
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3091'
+  actividad: Fabricación de motocicletas
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3092'
+  actividad: Fabricación de bicicletas y de sillas de ruedas para personas con discapacidad
+  tarifa_por_mil: '7'
+  pagina_pdf: 31
+- ciiu: '3099'
+  actividad: Fabricación de otros tipos de equipo de transporte n.c.p.
+  tarifa_por_mil: '7'
+  pagina_pdf: 32
+- ciiu: '3110'
+  actividad: Fabricación de muebles
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3120'
+  actividad: Fabricación de colchones y somieres
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3210'
+  actividad: Fabricación de joyas, bisutería y artículos conexos
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3220'
+  actividad: Fabricación de instrumentos musicales
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3230'
+  actividad: Fabricación de artículos y equipo para la práctica del deporte (excepto prendas de vestir y calzado)
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3240'
+  actividad: Fabricación de juegos, juguetes y rompecabezas
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3250'
+  actividad: Fabricación de instrumentos, aparatos y materiales médicos y odontológicos (incluido mobiliario)
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3290'
+  actividad: Otras industrias manufactureras n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3311'
+  actividad: Mantenimiento y reparación especializado de productos elaborados en metal
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3312'
+  actividad: Mantenimiento y reparación especializado de maquinaria y equipo
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3313'
+  actividad: Mantenimiento y reparación especializado de equipo electrónico y óptico
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3314'
+  actividad: Mantenimiento y reparación especializado de equipo eléctrico
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3315'
+  actividad: Mantenimiento y reparación especializado de equipo de transporte, excepto los vehículos automotores,
+    motocicletas y bicicletas
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3319'
+  actividad: Mantenimiento y reparación de otros tipos de equipos y sus componentes n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3320'
+  actividad: Instalación especializada de maquinaria y equipo industrial
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3511'
+  actividad: Generación de energía eléctrica
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3512'
+  actividad: Transmisión de energía eléctrica
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3513'
+  actividad: Distribución de energía eléctrica
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3514'
+  actividad: Comercialización de energía eléctrica
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3530'
+  actividad: Suministro de vapor y aire acondicionado
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3700'
+  actividad: Evacuación y tratamiento de aguas residuales
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3811'
+  actividad: Recolección de desechos no peligrosos
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3812'
+  actividad: Recolección de desechos peligrosos
+  tarifa_por_mil: '10'
+  pagina_pdf: 32
+- ciiu: '3821'
+  actividad: Tratamiento y disposición de desechos no peligrosos
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3822'
+  actividad: Tratamiento y disposición de desechos peligrosos
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '3830'
+  actividad: Recuperación de materiales
+  tarifa_por_mil: '11'
+  pagina_pdf: 32
+- ciiu: '4111'
+  actividad: Construcción de edificios residenciales
+  tarifa_por_mil: '7'
+  pagina_pdf: 32
+- ciiu: '4112'
+  actividad: Construcción de edificios no residenciales
+  tarifa_por_mil: '7'
+  pagina_pdf: 32
+- ciiu: '4210'
+  actividad: Construcción de carreteras y vías de ferrocarril
+  tarifa_por_mil: '8'
+  pagina_pdf: 32
+- ciiu: '4220'
+  actividad: Construcción de proyectos de servicio público
+  tarifa_por_mil: '8'
+  pagina_pdf: 32
+- ciiu: '4290'
+  actividad: Construcción de otras obras de ingeniería civil
+  tarifa_por_mil: '8'
+  pagina_pdf: 32
+- ciiu: '4311'
+  actividad: Demolición
+  tarifa_por_mil: '7'
+  pagina_pdf: 33
+- ciiu: '4312'
+  actividad: Preparación del terreno
+  tarifa_por_mil: '7'
+  pagina_pdf: 33
+- ciiu: '4321'
+  actividad: Instalaciones eléctricas de la construcción
+  tarifa_por_mil: '7'
+  pagina_pdf: 33
+- ciiu: '4322'
+  actividad: Instalaciones de fontanería, calefacción y aire acondicionado de la construcción
+  tarifa_por_mil: '7'
+  pagina_pdf: 33
+- ciiu: '4329'
+  actividad: Otras instalaciones especializadas de la construcción
+  tarifa_por_mil: '7'
+  pagina_pdf: 33
+- ciiu: '4330'
+  actividad: Terminación y acabado de edificios y obras de ingeniería civil
+  tarifa_por_mil: '8'
+  pagina_pdf: 33
+- ciiu: '4390'
+  actividad: Otras actividades especializadas para la construcción de edificios y obras de ingeniería civil
+  tarifa_por_mil: '8'
+  pagina_pdf: 33
+- ciiu: '45111'
+  actividad: Comercio de vehículos automotores eléctricos nuevos
+  tarifa_por_mil: '8'
+  pagina_pdf: 33
+- ciiu: '45112'
+  actividad: Comercio de vehículos automotores híbridos nuevos
+  tarifa_por_mil: '10'
+  pagina_pdf: 33
+- ciiu: '45113'
+  actividad: Comercio de vehículos automotores convencionales y otros nuevos
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '45121'
+  actividad: Comercio de vehículos automotores eléctricos usados
+  tarifa_por_mil: '8'
+  pagina_pdf: 33
+- ciiu: '45122'
+  actividad: Comercio de vehículos automotores híbridos usados
+  tarifa_por_mil: '10'
+  pagina_pdf: 33
+- ciiu: '45123'
+  actividad: Comercio de vehículos automotores convencionales y otros usados
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4520'
+  actividad: Mantenimiento y reparación de vehículos automotores.
+  tarifa_por_mil: '10'
+  pagina_pdf: 33
+- ciiu: '4530'
+  actividad: Comercio de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4542'
+  actividad: Mantenimiento y reparación de motocicletas y de sus partes y piezas
+  tarifa_por_mil: '10'
+  pagina_pdf: 33
+- ciiu: '4610'
+  actividad: Comercio al por mayor a cambio de una retribución o por contrata
+  tarifa_por_mil: '10'
+  pagina_pdf: 33
+- ciiu: '4631'
+  actividad: Comercio al por mayor de productos alimenticios
+  tarifa_por_mil: '4'
+  pagina_pdf: 33
+- ciiu: '4641'
+  actividad: Comercio al por mayor de productos textiles y productos confeccionados para uso doméstico
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4642'
+  actividad: Comercio al por mayor de prendas de vestir
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4643'
+  actividad: Comercio al por mayor de calzado
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4644'
+  actividad: Comercio al por mayor de aparatos y equipo de uso doméstico
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4651'
+  actividad: Comercio al por mayor de computadores, equipo periférico y programas de informática
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4652'
+  actividad: Comercio al por mayor de equipo, partes y piezas electrónicos y de telecomunicaciones
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4653'
+  actividad: Comercio al por mayor de maquinaria y equipo agropecuarios
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4659'
+  actividad: Comercio al por mayor de otros tipos de maquinaria y equipo n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4662'
+  actividad: Comercio al por mayor de metales y productos metalíferos
+  tarifa_por_mil: '11'
+  pagina_pdf: 33
+- ciiu: '4664'
+  actividad: Comercio al por mayor de productos químicos básicos, cauchos y plásticos en formas primarias y productos
+    químicos de uso agropecuario
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4665'
+  actividad: Comercio al por mayor de desperdicios, desechos y chatarra
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4669'
+  actividad: Comercio al por mayor de otros productos n.c.p.
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4690'
+  actividad: Comercio al por mayor no especializado
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '47191'
+  actividad: Comercio al por menor en establecimientos no especializados, con surtido compuesto principalmente por
+    drogas, medicamentos, textos escolares, libros y cuadernos (excepto bebidas alcohólicas, productos de tabaco,
+    sus derivados, sucedáneos o imitadores y los dispositivos necesarios para su funcionamiento).
+  tarifa_por_mil: '4'
+  pagina_pdf: 34
+- ciiu: '4721'
+  actividad: Comercio al por menor de productos agrícolas para el consumo en establecimientos especializados
+  tarifa_por_mil: '4'
+  pagina_pdf: 34
+- ciiu: '4722'
+  actividad: Comercio al por menor de leche, productos lácteos y huevos, en establecimientos especializados
+  tarifa_por_mil: '4'
+  pagina_pdf: 34
+- ciiu: '4723'
+  actividad: Comercio al por menor de carnes (incluye aves de corral), productos cárnicos, pescados y productos
+    de mar, en establecimientos especializados
+  tarifa_por_mil: '4'
+  pagina_pdf: 34
+- ciiu: '4729'
+  actividad: Comercio al por menor de otros productos alimenticios n.c.p., en establecimientos especializados
+  tarifa_por_mil: '4'
+  pagina_pdf: 34
+- ciiu: '4731'
+  actividad: Comercio al por menor de combustible para automotores
+  tarifa_por_mil: '13'
+  pagina_pdf: 34
+- ciiu: '4732'
+  actividad: Comercio al por menor de lubricantes (aceites, grasas), aditivos y productos de limpieza para vehículos
+    automotores
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4741'
+  actividad: Comercio al por menor de computadores, equipos periféricos, programas de informática y equipos de telecomunicaciones
+    en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4742'
+  actividad: Comercio al por menor de equipos y aparatos de sonido y de video, en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4751'
+  actividad: Comercio al por menor de productos textiles en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4753'
+  actividad: Comercio al por menor de tapices, alfombras y recubrimientos para paredes y pisos en establecimientos
+    especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4754'
+  actividad: Comercio al por menor de electrodomésticos y gasodomésticos de uso doméstico, muebles y equipos de
+    iluminación en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4755'
+  actividad: Comercio al por menor de artículos y utensilios de uso doméstico en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4759'
+  actividad: Comercio al por menor de otros artículos domésticos en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 34
+- ciiu: '4762'
+  actividad: Comercio al por menor de artículos deportivos, en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4769'
+  actividad: Comercio al por menor de otros artículos culturales y de entretenimiento n.c.p. en establecimientos
+    especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4771'
+  actividad: Comercio al por menor de prendas de vestir y sus accesorios (incluye artículos de piel) en establecimientos
+    especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4772'
+  actividad: Comercio al por menor de todo tipo de calzado y artículos de cuero y sucedáneos del cuero en establecimientos
+    especializados.
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4774'
+  actividad: Comercio al por menor de otros productos nuevos en establecimientos especializados
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4775'
+  actividad: Comercio al por menor de artículos de segunda mano
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4782'
+  actividad: Comercio al por menor de productos textiles, prendas de vestir y calzado, en puestos de venta móviles
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4789'
+  actividad: Comercio al por menor de otros productos en puestos de venta móviles
+  tarifa_por_mil: '11'
+  pagina_pdf: 35
+- ciiu: '4911'
+  actividad: Transporte férreo de pasajeros
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '4912'
+  actividad: Transporte férreo de carga
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '4921'
+  actividad: Transporte de pasajeros
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '4922'
+  actividad: Transporte mixto
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '4923'
+  actividad: Transporte de carga por carretera
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '4930'
+  actividad: Transporte por tuberías
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5011'
+  actividad: Transporte de pasajeros marítimo y de cabotaje
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5012'
+  actividad: Transporte de carga marítimo y de cabotaje
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5021'
+  actividad: Transporte fluvial de pasajeros
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5022'
+  actividad: Transporte fluvial de carga
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5111'
+  actividad: Transporte aéreo nacional de pasajeros
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5112'
+  actividad: Transporte aéreo internacional de pasajeros
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5121'
+  actividad: Transporte aéreo nacional de carga
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5122'
+  actividad: Transporte aéreo internacional de carga
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5210'
+  actividad: Almacenamiento y depósito
+  tarifa_por_mil: '10'
+  pagina_pdf: 35
+- ciiu: '5221'
+  actividad: Actividades de estaciones, vías y servicios complementarios para el transporte terrestre
+  tarifa_por_mil: '10'
+  pagina_pdf: 35
+- ciiu: '5222'
+  actividad: Actividades de puertos y servicios complementarios para el transporte acuático
+  tarifa_por_mil: '4'
+  pagina_pdf: 35
+- ciiu: '5223'
+  actividad: Actividades de aeropuertos, servicios de navegación aérea y demás actividades conexas al transporte
+    aéreo
+  tarifa_por_mil: '10'
+  pagina_pdf: 35
+- ciiu: '5224'
+  actividad: Manipulación de carga
+  tarifa_por_mil: '10'
+  pagina_pdf: 35
+- ciiu: '5229'
+  actividad: Otras actividades complementarias al transporte
+  tarifa_por_mil: '10'
+  pagina_pdf: 35
+- ciiu: '5310'
+  actividad: Actividades postales nacionales
+  tarifa_por_mil: '10'
+  pagina_pdf: 35
+- ciiu: '5320'
+  actividad: Actividades de mensajería y los servicios de entrega a domicilio con redes de distribución propia
+  tarifa_por_mil: '10'
+  pagina_pdf: 36
+- ciiu: '5330'
+  actividad: Servicio de pedido, compra, distribución y entrega a través de terceros
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5511'
+  actividad: Alojamiento en hoteles
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5512'
+  actividad: Alojamiento en aparta-hoteles
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5513'
+  actividad: Alojamiento en centros vacacionales
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5514'
+  actividad: Alojamiento rural
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5519'
+  actividad: Otros tipos de alojamientos para visitantes
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5520'
+  actividad: Actividades de zonas de camping y parques para vehículos recreacionales
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5530'
+  actividad: Servicio por horas de alojamiento
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5590'
+  actividad: Otros tipos de alojamiento n.c.p.
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5611'
+  actividad: Expendio a la mesa de comidas preparadas
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5612'
+  actividad: Expendio por autoservicio de comidas preparadas
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5613'
+  actividad: Expendio de comidas preparadas en cafeterías
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5619'
+  actividad: Otros tipos de expendio de comidas preparadas n.c.p.
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5621'
+  actividad: Catering para eventos
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5629'
+  actividad: Actividades de otros servicios de comidas
+  tarifa_por_mil: '12'
+  pagina_pdf: 36
+- ciiu: '5630'
+  actividad: Expendio de bebidas alcohólicas para el consumo dentro del establecimiento
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5812'
+  actividad: Edición de directorios y listas de correo
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5813'
+  actividad: Edición de periódicos, revistas y otras publicaciones periódicas
+  tarifa_por_mil: '4'
+  pagina_pdf: 36
+- ciiu: '5819'
+  actividad: Otros trabajos de edición
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5820'
+  actividad: Edición de programas de informática (software)
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5911'
+  actividad: Actividades de producción de películas cinematográficas, videos, programas, anuncios y comerciales
+    de televisión (excepto programación de televisión)
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5912'
+  actividad: Actividades de postproducción de películas cinematográficas, videos, programas, anuncios y comerciales
+    de televisión (excepto programación de televisión)
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '5913'
+  actividad: Actividades de distribución de películas cinematográficas, videos, programas, anuncios y comerciales
+    de televisión
+  tarifa_por_mil: '10'
+  pagina_pdf: 36
+- ciiu: '5914'
+  actividad: Actividades de exhibición de películas cinematográficas y videos
+  tarifa_por_mil: '7'
+  pagina_pdf: 36
+- ciiu: '5920'
+  actividad: Actividades de grabación de sonido y edición de música
+  tarifa_por_mil: '11'
+  pagina_pdf: 36
+- ciiu: '6010'
+  actividad: Actividades de programación y transmisión en el servicio de radiodifusión sonora
+  tarifa_por_mil: '4'
+  pagina_pdf: 36
+- ciiu: '6110'
+  actividad: Actividades de telecomunicaciones alámbricas
+  tarifa_por_mil: '10'
+  pagina_pdf: 36
+- ciiu: '6120'
+  actividad: Actividades de telecomunicaciones inalámbricas
+  tarifa_por_mil: '10'
+  pagina_pdf: 36
+- ciiu: '6130'
+  actividad: Actividades de telecomunicación satelital
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6190'
+  actividad: Otras actividades de telecomunicaciones
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6201'
+  actividad: Actividades de desarrollo de sistemas informáticos (planificación, análisis, diseño, programación,
+    pruebas)
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6202'
+  actividad: Actividades de consultoría informática y actividades de administración de instalaciones informáticas
+  tarifa_por_mil: '7'
+  pagina_pdf: 37
+- ciiu: '6209'
+  actividad: Otras actividades de tecnologías de información y actividades de servicios informáticos
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6311'
+  actividad: Procesamiento de datos, alojamiento (hosting) y actividades relacionadas
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6312'
+  actividad: Portales Web
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6391'
+  actividad: Actividades de agencias de noticias
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6399'
+  actividad: Otras actividades de servicio de información n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6424'
+  actividad: Actividades de las cooperativas financieras
+  tarifa_por_mil: '13'
+  pagina_pdf: 37
+- ciiu: '6492'
+  actividad: Actividades financieras de fondos de empleados y otras formas asociativas del sector solidario
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6629'
+  actividad: Evaluación de riesgos y daños, y otras actividades de servicios auxiliares
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6810'
+  actividad: Actividades inmobiliarias realizadas con bienes propios o arrendados
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6820'
+  actividad: Actividades inmobiliarias realizadas a cambio de una retribución o por contrata
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '6910'
+  actividad: Actividades jurídicas
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '6920'
+  actividad: Actividades de contabilidad, teneduría de libros, auditoría financiera y asesoría tributaria
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7010'
+  actividad: Actividades de administración empresarial
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7020'
+  actividad: Actividades de consultoría de gestión
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7111'
+  actividad: Actividades de arquitectura
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7112'
+  actividad: Actividades de ingeniería y otras actividades conexas de consultoría técnica
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7120'
+  actividad: Ensayos y análisis técnicos
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7210'
+  actividad: Investigaciones y desarrollo experimental en el campo de las ciencias naturales y la ingeniería
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7220'
+  actividad: Investigaciones y desarrollo experimental en el campo de las ciencias sociales y las humanidades
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7310'
+  actividad: Publicidad
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '7320'
+  actividad: Estudios de mercado y realización de encuestas de opinión pública
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7410'
+  actividad: Actividades especializadas de diseño
+  tarifa_por_mil: '8'
+  pagina_pdf: 37
+- ciiu: '7420'
+  actividad: Actividades de fotografía
+  tarifa_por_mil: '10'
+  pagina_pdf: 37
+- ciiu: '7490'
+  actividad: Otras actividades profesionales, científicas y técnicas n.c.p.
+  tarifa_por_mil: '8'
+  pagina_pdf: 38
+- ciiu: '7500'
+  actividad: Actividades veterinarias
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7710'
+  actividad: Alquiler y arrendamiento de vehículos automotores
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7721'
+  actividad: Alquiler y arrendamiento de equipo recreativo y deportivo
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7722'
+  actividad: Alquiler de videos y discos
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7729'
+  actividad: Alquiler y arrendamiento de otros efectos personales y enseres domésticos n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7730'
+  actividad: Alquiler y arrendamiento de otros tipos de maquinaria, equipo y bienes tangibles n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7740'
+  actividad: Arrendamiento de propiedad intelectual y productos similares, excepto obras protegidas por derechos
+    de autor
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7810'
+  actividad: Actividades de agencias de gestión y colocación de empleo
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7820'
+  actividad: Actividades de empresas de servicios temporales
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7830'
+  actividad: Otras actividades de provisión de talento humano
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7911'
+  actividad: Actividades de las agencias de viaje
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7912'
+  actividad: Actividades de operadores turísticos
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '7990'
+  actividad: Otros servicios de reserva y actividades relacionadas
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8010'
+  actividad: Actividades de seguridad privada
+  tarifa_por_mil: '13'
+  pagina_pdf: 38
+- ciiu: '8020'
+  actividad: Actividades de servicios de sistemas de seguridad
+  tarifa_por_mil: '13'
+  pagina_pdf: 38
+- ciiu: '8030'
+  actividad: Actividades de detectives e investigadores privados
+  tarifa_por_mil: '13'
+  pagina_pdf: 38
+- ciiu: '8110'
+  actividad: Actividades combinadas de apoyo a instalaciones
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8121'
+  actividad: Limpieza general interior de edificios
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8129'
+  actividad: Otras actividades de limpieza de edificios e instalaciones industriales
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8130'
+  actividad: Actividades de paisajismo y servicios de mantenimiento conexos
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8211'
+  actividad: Actividades combinadas de servicios administrativos de oficina
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8219'
+  actividad: Fotocopiado, preparación de documentos y otras actividades especializadas de apoyo a oficina
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8220'
+  actividad: Actividades de centros de llamadas (Call center)
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8230'
+  actividad: Organización de convenciones y eventos comerciales
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8291'
+  actividad: Actividades de agencias de cobranza y oficinas de calificación crediticia
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8292'
+  actividad: Actividades de envase y empaque
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8299'
+  actividad: Otras actividades de servicio de apoyo a las empresas n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 38
+- ciiu: '8511'
+  actividad: Educación de la primera infancia
+  tarifa_por_mil: '7'
+  pagina_pdf: 38
+- ciiu: '8512'
+  actividad: Educación preescolar
+  tarifa_por_mil: '7'
+  pagina_pdf: 38
+- ciiu: '8513'
+  actividad: Educación básica primaria
+  tarifa_por_mil: '7'
+  pagina_pdf: 38
+- ciiu: '8521'
+  actividad: Educación básica secundaria
+  tarifa_por_mil: '7'
+  pagina_pdf: 38
+- ciiu: '8522'
+  actividad: Educación media académica
+  tarifa_por_mil: '7'
+  pagina_pdf: 38
+- ciiu: '8523'
+  actividad: Educación media técnica
+  tarifa_por_mil: '7'
+  pagina_pdf: 39
+- ciiu: '8530'
+  actividad: Establecimientos que combinan diferentes niveles de educación inicial, preescolar, básica primaria,
+    básica secundaria y media
+  tarifa_por_mil: '7'
+  pagina_pdf: 39
+- ciiu: '8541'
+  actividad: Educación técnica profesional
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8542'
+  actividad: Educación tecnológica
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8543'
+  actividad: Educación de instituciones universitarias o de escuelas tecnológicas
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8544'
+  actividad: Educación de universidades
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8551'
+  actividad: Formación para el trabajo
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8552'
+  actividad: Enseñanza deportiva y recreativa
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8553'
+  actividad: Enseñanza cultural
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8559'
+  actividad: Otros tipos de educación n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8560'
+  actividad: Actividades de apoyo a la educación
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '8610'
+  actividad: Actividades de hospitales y clínicas, con internación
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '86211'
+  actividad: Actividades de la práctica médica, sin internación (excepto actividades de promoción y prevención que
+    realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública
+    o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '86221'
+  actividad: Actividades de la práctica odontológica, sin internación (excepto actividades de promoción y prevención
+    que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública
+    o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '86911'
+  actividad: Actividades de apoyo diagnóstico (excepto actividades de promoción y prevención que realicen las entidades
+    e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos
+    que provengan del Sistema General de Seguridad Social en Salud.)
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '86921'
+  actividad: Actividades de apoyo terapéutico (excepto actividades de promoción y prevención que realicen las entidades
+    e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos
+    que provengan del Sistema General de Seguridad Social en Salud.)
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '86991'
+  actividad: Otras actividades de atención de la salud humana (excepto actividades de promoción y prevención que
+    realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública
+    o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  tarifa_por_mil: '10'
+  pagina_pdf: 39
+- ciiu: '87101'
+  actividad: Actividades de atención residencial medicalizada de tipo general (excepto actividades de promoción
+    y prevención que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza
+    pública o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '8720'
+  actividad: Actividades de atención residencial, para el cuidado de pacientes con retardo mental, enfermedad mental
+    y consumo de sustancias psicoactivas
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '8730'
+  actividad: Actividades de atención en instituciones para el cuidado de personas mayores y/o discapacitadas
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '8790'
+  actividad: Otras actividades de atención en instituciones con alojamiento
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '8810'
+  actividad: Actividades de asistencia social sin alojamiento para personas mayores y discapacitadas
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '8891'
+  actividad: Actividades de guarderías para niños y niñas
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '8899'
+  actividad: Otras actividades de asistencia social n.c.p
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '92001'
+  actividad: Actividades de juegos de destreza, habilidad, conocimiento y fuerza
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9321'
+  actividad: Actividades de parques de atracciones y parques temáticos
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '93291'
+  actividad: Otras actividades recreativas y de esparcimiento n.c.p. (excepto juegos de suerte y azar, discotecas
+    y similares )
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9411'
+  actividad: Actividades de asociaciones empresariales y de empleadores
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9499'
+  actividad: Actividades de otras asociaciones n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9511'
+  actividad: Mantenimiento y reparación de computadores y de equipo periférico
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9512'
+  actividad: Mantenimiento y reparación de equipos de comunicación
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9521'
+  actividad: Mantenimiento y reparación de aparatos electrónicos de consumo
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9522'
+  actividad: Mantenimiento y reparación de aparatos domésticos y equipos domésticos y de jardinería
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9523'
+  actividad: Reparación de calzado y artículos de cuero
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9524'
+  actividad: Reparación de muebles y accesorios para el hogar
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9529'
+  actividad: Mantenimiento y reparación de otros efectos personales y enseres domésticos
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9601'
+  actividad: Lavado y limpieza, incluso la limpieza en seco, de productos textiles y de piel
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9602'
+  actividad: Peluquería y otros tratamientos de belleza
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9603'
+  actividad: Pompas fúnebres y actividades relacionadas
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '9609'
+  actividad: Otras actividades de servicios personales n.c.p.
+  tarifa_por_mil: '10'
+  pagina_pdf: 40
+- ciiu: '10201'
+  actividad: Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos (excepto elaboración de
+    jugos de frutas)
+  tarifa_por_mil: '4'
+  pagina_pdf: 40
+- ciiu: '10202'
+  actividad: Elaboración de jugos de frutas
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '10401'
+  actividad: Elaboración de productos lácteos (excepto bebidas)
+  tarifa_por_mil: '4'
+  pagina_pdf: 41
+- ciiu: '10402'
+  actividad: Elaboración de bebidas lácteas
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '14201'
+  actividad: Fabricación de prendas de vestir de piel
+  tarifa_por_mil: '4'
+  pagina_pdf: 41
+- ciiu: '14202'
+  actividad: Fabricación de artículos de piel (excepto prendas de vestir)
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '14301'
+  actividad: Fabricación de prendas de vestir de punto y ganchillo
+  tarifa_por_mil: '4'
+  pagina_pdf: 41
+- ciiu: '14302'
+  actividad: Fabricación de artículos de punto y ganchillo (excepto prendas de vestir)
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '35202'
+  actividad: Distribución de combustibles gaseosos por tuberías
+  tarifa_por_mil: '10'
+  pagina_pdf: 41
+- ciiu: '35201'
+  actividad: Producción de gas
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '36002'
+  actividad: Distribución de agua
+  tarifa_por_mil: '10'
+  pagina_pdf: 41
+- ciiu: '36001'
+  actividad: Captación y tratamiento de agua
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '39001'
+  actividad: Actividades de saneamiento ambiental y otros servicios de gestión de desechos (excepto los servicios
+    prestados por contratistas de construcción, constructores y urbanizadores)
+  tarifa_por_mil: '10'
+  pagina_pdf: 41
+- ciiu: '39002'
+  actividad: Actividades de saneamiento ambiental y otros de gestión de desechos prestados por contratistas de construcción,
+    constructores y urbanizadores
+  tarifa_por_mil: '7'
+  pagina_pdf: 41
+- ciiu: '454111'
+  actividad: Comercio de motocicletas eléctrica
+  tarifa_por_mil: '8'
+  pagina_pdf: 41
+- ciiu: '454112'
+  actividad: Comercio de motocicletas híbrida
+  tarifa_por_mil: '10'
+  pagina_pdf: 41
+- ciiu: '454113'
+  actividad: Comercio de motocicletas convencionales y otras
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '45412'
+  actividad: Comercio de partes, piezas y accesorios de motocicletas
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '46201'
+  actividad: Comercio al por mayor de materias primas agrícolas en bruto (alimentos)
+  tarifa_por_mil: '4'
+  pagina_pdf: 41
+- ciiu: '46202'
+  actividad: Comercio al por mayor de materias primas pecuarias y animales vivos
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '46321'
+  actividad: Comercio al por mayor de bebidas no alcohólicas
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '46322'
+  actividad: Comercio al por mayor de bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores
+    y los dispositivos necesarios para su funcionamiento
+  tarifa_por_mil: '19'
+  pagina_pdf: 41
+- ciiu: '46451'
+  actividad: Comercio al por mayor de productos farmacéuticos y medicinales
+  tarifa_por_mil: '4'
+  pagina_pdf: 41
+- ciiu: '46452'
+  actividad: Comercio al por mayor de productos cosméticos y de tocador (excepto productos farmacéuticos y medicinales)
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '46491'
+  actividad: Comercio al por mayor de otros utensilios domésticos n.c.p. (excepto joyas)
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '46492'
+  actividad: Venta de joyas
+  tarifa_por_mil: '13'
+  pagina_pdf: 41
+- ciiu: '46612'
+  actividad: Comercio al por mayor de combustibles derivados del petróleo
+  tarifa_por_mil: '13'
+  pagina_pdf: 41
+- ciiu: '46611'
+  actividad: Comercio al por mayor de combustibles sólidos, líquidos, gaseosos y productos conexos (excepto combustibles
+    derivados del petróleo)
+  tarifa_por_mil: '11'
+  pagina_pdf: 41
+- ciiu: '46631'
+  actividad: Comercio al por mayor de materiales de construcción
+  tarifa_por_mil: '7'
+  pagina_pdf: 42
+- ciiu: '46632'
+  actividad: Comercio al por mayor de artículos de ferretería, pinturas, productos de vidrio, equipo y materiales
+    de fontanería y calefacción
+  tarifa_por_mil: '11'
+  pagina_pdf: 42
+- ciiu: '47111'
+  actividad: Comercio al por menor en establecimientos no especializados con surtido compuesto principalmente por
+    alimentos, bebidas no alcohólicas
+  tarifa_por_mil: '4'
+  pagina_pdf: 42
+- ciiu: '47112'
+  actividad: Comercio al por menor en establecimientos no especializados con surtido compuesto principalmente por
+    bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores y los dispositivos necesarios
+    para su funcionamiento
+  tarifa_por_mil: '19'
+  pagina_pdf: 42
+- ciiu: '47241'
+  actividad: Comercio al por menor de bebidas en establecimientos especializados (excepto bebidas alcohólicas, productos
+    de tabaco, sus derivados, sucedáneos o imitadores y los dispositivos necesarios para su funcionamiento)
+  tarifa_por_mil: '11'
+  pagina_pdf: 42
+- ciiu: '47242'
+  actividad: Comercio al por menor de bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores
+    y los dispositivos necesarios para su funcionamiento
+  tarifa_por_mil: '19'
+  pagina_pdf: 42
+- ciiu: '47521'
+  actividad: Comercio al por menor de materiales de construcción
+  tarifa_por_mil: '7'
+  pagina_pdf: 42
+- ciiu: '47522'
+  actividad: Comercio al por menor de artículos de ferretería, pinturas y productos de vidrio en establecimientos
+    especializados (excepto materiales de construcción)
+  tarifa_por_mil: '11'
+  pagina_pdf: 42
+- ciiu: '47611'
+  actividad: Comercio al por menor y al por mayor de libros, textos escolares y cuadernos
+  tarifa_por_mil: '4'
+  pagina_pdf: 42
+- ciiu: '47612'
+  actividad: Comercio al por menor de periódicos, materiales y artículos de papelería y escritorio, en establecimientos
+    especializados (excepto libros, textos escolares y cuadernos)
+  tarifa_por_mil: '11'
+  pagina_pdf: 42
+- ciiu: '47731'
+  actividad: Comercio al por menor de productos farmacéuticos y medicinales en establecimientos especializados
+  tarifa_por_mil: '4'
+  pagina_pdf: 42
+- ciiu: '47732'
+  actividad: Comercio al por menor de productos cosméticos y artículos de tocador en establecimientos especializados
+    (excepto productos farmacéuticos y medicinales)
+  tarifa_por_mil: '11'
+  pagina_pdf: 42
+- ciiu: '47811'
+  actividad: Comercio al por menor de alimentos en puestos de venta móviles
+  tarifa_por_mil: '4'
+  pagina_pdf: 42
+- ciiu: '47812'
+  actividad: Comercio al por menor de bebidas en puestos de venta móviles (excepto bebidas alcohólicas, productos
+    de tabaco, sus derivados, sucedáneos o imitadores y los dispositivos necesarios para su funcionamiento)
+  tarifa_por_mil: '11'
+  pagina_pdf: 42
+- ciiu: '47813'
+  actividad: Comercio al por menor de bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores
+    y los dispositivos necesarios para su funcionamiento en puestos de venta móviles
+  tarifa_por_mil: '19'
+  pagina_pdf: 43
+- ciiu: '47911'
+  actividad: Comercio al por menor de alimentos y productos agrícolas en bruto; venta de textos escolares y libros
+    (incluye cuadernos escolares); venta de drogas y medicamentos realizado a través de internet
+  tarifa_por_mil: '4'
+  pagina_pdf: 43
+- ciiu: '47912'
+  actividad: Comercio al por menor y al por mayor de madera y materiales para construcción realizado a través de
+    internet
+  tarifa_por_mil: '7'
+  pagina_pdf: 43
+- ciiu: '47913'
+  actividad: Comercio al por menor de bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores
+    y los dispositivos necesarios para su funcionamiento realizado a través de internet
+  tarifa_por_mil: '19'
+  pagina_pdf: 43
+- ciiu: '47914'
+  actividad: Comercio al por menor de combustibles derivados del petróleo y venta de joyas realizado a través de
+    internet
+  tarifa_por_mil: '13'
+  pagina_pdf: 43
+- ciiu: '47915'
+  actividad: Comercio al por menor de demás productos n.c.p., venta de automotores (incluidas motocicletas) realizado
+    a través de internet
+  tarifa_por_mil: '11'
+  pagina_pdf: 43
+- ciiu: '47921'
+  actividad: Comercio al por menor de alimentos y productos agrícolas en bruto; venta de textos escolares y libros
+    (incluye cuadernos escolares); venta de drogas y medicamentos realizado a través de casas de venta o por correo
+  tarifa_por_mil: '4'
+  pagina_pdf: 43
+- ciiu: '47922'
+  actividad: Comercio al por menor y al por mayor de madera y materiales para construcción realizado a través de
+    casas de venta o por correo
+  tarifa_por_mil: '7'
+  pagina_pdf: 43
+- ciiu: '47923'
+  actividad: Comercio al por menor de bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores
+    y los dispositivos necesarios para su funcionamiento realizado a través de casas de venta o por correo
+  tarifa_por_mil: '19'
+  pagina_pdf: 43
+- ciiu: '47924'
+  actividad: Comercio al por menor de combustibles derivados del petróleo y venta de joyas realizado a través de
+    casas de venta o por correo
+  tarifa_por_mil: '13'
+  pagina_pdf: 43
+- ciiu: '47925'
+  actividad: Comercio al por menor de demás productos n.c.p.; venta de automotores (incluidas motocicletas) realizado
+    a través de casas de venta o por correo
+  tarifa_por_mil: '11'
+  pagina_pdf: 43
+- ciiu: '47991'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de textos escolares y libros (incluye cuadernos escolares); venta de drogas y medicamentos
+  tarifa_por_mil: '4'
+  pagina_pdf: 43
+- ciiu: '47992'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de materiales para construcción
+  tarifa_por_mil: '7'
+  pagina_pdf: 43
+- ciiu: '47993'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de combustibles derivados del petróleo y venta de joyas
+  tarifa_por_mil: '13'
+  pagina_pdf: 44
+- ciiu: '47994'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de bebidas alcohólicas, productos de tabaco, sus derivados, sucedáneos o imitadores y los dispositivos necesarios
+    para su funcionamiento
+  tarifa_por_mil: '19'
+  pagina_pdf: 44
+- ciiu: '47995'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de demás productos n.c.p.; venta de automotores (incluidas motocicletas)
+  tarifa_por_mil: '11'
+  pagina_pdf: 44
+- ciiu: '58111'
+  actividad: Servicio de edición de libros
+  tarifa_por_mil: '4'
+  pagina_pdf: 44
+- ciiu: '58112'
+  actividad: Edición y publicación de libros
+  tarifa_por_mil: '4'
+  pagina_pdf: 44
+- ciiu: '60201'
+  actividad: Actividades de programación de televisión
+  tarifa_por_mil: '4'
+  pagina_pdf: 44
+- ciiu: '60202'
+  actividad: Actividades de transmisión de televisión
+  tarifa_por_mil: '10'
+  pagina_pdf: 44
+demas_actividades:
+- clase: servicios
+  tarifa_por_mil: '10'
+- clase: comerciales
+  tarifa_por_mil: '11'
+- clase: industriales
+  tarifa_por_mil: '11'
+progresiva_financiera:
+- ciiu: '6411'
+  actividad: Banca Central
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6412'
+  actividad: Bancos comerciales
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6421'
+  actividad: Actividades de las corporaciones financieras
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6422'
+  actividad: Actividades de las compañías de financiamiento
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6423'
+  actividad: Banca de segundo piso
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6431'
+  actividad: Fideicomisos, fondos y entidades financieras similares
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6491'
+  actividad: Leasing financiero (arrendamiento financiero)
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6493'
+  actividad: Actividades de compra de cartera o factoring
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6494'
+  actividad: Otras actividades de distribución de fondos
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6495'
+  actividad: Instituciones especiales oficiales
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44
+- ciiu: '6496'
+  actividad: Capitalización
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 44

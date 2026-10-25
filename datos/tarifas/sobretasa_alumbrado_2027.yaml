@@ -1,0 +1,32 @@
+fuente: Acuerdo 1084 de 2026, arts. 13 a 15 (sobretasa de alumbrado público)
+url: https://incp.org.co/?p=136894
+mes_consulta: octubre de 2026
+verificado_por: ''
+vigencia_desde: 2027
+vigencia_hasta: null
+lectura: 'Doble lectura: OCR e imagen de las páginas 19 y 20 del PDF.'
+diferencias_ocr:
+- pagina: 20
+  ocr: residenciales 500 UVT
+  imagen: residenciales 600 UVT
+  se_usa: imagen
+base_gravable: La misma del predial (art. 13); 100 % del avalúo catastral para los beneficiarios de las
+  exenciones de los arts. 3, 4, 5 y 8
+tarifas_por_mil:
+- categoria: residencial_estratos_1_2_3_hasta_20000_uvt_no_urbanizables_areas_protegidas_rural_depositos_y_parqueaderos
+  de_2027_a_2041: '0'
+  desde_2042: '0'
+- categoria: residencial_estratos_1_2_3_mas_de_20000_uvt_y_estratos_4_5_6
+  de_2027_a_2041: '0.4'
+  desde_2042: '0.2'
+- categoria: dotacional_urbanizables_no_urbanizados_o_no_edificados
+  de_2027_a_2041: '0.8'
+  desde_2042: '0.6'
+- categoria: comercial_financiero_e_industrial
+  de_2027_a_2041: '1'
+  desde_2042: '0.8'
+topes_uvt:
+- categoria: residenciales
+  valor_limite_uvt: 600
+- categoria: demas_predios
+  valor_limite_uvt: 1200

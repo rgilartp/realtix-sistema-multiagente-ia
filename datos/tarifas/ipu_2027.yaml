@@ -1,0 +1,204 @@
+fuente: Acuerdo 1084 de 2026, art. 20 (modifica el art. 2 del Acuerdo 105 de 2003)
+url: https://incp.org.co/?p=136894
+mes_consulta: octubre de 2026
+verificado_por: ''
+vigencia_desde: 2027
+vigencia_hasta: null
+lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 21 a 24 del PDF; ver diferencias.'
+diferencias_ocr:
+- pagina: 22
+  ocr: estarán excluidos los predios de estratos 1 y 2 con base gravable inferior a 186 SMMLV
+  imagen: inferior a 16 SMMLV
+  se_usa: imagen
+advertencia: Los rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica;
+  la estimación de 2027 usa esta tabla tal como está.
+preferenciales:
+  unidad_base: SMMLV
+  residencial_urbano_y_rural_agropecuario:
+  - estratos:
+    - 1
+    - 2
+    desde: 16 SMMLV
+    hasta: 107 SMMLV
+    tarifa_por_mil: '1'
+  - estratos:
+    - 1
+    - 2
+    desde: más de 107 SMMLV
+    hasta: 135 SMMLV
+    tarifa_por_mil: '3'
+  - estratos:
+    - 3
+    desde: $1
+    hasta: 135 SMMLV
+    tarifa_por_mil: '3'
+  residencial_rural:
+  - desde: 16 SMMLV
+    hasta: 107 SMMLV
+    tarifa_por_mil: '1'
+  - desde: más de 107 SMMLV
+    hasta: 135 SMMLV
+    tarifa_por_mil: '3'
+  - desde: más de 135 SMMLV
+    hasta: null
+    tarifa_por_mil: '6.5'
+  excluidos: Estratos 1 y 2 (urbanos, rurales agropecuarios y residenciales rurales) con base gravable
+    inferior a 16 SMMLV
+generales:
+  residencial:
+  - desde: 1
+    hasta: 194307000
+    tarifa_por_mil: '5.5'
+  - desde: 194307001
+    hasta: 207062000
+    tarifa_por_mil: '5.6'
+  - desde: 207062001
+    hasta: 238375000
+    tarifa_por_mil: '5.7'
+  - desde: 238375001
+    hasta: 269690000
+    tarifa_por_mil: '5.8'
+  - desde: 269690001
+    hasta: 301005000
+    tarifa_por_mil: '5.9'
+  - desde: 301005001
+    hasta: 332318000
+    tarifa_por_mil: '6'
+  - desde: 332318001
+    hasta: 363632000
+    tarifa_por_mil: '6.1'
+  - desde: 363632001
+    hasta: 394946000
+    tarifa_por_mil: '6.2'
+  - desde: 394946001
+    hasta: 447136000
+    tarifa_por_mil: '6.3'
+  - desde: 447136001
+    hasta: 499330000
+    tarifa_por_mil: '6.4'
+  - desde: 499330001
+    hasta: 551518000
+    tarifa_por_mil: '6.5'
+  - desde: 551518001
+    hasta: 603709000
+    tarifa_por_mil: '6.6'
+  - desde: 603709001
+    hasta: 655899000
+    tarifa_por_mil: '6.8'
+  - desde: 655899001
+    hasta: 708090000
+    tarifa_por_mil: '7'
+  - desde: 708090001
+    hasta: 760279000
+    tarifa_por_mil: '7.2'
+  - desde: 760279001
+    hasta: 812470000
+    tarifa_por_mil: '7.4'
+  - desde: 812470001
+    hasta: 864660000
+    tarifa_por_mil: '7.6'
+  - desde: 864660001
+    hasta: 937727000
+    tarifa_por_mil: '7.8'
+  - desde: 937727001
+    hasta: 1010794000
+    tarifa_por_mil: '8'
+  - desde: 1010794001
+    hasta: 1083859000
+    tarifa_por_mil: '8.2'
+  - desde: 1083859001
+    hasta: 1156929000
+    tarifa_por_mil: '8.4'
+  - desde: 1156929001
+    hasta: 1229992000
+    tarifa_por_mil: '8.6'
+  - desde: 1229992001
+    hasta: 1303058000
+    tarifa_por_mil: '8.8'
+  - desde: 1303058001
+    hasta: 1376126000
+    tarifa_por_mil: '9'
+  - desde: 1376126001
+    hasta: 1449192000
+    tarifa_por_mil: '9.2'
+  - desde: 1449192001
+    hasta: 1710142000
+    tarifa_por_mil: '9.5'
+  - desde: 1710142001
+    hasta: 1971099000
+    tarifa_por_mil: '10.1'
+  - desde: 1971099001
+    hasta: 2232051000
+    tarifa_por_mil: '10.8'
+  - desde: 2232051001
+    hasta: 2505139000
+    tarifa_por_mil: '11.5'
+  - desde: 2505139001
+    hasta: 3188881000
+    tarifa_por_mil: '12.3'
+  - desde: 3188881001
+    hasta: 4411881000
+    tarifa_por_mil: '13.1'
+  - desde: 4411881001
+    hasta: null
+    tarifa_por_mil: '13.9'
+  no_residencial:
+  - destino: comercial
+    tarifa_por_mil: '8'
+    desde: 1
+    hasta: 363264000
+  - destino: comercial
+    tarifa_por_mil: '9.5'
+    desde: 363264001
+    hasta: null
+  - destino: financiero
+    tarifa_por_mil: '16'
+    desde: 1
+    hasta: null
+  - destino: industrial
+    tarifa_por_mil: '10'
+    desde: 1
+    hasta: null
+  - destino: depositos_y_parqueaderos_accesorios_hasta_30_m2
+    tarifa_por_mil: '5'
+    desde: 1
+    hasta: 6832000
+  - destino: depositos_y_parqueaderos_accesorios_hasta_30_m2
+    tarifa_por_mil: '8'
+    desde: 6832001
+    hasta: null
+  - destino: urbanizables_no_urbanizados_y_urbanizables_no_edificados
+    tarifa_por_mil: '12'
+    desde: 1
+    hasta: 63048000
+  - destino: urbanizables_no_urbanizados_y_urbanizables_no_edificados
+    tarifa_por_mil: '33'
+    desde: 63048001
+    hasta: null
+  - destino: pequena_propiedad_rural_produccion_agropecuaria
+    tarifa_por_mil: '4'
+    desde: 1
+    hasta: null
+  - destino: no_urbanizables
+    tarifa_por_mil: '5'
+    desde: 1
+    hasta: null
+  - destino: rural
+    tarifa_por_mil: '4'
+    desde: 1
+    hasta: 135
+    unidad: SMMLV
+  - destino: rural
+    tarifa_por_mil: '6.5'
+    desde: 135
+    hasta: null
+    unidad: SMMLV
+    desde_exclusivo: true
+  - destino: dotacional_entes_publicos
+    tarifa_por_mil: '5'
+    desde: 1
+    hasta: null
+  - destino: dotacional_particulares
+    tarifa_por_mil: '6.5'
+    desde: 1
+    hasta: null
