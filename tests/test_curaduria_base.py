@@ -191,7 +191,7 @@ def test_la_resolucion_265_trae_las_celdas_corregidas() -> None:
         ("normativa_ipu", "acuerdo_780_2020.md", "son de 2020"),
         ("normativa_ica", "acuerdo_65_2002.md", "desde el bimestre 6 de 2026"),
         ("normativa_ica", "acuerdo_1084_2026_ica.md", "1 de enero de 2027"),
-        ("normativa_ica", "acuerdo_1019_2025_ica.md", "vigencia 2026"),
+        ("normativa_ica", "acuerdo_1019_2025_ica.md", "todo el año gravable 2026"),
     ],
 )
 def test_los_archivos_que_mezclan_anios_dicen_para_cual_rige_cada_parte(
@@ -238,3 +238,39 @@ def test_el_art_44_del_acuerdo_1019_esta_en_la_coleccion_del_ica() -> None:
     articulo = _articulo(texto, 44)
     assert "Texto anterior, no vigente" in articulo
     assert "| 3(sic) | 30 |" in articulo
+
+
+def test_la_ley_14_trae_cada_capitulo_al_inicio_del_articulo_que_encabeza() -> None:
+    texto = _norma("normativa_ica", "ley_14_1983.md")
+    for numero, articulo in _articulos(texto):
+        final = [linea for linea in articulo.strip().splitlines() if linea.strip()][3:][-3:]
+        assert not any(re.match(r"CAP[ÍI]TULO\b", linea) for linea in final), numero
+    assert (
+        _articulo(texto, 32).lstrip().startswith("CAPÍTULO II\n\nImpuesto de Industria y Comercio")
+    )
+    assert _articulo(texto, 41).lstrip().startswith("CAPÍTULO III")
+    assert len(re.findall(r"(?m)^CAPÍTULO [IVX]+$", texto)) >= 7
+
+
+@pytest.mark.parametrize(
+    ("coleccion", "archivo", "numero", "frases"),
+    [
+        ("normativa_ipu", "decreto_639_2025.md", 207, ["derogó el Acuerdo 77 de 2002", "art. 15"]),
+        ("normativa_ica", "decreto_639_2025_ica.md", 205, ["art. 26", "1 de enero de 2027"]),
+        ("normativa_ipu", "decreto_639_2025.md", 205, ["art. 26", "1 de enero de 2027"]),
+    ],
+)
+def test_los_articulos_del_decreto_639_dicen_hasta_cuando_rigen(
+    coleccion: str, archivo: str, numero: int, frases: list[str]
+) -> None:
+    articulo = _articulo(_norma(coleccion, archivo), numero)
+    assert "**Vigencia.**" in articulo
+    assert all(frase in articulo for frase in frases)
+
+
+def test_el_acuerdo_648_y_el_105_dicen_que_rige_para_el_predial_de_2026_y_de_2027() -> None:
+    encabezado_648 = _norma("normativa_ipu", "acuerdo_648_2016.md").split("\n## Artículo ")[0]
+    assert "art. 20" in encabezado_648 and "reemplaza las tablas de su art. 1" in encabezado_648
+    encabezado_105 = _norma("normativa_ipu", "acuerdo_105_2003.md").split("\n## Artículo ")[0]
+    assert "Acuerdo 897 de 2023" in encabezado_105
+    assert "Resolución SDH-000194 de 2025" in encabezado_105

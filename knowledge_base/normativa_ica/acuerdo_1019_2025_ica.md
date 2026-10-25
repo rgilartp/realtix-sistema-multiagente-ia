@@ -2,7 +2,7 @@
 
 Fuente: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818 (consultada en octubre de 2026)
 
-> **Vigencia por año gravable.** El art. 44 fijó el ICA consolidado del régimen SIMPLE para la vigencia 2026, hasta que el art. 52 del Acuerdo 1084 de 2026 lo derogó; desde el 1 de enero de 2027 aplica el art. 24 del Acuerdo 1084.
+> **Vigencia por año gravable.** El art. 44 rige para todo el año gravable 2026 (ica_2026.yaml, regimen_simple_2026). El art. 52 del Acuerdo 1084 de 2026 lo derogó y desde el 1 de enero de 2027 aplica el art. 24 (adenda 06, sección 3.3).
 
 ## Artículo 44
 

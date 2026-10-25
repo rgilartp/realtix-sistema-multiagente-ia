@@ -24,6 +24,9 @@ preferenciales:
   - Acuerdo 780 de 2020, art. 3, parágrafo 2 («Se mantienen las tarifas preferenciales del 1 y 3 por mil, del Acuerdo
     648 de 2016…»)
   - Decreto 639 de 2025, art. 207 (estratos 1 y 2 con avalúo igual o menor a 16 SMMLV no declaran ni pagan)
+  nota_del_art_207: El art. 52 del Acuerdo 1084 de 2026 derogó el Acuerdo 77 de 2002, que cita el art. 207 del
+    Decreto 639 de 2025. El predial se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15), así
+    que para 2026 rige el art. 207 y desde 2027 la exclusión de los estratos 1 y 2 está en el art. 20 del Acuerdo 1084.
   aplica_a: Predios residenciales de los estratos 1, 2 y 3 cuyo avalúo catastral sea hasta 135 SMMLV
   unidad_base: SMMLV
   smmlv_del_anio_gravable:

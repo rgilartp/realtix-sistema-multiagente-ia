@@ -394,6 +394,30 @@ def recortar_cierre(contenido: str) -> str:
     return contenido
 
 
+def mover_divisiones(cortes: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Pasa «CAPÍTULO II / Impuesto de Industria y Comercio» del final de un artículo al inicio del
+    siguiente cuando es el que sigue en la numeración; en el último, lo quita.
+
+    Solo toca los encabezados en minúsculas: los de todo en mayúsculas los quita
+    `sin_titulos_finales`.
+    """
+    resultado = list(cortes)
+    for i, (numero, texto) in enumerate(resultado):
+        if sin_titulos_finales(texto) != texto.rstrip():
+            continue
+        lineas = texto.rstrip().splitlines()
+        con_texto = [j for j, linea in enumerate(lineas) if linea.strip()]
+        inicio = next((j for j in con_texto[-3:] if _DIVISION.match(lineas[j].strip())), None)
+        if not inicio:
+            continue
+        division = "\n".join(lineas[inicio:]).strip()
+        resultado[i] = (numero, "\n".join(lineas[:inicio]).rstrip())
+        siguiente = resultado[i + 1] if i + 1 < len(resultado) else None
+        if siguiente and siguiente[0].isdigit() and int(siguiente[0]) == int(numero) + 1:
+            resultado[i + 1] = (siguiente[0], f"{division}\n\n{siguiente[1]}")
+    return resultado
+
+
 def sin_titulos_finales(contenido: str) -> str:
     """Quita del final de un artículo los títulos de la sección que sigue (TÍTULO, CAPÍTULO…)."""
     lineas = contenido.rstrip().splitlines()
@@ -473,6 +497,7 @@ def convertir() -> dict[str, dict]:
             resultado[fuente["id"]] = {"estado": "sin_articulos", "articulos": 0}
             continue
         cortes[-1] = (cortes[-1][0], recortar_cierre(cortes[-1][1]))
+        cortes = mover_divisiones(cortes)
         cortes = [(n, sin_titulos_finales(t)) for n, t in cortes]
         destino = KNOWLEDGE_BASE / fuente["coleccion"]
         destino.mkdir(parents=True, exist_ok=True)

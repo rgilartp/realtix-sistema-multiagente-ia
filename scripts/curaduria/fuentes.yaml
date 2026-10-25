@@ -104,6 +104,13 @@ fuentes:
         Este artículo remite a los incisos de incrementos máximos del Acuerdo 648 de 2016, derogados por el
         parágrafo del art. 285 del Acuerdo 927 de 2024; los topes vigentes son los de la Ley 1995 de 2019,
         art. 2, según la adenda 06, sección 3.3.
+      "207": >-
+        El art. 52 del Acuerdo 1084 de 2026 derogó el Acuerdo 77 de 2002, que este artículo cita. El predial
+        se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15), de modo que para 2026 rige
+        este texto y desde 2027 la exclusión de los estratos 1 y 2 está en el art. 20 del Acuerdo 1084.
+      "205": >-
+        Rige para el año gravable 2026. Desde el 1 de enero de 2027 los regímenes del ICA son los del art. 26
+        del Acuerdo 1084 de 2026.
   - id: acuerdo_648_2016
     norma: Acuerdo 648 de 2016
     coleccion: normativa_ipu
@@ -115,7 +122,8 @@ fuentes:
       Los rangos en pesos de este acuerdo no son los de 2026, que están en la Resolución SDH-000194 de 2025
       (el art. 1 los ajusta cada año). Las tarifas preferenciales del art. 1 siguen vigentes (Acuerdo 780 de
       2020, art. 3, parágrafo 2). Los incisos de incrementos máximos están derogados por el parágrafo del
-      art. 285 del Acuerdo 927 de 2024, según la nota del Régimen Legal.
+      art. 285 del Acuerdo 927 de 2024, según la nota del Régimen Legal. Desde el predial de 2027, el art. 20
+      del Acuerdo 1084 de 2026 reemplaza las tablas de su art. 1.
   - id: decreto_352_2002_cap1
     norma: Decreto Distrital 352 de 2002, cap. I
     coleccion: normativa_ipu
@@ -138,7 +146,9 @@ fuentes:
     vigencia: >-
       El texto nuevo del art. 2 es el del art. 20 del Acuerdo 1084 de 2026 y rige desde el predial de 2027;
       el texto original de 2003, que aparece más abajo, no rige. Fuente: adenda 06, sección 3.3, y las notas
-      del Régimen Legal.
+      del Régimen Legal. Para el predial de 2026 rige el texto anterior del artículo: el art. 1 del Acuerdo
+      648 de 2016 y el Acuerdo 897 de 2023, con los rangos de la Resolución SDH-000194 de 2025 (así lo dice
+      otras_categorias_no_transcritas en ipu_2026.yaml).
   - id: acuerdo_780_2020
     norma: Acuerdo 780 de 2020, art. 3
     coleccion: normativa_ipu
@@ -274,6 +284,10 @@ fuentes:
     url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
     formato: html
     articulos: ["205"]
+    notas_de_articulo:
+      "205": >-
+        Rige para el año gravable 2026. Desde el 1 de enero de 2027 los regímenes del ICA son los del art. 26
+        del Acuerdo 1084 de 2026.
     nota: Declaración anual del ICA de los contribuyentes con menos de 391 UVT. Fuente fuera de la tabla de la sección 5 de la especificación, copiada del art. 205 que ya está en normativa_ipu.
   - id: acuerdo_1019_2025_ica
     norma: Acuerdo 1019 de 2025, art. 44
@@ -284,6 +298,6 @@ fuentes:
     texto_anterior:
       "44": lo derogó el art. 52 del Acuerdo 1084 de 2026 (desde 2027 el ICA consolidado del SIMPLE está en el art. 24)
     vigencia: >-
-      El art. 44 fijó el ICA consolidado del régimen SIMPLE para la vigencia 2026, hasta que el art. 52 del
-      Acuerdo 1084 de 2026 lo derogó; desde el 1 de enero de 2027 aplica el art. 24 del Acuerdo 1084.
+      El art. 44 rige para todo el año gravable 2026 (ica_2026.yaml, regimen_simple_2026). El art. 52 del
+      Acuerdo 1084 de 2026 lo derogó y desde el 1 de enero de 2027 aplica el art. 24 (adenda 06, sección 3.3).
     nota: Fuente fuera de la tabla de la sección 5 de la especificación; sirve para verificar el SIMPLE de 2026 con su texto.
