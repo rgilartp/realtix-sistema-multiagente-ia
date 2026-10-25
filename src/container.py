@@ -8,6 +8,8 @@ cada una como propiedad perezosa.
 from functools import cached_property, lru_cache
 
 from src.config import Settings, cargar_configuracion
+from src.data.adapter import MockRealSitAdapter, RealSitAdapter
+from src.store.almacen import Almacen, crear_motor
 
 
 class Contenedor:
@@ -20,6 +22,22 @@ class Contenedor:
     def settings(self) -> Settings:
         """Configuración inyectada o, si no la hay, leída del entorno."""
         return self._settings or cargar_configuracion()
+
+    @cached_property
+    def almacen(self) -> Almacen:
+        """Almacén propio en PostgreSQL (SQLite en las pruebas unitarias); crea las tablas."""
+        almacen = Almacen(crear_motor(self.settings.database_url.get_secret_value()))
+        almacen.crear_esquema()
+        return almacen
+
+    @cached_property
+    def adaptador(self) -> RealSitAdapter:
+        """Adaptador de RealSit (sintético, solo lectura); los casos van al almacén propio."""
+        return MockRealSitAdapter(
+            self.settings.realsit_db_path,
+            registro_casos=self.almacen,
+            vigencia=self.settings.vigencia_actual,
+        )
 
 
 @lru_cache(maxsize=1)
