@@ -2,6 +2,9 @@
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
 
 # Python y uv
 __pycache__/
