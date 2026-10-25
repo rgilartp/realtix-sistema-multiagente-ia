@@ -2,11 +2,9 @@
 
 Fuente: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818 (consultada en octubre de 2026)
 
-> **Vigencia por año gravable.** El art. 44 rige para todo el año gravable 2026 (ica_2026.yaml, regimen_simple_2026). El art. 52 del Acuerdo 1084 de 2026 lo derogó y desde el 1 de enero de 2027 aplica el art. 24 (adenda 06, sección 3.3).
+> **Vigencia por año gravable.** El art. 44 fija las tarifas del ICA consolidado del régimen SIMPLE «para … la vigencia 2026», es decir, para todo el año gravable 2026. El art. 52 del Acuerdo 1084 de 2026 lo derogó y el art. 24 de ese acuerdo dice «A partir del 1° de enero de 2027»: desde esa fecha aplica el art. 24.
 
 ## Artículo 44
-
-> **Texto anterior, no vigente.** Este artículo lo derogó el art. 52 del Acuerdo 1084 de 2026 (desde 2027 el ICA consolidado del SIMPLE está en el art. 24); el texto vigente está en esa norma, cargada en la base de conocimiento.
 
 Artículo 44. Derogado por el art. 52, Acuerdo Distrital 1084 de 2026.
 

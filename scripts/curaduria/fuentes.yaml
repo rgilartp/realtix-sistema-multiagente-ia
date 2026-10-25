@@ -103,7 +103,7 @@ fuentes:
       "45": >-
         Este artículo remite a los incisos de incrementos máximos del Acuerdo 648 de 2016, derogados por el
         parágrafo del art. 285 del Acuerdo 927 de 2024; los topes vigentes son los de la Ley 1995 de 2019,
-        art. 2, según la adenda 06, sección 3.3.
+        art. 2, vigente por la Ley 2294 de 2023, art. 49, parágrafo 3.
       "207": >-
         El art. 52 del Acuerdo 1084 de 2026 derogó el Acuerdo 77 de 2002, que este artículo cita. El predial
         se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15), de modo que para 2026 rige
@@ -130,6 +130,11 @@ fuentes:
     url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
     formato: html
     articulos: capitulo_1
+    notas_de_articulo:
+      "25": >-
+        Estas tarifas son las de 2002. Las del predial de 2026 y 2027 están en el art. 2 del Acuerdo 105 de
+        2003: para 2026, su texto anterior (Acuerdo 648 de 2016, art. 1, y Acuerdo 897 de 2023, con los rangos
+        de la Resolución SDH-000194 de 2025) y desde el predial de 2027, el art. 20 del Acuerdo 1084 de 2026.
   - id: decreto_807_1993_ipu
     norma: Decreto Distrital 807 de 1993
     coleccion: normativa_ipu
@@ -144,11 +149,13 @@ fuentes:
     formato: html
     articulos: ["2"]
     vigencia: >-
-      El texto nuevo del art. 2 es el del art. 20 del Acuerdo 1084 de 2026 y rige desde el predial de 2027;
-      el texto original de 2003, que aparece más abajo, no rige. Fuente: adenda 06, sección 3.3, y las notas
-      del Régimen Legal. Para el predial de 2026 rige el texto anterior del artículo: el art. 1 del Acuerdo
-      648 de 2016 y el Acuerdo 897 de 2023, con los rangos de la Resolución SDH-000194 de 2025 (así lo dice
-      otras_categorias_no_transcritas en ipu_2026.yaml).
+      El texto nuevo del art. 2 es el del art. 20 del Acuerdo 1084 de 2026 y rige desde el predial de 2027:
+      el predial se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15) y el acuerdo
+      rige desde su publicación (art. 52). El texto original de 2003, que aparece más abajo, no rige. Para
+      el predial de 2026 rige el texto anterior del artículo: el art. 3 de la Resolución SDH-000194 de 2025
+      cita «el artículo 2° del Acuerdo Distrital 105 de 2003, modificado por el artículo 1° del Acuerdo
+      Distrital 648 de 2016 y el artículo 2° del Acuerdo Distrital 897 de 2023», con los rangos de esa
+      resolución.
   - id: acuerdo_780_2020
     norma: Acuerdo 780 de 2020, art. 3
     coleccion: normativa_ipu
@@ -224,6 +231,15 @@ fuentes:
     url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
     formato: html
     articulos: capitulo_2
+    notas_de_articulo:
+      "53": >-
+        Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Las que rigen en 2026
+        están en el art. 3 del Acuerdo 65 de 2002 y sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021) y
+        desde 2027, en el art. 21 del Acuerdo 1084 de 2026.
+      "55": >-
+        Los rangos en pesos de este artículo son los de 2002. Las fechas del régimen de 2026 están en el art. 1
+        de la Resolución SDH-000195 de 2025 y desde 2027 los regímenes son los del art. 26 del Acuerdo 1084
+        de 2026.
     reemplazos:
       - de: "RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS\n\n| AÑO | DIARIOS | DIARIOS |"
         a: "| Rango de ingresos netos, desde | Rango de ingresos netos, hasta | Número de salarios mínimos diarios |"
@@ -253,7 +269,13 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965
     formato: html
     articulos: ["6", "7"]
-    nota: Fuente del ICA de 2026 aprobada por Rodolfo en la parada de B2. El art. 7 lo derogó el art. 52 del Acuerdo 1084.
+    notas_de_articulo:
+      "7": >-
+        Rige para el año gravable 2026 de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los
+        bimestrales. El art. 52 del Acuerdo 1084 de 2026 lo derogó, y según el parágrafo del art. 21 de ese
+        acuerdo las tarifas del art. 21 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales
+        desde el bimestre 6 de 2026.
+      nota: Fuente del ICA de 2026 aprobada por Rodolfo en la parada de B2. El art. 7 lo derogó el art. 52 del Acuerdo 1084.
   - id: acuerdo_816_2021
     norma: Acuerdo 816 de 2021, art. 4
     coleccion: normativa_ica
@@ -267,6 +289,11 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=10597
     formato: html
     articulos: ["1", "2", "3"]
+    vigencia: >-
+      El art. 52 del Acuerdo 1084 de 2026 derogó este acuerdo completo. Rige para el año gravable 2026 de los
+      declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales; según el parágrafo del
+      art. 21 de ese acuerdo, las tarifas del art. 21 se aplican a los anuales desde el 1 de enero de 2027 y
+      a los bimestrales desde el bimestre 6 de 2026.
     nota: Tarifa de la edición y publicación de libros; lo derogó el art. 52 del Acuerdo 1084. Fuente del ICA de 2026 aprobada por Rodolfo en la parada de B2.
   - id: resolucion_sdh_000265_2021
     norma: Resolución SDH-000265 de 2021, art. 1
@@ -301,9 +328,8 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818
     formato: html
     articulos: ["44"]
-    texto_anterior:
-      "44": lo derogó el art. 52 del Acuerdo 1084 de 2026 (desde 2027 el ICA consolidado del SIMPLE está en el art. 24)
     vigencia: >-
-      El art. 44 rige para todo el año gravable 2026 (ica_2026.yaml, regimen_simple_2026). El art. 52 del
-      Acuerdo 1084 de 2026 lo derogó y desde el 1 de enero de 2027 aplica el art. 24 (adenda 06, sección 3.3).
+      El art. 44 fija las tarifas del ICA consolidado del régimen SIMPLE «para … la vigencia 2026», es decir,
+      para todo el año gravable 2026. El art. 52 del Acuerdo 1084 de 2026 lo derogó y el art. 24 de ese
+      acuerdo dice «A partir del 1° de enero de 2027»: desde esa fecha aplica el art. 24.
     nota: Fuente fuera de la tabla de la sección 5 de la especificación; sirve para verificar el SIMPLE de 2026 con su texto.

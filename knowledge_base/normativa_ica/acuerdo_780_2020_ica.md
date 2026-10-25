@@ -21,6 +21,8 @@ Parágrafo. Para las demás actividades industriales, comerciales y de servicios
 
 ## Artículo 7
 
+> **Vigencia.** Rige para el año gravable 2026 de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales. El art. 52 del Acuerdo 1084 de 2026 lo derogó, y según el parágrafo del art. 21 de ese acuerdo las tarifas del art. 21 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales desde el bimestre 6 de 2026.
+
 ARTÍCULO 7. Derogado por el art. 52, Acuerdo Distrital 1084 de 2026.
 
 El texto original del artículo era el siguiente:

@@ -484,9 +484,7 @@ def _con_tabla_transcrita(contenido: str, archivo: str) -> str:
     tabla = (INSERCIONES / archivo).read_text(encoding="utf-8").strip()
     return (
         f"{contenido[: corte.end()].rstrip()}\n\n"
-        "> **Tabla transcrita.** El PDF trae esta tabla como texto suelto; se transcribió desde "
-        "`datos/tarifas/ipu_2026.yaml`, que se contrastó con el PDF fila por fila "
-        "(`scripts/curaduria/contrastar_rangos.py`).\n\n"
+        "> **Tabla transcrita del PDF de la resolución y contrastada con él fila por fila.**\n\n"
         f"{tabla}"
     )
 

@@ -236,7 +236,7 @@ def test_el_art_205_del_decreto_639_esta_tambien_en_la_coleccion_del_ica() -> No
 def test_el_art_44_del_acuerdo_1019_esta_en_la_coleccion_del_ica() -> None:
     texto = _norma("normativa_ica", "acuerdo_1019_2025_ica.md")
     articulo = _articulo(texto, 44)
-    assert "Texto anterior, no vigente" in articulo
+    assert "Texto anterior, no vigente" not in articulo
     assert "| 3(sic) | 30 |" in articulo
 
 
@@ -272,5 +272,47 @@ def test_el_acuerdo_648_y_el_105_dicen_que_rige_para_el_predial_de_2026_y_de_202
     encabezado_648 = _norma("normativa_ipu", "acuerdo_648_2016.md").split("\n## Artículo ")[0]
     assert "art. 20" in encabezado_648 and "reemplaza las tablas de su art. 1" in encabezado_648
     encabezado_105 = _norma("normativa_ipu", "acuerdo_105_2003.md").split("\n## Artículo ")[0]
-    assert "Acuerdo 897 de 2023" in encabezado_105
+    assert "Acuerdo Distrital 897 de 2023" in encabezado_105
     assert "Resolución SDH-000194 de 2025" in encabezado_105
+
+
+def test_la_base_no_cita_archivos_ni_documentos_internos_del_proyecto() -> None:
+    for ruta in NORMAS:
+        texto = ruta.read_text(encoding="utf-8")
+        for interno in (".yaml", "datos/", "scripts/", "adenda"):
+            assert interno not in texto, (ruta.name, interno)
+
+
+@pytest.mark.parametrize(
+    ("coleccion", "archivo", "numero"),
+    [
+        ("normativa_ica", "acuerdo_780_2020_ica.md", 7),
+    ],
+)
+def test_el_art_7_del_acuerdo_780_dice_hasta_cuando_rige(
+    coleccion: str, archivo: str, numero: int
+) -> None:
+    articulo = _articulo(_norma(coleccion, archivo), numero)
+    assert "bimestres 1 a 5 de 2026" in articulo and "art. 52" in articulo
+
+
+def test_el_acuerdo_98_y_el_1019_dicen_para_que_periodos_rigen() -> None:
+    acuerdo_98 = _norma("normativa_ica", "acuerdo_98_2003.md").split("\n## Artículo ")[0]
+    assert "derogó este acuerdo completo" in acuerdo_98 and "bimestres 1 a 5 de 2026" in acuerdo_98
+    acuerdo_1019 = _norma("normativa_ica", "acuerdo_1019_2025_ica.md")
+    assert "A partir del 1° de enero de 2027" in acuerdo_1019.split("\n## Artículo ")[0]
+
+
+@pytest.mark.parametrize(
+    ("archivo", "colecciones", "numero", "frase"),
+    [
+        ("decreto_352_2002_cap1.md", "normativa_ipu", 25, "Acuerdo 105 de 2003"),
+        ("decreto_352_2002_cap2.md", "normativa_ica", 53, "Acuerdo 65 de 2002"),
+        ("decreto_352_2002_cap2.md", "normativa_ica", 55, "Resolución SDH-000195 de 2025"),
+    ],
+)
+def test_las_tarifas_antiguas_del_decreto_352_dicen_de_que_anio_son(
+    archivo: str, colecciones: str, numero: int, frase: str
+) -> None:
+    articulo = _articulo(_norma(colecciones, archivo), numero)
+    assert "**Vigencia.**" in articulo and frase in articulo

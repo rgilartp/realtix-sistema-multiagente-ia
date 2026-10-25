@@ -50,7 +50,7 @@ conformidad con lo establecido en el inciso 4° del artículo 1° del Acuerdo Di
 tarifarios y para la liquidación del impuesto predial unificado correspondiente al año
 gravable 2026, son los siguientes:
 
-> **Tabla transcrita.** El PDF trae esta tabla como texto suelto; se transcribió desde `datos/tarifas/ipu_2026.yaml`, que se contrastó con el PDF fila por fila (`scripts/curaduria/contrastar_rangos.py`).
+> **Tabla transcrita del PDF de la resolución y contrastada con él fila por fila.**
 
 | Categoría y destino hacendario | Tarifa por mil | Desde | Hasta |
 |---|---|---|---|
@@ -70,7 +70,7 @@ los predios de propiedad de los clubes sociales, campestres, deportivos o recrea
 efectos tarifarios y de liquidación del impuesto predial unificado del año gravable 2026,
 serán los siguientes:
 
-> **Tabla transcrita.** El PDF trae esta tabla como texto suelto; se transcribió desde `datos/tarifas/ipu_2026.yaml`, que se contrastó con el PDF fila por fila (`scripts/curaduria/contrastar_rangos.py`).
+> **Tabla transcrita del PDF de la resolución y contrastada con él fila por fila.**
 
 | Tarifa por mil (destino 66) | Desde | Hasta |
 |---|---|---|

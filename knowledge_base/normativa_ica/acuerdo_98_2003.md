@@ -2,6 +2,8 @@
 
 Fuente: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=10597 (consultada en octubre de 2026)
 
+> **Vigencia por año gravable.** El art. 52 del Acuerdo 1084 de 2026 derogó este acuerdo completo. Rige para el año gravable 2026 de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales; según el parágrafo del art. 21 de ese acuerdo, las tarifas del art. 21 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales desde el bimestre 6 de 2026.
+
 ## Artículo 1
 
 Artículo 1. Tarifa del impuesto de industria y comercio, avisos y tableros para la actividad industrial de edición y publicación de libros: Para la actividad industrial de edición y publicación de libros, la tarifa aplicable será del 4,14 por mil.

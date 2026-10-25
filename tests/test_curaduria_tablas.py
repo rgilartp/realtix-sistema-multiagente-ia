@@ -205,7 +205,7 @@ def test_la_resolucion_194_trae_transcritas_las_tablas_de_los_arts_2_y_3_sin_la_
     articulos = _articulos(texto)
     assert "dane.gov.co" not in texto
     for numero, filas in (("2", 6), ("3", 10)):
-        assert "**Tabla transcrita.**" in articulos[numero]
+        assert "**Tabla transcrita del PDF de la resolución" in articulos[numero]
         assert [len(t) - 1 for t in _tablas(articulos[numero])] == [filas]
     assert "| Comercial (62) | 9,5 | $ 363.264.001 | $ - |" in articulos["2"]
     assert articulos["4"].strip().endswith("PUBLÍQUESE Y CÚMPLASE")  # cierre sin firmas

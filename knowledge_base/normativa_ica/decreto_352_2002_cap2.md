@@ -260,6 +260,8 @@ ARTÍCULO 52. PRESUNCIONES EN EL IMPUESTO DE INDUSTRIA Y COMERCIO. Para efectos 
 
 ## Artículo 53
 
+> **Vigencia.** Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Las que rigen en 2026 están en el art. 3 del Acuerdo 65 de 2002 y sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021) y desde 2027, en el art. 21 del Acuerdo 1084 de 2026.
+
 ARTÍCULO 53. TARIFAS DEL IMPUESTO DE INDUSTRIA Y COMERCIO. Las tarifas del impuesto de industria y comercio según la actividad son las siguientes y serán aplicables a partir de la entrada en vigencia del Acuerdo 65 de 2002:
 
 | a. Actividades Industriales | Tarifa 2002 (Por mil) | Tarifa 2003 y siguientes (Por mil) |
@@ -287,6 +289,8 @@ ARTÍCULO 53. TARIFAS DEL IMPUESTO DE INDUSTRIA Y COMERCIO. Las tarifas del impu
 ARTÍCULO 54. TARIFAS POR VARIAS ACTIVIDADES. Cuando un mismo contribuyente realice varias actividades, ya sean varias comerciales, varias industriales, varias de servicios o industriales con comerciales, industriales con servicios, comerciales con servicios o cualquier otra combinación, a las que de conformidad con lo previsto en el presente decreto correspondan diversas tarifas, determinará la base gravable de cada una de ellas y aplicará la tarifa correspondiente. El resultado de cada operación se sumará para determinar el impuesto a cargo del contribuyente. La administración no podrá exigir la aplicación de tarifas sobre la base del sistema de actividad predominante.
 
 ## Artículo 55
+
+> **Vigencia.** Los rangos en pesos de este artículo son los de 2002. Las fechas del régimen de 2026 están en el art. 1 de la Resolución SDH-000195 de 2025 y desde 2027 los regímenes son los del art. 26 del Acuerdo 1084 de 2026.
 
 ARTÍCULO 55. SISTEMA PREFERENCIAL DEL IMPUESTO DE INDUSTRIA, COMERCIO, AVISOS Y TABLEROS PARA LOS CONTRIBUYENTES DEL RÉGIMEN SIMPLIFICADO. De conformidad con lo previsto en el artículo 4 del Acuerdo 65 de 2002, hasta el 31 de diciembre de 2002, para los contribuyentes que cumplan con las condiciones para pertenecer al régimen simplificado del impuesto de industria, comercio, avisos y tableros, el valor de su impuesto será en salarios mínimos diarios vigentes, según sus ingresos netos anuales, conforme a la siguiente tabla:
 
