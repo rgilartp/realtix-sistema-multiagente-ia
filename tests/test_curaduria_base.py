@@ -316,3 +316,25 @@ def test_las_tarifas_antiguas_del_decreto_352_dicen_de_que_anio_son(
 ) -> None:
     articulo = _articulo(_norma(colecciones, archivo), numero)
     assert "**Vigencia.**" in articulo and frase in articulo
+
+
+def test_las_notas_del_predial_citan_el_acuerdo_780_y_el_art_20_dice_desde_cuando() -> None:
+    encabezado = _norma("normativa_ipu", "acuerdo_105_2003.md").split("\n## Artículo ")[0]
+    assert (
+        "inciso 4 del art. 1 del Acuerdo 648 de 2016 y en el art. 3 del Acuerdo 780" in encabezado
+    )
+    art_25 = _articulo(_norma("normativa_ipu", "decreto_352_2002_cap1.md"), 25)
+    assert "Acuerdo 780 de 2020, art. 3, para los residenciales urbanos" in art_25
+    art_20 = _articulo(_norma("normativa_ipu", "acuerdo_1084_2026.md"), 20)
+    assert "**Vigencia.** Las tarifas de este artículo rigen desde el predial de 2027" in art_20
+    assert "parágrafo 2 del art. 3 del Acuerdo 780 de 2020" in art_20
+
+
+def test_la_nota_del_art_53_del_decreto_352_dice_que_los_bimestrales_cambian_en_el_bimestre_6() -> (
+    None
+):
+    art_53 = _articulo(_norma("normativa_ica", "decreto_352_2002_cap2.md"), 53)
+    assert (
+        "bimestres 1 a 5 de 2026" in art_53
+        and "bimestre 6 de 2026 (parágrafo del art. 21)" in art_53
+    )

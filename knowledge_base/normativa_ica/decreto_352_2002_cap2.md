@@ -260,7 +260,7 @@ ARTÍCULO 52. PRESUNCIONES EN EL IMPUESTO DE INDUSTRIA Y COMERCIO. Para efectos 
 
 ## Artículo 53
 
-> **Vigencia.** Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Las que rigen en 2026 están en el art. 3 del Acuerdo 65 de 2002 y sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021) y desde 2027, en el art. 21 del Acuerdo 1084 de 2026.
+> **Vigencia.** Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Para el año gravable 2026 de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales rigen las del art. 3 del Acuerdo 65 de 2002 con sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021); las del art. 21 del Acuerdo 1084 de 2026 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales desde el bimestre 6 de 2026 (parágrafo del art. 21).
 
 ARTÍCULO 53. TARIFAS DEL IMPUESTO DE INDUSTRIA Y COMERCIO. Las tarifas del impuesto de industria y comercio según la actividad son las siguientes y serán aplicables a partir de la entrada en vigencia del Acuerdo 65 de 2002:
 

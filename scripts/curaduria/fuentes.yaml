@@ -133,8 +133,8 @@ fuentes:
     notas_de_articulo:
       "25": >-
         Estas tarifas son las de 2002. Las del predial de 2026 y 2027 están en el art. 2 del Acuerdo 105 de
-        2003: para 2026, su texto anterior (Acuerdo 648 de 2016, art. 1, y Acuerdo 897 de 2023, con los rangos
-        de la Resolución SDH-000194 de 2025) y desde el predial de 2027, el art. 20 del Acuerdo 1084 de 2026.
+        2003: para 2026, su texto anterior (Acuerdo 648 de 2016, art. 1; Acuerdo 780 de 2020, art. 3, para los
+        residenciales urbanos, y Acuerdo 897 de 2023, con los rangos de la Resolución SDH-000194 de 2025) y desde el predial de 2027, el art. 20 del Acuerdo 1084 de 2026.
   - id: decreto_807_1993_ipu
     norma: Decreto Distrital 807 de 1993
     coleccion: normativa_ipu
@@ -155,7 +155,8 @@ fuentes:
       el predial de 2026 rige el texto anterior del artículo: el art. 3 de la Resolución SDH-000194 de 2025
       cita «el artículo 2° del Acuerdo Distrital 105 de 2003, modificado por el artículo 1° del Acuerdo
       Distrital 648 de 2016 y el artículo 2° del Acuerdo Distrital 897 de 2023», con los rangos de esa
-      resolución.
+      resolución. Para los residenciales urbanos, el art. 1 de la misma resolución se apoya en el inciso 4
+      del art. 1 del Acuerdo 648 de 2016 y en el art. 3 del Acuerdo 780 de 2020.
   - id: acuerdo_780_2020
     norma: Acuerdo 780 de 2020, art. 3
     coleccion: normativa_ipu
@@ -200,6 +201,12 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513
     formato: html
     articulos: ["3", "4", "5", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "27", "28", "35", "52"]
+    notas_de_articulo:
+      "20": >-
+        Las tarifas de este artículo rigen desde el predial de 2027: el predial se causa el 1 de enero de cada
+        año gravable (Decreto 352 de 2002, art. 15) y este acuerdo rige desde su publicación (art. 52). Para el
+        predial de 2026 rigen los rangos de la Resolución SDH-000194 de 2025 y las tarifas preferenciales del
+        art. 1 del Acuerdo 648 de 2016, que mantuvo el parágrafo 2 del art. 3 del Acuerdo 780 de 2020.
     nota: Texto digital del Régimen Legal de Bogotá (en vigor desde el 9 de octubre de 2026). El PDF escaneado del INCP queda como contraste. Reparto de la adenda, sección 3.1; el art. 6 queda fuera. Los arts. 3, 4, 7 y 52 aplican a ambos impuestos y se cargan también en normativa_ica.
   - id: acuerdo_1084_2026_ica
     norma: Acuerdo 1084 de 2026
@@ -233,9 +240,11 @@ fuentes:
     articulos: capitulo_2
     notas_de_articulo:
       "53": >-
-        Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Las que rigen en 2026
-        están en el art. 3 del Acuerdo 65 de 2002 y sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021) y
-        desde 2027, en el art. 21 del Acuerdo 1084 de 2026.
+        Estas son las tarifas del ICA de 2002 y de 2003 en adelante del Decreto 352. Para el año gravable 2026
+        de los declarantes anuales y para los bimestres 1 a 5 de 2026 de los bimestrales rigen las del art. 3
+        del Acuerdo 65 de 2002 con sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021); las del art. 21 del
+        Acuerdo 1084 de 2026 se aplican a los anuales desde el 1 de enero de 2027 y a los bimestrales desde el
+        bimestre 6 de 2026 (parágrafo del art. 21).
       "55": >-
         Los rangos en pesos de este artículo son los de 2002. Las fechas del régimen de 2026 están en el art. 1
         de la Resolución SDH-000195 de 2025 y desde 2027 los regímenes son los del art. 26 del Acuerdo 1084

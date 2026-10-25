@@ -84,7 +84,7 @@ ARTÍCULO 24. IMPUESTO PREDIAL PARA LOS BIENES EN COPROPIEDAD. En los términos 
 
 ## Artículo 25
 
-> **Vigencia.** Estas tarifas son las de 2002. Las del predial de 2026 y 2027 están en el art. 2 del Acuerdo 105 de 2003: para 2026, su texto anterior (Acuerdo 648 de 2016, art. 1, y Acuerdo 897 de 2023, con los rangos de la Resolución SDH-000194 de 2025) y desde el predial de 2027, el art. 20 del Acuerdo 1084 de 2026.
+> **Vigencia.** Estas tarifas son las de 2002. Las del predial de 2026 y 2027 están en el art. 2 del Acuerdo 105 de 2003: para 2026, su texto anterior (Acuerdo 648 de 2016, art. 1; Acuerdo 780 de 2020, art. 3, para los residenciales urbanos, y Acuerdo 897 de 2023, con los rangos de la Resolución SDH-000194 de 2025) y desde el predial de 2027, el art. 20 del Acuerdo 1084 de 2026.
 
 ARTÍCULO 25. TARIFAS. En desarrollo de lo señalado en el artículo 4 de la Ley 44 de 1990, las tarifas del impuesto predial unificado, son las siguientes:
 
