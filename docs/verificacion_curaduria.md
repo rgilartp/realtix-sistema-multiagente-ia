@@ -6,10 +6,10 @@ la pone Rodolfo con `scripts/curaduria/marcar_verificado.py` después de revisar
 
 ## Tablas de `datos/`
 
-- [ ] `datos/tarifas/ipu_2026.yaml` — predial 2026: 30 rangos residenciales (art. 1), 6 tarifas no residenciales (art. 2) y 10 rangos de clubes, destino 66 (art. 3) de la Resolución SDH-000194 de 2025. Contraste con el PDF fila por fila: 0 diferencias. Las demás categorías de 2026 no se transcriben (ver abajo). Vista: `ipu_2026.html`.
-- [ ] `datos/tarifas/ipu_2027.yaml` — predial 2027, art. 20 del Acuerdo 1084, con sus reglas. Contraste con el texto digital del Régimen Legal, fila por fila: 5 tablas, 0 diferencias. Vista: `ipu_2027.html`.
+- [ ] `datos/tarifas/ipu_2026.yaml` — predial 2026: 30 rangos residenciales (art. 1), 6 tarifas no residenciales (art. 2) y 10 rangos de clubes, destino 66 (art. 3) de la Resolución SDH-000194 de 2025. Contraste con el PDF fila por fila: 0 diferencias. Trae también las tarifas preferenciales de 2026 (Acuerdo 648, art. 1; Acuerdo 780, art. 3, parágrafo 2; Decreto 639, art. 207), contrastadas con la tabla del Acuerdo 648. Las demás categorías de 2026 no se transcriben (ver abajo). Vista: `ipu_2026.html`.
+- [ ] `datos/tarifas/ipu_2027.yaml` — predial 2027, art. 20 del Acuerdo 1084, con sus reglas. Las preferenciales traen el texto literal de los límites y campos numéricos con la unidad de cada límite. Contraste con el texto digital del Régimen Legal, fila por fila: 5 tablas, 0 diferencias. Vista: `ipu_2027.html`.
 - [ ] `datos/tarifas/sobretasa_alumbrado_2027.yaml` — sobretasa de alumbrado, arts. 11 y 13 a 15, con el texto literal de cada categoría y sus reglas. Contraste con el texto digital: 2 tablas, 0 diferencias. Vista: `sobretasa_alumbrado_2027.html`.
-- [ ] `datos/tarifas/ica_2026.yaml` — ICA 2026: 486 actividades con tarifa, 10 de ellas por decisión de Rodolfo, más las demás actividades y el SIMPLE de 2026. Armada con el texto original del art. 3 del Acuerdo 65, los Acuerdos 780 (arts. 6 y 7), 816 (art. 4) y 98 y la Resolución SDH-000265 de 2021. Segunda lectura de la resolución con el Registro Distrital 7103: 481 de 486 coinciden y 5 no se pudieron leer. Vista: `ica_2026.html`.
+- [ ] `datos/tarifas/ica_2026.yaml` — ICA 2026: 486 actividades con tarifa, 10 de ellas por decisión de Rodolfo, más las demás actividades y el SIMPLE de 2026 (verificado con el art. 44 del Acuerdo 1019 de 2025). Armada con el texto original del art. 3 del Acuerdo 65, los Acuerdos 780 (arts. 6 y 7), 816 (art. 4) y 98 y la Resolución SDH-000265 de 2021. Segunda lectura de la resolución con el Registro Distrital 7103: 481 de 486 coinciden y 5 no se pudieron leer. Vista: `ica_2026.html`.
 - [ ] `datos/tarifas/ica_2027.yaml` — ICA 2027, art. 21: 447 actividades de tarifa fija y 28 de tarifa progresiva (475 en total), las demás actividades y el ICA consolidado del SIMPLE (art. 24). Texto digital del Régimen Legal: 475 de 475 coinciden en los dos sentidos; el SIMPLE coincide con el texto digital y con la imagen. Vista: `ica_2027.html`.
 - [ ] `datos/calendario/2026.yaml` — calendario 2026. Las fechas del ICA bimestral y del SPAC se leyeron de las tablas incrustadas como imagen. Vista: `calendario_2026.html`.
 - [ ] `datos/regimenes_ica.yaml` — regímenes del ICA de 2026 y 2027. Vista: `regimenes_y_uvt.html`.
@@ -101,6 +101,57 @@ Normas derogadas por el art. 52 del Acuerdo 1084 revisadas: solo el Acuerdo 98 d
 Acuerdo 780 y el art. 44 del Acuerdo 1019 fijaban tarifas del ICA. Las demás tratan de exenciones,
 notificaciones, regímenes, predial, publicidad exterior o azar y espectáculos.
 
+## Predial: tarifas preferenciales (RF-IPU-03)
+
+En 2026 siguen vigentes las tarifas preferenciales de los residenciales de estratos 1, 2 y 3 con avalúo de
+hasta 135 SMMLV; sin ellas la liquidación de 2026 cobraría de más. Fuentes: Acuerdo 648 de 2016, art. 1
+(1 por mil de 16 a 107 SMMLV y 3 por mil de más de 107 a 135 SMMLV en los estratos 1 y 2, y 3 por mil hasta
+135 SMMLV en el estrato 3), Acuerdo 780 de 2020, art. 3, parágrafo 2 («Se mantienen las tarifas
+preferenciales del 1 y 3 por mil…») y Decreto 639 de 2025, art. 207. Con el SMMLV de 2026 ($1.750.905), 16,
+107 y 135 SMMLV son $28.014.480, $187.346.835 y $236.372.175. El límite de 16 SMMLV cambia de un año a
+otro: en 2026, «igual o menor» a 16 SMMLV no declara ni paga (Decreto 639, art. 207); en 2027 solo queda
+excluido lo «inferior a 16 SMMLV» (Acuerdo 1084, art. 20) y 16 SMMLV exactos pagan 1 por mil. La vista
+`ipu_2026.html` muestra la tabla junto al texto de las tres normas.
+
+## Base de conocimiento: limpieza de la segunda ronda
+
+- **Texto ajeno y firmas.** El conversor corta cada artículo en su texto: la Ley 1581 traía unas 660
+  líneas de firmas, la Sentencia C-748 de 2011 y el texto del proyecto de ley después del art. 30. En el
+  último artículo de cada norma se conservan la fórmula de cierre y la fecha de expedición, pero no los
+  nombres y cargos de quienes firman, y se quitan los títulos de la parte siguiente (TÍTULO, CAPÍTULO).
+  Prueba: ningún archivo trae «TEXTO CONCILIADO» ni «SENTENCIA C-748», y ningún artículo sin tablas pasa
+  de 15.000 caracteres.
+- **Caracteres.** Se quitaron los 82 caracteres de formato Unicode (U+200B) y el pie de página de las
+  resoluciones de la Secretaría de Hacienda.
+- **Tablas.** El conversor expande `rowspan` y `colspan` repitiendo el valor, une las filas de encabezado
+  («Base gravable desde», «Base gravable hasta»), parte las tablas por sus filas de subtítulo y quita las
+  columnas vacías o repetidas por maquetación. Quedan como excepciones, con su razón, los subtítulos del
+  texto original del art. 3 del Acuerdo 65 («b. Actividades Comerciales») y la fila de 5330, donde la
+  fuente combina las columnas de 2021 y 2022 (la tarifa de 10,14 es de 2022).
+- **Resolución SDH-000265.** Se corrigieron las celdas partidas «1 1,04» (2394, columna 2022, y 2816,
+  columna 2024), «6 ,9» (4312, columna 2024) y «,9,66» (85591), se quitó el encabezado repetido en un
+  corte de página y el espacio inicial de la fila de 5330.
+- **Notas de vigencia.** Los archivos que mezclan años llevan al inicio una nota por año gravable:
+  Acuerdos 105 de 2003, 648 de 2016, 780 de 2020, 65 de 2002 y 1084 (ICA) y 1019 de 2025, y una nota en el
+  art. 45 del Decreto 639.
+- **Erratas de la fuente.** La compilación de Hacienda trae «IGUALO MENOR» y «SMLMV N.» en el art. 207 del
+  Decreto 639, «lijado» en los arts. 45 y 205 y «lije» en el art. 205; el Régimen Legal trae «igualo menor»
+  en el art. 17 del Decreto 474. Como las fuentes los traen así, se dejan.
+- **Artículos fuera de la tabla de la sección 5.** El art. 205 del Decreto 639 (declaración anual del ICA,
+  menos de 391 UVT) se copia a `normativa_ica`, y el art. 44 del Acuerdo 1019 de 2025 se carga allí para
+  verificar el SIMPLE de 2026.
+- **SIMPLE de 2026.** Verificado con el texto del art. 44 del Acuerdo 1019 de 2025 en el Régimen Legal:
+  12, 16, 30, 30 (sic) y 16 por mil, fila por fila (`contrastar_1084.py`); ya no depende de una fuente
+  secundaria.
+
+## Vistas
+
+Las celdas de números, códigos y fechas no se parten (`white-space:nowrap`), las demás palabras se parten
+solo en el límite de la celda (`overflow-wrap:break-word`), la columna se desplaza si la tabla es ancha,
+las tarifas llevan coma decimal y las cifras grandes, puntos de miles, los enlaces muestran una etiqueta
+corta y los extractos de la fuente salen como tablas HTML. El calendario muestra la imagen completa de la
+Resolución SDH-000195 y, al lado, las tablas insertadas en la base de conocimiento.
+
 ## Fuentes y de dónde salió cada archivo
 
 | Norma | Colección | Estado | Origen del archivo | Enlace |
@@ -127,6 +178,8 @@ notificaciones, regímenes, predial, publicidad exterior o azar y espectáculos.
 | Ley 14 de 1983 | `normativa_ica` | 90 artículos | Régimen Legal de Bogotá, con notas de vigencia; arts. 33 y 36 marcados como texto anterior, no vigente | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=267 |
 | Decreto Distrital 352 de 2002, cap. II | `normativa_ica` | 29 artículos | Cancillería (normograma) | https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm |
 | Decreto Distrital 807 de 1993 | `normativa_ica` | 170 artículos | Régimen Legal de Bogotá, con modificaciones y notas de vigencia | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=1637 |
+| Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205 | `normativa_ica` | 1 artículos | Compilación de la Secretaría de Hacienda (mismo archivo); fuera de la tabla de la sección 5 | https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm |
+| Acuerdo 1019 de 2025, art. 44 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá; texto anterior, no vigente; fuera de la tabla de la sección 5 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818 |
 | Acuerdo 65 de 2002, art. 3 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá (ya con el art. 21 del Acuerdo 1084) | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156 |
 | Acuerdo 780 de 2020, arts. 6 y 7 | `normativa_ica` | 2 artículos | Régimen Legal de Bogotá (mismo archivo); aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965 |
 | Acuerdo 816 de 2021, art. 4 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá; aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=116160&dt=S |
