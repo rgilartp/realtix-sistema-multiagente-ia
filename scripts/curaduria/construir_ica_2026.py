@@ -16,6 +16,7 @@ import re
 from collections import Counter
 from decimal import Decimal
 
+import convertir
 import yaml
 from bs4 import BeautifulSoup
 from comun import DESCARGAS, RAIZ
@@ -75,18 +76,50 @@ GRUPO_COMPLETADO = {"4930": "301"}
 FUENTE_ORIGINAL = (
     "Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)"
 )
-FUENTE_816 = (
-    "Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)"
+CRITERIO_GRUPOS = (
+    "La Resolución SDH-000265 de 2021 asigna cada CIIU a un grupo del art. 3 y, en el grupo 302, "
+    "a una fila del art. 6 del Acuerdo 780; la tarifa es la que fija el acuerdo vigente para ese "
+    "grupo o esa fila. Por eso las 10 actividades de construcción quedan en 6,9 o 7,6, y 6515 y "
+    "6523 van a 14 por mil, como todo el grupo de actividades financieras desde el Acuerdo 816."
 )
+# Dos CIIU vienen mal escritos en la compilación de Hacienda y en el Registro Distrital 7103.
+CIIU_CORREGIDO = {
+    "/ 8523": (
+        "8523",
+        "el código viene como «/ 8523» en la compilación de Hacienda y en el Registro "
+        "Distrital 7103",
+    ),
+    "85232/8551": (
+        "85232",
+        "el código viene como «85232/8551» en la compilación de Hacienda y en el Registro "
+        "Distrital 7103; el 85232 corresponde a la clase 8551, que ya está con la misma tarifa",
+    ),
+}
 FUENTE_780_7 = "Acuerdo 780 de 2020, art. 7 (2022: 10,14; 2023: 10,63; 2024 y siguientes: 11,04)"
-HASTA_1084 = "la publicación del Acuerdo 1084 de 2026 (su art. 52 lo deroga)"
+RIGE_5330 = (
+    "los periodos de esta tabla (año gravable 2026 de los anuales y bimestres 1 a 5 de los "
+    "bimestrales); el art. 52 del Acuerdo 1084 lo deroga y el art. 21 lo reemplaza según su "
+    "parágrafo"
+)
+RIGE_58112 = RIGE_5330
+
+
+def fuente_816(t2024: str) -> str:
+    """Fuente de la tarifa de 14 por mil, con lo que trae la columna de 2024 de la resolución."""
+    if t2024 == "13.1":
+        return (
+            "Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)"
+        )
+    return (
+        "Acuerdo 816 de 2021, art. 4 (la resolución clasifica este CIIU en el grupo 401, "
+        "actividades financieras; su columna de 2024 trae "
+        f"{t2024.replace('.', ',')}, y el art. 4, posterior, fija 14 por mil para todo ese literal)"
+    )
 
 
 def _texto(ruta) -> str:
-    texto = BeautifulSoup(ruta.read_bytes(), "html.parser").get_text("\n").replace("\xa0", " ")
-    texto = re.sub(r"(Art[íi]culo)\s*\n+\s*(?=\d)", r"\1 ", texto, flags=re.IGNORECASE)
-    texto = re.sub(r"[ \t]+", " ", texto)
-    return re.sub(r"\n\s*\n+", "\n", texto)
+    """Texto de una página descargada, con las tablas en Markdown (el mismo de `convertir.py`)."""
+    return convertir.limpiar(convertir._html_a_texto(ruta.read_bytes()))
 
 
 def _decimales(texto: str) -> set[Decimal]:
@@ -133,7 +166,7 @@ def _verificar_textos() -> dict:
         "original": _decimales(original),
         "frases_780": {t: f in art_6 for t, f in FRASES_780.items()},
         "art7_780": "11.04" in art_7,
-        "financiero_816": bool(re.search(r"d\. Actividades financieras\s+14\b", art_4)),
+        "financiero_816": bool(re.search(r"d\. Actividades financieras[\s|]+14\b", art_4)),
         "libros_98": "4,14 por mil" in en_98 and "8 por mil" in en_98,
     }
 
@@ -141,7 +174,9 @@ def _verificar_textos() -> dict:
 def _fila(ciiu: str, descripcion: str, grupo: str, t2024: str, contexto: dict) -> dict:
     """Arma la fila de un CIIU: elige la regla que fija su tarifa y la verifica en los textos."""
     grupos, texto, por_codigo = contexto["grupos"], contexto["texto"], contexto["por_codigo"]
-    nota, por_tarifa = None, False
+    nota, por_tarifa, nota_ciiu = None, False, None
+    if ciiu in CIIU_CORREGIDO:
+        ciiu, nota_ciiu = CIIU_CORREGIDO[ciiu]
     if ciiu in GRUPO_COMPLETADO:
         nota = (
             f"el código de grupo viene como «{grupo}» en la compilación de Hacienda, que lo trae "
@@ -163,8 +198,9 @@ def _fila(ciiu: str, descripcion: str, grupo: str, t2024: str, contexto: dict) -
     base = _tarifa(grupos[grupo]) if grupo in grupos else None
     base_en_texto = base is not None and Decimal(base).normalize() in texto["original"]
     registro = {"ciiu": ciiu, "actividad": descripcion, "grupo_resolucion_265": grupo}
-    if nota:
-        registro["nota"] = nota
+    notas = [n for n in (nota_ciiu, nota) if n]
+    if notas:
+        registro["nota"] = "; ".join(notas)
     minuscula = descripcion.lower()
     if ciiu in CONTRATISTAS | SIN_APOYO_780:
         registro |= {
@@ -178,12 +214,12 @@ def _fila(ciiu: str, descripcion: str, grupo: str, t2024: str, contexto: dict) -
         registro |= {
             "tarifa_por_mil": "11.04" if ok else "pendiente",
             "fuente_tarifa": FUENTE_780_7,
-            "rige_hasta": HASTA_1084,
+            "rige_para": RIGE_5330,
         }
     elif grupo == "401":
         registro |= {
             "tarifa_por_mil": "14" if texto["financiero_816"] else "pendiente",
-            "fuente_tarifa": FUENTE_816,
+            "fuente_tarifa": fuente_816(t2024),
         }
     elif por_tarifa or (t2024 == base and base_en_texto):
         registro |= {"tarifa_por_mil": t2024, "fuente_tarifa": FUENTE_ORIGINAL}
@@ -225,7 +261,7 @@ def _fila(ciiu: str, descripcion: str, grupo: str, t2024: str, contexto: dict) -
                 "Educación los descuentos del parágrafo primero"
             ),
             "fuente": "Acuerdo 98 de 2003, art. 1 y parágrafos (si no se cumple, 8 por mil)",
-            "rige_hasta": HASTA_1084,
+            "rige_para": RIGE_58112,
         }
     return registro
 
@@ -270,6 +306,7 @@ def _encabezado(datos: dict) -> dict:
             "fuente_de_la_tarifa": FUENTE_RES_265,
             "nota_para_el_agente": NOTA_PARA_EL_AGENTE,
         },
+        "criterio_de_la_resolucion_265": CRITERIO_GRUPOS,
         "periodos_que_cubre": {
             "declarantes_anuales": "año gravable 2026 (se declara en febrero de 2027)",
             "declarantes_bimestrales": (
@@ -280,7 +317,19 @@ def _encabezado(datos: dict) -> dict:
             "tarifas_de_2024_y_siguientes": (
                 "las de la columna de 2024 de la resolución rigen desde el año gravable 2024"
             ),
+            "entrada_en_vigencia_del_acuerdo_1084": (
+                "9 de octubre de 2026 (Registro Distrital 8679), dentro del bimestre 5"
+            ),
         },
+        "demas_actividades": [
+            {"clase": "industriales", "tarifa_por_mil": "11.04"},
+            {"clase": "comerciales", "tarifa_por_mil": "11.04"},
+            {"clase": "servicios", "tarifa_por_mil": "9.66"},
+        ],
+        "demas_actividades_fuente": (
+            "Acuerdo 65 de 2002, art. 3, texto original (columna de 2003 y siguientes): demás "
+            "actividades industriales, comerciales y de servicios"
+        ),
         "fuentes": [
             "Acuerdo 65 de 2002, art. 3, texto original (Régimen Legal de Bogotá, i=5156)",
             "Acuerdo 780 de 2020, arts. 6 y 7 (Régimen Legal, i=100965)",
@@ -317,10 +366,11 @@ def _encabezado(datos: dict) -> dict:
                 "Acuerdo 1019 de 2025, art. 44 (ICA consolidado del régimen SIMPLE en 2026); "
                 "sección regimen_simple_2026",
             ],
-            "rigen_desde_y_hasta": (
-                "Cada una rige hasta la publicación del Acuerdo 1084 (art. 52); la tarifa del "
-                "art. 21 de ese acuerdo la reemplaza desde el bimestre 6 de 2026 y, en los "
-                "anuales, desde 2027"
+            "rigen_para": (
+                "Los periodos de esta tabla (año gravable 2026 de los anuales y bimestres 1 a 5 de "
+                "los bimestrales); el art. 52 del Acuerdo 1084 las deroga y el art. 21 las "
+                "reemplaza según su parágrafo. El SIMPLE de 2026 rige todo el año y desde 2027 "
+                "aplica el art. 24"
             ),
             "no_fijan_tarifas_del_ica": (
                 "arts. 7 y 8 del Decreto 807 de 1993; art. 27 del Acuerdo 65 de 2002 "
@@ -333,6 +383,10 @@ def _encabezado(datos: dict) -> dict:
         },
         "regimen_simple_2026": {
             "fuente": "Acuerdo 1019 de 2025, art. 44 (derogado por el art. 52 del Acuerdo 1084)",
+            "rige": (
+                "todo el año 2026; desde 2027 aplica el art. 24 del Acuerdo 1084 "
+                "(regimen_simple_2027 en ica_2027.yaml)"
+            ),
             "descripcion": (
                 "Tarifas del ICA consolidado del régimen SIMPLE, por numeral del art. 908 del "
                 "Estatuto Tributario Nacional"
