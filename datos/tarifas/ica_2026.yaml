@@ -5,9 +5,27 @@ mes_consulta: octubre de 2026
 vigencia_desde: 2026
 vigencia_hasta: 2026
 verificado_por: ''
-estado: parcial
-nota_de_estado: Las filas pendientes no se completan con valores supuestos; cada una trae el valor de la resolución
-  como referencia y el motivo.
+estado: completa
+decision_de_rodolfo:
+  filas:
+  - '39002'
+  - '4111'
+  - '4112'
+  - '4311'
+  - '4312'
+  - '4321'
+  - '4322'
+  - '4329'
+  - '4330'
+  - '4390'
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  fuente_de_la_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de
+    Hacienda)
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 periodos_que_cubre:
   declarantes_anuales: año gravable 2026 (se declara en febrero de 2027)
   declarantes_bimestrales: bimestres 1 a 5 de 2026 (enero-octubre); desde el bimestre 6 de 2026 aplica ica_2027.yaml,
@@ -29,7 +47,7 @@ contraste:
   filas_por_fuente_de_la_tarifa:
     Acuerdo 65 de 2002, art. 3: 417
     Acuerdo 780 de 2020, art. 6: 30
-    pendiente: 10
+    Resolución SDH-000265 de 2021, art. 1: 10
     Acuerdo 816 de 2021, art. 4: 28
     Acuerdo 780 de 2020, art. 7: 1
   tarifas_de_grupo_que_aparecen_en_el_texto_original:
@@ -984,17 +1002,25 @@ por_actividad:
 - ciiu: '4111'
   actividad: Construcción de edificios residenciales
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4112'
   actividad: Construcción de edificios no residenciales
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4210'
   actividad: Construcción de carreteras y vías de ferrocarril
   grupo_resolucion_265: '302'
@@ -1016,52 +1042,80 @@ por_actividad:
 - ciiu: '4311'
   actividad: Demolición
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4312'
   actividad: Preparación del terreno
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4321'
   actividad: Instalaciones eléctricas de la construcción
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4322'
   actividad: Instalaciones de fontanería, calefacción y aire acondicionado de la construcción
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4329'
   actividad: Otras instalaciones especializadas de la construcción
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4330'
   actividad: Terminación y acabado de edificios y obras de ingeniería civil
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '7.6'
-  motivo: la resolución da 7,6, pero el art. 6 del Acuerdo 780 solo nombra carreteras, proyectos de servicio público
-    y otras obras de ingeniería civil
+  tarifa_por_mil: '7.6'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4390'
   actividad: Otras actividades especializadas para la construcción de edificios y obras de ingeniería civil
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '7.6'
-  motivo: la resolución da 7,6, pero el art. 6 del Acuerdo 780 solo nombra carreteras, proyectos de servicio público
-    y otras obras de ingeniería civil
+  tarifa_por_mil: '7.6'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '4511'
   actividad: Comercio de vehículos automotores nuevos
   grupo_resolucion_265: '202'
@@ -1303,8 +1357,9 @@ por_actividad:
   fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
 - ciiu: '4930'
   actividad: Transporte por tuberías
-  grupo_resolucion_265: '01'
-  nota: el código de grupo viene como «01» en la fuente; la tarifa coincide con la de 101, 201, 301
+  grupo_resolucion_265: '301'
+  nota: el código de grupo viene como «01» en la compilación de Hacienda, que lo trae truncado; es el 301 (su tarifa
+    es la de ese grupo)
   tarifa_por_mil: '4.14'
   fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
 - ciiu: '5011'
@@ -2139,10 +2194,14 @@ por_actividad:
   actividad: Actividades de saneamiento ambiental y otros servicios de gestión de desechos prestados por contratistas
     de construcción, constructores y urbanizadores
   grupo_resolucion_265: '302'
-  tarifa_por_mil: pendiente
-  tarifa_resolucion_265: '6.9'
-  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
-    y la resolución deja 6,9
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Resolución SDH-000265 de 2021, art. 1 (clasificación oficial por CIIU de la Secretaría de Hacienda)
+  decision: 'Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la clasificación
+    con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese acuerdo y no tiene modificaciones
+    ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma agrupación para 2027'
+  nota_para_el_agente: El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores
+    y urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta actividad en la
+    tarifa indicada, que es la que aplica.
 - ciiu: '45411'
   actividad: Comercio de motocicletas
   grupo_resolucion_265: '202'

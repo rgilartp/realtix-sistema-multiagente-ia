@@ -55,14 +55,23 @@ FRASES_780 = {
 # artículo no nombra. Esas filas quedan pendientes hasta que Rodolfo decida qué prevalece.
 CONTRATISTAS = {"4111", "4112", "4311", "4312", "4321", "4322", "4329", "39002"}
 SIN_APOYO_780 = {"4330", "4390"}
-MOTIVO_CONTRATISTAS = (
-    "el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y "
-    "urbanizadores, y la resolución deja 6,9"
+FUENTE_RES_265 = (
+    "Resolución SDH-000265 de 2021, art. 1 "
+    "(clasificación oficial por CIIU de la Secretaría de Hacienda)"
 )
-MOTIVO_SIN_APOYO = (
-    "la resolución da 7,6, pero el art. 6 del Acuerdo 780 solo nombra carreteras, proyectos de "
-    "servicio público y otras obras de ingeniería civil"
+DECISION_RODOLFO = (
+    "Decisión de Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021, que es la "
+    "clasificación con la que Hacienda aplica el art. 6 del Acuerdo 780, se expidió después de ese "
+    "acuerdo y no tiene modificaciones ni nulidades; el art. 21 del Acuerdo 1084 conserva la misma "
+    "agrupación para 2027"
 )
+NOTA_PARA_EL_AGENTE = (
+    "El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores y "
+    "urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta "
+    "actividad en la tarifa indicada, que es la que aplica."
+)
+# La compilación de Hacienda trae truncado el grupo de este CIIU: es el 301 (decisión de Rodolfo).
+GRUPO_COMPLETADO = {"4930": "301"}
 FUENTE_ORIGINAL = (
     "Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)"
 )
@@ -133,7 +142,15 @@ def _fila(ciiu: str, descripcion: str, grupo: str, t2024: str, contexto: dict) -
     """Arma la fila de un CIIU: elige la regla que fija su tarifa y la verifica en los textos."""
     grupos, texto, por_codigo = contexto["grupos"], contexto["texto"], contexto["por_codigo"]
     nota, por_tarifa = None, False
-    if grupo not in grupos:  # la fuente digital deja incompleto el código de grupo de algunas filas
+    if ciiu in GRUPO_COMPLETADO:
+        nota = (
+            f"el código de grupo viene como «{grupo}» en la compilación de Hacienda, que lo trae "
+            f"truncado; es el {GRUPO_COMPLETADO[ciiu]} (su tarifa es la de ese grupo)"
+        )
+        grupo, por_tarifa = GRUPO_COMPLETADO[ciiu], True
+    elif (
+        grupo not in grupos
+    ):  # la fuente digital deja incompleto el código de grupo de algunas filas
         candidatos = [g for g in grupos if g.endswith(grupo) and _tarifa(grupos[g]) == t2024]
         if candidatos and Decimal(t2024).normalize() in texto["original"]:
             nota = (
@@ -151,9 +168,10 @@ def _fila(ciiu: str, descripcion: str, grupo: str, t2024: str, contexto: dict) -
     minuscula = descripcion.lower()
     if ciiu in CONTRATISTAS | SIN_APOYO_780:
         registro |= {
-            "tarifa_por_mil": "pendiente",
-            "tarifa_resolucion_265": t2024,
-            "motivo": MOTIVO_CONTRATISTAS if ciiu in CONTRATISTAS else MOTIVO_SIN_APOYO,
+            "tarifa_por_mil": t2024,
+            "fuente_tarifa": FUENTE_RES_265,
+            "decision": DECISION_RODOLFO,
+            "nota_para_el_agente": NOTA_PARA_EL_AGENTE,
         }
     elif ciiu == "5330":
         ok = texto["art7_780"] and t2024 == "11.04"
@@ -245,11 +263,13 @@ def _encabezado(datos: dict) -> dict:
         "vigencia_desde": 2026,
         "vigencia_hasta": 2026,
         "verificado_por": "",
-        "estado": "parcial",
-        "nota_de_estado": (
-            "Las filas pendientes no se completan con valores supuestos; cada una trae el valor de "
-            "la resolución como referencia y el motivo."
-        ),
+        "estado": "completa",
+        "decision_de_rodolfo": {
+            "filas": sorted(CONTRATISTAS | SIN_APOYO_780),
+            "decision": DECISION_RODOLFO,
+            "fuente_de_la_tarifa": FUENTE_RES_265,
+            "nota_para_el_agente": NOTA_PARA_EL_AGENTE,
+        },
         "periodos_que_cubre": {
             "declarantes_anuales": "año gravable 2026 (se declara en febrero de 2027)",
             "declarantes_bimestrales": (
