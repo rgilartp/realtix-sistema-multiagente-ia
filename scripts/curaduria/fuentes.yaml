@@ -1,0 +1,133 @@
+# Catálogo de fuentes de la sección 5.1 (adenda, sección 8). `articulos: todos` conserva la norma
+# completa; una lista conserva solo esos artículos. `url: null` = sin enlace en la adenda (se anota
+# como pendiente en docs/verificacion_curaduria.md hasta ubicarlo en una fuente oficial).
+mes_consulta: octubre de 2026
+fuentes:
+  - id: ley_1581_2012
+    norma: Ley 1581 de 2012
+    coleccion: normativa_datos
+    url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html
+    formato: html
+    articulos: todos
+  - id: decreto_1074_2015
+    norma: Decreto 1074 de 2015, caps. 25 y 26
+    coleccion: normativa_datos
+    url: https://normativa.colpensiones.gov.co/colpens/docs/decreto_1074_2015.htm
+    formato: html
+    articulos: capitulos_25_26
+    nota: El cap. 25 lleva el metadato de origen «Decreto 1377 de 2013».
+  - id: ley_44_1990
+    norma: Ley 44 de 1990
+    coleccion: normativa_ipu
+    url: https://www.cancilleria.gov.co/sites/default/files/Normograma/docs/ley_0044_1990.htm
+    formato: html
+    articulos: todos
+    nota: Verificar la modificación de la Ley 1450 de 2011, art. 23.
+  - id: ley_1995_2019
+    norma: Ley 1995 de 2019
+    coleccion: normativa_ipu
+    url: https://www.igac.gov.co/sites/default/files/transparencia/normograma/ley_1995_de_2019.pdf
+    formato: pdf
+    articulos: todos
+  - id: ley_2294_2023
+    norma: Ley 2294 de 2023, art. 49
+    coleccion: normativa_ipu
+    url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/ley_2294_2023.htm
+    formato: html
+    articulos: ["49"]
+  - id: ley_1819_2016
+    norma: Ley 1819 de 2016, art. 354
+    coleccion: normativa_ipu
+    url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=79140
+    formato: html
+    articulos: ["354"]
+  - id: decreto_ley_1421_1993
+    norma: Decreto Ley 1421 de 1993
+    coleccion: normativa_ipu
+    url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=106394
+    formato: html
+    articulos: ["12", "155", "162"]
+  - id: decreto_474_2016
+    norma: Decreto 474 de 2016
+    coleccion: normativa_ipu
+    url: https://www.ambitojuridico.com/sites/default/files/BancoMedios/Archivos/d-474-16.pdf
+    formato: pdf
+    articulos: todos
+  - id: acuerdo_648_2016
+    norma: Acuerdo 648 de 2016
+    coleccion: normativa_ipu
+    url: null
+    formato: html
+    articulos: todos
+    nota: Sin enlace en la adenda; tomarlo del Régimen Legal de Bogotá.
+  - id: decreto_352_2002_cap1
+    norma: Decreto Distrital 352 de 2002, cap. I
+    coleccion: normativa_ipu
+    url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
+    formato: html
+    articulos: capitulo_1
+  - id: decreto_807_1993_ipu
+    norma: Decreto Distrital 807 de 1993
+    coleccion: normativa_ipu
+    url: https://bogota.gov.co/sites/default/files/tys/2021/01/DECRETO_807_1993.pdf
+    formato: pdf
+    articulos: todos
+    nota: Versión con modificaciones; el Acuerdo 1084 reemplazó el art. 27 y derogó los arts. 7 y 8.
+  - id: acuerdo_105_2003
+    norma: Acuerdo 105 de 2003, art. 2
+    coleccion: normativa_ipu
+    url: null
+    formato: html
+    articulos: ["2"]
+  - id: acuerdo_780_2020
+    norma: Acuerdo 780 de 2020, art. 3
+    coleccion: normativa_ipu
+    url: null
+    formato: html
+    articulos: ["3"]
+  - id: resolucion_rangos_2026
+    norma: Resolución de rangos del predial de 2026
+    coleccion: normativa_ipu
+    url: null
+    formato: pdf
+    articulos: todos
+    nota: Sin enlace en la adenda; tomarla de la Secretaría Distrital de Hacienda o del INCP.
+  - id: resolucion_sdh_000195_2025
+    norma: Resolución SDH-000195 de 2025
+    coleccion: normativa_ipu
+    url: https://www.haciendabogota.gov.co/es/normatividad/resolucion-sdh-000195-del-12-de-diciembre-de-2025
+    formato: html
+    articulos: ["1", "3", "4", "5", "6"]
+    nota: Arts. 3 a 6 al predial y art. 1 al ICA (se copia a ambas colecciones).
+  - id: acuerdo_1084_2026
+    norma: Acuerdo 1084 de 2026
+    coleccion: normativa_ipu
+    url: https://incp.org.co/wp-content/uploads/2026/10/Acuerdo-1084-de-2026-a-Consejo-de-BogotA¡-a-INCP.pdf
+    formato: pdf_escaneado
+    articulos: ["1", "2", "3", "4", "5", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "21", "24", "25", "26", "27", "28", "35", "52"]
+    nota: Reparto de la adenda, sección 3.1. El art. 6 queda fuera.
+  - id: ley_14_1983
+    norma: Ley 14 de 1983
+    coleccion: normativa_ica
+    url: https://www.dane.gov.co/files/acerca/Normatividad/decreto-1170-2015/Ley-14-de-1983.pdf
+    formato: pdf
+    articulos: todos
+    nota: Ese enlace es el texto original; se necesita la versión compilada vigente.
+  - id: decreto_352_2002_cap2
+    norma: Decreto Distrital 352 de 2002, cap. II
+    coleccion: normativa_ica
+    url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
+    formato: html
+    articulos: capitulo_2
+  - id: decreto_807_1993_ica
+    norma: Decreto Distrital 807 de 1993
+    coleccion: normativa_ica
+    url: https://bogota.gov.co/sites/default/files/tys/2021/01/DECRETO_807_1993.pdf
+    formato: pdf
+    articulos: todos
+  - id: acuerdo_65_2002
+    norma: Acuerdo 65 de 2002, art. 3
+    coleccion: normativa_ica
+    url: null
+    formato: html
+    articulos: ["3"]
