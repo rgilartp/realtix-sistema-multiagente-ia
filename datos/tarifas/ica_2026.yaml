@@ -1,13 +1,2638 @@
-fuente: Acuerdo 65 de 2002, art. 3, en su texto vigente en 2026
+fuente: 'Acuerdo 65 de 2002, art. 3, en su texto vigente en 2026: el original, modificado por el art. 6 del Acuerdo
+  780 de 2020 y el art. 4 del Acuerdo 816 de 2021'
 url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156
 mes_consulta: octubre de 2026
 vigencia_desde: 2026
 vigencia_hasta: 2026
 verificado_por: ''
-estado: pendiente
-motivo: >-
-  El Régimen Legal de Bogotá solo muestra el texto original de 2002 y el texto nuevo del art. 21 del
-  Acuerdo 1084 de 2026 (desde 2027). El texto vigente en 2026 lo modifican el art. 6 del Acuerdo 780
-  de 2020 y el art. 4 del Acuerdo 816 de 2021, y el Acuerdo 816 no está entre las fuentes de la
-  sección 5.1. No se completa con valores supuestos; falta la decisión sobre esa fuente.
-por_actividad: []
+estado: parcial
+nota_de_estado: Las filas pendientes no se completan con valores supuestos; cada una trae el valor de la resolución
+  como referencia y el motivo.
+periodos_que_cubre:
+  declarantes_anuales: año gravable 2026 (se declara en febrero de 2027)
+  declarantes_bimestrales: bimestres 1 a 5 de 2026 (enero-octubre); desde el bimestre 6 de 2026 aplica ica_2027.yaml,
+    porque el Acuerdo 1084 se aprobó en plenaria el 28 de septiembre de 2026 y se firmó el 8 de octubre de 2026,
+    ambas fechas dentro del bimestre 5
+  tarifas_de_2024_y_siguientes: las de la columna de 2024 de la resolución rigen desde el año gravable 2024
+fuentes:
+- Acuerdo 65 de 2002, art. 3, texto original (Régimen Legal de Bogotá, i=5156)
+- Acuerdo 780 de 2020, arts. 6 y 7 (Régimen Legal, i=100965)
+- Acuerdo 816 de 2021, art. 4 (Régimen Legal, i=116160)
+- Resolución SDH-000265 de 2021, art. 1 (compilación de la Secretaría de Hacienda; el PDF de bogota.gov.co trae
+  el mismo texto)
+- Acuerdo 98 de 2003 (Régimen Legal, i=10597)
+- Acuerdo 1019 de 2025, art. 44 (Régimen Legal, i=191818)
+contraste:
+  pagina_de_hacienda: La página del ICA de la Secretaría de Hacienda dice que las tarifas vigentes son las del art.
+    3 modificado por el art. 6 del Acuerdo 780 de 2020 y el art. 4 del Acuerdo 816 de 2021, con 14 por mil para
+    las actividades financieras. La página no se descarga como texto, así que cada tarifa se contrastó con los acuerdos.
+  filas_por_fuente_de_la_tarifa:
+    Acuerdo 65 de 2002, art. 3: 417
+    Acuerdo 780 de 2020, art. 6: 30
+    pendiente: 10
+    Acuerdo 816 de 2021, art. 4: 28
+    Acuerdo 780 de 2020, art. 7: 1
+  tarifas_de_grupo_que_aparecen_en_el_texto_original:
+    '101': true
+    '102': true
+    '103': true
+    '104': true
+    '201': true
+    '202': true
+    '203': true
+    '204': true
+    '301': true
+    '302': true
+    '303': true
+    '304': true
+    '305': true
+    '401': true
+  cifras_del_art_6_del_acuerdo_780_en_el_texto:
+    '12.14': true
+    '8.66': true
+    '7.66': true
+    '7.6': true
+    '10.62': true
+  art_7_del_acuerdo_780_11_04_en_el_texto: true
+  art_4_del_acuerdo_816_14_en_el_texto: true
+  acuerdo_98_4_14_y_8_en_el_texto: true
+  resolucion_265_modificada: Sin nota de modificación en la compilación de la Secretaría de Hacienda ni resolución
+    posterior en el Régimen Legal o en la búsqueda web.
+normas_derogadas_por_el_art_52_del_acuerdo_1084:
+  fijaban_tarifas_del_ica_y_se_aplican_aqui:
+  - 'Acuerdo 98 de 2003 (edición y publicación de libros: 4,14 por mil, u 8 si no se cumplen las condiciones); fila
+    58112'
+  - 'Acuerdo 780 de 2020, art. 7 (domicilios por plataformas: 11,04 por mil desde 2024); fila 5330'
+  - Acuerdo 1019 de 2025, art. 44 (ICA consolidado del régimen SIMPLE en 2026); sección regimen_simple_2026
+  rigen_desde_y_hasta: Cada una rige hasta la publicación del Acuerdo 1084 (art. 52); la tarifa del art. 21 de ese
+    acuerdo la reemplaza desde el bimestre 6 de 2026 y, en los anuales, desde 2027
+  no_fijan_tarifas_del_ica: arts. 7 y 8 del Decreto 807 de 1993; art. 27 del Acuerdo 65 de 2002 (exenciones); Acuerdo
+    77 de 2002 y Acuerdo 185 de 2005 (predial); arts. 12 a 14 del Acuerdo 469 de 2011 y art. 9 del Acuerdo 671 de
+    2017 (notificaciones); art. 10 del Acuerdo 756 de 2019 (regímenes); Acuerdo 111 de 2003 (publicidad exterior)
+    y Acuerdo 399 de 2009 (azar y espectáculos), estos dos derogados desde el 1 de enero de 2027
+regimen_simple_2026:
+  fuente: Acuerdo 1019 de 2025, art. 44 (derogado por el art. 52 del Acuerdo 1084)
+  descripcion: Tarifas del ICA consolidado del régimen SIMPLE, por numeral del art. 908 del Estatuto Tributario
+    Nacional
+  tarifas_por_mil:
+  - numeral: '1'
+    tarifa_por_mil: '12'
+  - numeral: '2'
+    tarifa_por_mil: '16'
+  - numeral: '3'
+    tarifa_por_mil: '30'
+  - numeral: 3 (sic)
+    tarifa_por_mil: '30'
+  - numeral: '6'
+    tarifa_por_mil: '16'
+por_actividad:
+- ciiu: '161'
+  actividad: Actividades de apoyo a la agricultura
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '162'
+  actividad: Actividades de apoyo a la ganadería
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '164'
+  actividad: Tratamiento de semillas para propagación
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '240'
+  actividad: Servicios de apoyo a la silvicultura
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '510'
+  actividad: Extracción de hulla (carbón de piedra)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '520'
+  actividad: Extracción de carbón lignito
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '610'
+  actividad: Extracción de petróleo crudo
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '620'
+  actividad: Extracción de gas natural
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '710'
+  actividad: Extracción de minerales de hierro
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '721'
+  actividad: Extracción de minerales de uranio y de torio
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '722'
+  actividad: Extracción de oro y otros metales preciosos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '723'
+  actividad: Extracción de minerales de níquel
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '729'
+  actividad: Extracción de otros minerales metalíferos no ferrosos n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '811'
+  actividad: Extracción de piedra, arena, arcillas comunes, yeso y anhidrita
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '812'
+  actividad: Extracción de arcillas de uso industrial, caliza, caolín y bentonitas
+  grupo_resolucion_265: '103'
+  nota: el código de grupo viene como «03» en la fuente; la tarifa coincide con la de 103
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '820'
+  actividad: Extracción de esmeraldas, piedras preciosas y semipreciosas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '891'
+  actividad: Extracción de minerales para la fabricación de abonos y productos químicos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '892'
+  actividad: Extracción de halita (sal)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '899'
+  actividad: Extracción de otros minerales no metálicos n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '910'
+  actividad: Actividades de apoyo para la extracción de petróleo y de gas natural
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '990'
+  actividad: Actividades de apoyo para otras actividades de explotación de minas y canteras
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1011'
+  actividad: Procesamiento y conservación de carne y productos cárnicos
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1012'
+  actividad: Procesamiento y conservación de pescados, crustáceos y moluscos
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1030'
+  actividad: Elaboración de aceites y grasas de origen vegetal y animal
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1051'
+  actividad: Elaboración de productos de molinería
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1052'
+  actividad: Elaboración de almidones y productos derivados del almidón
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1061'
+  actividad: Trilla de café
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1062'
+  actividad: Descafeinado, tostión y molienda del café
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1063'
+  actividad: Elaboración de otros derivados del café
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1071'
+  actividad: Elaboración y refinación de azúcar
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1072'
+  actividad: Elaboración de panela
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1081'
+  actividad: Elaboración de productos de panadería
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1082'
+  actividad: Elaboración de cacao, chocolate y productos de confitería
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1083'
+  actividad: Elaboración de macarrones, fideos, alcuzcuz y productos farináceos similares
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1084'
+  actividad: Elaboración de comidas y platos preparados
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1089'
+  actividad: Elaboración de otros productos alimenticios n.c.p.
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1090'
+  actividad: Elaboración de alimentos preparados para animales
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1101'
+  actividad: Destilación, rectificación y mezcla de bebidas alcohólicas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1102'
+  actividad: Elaboración de bebidas fermentadas no destiladas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1103'
+  actividad: Producción de malta, elaboración de cervezas y otras bebidas malteadas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1104'
+  actividad: Elaboración de bebidas no alcohólicas, producción de aguas minerales y de otras aguas embotelladas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1200'
+  actividad: Elaboración de productos de tabaco
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1311'
+  actividad: Preparación e hilatura de fibras textiles
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1312'
+  actividad: Tejeduría de productos textiles
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1313'
+  actividad: Acabado de productos textiles
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1391'
+  actividad: Fabricación de tejidos de punto y ganchillo
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1392'
+  actividad: Confección de artículos con materiales textiles, excepto prendas de vestir
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1393'
+  actividad: Fabricación de tapetes y alfombras para pisos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1394'
+  actividad: Fabricación de cuerdas, cordeles, cables, bramantes y redes
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1399'
+  actividad: Fabricación de otros artículos textiles n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1410'
+  actividad: Confección de prendas de vestir, excepto prendas de piel
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1511'
+  actividad: Curtido y recurtido de cueros; recurtido y teñido de pieles.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1512'
+  actividad: Fabricación de artículos de viaje, bolsos de mano y artículos similares elaborados en cuero, y fabricación
+    de artículos de talabartería y guarnicionería.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1513'
+  actividad: Fabricación de artículos de viaje, bolsos de mano y artículos similares; artículos de talabartería
+    y guarnicionería elaborados en otros materiales
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1521'
+  actividad: Fabricación de calzado de cuero y piel, con cualquier tipo de suela
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1522'
+  actividad: Fabricación de otros tipos de calzado, excepto calzado de cuero y piel
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1523'
+  actividad: Fabricación de partes del calzado
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1610'
+  actividad: Aserrado, acepillado e impregnación de la madera
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1620'
+  actividad: Fabricación de hojas de madera para enchapado; fabricación de tableros contrachapados, tableros laminados,
+    tableros de partículas y otros tableros y paneles
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1630'
+  actividad: Fabricación de partes y piezas de madera, de carpintería y ebanistería para la construcción y para
+    edificios
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1640'
+  actividad: Fabricación de recipientes de madera
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1690'
+  actividad: Fabricación de otros productos de madera; fabricación de artículos de corcho, cestería y espartería
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1701'
+  actividad: Fabricación de pulpas (pastas) celulósicas; papel y cartón
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1702'
+  actividad: Fabricación de papel y cartón ondulado (corrugado); fabricación de envases, empaques y de embalajes
+    de papel y cartón.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1709'
+  actividad: Fabricación de otros artículos de papel y cartón
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1811'
+  actividad: Actividades de impresión
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1812'
+  actividad: Actividades de servicios relacionados con la impresión
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1820'
+  actividad: Producción de copias a partir de grabaciones originales
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1910'
+  actividad: Fabricación de productos de hornos de coque
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1921'
+  actividad: Fabricación de productos de la refinación del petróleo
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '1922'
+  actividad: Actividad de mezcla de combustibles
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2011'
+  actividad: Fabricación de sustancias y productos químicos básicos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2012'
+  actividad: Fabricación de abonos y compuestos inorgánicos nitrogenados
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2013'
+  actividad: Fabricación de plásticos en formas primarias
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2014'
+  actividad: Fabricación de caucho sintético en formas primarias
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2021'
+  actividad: Fabricación de plaguicidas y otros productos químicos de uso agropecuario
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2022'
+  actividad: Fabricación de pinturas, barnices y revestimientos similares, tintas para impresión y masillas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2023'
+  actividad: Fabricación de jabones y detergentes, preparados para limpiar y pulir; perfumes y preparados de tocador
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2029'
+  actividad: Fabricación de otros productos químicos n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2030'
+  actividad: Fabricación de fibras sintéticas y artificiales
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2100'
+  actividad: Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso
+    farmacéutico
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '12.14'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (fabricación de productos farmacéuticos)
+- ciiu: '2211'
+  actividad: Fabricación de llantas y neumáticos de caucho
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2212'
+  actividad: Reencauche de llantas usadas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2219'
+  actividad: Fabricación de formas básicas de caucho y otros productos de caucho n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2221'
+  actividad: Fabricación de formas básicas de plástico
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2229'
+  actividad: Fabricación de artículos de plástico n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2310'
+  actividad: Fabricación de vidrio y productos de vidrio
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2391'
+  actividad: Fabricación de productos refractarios
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2392'
+  actividad: Fabricación de materiales de arcilla para la construcción
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2393'
+  actividad: Fabricación de otros productos de cerámica y porcelana
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2394'
+  actividad: Fabricación de cemento, cal y yeso
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2395'
+  actividad: Fabricación de artículos de hormigón, cemento y yeso
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2396'
+  actividad: Corte, tallado y acabado de la piedra
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2399'
+  actividad: Fabricación de otros productos minerales no metálicos n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2410'
+  actividad: Industrias básicas de hierro y de acero
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2421'
+  actividad: Industrias básicas de metales preciosos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2429'
+  actividad: Industrias básicas de otros metales no ferrosos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2431'
+  actividad: Fundición de hierro y de acero
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2432'
+  actividad: Fundición de metales no ferrosos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2511'
+  actividad: Fabricación de productos metálicos para uso estructural
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2512'
+  actividad: Fabricación de tanques, depósitos y recipientes de metal, excepto los utilizados para el envase o transporte
+    de mercancías
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2513'
+  actividad: Fabricación de generadores de vapor, excepto calderas de agua caliente para calefacción central
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2520'
+  actividad: Fabricación de armas y municiones
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2591'
+  actividad: Forja, prensado, estampado y laminado de metal; pulvimetalurgia
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2592'
+  actividad: Tratamiento y revestimiento de metales; mecanizado
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2593'
+  actividad: Fabricación de artículos de cuchillería, herramientas de mano y artículos de ferretería
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2599'
+  actividad: Fabricación de otros productos elaborados de metal n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2610'
+  actividad: Fabricación de componentes y tableros electrónicos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2620'
+  actividad: Fabricación de computadoras y de equipo periférico
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2630'
+  actividad: Fabricación de equipos de comunicación
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2640'
+  actividad: Fabricación de aparatos electrónicos de consumo
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2651'
+  actividad: Fabricación de equipo de medición, prueba, navegación y control
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2652'
+  actividad: Fabricación de relojes
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2660'
+  actividad: Fabricación de equipo de irradiación y equipo electrónico de uso médico y terapéutico
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2670'
+  actividad: Fabricación de instrumentos ópticos y equipo fotográfico
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2680'
+  actividad: Fabricación de soportes magnéticos y ópticos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2711'
+  actividad: Fabricación de motores, generadores y transformadores eléctricos.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2712'
+  actividad: Fabricación de aparatos de distribución y control de la energía eléctrica
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2720'
+  actividad: Fabricación de pilas, baterías y acumuladores eléctricos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2731'
+  actividad: Fabricación de hilos y cables eléctricos y de fibra óptica
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2732'
+  actividad: Fabricación de dispositivos de cableado
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2740'
+  actividad: Fabricación de equipos eléctricos de iluminación
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2750'
+  actividad: Fabricación de aparatos de uso domestico
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2790'
+  actividad: Fabricación de otros tipos de equipo eléctrico n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2811'
+  actividad: Fabricación de motores, turbinas, y partes para motores de combustión interna
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2812'
+  actividad: Fabricación de equipos de potencia hidráulica y neumática
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2813'
+  actividad: Fabricación de otras bombas, compresores, grifos y válvulas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2814'
+  actividad: Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2815'
+  actividad: Fabricación de hornos, hogares y quemadores industriales
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2816'
+  actividad: Fabricación de equipo de elevación y manipulación
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2817'
+  actividad: Fabricación de maquinaria y equipo de oficina (excepto computadoras y equipo periférico)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2818'
+  actividad: Fabricación de herramientas manuales con motor
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2819'
+  actividad: Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2821'
+  actividad: Fabricación de maquinaria agropecuaria y forestal
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2822'
+  actividad: Fabricación de máquinas formadoras de metal y de máquinas herramienta
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2823'
+  actividad: Fabricación de maquinaria para la metalurgia
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2824'
+  actividad: Fabricación de maquinaria para explotación de minas y canteras y para obras de construcción
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2825'
+  actividad: Fabricación de maquinaria para la elaboración de alimentos, bebidas y tabaco
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2826'
+  actividad: Fabricación de maquinaria para la elaboración de productos textiles, prendas de vestir y cueros
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2829'
+  actividad: Fabricación de otros tipos de maquinaria y equipo de uso especial n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2910'
+  actividad: Fabricación de vehículos automotores y sus motores
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2920'
+  actividad: Fabricación de carrocerías para vehículos automotores; fabricación de remolques y semirremolques
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '2930'
+  actividad: Fabricación de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3011'
+  actividad: Construcción de barcos y de estructuras flotantes
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3012'
+  actividad: Construcción de embarcaciones de recreo y deporte
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3020'
+  actividad: Fabricación de locomotoras y de material rodante para ferrocarriles
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3030'
+  actividad: Fabricación de aeronaves, naves espaciales y de maquinaria conexa
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3040'
+  actividad: Fabricación de vehículos militares de combate
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3091'
+  actividad: Fabricación de motocicletas
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3092'
+  actividad: Fabricación de bicicletas y de sillas de ruedas para personas con discapacidad
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3099'
+  actividad: Fabricación de otros tipos de equipo de transporte n.c.p.
+  grupo_resolucion_265: '102'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3110'
+  actividad: Fabricación de muebles
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3120'
+  actividad: Fabricación de colchones y somieres
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3210'
+  actividad: Fabricación de joyas, bisutería y artículos conexos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3220'
+  actividad: Fabricación de instrumentos musicales
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3230'
+  actividad: Fabricación de artículos y equipo para la práctica del deporte (excepto prendas de vestir y calzado)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3240'
+  actividad: Fabricación de juegos, juguetes y rompecabezas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3250'
+  actividad: Fabricación de instrumentos, aparatos y materiales médicos y odontológicos (incluido mobiliario)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3290'
+  actividad: Otras industrias manufactureras n.c.p.
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3311'
+  actividad: Mantenimiento y reparación especializado de productos elaborados en metal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3312'
+  actividad: Mantenimiento y reparación especializado de maquinaria y equipo
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3313'
+  actividad: Mantenimiento y reparación especializado de equipo electrónico y óptico
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3314'
+  actividad: Mantenimiento y reparación especializado de equipo eléctrico
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3315'
+  actividad: Mantenimiento y reparación especializado de equipo de transporte, excepto los vehículos automotores,
+    motocicletas y bicicletas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3319'
+  actividad: Mantenimiento y reparación de otros tipos de equipos y sus componentes n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3320'
+  actividad: Instalación especializada de maquinaria y equipo industrial
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3511'
+  actividad: Generación de energía eléctrica
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3512'
+  actividad: Transmisión de energía eléctrica
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3513'
+  actividad: Distribución de energía eléctrica
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3514'
+  actividad: Comercialización de energía eléctrica
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3530'
+  actividad: Suministro de vapor y aire acondicionado
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3700'
+  actividad: Evacuación y tratamiento de aguas residuales
+  grupo_resolucion_265: '304'
+  nota: el código de grupo viene como «04» en la fuente; la tarifa coincide con la de 304
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3811'
+  actividad: Recolección de desechos no peligrosos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3812'
+  actividad: Recolección de desechos peligrosos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3821'
+  actividad: Tratamiento y disposición de desechos no peligrosos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3822'
+  actividad: Tratamiento y disposición de desechos peligrosos
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '3830'
+  actividad: Recuperación de materiales
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4111'
+  actividad: Construcción de edificios residenciales
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4112'
+  actividad: Construcción de edificios no residenciales
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4210'
+  actividad: Construcción de carreteras y vías de ferrocarril
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '7.6'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (carreteras, proyectos de servicio público
+    y otras obras de ingeniería civil)
+- ciiu: '4220'
+  actividad: Construcción de proyectos de servicio público
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '7.6'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (carreteras, proyectos de servicio público
+    y otras obras de ingeniería civil)
+- ciiu: '4290'
+  actividad: Construcción de otras obras de ingeniería civil
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '7.6'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (carreteras, proyectos de servicio público
+    y otras obras de ingeniería civil)
+- ciiu: '4311'
+  actividad: Demolición
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4312'
+  actividad: Preparación del terreno
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4321'
+  actividad: Instalaciones eléctricas de la construcción
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4322'
+  actividad: Instalaciones de fontanería, calefacción y aire acondicionado de la construcción
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4329'
+  actividad: Otras instalaciones especializadas de la construcción
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '4330'
+  actividad: Terminación y acabado de edificios y obras de ingeniería civil
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '7.6'
+  motivo: la resolución da 7,6, pero el art. 6 del Acuerdo 780 solo nombra carreteras, proyectos de servicio público
+    y otras obras de ingeniería civil
+- ciiu: '4390'
+  actividad: Otras actividades especializadas para la construcción de edificios y obras de ingeniería civil
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '7.6'
+  motivo: la resolución da 7,6, pero el art. 6 del Acuerdo 780 solo nombra carreteras, proyectos de servicio público
+    y otras obras de ingeniería civil
+- ciiu: '4511'
+  actividad: Comercio de vehículos automotores nuevos
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4512'
+  actividad: Comercio de vehículos automotores usados
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4520'
+  actividad: Mantenimiento y reparación de vehículos automotores.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4530'
+  actividad: Comercio de partes, piezas (autopartes) y accesorios (lujos) para vehículos automotores
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4542'
+  actividad: Mantenimiento y reparación de motocicletas y de sus partes y piezas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4610'
+  actividad: Comercio al por mayor a cambio de una retribución o por contrata
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4631'
+  actividad: Comercio al por mayor de productos alimenticios
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4641'
+  actividad: Comercio al por mayor de productos textiles y productos confeccionados para uso doméstico
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4642'
+  actividad: Comercio al por mayor de prendas de vestir
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4643'
+  actividad: Comercio al por mayor de calzado
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4644'
+  actividad: Comercio al por mayor de aparatos y equipo de uso doméstico
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4651'
+  actividad: Comercio al por mayor de computadores, equipo periférico y programas de informática
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4652'
+  actividad: Comercio al por mayor de equipo, partes y piezas electrónicos y de telecomunicaciones
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4653'
+  actividad: Comercio al por mayor de maquinaria y equipo agropecuarios
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4659'
+  actividad: Comercio al por mayor de otros tipos de maquinaria y equipo n.c.p.
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4662'
+  actividad: Comercio al por mayor de metales y productos metalíferos
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4664'
+  actividad: Comercio al por mayor de productos químicos básicos, cauchos y plásticos en formas primarias y productos
+    químicos de uso agropecuario
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4665'
+  actividad: Comercio al por mayor de desperdicios, desechos y chatarra
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4669'
+  actividad: Comercio al por mayor de otros productos n.c.p.
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4690'
+  actividad: Comercio al por mayor no especializado
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4721'
+  actividad: Comercio al por menor de productos agrícolas para el consumo en establecimientos especializados
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4722'
+  actividad: Comercio al por menor de leche, productos lácteos y huevos, en establecimientos especializados
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4723'
+  actividad: Comercio al por menor de carnes (incluye aves de corral), productos cárnicos, pescados y productos
+    de mar, en establecimientos especializados
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4729'
+  actividad: Comercio al por menor de otros productos alimenticios n.c.p., en establecimientos especializados
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4731'
+  actividad: Comercio al por menor de combustible para automotores
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4732'
+  actividad: Comercio al por menor de lubricantes (aceites, grasas), aditivos y productos de limpieza para vehículos
+    automotores
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4741'
+  actividad: Comercio al por menor de computadores, equipos periféricos, programas de informática y equipos de telecomunicaciones
+    en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4742'
+  actividad: Comercio al por menor de equipos y aparatos de sonido y de video, en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4751'
+  actividad: Comercio al por menor de productos textiles en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4753'
+  actividad: Comercio al por menor de tapices, alfombras y recubrimientos para paredes y pisos en establecimientos
+    especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4754'
+  actividad: Comercio al por menor de electrodomésticos y gasodomésticos de uso doméstico, muebles y equipos de
+    iluminación en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4755'
+  actividad: Comercio al por menor de artículos y utensilios de uso doméstico en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4759'
+  actividad: Comercio al por menor de otros artículos domésticos en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4762'
+  actividad: Comercio al por menor de artículos deportivos, en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4769'
+  actividad: Comercio al por menor de otros artículos culturales y de entretenimiento n.c.p. en establecimientos
+    especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4771'
+  actividad: Comercio al por menor de prendas de vestir y sus accesorios (incluye artículos de piel) en establecimientos
+    especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4772'
+  actividad: Comercio al por menor de todo tipo de calzado y artículos de cuero y sucedáneos del cuero en establecimientos
+    especializados.
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4774'
+  actividad: Comercio al por menor de otros productos nuevos en establecimientos especializados
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4775'
+  actividad: Comercio al por menor de artículos de segunda mano
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4782'
+  actividad: Comercio al por menor de productos textiles, prendas de vestir y calzado, en puestos de venta móviles
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4789'
+  actividad: Comercio al por menor de otros productos en puestos de venta móviles
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4911'
+  actividad: Transporte férreo de pasajeros
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4912'
+  actividad: Transporte férreo de carga
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4921'
+  actividad: Transporte de pasajeros
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4922'
+  actividad: Transporte mixto
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4923'
+  actividad: Transporte de carga por carretera
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '4930'
+  actividad: Transporte por tuberías
+  grupo_resolucion_265: '01'
+  nota: el código de grupo viene como «01» en la fuente; la tarifa coincide con la de 101, 201, 301
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5011'
+  actividad: Transporte de pasajeros marítimo y de cabotaje
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5012'
+  actividad: Transporte de carga marítimo y de cabotaje
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5021'
+  actividad: Transporte fluvial de pasajeros
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5022'
+  actividad: Transporte fluvial de carga
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5111'
+  actividad: Transporte aéreo nacional de pasajeros
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5112'
+  actividad: Transporte aéreo internacional de pasajeros
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5121'
+  actividad: Transporte aéreo nacional de carga
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5122'
+  actividad: Transporte aéreo internacional de carga
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5210'
+  actividad: Almacenamiento y depósito
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5221'
+  actividad: Actividades de estaciones, vías y servicios complementarios para el transporte terrestre
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5222'
+  actividad: Actividades de puertos y servicios complementarios para el transporte acuático
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5223'
+  actividad: Actividades de aeropuertos, servicios de navegación aérea y demás actividades conexas al transporte
+    aéreo
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5224'
+  actividad: Manipulación de carga
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5229'
+  actividad: Otras actividades complementarias al transporte
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5310'
+  actividad: Actividades postales nacionales
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5320'
+  actividad: Actividades de mensajería
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5511'
+  actividad: Alojamiento en hoteles
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5512'
+  actividad: Alojamiento en aparta- hoteles
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5513'
+  actividad: Alojamiento en centros vacacionales
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5514'
+  actividad: Alojamiento rural
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5519'
+  actividad: Otros tipos de alojamientos para visitantes
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5520'
+  actividad: Actividades de zonas de camping y parques para vehículos recreacionales
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5530'
+  actividad: Servicio de estancia por horas
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5590'
+  actividad: Otros tipos de alojamiento n.c.p.
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5611'
+  actividad: Expendio a la mesa de comidas preparadas
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5612'
+  actividad: Expendio por autoservicio de comidas preparadas
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5613'
+  actividad: Expendio de comidas preparadas en cafeterías
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5619'
+  actividad: Otros tipos de expendio de comidas preparadas n.c.p.
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5621'
+  actividad: Catering para eventos
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5629'
+  actividad: Actividades de otros servicios de comidas
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5630'
+  actividad: Expendio de bebidas alcohólicas para el consumo dentro del establecimiento
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5812'
+  actividad: Edición de directorios y listas de correo
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5813'
+  actividad: Edición de periódicos, revistas y otras publicaciones periódicas
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5819'
+  actividad: Otros trabajos de edición
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5820'
+  actividad: Edición de programas de informática (software)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5911'
+  actividad: Actividades de producción de películas cinematográficas, videos, programas, anuncios y comerciales
+    de televisión (excepto programación de televisión)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5912'
+  actividad: Actividades de postproducción de películas cinematográficas, videos, programas, anuncios y comerciales
+    de televisión (excepto programación de televisión)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5913'
+  actividad: Actividades de distribución de películas cinematográficas, videos, programas, anuncios y comerciales
+    de televisión
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5914'
+  actividad: Actividades de exhibición de películas cinematográficas y videos
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5920'
+  actividad: Actividades de grabación de sonido y edición de música
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6010'
+  actividad: Actividades de programación y transmisión en el servicio de radiodifusión sonora
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6110'
+  actividad: Actividades de telecomunicaciones alámbricas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '10.62'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (telecomunicaciones alámbricas e inalámbricas)
+- ciiu: '6120'
+  actividad: Actividades de telecomunicaciones inalámbricas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '10.62'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (telecomunicaciones alámbricas e inalámbricas)
+- ciiu: '6130'
+  actividad: Actividades de telecomunicación satelital
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6190'
+  actividad: Otras actividades de telecomunicaciones
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6201'
+  actividad: Actividades de desarrollo de sistemas informáticos (planificación, análisis, diseño, programación,
+    pruebas)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6202'
+  actividad: Actividades de consultoría informática y actividades de administración de instalaciones informáticas
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6209'
+  actividad: Otras actividades de tecnologías de información y actividades de servicios informáticos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6311'
+  actividad: Procesamiento de datos, alojamiento (host- ing) y actividades relacionadas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6312'
+  actividad: Portales Web
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6391'
+  actividad: Actividades de agencias de noticias
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6399'
+  actividad: Otras actividades de servicio de información n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6411'
+  actividad: Banca Central
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6412'
+  actividad: Bancos comerciales
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6421'
+  actividad: Actividades de las corporaciones financieras
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6422'
+  actividad: Actividades de las compañías de financia- miento
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6423'
+  actividad: Banca de segundo piso
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6424'
+  actividad: Actividades de las cooperativas financieras
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6431'
+  actividad: Fideicomisos, fondos y entidades financieras similares
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6491'
+  actividad: Leasing financiero (arrendamiento financiero)
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6492'
+  actividad: Actividades financieras de fondos de empleados y otras formas asociativas del sector solidario
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6493'
+  actividad: Actividades de compra de cartera o factoring
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6494'
+  actividad: Otras actividades de distribución de fondos
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6495'
+  actividad: Instituciones especiales oficiales
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6496'
+  actividad: Capitalización
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6511'
+  actividad: Seguros generales
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6512'
+  actividad: Seguros de vida
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6513'
+  actividad: Reaseguros
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6515'
+  actividad: Seguros de salud
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6521'
+  actividad: Servicios de seguros sociales de salud
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6522'
+  actividad: Servicios de seguros sociales en riesgos laborales
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6523'
+  actividad: Servicios de seguros sociales en riesgos familia
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6532'
+  actividad: Régimen de ahorro con solidaridad (RAIS)
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6612'
+  actividad: Corretaje de valores y de contratos de productos básicos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6613'
+  actividad: Otras actividades relacionadas con el mercado de valores
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6614'
+  actividad: Actividades de las sociedades de intermediación cambiaria y de servicios financieros especiales
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6615'
+  actividad: Actividades de los profesionales de compra y venta de divisas
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6619'
+  actividad: Otras actividades auxiliares de las actividades de servicios financieros n.c.p.
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6621'
+  actividad: Actividades de agentes y corredores de seguros
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6629'
+  actividad: Evaluación de riesgos y daños, y otras actividades de servicios auxiliares
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6630'
+  actividad: Actividades de administración de fondos
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '6810'
+  actividad: Actividades inmobiliarias realizadas con bienes propios o arrendados
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '6820'
+  actividad: Actividades inmobiliarias realizadas a cambio de una retribución o por contrata
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7310'
+  actividad: Publicidad
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7420'
+  actividad: Actividades de fotografía
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7500'
+  actividad: Actividades veterinarias
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7710'
+  actividad: Alquiler y arrendamiento de vehículos automotores
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7721'
+  actividad: Alquiler y arrendamiento de equipo recreativo y deportivo
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7722'
+  actividad: Alquiler de videos y discos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7729'
+  actividad: Alquiler y arrendamiento de otros efectos personales y enseres domésticos n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7730'
+  actividad: Alquiler y arrendamiento de otros tipos de maquinaria, equipo y bienes tangibles n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7740'
+  actividad: Arrendamiento de propiedad intelectual y productos similares, excepto obras protegidas por derechos
+    de autor
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7810'
+  actividad: Actividades de agencias de gestión y colocación de empleo
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7820'
+  actividad: Actividades de empresas de servicios temporales
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7830'
+  actividad: Otras actividades de provisión de talento humano
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7911'
+  actividad: Actividades de las agencias de viaje
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7912'
+  actividad: Actividades de operadores turísticos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '7990'
+  actividad: Otros servicios de reserva y actividades relacionadas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8010'
+  actividad: Actividades de seguridad privada
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8020'
+  actividad: Actividades de servicios de sistemas de seguridad
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8030'
+  actividad: Actividades de detectives e investigadores privados
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8110'
+  actividad: Actividades combinadas de apoyo a instalaciones
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8121'
+  actividad: Limpieza general interior de edificios
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8129'
+  actividad: Otras actividades de limpieza de edificios e instalaciones industriales
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8130'
+  actividad: Actividades de paisajismo y servicios de mantenimiento conexos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8211'
+  actividad: Actividades combinadas de servicios administrativos de oficina
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8219'
+  actividad: Fotocopiado, preparación de documentos y otras actividades especializadas de apoyo a oficina
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8220'
+  actividad: Actividades de centros de llamadas (Call center)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8230'
+  actividad: Organización de convenciones y eventos comerciales
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8291'
+  actividad: Actividades de agencias de cobranza y oficinas de calificación crediticia
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8292'
+  actividad: Actividades de envase y empaque
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8299'
+  actividad: Otras actividades de servicio de apoyo a las empresas n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8511'
+  actividad: Educación de la primera infancia
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8512'
+  actividad: Educación preescolar
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8513'
+  actividad: Educación básica primaria
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8521'
+  actividad: Educación básica secundaria
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8522'
+  actividad: Educación media académica
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8530'
+  actividad: Establecimientos que combinan diferentes niveles de educación inicial, preescolar, básica primaria,
+    básica secundaria y media
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8541'
+  actividad: Educación técnica profesional
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8542'
+  actividad: Educación tecnológica
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8543'
+  actividad: Educación de instituciones universitarias o de escuelas tecnológicas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8544'
+  actividad: Educación de universidades
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8551'
+  actividad: Formación para el trabajo
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8552'
+  actividad: Enseñanza deportiva y recreativa
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8553'
+  actividad: Enseñanza cultural
+  grupo_resolucion_265: '304'
+  nota: el código de grupo viene como «04» en la fuente; la tarifa coincide con la de 304
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8559'
+  actividad: Otros tipos de educación n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '85591'
+  actividad: Educación académica no formal (excepto programas de educación básica primaria, básica secundaria y
+    media no gradual con fines de validación)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '85592'
+  actividad: Educación académica no formal impartida mediante programas de educación básica primaria, básica secundaria
+    y media no gradual con fines de validación
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8560'
+  actividad: Actividades de apoyo a la educación
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8610'
+  actividad: Actividades de hospitales y clínicas, con internación
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8720'
+  actividad: Actividades de atención residencial, para el cuidado de pacientes con retardo mental, enfermedad mental
+    y consumo de sustancias psicoactivas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8730'
+  actividad: Actividades de atención en instituciones para el cuidado de personas mayores y/o discapacitadas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8790'
+  actividad: Otras actividades de atención en instituciones con alojamiento
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8810'
+  actividad: Actividades de asistencia social sin alojamiento para personas mayores y discapacitadas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8891'
+  actividad: Actividades de guarderías para niños y niñas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '8899'
+  actividad: Otras actividades de asistencia social n.c.p
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9321'
+  actividad: Actividades de parques de atracciones y parques temáticos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9411'
+  actividad: Actividades de asociaciones empresariales y de empleadores
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9499'
+  actividad: Actividades de otras asociaciones n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9511'
+  actividad: Mantenimiento y reparación de computadores y de equipo periférico
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9512'
+  actividad: Mantenimiento y reparación de equipos de comunicación
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9521'
+  actividad: Mantenimiento y reparación de aparatos electrónicos de consumo
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9522'
+  actividad: Mantenimiento y reparación de aparatos domésticos y equipos domésticos y de jardinería
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9523'
+  actividad: Reparación de calzado y artículos de cuero
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9524'
+  actividad: Reparación de muebles y accesorios para el hogar
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9529'
+  actividad: Mantenimiento y reparación de otros efectos personales y enseres domésticos
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9601'
+  actividad: Lavado y limpieza, incluso la limpieza en seco, de productos textiles y de piel
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9602'
+  actividad: Peluquería y otros tratamientos de belleza
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9603'
+  actividad: Pompas fúnebres y actividades relacionadas
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '9609'
+  actividad: Otras actividades de servicios personales n.c.p.
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '10201'
+  actividad: Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos (excepto elaboración de
+    jugos de frutas)
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '10202'
+  actividad: Elaboración de jugos de frutas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '10401'
+  actividad: Elaboración de productos lácteos (excepto bebidas)
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '10402'
+  actividad: Elaboración de bebidas lácteas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '14201'
+  actividad: Fabricación de prendas de vestir de piel
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '14202'
+  actividad: Fabricación de artículos de piel (excepto prendas de vestir)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '14301'
+  actividad: Fabricación de prendas de vestir de punto y ganchillo
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '14302'
+  actividad: Fabricación de artículos de punto y ganchillo (excepto prendas de vestir)
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '35201'
+  actividad: Producción de gas
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '35202'
+  actividad: Distribución de combustibles gaseosos por tuberías
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '36001'
+  actividad: Captación y tratamiento de agua
+  grupo_resolucion_265: '103'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '36002'
+  actividad: Distribución de agua
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '39001'
+  actividad: Actividades de saneamiento ambiental y otros servicios de gestión de desechos (excepto los servicios
+    prestados por contratistas de construcción, constructores y urbanizadores)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '39002'
+  actividad: Actividades de saneamiento ambiental y otros servicios de gestión de desechos prestados por contratistas
+    de construcción, constructores y urbanizadores
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: pendiente
+  tarifa_resolucion_265: '6.9'
+  motivo: el art. 6 del Acuerdo 780 sube a 8,66 a los contratistas de construcción, constructores y urbanizadores,
+    y la resolución deja 6,9
+- ciiu: '45411'
+  actividad: Comercio de motocicletas
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '45412'
+  actividad: Comercio de partes, piezas y accesorios de motocicletas
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46201'
+  actividad: Comercio al por mayor de materias primas agrícolas en bruto (alimentos)
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46202'
+  actividad: Comercio al por mayor de materias primas pecuarias y animales vivos
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46321'
+  actividad: Comercio al por mayor de bebidas y tabaco (diferentes a licores y cigarrillos)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46322'
+  actividad: Comercio al por mayor de licores y cigarrillos
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46451'
+  actividad: Comercio al por mayor de productos farmacéuticos y medicinales
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46452'
+  actividad: Comercio al por mayor de productos cosméticos y de tocador (excepto productos farmacéuticos y medicinales)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46491'
+  actividad: Comercio al por mayor de otros utensilios domésticos n.c.p. (excepto joyas)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46492'
+  actividad: Venta de joyas
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46611'
+  actividad: Comercio al por mayor de combustibles sólidos, líquidos, gaseosos y productos conexos (excepto combustibles
+    derivados del petróleo)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46612'
+  actividad: Comercio al por mayor de combustibles derivados del petróleo
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46631'
+  actividad: Comercio al por mayor de materiales de construcción
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '46632'
+  actividad: Comercio al por mayor de artículos de ferretería, pinturas, productos de vidrio, equipo y materiales
+    de fontanería y calefacción
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47111'
+  actividad: Comercio al por menor en establecimientos no especializados con surtido compuesto principalmente por
+    alimentos, bebidas no alcohólicas o tabaco (excepto cigarrillos)
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47112'
+  actividad: Comercio al por menor en establecimientos no especializados con surtido compuesto principalmente por
+    licores y cigarrillos
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47191'
+  actividad: Comercio al por menor en establecimientos no especializados, con surtido compuesto principalmente por
+    productos de bebidas alcohólicas y cigarrillos
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47192'
+  actividad: Comercio al por menor en establecimientos no especializados, con surtido compuesto principalmente por
+    drogas, medicamentos, textos escolares, libros y cuadernos.
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47241'
+  actividad: Comercio al por menor de bebidas y productos del tabaco, en establecimientos especializados (excepto
+    licores y cigarrillos)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47242'
+  actividad: Comercio al por menor de licores y cigarrillos
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47521'
+  actividad: Comercio al por menor de materiales de construcción
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47522'
+  actividad: Comercio al por menor de artículos de ferretería, pinturas y productos de vidrio en establecimientos
+    especializados (excepto materiales de construcción)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47611'
+  actividad: Comercio al por menor y al por mayor de libros, textos escolares y cuadernos
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47612'
+  actividad: Comercio al por menor de periódicos, materiales y artículos de papelería y escritorio, en establecimientos
+    especializados (excepto libros, textos escolares y cuadernos)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47731'
+  actividad: Comercio al por menor de productos farmacéuticos y medicinales en establecimientos especializados
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47732'
+  actividad: Comercio al por menor de productos cosméticos y artículos de tocador en establecimientos especializados
+    (excepto productos farmacéuticos y medicinales)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47811'
+  actividad: Comercio al por menor de alimentos en puestos de venta móviles
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47812'
+  actividad: Comercio al por menor de bebidas y tabaco en puestos de venta móviles (excepto licores y cigarrillos)
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47813'
+  actividad: Comercio al por menor de cigarrillos y licores en puestos de venta móviles
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47911'
+  actividad: Comercio al por menor de alimentos y productos agrícolas en bruto; venta de textos escolares y libros
+    (incluye cuadernos escolares); venta de drogas y medicamentos realizado a través de internet
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47912'
+  actividad: Comercio al por menor y al por mayor de madera y materiales para construcción; venta de automotores
+    (incluidas motocicletas) realizado a través de internet
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47913'
+  actividad: Comercio al por menor de cigarrillos y licores; venta de combustibles derivados del petróleo y venta
+    de joyas realizado a través de internet
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47914'
+  actividad: Comercio al por menor de demás productos n.c.p. realizado a través de internet
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47921'
+  actividad: Comercio al por menor de alimentos y productos agrícolas en bruto; venta de textos escolares y libros
+    (incluye cuadernos escolares); venta de drogas y medicamentos realizado a través de casas de venta o por correo
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47922'
+  actividad: Comercio al por menor y al por mayor de madera y materiales para construcción; venta de automotores
+    (incluidas motocicletas) realizado a través de casas de venta o por correo
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47923'
+  actividad: Comercio al por menor de cigarrillos y licores; venta de combustibles derivados del petróleo y venta
+    de joyas realizado a través de casas de venta o por correo
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47924'
+  actividad: Comercio al por menor de demás productos n.c.p. realizado a través de casas de venta o por correo
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47991'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de textos escolares y libros (incluye cuadernos escolares); venta de drogas y medicamentos
+  grupo_resolucion_265: '201'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47992'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de materiales para construcción; venta de automotores (incluidas motocicletas)
+  grupo_resolucion_265: '202'
+  tarifa_por_mil: '6.9'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47993'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de cigarrillos y licores; venta de combustibles derivados del petróleo y venta de joyas
+  grupo_resolucion_265: '203'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '47994'
+  actividad: Otros tipos de comercio al por menor no realizado en establecimientos, puestos de venta o mercados
+    de demás productos n.c.p.
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '58111'
+  actividad: Servicio de edición de libros
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '58112'
+  actividad: Edición y publicación de libros
+  grupo_resolucion_265: '104'
+  tarifa_por_mil: '8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+  tarifa_condicionada:
+    tarifa_por_mil: '4.14'
+    condicion: donar tres ejemplares de cada nueva publicación y dar a la Secretaría de Educación los descuentos
+      del parágrafo primero
+    fuente: Acuerdo 98 de 2003, art. 1 y parágrafos (si no se cumple, 8 por mil)
+    rige_hasta: la publicación del Acuerdo 1084 de 2026 (su art. 52 lo deroga)
+- ciiu: '58113'
+  actividad: Edición y publicación de libros (Tarifa especial para los contribuyentes que cumplen condiciones del
+    Acuerdo 98 de 2003)
+  grupo_resolucion_265: '101'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '60201'
+  actividad: Actividades de programación de televisión
+  grupo_resolucion_265: '301'
+  tarifa_por_mil: '4.14'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '60202'
+  actividad: Actividades de transmisión de televisión
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '64991'
+  actividad: Otras actividades de servicio financiero, excepto las de seguros y pensiones n.c.p.
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '64992'
+  actividad: Actividades comerciales de las casas de empeño o compraventa
+  grupo_resolucion_265: '204'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '64993'
+  actividad: Servicios de las casas de empeño o compraventas
+  grupo_resolucion_265: '303'
+  tarifa_por_mil: '13.8'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '66111'
+  actividad: Administración de mercados financieros (excepto actividades de las bolsas de valores)
+  grupo_resolucion_265: '401'
+  tarifa_por_mil: '14'
+  fuente_tarifa: Acuerdo 816 de 2021, art. 4 (la resolución trae 13,1 de 2024, del Acuerdo 780, art. 6)
+- ciiu: '66112'
+  actividad: Actividades de las bolsas de valores
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '69101'
+  actividad: Actividades jurídicas como consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '69102'
+  actividad: Actividades jurídicas en el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '69201'
+  actividad: Actividades de contabilidad, teneduría de libros, auditoría financiera y asesoría tributaria como consultoría
+    profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '69202'
+  actividad: Actividades de contabilidad, teneduría de libros, auditoría financiera y asesoría tributaria en el
+    ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '70101'
+  actividad: Actividades de administración empresarial como consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '70102'
+  actividad: Actividades de administración empresarial en el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '70201'
+  actividad: Actividades de consultoría de gestión
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '70202'
+  actividad: Actividades de gestión en el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '71111'
+  actividad: Actividades de arquitectura
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '71112'
+  actividad: Actividades de arquitectura en ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '71121'
+  actividad: Actividades de ingeniería y otras actividades conexas de consultoría técnica
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '71122'
+  actividad: Actividades de ingeniería y otras actividades conexas de consultoría técnica en ejercicio de una profesión
+    liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '71201'
+  actividad: Ensayos y análisis técnicos como consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '71202'
+  actividad: Ensayos y análisis técnicos como consultoría profesional en el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '72101'
+  actividad: Investigaciones y desarrollo experimental en el campo de las ciencias naturales y la ingeniería como
+    consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '72102'
+  actividad: Investigaciones y desarrollo experimental en el campo de las ciencias naturales y la ingeniería en
+    el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '72201'
+  actividad: Investigaciones y desarrollo experimental en el campo de las ciencias sociales y las humanidades como
+    consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '72202'
+  actividad: Investigaciones y desarrollo experimental en el campo de las ciencias sociales y las humanidades en
+    el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '73201'
+  actividad: Estudios de mercado y realización de encuestas de opinión pública como consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '73202'
+  actividad: Estudios de mercado y realización de encuestas de opinión pública en el ejercicio de una profesión
+    liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '74101'
+  actividad: Actividades especializadas de diseño como consultoría profesional
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '74102'
+  actividad: Actividades especializadas de diseño en el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: '74901'
+  actividad: Otras actividades profesionales, científicas y técnicas n.c.p. como consultoría profesional (incluye
+    actividades de periodistas)
+  grupo_resolucion_265: '302'
+  tarifa_por_mil: '8.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría profesional)
+- ciiu: '74902'
+  actividad: Otras actividades profesionales, científicas y técnicas n.c.p. en el ejercicio de una profesión liberal
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '7.66'
+  fuente_tarifa: Acuerdo 780 de 2020, art. 6, columna «2024 y siguientes» (consultoría en el ejercicio de una profesión
+    liberal)
+- ciiu: / 8523
+  actividad: Educación media técnica
+  grupo_resolucion_265: '305'
+  tarifa_por_mil: '7'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: 85232/8551
+  actividad: Educación de formación laboral
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '86211'
+  actividad: Actividades de la práctica médica, sin internación (excepto actividades de promoción y prevención que
+    realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública
+    o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '86221'
+  actividad: Actividades de la práctica odontológica, sin internación (excepto actividades de promoción y prevención
+    que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública
+    o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '86911'
+  actividad: Actividades de apoyo diagnóstico (excepto actividades de promoción y prevención que realicen las entidades
+    e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos
+    que provengan del Sistema General de Seguridad Social en Salud.)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '86921'
+  actividad: Actividades de apoyo terapéutico (excepto actividades de promoción y prevención que realicen las entidades
+    e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos
+    que provengan del Sistema General de Seguridad Social en Salud.)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '86991'
+  actividad: Otras actividades de atención de la salud humana (excepto actividades de promoción y prevención que
+    realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública
+    o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '87101'
+  actividad: Actividades de atención residencial medical- izada de tipo general (excepto actividades de promoción
+    y prevención que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza
+    pública o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '92001'
+  actividad: Actividades de juegos de destreza, habilidad, conocimiento y fuerza
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '93291'
+  actividad: Otras actividades recreativas y de esparcimiento n.c.p. (excepto juegos de suerte y azar, discotecas
+    y similares)
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '9.66'
+  fuente_tarifa: Acuerdo 65 de 2002, art. 3, texto original (tarifa del grupo, columna de 2003 y siguientes)
+- ciiu: '5330'
+  actividad: Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones
+    de contacto y que utilizan una red de domiciliarios
+  grupo_resolucion_265: '304'
+  tarifa_por_mil: '11.04'
+  fuente_tarifa: 'Acuerdo 780 de 2020, art. 7 (2022: 10,14; 2023: 10,63; 2024 y siguientes: 11,04)'
+  rige_hasta: la publicación del Acuerdo 1084 de 2026 (su art. 52 lo deroga)
