@@ -8,13 +8,6 @@ Artículo 1°. Ajuste de rangos de avalúo catastral de los predios residenciale
 urbanos. De conformidad con lo establecido en el inciso 4° del artículo 1° del Acuerdo
 Distrital 648 de 2016 y en el artículo 3° del Acuerdo Distrital 780 de 2020, los rangos de
 1 https://www.dane.gov.co/files/operaciones/IPVN/bol-IPVN-IItrim2025.pdf
-Pública
-“Por la cual se ajustan para el año gravable 2026 los rangos del avalúo catastral determinantes de
-la tarifa del impuesto predial unificado”
-www.haciendabogota.gov.co
-Carrera 30 N.° 25-90 - Bogotá, D. C. Código postal: 111311
-PBX: (+57) 601 338 50 00 Información: Línea 195
-NIT. 899.999.061-9
 avalúo catastral aplicables a los predios residenciales urbanos, para efectos tarifarios y para
 la liquidación del impuesto predial unificado correspondiente al año gravable 2026, son los
 siguientes:
@@ -49,12 +42,6 @@ $ 1.710.142.001 $ 1.971.099.000 10,1
 $ 1.971.099.001 $ 2.232.051.000 10,8
 $ 2.232.051.001 $ 2.505.139.000 11,5
 $ 2.505.139.001 $ - 12,3
-Pública
-“Por la cual se ajustan para el año gravable 2026 los rangos del avalúo catastral determinantes de
-la tarifa del impuesto predial unificado”
-www.haciendabogota.gov.co
-Carrera 30 N.° 25-90 - Bogotá, D. C. Código postal: 111311
-PBX: (+57) 601 338 50 00 Información: Línea 195
 
 ## Artículo 2
 
@@ -93,8 +80,7 @@ edificados
 ## Artículo 3
 
 Artículo 3°. Ajuste de rangos de avalúo catastral de los predios de propiedad de los
-clubes sociales, campestres, deportivos o recreativos. De conformidad con el artículo
-2° del Acuerdo Distrital 105 de 2003, modificado por el artículo 1° del Acuerdo Distrital 648
+clubes sociales, campestres, deportivos o recreativos. De conformidad con el artículo 2° del Acuerdo Distrital 105 de 2003, modificado por el artículo 1° del Acuerdo Distrital 648
 de 2016 y el artículo 2° del Acuerdo Distrital 897 de 2023, los rangos de avalúo catastral de
 los predios de propiedad de los clubes sociales, campestres, deportivos o recreativos, para
 efectos tarifarios y de liquidación del impuesto predial unificado del año gravable 2026,
@@ -125,23 +111,7 @@ y/o recreativos
 8,77 $ 81.900.239.001 $ 95.550.247.000
 8,96 $ 95.550.247.001 $ 109.200.303.000
 9,15 $ 109.200.303.001
-Pública
-“Por la cual se ajustan para el año gravable 2026 los rangos del avalúo catastral determinantes de
-la tarifa del impuesto predial unificado”
-www.haciendabogota.gov.co
-Carrera 30 N.° 25-90 - Bogotá, D. C. Código postal: 111311
-PBX: (+57) 601 338 50 00 Información: Línea 195
 
 ## Artículo 4
 
 Artículo 4°. Vigencia. La presente Resolución rige a partir del 1° de enero de 2026.
-PUBLÍQUESE Y CÚMPLASE
-ANA MARÍA CADENA RUIZ
-Secretaria Distrital de Hacienda
-Despacho del secretario distrital de Hacienda
-Aprobado por: Andrés Felipe Uribe Medina - Subsecretario Técnico de Hacienda
-Pablo Fernando Verástegui Niño – Director de Impuestos de Bogotá
-Marcela Gómez Martínez – Directora Jurídica
-Revisado por: César Figueroa Socarrás – Subdirector de Planeación e Inteligencia Tributaria
-Pedro Andrés Cuéllar Trujillo – Subdirector Jurídico de Hacienda
-Proyectado por: Elena Lucía Ortiz Henao - Subdirectora Jurídico Tributaria

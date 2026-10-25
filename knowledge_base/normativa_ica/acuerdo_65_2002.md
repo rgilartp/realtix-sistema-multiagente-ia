@@ -2,6 +2,8 @@
 
 Fuente: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156 (consultada en octubre de 2026)
 
+> **Vigencia por año gravable.** Las tarifas del art. 21 del Acuerdo 1084 de 2026 (texto nuevo del art. 3 del Acuerdo 65) se aplican, según el parágrafo del art. 21, a los declarantes anuales desde el 1 de enero de 2027 y a los bimestrales desde el bimestre siguiente a la aprobación del acuerdo (se aprobó en el bimestre 5 de 2026, por eso desde el bimestre 6 de 2026). Hasta esos periodos rigen el texto original del art. 3 y sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021).
+
 ## Artículo 3
 
 Artículo 3. Modificado por el art. 21, Acuerdo Distrital 1084 de 2026. <El nuevo texto es el siguiente> Tarifas del Impuesto de Industria y Comercio: Las tarifas del impuesto de industria y comercio son las siguientes:
@@ -461,9 +463,8 @@ Artículo 3. Modificado por el art. 21, Acuerdo Distrital 1084 de 2026. <El nuev
 
 Establézcase una tarifa progresiva para el impuesto de industria y comercio para las siguientes actividades:
 
-| Actividad | CIIU | Tarifas por mil |  |  |
+| Actividad | CIIU | Tarifas por mil Hasta 2027 | Tarifas por mil 2028 | Tarifas por mil 2029 en adelante |
 |---|---|---|---|---|
-| Hasta 2027 | 2028 | 2029 en adelante |  |  |
 | Banca Central | 6411 | 20 | 19 | 18 |
 | Bancos comerciales | 6412 | 20 | 19 | 18 |
 | Actividades de las corporaciones financieras | 6421 | 20 | 19 | 18 |
@@ -505,9 +506,8 @@ El texto original del artículo era el siguiente:
 
 Artículo 3. Tarifas del impuesto de industria y comercio. Las tarifas del impuesto de industria y comercio según la actividad son las siguientes y serán aplicables a partir de la entrada en vigencia del presente Acuerdo:
 
-| a. Actividades Industriales | Tarifa 2002 | Tarifa 2003 y |
+| a. Actividades Industriales | Tarifa 2002 (Por mil) | Tarifa 2003 y siguientes (Por mil) |
 |---|---|---|
-|  | (Por mil) | siguientes (Por mil) |
 | Producción de alimentos, excepto bebidas; producción de calzado y prendas de vestir. | 3,6 | 4,14 |
 | Fabricación de productos primarios de hierro y acero; fabricación de material de transporte. | 6,0 | 6,9 |
 | Edición de libros | 8 | 8 |

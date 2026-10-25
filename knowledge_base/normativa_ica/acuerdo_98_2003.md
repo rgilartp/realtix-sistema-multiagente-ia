@@ -40,12 +40,5 @@ PUBLÍQUESE Y CÚMPLASE
 
 Dado en Bogotá, D.C., a los treinta y uno (31) días del mes de octubre de 2003.
 
-| FERNANDO LOPEZ GUTIERREZ | MARIA ELENA CALVACHI Z. |
+| FERNANDO LOPEZ GUTIERREZ Presidente | MARIA ELENA CALVACHI Z. Secretaria General (E) |
 |---|---|
-| Presidente | Secretaria General (E) |
-
-ANTANAS MOCKUS SIVICKAS
-
-Alcalde Mayor de Bogotá, D.C.
-
-NOTA: Publicado en el Registro Distrital 2991 de Noviembre 20 de 2003

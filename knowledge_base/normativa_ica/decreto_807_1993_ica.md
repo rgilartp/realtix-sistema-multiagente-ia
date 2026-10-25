@@ -2687,5 +2687,3 @@ Ver Acuerdo 28 de 1995 Concejo Distrito Capital. Plan de Racionalización Tribut
 Publíquese y cúmplase.
 
 Dado en Santa Fe de Bogotá, D.C., a 17 de diciembre de 1993.
-
-El Alcalde, JAIME CASTRO. El Secretario de Hacienda, JULIO ROBERTO PIZA RODRÍGUEZ.

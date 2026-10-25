@@ -295,14 +295,14 @@ ARTÍCULO 55. SISTEMA PREFERENCIAL DEL IMPUESTO DE INDUSTRIA, COMERCIO, AVISOS Y
 
 RANGO DE INGRESOS NETOS NÚMERO DE SALARIOS MINIMOS
 
-| AÑO | DIARIOS |  |
+| AÑO | DIARIOS | DIARIOS |
 |---|---|---|
 | $ 0 | $ 15.000.000 | 0 |
 | $ 15.000.001 | $ 20.000.000 | 8 |
 | $ 20.000.001 | $ 30.000.000 | 12 |
 | $ 30.000.001 | $ 45.000.000 | 24 |
 | $ 45.000.001 | $ 60.000.000 | 36 |
-| $ 60.000.001 | $ 77.900.000 60 |  |
+| $ 60.000.001 | $ 77.900.000 60 | $ 77.900.000 60 |
 
 Los contribuyentes previstos en el inciso anterior no presentarán declaración tributaria ni serán sujetos de retención y su impuesto será igual a la suma cancelada de acuerdo con el monto del pago aquí fijado en los recibos oficiales de pago que para el efecto prescriba la Dirección Distrital de Impuestos.
 

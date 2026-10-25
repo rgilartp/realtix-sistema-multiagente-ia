@@ -99,6 +99,11 @@ fuentes:
     formato: html
     articulos: ["43", "44", "45", "205", "206", "207", "217", "218", "219", "220", "221", "222", "223", "224", "225", "226", "227", "231", "232", "233", "263"]
     nota: Compilación de la Secretaría de Hacienda. Cada artículo cita el del Decreto 474 de 2016 que compila; el art. 263 es la derogatoria expresa.
+    notas_de_articulo:
+      "45": >-
+        Este artículo remite a los incisos de incrementos máximos del Acuerdo 648 de 2016, derogados por el
+        parágrafo del art. 285 del Acuerdo 927 de 2024; los topes vigentes son los de la Ley 1995 de 2019,
+        art. 2, según la adenda 06, sección 3.3.
   - id: acuerdo_648_2016
     norma: Acuerdo 648 de 2016
     coleccion: normativa_ipu
@@ -106,6 +111,11 @@ fuentes:
     formato: html
     articulos: todos
     nota: Sin enlace en la adenda; tomado del Régimen Legal de Bogotá.
+    vigencia: >-
+      Los rangos en pesos de este acuerdo no son los de 2026, que están en la Resolución SDH-000194 de 2025
+      (el art. 1 los ajusta cada año). Las tarifas preferenciales del art. 1 siguen vigentes (Acuerdo 780 de
+      2020, art. 3, parágrafo 2). Los incisos de incrementos máximos están derogados por el parágrafo del
+      art. 285 del Acuerdo 927 de 2024, según la nota del Régimen Legal.
   - id: decreto_352_2002_cap1
     norma: Decreto Distrital 352 de 2002, cap. I
     coleccion: normativa_ipu
@@ -125,12 +135,19 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=11030
     formato: html
     articulos: ["2"]
+    vigencia: >-
+      El texto nuevo del art. 2 es el del art. 20 del Acuerdo 1084 de 2026 y rige desde el predial de 2027;
+      el texto original de 2003, que aparece más abajo, no rige. Fuente: adenda 06, sección 3.3, y las notas
+      del Régimen Legal.
   - id: acuerdo_780_2020
     norma: Acuerdo 780 de 2020, art. 3
     coleccion: normativa_ipu
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965
     formato: html
     articulos: ["3"]
+    vigencia: >-
+      Los rangos en pesos del art. 3 son de 2020 (parágrafo 1); para 2026 rigen los de la Resolución
+      SDH-000194 de 2025. Fuente: el parágrafo 1 del art. 3.
   - id: resolucion_000194_2025_rangos
     norma: Resolución SDH-000194 de 2025 (rangos del predial de 2026)
     coleccion: normativa_ipu
@@ -172,6 +189,12 @@ fuentes:
     formato: html
     articulos: ["1", "2", "3", "4", "7", "21", "24", "25", "26", "52"]
     nota: Reparto de la adenda, sección 3.1 (arts. 21, 24, 25 y 26 e incentivos del ICA). Mismo texto digital del Régimen Legal.
+    vigencia: >-
+      Las tarifas del art. 21 del Acuerdo 1084 de 2026 (texto nuevo del art. 3 del Acuerdo 65) se aplican, según
+      el parágrafo del art. 21, a los declarantes anuales desde el 1 de enero de 2027 y a los bimestrales desde
+      el bimestre siguiente a la aprobación del acuerdo (se aprobó en el bimestre 5 de 2026, por eso desde el
+      bimestre 6 de 2026). Hasta esos periodos rigen el texto original del art. 3 y sus modificaciones
+      (Acuerdos 780 de 2020 y 816 de 2021).
   - id: ley_14_1983
     norma: Ley 14 de 1983
     coleccion: normativa_ica
@@ -201,6 +224,12 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156
     formato: html
     articulos: ["3"]
+    vigencia: >-
+      Las tarifas del art. 21 del Acuerdo 1084 de 2026 (texto nuevo del art. 3 del Acuerdo 65) se aplican, según
+      el parágrafo del art. 21, a los declarantes anuales desde el 1 de enero de 2027 y a los bimestrales desde
+      el bimestre siguiente a la aprobación del acuerdo (se aprobó en el bimestre 5 de 2026, por eso desde el
+      bimestre 6 de 2026). Hasta esos periodos rigen el texto original del art. 3 y sus modificaciones
+      (Acuerdos 780 de 2020 y 816 de 2021).
   - id: acuerdo_780_2020_ica
     norma: Acuerdo 780 de 2020, arts. 6 y 7
     coleccion: normativa_ica
@@ -238,3 +267,23 @@ fuentes:
     formato: html
     articulos: ["342", "345"]
     nota: Modifican los arts. 33 y 36 de la Ley 14 de 1983 (base gravable y actividades de servicios del ICA). Misma parte de la ley que el art. 354.
+  - id: decreto_639_2025_ica
+    norma: Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205
+    coleccion: normativa_ica
+    archivo: decreto_639_2025
+    url: https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm
+    formato: html
+    articulos: ["205"]
+    nota: Declaración anual del ICA de los contribuyentes con menos de 391 UVT. Fuente fuera de la tabla de la sección 5 de la especificación, copiada del art. 205 que ya está en normativa_ipu.
+  - id: acuerdo_1019_2025_ica
+    norma: Acuerdo 1019 de 2025, art. 44
+    coleccion: normativa_ica
+    url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818
+    formato: html
+    articulos: ["44"]
+    texto_anterior:
+      "44": lo derogó el art. 52 del Acuerdo 1084 de 2026 (desde 2027 el ICA consolidado del SIMPLE está en el art. 24)
+    vigencia: >-
+      El art. 44 fijó el ICA consolidado del régimen SIMPLE para la vigencia 2026, hasta que el art. 52 del
+      Acuerdo 1084 de 2026 lo derogó; desde el 1 de enero de 2027 aplica el art. 24 del Acuerdo 1084.
+    nota: Fuente fuera de la tabla de la sección 5 de la especificación; sirve para verificar el SIMPLE de 2026 con su texto.

@@ -98,7 +98,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 103 | 2391 | Fabricación de productos refractarios | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2392 | Fabricación de materiales de arcilla para la construcción | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2393 | Fabricación de otros productos de cerámica y porcelana | 11,04 | 11,04 | 11,04 | 11,04 |
-| 103 | 2394 | Fabricación de cemento, cal y yeso | 11,04 | 1 1,04 | 11,04 | 11,04 |
+| 103 | 2394 | Fabricación de cemento, cal y yeso | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2395 | Fabricación de artículos de hormigón, cemento y yeso | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2396 | Corte, tallado y acabado de la piedra | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2399 | Fabricación de otros productos minerales no metálicos n.c.p. | 11,04 | 11,04 | 11,04 | 11,04 |
@@ -137,7 +137,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 103 | 2813 | Fabricación de otras bombas, compresores, grifos y válvulas | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2814 | Fabricación de cojinetes, engranajes, trenes de engranajes y piezas de transmisión | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2815 | Fabricación de hornos, hogares y quemadores industriales | 11,04 | 11,04 | 11,04 | 11,04 |
-| 103 | 2816 | Fabricación de equipo de elevación y manipulación | 11,04 | 11,04 | 11,04 | 1 1,04 |
+| 103 | 2816 | Fabricación de equipo de elevación y manipulación | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2817 | Fabricación de maquinaria y equipo de oficina (excepto computadoras y equipo periférico) | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2818 | Fabricación de herramientas manuales con motor | 11,04 | 11,04 | 11,04 | 11,04 |
 | 103 | 2819 | Fabricación de otros tipos de maquinaria y equipo de uso general n.c.p. | 11,04 | 11,04 | 11,04 | 11,04 |
@@ -191,7 +191,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 302 | 4220 | Construcción de proyectos de servicio público | 6,9 | 7,12 | 7,36 | 7,6 |
 | 302 | 4290 | Construcción de otras obras de ingeniería civil | 6,9 | 7,12 | 7,36 | 7,6 |
 | 302 | 4311 | Demolición | 6,9 | 6,9 | 6,9 | 6,9 |
-| 302 | 4312 | Preparación del terreno | 6,9 | 6,9 | 6,9 | 6 ,9 |
+| 302 | 4312 | Preparación del terreno | 6,9 | 6,9 | 6,9 | 6,9 |
 | 302 | 4321 | Instalaciones eléctricas de la construcción | 6,9 | 6,9 | 6,9 | 6,9 |
 | 302 | 4322 | Instalaciones de fontanería, calefacción y aire acondicionado de la construcción | 6,9 | 6,9 | 6,9 | 6,9 |
 | 302 | 4329 | Otras instalaciones especializadas de la construcción | 6,9 | 6,9 | 6,9 | 6,9 |
@@ -273,7 +273,6 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 303 | 5613 | Expendio de comidas preparadas en cafeterías | 13,8 | 13,8 | 13,8 | 13,8 |
 | 303 | 5619 | Otros tipos de expendio de comidas preparadas n.c.p. | 13,8 | 13,8 | 13,8 | 13,8 |
 | 303 | 5621 | Catering para eventos | 13,8 | 13,8 | 13,8 | 13,8 |
-| Agrupación por Tarifa | Código de Actividad CIIU Resol | Descripción Actividad Económica | Tarifa 2021 (por mil) | Tarifa 2022 (por mil) | Tarifa 2023 (por mil) | Tarifa 2024 (por mil) |
 | 303 | 5629 | Actividades de otros servicios de comidas | 13,8 | 13,8 | 13,8 | 13,8 |
 | 303 | 5630 | Expendio de bebidas alcohólicas para el consumo dentro del establecimiento | 13,8 | 13,8 | 13,8 | 13,8 |
 | 103 | 5812 | Edición de directorios y listas de correo | 11,04 | 11,04 | 11,04 | 11,04 |
@@ -371,7 +370,7 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 304 | 8552 | Enseñanza deportiva y recreativa | 9,66 | 9,66 | 9,66 | 9,66 |
 | 04 | 8553 | Enseñanza cultural | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 8559 | Otros tipos de educación n.c.p. | 9,66 | 9,66 | 9,66 | 9,66 |
-| 304 | 85591 | Educación académica no formal (excepto programas de educación básica primaria, básica secundaria y media no gradual con fines de validación) | 9,66 | ,9,66 | 9,66 | 9,66 |
+| 304 | 85591 | Educación académica no formal (excepto programas de educación básica primaria, básica secundaria y media no gradual con fines de validación) | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 85592 | Educación académica no formal impartida mediante programas de educación básica primaria, básica secundaria y media no gradual con fines de validación | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 8560 | Actividades de apoyo a la educación | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 8610 | Actividades de hospitales y clínicas, con internación | 9,66 | 9,66 | 9,66 | 9,66 |
@@ -494,4 +493,4 @@ ARTÍCULO 1. Establecer la siguiente clasificación de las actividades económic
 | 304 | 87101 | Actividades de atención residencial medical- izada de tipo general (excepto actividades de promoción y prevención que realicen las entidades e instituciones promotoras y prestadoras de servicios de salud de naturaleza pública o privada, con recursos que provengan del Sistema General de Seguridad Social en Salud.) | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 92001 | Actividades de juegos de destreza, habilidad, conocimiento y fuerza | 9,66 | 9,66 | 9,66 | 9,66 |
 | 304 | 93291 | Otras actividades recreativas y de esparcimiento n.c.p. (excepto juegos de suerte y azar, discotecas y similares) | 9,66 | 9,66 | 9,66 | 9,66 |
-| 304 | 5330 | Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones de contacto y que utilizan una red de domiciliarios | 10,14 | 10,63 | 11,04 |  |
+| 304 | 5330 | Servicio de pedido, compra, distribución y entrega de productos a través de plataformas o aplicaciones de contacto y que utilizan una red de domiciliarios | 10,14 | 10,14 | 10,63 | 11,04 |
