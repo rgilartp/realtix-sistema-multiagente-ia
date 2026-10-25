@@ -154,7 +154,7 @@ def test_ipu_2026_coincide_con_el_pdf_en_los_tres_articulos() -> None:
 @pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
 def test_las_tablas_del_acuerdo_1084_coinciden_con_su_texto_digital() -> None:
     resultados = contrastar_1084.contrastar()
-    assert len(resultados) == 8
+    assert len(resultados) == 9
     for resultado in resultados:
         assert resultado["diferencias"] == [], resultado["tabla"]
         assert resultado["filas_en_el_texto"] == resultado["filas_en_el_yaml"]

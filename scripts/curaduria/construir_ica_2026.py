@@ -383,6 +383,10 @@ def _encabezado(datos: dict) -> dict:
         },
         "regimen_simple_2026": {
             "fuente": "Acuerdo 1019 de 2025, art. 44 (derogado por el art. 52 del Acuerdo 1084)",
+            "verificacion": (
+                "Contrastado con el texto del art. 44 en el Régimen Legal de Bogotá (i=191818): "
+                "12, 16, 30, 30 (sic) y 16 por mil, fila por fila; ver contrastar_1084.py"
+            ),
             "rige": (
                 "todo el año 2026; desde 2027 aplica el art. 24 del Acuerdo 1084 "
                 "(regimen_simple_2027 en ica_2027.yaml)"

@@ -2,8 +2,8 @@
 
 El texto digital es el del Régimen Legal de Bogotá, ya cortado por artículo en `knowledge_base/`.
 Compara, fila por fila, la sobretasa de alumbrado (arts. 14 y 15), el predial de 2027 (art. 20) y el
-ICA consolidado del SIMPLE (art. 24). Escribe `docs/verificacion/acuerdo_1084_contraste.json` y
-termina con código 1 si hay diferencias.
+ICA consolidado del SIMPLE (art. 24), más el de 2026 (art. 44 del Acuerdo 1019 de 2025). Escribe
+`docs/verificacion/acuerdo_1084_contraste.json` y termina con código 1 si hay diferencias.
 Uso: uv run python scripts/curaduria/contrastar_1084.py
 """
 
@@ -16,6 +16,7 @@ import yaml
 from comun import KNOWLEDGE_BASE, RAIZ
 
 IPU = KNOWLEDGE_BASE / "normativa_ipu" / "acuerdo_1084_2026.md"
+ICA_1019 = KNOWLEDGE_BASE / "normativa_ica" / "acuerdo_1019_2025_ica.md"
 ICA = KNOWLEDGE_BASE / "normativa_ica" / "acuerdo_1084_2026_ica.md"
 SALIDA = RAIZ / "docs" / "verificacion" / "acuerdo_1084_contraste.json"
 
@@ -115,13 +116,12 @@ def contrastar() -> list[dict]:
     )
 
     art_20 = tablas(_articulo(ipu, 20))
-    preferenciales, residencial, no_residencial, clubes = art_20[:4]
-    rural = preferenciales[8:10]  # tras «Predios residenciales rurales» y dos filas de encabezado
+    urbanos, rurales, residencial, no_residencial, clubes = art_20[:5]
     pref = predial["preferenciales"]
     resultados.append(
         _comparar(
             "predial 2027, preferenciales urbanos y rurales con destino agropecuario",
-            [(f[1].lower(), f[2].lower(), _decimal(f[3])) for f in preferenciales[2:5]],
+            [(f[1].lower(), f[2].lower(), _decimal(f[3])) for f in urbanos],
             [
                 (f["desde"].lower(), f["hasta"].lower(), _decimal(f["tarifa_por_mil"]))
                 for f in pref["residencial_urbano_y_rural_agropecuario"]
@@ -131,7 +131,7 @@ def contrastar() -> list[dict]:
     resultados.append(
         _comparar(
             "predial 2027, preferenciales residenciales rurales",
-            [(f[0].lower(), f[1].lower(), _decimal(f[2])) for f in rural],
+            [(f[0].lower(), f[1].lower(), _decimal(f[2])) for f in rurales],
             [
                 (f["desde"].lower(), f["hasta"].lower(), _decimal(f["tarifa_por_mil"]))
                 for f in pref["residencial_rural"][:2]
@@ -140,10 +140,9 @@ def contrastar() -> list[dict]:
     )
 
     def fila_residencial(f: list[str]) -> tuple:
-        celdas = [c for c in f if c]
-        if celdas[0].lower().startswith("más de"):
-            return (*_rango(celdas[0]), _decimal(celdas[-1]))
-        return (*_rango(celdas[0], celdas[1]), _decimal(celdas[-1]))
+        if f[0].lower().startswith("más de"):  # la fuente repite «Más de…» en Desde y en Hasta
+            return (*_rango(f[0]), _decimal(f[-1]))
+        return (*_rango(f[0], f[1]), _decimal(f[-1]))
 
     resultados.append(
         _comparar(
@@ -162,10 +161,9 @@ def contrastar() -> list[dict]:
 
     def fila_no_residencial(f: list[str]) -> tuple:
         tarifa = _decimal(f[1])
-        celdas = [c for c in f[2:] if c]
-        if len(celdas) == 1:
-            return (tarifa, *_rango(celdas[0]))
-        return (tarifa, *_rango(celdas[0], celdas[1]))
+        if f[2] == f[3]:  # «Más de…» o «Cualquier avalúo» repetido en Desde y en Hasta
+            return (tarifa, *_rango(f[2]))
+        return (tarifa, *_rango(f[2], f[3]))
 
     resultados.append(
         _comparar(
@@ -179,17 +177,15 @@ def contrastar() -> list[dict]:
     )
 
     def fila_club(f: list[str]) -> tuple:
-        celdas = [c for c in f if c]
-        if celdas[0].startswith("Dotacional"):  # la primera fila trae la categoría
-            celdas = celdas[1:]
-        if celdas[0].lower().startswith("más de"):
-            return (_decimal(celdas[1]), _decimal(celdas[2]), *_rango(celdas[0]))
-        return (_decimal(celdas[2]), _decimal(celdas[3]), *_rango(celdas[0], celdas[1]))
+        tarifas = (_decimal(f[3]), _decimal(f[4]))
+        if f[1] == f[2]:  # «Más de…» repetido en Desde y en Hasta
+            return (*tarifas, *_rango(f[1]))
+        return (*tarifas, *_rango(f[1], f[2]))
 
     resultados.append(
         _comparar(
             "predial 2027, clubes campestres, sociales y deportivos",
-            [fila_club(f) for f in clubes[2:]],
+            [fila_club(f) for f in clubes],
             [
                 (
                     _decimal(f["tarifa_por_mil_2027"]),
@@ -208,6 +204,19 @@ def contrastar() -> list[dict]:
             "ICA consolidado del SIMPLE, art. 24",
             [(f[0], _decimal(f[1])) for f in art_24],
             [(t["numeral"], _decimal(t["tarifa_por_mil"])) for t in simple["tarifas_por_mil"]],
+        )
+    )
+
+    art_44 = tablas(_articulo(ICA_1019.read_text(encoding="utf-8"), 44))[0]
+    simple_2026 = _yaml("tarifas/ica_2026.yaml")["regimen_simple_2026"]
+    resultados.append(
+        _comparar(
+            "ICA consolidado del SIMPLE 2026, art. 44 del Acuerdo 1019 de 2025",
+            [(re.sub(r"\s", "", f[0]), _decimal(f[1])) for f in art_44],
+            [
+                (re.sub(r"\s", "", t["numeral"]), _decimal(t["tarifa_por_mil"]))
+                for t in simple_2026["tarifas_por_mil"]
+            ],
         )
     )
     return resultados
