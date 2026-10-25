@@ -133,25 +133,31 @@ def test_ica_2027_coincide_en_los_dos_sentidos_con_el_texto_digital() -> None:
     assert len(fijas) + len(progresivas) == 475
 
 
-PENDIENTES_ICA_2026 = {
-    "4111",
-    "4112",
-    "4311",
-    "4312",
-    "4321",
-    "4322",
-    "4329",
-    "4330",
-    "4390",
-    "39002",
+# Filas que decidió Rodolfo en la parada de B2: prevalece la Resolución SDH-000265 de 2021.
+DECIDIDAS_ICA_2026 = {
+    "4111": "6.9",
+    "4112": "6.9",
+    "4311": "6.9",
+    "4312": "6.9",
+    "4321": "6.9",
+    "4322": "6.9",
+    "4329": "6.9",
+    "39002": "6.9",
+    "4330": "7.6",
+    "4390": "7.6",
 }
+NOTA_PARA_EL_AGENTE = (
+    "El art. 6 del Acuerdo 780 de 2020 nombra a los contratistas de construcción, constructores y "
+    "urbanizadores en el grupo que sube a 8,66 por mil; la Secretaría de Hacienda clasificó esta "
+    "actividad en la tarifa indicada, que es la que aplica."
+)
 
 
 @pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
 def test_ica_2026_arma_el_texto_vigente_con_sus_fuentes() -> None:
     datos = _yaml("tarifas/ica_2026.yaml")
     filas = datos["por_actividad"]
-    assert datos["estado"] == "parcial"
+    assert datos["estado"] == "completa"
     assert len(filas) == 486
     assert len({f["ciiu"] for f in filas}) == 486
     por_codigo = {f["ciiu"]: f for f in filas}
@@ -167,17 +173,33 @@ def test_ica_2026_arma_el_texto_vigente_con_sus_fuentes() -> None:
 
 
 @pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
-def test_ica_2026_deja_pendiente_lo_que_no_se_puede_verificar() -> None:
-    filas = _yaml("tarifas/ica_2026.yaml")["por_actividad"]
-    pendientes = {f["ciiu"] for f in filas if f["tarifa_por_mil"] == "pendiente"}
-    assert pendientes == PENDIENTES_ICA_2026
+def test_ica_2026_aplica_la_decision_de_rodolfo_sobre_las_10_filas() -> None:
+    datos = _yaml("tarifas/ica_2026.yaml")
+    filas = datos["por_actividad"]
+    por_codigo = {f["ciiu"]: f for f in filas}
+    assert not [f for f in filas if f["tarifa_por_mil"] == "pendiente"]
+    assert datos["decision_de_rodolfo"]["filas"] == sorted(DECIDIDAS_ICA_2026)
+    for codigo, tarifa in DECIDIDAS_ICA_2026.items():
+        fila = por_codigo[codigo]
+        assert fila["tarifa_por_mil"] == tarifa
+        assert fila["fuente_tarifa"] == (
+            "Resolución SDH-000265 de 2021, art. 1 "
+            "(clasificación oficial por CIIU de la Secretaría de Hacienda)"
+        )
+        assert fila["nota_para_el_agente"] == NOTA_PARA_EL_AGENTE
+        assert "Rodolfo" in fila["decision"]
     for fila in filas:
-        if fila["ciiu"] in pendientes:
-            assert fila["tarifa_resolucion_265"]
-            assert fila["motivo"]
-        else:
-            assert fila["fuente_tarifa"]
-            assert Decimal(fila["tarifa_por_mil"]) > 0
+        assert fila["fuente_tarifa"]
+        assert Decimal(fila["tarifa_por_mil"]) > 0
+        if fila["ciiu"] not in DECIDIDAS_ICA_2026:
+            assert "nota_para_el_agente" not in fila
+
+
+@pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
+def test_ica_2026_completa_el_grupo_truncado_del_4930() -> None:
+    fila = next(f for f in _yaml("tarifas/ica_2026.yaml")["por_actividad"] if f["ciiu"] == "4930")
+    assert fila["grupo_resolucion_265"] == "301"
+    assert fila["tarifa_por_mil"] == "4.14"
 
 
 @pytest.mark.req("RF-ICA-03 · Fechas de declaración")
@@ -252,6 +274,25 @@ def test_las_normas_corregidas_traen_sus_notas_de_vigencia() -> None:
     assert "Modificado por" in ley_14
     for archivo in ("normativa_ipu/decreto_474_2016.md", "normativa_ipu/decreto_807_1993_ipu.md"):
         assert "alcaldiabogota.gov.co" in (KB / archivo).read_text(encoding="utf-8")
+
+
+def _articulo(texto: str, numero: int) -> str:
+    inicio = texto.index(f"\n## Artículo {numero}\n")
+    fin = texto.find("\n## Artículo ", inicio + 1)
+    return texto[inicio : fin if fin != -1 else len(texto)]
+
+
+@pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
+def test_la_ley_14_marca_como_no_vigentes_los_arts_33_y_36_y_remite_a_la_ley_1819() -> None:
+    ley_14 = (KB / "normativa_ica" / "ley_14_1983.md").read_text(encoding="utf-8")
+    for numero, referencia in ((33, "art. 342"), (36, "art. 345")):
+        articulo = _articulo(ley_14, numero)
+        assert "Texto anterior, no vigente" in articulo
+        assert f"Ley 1819 de 2016, {referencia}" in articulo
+    assert ley_14.count("Texto anterior, no vigente") == 2
+    ley_1819 = (KB / "normativa_ica" / "ley_1819_2016_ica.md").read_text(encoding="utf-8")
+    assert [n for n in (342, 345) if f"\n## Artículo {n}\n" in ley_1819] == [342, 345]
+    assert "Ley 1819 de 2016" in ley_1819.splitlines()[0]
 
 
 @pytest.mark.req("RF-OBS-04 · Actualización de la base vectorial")
