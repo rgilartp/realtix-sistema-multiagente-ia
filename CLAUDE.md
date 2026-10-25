@@ -101,7 +101,9 @@ Fuera de esas paradas, no se pide confirmación.
    ejecutado.
 7. Nunca commit ni push a `main`, ni `--no-verify` ni `--no-gpg-sign`; si la firma falla, es una
    parada.
-8. No leer `.env` ni llaves privadas, ni imprimir secretos.
+8. No leer `.env` ni llaves privadas, ni imprimir secretos. Nunca se ejecutan comandos que
+   muestren variables de entorno o la configuración resuelta (para validar Compose,
+   `docker compose config -q`).
 9. Fechas (sección 0.4): ninguna fecha exacta del trabajo en documentos, resúmenes, ADR, PR,
    commits, reportes ni informe; si hace falta, «octubre de 2026». Las fechas tributarias sí van.
    En resultados, el tiempo se registra como duración (ms). Si un escenario necesita un municipio
@@ -128,7 +130,9 @@ Fuera de esas paradas, no se pide confirmación.
   `scripts/trazabilidad.py`.
 - **Dependencias:** versiones exactas en `pyproject.toml` y `uv.lock`: la estable más reciente con
   al menos 7 días en PyPI; `faker` fijo; `anthropic` menor que 2.0 (`langchain-anthropic` 1.7.6).
-- **Clave de Anthropic del sistema:** `REALTIX_ANTHROPIC_API_KEY`, nunca `ANTHROPIC_API_KEY`.
+- **Clave de Anthropic del sistema multiagente de IA:** `REALTIX_ANTHROPIC_API_KEY`, nunca
+  `ANTHROPIC_API_KEY`.
+- **Imágenes de Docker:** nunca incluyen `.env`; `.dockerignore` lo excluye en B13.
 
 ## Comandos frecuentes
 
