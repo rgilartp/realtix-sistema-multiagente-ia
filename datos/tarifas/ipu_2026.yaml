@@ -1,0 +1,125 @@
+fuente: Resolución de rangos del predial de 2026, arts. 1 y 2; Acuerdos 780 de 2020,
+  art. 3, y 105 de 2003, art. 2
+url: null
+mes_consulta: octubre de 2026
+vigencia_desde: 2026
+vigencia_hasta: 2026
+verificado_por: ''
+nota: Tabla transcrita de la sección 4.4 de la especificación (copia del PDF del INCP);
+  pendiente contrastar con el PDF.
+residencial_urbano:
+- desde: 0
+  hasta: 194307000
+  tarifa_por_mil: '5.5'
+- desde: 194307001
+  hasta: 207062000
+  tarifa_por_mil: '5.6'
+- desde: 207062001
+  hasta: 238375000
+  tarifa_por_mil: '5.7'
+- desde: 238375001
+  hasta: 269690000
+  tarifa_por_mil: '5.8'
+- desde: 269690001
+  hasta: 301005000
+  tarifa_por_mil: '5.9'
+- desde: 301005001
+  hasta: 332318000
+  tarifa_por_mil: '6.0'
+- desde: 332318001
+  hasta: 363632000
+  tarifa_por_mil: '6.1'
+- desde: 363632001
+  hasta: 394946000
+  tarifa_por_mil: '6.2'
+- desde: 394946001
+  hasta: 447136000
+  tarifa_por_mil: '6.3'
+- desde: 447136001
+  hasta: 499330000
+  tarifa_por_mil: '6.4'
+- desde: 499330001
+  hasta: 551518000
+  tarifa_por_mil: '6.5'
+- desde: 551518001
+  hasta: 603709000
+  tarifa_por_mil: '6.6'
+- desde: 603709001
+  hasta: 655899000
+  tarifa_por_mil: '6.8'
+- desde: 655899001
+  hasta: 708090000
+  tarifa_por_mil: '7.0'
+- desde: 708090001
+  hasta: 760279000
+  tarifa_por_mil: '7.2'
+- desde: 760279001
+  hasta: 812470000
+  tarifa_por_mil: '7.4'
+- desde: 812470001
+  hasta: 864660000
+  tarifa_por_mil: '7.6'
+- desde: 864660001
+  hasta: 937727000
+  tarifa_por_mil: '7.8'
+- desde: 937727001
+  hasta: 1010794000
+  tarifa_por_mil: '8.0'
+- desde: 1010794001
+  hasta: 1083859000
+  tarifa_por_mil: '8.2'
+- desde: 1083859001
+  hasta: 1156929000
+  tarifa_por_mil: '8.4'
+- desde: 1156929001
+  hasta: 1229992000
+  tarifa_por_mil: '8.6'
+- desde: 1229992001
+  hasta: 1303058000
+  tarifa_por_mil: '8.8'
+- desde: 1303058001
+  hasta: 1376126000
+  tarifa_por_mil: '9.0'
+- desde: 1376126001
+  hasta: 1449192000
+  tarifa_por_mil: '9.2'
+- desde: 1449192001
+  hasta: 1710142000
+  tarifa_por_mil: '9.5'
+- desde: 1710142001
+  hasta: 1971099000
+  tarifa_por_mil: '10.1'
+- desde: 1971099001
+  hasta: 2232051000
+  tarifa_por_mil: '10.8'
+- desde: 2232051001
+  hasta: 2505139000
+  tarifa_por_mil: '11.5'
+- desde: 2505139001
+  hasta: null
+  tarifa_por_mil: '12.3'
+no_residencial:
+- destino: Comercial (62)
+  desde: 0
+  hasta: 363264000
+  tarifa_por_mil: '8'
+- destino: Comercial (62)
+  desde: 363264001
+  hasta: null
+  tarifa_por_mil: '9.5'
+- destino: Depósitos y parqueaderos accesorios de hasta 30 m² (65)
+  desde: 1
+  hasta: 6832000
+  tarifa_por_mil: '5'
+- destino: Depósitos y parqueaderos accesorios de hasta 30 m² (65)
+  desde: 6832001
+  hasta: null
+  tarifa_por_mil: '8'
+- destino: Urbanizables no urbanizados y urbanizados no edificados (67)
+  desde: 0
+  hasta: 63048000
+  tarifa_por_mil: '12'
+- destino: Urbanizables no urbanizados y urbanizados no edificados (67)
+  desde: 63048001
+  hasta: null
+  tarifa_por_mil: '33'

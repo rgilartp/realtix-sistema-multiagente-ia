@@ -1,0 +1,13 @@
+fuentes:
+- archivo: ley_14_1983.md
+  norma: Ley 14 de 1983
+  url: https://www.dane.gov.co/files/acerca/Normatividad/decreto-1170-2015/Ley-14-de-1983.pdf
+  mes_consulta: octubre de 2026
+- archivo: decreto_352_2002_cap2.md
+  norma: Decreto Distrital 352 de 2002, cap. II
+  url: https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm
+  mes_consulta: octubre de 2026
+- archivo: decreto_807_1993_ica.md
+  norma: Decreto Distrital 807 de 1993
+  url: https://bogota.gov.co/sites/default/files/tys/2021/01/DECRETO_807_1993.pdf
+  mes_consulta: octubre de 2026
