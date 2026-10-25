@@ -39,6 +39,10 @@ dev = [
     "pytest-cov==7.1.0",
     "ruff==0.17.1",
 ]
+curaduria = [
+    "beautifulsoup4==4.15.0",
+    "markdownify==1.2.3",
+]
 eval = [
     "matplotlib==3.11.2",
     "ragas==0.4.3",
