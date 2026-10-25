@@ -19,7 +19,7 @@ def descargar() -> dict[str, dict]:
     with httpx.Client(
         follow_redirects=True, timeout=60, headers={"User-Agent": _NAVEGADOR}
     ) as cliente:
-        for fuente in catalogo["fuentes"]:
+        for fuente in catalogo["fuentes"] + catalogo.get("verificacion", []):
             urls = fuente["url"] if isinstance(fuente["url"], list) else [fuente["url"]]
             if not urls[0]:
                 estado[fuente["id"]] = {"estado": "sin_enlace"}

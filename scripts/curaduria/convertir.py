@@ -100,7 +100,9 @@ def convertir() -> dict[str, dict]:
         ]
         for numero, contenido in cortes:
             cuerpo += [f"## Artículo {numero}", "", contenido, ""]
-        (destino / f"{fuente['id']}.md").write_text("\n".join(cuerpo), encoding="utf-8")
+        lineas = "\n".join(cuerpo).splitlines()
+        contenido = "\n".join(linea.rstrip() for linea in lineas).rstrip("\n") + "\n"
+        (destino / f"{fuente['id']}.md").write_text(contenido, encoding="utf-8")
         resultado[fuente["id"]] = {"estado": "ok", "articulos": len(cortes)}
         por_coleccion.setdefault(fuente["coleccion"], []).append(
             {
