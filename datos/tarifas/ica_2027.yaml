@@ -4,10 +4,19 @@ mes_consulta: octubre de 2026
 vigencia_desde: 2027
 vigencia_hasta: null
 verificado_por: ''
-aplicacion: Declarantes anuales desde el 1 de enero de 2027; bimestrales desde el bimestre siguiente a la aprobación
-  del acuerdo (fecha pendiente de confirmar).
-lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 27 a 44 del PDF; las diferencias se listan
-  en docs/verificacion/.'
+aplicacion:
+  texto_del_acuerdo: 'Art. 21, parágrafo: a los obligados a declarar con periodicidad anual cuando entre en vigencia
+    el acuerdo se les aplican las tarifas desde el 1 de enero de 2027; a los obligados a declarar cada dos meses,
+    desde el bimestre siguiente a la aprobación del acuerdo.'
+  aprobacion_en_plenaria: '28 de septiembre de 2026 (prensa: El Tiempo e Infobae)'
+  fecha_del_acuerdo: 8 de octubre de 2026 (PDF firmado)
+  periodos_que_cubre:
+    declarantes_anuales: año gravable 2027 en adelante (desde el 1 de enero de 2027)
+    declarantes_bimestrales: desde el bimestre 6 de 2026 (noviembre-diciembre, que se declara a más tardar el 12
+      de febrero de 2027); la aprobación y la fecha del acuerdo caen en el bimestre 5 (septiembre-octubre)
+  tabla_anterior: ica_2026.yaml cubre el año gravable 2026 de los anuales y los bimestres 1 a 5 de 2026 de los bimestrales
+lectura: 'Doble lectura: OCR (Tesseract, español) e imagen de las páginas 27 a 45 del PDF, y el texto digital del
+  Régimen Legal; las diferencias se listan en docs/verificacion/.'
 por_actividad:
 - ciiu: '161'
   actividad: Actividades de apoyo a la agricultura
@@ -1943,3 +1952,105 @@ progresiva_financiera:
   en_2028: '19'
   desde_2029: '18'
   pagina_pdf: 44
+- ciiu: '6499'
+  actividad: Otras actividades de servicio financiero, excepto las de seguros y pensiones n.c.p.
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6511'
+  actividad: Seguros generales
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6512'
+  actividad: Seguros de vida
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6513'
+  actividad: Reaseguros
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6515'
+  actividad: Seguros de salud
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6521'
+  actividad: Servicios de seguros sociales de salud
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6522'
+  actividad: Servicios de seguros sociales en riesgos laborales
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6523'
+  actividad: Servicios de seguros sociales en riesgos familia
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6532'
+  actividad: Régimen de ahorro con solidaridad (RAIS)
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6611'
+  actividad: Administración de mercados financieros
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6612'
+  actividad: Corretaje de valores y de contratos de productos básicos
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6613'
+  actividad: Otras actividades relacionadas con el mercado de valores
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6614'
+  actividad: Actividades de las sociedades de intermediación cambiaria y de servicios financieros especiales
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6615'
+  actividad: Actividades de los profesionales de compra y venta de divisas
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6619'
+  actividad: Otras actividades auxiliares de las actividades de servicios financieros n.c.p.
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6621'
+  actividad: Actividades de agentes y corredores de seguros
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
+- ciiu: '6630'
+  actividad: Actividades de administración de fondos
+  hasta_2027: '20'
+  en_2028: '19'
+  desde_2029: '18'
+  pagina_pdf: 45
