@@ -34,7 +34,11 @@ h1{font-size:20px}h2{font-size:16px;margin:24px 0 8px}
 .par img{max-width:100%;border:1px solid #bbb}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
 table{border-collapse:collapse;width:100%;font-size:13px}
-td,th{border:1px solid #bbb;padding:3px 6px;text-align:left;overflow-wrap:anywhere}
+td,th{border:1px solid #bbb;padding:3px 6px;text-align:left;overflow-wrap:break-word;
+ word-break:normal}
+.n{white-space:nowrap}
+th.n{white-space:nowrap}
+p{margin:6px 0}
 th{background:#eee}.dif{background:#ffe08a}.ok{background:#d9f2d9}.sin{background:#f6d5d5}
 .nota{background:#fff6d6;padding:6px 10px;border-left:4px solid #e0a800;margin:8px 0}
 @media (max-width:800px){.par{grid-template-columns:1fr}}
@@ -66,15 +70,68 @@ def imagen_incrustada(numero: int) -> str:
     return _jpeg(Image.open(ruta), f"sdh_000195_tabla{numero}.jpg")
 
 
+class Html(str):
+    """Contenido de una celda que ya es HTML (por ejemplo, un enlace) y no se vuelve a escapar."""
+
+
+def enlace(etiqueta: str, url: str | None) -> Html:
+    if not url:
+        return Html(html.escape(etiqueta))
+    return Html(f'<a href="{html.escape(url, quote=True)}">{html.escape(etiqueta)}</a>')
+
+
+_NUMERICA = re.compile(
+    r"^([\d$.,\s%+-]+(SMMLV|UVT|smlmv)?|\d{1,2} de \w+ de \d{4}|[\d·\- ]+)$", re.IGNORECASE
+)
+
+
+def formato(valor) -> str:
+    """Tarifas con coma decimal (12,3), y miles con punto en las cifras grandes (49.799)."""
+    if isinstance(valor, bool) or valor is None:
+        return str(valor)
+    if isinstance(valor, int):
+        return f"{valor:,}".replace(",", ".") if valor >= 10000 else str(valor)
+    texto = str(valor)
+    return texto.replace(".", ",") if re.fullmatch(r"\d+\.\d{1,2}", texto) else texto
+
+
+def _celda(valor, etiqueta: str = "td") -> str:
+    if isinstance(valor, Html):
+        return f"<{etiqueta}>{valor}</{etiqueta}>"
+    texto = formato(valor)
+    sin_corte = _NUMERICA.match(texto) or (etiqueta == "th" and len(texto) <= 14)
+    clase = ' class="n"' if sin_corte else ""
+    return f"<{etiqueta}{clase}>{html.escape(texto)}</{etiqueta}>"
+
+
 def tabla(
     columnas: list[str], filas: list[list], marca: Callable[[list], str] = lambda _: ""
 ) -> str:
-    cabecera = "".join(f"<th>{html.escape(c)}</th>" for c in columnas)
+    cabecera = "".join(_celda(c, "th") for c in columnas)
     cuerpo = "".join(
-        f'<tr class="{marca(f)}">' + "".join(f"<td>{html.escape(str(c))}</td>" for c in f) + "</tr>"
-        for f in filas
+        f'<tr class="{marca(f)}">' + "".join(_celda(c) for c in f) + "</tr>" for f in filas
     )
     return f"<table><tr>{cabecera}</tr>{cuerpo}</table>"
+
+
+def md_a_html(texto: str) -> str:
+    """Párrafos y tablas Markdown de un extracto de la fuente, como párrafos y tablas HTML."""
+    partes = []
+    for bloque in re.split(r"\n\s*\n", texto.strip()):
+        lineas = [linea for linea in bloque.splitlines() if linea.strip()]
+        if lineas and all(linea.startswith("|") for linea in lineas):
+            filas = [
+                [c.strip() for c in linea.strip().strip("|").split("|")]
+                for linea in lineas
+                if not re.fullmatch(r"\|[-| ]+\|", linea.strip())
+            ]
+            partes.append(tabla(filas[0], filas[1:]))
+        elif lineas:
+            parrafo = html.escape(" ".join(linea.strip() for linea in lineas))
+            partes.append(
+                "<p>" + re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", parrafo) + "</p>"
+            )
+    return "".join(partes)
 
 
 def par(imagenes: list[str], derecha: str) -> str:
@@ -140,8 +197,8 @@ def vista_sobretasa() -> None:
         [[t["descripcion"], t["de_2027_a_2041"], t["desde_2042"]] for t in d["tarifas_por_mil"]],
     )
     topes = tabla(
-        ["Categoría", "Límite (UVT)"],
-        [[t["categoria"], t["valor_limite_uvt"]] for t in d["topes_uvt"]],
+        ["Categoría (texto del art. 15)", "Límite (UVT)"],
+        [[t["descripcion"], t["valor_limite_uvt"]] for t in d["topes_uvt"]],
         lambda f: "dif" if f[1] == 600 else "",
     )
     cuerpo = nota(
@@ -310,8 +367,18 @@ def _extracto(archivo: str, desde: str, hasta: str | None = None, largo: int = 3
     texto = construir_ica_2026._texto(DESCARGAS / archivo)
     inicio = texto.index(desde)
     fin = texto.index(hasta, inicio) if hasta else inicio + largo
-    lineas = texto[inicio:fin].strip().replace("\r", "").splitlines()
-    return f"<pre>{html.escape(chr(10).join(linea.rstrip() for linea in lineas))}</pre>"
+    return md_a_html(texto[inicio:fin])
+
+
+def _extracto_kb(coleccion: str, archivo: str, numero: int, hasta: str | None = None) -> str:
+    """Un artículo de la base de conocimiento (con sus tablas) como HTML."""
+    texto = (RAIZ / "knowledge_base" / coleccion / archivo).read_text(encoding="utf-8")
+    inicio = texto.index(f"\n## Artículo {numero}\n")
+    fin = texto.find("\n## Artículo ", inicio + 1)
+    articulo = texto[inicio + len(f"\n## Artículo {numero}\n") : fin if fin != -1 else len(texto)]
+    if hasta:
+        articulo = articulo[: articulo.index(hasta)]
+    return md_a_html(articulo)
 
 
 def vista_ica_2026() -> None:
@@ -470,6 +537,50 @@ def vista_ipu_2026() -> None:
         "2025. Se muestran las páginas del PDF que traen las tablas."
     )
     cuerpo += nota(d["otras_categorias_no_transcritas"])
+    pref = d["preferenciales"]
+    tabla_pref = tabla(
+        [
+            "Estratos",
+            "Desde (texto)",
+            "Hasta (texto)",
+            "Tarifa por mil",
+            "Desde (número)",
+            "Hasta (número)",
+        ],
+        [
+            [
+                ",".join(map(str, f["estratos"])),
+                f["desde"],
+                f["hasta"],
+                f["tarifa_por_mil"],
+                f"{f['desde_valor']} {f['unidad_desde']}"
+                + (" (exclusivo)" if f["desde_exclusivo"] else ""),
+                f"{f['hasta_valor']} {f['unidad_hasta']}",
+            ]
+            for f in pref["residencial"]
+        ],
+    )
+    pesos = tabla(
+        ["Límite", "En pesos de 2026"],
+        [[k.replace("_smmlv", " SMMLV"), v] for k, v in pref["limites_en_pesos"].items()],
+    )
+    texto_normas = (
+        "<h2>Acuerdo 648 de 2016, art. 1</h2>"
+        + _extracto_kb("normativa_ipu", "acuerdo_648_2016.md", 1, "Los demás predios")
+        + "<h2>Acuerdo 780 de 2020, art. 3, parágrafo 2</h2>"
+        + "<p>Se mantienen las tarifas preferenciales del 1 y 3 por mil, del Acuerdo 648 de 2016, "
+        "para los predios residenciales de los estratos 1, 2 y 3 según los valores de los avalúos "
+        "catastrales allí señalados.</p>"
+        + "<h2>Decreto 639 de 2025, art. 207</h2>"
+        + _extracto_kb("normativa_ipu", "decreto_639_2025.md", 207)
+    )
+    cuerpo += (
+        '<h2 id="preferenciales">Tarifas preferenciales de 2026</h2>'
+        f'<div class="par"><div>{texto_normas}</div><div>{tabla_pref}'
+        f"<p>SMMLV de 2026: {formato(pref['smmlv_del_anio_gravable']['valor'])}.</p>{pesos}"
+        f"<p>{html.escape(pref['limite_de_16_smmlv'])}</p>"
+        f"<p>{html.escape(pref['excluidos'])}</p></div></div>"
+    )
     cuerpo += par(
         paginas,
         "<h2>Art. 1, residenciales urbanos</h2>"
@@ -489,9 +600,25 @@ def vista_calendario() -> None:
         "Las tablas de fechas del ICA bimestral y de las cuotas del SPAC están como imagen en la "
         "página del Régimen Legal; se leyeron de la imagen. Las demás fechas salen del texto."
     )
+    insertadas = ""
+    for titulo, archivo in (
+        ("Art. 1: ICA bimestral y agentes de retención", "sdh_195_art_1.md"),
+        ("Art. 5: cuotas del SPAC", "sdh_195_art_5.md"),
+    ):
+        contenido = (RAIZ / "scripts" / "curaduria" / "inserciones" / archivo).read_text(
+            encoding="utf-8"
+        )
+        insertadas += f"<h2>Tabla insertada en la base de conocimiento, {titulo}</h2>"
+        insertadas += md_a_html(contenido)
     cuerpo += par(
-        [imagen_incrustada(1), imagen_incrustada(4)],
-        tabla(["Concepto", "Fechas", "Artículo"], filas),
+        [imagen_incrustada(1), imagen_incrustada(2), imagen_incrustada(4)],
+        tabla(["Concepto", "Fechas", "Artículo"], filas)
+        + nota(
+            "A la izquierda están las imágenes de la página: la tabla del art. 1 sigue en la "
+            "segunda imagen (bimestres 4 a 6 de la retención). A la derecha, las tablas que se "
+            "insertaron en la base de conocimiento, para compararlas con las imágenes."
+        )
+        + insertadas,
     )
     pagina("calendario_2026.html", "Calendario 2026, Resolución SDH-000195", cuerpo)
 
@@ -503,8 +630,9 @@ def vista_regimenes() -> None:
         [a["anio_gravable"], a["fuente"], a["umbral_uvt"], a["base_del_umbral"]] for a in r["anios"]
     ]
 
-    def fuente(x: dict) -> str:
-        return f"{x['fuente']} ({x['url']})" if x.get("url") else x["fuente"]
+    def fuente(x: dict) -> Html:
+        etiqueta = x["fuente"].replace("Resolución DIAN", "Res. DIAN")
+        return enlace(etiqueta, x.get("url"))
 
     uvt = tabla(
         ["Año", "UVT", "Resolución de la DIAN", "SMMLV", "Decreto del salario mínimo"],
@@ -514,7 +642,7 @@ def vista_regimenes() -> None:
                 x["valor"],
                 fuente(x),
                 s["valor"],
-                fuente(s) + (f". {s['nota']}" if s.get("nota") else ""),
+                fuente(s),
             ]
             for x in u["uvt"]
             for s in u["smmlv"]
@@ -525,7 +653,9 @@ def vista_regimenes() -> None:
     cuerpo = nota(
         "Regímenes del ICA: art. 1 de la Resolución SDH-000195 (2026) y art. 26 del Acuerdo 1084 "
         "(desde 2027, página 48 del PDF). UVT y SMMLV salen de las resoluciones de la DIAN y de "
-        "los decretos del salario mínimo; los de 2027 aún no existen."
+        "los decretos del salario mínimo; los de 2027 aún no existen. "
+        "El SIMPLE de 2026 (12, 16, 30, 30 y 16 por mil) se verificó con el texto del art. 44 del "
+        "Acuerdo 1019 de 2025 en el Régimen Legal."
     )
     cuerpo += par(
         [imagen_ocr(48)],

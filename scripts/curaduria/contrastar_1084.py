@@ -110,8 +110,8 @@ def contrastar() -> list[dict]:
     resultados.append(
         _comparar(
             "sobretasa, art. 15 (topes en UVT)",
-            [int(re.sub(r"\D", "", f[1])) for f in art_15],
-            [t["valor_limite_uvt"] for t in sobretasa["topes_uvt"]],
+            [(f[0], int(re.sub(r"\D", "", f[1]))) for f in art_15],
+            [(t["descripcion"], t["valor_limite_uvt"]) for t in sobretasa["topes_uvt"]],
         )
     )
 

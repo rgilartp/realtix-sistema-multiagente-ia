@@ -35,8 +35,10 @@ tarifas_por_mil:
 topes_uvt:
 - categoria: residenciales
   valor_limite_uvt: 600
+  descripcion: Residenciales
 - categoria: demas_predios
   valor_limite_uvt: 1200
+  descripcion: Demás predios
 reglas:
 - articulo: 14, parágrafo
   regla: No están sujetos a la sobretasa (1) los predios residenciales de los estratos 4, 5 y 6 con al menos un

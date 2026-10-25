@@ -272,9 +272,47 @@ def test_las_vistas_no_dejan_texto_tapado() -> None:
     for ruta in vistas:
         texto = ruta.read_text(encoding="utf-8")
         assert ".par>div{min-width:0;overflow-x:auto}" in texto, ruta.name
-        assert "td,th{" in texto and "overflow-wrap:anywhere" in texto, ruta.name
+        celdas = re.search(r"td,th\{[^}]*\}", texto, re.DOTALL)
+        assert celdas, ruta.name
+        assert "anywhere" not in celdas.group(0), ruta.name  # parte números y palabras
+        assert "overflow-wrap:break-word" in celdas.group(0), ruta.name
+        assert "word-break:normal" in celdas.group(0), ruta.name
+        assert ".n{white-space:nowrap}" in texto, ruta.name
         if "<pre>" in texto:
             assert "pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}" in texto, ruta.name
+
+
+@pytest.mark.req("RF-IPU-05 · Citación de la norma")
+def test_las_celdas_de_numeros_codigos_y_fechas_no_se_parten() -> None:
+    texto = (VISTAS / "ica_2026.html").read_text(encoding="utf-8")
+    assert '<td class="n">4111</td>' in texto  # código CIIU
+    assert '<td class="n">13,1</td>' in texto  # tarifa con coma decimal
+    assert not re.search(r"<td>\d+\.\d{1,2}</td>", texto)
+    assert '<th class="n">CIIU</th>' in texto
+    calendario = (VISTAS / "calendario_2026.html").read_text(encoding="utf-8")
+    assert '<td class="n">10 de abril de 2026</td>' in calendario
+    assert "18 de septiembre de 2026" in calendario and "15 de enero de 2027" in calendario
+    regimenes = (VISTAS / "regimenes_y_uvt.html").read_text(encoding="utf-8")
+    assert '<td class="n">49.799</td>' in regimenes and '<td class="n">1.750.905</td>' in regimenes
+    assert '<a href="https://normograma.dian.gov.co/' in regimenes
+    assert "Res. DIAN 000193 de 2024" in regimenes
+    assert (
+        "https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0193_2024.htm</td>"
+        not in regimenes
+    )
+
+
+@pytest.mark.req("RF-IPU-05 · Citación de la norma")
+def test_los_extractos_de_la_fuente_muestran_sus_tablas_como_tablas_html() -> None:
+    for vista in ("ica_2026.html", "ipu_2026.html"):
+        texto = (VISTAS / vista).read_text(encoding="utf-8")
+        assert "<pre>" not in texto, vista
+        assert "| Desde |" not in texto and "|---|" not in texto, vista
+    ipu = (VISTAS / "ipu_2026.html").read_text(encoding="utf-8")
+    assert "Tarifas preferenciales de 2026" in ipu
+    assert "Decreto 639 de 2025, art. 207" in ipu and "Acuerdo 780 de 2020, art. 3" in ipu
+    sobretasa = (VISTAS / "sobretasa_alumbrado_2027.html").read_text(encoding="utf-8")
+    assert "Residenciales" in sobretasa and "Demás predios" in sobretasa
 
 
 @pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")

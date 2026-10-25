@@ -7,7 +7,11 @@ h1{font-size:20px}h2{font-size:16px;margin:24px 0 8px}
 .par img{max-width:100%;border:1px solid #bbb}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
 table{border-collapse:collapse;width:100%;font-size:13px}
-td,th{border:1px solid #bbb;padding:3px 6px;text-align:left;overflow-wrap:anywhere}
+td,th{border:1px solid #bbb;padding:3px 6px;text-align:left;overflow-wrap:break-word;
+ word-break:normal}
+.n{white-space:nowrap}
+th.n{white-space:nowrap}
+p{margin:6px 0}
 th{background:#eee}.dif{background:#ffe08a}.ok{background:#d9f2d9}.sin{background:#f6d5d5}
 .nota{background:#fff6d6;padding:6px 10px;border-left:4px solid #e0a800;margin:8px 0}
 @media (max-width:800px){.par{grid-template-columns:1fr}}
