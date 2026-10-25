@@ -1,5 +1,6 @@
 """Curaduría y datos por año gravable (B2): esquemas de `datos/`, base de conocimiento y scripts."""
 
+import re
 import shutil
 import sys
 from decimal import ROUND_HALF_UP, Decimal
@@ -113,23 +114,80 @@ def test_ica_2027_tiene_447_actividades_con_tarifas_conocidas() -> None:
     assert len(filas) == 447
     assert len({f["ciiu"] for f in filas}) == 447
     assert {f["tarifa_por_mil"] for f in filas} == {"4", "7", "8", "10", "11", "12", "13", "19"}
-    assert len(datos["progresiva_financiera"]) == 11
+    assert len(datos["progresiva_financiera"]) == 28
 
 
 @pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
-def test_ica_2027_coincide_con_el_texto_digital_del_regimen_legal() -> None:
-    digital = doble_lectura.tarifas_regimen_legal()
-    propia = {
-        f["ciiu"]: f["tarifa_por_mil"] for f in _yaml("tarifas/ica_2027.yaml")["por_actividad"]
+def test_ica_2027_coincide_en_los_dos_sentidos_con_el_texto_digital() -> None:
+    datos = _yaml("tarifas/ica_2027.yaml")
+    fijas = {f["ciiu"]: f["tarifa_por_mil"] for f in datos["por_actividad"]}
+    progresivas = {
+        f["ciiu"]: (f["hasta_2027"], f["en_2028"], f["desde_2029"])
+        for f in datos["progresiva_financiera"]
     }
-    assert propia == digital
+    digital_fijas = doble_lectura.tarifas_regimen_legal()
+    digital_progresivas = doble_lectura.progresivas_regimen_legal()
+    assert fijas == digital_fijas  # el YAML tiene todo lo del texto y el texto, todo lo del YAML
+    assert progresivas == digital_progresivas
+    assert not set(fijas) & set(progresivas)
+    assert len(fijas) + len(progresivas) == 475
+
+
+PENDIENTES_ICA_2026 = {
+    "4111",
+    "4112",
+    "4311",
+    "4312",
+    "4321",
+    "4322",
+    "4329",
+    "4330",
+    "4390",
+    "39002",
+}
 
 
 @pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
-def test_ica_2026_queda_pendiente_sin_valores_supuestos() -> None:
+def test_ica_2026_arma_el_texto_vigente_con_sus_fuentes() -> None:
     datos = _yaml("tarifas/ica_2026.yaml")
-    assert datos["estado"] == "pendiente"
-    assert datos["por_actividad"] == []
+    filas = datos["por_actividad"]
+    assert datos["estado"] == "parcial"
+    assert len(filas) == 486
+    assert len({f["ciiu"] for f in filas}) == 486
+    por_codigo = {f["ciiu"]: f for f in filas}
+    financieras = [f for f in filas if f["grupo_resolucion_265"] == "401"]
+    assert len(financieras) == 28
+    assert {f["tarifa_por_mil"] for f in financieras} == {"14"}
+    assert por_codigo["5330"]["tarifa_por_mil"] == "11.04"
+    assert por_codigo["2100"]["tarifa_por_mil"] == "12.14"
+    assert por_codigo["58112"]["tarifa_por_mil"] == "8"
+    assert por_codigo["58112"]["tarifa_condicionada"]["tarifa_por_mil"] == "4.14"
+    simple = datos["regimen_simple_2026"]["tarifas_por_mil"]
+    assert [t["tarifa_por_mil"] for t in simple] == ["12", "16", "30", "30", "16"]
+
+
+@pytest.mark.req("RF-ICA-01 · Consultas conceptuales de ICA")
+def test_ica_2026_deja_pendiente_lo_que_no_se_puede_verificar() -> None:
+    filas = _yaml("tarifas/ica_2026.yaml")["por_actividad"]
+    pendientes = {f["ciiu"] for f in filas if f["tarifa_por_mil"] == "pendiente"}
+    assert pendientes == PENDIENTES_ICA_2026
+    for fila in filas:
+        if fila["ciiu"] in pendientes:
+            assert fila["tarifa_resolucion_265"]
+            assert fila["motivo"]
+        else:
+            assert fila["fuente_tarifa"]
+            assert Decimal(fila["tarifa_por_mil"]) > 0
+
+
+@pytest.mark.req("RF-ICA-03 · Fechas de declaración")
+def test_ica_2026_y_2027_dicen_que_periodos_cubren() -> None:
+    en_2026 = _yaml("tarifas/ica_2026.yaml")["periodos_que_cubre"]
+    en_2027 = _yaml("tarifas/ica_2027.yaml")["aplicacion"]["periodos_que_cubre"]
+    assert "bimestres 1 a 5 de 2026" in en_2026["declarantes_bimestrales"]
+    assert "bimestre 6 de 2026" in en_2027["declarantes_bimestrales"]
+    assert "12 de febrero de 2027" in en_2027["declarantes_bimestrales"]
+    assert "1 de enero de 2027" in en_2027["declarantes_anuales"]
 
 
 @pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
@@ -164,10 +222,36 @@ def test_regimenes_ica_y_umbral_en_pesos() -> None:
 
 
 @pytest.mark.req("RF-ICA-03 · Fechas de declaración")
-def test_uvt_y_smmlv_de_2027_siguen_pendientes() -> None:
+def test_uvt_y_smmlv_salen_de_fuentes_oficiales_y_los_de_2027_siguen_pendientes() -> None:
     datos = _yaml("uvt_smmlv.yaml")
-    assert all(isinstance(x["valor"], int) for x in datos["uvt"][:2] + datos["smmlv"][:2])
+    vigentes = datos["uvt"][:2] + datos["smmlv"][:2]
+    assert [x["valor"] for x in vigentes] == [49799, 52374, 1423500, 1750905]
+    for x in vigentes:
+        assert x["url"].startswith(
+            ("https://normograma.dian.gov.co/", "https://normativa.colpensiones.gov.co/")
+        )
     assert datos["uvt"][2]["valor"] == datos["smmlv"][2]["valor"] == "pendiente"
+    assert "confirmar" not in yaml.safe_dump(datos, allow_unicode=True)
+
+
+@pytest.mark.req("RF-IPU-05 · Citación de la norma")
+def test_ipu_2026_cita_su_resolucion_y_el_contraste() -> None:
+    datos = _yaml("tarifas/ipu_2026.yaml")
+    assert "SDH-000194 de 2025" in datos["fuente"]
+    assert datos["url"].endswith("Resolucion-000194-de-2025-SDH.pdf")
+    assert datos["contraste"]["diferencias"] == 0
+
+
+@pytest.mark.req("RF-IPU-05 · Citación de la norma")
+def test_las_normas_corregidas_traen_sus_notas_de_vigencia() -> None:
+    ley_1581 = (KB / "normativa_datos" / "ley_1581_2012.md").read_text(encoding="utf-8")
+    articulos = [int(n) for n in re.findall(r"^## Artículo (\d+)$", ley_1581, re.MULTILINE)]
+    assert articulos == list(range(1, 31))
+    ley_14 = (KB / "normativa_ica" / "ley_14_1983.md").read_text(encoding="utf-8")
+    assert "alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=267" in ley_14
+    assert "Modificado por" in ley_14
+    for archivo in ("normativa_ipu/decreto_474_2016.md", "normativa_ipu/decreto_807_1993_ipu.md"):
+        assert "alcaldiabogota.gov.co" in (KB / archivo).read_text(encoding="utf-8")
 
 
 @pytest.mark.req("RF-OBS-04 · Actualización de la base vectorial")
@@ -225,17 +309,21 @@ def test_marcar_verificado_llena_el_nombre_y_marca_la_casilla(tmp_path: Path) ->
     (tmp_path / "datos" / "tarifas").mkdir(parents=True)
     (tmp_path / "docs").mkdir()
     shutil.copy(DATOS / "tarifas" / "ipu_2026.yaml", tmp_path / "datos" / "tarifas")
-    shutil.copy(DATOS / "tarifas" / "ica_2026.yaml", tmp_path / "datos" / "tarifas")
+    (tmp_path / "datos" / "tarifas" / "tabla_pendiente.yaml").write_text(
+        "estado: pendiente\nverificado_por: ''\n", encoding="utf-8"
+    )
     (tmp_path / "docs" / "verificacion_curaduria.md").write_text(
         "- [ ] `datos/tarifas/ipu_2026.yaml` — predial.\n"
-        "- [ ] `datos/tarifas/ica_2026.yaml` — pendiente.\n",
+        "- [ ] `datos/tarifas/tabla_pendiente.yaml` — pendiente.\n",
         encoding="utf-8",
     )
     for _ in range(2):  # idempotente
         verificadas = marcar_verificado.marcar("Nombre Apellido", tmp_path)
     assert verificadas == ["datos/tarifas/ipu_2026.yaml"]
     ipu = yaml.safe_load((tmp_path / "datos/tarifas/ipu_2026.yaml").read_text(encoding="utf-8"))
-    ica = yaml.safe_load((tmp_path / "datos/tarifas/ica_2026.yaml").read_text(encoding="utf-8"))
+    ica = yaml.safe_load(
+        (tmp_path / "datos/tarifas/tabla_pendiente.yaml").read_text(encoding="utf-8")
+    )
     assert ipu["verificado_por"] == "Nombre Apellido"
     assert ica["verificado_por"] == ""
     lineas = (tmp_path / "docs/verificacion_curaduria.md").read_text(encoding="utf-8").splitlines()
