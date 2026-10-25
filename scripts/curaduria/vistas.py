@@ -162,8 +162,8 @@ def vista_ipu_2027() -> None:
         [
             [
                 ",".join(map(str, f.get("estratos", ["rural"]))),
-                f["desde"],
-                f["hasta"],
+                _valor(f["desde"]),
+                _valor(f["hasta"]),
                 f["tarifa_por_mil"],
             ]
             for f in pref["residencial_urbano_y_rural_agropecuario"] + pref["residencial_rural"]
@@ -273,15 +273,18 @@ def vista_ica_2026() -> None:
     }
     filas = d["por_actividad"]
     pendientes = [f for f in filas if f["tarifa_por_mil"] == "pendiente"]
+    decididas = [f for f in filas if "decision" in f]
+    resaltadas = {f["ciiu"] for f in pendientes + decididas}
     por_fuente = d["contraste"]["filas_por_fuente_de_la_tarifa"]
     coinciden = sum(1 for f in filas if lecturas.get(f["ciiu"]) == "coincide")
     cuerpo = nota(
-        f"{len(filas)} actividades, {len(pendientes)} pendientes. Segunda lectura de la "
-        "resolución: "
+        f"{len(filas)} actividades, {len(pendientes)} pendientes y {len(decididas)} decididas por "
+        "Rodolfo. Segunda lectura de la resolución: "
         f"el Registro Distrital 7103 coincide en la tarifa de 2024 de {coinciden} filas. Verde: "
-        "coinciden las dos lecturas; amarillo: pendiente; sin color: la segunda lectura no pudo "
-        "leer la fila."
+        "coinciden las dos lecturas; amarillo: fila pendiente o decidida por Rodolfo; sin color: "
+        "la segunda lectura no pudo leer la fila."
     )
+    cuerpo += nota(d["decision_de_rodolfo"]["decision"] + ".")
     cuerpo += nota(
         "Periodos que cubre esta tabla. Anuales: "
         + d["periodos_que_cubre"]["declarantes_anuales"]
@@ -291,8 +294,11 @@ def vista_ica_2026() -> None:
     )
     resumen = tabla(["Fuente de la tarifa", "Filas"], [[k, v] for k, v in por_fuente.items()])
     pend = tabla(
-        ["CIIU", "Actividad", "Tarifa de la resolución", "Motivo"],
-        [[f["ciiu"], f["actividad"], f["tarifa_resolucion_265"], f["motivo"]] for f in pendientes],
+        ["CIIU", "Actividad", "Tarifa por mil", "Nota para el agente"],
+        [
+            [f["ciiu"], f["actividad"], f["tarifa_por_mil"], f["nota_para_el_agente"]]
+            for f in decididas
+        ],
         lambda _: "dif",
     )
     simple = d["regimen_simple_2026"]
@@ -316,12 +322,12 @@ def vista_ica_2026() -> None:
                 f["actividad"],
                 f["grupo_resolucion_265"],
                 f["tarifa_por_mil"],
-                f.get("fuente_tarifa", f.get("motivo", "")),
+                f.get("fuente_tarifa", ""),
             ]
             for f in filas
         ],
         lambda f: (
-            "dif" if f[3] == "pendiente" else ("ok" if lecturas.get(f[0]) == "coincide" else "")
+            "dif" if f[0] in resaltadas else ("ok" if lecturas.get(f[0]) == "coincide" else "")
         ),
     )
     izquierda = (
@@ -336,7 +342,8 @@ def vista_ica_2026() -> None:
     )
     cuerpo += (
         f'<div class="par"><div>{izquierda}</div><div><h2>Fuente de cada tarifa</h2>{resumen}'
-        f"<h2>Filas pendientes</h2>{pend}<h2>Normas derogadas por el art. 52 del Acuerdo 1084</h2>"
+        f"<h2>Filas que decidió Rodolfo</h2>{pend}"
+        "<h2>Normas derogadas por el art. 52 del Acuerdo 1084</h2>"
         f"{texto_derogadas}<h2>ICA consolidado del régimen SIMPLE en 2026</h2>{tabla_simple}"
         "</div></div>"
     )
