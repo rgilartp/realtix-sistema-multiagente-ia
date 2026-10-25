@@ -60,12 +60,6 @@ extend-exclude = [
     "docs/paquete",
     "docs/06_ADENDA_MARCO_JURIDICO_Y_PRUEBAS.md",
     "docs/ESPECIFICACION_TECNICA.md",
-    # Copia literal de 6.3.1 (B3); se quita en el commit siguiente.
-    "src/data/models.py",
-    "src/data/adapter.py",
-    "src/data/database.py",
-    "src/data/demo.py",
-    "src/data/generar/generate_synthetic_data.py",
 ]
 # La exclusión vale también cuando pre-commit le pasa los archivos uno por uno.
 force-exclude = true
