@@ -123,7 +123,7 @@ excluido lo «inferior a 16 SMMLV» (Acuerdo 1084, art. 20) y 16 SMMLV exactos p
   de 15.000 caracteres.
 - **Caracteres.** Se quitaron los 82 caracteres de formato Unicode (U+200B) y el pie de página de las
   resoluciones de la Secretaría de Hacienda.
-- **Tablas.** El conversor expande `rowspan` y `colspan` repitiendo el valor, une las filas de encabezado
+- **Tablas** (corregido en la cuarta ronda: ya no repite el valor de las celdas combinadas ni une filas sin celdas combinadas). El conversor expande `rowspan` y `colspan` repitiendo el valor, une las filas de encabezado
   («Base gravable desde», «Base gravable hasta»), parte las tablas por sus filas de subtítulo y quita las
   columnas vacías o repetidas por maquetación. Quedan como excepciones, con su razón, los subtítulos del
   texto original del art. 3 del Acuerdo 65 («b. Actividades Comerciales») y la fila de 5330, donde la
@@ -160,16 +160,16 @@ Resolución SDH-000195 y, al lado, las tablas insertadas en la base de conocimie
 | Decreto 1074 de 2015, caps. 25 y 26 | `normativa_datos` | 42 artículos | Colpensiones (normograma) | https://normativa.colpensiones.gov.co/colpens/docs/decreto_1074_2015.htm |
 | Ley 44 de 1990 | `normativa_ipu` | 30 artículos | Colpensiones (normograma) | https://normativa.colpensiones.gov.co/colpens/docs/ley_0044_1990.htm |
 | Ley 1995 de 2019 | `normativa_ipu` | 7 artículos | IGAC | https://www.igac.gov.co/sites/default/files/transparencia/normograma/ley_1995_de_2019.pdf |
-| Ley 2294 de 2023, art. 49 | `normativa_ipu` | 1 artículos | Cancillería (normograma) | https://cancilleria.gov.co/sites/default/files/Normograma/docs/ley_2294_2023.htm |
-| Ley 1819 de 2016, art. 354 | `normativa_ipu` | 1 artículos | Secretaría del Senado (parte 7 de la ley) | http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html |
+| Ley 2294 de 2023, art. 49 | `normativa_ipu` | 1 artículo | Cancillería (normograma) | https://cancilleria.gov.co/sites/default/files/Normograma/docs/ley_2294_2023.htm |
+| Ley 1819 de 2016, art. 354 | `normativa_ipu` | 1 artículo | Secretaría del Senado (parte 7 de la ley) | http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html |
 | Decreto Ley 1421 de 1993 | `normativa_ipu` | 3 artículos | Secretaría del Senado (cuatro partes) | http://www.secretariasenado.gov.co/senado/basedoc/decreto_1421_1993.html |
 | Decreto 474 de 2016 | `normativa_ipu` | 21 artículos | Régimen Legal de Bogotá; texto anterior, no vigente: lo compiló y derogó el Decreto 639 de 2025 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67262&dt=S |
 | Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016 | `normativa_ipu` | 21 artículos | Compilación de la Secretaría de Hacienda (arts. que compilan el Decreto 474 y la derogatoria del art. 263) | https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm |
 | Acuerdo 648 de 2016 | `normativa_ipu` | 15 artículos | Régimen Legal de Bogotá | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=67557&dt=S |
 | Decreto Distrital 352 de 2002, cap. I | `normativa_ipu` | 18 artículos | Cancillería (normograma) | https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm |
 | Decreto Distrital 807 de 1993 | `normativa_ipu` | 170 artículos | Régimen Legal de Bogotá, con modificaciones y notas de vigencia | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=1637 |
-| Acuerdo 105 de 2003, art. 2 | `normativa_ipu` | 1 artículos | Régimen Legal de Bogotá (ya con el art. 20 del Acuerdo 1084) | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=11030 |
-| Acuerdo 780 de 2020, art. 3 | `normativa_ipu` | 1 artículos | Régimen Legal de Bogotá | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965 |
+| Acuerdo 105 de 2003, art. 2 | `normativa_ipu` | 1 artículo | Régimen Legal de Bogotá (ya con el art. 20 del Acuerdo 1084) | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=11030 |
+| Acuerdo 780 de 2020, art. 3 | `normativa_ipu` | 1 artículo | Régimen Legal de Bogotá | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965 |
 | Resolución SDH-000194 de 2025 (rangos del predial de 2026) | `normativa_ipu` | 4 artículos | INCP (PDF, descargado por Rodolfo) | https://incp.org.co/wp-content/uploads/2025/12/Resolucion-000194-de-2025-SDH.pdf |
 | Resolución SDH-000195 de 2025 | `normativa_ipu` | 4 artículos | Régimen Legal de Bogotá (guardado por Rodolfo); las cuotas del SPAC, de la imagen | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S |
 | Resolución SDH-000195 de 2025 | `normativa_ica` | 2 artículos | Régimen Legal de Bogotá (mismo archivo); las fechas bimestrales, de las imágenes | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191813&dt=S |
@@ -178,13 +178,13 @@ Resolución SDH-000195 y, al lado, las tablas insertadas en la base de conocimie
 | Ley 14 de 1983 | `normativa_ica` | 90 artículos | Régimen Legal de Bogotá, con notas de vigencia; arts. 33 y 36 marcados como texto anterior, no vigente | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=267 |
 | Decreto Distrital 352 de 2002, cap. II | `normativa_ica` | 29 artículos | Cancillería (normograma) | https://cancilleria.gov.co/sites/default/files/Normograma/docs/d_alcabog_0352_2002.htm |
 | Decreto Distrital 807 de 1993 | `normativa_ica` | 170 artículos | Régimen Legal de Bogotá, con modificaciones y notas de vigencia | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=1637 |
-| Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205 | `normativa_ica` | 1 artículos | Compilación de la Secretaría de Hacienda (mismo archivo); fuera de la tabla de la sección 5 | https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm |
-| Acuerdo 1019 de 2025, art. 44 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá; texto anterior, no vigente; fuera de la tabla de la sección 5 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818 |
-| Acuerdo 65 de 2002, art. 3 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá (ya con el art. 21 del Acuerdo 1084) | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156 |
+| Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205 | `normativa_ica` | 1 artículo | Compilación de la Secretaría de Hacienda (mismo archivo); fuera de la tabla de la sección 5 | https://compilacionjuridica.shd.gov.co/compilacion/docs/d_alcabog_0639_2025.htm |
+| Acuerdo 1019 de 2025, art. 44 | `normativa_ica` | 1 artículo | Régimen Legal de Bogotá; rige todo el año gravable 2026, lo derogó el art. 52 del Acuerdo 1084 (desde 2027, art. 24); fuera de la tabla de la sección 5 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=191818 |
+| Acuerdo 65 de 2002, art. 3 | `normativa_ica` | 1 artículo | Régimen Legal de Bogotá (ya con el art. 21 del Acuerdo 1084) | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=5156 |
 | Acuerdo 780 de 2020, arts. 6 y 7 | `normativa_ica` | 2 artículos | Régimen Legal de Bogotá (mismo archivo); aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=100965 |
-| Acuerdo 816 de 2021, art. 4 | `normativa_ica` | 1 artículos | Régimen Legal de Bogotá; aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=116160&dt=S |
+| Acuerdo 816 de 2021, art. 4 | `normativa_ica` | 1 artículo | Régimen Legal de Bogotá; aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=116160&dt=S |
 | Acuerdo 98 de 2003 | `normativa_ica` | 3 artículos | Régimen Legal de Bogotá; aprobada por Rodolfo en la parada de B2 | https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=10597 |
-| Resolución SDH-000265 de 2021, art. 1 | `normativa_ica` | 1 artículos | Compilación de la Secretaría de Hacienda; aprobada por Rodolfo en la parada de B2 | https://compilacionjuridica.shd.gov.co/compilacion/docs/resolucion_sdh_0265_2021.htm |
+| Resolución SDH-000265 de 2021, art. 1 | `normativa_ica` | 1 artículo | Compilación de la Secretaría de Hacienda; aprobada por Rodolfo en la parada de B2 | https://compilacionjuridica.shd.gov.co/compilacion/docs/resolucion_sdh_0265_2021.htm |
 | Ley 1819 de 2016, arts. 342 y 345 | `normativa_ica` | 2 artículos | Secretaría del Senado (parte 7 de la ley, la misma del art. 354) | http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html |
 
 Además, el Registro Distrital 7103 (`https://www.alcaldiabogota.gov.co/sisjur/normas/verNormaPDF?i=109475`)
@@ -266,3 +266,10 @@ filas de datos bajan en 1 por tabla porque el encabezado unido y los subtítulos
 (por ejemplo, el art. 2 del Acuerdo 105 pasa de 117 a 97 porque los subtítulos y los encabezados de dos filas ya no cuentan como datos); suben en
 el Decreto 352 (26 a 33) y la Resolución 194 (0 a 16, transcritas). Los caracteres bajan por las firmas, el
 membrete de la Resolución 194, los caracteres de formato y el texto ajeno de la Ley 1581.
+
+**Quinta revisión.** La base ya no cita archivos ni documentos internos del proyecto (`.yaml`, `datos/`,
+`scripts/`, «adenda»): cada nota remite a la norma y al artículo que la sustentan, y una prueba lo vigila.
+El Acuerdo 98 de 2003, el art. 7 del Acuerdo 780 de 2020 y el art. 44 del Acuerdo 1019 de 2025 llevan la
+nota de que el art. 52 del Acuerdo 1084 los derogó y de los periodos de 2026 en que rigen; el art. 44 ya no
+se marca como texto anterior. Los arts. 25 (cap. I), 53 y 55 (cap. II) del Decreto 352 de 2002 dicen de qué
+año son sus tarifas y dónde están las de 2026 y 2027.
