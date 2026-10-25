@@ -98,8 +98,17 @@ def convertir() -> dict[str, dict]:
             f"Fuente: {_principal(fuente)} (consultada en {mes})",
             "",
         ]
+        anteriores = fuente.get("texto_anterior", {})
         for numero, contenido in cortes:
-            cuerpo += [f"## Artículo {numero}", "", contenido, ""]
+            cuerpo += [f"## Artículo {numero}", ""]
+            if numero in anteriores:
+                cuerpo += [
+                    "> **Texto anterior, no vigente.** Este artículo lo modificó la "
+                    f"{anteriores[numero]}; el texto vigente está en esa norma, cargada en esta "
+                    "misma colección.",
+                    "",
+                ]
+            cuerpo += [contenido, ""]
         lineas = "\n".join(cuerpo).splitlines()
         contenido = "\n".join(linea.rstrip() for linea in lineas).rstrip("\n") + "\n"
         (destino / f"{fuente['id']}.md").write_text(contenido, encoding="utf-8")

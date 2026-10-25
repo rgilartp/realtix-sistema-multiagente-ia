@@ -140,7 +140,10 @@ fuentes:
     url: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=267
     formato: html
     articulos: todos
-    nota: Texto del Régimen Legal de Bogotá con sus notas de vigencia.
+    nota: Texto del Régimen Legal de Bogotá con sus notas de vigencia. Los arts. 33 y 36 muestran el texto de 1983, que la Ley 1819 de 2016 modificó.
+    texto_anterior:
+      "33": Ley 1819 de 2016, art. 342 (base gravable del impuesto de industria y comercio)
+      "36": Ley 1819 de 2016, art. 345 (actividades de servicios)
   - id: decreto_352_2002_cap2
     norma: Decreto Distrital 352 de 2002, cap. II
     coleccion: normativa_ica
@@ -189,3 +192,11 @@ fuentes:
     formato: html
     articulos: ["1"]
     nota: Compilación de la Secretaría de Hacienda; el PDF de bogota.gov.co trae el mismo texto. Da a cada CIIU su grupo y sus tarifas de 2021 a 2024. Fuente aprobada por Rodolfo en la parada de B2.
+  - id: ley_1819_2016_ica
+    norma: Ley 1819 de 2016, arts. 342 y 345
+    coleccion: normativa_ica
+    archivo: ley_1819_2016
+    url: http://www.secretariasenado.gov.co/senado/basedoc/ley_1819_2016_pr007.html
+    formato: html
+    articulos: ["342", "345"]
+    nota: Modifican los arts. 33 y 36 de la Ley 14 de 1983 (base gravable y actividades de servicios del ICA). Misma parte de la ley que el art. 354.
