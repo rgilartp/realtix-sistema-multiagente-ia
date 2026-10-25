@@ -220,6 +220,29 @@ def vista_sobretasa() -> None:
     pagina("sobretasa_alumbrado_2027.html", "Sobretasa de alumbrado público 2027", cuerpo)
 
 
+def _categorias_no_residenciales() -> list[str]:
+    """Categoría de cada fila de los no residenciales, tal como la escribe el art. 20."""
+    texto = (RAIZ / "knowledge_base" / "normativa_ipu" / "acuerdo_1084_2026.md").read_text("utf-8")
+    inicio = texto.index("| CATEGORÍA DEL PREDIO | TARIFA X MIL | DESDE | HASTA |")
+    filas = []
+    for linea in texto[inicio:].splitlines()[2:]:
+        if not linea.startswith("|"):
+            break
+        filas.append(linea.strip("|").split("|")[0].strip())
+    return filas
+
+
+def _limite(fila: dict, campo: str) -> str:
+    """Desde o Hasta con su unidad: «135 SMMLV» y no «135» cuando el límite va en salarios."""
+    valor = fila[campo]
+    if valor is None:
+        return "en adelante"
+    if fila.get("unidad") == "SMMLV" and not (campo == "desde" and valor == 1):
+        previo = "Más de " if campo == "desde" and fila.get("desde_exclusivo") else ""
+        return f"{previo}{valor} SMMLV"
+    return f"$ {_valor(valor)}"
+
+
 def vista_ipu_2027() -> None:
     d = _yaml("tarifas/ipu_2027.yaml")
     pref = d["preferenciales"]
@@ -236,10 +259,12 @@ def vista_ipu_2027() -> None:
         ],
     )
     no_res = tabla(
-        ["Destino", "Tarifa por mil", "Desde", "Hasta"],
+        ["Categoría del predio (como está en la norma)", "Tarifa por mil", "Desde", "Hasta"],
         [
-            [f["destino"], f["tarifa_por_mil"], _valor(f["desde"]), _valor(f["hasta"])]
-            for f in d["generales"]["no_residencial"]
+            [literal, f["tarifa_por_mil"], _limite(f, "desde"), _limite(f, "hasta")]
+            for literal, f in zip(
+                _categorias_no_residenciales(), d["generales"]["no_residencial"], strict=True
+            )
         ],
     )
     preferenciales = tabla(
@@ -595,7 +620,14 @@ def vista_ipu_2026() -> None:
 
 def vista_calendario() -> None:
     d = _yaml("calendario/2026.yaml")
-    filas = [[p["concepto"], " · ".join(p["fechas"]), p["articulo"] or "—"] for p in d["plazos"]]
+    filas = [
+        [
+            p["concepto"],
+            Html("<br>".join(f'<span class="n">{html.escape(str(f))}</span>' for f in p["fechas"])),
+            p["articulo"] or "—",
+        ]
+        for p in d["plazos"]
+    ]
     cuerpo = nota(
         "Las tablas de fechas del ICA bimestral y de las cuotas del SPAC están como imagen en la "
         "página del Régimen Legal; se leyeron de la imagen. Las demás fechas salen del texto."
@@ -619,6 +651,24 @@ def vista_calendario() -> None:
             "insertaron en la base de conocimiento, para compararlas con las imágenes."
         )
         + insertadas,
+    )
+    textos = "".join(
+        f"<h2>Art. {n}{' (ICA anual)' if c == 'normativa_ica' else ''}</h2>" + _extracto_kb(c, a, n)
+        for c, a, n in (
+            ("normativa_ica", "resolucion_sdh_000195_2025_ica.md", 1),
+            ("normativa_ipu", "resolucion_sdh_000195_2025.md", 3),
+            ("normativa_ipu", "resolucion_sdh_000195_2025.md", 4),
+            ("normativa_ipu", "resolucion_sdh_000195_2025.md", 5),
+            ("normativa_ipu", "resolucion_sdh_000195_2025.md", 6),
+        )
+    )
+    cuerpo += (
+        "<h2>Texto de los artículos de donde salen las fechas</h2>"
+        + nota(
+            "Las fechas que no están en imagen salen de estos textos (arts. 1, 3, 4, 5 y 6 de la "
+            "Resolución SDH-000195 de 2025), tal como están en la base de conocimiento."
+        )
+        + f'<div class="texto">{textos}</div>'
     )
     pagina("calendario_2026.html", "Calendario 2026, Resolución SDH-000195", cuerpo)
 

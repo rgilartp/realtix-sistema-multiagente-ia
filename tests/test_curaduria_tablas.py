@@ -220,3 +220,15 @@ def test_el_decreto_352_une_las_filas_partidas_y_pone_el_encabezado_del_art_55_e
     assert "| Rango de ingresos netos, desde | Rango de ingresos netos, hasta |" in texto
     assert "RANGO DE INGRESOS NETOS NÚMERO" not in texto
     assert "| $ 60.000.001 | $ 77.900.000 | 60 |" in texto
+
+
+def test_las_vistas_muestran_la_categoria_literal_y_cada_fecha_en_su_linea() -> None:
+    vistas = RAIZ / "docs" / "verificacion"
+    ipu = (vistas / "ipu_2027.html").read_text(encoding="utf-8")
+    assert "pequena_propiedad" not in ipu and "depositos_y_parqueaderos" not in ipu
+    assert "Pequeña propiedad rural destinada a la producción agropecuaria" in ipu
+    assert '<td class="n">135 SMMLV</td>' in ipu and "Más de 135 SMMLV" in ipu
+    calendario = (vistas / "calendario_2026.html").read_text(encoding="utf-8")
+    for fecha in ("2026-10-09", "2026-12-04", "2026-12-11", "2027-02-12"):
+        assert f'<span class="n">{fecha}</span>' in calendario
+    assert "Texto de los artículos de donde salen las fechas" in calendario
