@@ -525,3 +525,17 @@ def test_la_regla_de_categorias_esta_escrita_y_se_cumple() -> None:
     assert "sobretasa" in ipu10["texto"] and "2027" in ipu10["texto"]  # cálculo: su agente
     definiciones = [q for q in consultas.values() if q["texto"].startswith("¿Qué es la sobretasa")]
     assert all(q["categoria"] == "general" for q in definiciones)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-05 · Registro auditable")
+def test_los_mensajes_del_contribuyente_no_llevan_numeros_de_documento(escenarios) -> None:
+    """La identificación la da la sesión; un documento en el texto iría al modelo y a las trazas."""
+    import re
+
+    documento = re.compile(r"\b(CC|CE|NIT)[-\s]?\d{6,}|\b\d{8,10}\b", re.IGNORECASE)
+    for e in escenarios:
+        for turno in e["turnos"]:
+            assert not documento.search(turno["usuario"]), (e["id"], turno["usuario"])
+    for consulta in cargar_enrutamiento():
+        assert not documento.search(consulta["texto"]), consulta["id"]

@@ -15,7 +15,7 @@ sesion: U02
 reloj: '2026-10-01T10:00:00-05:00'
 tipo_latencia: simple
 turnos:
-- usuario: Me identifico con la cédula CC-1000000002. Dame el estado de cuenta de todos mis predios
+- usuario: Dame el estado de cuenta de todos mis predios
 verificaciones_codigo:
 - tipo: contiene_texto
   valor: 50C-9000201
