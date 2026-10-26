@@ -1,9 +1,10 @@
 """Fija la escala de la similitud con 10 consultas de prueba (sección 3.3, pendiente de B5).
 
 Cinco consultas pertinentes (de los escenarios aprobados, cada una contra su colección) y cinco sin
-relación con la base (contra las cuatro colecciones). Toma el coseno del mejor fragmento de cada
-una y propone la escala: el coseno que vale 0 es el más alto de las consultas sin relación, y el que
-vale 1, la mediana de las pertinentes. Escribe `reports/b08_calibracion.json`.
+relación con la base (contra las cuatro colecciones). De cada una toma el coseno más alto de sus
+fragmentos (el que usa la confianza) y propone la escala: el coseno que vale 0 es el más alto de las
+consultas sin relación, y el que vale 1, la mediana de las pertinentes. Escribe
+`reports/b08_calibracion.json`.
 
 Gasta solo los embeddings de las 10 consultas (unos 200 tokens).
 Uso: uv run python scripts/calibrar_similitud.py
@@ -40,12 +41,13 @@ def main() -> None:
     recuperador = Contenedor().recuperador
     filas = []
     for id_, consulta, coleccion in PERTINENTES:
-        mejor = recuperador.recuperar(consulta, coleccion=coleccion, k=5, anio=2026)[0]
+        fragmentos = recuperador.recuperar(consulta, coleccion=coleccion, k=5, anio=2026)
+        mejor = max(fragmentos, key=lambda f: f.similitud)
         filas.append({"consulta": id_, "tipo": "pertinente", "coseno": round(mejor.similitud, 4),
                       "fragmento": mejor.cita})  # fmt: skip
     for id_, consulta in SIN_RELACION:
         mejores = [
-            recuperador.recuperar(consulta, coleccion=c, k=1, anio=2026)[0] for c in COLECCIONES
+            f for c in COLECCIONES for f in recuperador.recuperar(consulta, coleccion=c, anio=2026)
         ]
         mejor = max(mejores, key=lambda f: f.similitud)
         filas.append({"consulta": id_, "tipo": "sin_relacion", "coseno": round(mejor.similitud, 4),

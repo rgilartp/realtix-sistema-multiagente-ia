@@ -1,0 +1,68 @@
+{
+  "consultas": [
+    {
+      "consulta": "IPU-04",
+      "tipo": "pertinente",
+      "coseno": 0.6887,
+      "fragmento": "Ley 44 de 1990, art. 2"
+    },
+    {
+      "consulta": "IPU-09",
+      "tipo": "pertinente",
+      "coseno": 0.5576,
+      "fragmento": "Acuerdo 648 de 2016, art. 1"
+    },
+    {
+      "consulta": "ICA-01",
+      "tipo": "pertinente",
+      "coseno": 0.6831,
+      "fragmento": "Ley 14 de 1983, art. 32"
+    },
+    {
+      "consulta": "GEN-04",
+      "tipo": "pertinente",
+      "coseno": 0.5171,
+      "fragmento": "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)"
+    },
+    {
+      "consulta": "GEN-07",
+      "tipo": "pertinente",
+      "coseno": 0.5721,
+      "fragmento": "Ley 1581 de 2012, art. 8"
+    },
+    {
+      "consulta": "FA-01",
+      "tipo": "sin_relacion",
+      "coseno": 0.4065,
+      "fragmento": "Acuerdo 1084 de 2026, art. 10"
+    },
+    {
+      "consulta": "FA-02",
+      "tipo": "sin_relacion",
+      "coseno": 0.3566,
+      "fragmento": "Ley 14 de 1983, art. 57"
+    },
+    {
+      "consulta": "receta",
+      "tipo": "sin_relacion",
+      "coseno": 0.3196,
+      "fragmento": "Decreto Distrital 807 de 1993, art. 39"
+    },
+    {
+      "consulta": "futbol",
+      "tipo": "sin_relacion",
+      "coseno": 0.1959,
+      "fragmento": "Ley 14 de 1983, art. 69"
+    },
+    {
+      "consulta": "pelicula",
+      "tipo": "sin_relacion",
+      "coseno": 0.2259,
+      "fragmento": "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario"
+    }
+  ],
+  "escala": {
+    "minimo": 0.41,
+    "maximo": 0.57
+  }
+}

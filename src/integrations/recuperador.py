@@ -17,8 +17,9 @@ from src.services.confianza import EscalaSimilitud
 
 RAIZ_BASE = Path(__file__).resolve().parent.parent.parent / "knowledge_base"
 # Escala del coseno de `text-embedding-3-large` sobre esta base, fijada en B8 con 10 consultas de
-# prueba (`scripts/calibrar_similitud.py`; método y cifras en `docs/resumenes/b08.md`).
-ESCALA_SIMILITUD = EscalaSimilitud(minimo=0.0, maximo=1.0)
+# prueba (`scripts/calibrar_similitud.py`, `reports/b08_calibracion.json`): 0,41 es el coseno más
+# alto de las consultas sin relación (vale 0) y 0,57, la mediana de las pertinentes (vale 1).
+ESCALA_SIMILITUD = EscalaSimilitud(minimo=0.41, maximo=0.57)
 PALABRA = re.compile(r"[a-z0-9]{3,}")
 
 

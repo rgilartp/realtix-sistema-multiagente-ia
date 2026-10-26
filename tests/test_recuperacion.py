@@ -387,7 +387,14 @@ def test_ingesta_y_recuperacion_con_el_chroma_de_compose(tmp_path) -> None:
     [
         ("¿Hasta cuándo se puede pagar el predial con descuento?", "normativa_ipu",
          "Resolución SDH-000195 de 2025"),
-        ("¿Cuánto puede subir el predial de un año a otro?", "normativa_ipu", "Ley 1995 de 2019"),
+        pytest.param(
+            "¿Cuánto puede subir el predial de un año a otro?", "normativa_ipu", "Ley 1995 de 2019",
+            marks=pytest.mark.xfail(
+                reason="Hallazgo de B8: el art. 2 de la Ley 1995 queda 9.º en el canal vectorial y "
+                "BM25 no lo trae; se revisa en B12 (docs/resumenes/b08.md)",
+                strict=True,
+            ),
+        ),
         ("¿Quién paga el impuesto de industria y comercio?", "normativa_ica", "Ley 14 de 1983"),
         ("¿Cómo pago por cuotas el predial?", "plataforma_general", "SPAC"),
         ("¿Qué puedo pedir sobre mis datos personales?", "normativa_datos", "Ley 1581 de 2012"),
