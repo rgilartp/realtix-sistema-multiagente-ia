@@ -40,4 +40,4 @@ dado_cuando_entonces:
   entonces: >-
     el sistema lista los pagos registrados con su fecha, valor y medio de pago, iguales a los del adaptador,
     sin modificar ningún dato (RF-SYS-02)
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

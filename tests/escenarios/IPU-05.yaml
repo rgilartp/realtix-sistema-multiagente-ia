@@ -32,4 +32,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta cuándo se causa el predial
   entonces: Recibe el hecho generador, la causación y el período, con la cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

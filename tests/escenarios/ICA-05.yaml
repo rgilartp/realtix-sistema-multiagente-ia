@@ -37,4 +37,4 @@ dado_cuando_entonces:
   dado: U04 con sesión, régimen común bimestral y actividad 5611
   cuando: Pide una estimación con $250.000.000 de ingresos del bimestre
   entonces: Recibe $3.450.000 con la tarifa de 13,8 por mil
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

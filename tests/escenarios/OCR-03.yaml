@@ -52,4 +52,4 @@ nota_revision:
 - >-
   La fecha límite que muestre el recibo la fija la plantilla sintética de B10; aquí solo se verifica la
   del calendario (datos/calendario/2026.yaml).
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

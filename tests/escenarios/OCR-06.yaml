@@ -37,4 +37,4 @@ dado_cuando_entonces:
   cuando: Carga el archivo
   entonces: >-
     Recibe el motivo específico del rechazo y la petición de cargar el recibo completo y legible
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

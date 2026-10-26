@@ -39,4 +39,4 @@ dado_cuando_entonces:
   dado: U05 con sesión, régimen preferencial y actividad 6201
   cuando: Pide una estimación con $60.000.000 de ingresos en el año
   entonces: Recibe $579.600 como proyección anual, con tarifa y notas
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

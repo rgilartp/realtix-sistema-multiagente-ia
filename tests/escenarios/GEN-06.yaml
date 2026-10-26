@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es un dato personal
   entonces: Recibe la definición con la cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

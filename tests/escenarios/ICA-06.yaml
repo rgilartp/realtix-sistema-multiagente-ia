@@ -38,4 +38,4 @@ dado_cuando_entonces:
   dado: U12 con sesión y actividad 6201
   cuando: Pide una estimación con $900.000.000 de ingresos de 2027
   entonces: Recibe $9.000.000 con la tarifa de 10 por mil de 2027
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

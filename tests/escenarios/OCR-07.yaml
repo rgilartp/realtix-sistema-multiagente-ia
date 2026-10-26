@@ -41,4 +41,4 @@ dado_cuando_entonces:
   dado: U03 con sesión que cargó un recibo y confirmó los datos
   cuando: Responde que los datos son correctos
   entonces: El sistema contrasta los datos con el adaptador e informa que coinciden
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -37,4 +37,4 @@ dado_cuando_entonces:
   dado: U02 con sesión y dos predios
   cuando: Pregunta cuánto debe de «mi predio»
   entonces: Recibe la pregunta de cuál predio, con las dos matrículas
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

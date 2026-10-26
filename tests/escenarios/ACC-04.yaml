@@ -42,4 +42,4 @@ dado_cuando_entonces:
   dado: Una conversación sin sesión
   cuando: Pregunta por la tarifa de la actividad 6201
   entonces: Recibe la tarifa por año sin necesidad de iniciar sesión
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

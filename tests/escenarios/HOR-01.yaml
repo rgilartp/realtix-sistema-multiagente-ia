@@ -40,4 +40,4 @@ dado_cuando_entonces:
   dado: El reloj simulado marca el domingo 4 de octubre de 2026 a las 10:00
   cuando: El contribuyente pide un funcionario
   entonces: Recibe el aviso de fuera de horario con el horario y cuándo se vuelve a atender
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

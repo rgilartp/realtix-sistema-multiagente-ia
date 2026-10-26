@@ -42,4 +42,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta por el predial y por el ICA en un solo mensaje
   entonces: Recibe una explicación de cada impuesto, una sola vez, con su cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

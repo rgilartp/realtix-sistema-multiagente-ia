@@ -39,4 +39,4 @@ dado_cuando_entonces:
   entonces: >-
     el sistema informa el saldo pendiente y las obligaciones por vigencia con su estado, iguales a los
     que devuelve el adaptador para ese predio
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -35,4 +35,4 @@ dado_cuando_entonces:
   dado: U01 con sesión
   cuando: Pide hablar con una persona
   entonces: El caso se transfiere con su resumen y el contribuyente recibe el aviso de transferencia
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

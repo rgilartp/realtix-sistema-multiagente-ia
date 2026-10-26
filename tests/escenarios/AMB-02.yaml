@@ -37,4 +37,4 @@ dado_cuando_entonces:
   dado: U02 con sesión que ya consultó el predio 50C-9000202
   cuando: Pregunta por «ese mismo predio» en el segundo mensaje
   entonces: El segundo turno responde sobre el predio del turno anterior
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

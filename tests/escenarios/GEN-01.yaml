@@ -32,4 +32,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta cómo entrar a la OVT simulada
   entonces: Recibe los pasos y la duración de la sesión
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

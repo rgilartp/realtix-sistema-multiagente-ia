@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Una conversación nueva, sin sesión
   cuando: El contribuyente saluda
   entonces: La primera respuesta incluye el aviso de IA y la posibilidad de pedir un funcionario
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

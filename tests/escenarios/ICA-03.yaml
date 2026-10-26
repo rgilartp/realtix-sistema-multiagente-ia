@@ -36,4 +36,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta la periodicidad del ICA
   entonces: Recibe la regla de 2026 con el umbral de 391 UVT en pesos
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

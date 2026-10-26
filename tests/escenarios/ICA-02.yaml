@@ -32,4 +32,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta sobre qué ingresos se calcula el ICA
   entonces: Recibe la base gravable y las exclusiones, con la cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

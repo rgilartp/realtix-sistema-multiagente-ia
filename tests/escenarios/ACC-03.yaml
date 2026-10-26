@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Una solicitud con un token alterado o vencido
   cuando: Pregunta cuánto debe de un predio concreto
   entonces: Se trata como si no hubiera sesión y se le pide iniciar sesión
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

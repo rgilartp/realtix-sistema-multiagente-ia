@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es la sobretasa de alumbrado
   entonces: Recibe una definición sencilla, desde cuándo rige y quién la paga
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -31,4 +31,4 @@ dado_cuando_entonces:
   dado: U01 con sesión
   cuando: Hace una pregunta que no es tributaria
   entonces: Recibe que el tema no está cubierto y no se escala
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

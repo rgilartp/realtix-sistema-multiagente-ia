@@ -42,4 +42,4 @@ dado_cuando_entonces:
   dado: un contribuyente autenticado que se identifica con su cédula o NIT
   cuando: pide su estado de cuenta
   entonces: el sistema obtiene sus predios mediante el adaptador y responde solo sobre ellos
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

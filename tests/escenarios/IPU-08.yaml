@@ -32,4 +32,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión; el reloj marca el 1 de octubre de 2026
   cuando: Pregunta el plazo del predial de 2026
   entonces: Recibe el 10 de julio de 2026 con la cita y que el plazo ya venció
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -35,4 +35,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es el predial y cómo se calcula
   entonces: Recibe la definición, la base gravable y quién fija la tarifa, con la cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

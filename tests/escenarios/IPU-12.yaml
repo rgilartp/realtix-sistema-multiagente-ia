@@ -32,4 +32,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta cómo le notifican la factura
   entonces: Recibe la publicación en el Registro Distrital y en la web, y que el envío es adicional
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

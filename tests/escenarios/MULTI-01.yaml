@@ -41,4 +41,4 @@ dado_cuando_entonces:
   dado: U04 con sesión, predio al día e ICA con un bimestre pendiente
   cuando: Pregunta por el predial y por el ICA en un solo mensaje
   entonces: Recibe una respuesta con las dos partes, cada una con sus valores
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

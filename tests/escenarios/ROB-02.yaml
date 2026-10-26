@@ -35,4 +35,4 @@ dado_cuando_entonces:
   dado: el adaptador de datos no responde dentro del tiempo máximo de espera
   cuando: el agente consulta el estado de cuenta
   entonces: el sistema no muestra un error técnico y deriva la consulta al escalamiento (RNF-08)
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

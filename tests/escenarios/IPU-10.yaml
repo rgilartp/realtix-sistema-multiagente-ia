@@ -51,4 +51,4 @@ dado_cuando_entonces:
   entonces: >-
     Recibe la estimación de 2026 con tarifa, base y valor, que está vencido y causa intereses, y la nota
     de estimación no vinculante
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

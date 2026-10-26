@@ -36,4 +36,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta por un tributo que el sistema no cubre
   entonces: Recibe que el tema está fuera del canal y el caso se transfiere con su resumen
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

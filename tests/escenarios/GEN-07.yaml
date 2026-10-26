@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta por sus derechos sobre sus datos
   entonces: Recibe la lista de derechos del titular con la cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

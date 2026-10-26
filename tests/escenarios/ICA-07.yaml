@@ -35,4 +35,4 @@ dado_cuando_entonces:
   dado: U04 con sesión y régimen común bimestral
   cuando: Pregunta cuándo declara el ICA
   entonces: Recibe las seis fechas y la próxima, el 9 de octubre de 2026
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

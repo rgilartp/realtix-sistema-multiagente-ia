@@ -36,4 +36,4 @@ dado_cuando_entonces:
   dado: U04 con sesión
   cuando: Pregunta por la retención de ICA
   entonces: Recibe que el tema está fuera del canal y el caso se transfiere con su resumen
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -39,4 +39,4 @@ dado_cuando_entonces:
   dado: U08 con sesión, dos cuotas del SPAC pagadas y dos pendientes
   cuando: Pregunta cuántas cuotas le faltan y cuándo vence la siguiente
   entonces: Recibe las dos cuotas pendientes, sus fechas y el saldo de $1.690.000
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

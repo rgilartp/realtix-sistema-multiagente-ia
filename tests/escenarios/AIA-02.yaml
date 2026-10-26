@@ -34,4 +34,4 @@ dado_cuando_entonces:
   dado: Un contribuyente que no sabe con quién habla
   cuando: Pregunta si está hablando con una persona
   entonces: Recibe la aclaración de que es un sistema de IA y la oferta de pasar con un funcionario
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

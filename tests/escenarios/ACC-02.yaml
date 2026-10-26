@@ -37,4 +37,4 @@ dado_cuando_entonces:
   cuando: se pide el estado de cuenta de un predio
   entonces: >-
     el sistema no entrega datos e indica que se debe iniciar sesión en la Oficina Virtual Tributaria (RF-AUT-04)
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

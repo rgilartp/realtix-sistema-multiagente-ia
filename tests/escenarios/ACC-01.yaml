@@ -43,4 +43,4 @@ dado_cuando_entonces:
   entonces: >-
     el sistema rechaza la consulta con un mensaje explícito, no revela ningún dato del predio y no escala
     el caso (RF-AUT-02)
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

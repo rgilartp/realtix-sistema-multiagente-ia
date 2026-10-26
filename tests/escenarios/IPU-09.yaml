@@ -41,4 +41,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta cuánto puede subir su predial
   entonces: Recibe los topes por tipo de predio y que la ley sigue vigente
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

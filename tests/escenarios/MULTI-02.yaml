@@ -44,4 +44,4 @@ dado_cuando_entonces:
   cuando: Pide la estimación del predial y la fecha del ICA en un solo mensaje
   entonces: >-
     Recibe que el predial de 2026 ya está pagado, con su valor, y la fecha de declaración del ICA
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

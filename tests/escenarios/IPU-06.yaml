@@ -41,4 +41,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta por las tarifas de los estratos bajos
   entonces: Recibe las tres tarifas con sus límites en SMMLV y en pesos
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

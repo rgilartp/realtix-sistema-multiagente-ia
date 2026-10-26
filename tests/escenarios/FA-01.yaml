@@ -31,4 +31,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Hace una pregunta que no es tributaria
   entonces: Recibe que el tema no está cubierto y no se escala
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

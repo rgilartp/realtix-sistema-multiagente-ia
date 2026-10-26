@@ -49,4 +49,4 @@ dado_cuando_entonces:
   cuando: Pide la estimación del predial de 2027
   entonces: >-
     Recibe la estimación de 2027 con la sobretasa y las advertencias de lo que aún no se publica
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

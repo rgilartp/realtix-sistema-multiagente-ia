@@ -37,4 +37,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta por el predial en Medellín
   entonces: El caso se transfiere a un funcionario con su resumen
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

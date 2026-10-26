@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es el ICA y quién lo paga
   entonces: Recibe el hecho generador y el sujeto pasivo, con la cita
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

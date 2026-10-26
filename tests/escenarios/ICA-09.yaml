@@ -40,4 +40,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta cómo será el régimen en 2027
   entonces: Recibe la regla en UVT de cada régimen y su periodicidad
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

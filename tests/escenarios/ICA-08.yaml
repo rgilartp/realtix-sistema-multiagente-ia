@@ -30,4 +30,4 @@ dado_cuando_entonces:
   dado: U12 con sesión y régimen común anual
   cuando: Pregunta cuándo declara el ICA
   entonces: Recibe el 26 de febrero de 2027
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

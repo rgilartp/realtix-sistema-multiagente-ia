@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión; el reloj está en octubre de 2026
   cuando: Pregunta hasta cuándo hay descuento en 2026
   entonces: Recibe la fecha y el porcentaje, y que el plazo ya venció
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -33,4 +33,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es el IVIUR
   entonces: Recibe el significado y para qué se usa
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"
