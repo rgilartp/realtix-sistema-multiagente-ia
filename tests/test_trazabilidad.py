@@ -56,3 +56,16 @@ def test_recolecta_las_marcas_del_repositorio(tmp_path: Path) -> None:
     assert "RNF-14 · Configuración por entorno" in (tmp_path / "trazabilidad.md").read_text(
         encoding="utf-8"
     )
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
+def test_recolecta_los_requerimientos_de_las_pruebas_de_la_web() -> None:
+    from scripts.trazabilidad import recolectar_web
+
+    evidencias = recolectar_web()
+    requerimientos = {e.requerimiento for e in evidencias}
+    for esperado in ("RF-UI-01 · Widget embebible", "RF-UI-03 · Identificación del interlocutor",
+                     "RF-UI-04 · Carga desde la conversación"):  # fmt: skip
+        assert esperado in requerimientos
+    assert all(e.prueba.startswith("web/tests/web.spec.js::") for e in evidencias)

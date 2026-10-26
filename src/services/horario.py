@@ -98,9 +98,10 @@ class Horario:
     def aviso_fuera_de_horario(self, momento: datetime | None = None) -> str:
         """Aviso informativo con el horario y cuándo se vuelve a atender (RNF-07)."""
         apertura = self.proxima_apertura(momento)
+        hora = _hora(apertura.time())  # termina en «a. m.» o «p. m.»: no lleva otro punto
         cuando = (
             f"{DIAS[apertura.weekday()]} {apertura.day} de {MESES[apertura.month - 1]} "
-            f"de {apertura.year} a las {_hora(apertura.time())}."
+            f"de {apertura.year} a las {hora}"
         )
         return (
             "En este momento estoy fuera del horario de atención. Atiendo de lunes a viernes, de "
