@@ -24,7 +24,7 @@ from starlette.exceptions import HTTPException
 
 from src.agents.graph import checkpointer_postgres, construir_grafo
 from src.api import admin, chat, escalamiento, ovt_simulada, predios
-from src.api.servicios import ServiciosAPI
+from src.api.servicios import ServiciosAPI, version_del_proyecto
 from src.config import Settings
 from src.container import Contenedor, obtener_contenedor
 from src.integrations.robustez import con_tiempo_y_reintento
@@ -81,7 +81,7 @@ def crear_app(servicios: ServiciosAPI | None = None) -> FastAPI:
     settings = servicios.settings if servicios else obtener_contenedor().settings
     app = FastAPI(
         title="API del sistema multiagente de IA (Realtix)",
-        version=servicios.version if servicios else "",
+        version=servicios.version if servicios else version_del_proyecto(),
         lifespan=_ciclo_de_vida,
     )
     if servicios is not None:

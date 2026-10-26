@@ -1,0 +1,332 @@
+{
+  "resultados": [
+    {
+      "escenario": "IPU-01",
+      "id_conversacion": "latencia-IPU-01-8646fd4a",
+      "tipo": "simple",
+      "codigo_http": 200,
+      "duracion_ms": 6868.1,
+      "estado": "escalada",
+      "motivo_escalamiento": "confianza insuficiente",
+      "tiempos_ms": {
+        "total": 6840,
+        "nodo_orquestador": 2085,
+        "nodo_ipu": 4638,
+        "nodo_confianza": 1,
+        "nodo_escalamiento": 23
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ipu": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 15469,
+        "salida": 832
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "IPU-10",
+      "id_conversacion": "latencia-IPU-10-c6a9968f",
+      "tipo": "simple",
+      "codigo_http": 200,
+      "duracion_ms": 6466.7,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 6458,
+        "nodo_orquestador": 1767,
+        "nodo_ipu": 4655,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 21
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ipu": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 16378,
+        "salida": 813
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "ICA-05",
+      "id_conversacion": "latencia-ICA-05-2c83e65f",
+      "tipo": "simple",
+      "codigo_http": 200,
+      "duracion_ms": 7287.3,
+      "estado": "aclaracion",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 7279,
+        "nodo_orquestador": 1892,
+        "nodo_ica": 5350,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 23
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ica": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 21322,
+        "salida": 833
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "ICA-08",
+      "id_conversacion": "latencia-ICA-08-8b9ddba4",
+      "tipo": "simple",
+      "codigo_http": 200,
+      "duracion_ms": 7489.0,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 7480,
+        "nodo_orquestador": 2140,
+        "nodo_ica": 5308,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 20
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ica": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 18802,
+        "salida": 730
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "AIA-02",
+      "id_conversacion": "latencia-AIA-02-7b76c80a",
+      "tipo": "simple",
+      "codigo_http": 200,
+      "duracion_ms": 1767.7,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 1760,
+        "nodo_orquestador": 1723,
+        "nodo_general": 1,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 24
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5"
+      },
+      "tokens": {
+        "entrada": 2640,
+        "salida": 135
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "IPU-04",
+      "id_conversacion": "latencia-IPU-04-d8cfcc1f",
+      "tipo": "con_recuperacion",
+      "codigo_http": 200,
+      "duracion_ms": 8577.6,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 8571,
+        "nodo_orquestador": 1908,
+        "nodo_ipu": 6631,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 19
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ipu": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 15001,
+        "salida": 1549
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "IPU-09",
+      "id_conversacion": "latencia-IPU-09-3a381954",
+      "tipo": "con_recuperacion",
+      "codigo_http": 200,
+      "duracion_ms": 7645.1,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 7637,
+        "nodo_orquestador": 1634,
+        "nodo_ipu": 5969,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 21
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ipu": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 15325,
+        "salida": 1272
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "ICA-01",
+      "id_conversacion": "latencia-ICA-01-48dc0bed",
+      "tipo": "con_recuperacion",
+      "codigo_http": 200,
+      "duracion_ms": 8528.2,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 8520,
+        "nodo_orquestador": 2107,
+        "nodo_ica": 6381,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 20
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ica": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 14169,
+        "salida": 1145
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "GEN-04",
+      "id_conversacion": "latencia-GEN-04-f141f684",
+      "tipo": "con_recuperacion",
+      "codigo_http": 200,
+      "duracion_ms": 4542.0,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 4535,
+        "nodo_orquestador": 1707,
+        "nodo_general": 2797,
+        "nodo_confianza": 2,
+        "nodo_respuesta": 20
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_general": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 6916,
+        "salida": 359
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "GEN-07",
+      "id_conversacion": "latencia-GEN-07-c695ef4b",
+      "tipo": "con_recuperacion",
+      "codigo_http": 200,
+      "duracion_ms": 4875.5,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 4868,
+        "nodo_orquestador": 1562,
+        "nodo_general": 3277,
+        "nodo_confianza": 1,
+        "nodo_respuesta": 19
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_general": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 8712,
+        "salida": 547
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "MULTI-03",
+      "id_conversacion": "latencia-MULTI-03-d4220134",
+      "tipo": "orquestador",
+      "codigo_http": 200,
+      "duracion_ms": 14269.9,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "tiempos_ms": {
+        "total": 14263,
+        "nodo_orquestador": 1841,
+        "nodo_ipu": 5622,
+        "nodo_confianza": 2,
+        "nodo_ica": 6763,
+        "nodo_respuesta": 24
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5",
+        "nodo_ipu": "claude-haiku-5-5",
+        "nodo_ica": "claude-haiku-5-5"
+      },
+      "tokens": {
+        "entrada": 23507,
+        "salida": 2265
+      },
+      "cumple_meta": true
+    },
+    {
+      "escenario": "FA-03",
+      "id_conversacion": "latencia-FA-03-70c03ceb",
+      "tipo": "orquestador",
+      "codigo_http": 200,
+      "duracion_ms": 1714.0,
+      "estado": "escalada",
+      "motivo_escalamiento": "fuera de alcance",
+      "tiempos_ms": {
+        "total": 1707,
+        "nodo_orquestador": 1679,
+        "nodo_escalamiento": 17
+      },
+      "modelo_por_nodo": {
+        "nodo_orquestador": "claude-sonnet-5-5"
+      },
+      "tokens": {
+        "entrada": 2643,
+        "salida": 147
+      },
+      "cumple_meta": true
+    }
+  ],
+  "resumen": {
+    "latencia": {
+      "con_recuperacion": {
+        "consultas": 5,
+        "mediana_ms": 7645.1,
+        "maximo_ms": 8577.6,
+        "meta_ms": 15000,
+        "cumplen": 5
+      },
+      "orquestador": {
+        "consultas": 2,
+        "mediana_ms": 7991.9,
+        "maximo_ms": 14269.9,
+        "meta_ms": 15000,
+        "cumplen": 2
+      },
+      "simple": {
+        "consultas": 5,
+        "mediana_ms": 6868.1,
+        "maximo_ms": 7489.0,
+        "meta_ms": 8000,
+        "cumplen": 5
+      }
+    },
+    "tokens": {
+      "entrada": 160884,
+      "salida": 10627
+    }
+  },
+  "costo_total_usd": "0.0996762"
+}

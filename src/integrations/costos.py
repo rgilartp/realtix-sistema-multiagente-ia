@@ -98,6 +98,15 @@ class UsoPorNodo(BaseCallbackHandler):
             "salida": sum(s for _, _, _, s in self.llamadas),
         }
 
+    def por_modelo(self) -> dict[str, dict[str, int]]:
+        """Tokens de entrada y de salida por modelo (para el costo del turno)."""
+        salida: dict[str, dict[str, int]] = {}
+        for _, modelo, entrada, sal in self.llamadas:
+            acumulado = salida.setdefault(modelo, {"entrada": 0, "salida": 0})
+            acumulado["entrada"] += entrada
+            acumulado["salida"] += sal
+        return salida
+
     def modelo_por_nodo(self) -> dict[str, str]:
         return {nodo: modelo for nodo, modelo, _, _ in self.llamadas}
 

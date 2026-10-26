@@ -86,6 +86,8 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
     nueva = abrir_conversacion(servicios, id_conversacion, solicitud.sesion)
     aviso_ia = AVISO_IA if nueva else None
 
+    por_modelo: dict[str, dict[str, int]] = {}
+
     def responder(
         texto: str, interlocutor: str, estado: str, meta: dict[str, Any] | None = None
     ) -> RespuestaChat:
@@ -99,7 +101,7 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
             estado=estado,  # type: ignore[arg-type]
             meta=Meta(**datos),
         )
-        registrar_interaccion(servicios, respuesta, solicitud.evaluacion.escenario_id)
+        registrar_interaccion(servicios, respuesta, solicitud.evaluacion.escenario_id, por_modelo)
         return respuesta
 
     horario = Horario.desde_settings(servicios.settings, RelojFijo(momento))
@@ -140,6 +142,7 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
     meta["agentes_invocados"] = list(tiempos)
     meta["tokens"] = uso.totales()
     meta["modelo_por_nodo"] = uso.modelo_por_nodo()
+    por_modelo.update(uso.por_modelo())
     return responder(texto, "agente", estado_api, meta)
 
 
@@ -253,9 +256,13 @@ def escalar_por_falla(servicios: ServiciosAPI, id_conversacion: str) -> str | No
 
 
 def registrar_interaccion(
-    servicios: ServiciosAPI, respuesta: RespuestaChat, escenario_id: str | None
+    servicios: ServiciosAPI,
+    respuesta: RespuestaChat,
+    escenario_id: str | None,
+    por_modelo: dict[str, dict[str, int]] | None = None,
 ) -> None:
-    """Una fila por turno, sin texto ni datos personales (ADR-11); si falla, no rompe el turno."""
+    """Una fila por turno, sin texto ni datos personales (ADR-11); si falla, no rompe el turno.
+    Los tokens guardan también el desglose por modelo, para calcular el costo."""
     meta = respuesta.meta
     try:
         servicios.almacen.registrar_interaccion(
@@ -269,7 +276,7 @@ def registrar_interaccion(
             motivo=meta.motivo_escalamiento,
             agentes=meta.agentes_invocados,
             tiempos_ms=meta.tiempos_ms,
-            tokens=meta.tokens,
+            tokens={**meta.tokens, "por_modelo": por_modelo or {}},
             modelos=meta.modelo_por_nodo,
         )
     except Exception as error:
