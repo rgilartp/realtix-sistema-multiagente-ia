@@ -23,7 +23,7 @@ async function fuentesListas(page) {
     await marco
       .evaluate(async () => {
         await Promise.all([
-          document.fonts.load('600 1em "Literata Variable"'),
+          document.fonts.load('700 1em "Archivo Variable"'),
           document.fonts.load('400 1em "Atkinson Hyperlegible Next Variable"'),
           document.fonts.load('700 1em "Atkinson Hyperlegible Next Variable"'),
         ]);

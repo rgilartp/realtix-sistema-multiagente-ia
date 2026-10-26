@@ -29,6 +29,9 @@ scripts/curaduria/descargas/
 # Web
 node_modules/
 web/dist/
+# Impeccable y playwright-cli: estado local de las herramientas de diseño
+.impeccable/
+.playwright-cli/
 
 # Editores y sistema
 .vscode/
