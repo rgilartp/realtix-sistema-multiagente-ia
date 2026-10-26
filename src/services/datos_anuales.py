@@ -54,7 +54,7 @@ def porcentaje_pronto_pago(anio: int) -> int:
     """Porcentaje de descuento por pronto pago del predial (Res. SDH-000195 de 2025, art. 6)."""
     datos = cargar_datos(f"calendario/{anio}.yaml", anio, "calendario")
     for plazo in datos["plazos"]:
-        if plazo["concepto"].startswith("predial_pronto_pago"):
+        if plazo["concepto"] == "predial_pronto_pago_10":
             return int(plazo["porcentaje_descuento"])
     raise AnioSinDatosError(anio, "descuento por pronto pago")
 
