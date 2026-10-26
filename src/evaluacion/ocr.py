@@ -11,7 +11,7 @@ from langchain_core.language_models import BaseChatModel
 
 from src.agents.nodes.ocr import leer_recibo
 from src.agents.vision import abrir_documento
-from src.data.generar.recibos import CAMPOS_EXTRAIBLES, Recibo, imagen_de
+from src.data.generar.recibos import CAMPOS_EXTRAIBLES, Recibo
 from src.services.documentos import validar_campos
 
 ESPERADOS = {
@@ -35,7 +35,7 @@ def evaluar_ocr(
         for formato in formatos:
             ruta = archivos[recibo.nombre][formato]
             tipo = "application/pdf" if formato == "pdf" else "image/png"
-            imagen = abrir_documento(ruta, tipo) if formato == "pdf" else imagen_de(recibo)
+            imagen = abrir_documento(ruta, tipo)  # el archivo, como lo recibe la API
             campos, problemas = leer_recibo(modelo, imagen, timeout_s)
             fila: dict[str, Any] = {"documento": recibo.nombre, "formato": formato,
                                     "calidad": recibo.calidad, "tipo": recibo.tipo,

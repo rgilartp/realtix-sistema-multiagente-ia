@@ -30,12 +30,11 @@ from src.agents.dependencias import Dependencias
 from src.agents.herramientas import FUENTE_REALSIT
 from src.agents.nodes._comun import (
     agregar_parcial,
-    contiene,
     formatear_pesos,
-    normalizar,
     parcial,
     texto_de_la_parte,
 )
+from src.agents.nodes.general import AVISO_SESION
 from src.agents.state import AgentState
 from src.agents.vision import abrir_documento, leer_documento
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE, PredioInaccesibleError
@@ -44,6 +43,7 @@ from src.services import obligaciones
 from src.services.documentos import (
     CamposRecibo,
     contrastar,
+    interpretar_confirmacion,
     problemas_de_legibilidad,
     validar_campos,
 )
@@ -66,9 +66,6 @@ ROTULOS = {
     "descuento": "Descuento por pronto pago",
     "fecha_limite": "Fecha límite de pago",
 }
-AFIRMACIONES = ("si", "correcto", "correctos", "estan bien", "esta bien", "confirmo", "asi es",
-                "exacto", "de acuerdo", "todo bien")  # fmt: skip
-NEGACIONES = ("no", "incorrect", "estan mal", "esta mal", "hay un error", "equivocad", "errado")
 PEDIR_RECIBO = "Adjunta el recibo del predial que quieres revisar (JPG, PNG o PDF)."
 DESCARTADOS = (
     "Entendido: no usaré esos datos. Vuelve a cargar el recibo en una foto más clara o en PDF, o "
@@ -157,18 +154,20 @@ def crear_nodo_ocr(deps: Dependencias) -> Callable[..., dict[str, Any]]:
     def confirmar(
         state: AgentState, datos: dict[str, Any], config: RunnableConfig | None
     ) -> dict[str, Any]:
-        respuesta = normalizar(texto_de_la_parte(state)).strip(" .,;:!¡¿?")
-        palabras = respuesta.replace(",", " ").split()
-        if contiene(respuesta, NEGACIONES[1:]) or (palabras and palabras[0] == "no"):
+        confirmacion = interpretar_confirmacion(texto_de_la_parte(state))
+        if confirmacion == "no":
             datos.pop("ocr", None)
             return parcial("ocr", DESCARTADOS, suficiencia="aclaracion")
-        if not (contiene(respuesta, AFIRMACIONES[1:]) or (palabras and palabras[0] == "si")):
+        if confirmacion is None:  # el orquestador solo envía respuestas claras
             return parcial("ocr", "", suficiencia="no_corresponde", cobertura=0.0)
         campos, _ = validar_campos(datos["ocr"]["campos"])
-        assert campos is not None  # se guardaron ya validados
         contribuyente = state.get("contribuyente_id")
-        if not contribuyente:
+        if campos is None:  # no debería pasar: se guardaron ya validados
+            datos.pop("ocr", None)
             return parcial("ocr", PEDIR_RECIBO, suficiencia="aclaracion")
+        if not contribuyente:  # la sesión venció: el aviso de sesión (RF-AUT-04)
+            datos.pop("ocr", None)
+            return parcial("ocr", AVISO_SESION, suficiencia="aclaracion")
         try:
             estado = con_tiempo_y_reintento(
                 lambda: deps.adaptador.get_estado_cuenta(campos.matricula, contribuyente),

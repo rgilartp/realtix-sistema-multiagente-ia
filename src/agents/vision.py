@@ -23,6 +23,7 @@ from src.integrations.robustez import con_tiempo_y_reintento
 
 ANCHO_MAXIMO = 1000
 ESCALA_PDF = 150 / 72  # unos 150 ppp, como la plantilla
+LADO_MAXIMO_PDF = 2500
 
 
 class CamposOCR(BaseModel):
@@ -55,7 +56,11 @@ def abrir_documento(ruta: str | Path, tipo: str) -> Image.Image:
 
         pdf = pypdfium2.PdfDocument(str(ruta))
         try:
-            return pdf[0].render(scale=ESCALA_PDF).to_pil().convert("RGB")
+            pagina = pdf[0]
+            ancho, alto = pagina.get_size()  # en puntos
+            # Una página enorme no se convierte a más de LADO_MAXIMO_PDF píxeles por lado.
+            escala = min(ESCALA_PDF, LADO_MAXIMO_PDF / max(ancho, alto, 1))
+            return pagina.render(scale=escala).to_pil().convert("RGB")
         finally:
             pdf.close()
     with Image.open(ruta) as imagen:

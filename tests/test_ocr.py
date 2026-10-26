@@ -162,7 +162,7 @@ def api_ocr(datos_sinteticos):
 @pytest.mark.unit
 @pytest.mark.req(
     "RF-OCR-02 · Extracción de campos", "RF-OCR-03 · Confirmación de datos extraídos",
-    "RF-OCR-05 · Modelo de visión",
+    "RF-OCR-05 · Modelo de visión", "RNF-03 · Protección de datos personales",
 )  # fmt: skip
 def test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste(api_ocr, archivos) -> None:
     cliente, servicios, modelo = api_ocr
@@ -234,28 +234,114 @@ def test_ocr_06_documento_de_otro_tipo_y_campos_faltantes(api_ocr, archivos) -> 
     assert incompleto["meta"]["datos_extraidos"] is None
 
 
+def _general(texto: str = "Hola, ¿en qué te ayudo?") -> Any:
+    return salida(respuesta=texto, suficiencia="completa", cobertura=1.0, fuera_del_mvp=False,
+                  fragmentos_citados=[])  # fmt: skip
+
+
 @pytest.mark.unit
 @pytest.mark.req(
     "RF-OCR-03 · Confirmación de datos extraídos", "RF-AUT-02 · Restricción a predios propios"
 )
-def test_negacion_otra_pregunta_y_predio_ajeno(api_ocr, archivos) -> None:
+def test_negacion_y_predio_ajeno(api_ocr, archivos) -> None:
     cliente, _, modelo = api_ocr
     u01 = {**CAMPOS_U03, "matricula": "50C-9000101", "avaluo": "$280.000.000",
            "valor_liquidado": "$1.652.000", "descuento": "$165.200"}  # fmt: skip
-    # Pregunta otra cosa: el OCR la devuelve y el orquestador la reclasifica (agente general).
-    modelo.respuestas = [lectura(), salida(respuesta="Hola, ¿en qué te ayudo?",
-                                           suficiencia="completa", cobertura=1.0,
-                                           fuera_del_mvp=False, fragmentos_citados=[]),
-                         lectura(u01)]  # fmt: skip
+    modelo.respuestas = [lectura(), lectura(u01)]
     subir(cliente, archivos["recibo_valido_U03"]["png"], "conv-neg")
-    otra = chat(cliente, "conv-neg", "Hola, buenas tardes", **token(U03))
-    assert "nodo_general" in otra["meta"]["agentes_invocados"]
     no = chat(cliente, "conv-neg", "No, están mal", **token(U03))
     assert "no usaré esos datos" in no["respuesta"] and no["meta"]["datos_extraidos"] is None
     # Recibo de un predio ajeno (el de U01 con la sesión de U03): mismo mensaje único (OC-06).
     subir(cliente, archivos["recibo_valido_U01"]["pdf"], "conv-ajeno", tipo="application/pdf")
     ajeno = chat(cliente, "conv-ajeno", "Sí, correcto", **token(U03))
     assert ajeno["estado"] == "rechazo_acceso" and ajeno["respuesta"] == MENSAJE_PREDIO_INACCESIBLE
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OCR-03 · Confirmación de datos extraídos", "RF-ORQ-06 · Prevención de bucles")
+def test_otros_mensajes_no_confirman_ni_escalan(api_ocr, archivos) -> None:
+    """Revisión independiente: un recibo sin confirmar no escala la conversación por el tope de
+    reclasificaciones, y una pregunta que empieza con «Si…» o «inexactos» no confirma."""
+    cliente, servicios, modelo = api_ocr
+    modelo.respuestas = [lectura(), *[_general() for _ in range(3)]]
+    subir(cliente, archivos["recibo_valido_U03"]["png"], "conv-otros")
+    for mensaje in ("Hola, buenas tardes", "Hola otra vez", "Hola de nuevo"):
+        r = chat(cliente, "conv-otros", mensaje, **token(U03))
+        assert r["estado"] == "respondida" and "nodo_general" in r["meta"]["agentes_invocados"]
+    assert servicios.almacen.estado_conversacion("conv-otros") == "activa"
+    # Los datos vencieron con el primer mensaje: un «sí» posterior ya no los usa.
+    modelo.respuestas = [_general("¿Sobre qué quieres que te confirme?")]
+    tarde = chat(cliente, "conv-otros", "Sí", **token(U03))
+    assert "coinciden" not in tarde["respuesta"]
+    for conversacion, mensaje in (
+        ("conv-si", "Si pago después de la fecha, ¿cuánto me cobran de intereses?"),
+        ("conv-inexactos", "Los datos son inexactos"),
+    ):
+        modelo.respuestas = [lectura(), _general()]
+        subir(cliente, archivos["recibo_valido_U03"]["png"], conversacion)
+        r = chat(cliente, conversacion, mensaje, **token(U03))
+        assert "Gracias por confirmar" not in r["respuesta"], mensaje
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-OCR-03 · Confirmación de datos extraídos", "RF-ESC-02 · Activación del escalamiento"
+)
+def test_peticion_de_funcionario_y_oferta_de_transferencia_no_confirman(api_ocr, archivos) -> None:
+    cliente, _, modelo = api_ocr
+    modelo.respuestas = [lectura()]
+    subir(cliente, archivos["recibo_valido_U03"]["png"], "conv-func")
+    r = chat(cliente, "conv-func", "No, quiero hablar con un funcionario", **token(U03))
+    assert r["estado"] == "escalada" and r["meta"]["motivo_escalamiento"] == "solicitud explícita"
+    # Con un recibo pendiente, «¿Eres un robot?» ofrece la transferencia; el «Sí» la acepta.
+    modelo.respuestas = [lectura()]
+    subir(cliente, archivos["recibo_valido_U03"]["png"], "conv-robot")
+    robot = chat(cliente, "conv-robot", "¿Eres un robot?", **token(U03))
+    assert "inteligencia artificial" in robot["respuesta"]
+    acepta = chat(cliente, "conv-robot", "Sí", **token(U03))
+    assert acepta["estado"] == "escalada" and "coinciden" not in acepta["respuesta"]
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-AUT-04 · Aviso de sesión requerida", "RF-OCR-03 · Confirmación de datos extraídos"
+)
+def test_sin_sesion_el_recibo_pendiente_da_el_aviso_de_sesion(datos_sinteticos) -> None:
+    from src.agents.dependencias import Dependencias
+    from src.agents.graph import configuracion_de_hilo, construir_grafo
+    from src.agents.nodes.general import AVISO_SESION
+    from src.agents.state import entrada_de_turno
+    from src.data.memoria import RealSitEnMemoria
+
+    grafo = construir_grafo(
+        Dependencias(RealSitEnMemoria(datos_sinteticos), modelos=lambda _n: ModeloFalso())
+    )
+    config = configuracion_de_hilo("conv-vencida", "2026-10-01T10:00:00-05:00")
+    pendiente = {"ocr": {"campos": CAMPOS_U03, "pendiente": True, "confirmado": False}}
+    grafo.update_state(config, {"datos_extraidos": pendiente})
+    final = grafo.invoke(entrada_de_turno("Sí, correcto", "conv-vencida"), config)
+    assert final["respuesta_final"] == AVISO_SESION and "ocr" not in final["datos_extraidos"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OCR-03 · Confirmación de datos extraídos")
+@pytest.mark.parametrize(
+    ("texto", "esperado"),
+    [
+        ("Sí, los datos son correctos", "si"), ("Sí", "si"), ("ok", "si"),
+        ("sí los datos son correctos", "si"), ("Todo bien", "si"),
+        ("correcto, no hay problema", "si"), ("No", "no"), ("No, están mal", "no"),
+        ("Los datos son inexactos", "no"), ("Están incorrectos", "no"),
+        ("Si pago después de la fecha, ¿cuánto me cobran?", None),
+        ("Si pago después de la fecha cuánto me cobran", None),
+        ("No entiendo qué es el avalúo", None), ("No, quiero hablar con un funcionario", None),
+        ("Hola, buenas tardes", None),
+    ],
+)  # fmt: skip
+def test_interpretar_la_confirmacion(texto, esperado) -> None:
+    from src.services.documentos import interpretar_confirmacion
+
+    assert interpretar_confirmacion(texto) == esperado
 
 
 @pytest.mark.unit
@@ -269,7 +355,7 @@ def test_falla_del_modelo_de_vision_escala_sin_error_tecnico(api_ocr, archivos) 
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-OCR-02 · Extracción de campos")
+@pytest.mark.req("RF-OCR-02 · Extracción de campos", "RNF-03 · Protección de datos personales")
 def test_el_esquema_no_pide_el_nombre_del_propietario_ni_razonamiento() -> None:
     esquema = SalidaOCR.model_json_schema()
     nombres = [*esquema["properties"], *esquema["$defs"]["CamposOCR"]["properties"]]

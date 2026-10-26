@@ -541,8 +541,8 @@
     {
       "modelo": "claude-haiku-5-5",
       "entrada": 75504,
-      "salida": 2411
+      "salida": 2426
     }
   ],
-  "costo_usd": "0.0087559"
+  "costo_usd": "0.0087634"
 }

@@ -14,6 +14,7 @@ from typing import Any
 from src.agents.dependencias import Clasificacion, Dependencias
 from src.agents.nodes._comun import MATRICULA, contiene, es_personal, normalizar, ultimo_texto
 from src.agents.state import AgentState
+from src.services.documentos import interpretar_confirmacion
 
 SOLICITUD_EXPLICITA = (
     "hablar con una persona", "hablar con un funcionario", "hablar con un humano",
@@ -151,13 +152,20 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
             }
 
         ocr = datos.get("ocr") or {}
-        if (
-            ocr.get("pendiente")
-            and not state.get("documento_adjunto")
-            and "ocr" not in state.get("categorias_descartadas", [])
-        ):
-            # Hay datos de un recibo por confirmar (RF-OCR-03): la respuesta va al agente OCR,
-            # sin modelo; si no es una confirmación, el OCR la devuelve y aquí se reclasifica.
+        if ocr.get("pendiente") and not state.get("documento_adjunto"):
+            # Hay datos de un recibo por confirmar (RF-OCR-03). Un «sí» o un «no» claros van al
+            # agente OCR, sin modelo y sin contar como reclasificación; cualquier otro mensaje (o
+            # una transferencia ofrecida, o una petición de funcionario) hace vencer los datos y
+            # se clasifica como siempre.
+            confirmacion = interpretar_confirmacion(texto)
+            if (
+                confirmacion is None
+                or datos.get("oferta_transferencia")
+                or contiene(texto, SOLICITUD_EXPLICITA)
+            ):
+                datos["ocr"] = {**ocr, "pendiente": False}
+                ocr = {}
+        if ocr.get("pendiente") and not state.get("documento_adjunto"):
             parte = {"categoria": "ocr", "texto": texto, "busqueda": texto}
             return {
                 "categoria": "ocr",

@@ -8,6 +8,8 @@ RF-OCR-04). Sin LangGraph ni modelos.
   habría que calibrarlos de nuevo.
 - **Campos:** los seis de RF-OCR-02, normalizados (matrícula, vigencia, pesos y fecha). Uno que
   falta o no tiene el formato esperado hace el documento ilegible o incompleto.
+- **Confirmación (RF-OCR-03):** solo un «sí» o un «no» claros, con palabras completas; una pregunta
+  («Si pago tarde, ¿cuánto…?»), «inexactos» o «No entiendo…» no lo son.
 - **Contraste:** compara el avalúo y el valor liquidado del recibo con la obligación del predial de
   esa vigencia en la cuenta; no modifica nada (ADR-05).
 """
@@ -148,3 +150,43 @@ def contrastar(campos: CamposRecibo, cuenta: CuentaTributo) -> Contraste:
     return Contraste(
         True, not diferencias, diferencias, cuenta.vencidas, cuenta.pendientes, cuenta.saldo
     )
+
+
+AFIRMACION_SOLA = re.compile(r"^(?:si|sí|ok|vale|listo|correcto|exacto|confirmo)[\s.!]*$")
+SI_CON_PAUSA = re.compile(r"^(?:sí|si)\s*[,.!]")  # «Sí, …»: no «Si pago…»
+AFIRMACIONES = re.compile(
+    r"\b(?:son correct[oa]s|es correct[oa]|correct[oa]s?|estan bien|esta bien|confirmo|"
+    r"asi es|exact[oa]s?|de acuerdo|todo bien|coinciden)\b"
+)
+NEGACIONES = re.compile(
+    r"\b(?:incorrect\w*|inexact\w*|equivocad\w*|errad\w*|errores?|estan mal|esta mal|"
+    r"no coinciden|no son correct\w*|no es correct\w*)\b"
+)
+NO_SOLO = re.compile(r"^no[\s.!]*$")
+
+
+def interpretar_confirmacion(texto: str) -> Literal["si", "no"] | None:
+    """«si», «no» o `None` si el texto no es una respuesta clara a «¿Es correcto?».
+
+    Se compara en minúsculas y sin tildes, con palabras completas; un texto que pregunta algo (con
+    «?») nunca confirma.
+    """
+    import unicodedata
+
+    minusculas = " ".join(texto.lower().split())
+    sin_tildes = "".join(
+        c for c in unicodedata.normalize("NFD", minusculas) if unicodedata.category(c) != "Mn"
+    )
+    if "?" in sin_tildes or "¿" in sin_tildes:
+        return None
+    if NO_SOLO.match(sin_tildes) or NEGACIONES.search(sin_tildes):
+        return "no"
+    if AFIRMACION_SOLA.match(minusculas) or AFIRMACION_SOLA.match(sin_tildes):
+        return "si"
+    # «Si pago…» es condicional: un «si» sin tilde ni pausa al comienzo no confirma.
+    condicional = sin_tildes.startswith("si ") and not (
+        SI_CON_PAUSA.match(minusculas) or minusculas.startswith("sí ")
+    )
+    if not condicional and AFIRMACIONES.search(sin_tildes):
+        return "si"
+    return None
