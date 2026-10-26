@@ -40,5 +40,6 @@ bloque y se entrega completo en B17 (sección 9 de la especificación técnica).
 | 4.2 | Estratos 1 a 3 «para las tarifas preferenciales de 2027» | Sirven también para las de 2026 (U09, U10 y U11); los valores de 2027 con regla en SMMLV no se estiman mientras no se publique el SMMLV de 2027 | Propuesta en el PR de B3 |
 | 3.10 | Lista de variables de entorno | Se agrega `VIGENCIA_ACTUAL` (M-02), con valor 2026 | Propuesta en el PR de B3 |
 | 4.3 | Cada YAML de `datos/` trae fuente, url, mes de consulta, vigencias y verificador | `uvt_smmlv.yaml` y `regimenes_ica.yaml` no traían los campos en la raíz; se agregaron sin cambiar valores, y `calendario/2026.yaml` recibió `porcentaje_descuento: 10` (Resolución SDH-000195 de 2025, art. 6) | Aprobado |
+| 3.1 (AgentState) | 14 campos en la Tabla 3 | Se agregan tres campos auxiliares del turno (`marcas`, `respuesta_final`, `categorias_descartadas`), sin cambiar los 14 ni el ciclo de vida: la sección 3.1 de la especificación ya los permite (ADR-23) | Propuesta en el PR de B4 |
 
 Fuente: sección 9 de la especificación técnica v6.

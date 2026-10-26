@@ -169,3 +169,4 @@ uv run python scripts/trazabilidad.py
 - ADR-20: predial 2026 con el Acuerdo 780 de 2020 y la resolución de rangos de 2026.
 - ADR-21: usabilidad interna con SUS y evaluación heurística de los dos autores.
 - ADR-22: respuestas de referencia de los autores, cada una con su fuente.
+- ADR-23: tres campos auxiliares del turno en `AgentState` (marcas, respuesta final, descartadas).
