@@ -42,7 +42,7 @@ def test_registrar_un_caso_sin_conversacion_previa_la_crea(almacen: Almacen) -> 
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-ESC-03 · Resumen estructurado del caso")
+@pytest.mark.req("RF-ESC-03 · Resumen del caso")
 def test_el_caso_que_escala_antes_de_la_confianza_guarda_cero_con_su_motivo(
     almacen: Almacen,
 ) -> None:

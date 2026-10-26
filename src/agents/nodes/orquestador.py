@@ -1,0 +1,144 @@
+"""`nodo_orquestador` simulado: clasifica por palabras clave, sin modelo ni red.
+
+Plan: categoría o categorías con su parte de la consulta, y las marcas (sesión requerida,
+solicitud explícita, pregunta por la IA, tributario fuera del MVP y municipio distinto de Bogotá).
+B7 lo reemplaza por Sonnet 5.5 con la misma firma.
+"""
+
+import re
+from collections.abc import Callable
+from typing import Any
+
+from src.agents.dependencias import Clasificacion, Dependencias
+from src.agents.nodes._comun import MATRICULA, contiene, es_personal, normalizar, ultimo_texto
+from src.agents.state import AgentState
+
+SOLICITUD_EXPLICITA = (
+    "hablar con una persona", "hablar con un funcionario", "hablar con un humano",
+    "hablar con un asesor", "quiero un funcionario", "quiero un asesor", "quiero una persona",
+    "pasame con", "transfiereme", "que me atienda un", "que me atienda una",
+)  # fmt: skip
+ACEPTACIONES = ("si", "claro", "por favor", "ok", "dale", "si por favor", "si, por favor")
+PREGUNTA_IA = (
+    "estoy hablando con una persona", "hablo con una persona", "eres una persona", "eres un robot",
+    "eres humano", "eres un bot", "hablando con un humano", "eres una inteligencia artificial",
+)  # fmt: skip
+NO_TRIBUTARIO = ("clima", "receta", "futbol", "pelicula", "pico y placa", "licencia de conduccion")
+TRIBUTARIO_FUERA_DEL_MVP = (
+    "impuesto de renta", "declaracion de renta", "impuesto vehicular",
+    "impuesto de vehiculos", "plusvalia", "valorizacion", "delineacion urbana", "aduana",
+)  # fmt: skip
+TRIBUTARIO_FUERA_PALABRA = re.compile(r"\b(renta|iva)\b")
+OTROS_MUNICIPIOS = ("medellin", "cali", "barranquilla", "cartagena", "bucaramanga")
+PALABRAS_IPU = ("predial", "predio", "avaluo", "matricula", "spac", "sobretasa", "impuesto predial")
+PALABRAS_ICA = ("industria y comercio", "actividad economica", "ciiu", "retencion")
+PALABRAS_OCR = ("recibo", "documento adjunto", "adjunto", "adjunte", "te envio")
+PALABRAS_TRIBUTARIAS = PALABRAS_IPU + PALABRAS_ICA + ("impuesto", "tributo", "declarar")
+
+
+def _tiene_ica(texto: str) -> bool:
+    return bool(re.search(r"\bica\b", normalizar(texto))) or contiene(texto, PALABRAS_ICA)
+
+
+def _tiene_ipu(texto: str) -> bool:
+    return (
+        bool(MATRICULA.search(texto))
+        or contiene(texto, PALABRAS_IPU)
+        or "ipu" in normalizar(texto).split()
+    )
+
+
+def clasificar_por_palabras(texto: str, state: AgentState) -> Clasificacion:
+    """Clasificador simulado y determinista. Respeta las categorías ya descartadas."""
+    marcas: dict[str, Any] = {}
+    t = normalizar(texto)
+    oferta = state.get("datos_extraidos", {}).get("oferta_transferencia")
+    if contiene(texto, SOLICITUD_EXPLICITA) or (oferta and t.strip(" .,!¡") in ACEPTACIONES):
+        marcas["solicitud_explicita"] = True
+    if contiene(texto, PREGUNTA_IA):
+        marcas["pregunta_ia"] = True
+    otro_municipio = contiene(texto, OTROS_MUNICIPIOS)
+    if otro_municipio:
+        marcas["municipio_distinto"] = True
+    if (
+        contiene(texto, TRIBUTARIO_FUERA_DEL_MVP)
+        or TRIBUTARIO_FUERA_PALABRA.search(t)
+        or (otro_municipio and contiene(texto, PALABRAS_TRIBUTARIAS))
+    ):
+        marcas["tributario_fuera_mvp"] = True
+
+    adjunto = state.get("documento_adjunto") is not None
+    candidatas: list[str] = []
+    if adjunto or contiene(texto, PALABRAS_OCR):
+        candidatas.append("ocr")
+    if _tiene_ipu(texto):
+        candidatas.append("ipu")
+    if _tiene_ica(texto):
+        candidatas.append("ica")
+    if not candidatas:
+        if contiene(texto, NO_TRIBUTARIO):
+            marcas["no_tributario"] = True
+            candidatas.append("fuera_de_alcance")
+        else:
+            candidatas.append("general")
+    if (es_personal(texto) or adjunto) and not state.get("contribuyente_id"):
+        marcas["sesion_requerida"] = True
+        candidatas = ["general"]
+    if marcas.get("pregunta_ia"):
+        candidatas = ["general"]
+    descartadas = state.get("categorias_descartadas", [])
+    partes = [{"categoria": c, "texto": texto} for c in candidatas if c not in descartadas]
+    return Clasificacion(partes or [{"categoria": "general", "texto": texto}], marcas)
+
+
+def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
+    clasificar = deps.clasificador or clasificar_por_palabras
+    maximo = deps.config.max_reclasificaciones
+
+    def escalar(motivo: str, marcas: dict[str, Any], intentos: int, **extra: Any) -> dict[str, Any]:
+        return {
+            "requiere_escalamiento": True,
+            "motivo_escalamiento": motivo,
+            "marcas": marcas,
+            "intentos_clasificacion": intentos,
+            **extra,
+        }
+
+    def nodo_orquestador(state: AgentState) -> dict[str, Any]:
+        marcas = dict(state.get("marcas", {}))
+        intentos = state.get("intentos_clasificacion", 0)
+        pendientes = list(state.get("categorias_pendientes", []))
+        datos = dict(state.get("datos_extraidos", {}))
+        texto = ultimo_texto(state)
+
+        if marcas.pop("reclasificar", False):
+            if intentos >= maximo:
+                return escalar("tope de reclasificaciones", marcas, intentos)
+            intentos += 1
+        elif pendientes:  # siguiente parte de una consulta multiagente
+            siguiente = pendientes.pop(0)
+            return {"categoria": siguiente["categoria"], "categorias_pendientes": pendientes}
+
+        try:
+            clasificacion = clasificar(texto, state)
+        except Exception:  # fallo del modelo del orquestador (RNF-08)
+            marcas["fallo_servicio"] = True
+            return escalar("fallo del modelo", marcas, intentos)
+        marcas.update(clasificacion.marcas)
+        datos.pop("oferta_transferencia", None)
+
+        if marcas.get("solicitud_explicita"):
+            return escalar("solicitud explícita", marcas, intentos, datos_extraidos=datos)
+        if marcas.get("tributario_fuera_mvp"):
+            return escalar("fuera de alcance", marcas, intentos, datos_extraidos=datos)
+        partes = clasificacion.partes
+        return {
+            "categoria": partes[0]["categoria"],
+            "categorias_pendientes": pendientes
+            + [p for p in partes[1:] if p["categoria"] not in {x["categoria"] for x in pendientes}],
+            "marcas": marcas,
+            "intentos_clasificacion": intentos,
+            "datos_extraidos": datos,
+        }
+
+    return nodo_orquestador
