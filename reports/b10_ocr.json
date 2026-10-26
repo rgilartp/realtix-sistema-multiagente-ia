@@ -1,0 +1,548 @@
+{
+  "resultados": [
+    {
+      "documento": "recibo_valido_U01",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000101",
+        "vigencia": "2026",
+        "avaluo": "$280.000.000",
+        "valor_liquidado": "$1.652.000",
+        "descuento": "$165.200",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U01",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000101",
+        "vigencia": "2026",
+        "avaluo": "$280.000.000",
+        "valor_liquidado": "$1.652.000",
+        "descuento": "$165.200",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U02",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000201",
+        "vigencia": "2026",
+        "avaluo": "$180.000.000",
+        "valor_liquidado": "$990.000",
+        "descuento": "$99.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U02",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000201",
+        "vigencia": "2026",
+        "avaluo": "$180.000.000",
+        "valor_liquidado": "$990.000",
+        "descuento": "$99.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U02_2",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000202",
+        "vigencia": "2026",
+        "avaluo": "$420.000.000",
+        "valor_liquidado": "$2.646.000",
+        "descuento": "$264.600",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U02_2",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000202",
+        "vigencia": "2026",
+        "avaluo": "$420.000.000",
+        "valor_liquidado": "$2.646.000",
+        "descuento": "$264.600",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U03",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000301",
+        "vigencia": "2026",
+        "avaluo": "$350.000.000",
+        "valor_liquidado": "$2.135.000",
+        "descuento": "$213.500",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U03",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000301",
+        "vigencia": "2026",
+        "avaluo": "$350.000.000",
+        "valor_liquidado": "$2.135.000",
+        "descuento": "$213.500",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U04",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000401",
+        "vigencia": "2026",
+        "avaluo": "$300.000.000",
+        "valor_liquidado": "$2.400.000",
+        "descuento": "$240.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U04",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000401",
+        "vigencia": "2026",
+        "avaluo": "$300.000.000",
+        "valor_liquidado": "$2.400.000",
+        "descuento": "$240.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U05",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000501",
+        "vigencia": "2026",
+        "avaluo": "$220.000.000",
+        "valor_liquidado": "$1.254.000",
+        "descuento": "$125.400",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U05",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000501",
+        "vigencia": "2026",
+        "avaluo": "$220.000.000",
+        "valor_liquidado": "$1.254.000",
+        "descuento": "$125.400",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U06",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000601",
+        "vigencia": "2026",
+        "avaluo": "$50.000.000",
+        "valor_liquidado": "$600.000",
+        "descuento": "$60.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U06",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000601",
+        "vigencia": "2026",
+        "avaluo": "$50.000.000",
+        "valor_liquidado": "$600.000",
+        "descuento": "$60.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U07",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000701",
+        "vigencia": "2026",
+        "avaluo": "$300.000.000",
+        "valor_liquidado": "$1.770.000",
+        "descuento": "$177.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U07",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000701",
+        "vigencia": "2026",
+        "avaluo": "$300.000.000",
+        "valor_liquidado": "$1.770.000",
+        "descuento": "$177.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U08",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000801",
+        "vigencia": "2026",
+        "avaluo": "$520.000.000",
+        "valor_liquidado": "$3.380.000",
+        "descuento": "$338.000",
+        "fecha_limite": "02/10/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U08",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000801",
+        "vigencia": "2026",
+        "avaluo": "$520.000.000",
+        "valor_liquidado": "$3.380.000",
+        "descuento": "$338.000",
+        "fecha_limite": "02/10/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U09",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000901",
+        "vigencia": "2026",
+        "avaluo": "$150.000.000",
+        "valor_liquidado": "$150.000",
+        "descuento": "$15.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_valido_U09",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "recibo_predial",
+      "problemas": [],
+      "aciertos": {
+        "matricula": true,
+        "vigencia": true,
+        "avaluo": true,
+        "valor_liquidado": true,
+        "descuento": true,
+        "fecha_limite": true
+      },
+      "leidos": {
+        "matricula": "50C-9000901",
+        "vigencia": "2026",
+        "avaluo": "$150.000.000",
+        "valor_liquidado": "$150.000",
+        "descuento": "$15.000",
+        "fecha_limite": "10/07/2026"
+      }
+    },
+    {
+      "documento": "recibo_desenfocado_U03",
+      "formato": "png",
+      "calidad": "desenfocado",
+      "tipo": "recibo_predial",
+      "problemas": [
+        "desenfocado"
+      ],
+      "rechazo_correcto": true
+    },
+    {
+      "documento": "recibo_baja_resolucion_U03",
+      "formato": "png",
+      "calidad": "baja_resolucion",
+      "tipo": "recibo_predial",
+      "problemas": [
+        "baja_resolucion"
+      ],
+      "rechazo_correcto": true
+    },
+    {
+      "documento": "recibo_solo_recortado_U03",
+      "formato": "png",
+      "calidad": "recortado",
+      "tipo": "recibo_predial",
+      "problemas": [
+        "recortado"
+      ],
+      "rechazo_correcto": true
+    },
+    {
+      "documento": "recibo_recortado_U03",
+      "formato": "png",
+      "calidad": "recortado_baja_resolucion",
+      "tipo": "recibo_predial",
+      "problemas": [
+        "recortado",
+        "baja_resolucion"
+      ],
+      "rechazo_correcto": true
+    },
+    {
+      "documento": "documento_otro_tipo",
+      "formato": "png",
+      "calidad": "legible",
+      "tipo": "otro_documento",
+      "problemas": [
+        "no_es_recibo"
+      ],
+      "rechazo_correcto": true
+    },
+    {
+      "documento": "documento_otro_tipo",
+      "formato": "pdf",
+      "calidad": "legible",
+      "tipo": "otro_documento",
+      "problemas": [
+        "no_es_recibo"
+      ],
+      "rechazo_correcto": true
+    }
+  ],
+  "resumen": {
+    "documentos_legibles": 20,
+    "exactitud_por_campo": {
+      "matricula": 1.0,
+      "vigencia": 1.0,
+      "avaluo": 1.0,
+      "valor_liquidado": 1.0,
+      "descuento": 1.0,
+      "fecha_limite": 1.0
+    },
+    "exactitud_total": 1.0,
+    "documentos_completos": 20,
+    "rechazos": 6,
+    "rechazos_correctos": 6
+  },
+  "tokens": [
+    {
+      "modelo": "claude-haiku-5-5",
+      "entrada": 75504,
+      "salida": 2426
+    }
+  ],
+  "costo_usd": "0.0087634"
+}
