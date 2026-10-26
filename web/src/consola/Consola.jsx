@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { mensajeParaMostrar, obtener } from "../api.js";
+import { BotonTema } from "../tema.jsx";
 
 const LANGSMITH = import.meta.env.VITE_LANGSMITH_URL ?? "https://smith.langchain.com/";
 const CATEGORIAS = ["ipu", "ica", "general", "ocr", "fuera_de_alcance", "sin_categoria"];
@@ -109,7 +110,7 @@ function Boton({ children, ...props }) {
   return (
     <button
       type="button"
-      className="min-h-11 rounded-control bg-sello px-4 text-sm font-semibold text-hoja enabled:hover:bg-sello-fuerte disabled:cursor-wait disabled:bg-papel-2 disabled:text-tinta-suave"
+      className="min-h-11 rounded-control bg-sello px-4 text-sm font-semibold text-blanco enabled:hover:bg-sello-fuerte disabled:cursor-wait disabled:bg-papel-2 disabled:text-tinta-suave"
       {...props}
     >
       {children}
@@ -229,7 +230,7 @@ function Bandeja({ token }) {
                     aria-pressed={elegido}
                     className={`w-full px-4 py-3 text-left focus-visible:-outline-offset-3 active:scale-100 ${
                       elegido
-                        ? "bg-sello-suave ring-2 ring-sello ring-inset focus-visible:outline-tinta focus-visible:-outline-offset-6"
+                        ? "bg-sello-suave ring-2 ring-sello-texto ring-inset focus-visible:outline-tinta focus-visible:-outline-offset-6"
                         : "hover:bg-papel"
                     }`}
                   >
@@ -292,16 +293,17 @@ function Bandeja({ token }) {
   );
 }
 
-// Intensidad del color según el valor; el texto siempre es tinta. El tope de cada color deja el
-// contraste en 4,5:1 o más (lo mide `npm run contraste`, que lee estos valores).
+// Intensidad del color según el valor, mezclado con la hoja del modo; el texto siempre es tinta. El
+// tope de cada color deja el contraste en 4,5:1 o más en los dos modos (lo mide `npm run contraste`,
+// que lee estos valores).
 const TOPE_ACIERTO = 40;
 const TOPE_ERROR = 35;
 function fondoCelda(valor, maximo, diagonal) {
   if (!valor) return undefined;
   const proporcion = valor / maximo;
-  const color = diagonal ? "var(--color-sello)" : "var(--color-error)";
+  const color = diagonal ? "var(--color-celda-acierto)" : "var(--color-celda-error)";
   const tope = diagonal ? TOPE_ACIERTO : TOPE_ERROR;
-  return `color-mix(in srgb, ${color} ${Math.round(10 + proporcion * (tope - 10))}%, white)`;
+  return `color-mix(in srgb, ${color} ${Math.round(10 + proporcion * (tope - 10))}%, var(--color-hoja))`;
 }
 
 function Metricas({ token }) {
@@ -462,7 +464,7 @@ function Metricas({ token }) {
                       <span className="flex items-center gap-2">
                         <span className="font-semibold sm:w-12 sm:text-right">{numero(m.f1, 3, true)}</span>
                         <span className="hidden h-2 w-24 overflow-hidden rounded-[2px] bg-papel-2 sm:block" aria-hidden="true">
-                          <span className="block h-full bg-sello" style={{ width: `${(m.f1 ?? 0) * 100}%` }} />
+                          <span className="block h-full bg-sello-texto" style={{ width: `${(m.f1 ?? 0) * 100}%` }} />
                         </span>
                       </span>
                     </td>
@@ -503,16 +505,17 @@ export default function Consola() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
             <span
               data-prueba="salud"
-              className={`inline-flex items-center gap-2 font-semibold ${sano ? "text-funcionario" : "text-tinta-suave"}`}
+              className={`inline-flex items-center gap-2 font-semibold ${sano ? "text-funcionario-texto" : "text-tinta-suave"}`}
             >
               <span className={`h-2.5 w-2.5 rounded-full ${sano ? "bg-funcionario" : "bg-tinta-suave"}`} aria-hidden="true" />
               Servicio: {salud?.estado ?? "…"}
               {salud?.version ? ` (v${salud.version})` : ""}
             </span>
-            <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-block py-1 font-semibold text-sello underline">
+            <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-block py-1 font-semibold text-sello-texto underline">
               Trazas en LangSmith
               <span className="sr-only"> (se abre en otra pestaña)</span>
             </a>
+            <BotonTema />
           </div>
         </div>
       </header>
@@ -550,7 +553,7 @@ export default function Consola() {
               onClick={() => setVista(clave)}
               aria-pressed={vista === clave}
               className={`min-h-11 rounded-t-control px-5 text-sm font-semibold active:scale-100 ${
-                vista === clave ? "bg-sello text-hoja" : "bg-papel-2 text-tinta hover:bg-sello-suave hover:text-sello"
+                vista === clave ? "bg-sello text-blanco" : "bg-papel-2 text-tinta hover:bg-sello-suave hover:text-sello-texto"
               }`}
             >
               {nombre}

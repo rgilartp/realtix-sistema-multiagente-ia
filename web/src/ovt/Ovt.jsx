@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 
 import { obtener, publicar } from "../api.js";
+import { BotonTema } from "../tema.jsx";
 
 export const ROTULO = "Entorno simulado de pruebas — no es la Oficina Virtual Tributaria real";
 
@@ -70,8 +71,11 @@ export default function Ovt() {
       {/* En escritorio, la columna derecha queda libre para el widget (400 px y su margen). */}
       <div className="mx-auto max-w-4xl px-4 pt-8 pb-28 sm:px-6 md:pt-12 lg:mr-[448px] lg:ml-[max(1.5rem,calc(50vw-40rem))] lg:max-w-3xl">
         <header className="max-w-[65ch]">
-          <h1 className="text-2xl font-bold md:text-3xl">OVT simulada</h1>
-          <p className="mt-3 text-base text-tinta-suave">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h1 className="text-2xl font-bold md:text-3xl">OVT simulada</h1>
+            <BotonTema />
+          </div>
+          <p className="mt-3 max-w-[34rem] text-base text-tinta-suave">
             Esta página imita el portal donde vivirá el asistente. Elige un usuario de prueba para
             iniciar una sesión simulada: el asistente tributario la recibe sin que tengas que
             escribir nada. Todos los datos son sintéticos.
@@ -92,7 +96,7 @@ export default function Ovt() {
                 <button
                   type="button"
                   onClick={cerrar}
-                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-4 text-sm font-semibold hover:border-sello hover:text-sello"
+                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-4 text-sm font-semibold hover:border-sello-texto hover:text-sello-texto"
                 >
                   Cerrar sesión
                 </button>
@@ -114,7 +118,7 @@ export default function Ovt() {
                   type="submit"
                   disabled={!elegido}
                   aria-describedby={elegido ? undefined : "ayuda-sesion"}
-                  className="min-h-12 rounded-control bg-sello px-5 text-base font-semibold whitespace-nowrap text-hoja enabled:hover:bg-sello-fuerte disabled:bg-papel-2 disabled:text-tinta-suave"
+                  className="min-h-12 rounded-control bg-sello px-5 text-base font-semibold whitespace-nowrap text-blanco enabled:hover:bg-sello-fuerte disabled:bg-papel-2 disabled:text-tinta-suave"
                 >
                   Iniciar sesión simulada
                 </button>

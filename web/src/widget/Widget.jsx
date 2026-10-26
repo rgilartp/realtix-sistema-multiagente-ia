@@ -7,6 +7,7 @@
 // - Fuera de horario destacado, con la hora en que vuelve a atender (RNF-07).
 // - Carga de recibos (JPG, PNG o PDF de hasta 5 MB) validada en el navegador (RF-UI-04).
 // - Con la conversación escalada, consulta cada 5 s los mensajes nuevos del funcionario.
+// - Tema claro u oscuro: el de la página que lo inserta (embed.js); sin ella, el del sistema.
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
@@ -20,6 +21,7 @@ import {
   nuevaConversacion,
   pedirFuncionario,
 } from "../api.js";
+import { TEMAS, aplicarTema } from "../tema.jsx";
 
 const CONSULTA_MS = 5000;
 const ORIGENES_PERMITIDOS = [
@@ -35,12 +37,12 @@ const SUGERENCIAS = [
 const QUIEN = {
   agente: {
     etiqueta: "Asistente de IA",
-    pestana: "bg-sello text-hoja",
+    pestana: "bg-sello text-blanco",
     borde: "border-sello",
   },
   funcionario: {
     etiqueta: "Funcionario",
-    pestana: "bg-funcionario text-hoja",
+    pestana: "bg-funcionario text-blanco",
     borde: "border-funcionario",
   },
   sistema: {
@@ -86,7 +88,7 @@ function Burbuja({ mensaje }) {
   if (mensaje.autor === "contribuyente") {
     return (
       <div className="flex animate-entrada justify-end">
-        <p className="max-w-[85%] rounded-mensaje rounded-br-casilla bg-tinta px-4 py-2.5 text-base whitespace-pre-line text-wrap text-hoja">
+        <p className="max-w-[85%] rounded-mensaje rounded-br-casilla bg-burbuja px-4 py-2.5 text-base whitespace-pre-line text-wrap text-blanco">
           {mensaje.archivo ? (
             <span className="inline-flex items-center gap-1.5">
               <IconoClip />
@@ -153,7 +155,7 @@ function Escribiendo() {
       <Etiqueta autor="agente" />
       <span className="flex gap-1.5 rounded-mensaje rounded-tl-none border border-sello bg-hoja px-4 py-3" aria-hidden="true">
         {[0, 150, 300].map((retraso) => (
-          <span key={retraso} className="h-2 w-2 animate-punto rounded-full bg-sello" style={{ animationDelay: `${retraso}ms` }} />
+          <span key={retraso} className="h-2 w-2 animate-punto rounded-full bg-sello-texto" style={{ animationDelay: `${retraso}ms` }} />
         ))}
       </span>
       <span className="sr-only">El asistente está escribiendo</span>
@@ -188,10 +190,26 @@ export default function Widget() {
     desde.current = null;
   }, []);
 
-  // El token de la OVT llega por postMessage desde la página que inserta el widget.
+  // Sin página que lo inserte, sigue el tema del sistema también mientras está abierto.
+  useEffect(() => {
+    if (window.parent !== window) return;
+    const consulta = window.matchMedia("(prefers-color-scheme: dark)");
+    const seguir = (evento) => aplicarTema(evento.matches ? "oscuro" : "claro");
+    consulta.addEventListener("change", seguir);
+    return () => consulta.removeEventListener("change", seguir);
+  }, []);
+
+  // El token de la OVT y el tema llegan por postMessage desde la página que inserta el widget.
   useEffect(() => {
     function recibir(evento) {
       if (evento.source !== window.parent || !ORIGENES_PERMITIDOS.includes(evento.origin)) return;
+      if (evento.data?.tipo === "realtix-tema") {
+        // Solo «claro» u «oscuro», exactos; cualquier otro valor se ignora.
+        if (!TEMAS.includes(evento.data.tema)) return;
+        aplicarTema(evento.data.tema);
+        document.documentElement.removeAttribute("data-tema-pendiente");
+        return;
+      }
       if (evento.data?.tipo !== "realtix-sesion") return;
       const nuevo = evento.data.token ?? null;
       if (nuevo === tokenActual.current) return;
@@ -320,11 +338,13 @@ export default function Widget() {
       ? "Te atiende un funcionario"
       : "Tu caso está con un funcionario"
     : "Te atiende un asistente de IA";
-  const punto = escalada ? "bg-funcionario-suave" : "bg-sello-suave";
+  // El punto va sobre el azul de la cabecera en los dos modos: blanco lleno con el asistente y
+  // vacío con el funcionario (el texto de al lado dice quién atiende).
+  const punto = escalada ? "border-2 border-blanco" : "bg-blanco";
 
   return (
     <div className="flex h-dvh flex-col bg-papel font-texto text-tinta">
-      <header className="sobre-oscuro bg-sello px-4 pt-3 pb-3 text-hoja">
+      <header className="sobre-oscuro bg-sello px-4 pt-3 pb-3 text-blanco">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h1 className="text-xl leading-tight font-bold">Asistente tributario</h1>
@@ -333,7 +353,7 @@ export default function Widget() {
               {estadoActual}
             </p>
           </div>
-          <span className="shrink-0 rounded-casilla border border-hoja/60 px-2 py-0.5 text-xs font-semibold">
+          <span className="shrink-0 rounded-casilla border border-blanco/60 px-2 py-0.5 text-xs font-semibold">
             {token ? "Sesión iniciada" : "Sin sesión"}
           </span>
         </div>
@@ -341,7 +361,7 @@ export default function Widget() {
           type="button"
           onClick={funcionario}
           disabled={ocupado || escalada}
-          className="mt-2.5 min-h-11 w-full rounded-control border border-hoja/80 px-3 text-sm font-semibold text-hoja enabled:hover:bg-hoja enabled:hover:text-sello disabled:cursor-default disabled:border-dashed disabled:border-hoja/60"
+          className="mt-2.5 min-h-11 w-full rounded-control border border-blanco/80 px-3 text-sm font-semibold text-blanco enabled:hover:bg-blanco enabled:hover:text-sello disabled:cursor-default disabled:border-dashed disabled:border-blanco/60"
         >
           {escalada ? "Ya pediste un funcionario" : "Hablar con un funcionario"}
         </button>
@@ -353,7 +373,7 @@ export default function Widget() {
           data-prueba="aviso-ia"
           aria-label="Aviso de inteligencia artificial"
         >
-          <p className="bg-sello-suave px-4 py-1.5 font-titulo text-base font-bold text-sello [font-stretch:87.5%]">
+          <p className="bg-sello-suave px-4 py-1.5 font-titulo text-base font-bold text-sello-texto [font-stretch:87.5%]">
             Antes de empezar
           </p>
           <p className="px-4 py-3">{AVISO_IA}.</p>
@@ -371,7 +391,7 @@ export default function Widget() {
                   key={s}
                   type="button"
                   onClick={() => preguntar(s)}
-                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello hover:bg-sello-suave hover:text-sello"
+                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello-texto hover:bg-sello-suave hover:text-sello-texto"
                 >
                   {s}
                 </button>
@@ -403,7 +423,7 @@ export default function Widget() {
             onClick={() => archivo.current?.click()}
             disabled={ocupado}
             aria-label="Adjuntar recibo (JPG, PNG o PDF, hasta 5 MB)"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-control border border-borde-control text-tinta-suave enabled:hover:border-sello enabled:hover:text-sello disabled:border-dashed disabled:text-tinta-suave/70"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-control border border-borde-control text-tinta-suave enabled:hover:border-sello-texto enabled:hover:text-sello-texto disabled:border-dashed disabled:text-tinta-suave/70"
           >
             <IconoClip />
           </button>
@@ -417,12 +437,12 @@ export default function Widget() {
             maxLength={2000}
             placeholder="Escribe tu consulta"
             autoComplete="off"
-            className="h-11 min-w-0 flex-1 rounded-control border border-borde-control bg-hoja px-3 text-base text-tinta placeholder:text-tinta-suave focus:border-sello"
+            className="h-11 min-w-0 flex-1 rounded-control border border-borde-control bg-hoja px-3 text-base text-tinta placeholder:text-tinta-suave focus:border-sello-texto"
           />
           <button
             type="submit"
             disabled={ocupado || !texto.trim()}
-            className="h-11 shrink-0 rounded-control bg-sello px-4 text-sm font-semibold text-hoja enabled:hover:bg-sello-fuerte disabled:bg-papel-2 disabled:text-tinta-suave"
+            className="h-11 shrink-0 rounded-control bg-sello px-4 text-sm font-semibold text-blanco enabled:hover:bg-sello-fuerte disabled:bg-papel-2 disabled:text-tinta-suave"
           >
             Enviar
           </button>
