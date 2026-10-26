@@ -3,10 +3,13 @@
 Un YAML por escenario en `tests/escenarios/`. Este módulo no ejecuta nada: valida que el formato y
 la distribución sean los de la especificación, aprueba las respuestas de referencia (ADR-22) y
 genera la hoja de revisión y el índice, que revisa y aprueba Rodolfo antes de una corrida.
+`categoria_esperada` se refiere al primer turno; solo los de horario (la API responde antes de
+clasificar) y una falla del orquestador van sin categoría.
 """
 
 import json
 import re
+import unicodedata
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -70,6 +73,9 @@ CON_VALOR = (
 SESIONES = tuple(f"U{n:02d}" for n in range(1, 13)) + ("TOKEN_INVALIDO", None)
 TIPOS_LATENCIA = ("simple", "rag")
 TIPOS_ADJUNTO = ("recibo_sintetico", "otro_documento")
+# Calidades del adjunto simulado (la lista que usa el generador de recibos de B10).
+CALIDADES = ("legible", "desenfocado", "baja_resolucion", "recortado", "recortado_baja_resolucion")
+GRUPOS_SIN_CATEGORIA = ("horario", "robustez")
 OBLIGATORIOS = (
     "id", "titulo", "origen", "rf", "hu", "grupo", "categoria_esperada", "comportamiento_esperado",
     "sesion", "reloj", "tipo_latencia", "turnos", "verificaciones_codigo", "respuesta_referencia",
@@ -129,16 +135,16 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
         errores.append("id con formato inválido")
     if esc["grupo"] not in DISTRIBUCION:
         errores.append(f"grupo desconocido ({esc['grupo']!r})")
-    if esc["categoria_esperada"] is None and esc["grupo"] != "horario":
-        errores.append(
-            "solo los de horario van sin categoría (la API responde antes de clasificar)"
-        )
+    if esc["categoria_esperada"] is None and esc["grupo"] not in GRUPOS_SIN_CATEGORIA:
+        errores.append("solo horario y robustez pueden ir sin categoría (no se llega a clasificar)")
     elif esc["categoria_esperada"] is not None and esc["categoria_esperada"] not in CATEGORIAS:
         errores.append(f"categoria_esperada desconocida ({esc['categoria_esperada']!r})")
     if esc["grupo"] == "multiagente":
         cats = esc.get("categorias_esperadas")
         if not (isinstance(cats, list) and len(cats) >= 2 and set(cats) <= set(CATEGORIAS)):
             errores.append("un escenario multiagente necesita categorias_esperadas (2 o más)")
+        elif esc["categoria_esperada"] not in cats:
+            errores.append("categoria_esperada debe ser una de categorias_esperadas")
     if esc["comportamiento_esperado"] not in COMPORTAMIENTOS:
         errores.append(f"comportamiento_esperado desconocido ({esc['comportamiento_esperado']!r})")
     if esc["sesion"] not in SESIONES:
@@ -173,7 +179,9 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
                 errores.append(f"origen desconocido ({o!r})")
     adjunto = esc.get("adjunto")
     if adjunto is not None and (
-        not isinstance(adjunto, dict) or adjunto.get("tipo") not in TIPOS_ADJUNTO
+        not isinstance(adjunto, dict)
+        or adjunto.get("tipo") not in TIPOS_ADJUNTO
+        or adjunto.get("calidad") not in CALIDADES
     ):
         errores.append(f"adjunto con tipo desconocido ({adjunto!r})")
     if esc["grupo"] == "ocr" and adjunto is None:
@@ -193,7 +201,9 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
         errores.append("respuesta_referencia vacía: si no hay fuente, debe decir PENDIENTE")
     if referencia.startswith(PENDIENTE) and not pendiente:
         errores.append("una referencia PENDIENTE necesita explicar qué falta en `pendiente`")
-    if not referencia.startswith(PENDIENTE) and not esc["fuentes_esperadas"]:
+    if not isinstance(esc["fuentes_esperadas"], list):
+        errores.append("fuentes_esperadas debe ser una lista")
+    elif not referencia.startswith(PENDIENTE) and not esc["fuentes_esperadas"]:
         errores.append("fuentes_esperadas vacío: toda referencia con contenido lleva su fuente")
     if not (isinstance(esc["no_debe"], list)):
         errores.append("no_debe debe ser una lista")
@@ -202,6 +212,8 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
         errores.append("dado_cuando_entonces necesita dado, cuando y entonces")
     if esc["aprobado_por"] is None:
         errores.append("aprobado_por no puede ser nulo (vacío es '')")
+    elif esc["aprobado_por"] and esc_con_pendientes(esc):
+        errores.append("un escenario con algo pendiente no puede estar aprobado")
     return [f"{id_}: {e}" for e in errores]
 
 
@@ -357,6 +369,10 @@ def validar_enrutamiento(consultas: list[dict[str, Any]]) -> list[str]:
         if (c.get("categoria") == "ocr") != bool(c.get("adjunto")):
             errores.append(f"{c.get('id')}: solo las consultas de ocr llevan adjunto simulado")
         adjunto = c.get("adjunto")
+        if adjunto and adjunto.get("calidad") not in CALIDADES:
+            errores.append(
+                f"{c.get('id')}: calidad de adjunto desconocida ({adjunto.get('calidad')!r})"
+            )
         if adjunto and adjunto.get("tipo") not in TIPOS_ADJUNTO:
             errores.append(f"{c.get('id')}: tipo de adjunto desconocido ({adjunto.get('tipo')!r})")
     for categoria in CATEGORIAS:
@@ -376,7 +392,9 @@ def aprobar_referencias(
 ) -> tuple[list[str], list[str], list[str]]:
     """Llena `aprobado_por` en los escenarios. Devuelve (aprobados, excluidos, con pendientes).
 
-    No aprueba los escenarios con algo pendiente ni los excluidos; el resto del archivo no cambia.
+    No aprueba los escenarios con algo pendiente ni los excluidos, y les borra una aprobación
+    anterior (en una ronda de correcciones no debe quedar una aprobación vieja); el resto del
+    archivo no cambia.
     """
     if not por.strip():
         raise ValueError("Hace falta el nombre de quien aprueba (--por).")
@@ -388,15 +406,37 @@ def aprobar_referencias(
     con_pendientes: list[str] = []
     for ruta in sorted(directorio.glob("*.yaml")):
         esc = yaml.safe_load(ruta.read_text(encoding="utf-8"))
-        if esc["id"] in excluir:
-            excluidos.append(esc["id"])
-        elif esc_con_pendientes(esc):
-            con_pendientes.append(esc["id"])
+        texto = ruta.read_text(encoding="utf-8")
+        if esc["id"] in excluir or esc_con_pendientes(esc):
+            (excluidos if esc["id"] in excluir else con_pendientes).append(esc["id"])
+            if esc["aprobado_por"]:
+                ruta.write_text(LINEA_APROBACION.sub("aprobado_por: ''", texto), encoding="utf-8")
         else:
-            texto = ruta.read_text(encoding="utf-8")
             nuevo = LINEA_APROBACION.sub(
                 lambda _: f"aprobado_por: {json.dumps(por, ensure_ascii=False)}", texto
             )
             ruta.write_text(nuevo, encoding="utf-8")
             aprobados.append(esc["id"])
     return aprobados, excluidos, con_pendientes
+
+
+# -- Comparación de textos para las verificaciones de código (la usa el evaluador de B12) -----
+
+_ESPACIO_ANTES_DE_PORCENTAJE = re.compile(r"(\d)\s+%")
+_ORDINAL = re.compile(r"(\d)\s*[°º]")
+
+
+def normalizar_texto(texto: str) -> str:
+    """Minúsculas, sin tildes, «10 %» = «10%», «1° de enero» = «1 de enero» y espacios simples."""
+    sin_tildes = "".join(
+        c for c in unicodedata.normalize("NFD", texto.lower()) if unicodedata.category(c) != "Mn"
+    )
+    sin_tildes = _ORDINAL.sub(r"\1", _ESPACIO_ANTES_DE_PORCENTAJE.sub(r"\1%", sin_tildes))
+    return " ".join(sin_tildes.split())
+
+
+def contiene(respuesta: str, esperado: str) -> bool:
+    """`contiene_texto` y `contiene_valor` comparan así: sin fallar por la forma de escribir y sin
+    tomar una parte de otra palabra o cifra («1 de julio» no está en «11 de julio»)."""
+    patron = rf"(?<!\w){re.escape(normalizar_texto(esperado))}(?!\w)"
+    return re.search(patron, normalizar_texto(respuesta)) is not None

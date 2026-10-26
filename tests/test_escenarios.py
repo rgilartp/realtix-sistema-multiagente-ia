@@ -543,3 +543,56 @@ def test_los_mensajes_del_contribuyente_no_llevan_numeros_de_documento(escenario
             assert not documento.search(turno["usuario"]), (e["id"], turno["usuario"])
     for consulta in cargar_enrutamiento():
         assert not documento.search(consulta["texto"]), consulta["id"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-16 · Tasa de respuestas correctas")
+def test_las_verificaciones_de_texto_no_dependen_de_la_forma_de_escribir() -> None:
+    from src.evaluacion.escenarios import contiene, normalizar_texto
+
+    assert contiene("Tienes un descuento del 10% hasta el 17 de abril", "10 %")
+    assert contiene("Se causa el 1 de enero", "1° de enero")
+    assert contiene("SE CAUSA EL 1º DE ENERO", "1° de enero")
+    assert contiene("el regimen comun", "régimen común")
+    assert not contiene("el 11 de julio", "1 de julio")  # no confunde fechas parecidas
+    assert normalizar_texto("  Hola\n  Mundo ") == "hola mundo"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-16 · Tasa de respuestas correctas")
+def test_el_validador_cuida_la_aprobacion_las_categorias_y_los_adjuntos(por_id) -> None:
+    pendiente_aprobado = copy.deepcopy(por_id["IPU-04"])
+    pendiente_aprobado["respuesta_referencia"] = "PENDIENTE: falta la fuente"
+    pendiente_aprobado["pendiente"] = ["falta la fuente"]
+    assert any("no puede estar aprobado" in e for e in validar_escenario(pendiente_aprobado))
+    multi = copy.deepcopy(por_id["MULTI-01"])
+    multi["categoria_esperada"] = "general"
+    assert any("categorias_esperadas" in e for e in validar_escenario(multi))
+    ocr = copy.deepcopy(por_id["OCR-01"])
+    ocr["adjunto"]["calidad"] = "borrosa"
+    assert validar_escenario(ocr)
+    fuentes = copy.deepcopy(por_id["IPU-04"])
+    fuentes["fuentes_esperadas"] = "Ley 44 de 1990"
+    assert validar_escenario(fuentes)
+    assert por_id["ROB-01"]["categoria_esperada"] is None  # falla del orquestador: sin clasificar
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-16 · Tasa de respuestas correctas")
+def test_aprobar_borra_una_aprobacion_vieja_si_queda_pendiente_o_excluido(tmp_path) -> None:
+    copia = tmp_path / "escenarios"
+    copia.mkdir()
+    for nombre in ("IPU-04.yaml", "IPU-05.yaml"):
+        texto = (DIR_ESCENARIOS / nombre).read_text("utf-8")
+        texto = re.sub(r"^aprobado_por:.*$", 'aprobado_por: "Alguien"', texto, flags=re.M)
+        (copia / nombre).write_text(texto, encoding="utf-8")
+    datos = yaml.safe_load((copia / "IPU-05.yaml").read_text("utf-8"))
+    datos["respuesta_referencia"] = "PENDIENTE: falta la fuente"
+    datos["pendiente"] = ["falta la fuente"]
+    (copia / "IPU-05.yaml").write_text(yaml.safe_dump(datos, allow_unicode=True), "utf-8")
+    aprobados, excluidos, pendientes = aprobar_referencias(
+        "Rodolfo Angel Gilart Pulido", frozenset({"IPU-04"}), directorio=copia
+    )
+    assert (aprobados, excluidos, pendientes) == ([], ["IPU-04"], ["IPU-05"])
+    for nombre in ("IPU-04.yaml", "IPU-05.yaml"):
+        assert yaml.safe_load((copia / nombre).read_text("utf-8"))["aprobado_por"] == ""
