@@ -521,11 +521,15 @@ def test_ingesta_y_recuperacion_con_el_chroma_de_compose(tmp_path) -> None:
         pytest.param(
             "¿Cuánto puede subir el predial de un año a otro?", "normativa_ipu", "Ley 1995 de 2019",
             marks=pytest.mark.xfail(
-                reason="Hallazgo de B8: el art. 2 de la Ley 1995 queda 9.º en el canal vectorial y "
-                "BM25 no lo trae; se revisa en B12 (docs/resumenes/b08.md)",
+                reason="Hallazgo de B8: con las palabras del contribuyente, el art. 2 de la Ley "
+                "1995 no entra en los 5; por eso el agente recupera con la búsqueda del "
+                "orquestador (caso siguiente; docs/resumenes/fix-recuperacion.md)",
                 strict=True,
             ),
         ),
+        # La búsqueda que escribe el orquestador en los términos de la norma (revisión externa).
+        ("límite al aumento anual del impuesto predial", "normativa_ipu",
+         "Ley 1995 de 2019, art. 2"),
         ("¿Quién paga el impuesto de industria y comercio?", "normativa_ica", "Ley 14 de 1983"),
         ("¿Cómo pago por cuotas el predial?", "plataforma_general", "SPAC"),
         ("¿Qué puedo pedir sobre mis datos personales?", "normativa_datos", "Ley 1581 de 2012"),

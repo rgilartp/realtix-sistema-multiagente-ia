@@ -17,9 +17,11 @@ from src.agents.nodes.simulados import responder_ica
 from src.agents.prompts import prompt_de_agente
 from src.agents.state import AgentState
 
+COLECCIONES = ("normativa_ica",)  # colecciones donde recupera el agente
+
 
 def crear_nodo_ica(deps: Dependencias) -> Callable[..., dict[str, Any]]:
-    agente = ConfigAgente("ica", prompt_de_agente("ica"), ("normativa_ica",), HERRAMIENTAS_ICA)
+    agente = ConfigAgente("ica", prompt_de_agente("ica"), COLECCIONES, HERRAMIENTAS_ICA)
 
     def nodo_ica(state: AgentState, config: RunnableConfig) -> dict[str, Any]:
         if deps.modelos is None:

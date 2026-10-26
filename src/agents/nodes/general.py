@@ -36,10 +36,11 @@ FUERA_DE_ALCANCE = (
 FUERA_DEL_CANAL = f"Esa consulta queda fuera de lo que puedo atender en este canal. {ALCANCE}"
 
 
+COLECCIONES = ("plataforma_general", "normativa_datos")  # colecciones donde recupera el agente
+
+
 def crear_nodo_general(deps: Dependencias) -> Callable[..., dict[str, Any]]:
-    agente = ConfigAgente(
-        "general", prompt_de_agente("general"), ("plataforma_general", "normativa_datos")
-    )
+    agente = ConfigAgente("general", prompt_de_agente("general"), COLECCIONES)
 
     def nodo_general(state: AgentState, config: RunnableConfig) -> dict[str, Any]:
         marcas = state.get("marcas", {})

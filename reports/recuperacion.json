@@ -1,0 +1,1840 @@
+{
+  "resultados": [
+    {
+      "escenario": "ACC-01",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Dame el estado de cuenta del predio 50C-9000201",
+          "busqueda": "estado de cuenta y obligaciones pendientes del impuesto predial unificado de un predio",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 1084 de 2026, art. 14",
+            "Decreto Distrital 352 de 2002, cap. I, art. 24",
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 141",
+            "Ley 44 de 1990, art. 13"
+          ],
+          "con_busqueda": [
+            "Ley 44 de 1990, art. 13",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Decreto Distrital 807 de 1993, art. 142",
+            "Acuerdo 1084 de 2026, art. 35",
+            "Ley 44 de 1990, art. 12"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Decreto 807 de 1993, art. 18",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "acceso",
+      "comportamiento_esperado": "rechazar_acceso"
+    },
+    {
+      "escenario": "ACC-02",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Cuánto debo de mi predio 50C-9000301?",
+          "busqueda": "consulta de obligaciones y saldo del impuesto predial unificado del predio requiere autenticación en la Oficina Virtual Tributaria",
+          "anio": 2026,
+          "con_texto": [
+            "Glosario con fuentes (sintético), Descuento por pronto pago",
+            "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+            "Glosario con fuentes (sintético), Impuesto Predial Unificado",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.2",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "acceso",
+      "comportamiento_esperado": "pedir_sesion"
+    },
+    {
+      "escenario": "ACC-03",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Cuánto debo de mi predio 50C-9000301?",
+          "busqueda": "consulta de obligaciones y saldo del impuesto predial unificado que requiere autenticación en la Oficina Virtual Tributaria",
+          "anio": 2026,
+          "con_texto": [
+            "Glosario con fuentes (sintético), Descuento por pronto pago",
+            "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+            "Glosario con fuentes (sintético), Impuesto Predial Unificado",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.2",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "acceso",
+      "comportamiento_esperado": "pedir_sesion"
+    },
+    {
+      "escenario": "ACC-04",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Qué tarifa de industria y comercio paga en Bogotá la actividad 6201, desarrollo de software?",
+          "busqueda": "tarifa del impuesto de industria y comercio en Bogotá para la actividad CIIU 6201 desarrollo de sistemas informáticos",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 1084 de 2026, art. 21",
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Acuerdo 65 de 2002, art. 3",
+            "Decreto Distrital 807 de 1993, art. 126",
+            "Acuerdo 1084 de 2026, art. 1"
+          ],
+          "con_busqueda": [
+            "Acuerdo 1084 de 2026, art. 21",
+            "Acuerdo 65 de 2002, art. 3",
+            "Acuerdo 65 de 2002, art. 3",
+            "Resolución SDH-000265 de 2021, art. 1",
+            "Acuerdo 1084 de 2026, art. 21"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 65 de 2002, art. 3",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 21",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "acceso",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "AIA-01",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "Hola, buenas tardes",
+          "busqueda": "saludo y orientación general sobre la Oficina Virtual Tributaria de Bogotá",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Ley 1581 de 2012, art. 28"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "aviso_ia",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "AIA-02",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Estoy hablando con una persona?",
+          "busqueda": "atención al contribuyente mediante asistente de inteligencia artificial en la Oficina Virtual Tributaria",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Glosario con fuentes (sintético), Titular",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.1"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "aviso_ia",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "AMB-02",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuánto debo del predio 50C-9000202?",
+          "busqueda": "valor a pagar del impuesto predial unificado y saldo de la obligación tributaria del predio",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 142",
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 115",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 207"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 8",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Decreto Distrital 807 de 1993, art. 20",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Acuerdo 648 de 2016, art. 3"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000194 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ambiguas_varios_turnos",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ESC-01",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "Quiero hablar con una persona",
+          "busqueda": "atención al contribuyente por un funcionario de la Secretaría de Hacienda",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.4",
+            "Ley 1581 de 2012, art. 13"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "escalamiento",
+      "comportamiento_esperado": "escalar"
+    },
+    {
+      "escenario": "FA-01",
+      "partes": [
+        {
+          "categoria": "fuera_de_alcance",
+          "texto": "¿Cómo va a estar el clima mañana en Bogotá?",
+          "busqueda": "pronóstico del clima en Bogotá",
+          "anio": 2026,
+          "con_texto": [],
+          "con_busqueda": []
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "fuera_de_alcance",
+      "comportamiento_esperado": "informar_fuera_de_alcance"
+    },
+    {
+      "escenario": "FA-02",
+      "partes": [
+        {
+          "categoria": "fuera_de_alcance",
+          "texto": "¿Cómo renuevo mi licencia de conducción?",
+          "busqueda": "renovación de la licencia de conducción trámite",
+          "anio": 2026,
+          "con_texto": [],
+          "con_busqueda": []
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "fuera_de_alcance",
+      "comportamiento_esperado": "informar_fuera_de_alcance"
+    },
+    {
+      "escenario": "FA-03",
+      "partes": [
+        {
+          "categoria": "fuera_de_alcance",
+          "texto": "¿Cómo presento mi declaración de renta?",
+          "busqueda": "procedimiento para presentar la declaración del impuesto sobre la renta",
+          "anio": 2026,
+          "con_texto": [],
+          "con_busqueda": []
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "fuera_de_alcance",
+      "comportamiento_esperado": "escalar"
+    },
+    {
+      "escenario": "FA-04",
+      "partes": [
+        {
+          "categoria": "fuera_de_alcance",
+          "texto": "¿Hasta cuándo pago el impuesto de mi vehículo?",
+          "busqueda": "plazo para el pago del impuesto sobre vehículos automotores en Bogotá",
+          "anio": 2026,
+          "con_texto": [],
+          "con_busqueda": []
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "fuera_de_alcance",
+      "comportamiento_esperado": "escalar"
+    },
+    {
+      "escenario": "FA-05",
+      "partes": [
+        {
+          "categoria": "fuera_de_alcance",
+          "texto": "¿Cuánto es el predial de un apartamento en Medellín?",
+          "busqueda": "impuesto predial unificado de un apartamento en el municipio de Medellín",
+          "anio": 2026,
+          "con_texto": [],
+          "con_busqueda": []
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "fuera_de_alcance",
+      "comportamiento_esperado": "escalar"
+    },
+    {
+      "escenario": "GEN-01",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Cómo entro a la OVT simulada y cuánto dura mi sesión?",
+          "busqueda": "ingreso a la Oficina Virtual Tributaria y duración de la sesión del contribuyente",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada",
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "GEN-02",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Puedo pagar mi predial o presentar mi declaración con el asistente?",
+          "busqueda": "canales habilitados para pagar el impuesto predial unificado y presentar la declaración tributaria en la Oficina Virtual Tributaria",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace",
+            "Glosario con fuentes (sintético), Descuento por pronto pago",
+            "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Glosario con fuentes (sintético), Impuesto Predial Unificado",
+            "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "GEN-03",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Qué es la sobretasa de alumbrado público?",
+          "busqueda": "definición de la sobretasa de alumbrado público y su cobro en el impuesto predial unificado",
+          "anio": 2026,
+          "con_texto": [
+            "Glosario con fuentes (sintético), Sobretasa de alumbrado público",
+            "Glosario con fuentes (sintético), Hecho generador de la sobretasa",
+            "Glosario con fuentes (sintético), Base gravable de la sobretasa",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Glosario con fuentes (sintético), Impuesto Predial Unificado"
+          ],
+          "con_busqueda": [
+            "Glosario con fuentes (sintético), Sobretasa de alumbrado público",
+            "Glosario con fuentes (sintético), Hecho generador de la sobretasa",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Glosario con fuentes (sintético), Base gravable de la sobretasa",
+            "Glosario con fuentes (sintético), Impuesto Predial Unificado"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Glosario (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 1084 de 2026, arts. 10, 11 y 13",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "GEN-04",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Qué es el SPAC?",
+          "busqueda": "definición del Sistema de Pago de Acuerdos de Cobro SPAC en la Oficina Virtual Tributaria de Bogotá",
+          "anio": 2026,
+          "con_texto": [
+            "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+            "Glosario con fuentes (sintético), Descuento por pronto pago",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.1.3"
+          ],
+          "con_busqueda": [
+            "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+            "Glosario con fuentes (sintético), Descuento por pronto pago",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Glosario (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 648 de 2016, art. 3",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 5",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "GEN-05",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Qué es el IVIUR y para qué sirve?",
+          "busqueda": "definición del IVIUR índice de valor impuesto predial unificado y su finalidad",
+          "anio": 2026,
+          "con_texto": [
+            "Glosario con fuentes (sintético), IVIUR",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada",
+            "Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente"
+          ],
+          "con_busqueda": [
+            "Glosario con fuentes (sintético), IVIUR",
+            "Glosario con fuentes (sintético), Impuesto Predial Unificado",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Glosario con fuentes (sintético), Base gravable de la sobretasa",
+            "Glosario con fuentes (sintético), Sobretasa de alumbrado público"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Glosario (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 20",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "GEN-06",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Qué es un dato personal?",
+          "busqueda": "definición de dato personal en la ley de protección de datos personales y tratamiento de información",
+          "anio": 2026,
+          "con_texto": [
+            "Glosario con fuentes (sintético), Dato personal",
+            "Ley 1581 de 2012, art. 3",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.1.2",
+            "Glosario con fuentes (sintético), Titular",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.2.1"
+          ],
+          "con_busqueda": [
+            "Ley 1581 de 2012, art. 3",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.1.2",
+            "Ley 1581 de 2012, art. 2",
+            "Glosario con fuentes (sintético), Dato personal",
+            "Ley 1581 de 2012, art. 7"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Glosario (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Ley 1581 de 2012, art. 3",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "GEN-07",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "¿Qué derechos tengo sobre mis datos personales?",
+          "busqueda": "derechos del titular de datos personales habeas data tratamiento de datos personales",
+          "anio": 2026,
+          "con_texto": [
+            "Ley 1581 de 2012, art. 8",
+            "Ley 1581 de 2012, art. 1",
+            "Ley 1581 de 2012, art. 7",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.3",
+            "Ley 1581 de 2012, art. 21"
+          ],
+          "con_busqueda": [
+            "Ley 1581 de 2012, art. 8",
+            "Ley 1581 de 2012, art. 17",
+            "Ley 1581 de 2012, art. 18",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.3",
+            "Ley 1581 de 2012, art. 21"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Ley 1581 de 2012, art. 8",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "general",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "HOR-01",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "Hola, necesito hablar con un funcionario",
+          "busqueda": "atención al contribuyente por un funcionario de la Secretaría de Hacienda",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.4"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Manual de uso de la OVT simulada (sintético), Qué es la OVT simulada"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "horario",
+      "comportamiento_esperado": "aviso_fuera_de_horario"
+    },
+    {
+      "escenario": "HOR-02",
+      "partes": [
+        {
+          "categoria": "general",
+          "texto": "Hola, necesito hablar con un funcionario",
+          "busqueda": "atención al contribuyente por funcionario de la Secretaría de Hacienda Distrital",
+          "anio": 2026,
+          "con_texto": [
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Manual de uso de la OVT simulada (sintético), Cómo entrar",
+            "Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.4"
+          ],
+          "con_busqueda": [
+            "Manual de uso de la OVT simulada (sintético), Horario de atención",
+            "Glosario con fuentes (sintético), Sujeto pasivo de la sobretasa",
+            "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+            "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario",
+            "Ley 1581 de 2012, art. 20"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "horario",
+      "comportamiento_esperado": "aviso_fuera_de_horario"
+    },
+    {
+      "escenario": "ICA-01",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Qué es el impuesto de industria y comercio y quién lo paga?",
+          "busqueda": "definición, hecho generador y sujeto pasivo del impuesto de industria, comercio, avisos y tableros en Bogotá",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto Distrital 807 de 1993, art. 26",
+            "Ley 14 de 1983, art. 32",
+            "Decreto Distrital 352 de 2002, cap. II, art. 40",
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Decreto Distrital 352 de 2002, cap. II, art. 32"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 352 de 2002, cap. II, art. 58",
+            "Decreto Distrital 352 de 2002, cap. II, art. 41",
+            "Decreto Distrital 352 de 2002, cap. II, art. 32",
+            "Decreto Distrital 352 de 2002, cap. II, art. 57",
+            "Decreto Distrital 352 de 2002, cap. II, art. 40"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Decreto 352 de 2002, arts. 32 y 41",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-02",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Sobre qué ingresos se calcula el impuesto de industria y comercio?",
+          "busqueda": "base gravable del impuesto de industria y comercio ingresos brutos ordinarios y extraordinarios",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto Distrital 352 de 2002, cap. II, art. 42",
+            "Ley 1819 de 2016, arts. 342 y 345, art. 342",
+            "Decreto Distrital 352 de 2002, cap. II, art. 52",
+            "Decreto Distrital 807 de 1993, art. 117",
+            "Decreto Distrital 807 de 1993, art. 127"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 352 de 2002, cap. II, art. 42",
+            "Ley 1819 de 2016, arts. 342 y 345, art. 342",
+            "Decreto Distrital 807 de 1993, art. 117",
+            "Decreto Distrital 352 de 2002, cap. II, art. 48",
+            "Decreto Distrital 352 de 2002, cap. II, art. 50"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Decreto 352 de 2002, art. 42",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-03",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Cada cuánto se declara el ICA en 2026?",
+          "busqueda": "periodicidad de presentación de la declaración del impuesto de industria y comercio año gravable 2026",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 1084 de 2026, art. 2",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1019 de 2025, art. 44",
+            "Decreto Distrital 807 de 1993, art. 109"
+          ],
+          "con_busqueda": [
+            "Resolución SDH-000195 de 2025, art. 1",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Decreto Distrital 807 de 1993, art. 12",
+            "Acuerdo 1084 de 2026, art. 2"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-04",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "Mi actividad económica es el código CIIU 6201 y calculo ingresos de $60.000.000 en el año, ¿cuánto sería el ICA?",
+          "busqueda": "tarifa del impuesto de industria y comercio para la actividad CIIU 6201 y base gravable de ingresos brutos anuales",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 65 de 2002, art. 3",
+            "Decreto Distrital 352 de 2002, cap. II, art. 55",
+            "Decreto Distrital 807 de 1993, art. 116",
+            "Resolución SDH-000265 de 2021, art. 1",
+            "Acuerdo 1084 de 2026, art. 21"
+          ],
+          "con_busqueda": [
+            "Ley 1819 de 2016, arts. 342 y 345, art. 342",
+            "Acuerdo 65 de 2002, art. 3",
+            "Acuerdo 65 de 2002, art. 3",
+            "Decreto Distrital 807 de 1993, art. 37",
+            "Acuerdo 1084 de 2026, art. 21"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 65 de 2002, art. 3",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-05",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "Mis ingresos de un bimestre son $250.000.000 en la actividad 5611, ¿cuánto pago de ICA?",
+          "busqueda": "base gravable y tarifa del impuesto de industria y comercio para la actividad CIIU 5611 según ingresos del período",
+          "anio": 2026,
+          "con_texto": [
+            "Ley 14 de 1983, art. 44",
+            "Decreto Distrital 352 de 2002, cap. II, art. 50",
+            "Decreto Distrital 352 de 2002, cap. II, art. 55",
+            "Acuerdo 65 de 2002, art. 3",
+            "Decreto Distrital 352 de 2002, cap. II, art. 47"
+          ],
+          "con_busqueda": [
+            "Ley 1819 de 2016, arts. 342 y 345, art. 342",
+            "Acuerdo 65 de 2002, art. 3",
+            "Acuerdo 65 de 2002, art. 3",
+            "Decreto Distrital 352 de 2002, cap. II, art. 42",
+            "Acuerdo 1084 de 2026, art. 21"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 65 de 2002, art. 3",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 21",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-06",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "Si en 2027 tuviera ingresos de $900.000.000 con la actividad 6201, ¿cuánto sería el ICA?",
+          "busqueda": "tarifa del impuesto de industria y comercio por actividad CIIU 6201 sobre ingresos gravables año 2027",
+          "anio": 2027,
+          "con_texto": [
+            "Acuerdo 1084 de 2026, art. 21",
+            "Decreto Distrital 807 de 1993, art. 116",
+            "Acuerdo 1084 de 2026, art. 1",
+            "Decreto Distrital 807 de 1993, art. 116",
+            "Acuerdo 1084 de 2026, art. 21"
+          ],
+          "con_busqueda": [
+            "Acuerdo 1084 de 2026, art. 21",
+            "Acuerdo 65 de 2002, art. 3",
+            "Ley 1819 de 2016, arts. 342 y 345, art. 342",
+            "Acuerdo 1084 de 2026, art. 21",
+            "Acuerdo 1084 de 2026, art. 25"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 21",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-07",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Cuándo tengo que declarar el ICA este año?",
+          "busqueda": "plazos y fechas para presentar la declaración del impuesto de industria y comercio en el año gravable",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 1",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 3",
+            "Resolución SDH-000195 de 2025, art. 1"
+          ],
+          "con_busqueda": [
+            "Resolución SDH-000195 de 2025, art. 1",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Resolución SDH-000195 de 2025, art. 2",
+            "Decreto Distrital 807 de 1993, art. 28",
+            "Decreto Distrital 807 de 1993, art. 12"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 1",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-08",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Cuándo declaro el ICA de este año?",
+          "busqueda": "plazos para presentar la declaración del impuesto de industria y comercio ICA en Bogotá vigencia actual",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 1",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 3"
+          ],
+          "con_busqueda": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 1",
+            "Decreto Distrital 807 de 1993, art. 30",
+            "Decreto Distrital 807 de 1993, art. 12",
+            "Acuerdo 1084 de 2026, art. 2"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-09",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Cómo será el régimen del ICA en 2027?",
+          "busqueda": "régimen del impuesto de industria y comercio ICA vigencia 2027 régimen simple de tributación",
+          "anio": 2027,
+          "con_texto": [
+            "Acuerdo 1019 de 2025, art. 44",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 21",
+            "Acuerdo 1084 de 2026, art. 1"
+          ],
+          "con_busqueda": [
+            "Acuerdo 1019 de 2025, art. 44",
+            "Acuerdo 1084 de 2026, art. 24",
+            "Decreto Distrital 807 de 1993, art. 27",
+            "Acuerdo 1084 de 2026, art. 26",
+            "Acuerdo 1084 de 2026, art. 26"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 26",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "ICA-10",
+      "partes": [
+        {
+          "categoria": "ica",
+          "texto": "¿Cómo manejo la retención de ICA de mis ventas con tarjeta?",
+          "busqueda": "retención del impuesto de industria y comercio por pagos con tarjetas débito y crédito agente retenedor",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Acuerdo 1084 de 2026, art. 25",
+            "Decreto Distrital 807 de 1993, art. 127"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Acuerdo 1084 de 2026, art. 25",
+            "Decreto Distrital 807 de 1993, art. 127",
+            "Decreto Distrital 807 de 1993, art. 127"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ica",
+      "comportamiento_esperado": "escalar"
+    },
+    {
+      "escenario": "IPU-04",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Qué es el impuesto predial unificado y cómo se calcula?",
+          "busqueda": "definición, hecho generador y base gravable del impuesto predial unificado en Bogotá, tarifa y liquidación",
+          "anio": 2026,
+          "con_texto": [
+            "Ley 44 de 1990, art. 2",
+            "Ley 44 de 1990, art. 12",
+            "Ley 44 de 1990, art. 3",
+            "Resolución SDH-000195 de 2025, art. 6",
+            "Ley 1995 de 2019, art. 2"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 352 de 2002, cap. I, art. 14",
+            "Ley 44 de 1990, art. 3",
+            "Decreto Ley 1421 de 1993, art. 155",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Acuerdo 648 de 2016, art. 12"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Ley 44 de 1990, arts. 1, 3 y 4",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-05",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuándo se causa el predial y qué período cubre?",
+          "busqueda": "causación del impuesto predial unificado y período gravable que comprende",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto Distrital 352 de 2002, cap. I, art. 16",
+            "Decreto Distrital 352 de 2002, cap. I, art. 15",
+            "Decreto Distrital 807 de 1993, art. 89",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 207",
+            "Decreto Distrital 352 de 2002, cap. I, art. 17"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 352 de 2002, cap. I, art. 16",
+            "Decreto Distrital 352 de 2002, cap. I, art. 15",
+            "Ley 44 de 1990, art. 3",
+            "Decreto Distrital 352 de 2002, cap. I, art. 20",
+            "Ley 44 de 1990, art. 2"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Decreto 352 de 2002, arts. 14, 15 y 16",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-06",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Qué tarifa de predial pagan los estratos 1, 2 y 3 en 2026?",
+          "busqueda": "tarifas del impuesto predial unificado para predios residenciales de estratos 1, 2 y 3 vigencia 2026",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Acuerdo 1084 de 2026, art. 14",
+            "Acuerdo 648 de 2016, art. 2",
+            "Acuerdo 648 de 2016, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 207"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 352 de 2002, cap. I, art. 26",
+            "Acuerdo 648 de 2016, art. 2",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 207",
+            "Resolución SDH-000194 de 2025 (rangos del predial de 2026), art. 1"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 648 de 2016, art. 1",
+          "con_texto": true,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 780 de 2020, art. 3, par. 2",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Decreto 639 de 2025, art. 207",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-07",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Hasta cuándo pago el predial con descuento en 2026?",
+          "busqueda": "plazo para el pago del impuesto predial unificado con descuento por pronto pago vigencia 2026",
+          "anio": 2026,
+          "con_texto": [
+            "Resolución SDH-000195 de 2025, art. 6",
+            "Acuerdo 648 de 2016, art. 11",
+            "Acuerdo 648 de 2016, art. 3",
+            "Resolución SDH-000195 de 2025, art. 3",
+            "Resolución SDH-000195 de 2025, art. 5"
+          ],
+          "con_busqueda": [
+            "Resolución SDH-000195 de 2025, art. 6",
+            "Acuerdo 648 de 2016, art. 11",
+            "Resolución SDH-000195 de 2025, art. 3",
+            "Acuerdo 648 de 2016, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 6",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-08",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuál es el plazo del predial de 2026?",
+          "busqueda": "plazos y fechas límite de pago del impuesto predial unificado vigencia 2026",
+          "anio": 2026,
+          "con_texto": [
+            "Resolución SDH-000195 de 2025, art. 3",
+            "Acuerdo 1084 de 2026, art. 5",
+            "Acuerdo 648 de 2016, art. 3",
+            "Acuerdo 1084 de 2026, art. 11",
+            "Resolución SDH-000195 de 2025, art. 6"
+          ],
+          "con_busqueda": [
+            "Resolución SDH-000195 de 2025, art. 3",
+            "Acuerdo 1084 de 2026, art. 15",
+            "Acuerdo 1084 de 2026, art. 11",
+            "Resolución SDH-000195 de 2025, art. 6",
+            "Acuerdo 1084 de 2026, art. 16"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, arts. 3 y 4",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-09",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuánto puede subir mi predial de un año a otro?",
+          "busqueda": "límite del incremento anual del impuesto predial unificado respecto del año anterior",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 14",
+            "Ley 44 de 1990, art. 6",
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Ley 1421 de 1993, art. 12",
+            "Decreto Distrital 807 de 1993, art. 142"
+          ],
+          "con_busqueda": [
+            "Ley 1995 de 2019, art. 2",
+            "Decreto Distrital 352 de 2002, cap. I, art. 27",
+            "Ley 44 de 1990, art. 6",
+            "Decreto Ley 1421 de 1993, art. 155",
+            "Ley 44 de 1990, art. 12"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Ley 1995 de 2019, art. 2",
+          "con_texto": false,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Ley 2294 de 2023, art. 49, par. 3",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-10",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuánto me tocaría pagar de predial este año por mi apartamento?",
+          "busqueda": "liquidación y tarifa del impuesto predial unificado según avalúo catastral del predio vigencia actual",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 780 de 2020, art. 3",
+            "Decreto Distrital 807 de 1993, art. 142",
+            "Acuerdo 648 de 2016, art. 1",
+            "Resolución SDH-000195 de 2025, art. 3",
+            "Decreto Distrital 807 de 1993, art. 115"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Ley 1421 de 1993, art. 155",
+            "Acuerdo 648 de 2016, art. 1",
+            "Acuerdo 648 de 2016, art. 5",
+            "Acuerdo 780 de 2020, art. 3"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000194 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Resolución SDH-000195 de 2025, arts. 3 y 6",
+          "con_texto": true,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Decreto 807 de 1993, arts. 15, 66 y 132",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-11",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuánto sería el impuesto predial de mi apartamento en 2027?",
+          "busqueda": "cálculo de la liquidación del impuesto predial unificado vigencia 2027 tarifa avalúo catastral",
+          "anio": 2027,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 3",
+            "Acuerdo 780 de 2020, art. 3",
+            "Decreto Distrital 807 de 1993, art. 115",
+            "Acuerdo 1084 de 2026, art. 20",
+            "Decreto Distrital 807 de 1993, art. 142"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Acuerdo 648 de 2016, art. 5",
+            "Acuerdo 780 de 2020, art. 3",
+            "Ley 1995 de 2019, art. 2",
+            "Acuerdo 1084 de 2026, art. 20"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 1084 de 2026, arts. 13, 14, 15 y 20",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-12",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cómo me notifican la factura del predial?",
+          "busqueda": "notificación de la factura del impuesto predial unificado al contribuyente en Bogotá",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 227",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Acuerdo 1084 de 2026, art. 27",
+            "Acuerdo 1084 de 2026, art. 35",
+            "Acuerdo 648 de 2016, art. 5"
+          ],
+          "con_busqueda": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 227",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 227",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Acuerdo 1084 de 2026, art. 35",
+            "Ley 1819 de 2016, art. 354"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 648 de 2016, art. 5",
+          "con_texto": true,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Ley 1819 de 2016, art. 354",
+          "con_texto": false,
+          "con_busqueda": true
+        },
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 27, num. 3",
+          "con_texto": true,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-13",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Puedo pagar el predial sin declarar?",
+          "busqueda": "pago del impuesto predial unificado sin presentar declaración, factura oficial y declaración como obligación formal",
+          "anio": 2026,
+          "con_texto": [
+            "Resolución SDH-000195 de 2025, art. 3",
+            "Resolución SDH-000195 de 2025, art. 6",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Decreto Distrital 807 de 1993, art. 124",
+            "Ley 44 de 1990, art. 12"
+          ],
+          "con_busqueda": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Ley 1819 de 2016, art. 354",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 227",
+            "Ley 44 de 1990, art. 12"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 648 de 2016, art. 5",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Decreto 474 de 2016, art. 10",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 4",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-14",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Tengo un predio con deuda vencida, ¿hay algún beneficio en los intereses?",
+          "busqueda": "beneficios o condonación de intereses de mora en el impuesto predial unificado por deuda vencida",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto Distrital 807 de 1993, art. 138",
+            "Acuerdo 1084 de 2026, art. 7",
+            "Decreto Distrital 807 de 1993, art. 139",
+            "Acuerdo 1084 de 2026, art. 7",
+            "Decreto Distrital 807 de 1993, art. 144"
+          ],
+          "con_busqueda": [
+            "Acuerdo 1084 de 2026, art. 5",
+            "Decreto Distrital 807 de 1993, art. 138",
+            "Resolución SDH-000195 de 2025, art. 6",
+            "Decreto Distrital 807 de 1993, art. 144",
+            "Acuerdo 648 de 2016, art. 3"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Acuerdo 1084 de 2026, art. 7",
+          "con_texto": true,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "IPU-15",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Estoy en el pago por cuotas del predial, ¿cuántas cuotas me faltan y cuándo vence la siguiente?",
+          "busqueda": "pago por cuotas del impuesto predial unificado número de cuotas y fecha de vencimiento de la siguiente cuota",
+          "anio": 2026,
+          "con_texto": [
+            "Resolución SDH-000195 de 2025, art. 5",
+            "Ley 1995 de 2019, art. 6",
+            "Acuerdo 648 de 2016, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 218"
+          ],
+          "con_busqueda": [
+            "Resolución SDH-000195 de 2025, art. 5",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Acuerdo 648 de 2016, art. 3",
+            "Ley 1995 de 2019, art. 6",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 218"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 5",
+          "con_texto": true,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "ipu",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "MULTI-01",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cómo va mi predial?",
+          "busqueda": "estado de cuenta y obligaciones del impuesto predial unificado del contribuyente",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 780 de 2020, art. 3",
+            "Ley 44 de 1990, art. 3",
+            "Acuerdo 648 de 2016, art. 1",
+            "Ley 44 de 1990, art. 12",
+            "Acuerdo 648 de 2016, art. 1"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Ley 44 de 1990, art. 11",
+            "Ley 44 de 1990, art. 12",
+            "Acuerdo 1084 de 2026, art. 35"
+          ]
+        },
+        {
+          "categoria": "ica",
+          "texto": "¿Cuánto me falta de ICA y para cuándo?",
+          "busqueda": "saldo a pagar y plazos de declaración y pago del impuesto de industria y comercio",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1019 de 2025, art. 44",
+            "Acuerdo 1084 de 2026, art. 2"
+          ],
+          "con_busqueda": [
+            "Resolución SDH-000195 de 2025, art. 1",
+            "Resolución SDH-000195 de 2025, art. 2",
+            "Decreto Distrital 807 de 1993, art. 63",
+            "Decreto Distrital 807 de 1993, art. 12",
+            "Decreto Distrital 807 de 1993, art. 144"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "multiagente",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "MULTI-02",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Estímame el predial de este año",
+          "busqueda": "estimación del impuesto predial unificado a cargo del predio en el año gravable",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 3",
+            "Acuerdo 780 de 2020, art. 3",
+            "Ley 44 de 1990, art. 12",
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Ley 1421 de 1993, art. 155"
+          ],
+          "con_busqueda": [
+            "Decreto Ley 1421 de 1993, art. 155",
+            "Ley 44 de 1990, art. 2",
+            "Decreto Distrital 352 de 2002, cap. I, art. 20",
+            "Decreto Distrital 352 de 2002, cap. I, art. 16",
+            "Acuerdo 1084 de 2026, art. 13"
+          ]
+        },
+        {
+          "categoria": "ica",
+          "texto": "dime cuándo declaro el ICA",
+          "busqueda": "plazos para presentar la declaración del impuesto de industria y comercio ICA",
+          "anio": 2026,
+          "con_texto": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 1",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 3"
+          ],
+          "con_busqueda": [
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Resolución SDH-000195 de 2025, art. 1",
+            "Decreto Distrital 807 de 1993, art. 28",
+            "Decreto Distrital 807 de 1993, art. 30",
+            "Decreto Distrital 807 de 1993, art. 12"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000194 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Resolución SDH-000195 de 2025, art. 1",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "multiagente",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "MULTI-03",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Explícame qué es el predial",
+          "busqueda": "definición y hecho generador del impuesto predial unificado en Bogotá",
+          "anio": 2026,
+          "con_texto": [
+            "Ley 44 de 1990, art. 12",
+            "Ley 44 de 1990, art. 3",
+            "Ley 44 de 1990, art. 2",
+            "Ley 44 de 1990, art. 1",
+            "Ley 44 de 1990, art. 4"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 352 de 2002, cap. I, art. 14",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Acuerdo 1084 de 2026, art. 12",
+            "Decreto Distrital 352 de 2002, cap. I, art. 17",
+            "Decreto Distrital 352 de 2002, cap. I, art. 28"
+          ]
+        },
+        {
+          "categoria": "ica",
+          "texto": "Explícame qué es el ICA",
+          "busqueda": "definición y hecho generador del impuesto de industria y comercio en Bogotá",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 1",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205",
+            "Acuerdo 1084 de 2026, art. 2",
+            "Acuerdo 1084 de 2026, art. 3"
+          ],
+          "con_busqueda": [
+            "Decreto Distrital 352 de 2002, cap. II, art. 32",
+            "Decreto Distrital 352 de 2002, cap. II, art. 41",
+            "Ley 14 de 1983, art. 32",
+            "Ley 1819 de 2016, arts. 342 y 345, art. 345",
+            "Decreto Distrital 352 de 2002, cap. II, art. 40"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Ley 44 de 1990, arts. 1 y 3",
+          "con_texto": true,
+          "con_busqueda": false
+        },
+        {
+          "fuente": "Decreto 352 de 2002, art. 32",
+          "con_texto": false,
+          "con_busqueda": true
+        }
+      ],
+      "grupo": "multiagente",
+      "comportamiento_esperado": "responder"
+    },
+    {
+      "escenario": "OCR-01",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Te envío mi recibo del predial para que lo revises",
+          "busqueda": "recibo del impuesto predial unificado contenido y datos del documento de pago",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 10",
+            "Acuerdo 780 de 2020, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 227",
+            "Ley 1995 de 2019, art. 5",
+            "Decreto Distrital 807 de 1993, art. 131"
+          ],
+          "con_busqueda": [
+            "Ley 44 de 1990, art. 13",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Resolución SDH-000195 de 2025, art. 4",
+            "Decreto Distrital 807 de 1993, art. 131",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 227"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Resolución SDH-000195 de 2025, arts. 3 y 6",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "ocr",
+      "comportamiento_esperado": "confirmar_datos"
+    },
+    {
+      "escenario": "ROB-01",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "¿Cuánto debo de mi predio 50C-9000301?",
+          "busqueda": "valor a pagar del impuesto predial unificado por predio y saldo de la obligación tributaria",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 142",
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 115",
+            "Decreto Distrital 352 de 2002, cap. I, art. 24"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 8",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Decreto Distrital 807 de 1993, art. 20",
+            "Ley 44 de 1990, art. 1",
+            "Acuerdo 648 de 2016, art. 3"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "robustez",
+      "comportamiento_esperado": "escalar"
+    },
+    {
+      "escenario": "ROB-02",
+      "partes": [
+        {
+          "categoria": "ipu",
+          "texto": "Quiero ver el estado de cuenta de mi predio 50C-9000301",
+          "busqueda": "estado de cuenta y obligaciones del contribuyente del impuesto predial unificado",
+          "anio": 2026,
+          "con_texto": [
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 141",
+            "Acuerdo 648 de 2016, art. 1",
+            "Decreto Distrital 807 de 1993, art. 133",
+            "Acuerdo 1084 de 2026, art. 14"
+          ],
+          "con_busqueda": [
+            "Acuerdo 648 de 2016, art. 3",
+            "Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224",
+            "Ley 44 de 1990, art. 11",
+            "Ley 44 de 1990, art. 12",
+            "Acuerdo 1084 de 2026, art. 35"
+          ]
+        }
+      ],
+      "fuentes": [
+        {
+          "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+          "con_texto": false,
+          "con_busqueda": false
+        }
+      ],
+      "grupo": "robustez",
+      "comportamiento_esperado": "escalar"
+    }
+  ],
+  "resumen": {
+    "escenarios": 50,
+    "fuentes": 69,
+    "con_texto": {
+      "aciertos_por_fuente": 36,
+      "tasa_por_fuente": 0.522,
+      "escenarios_con_todas": 24,
+      "tasa_por_escenario": 0.48
+    },
+    "con_busqueda": {
+      "aciertos_por_fuente": 40,
+      "tasa_por_fuente": 0.58,
+      "escenarios_con_todas": 27,
+      "tasa_por_escenario": 0.54
+    },
+    "k": 5,
+    "responden_con_fragmentos": {
+      "escenarios": 31,
+      "fuentes": 48,
+      "con_texto": {
+        "aciertos_por_fuente": 27,
+        "tasa_por_fuente": 0.562,
+        "escenarios_con_todas": 16,
+        "tasa_por_escenario": 0.516
+      },
+      "con_busqueda": {
+        "aciertos_por_fuente": 31,
+        "tasa_por_fuente": 0.646,
+        "escenarios_con_todas": 19,
+        "tasa_por_escenario": 0.613
+      }
+    }
+  },
+  "costo_anthropic_usd": "0.338466",
+  "tokens": [
+    {
+      "modelo": "claude-sonnet-5-5",
+      "entrada": 129213,
+      "salida": 8004
+    }
+  ]
+}
