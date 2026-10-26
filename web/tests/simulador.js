@@ -12,9 +12,12 @@ export const TEXTOS = {
   avisoIa:
     "Te atiende un asistente de inteligencia artificial. Sus respuestas son orientativas y " +
     "puedes pedir que te atienda un funcionario en cualquier momento",
-  predial:
-    "El impuesto predial unificado es un tributo anual sobre los predios; se calcula con el " +
-    "avalúo catastral y la tarifa que corresponde al predio (Acuerdo 105 de 2003, art. 2).",
+  // AVISO_SESION de nodo_general: consulta personal sin sesión (ACC-02)
+  avisoSesion:
+    "Para consultar información de tu cuenta necesitas iniciar sesión en la Oficina Virtual " +
+    "Tributaria (entorno simulado de pruebas). Mientras tanto puedo resolver dudas generales.",
+  // Texto neutro, solo para revisar la lista de fuentes; no se usa en ninguna captura.
+  pruebaFuentes: "Texto de prueba para revisar la lista de fuentes.",
   fueraDeHorario:
     "En este momento estoy fuera del horario de atención. Atiendo de lunes a viernes, de 8:00 a. m. " +
     "a 5:00 p. m. (hora de Colombia), sin contar festivos. Vuelvo a atender el lunes 5 de octubre de " +
@@ -32,7 +35,9 @@ export const TEXTOS = {
     "Estos son los datos que leí del recibo:\n- Matrícula catastral: 50C-9000301\n- Vigencia fiscal: " +
     "2026\n- Avalúo catastral: $350.000.000\n- Valor liquidado: $2.135.000\n- Descuento por pronto " +
     "pago: $213.500\n- Fecha límite de pago: 10/07/2026\n\n¿Es correcto?",
-  funcionario: "Hola, soy el funcionario que revisa tu caso. Ya vi el resumen; te ayudo con el pago.",
+  // El sistema todavía no tiene cómo responder desde la consola (sección 3.6, opcional): texto de
+  // prueba para revisar la consulta periódica; no se usa en ninguna captura.
+  funcionario: "Texto de prueba de un mensaje del funcionario.",
 };
 
 const USUARIOS = [
@@ -83,11 +88,13 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
       if (fueraDeHorario) {
         return json(chat(cuerpo.id_conversacion, TEXTOS.fueraDeHorario, "sistema", "fuera_de_horario"));
       }
-      const texto = `${TEXTOS.predial}\n\nFuentes: Acuerdo 105 de 2003, art. 2; Ley 44 de 1990, art. 1.`;
-      return json(chat(cuerpo.id_conversacion, texto, "agente", "respondida", {
-        categoria: "ipu", agentes_invocados: ["nodo_orquestador", "nodo_ipu", "nodo_confianza", "nodo_respuesta"],
-        nivel_confianza: 0.86,
-      }));
+      if (!auth) {
+        return json(chat(cuerpo.id_conversacion, TEXTOS.avisoSesion, "agente", "aviso_sesion", {
+          categoria: "general", agentes_invocados: ["nodo_orquestador", "nodo_general", "nodo_confianza", "nodo_respuesta"],
+        }));
+      }
+      const texto = `${TEXTOS.pruebaFuentes}\n\nFuentes: Fuente de prueba A; Fuente de prueba B.`;
+      return json(chat(cuerpo.id_conversacion, texto, "agente", "respondida", { categoria: "general" }));
     }
     if (ruta === "/api/v1/chat/documento") {
       const id = /name="id_conversacion"\r\n\r\n([^\r]+)/.exec(peticion.postData() ?? "")?.[1] ?? "conv";

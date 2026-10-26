@@ -49,7 +49,8 @@
   function margenSuperior() {
     var respetar = document.querySelector("[data-realtix-respetar]");
     var abajo = respetar ? respetar.getBoundingClientRect().bottom : 0;
-    return Math.max(16, Math.round(abajo) + 12);
+    // En el celular el panel empieza justo debajo del rótulo, sin hueco.
+    return Math.max(ancho.matches ? 16 : 8, Math.round(abajo) + (ancho.matches ? 12 : 0));
   }
 
   function medidas() {

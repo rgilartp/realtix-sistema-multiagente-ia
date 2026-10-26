@@ -17,7 +17,9 @@ Capturas de la OVT simulada, el widget y la consola, cada una en 1280 px (`_1280
   mismo cálculo de `/admin/metricas`; por eso la exactitud, el total etiquetado, la precisión, la
   exhaustividad y el F1 son coherentes entre sí. Las duraciones son las de la medición de B9.
 - **La captura de las métricas para el documento de grado se tomará en B16**, con la corrida final.
-- **La captura con una respuesta sobre normas se tomará en B16**, con el sistema corregido. La
-  respuesta real a «¿Qué es el impuesto predial?» tiene una falla conocida (ver
-  `docs/resumenes/b11.md`, «Fallas conocidas»), y la respuesta de la API simulada en
-  `widget_respuesta` es solo un ejemplo de formato.
+- **`widget_respuesta` muestra el aviso de sesión** (`AVISO_SESION`, texto fijo del código) ante
+  «¿Cuánto debo de mi predio?» sin sesión (ACC-02).
+- **La captura con una respuesta sobre normas y la de la lista de fuentes se tomarán en B16**, con el
+  sistema corregido. Las respuestas reales a «¿Qué es el impuesto predial?» y a la pregunta de GEN-02
+  tienen fallas conocidas (ver `docs/resumenes/b11.md`, «Fallas conocidas»). La lista de fuentes se
+  revisa en las pruebas con un texto neutro, que no se usa en ninguna captura.
