@@ -162,6 +162,7 @@ def _regimen(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             "periodicidad": regla.periodicidad,
             "regla": regla.regla,
             "umbral_uvt": regla.umbral_uvt,
+            "fuente": regla.fuente,
         }
         try:
             fila["umbral_en_pesos"] = pesos(regla.umbral_en_pesos())

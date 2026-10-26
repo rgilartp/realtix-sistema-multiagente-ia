@@ -81,7 +81,11 @@ def buscar_tarifa_ipu(anio: int, destino: Destino, estrato: int | None, avaluo: 
     if avaluo <= 0:
         raise ValueError("El avalúo debe ser mayor que cero.")
     datos = cargar_datos(f"tarifas/ipu_{anio}.yaml", anio, "predial")
-    fuente = str(datos["fuente"])
+    por_seccion = datos.get("fuentes_por_seccion") or {}
+
+    def fuente(seccion: str) -> str:
+        """La fuente de la sección que dio la tarifa; sin ella, la del archivo."""
+        return str(por_seccion.get(seccion) or datos["fuente"])
 
     if destino == "residencial":
         if estrato in (1, 2, 3):
@@ -95,7 +99,7 @@ def buscar_tarifa_ipu(anio: int, destino: Destino, estrato: int | None, avaluo: 
                     Decimal(0),
                     False,
                     "excluido: estratos 1 y 2 bajo el límite",
-                    fuente,
+                    fuente("exclusion"),
                 )
             for fila in propias:
                 desde = _a_pesos(fila["desde_valor"], fila["unidad_desde"], anio)
@@ -107,16 +111,16 @@ def buscar_tarifa_ipu(anio: int, destino: Destino, estrato: int | None, avaluo: 
                         Decimal(fila["tarifa_por_mil"]),
                         True,
                         "preferencial de estratos 1 a 3",
-                        fuente,
+                        fuente("preferenciales"),
                     )
         fila = _fila_general(_generales_residencial(datos, anio), avaluo)
-        regla = "rango general residencial"
+        regla, seccion = "rango general residencial", "residencial_urbano"
     else:
         fila = _fila_general(_filas_por_destino(datos, anio, destino), avaluo)
-        regla = f"tarifa no residencial: {destino}"
+        regla, seccion = f"tarifa no residencial: {destino}", "no_residencial"
     if fila is None:
         raise AnioSinDatosError(anio, f"tarifa del predial para el avalúo {avaluo}")
-    return TarifaIPU(anio, destino, Decimal(fila["tarifa_por_mil"]), True, regla, fuente)
+    return TarifaIPU(anio, destino, Decimal(fila["tarifa_por_mil"]), True, regla, fuente(seccion))
 
 
 def valor_impuesto(base: int, tarifa_por_mil: Decimal) -> int:

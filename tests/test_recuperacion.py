@@ -181,6 +181,71 @@ def test_los_textos_anteriores_van_aparte_con_su_vigencia(fragmentos) -> None:
     )
 
 
+MARCA_DE_TEXTO_ANTERIOR = re.compile(r"\bera(?:n)? el siguiente\b", re.IGNORECASE)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-05 · Citación de la norma", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_ningun_fragmento_vigente_trae_un_texto_anterior_o_derogado(fragmentos) -> None:
+    """Revisión externa: toda «… era el siguiente» de la base (párrafo suelto o marca `<…>`
+    dentro de un párrafo) abre un texto anterior; si falta una variante, esta prueba falla."""
+    sin_reconocer = [
+        f.id
+        for lista in fragmentos.values()
+        for f in lista
+        if not f.metadatos["texto_anterior"] and MARCA_DE_TEXTO_ANTERIOR.search(f.texto)
+    ]
+    assert sin_reconocer == []
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-IPU-05 · Citación de la norma")
+def test_los_textos_derogados_no_rigen(fragmentos) -> None:
+    todos = [f for lista in fragmentos.values() for f in lista]
+
+    def de(archivo: str, articulo: str, anterior: bool) -> str:
+        return "\n".join(
+            f.texto
+            for f in todos
+            if f.metadatos["archivo"] == archivo
+            and f.metadatos["articulo"] == articulo
+            and f.metadatos["texto_anterior"] is anterior
+        )
+
+    # Acuerdo 648, art. 1: los topes de aumento, derogados por el Acuerdo 927 de 2024.
+    acuerdo_648 = [
+        f
+        for f in todos
+        if f.metadatos["archivo"] == "normativa_ipu/acuerdo_648_2016.md"
+        and f.metadatos["articulo"] == "Artículo 1"
+    ]
+    vigente = de("normativa_ipu/acuerdo_648_2016.md", "Artículo 1", anterior=False)
+    anterior = de("normativa_ipu/acuerdo_648_2016.md", "Artículo 1", anterior=True)
+    for tope in ("20%", "15%", "10%", "18%", "Índice de Precios al Consumidor"):
+        assert tope in anterior and tope not in vigente
+    assert "| 1 y 2 | 16 smlmv | 107 smlmv | 1 por mil |" in vigente  # las tarifas siguen
+    assert "IPVN" in vigente
+    assert {
+        (f.metadatos["vigencia_desde"], f.metadatos["vigencia_hasta"])
+        for f in acuerdo_648
+        if f.metadatos["texto_anterior"]
+    } == {(SIN_INICIO, SIN_INICIO)}
+    # Ley 14, art. 4: la marca va dentro del párrafo; el artículo entero es anterior.
+    assert "Derogado por el art. 336, Ley 1955 de 2019." in de(
+        "normativa_ica/ley_14_1983.md", "Artículo 4", anterior=False
+    )
+    ley_14 = de("normativa_ica/ley_14_1983.md", "Artículo 4", anterior=True)
+    assert "A partir del 1 de enero de 1984" in ley_14
+    assert "Los terrenos y las edificaciones" in ley_14
+    # Decreto 807, art. 24: «El texto derogado era el siguiente» y el artículo entero.
+    assert "Artículo 24. Firmeza de la Declaración Privada" in de(
+        "normativa_ipu/decreto_807_1993_ipu.md", "Artículo 24", anterior=True
+    )
+    assert "Firmeza de la Declaración Privada" not in de(
+        "normativa_ipu/decreto_807_1993_ipu.md", "Artículo 24", anterior=False
+    )
+
+
 @pytest.mark.unit
 @pytest.mark.req("RF-IPU-05 · Citación de la norma")
 def test_un_texto_largo_se_parte_con_solape_y_uno_corto_queda_entero() -> None:
@@ -456,11 +521,15 @@ def test_ingesta_y_recuperacion_con_el_chroma_de_compose(tmp_path) -> None:
         pytest.param(
             "¿Cuánto puede subir el predial de un año a otro?", "normativa_ipu", "Ley 1995 de 2019",
             marks=pytest.mark.xfail(
-                reason="Hallazgo de B8: el art. 2 de la Ley 1995 queda 9.º en el canal vectorial y "
-                "BM25 no lo trae; se revisa en B12 (docs/resumenes/b08.md)",
+                reason="Hallazgo de B8: con las palabras del contribuyente, el art. 2 de la Ley "
+                "1995 no entra en los 5; por eso el agente recupera con la búsqueda del "
+                "orquestador (caso siguiente; docs/resumenes/fix-recuperacion.md)",
                 strict=True,
             ),
         ),
+        # La búsqueda que escribe el orquestador en los términos de la norma (revisión externa).
+        ("límite al aumento anual del impuesto predial", "normativa_ipu",
+         "Ley 1995 de 2019, art. 2"),
         ("¿Quién paga el impuesto de industria y comercio?", "normativa_ica", "Ley 14 de 1983"),
         ("¿Cómo pago por cuotas el predial?", "plataforma_general", "SPAC"),
         ("¿Qué puedo pedir sobre mis datos personales?", "normativa_datos", "Ley 1581 de 2012"),

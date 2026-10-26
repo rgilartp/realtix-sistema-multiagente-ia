@@ -1,6 +1,7 @@
 """`nodo_orquestador` simulado: clasifica por palabras clave, sin modelo ni red.
 
-Plan: categoría o categorías con su parte de la consulta, y las marcas (sesión requerida,
+Plan: categoría o categorías con su parte de la consulta y su consulta de búsqueda (`busqueda`;
+el clasificador simulado usa el mismo texto), y las marcas (sesión requerida,
 solicitud explícita, pregunta por la IA, tributario fuera del MVP y municipio distinto de Bogotá).
 Guarda la parte actual (`parte_actual`) para que cada worker responda la suya y, al reclasificar,
 clasifica solo la parte rechazada (sección 3.3). B7 lo reemplaza por Sonnet 5.5 con la misma firma.
@@ -168,7 +169,7 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
             clave = (parte["categoria"], parte["texto"])
             if clave not in vistas:
                 vistas.add(clave)
-                partes.append(parte)
+                partes.append({**parte, "busqueda": parte.get("busqueda") or parte["texto"]})
         if not partes:  # nada nuevo que probar para esta parte
             return escalar("sin cobertura", marcas, intentos, datos_extraidos=datos)
         return {
