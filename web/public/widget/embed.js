@@ -33,11 +33,11 @@
   boton.type = "button";
   boton.setAttribute("aria-controls", "realtix-widget");
   boton.style.cssText =
-    "border:0;border-radius:999px;padding:12px 18px;background:#0e5a64;color:#fff;font:inherit;" +
-    "font-size:15px;font-weight:600;box-shadow:0 6px 18px rgba(28,34,38,.25);cursor:pointer;" +
+    "border:0;border-radius:6px;padding:12px 18px;background:#4b2c85;color:#fff;font:inherit;" +
+    "font-size:17px;font-weight:700;box-shadow:0 4px 14px rgba(29,36,51,.28);cursor:pointer;" +
     "pointer-events:auto";
   boton.addEventListener("focus", function () {
-    boton.style.outline = "3px solid #1c2226";
+    boton.style.outline = "3px solid #1d2433";
     boton.style.outlineOffset = "2px";
   });
   boton.addEventListener("blur", function () {
@@ -54,7 +54,8 @@
   }
 
   function medidas() {
-    var duracion = sinMovimiento.matches ? "0ms" : "200ms";
+    // Abre en 200 ms y cierra más rápido (140 ms); nace del botón, abajo a la derecha.
+    var duracion = sinMovimiento.matches ? "0ms" : abierto ? "200ms" : "140ms";
     var curva = "cubic-bezier(.23,1,.32,1)";
     var borde = ancho.matches ? 16 : 8;
     var alto = window.innerHeight - margenSuperior() - borde - 48 - 10; // botón y separación
@@ -68,12 +69,12 @@
       ",visibility 0s linear " + (abierto ? "0s" : duracion);
     iframe.style.cssText =
       tamano +
-      "border:0;border-radius:18px;background:#fff;pointer-events:auto;" +
-      "box-shadow:0 1px 2px rgba(28,34,38,.06),0 12px 32px rgba(28,34,38,.18);" +
+      "border:0;border-radius:6px;background:#ecf1ee;pointer-events:auto;transform-origin:100% 100%;" +
+      "box-shadow:0 1px 2px rgba(29,36,51,.08),0 12px 32px rgba(29,36,51,.2);" +
       "transition:" + transicion + ";" +
       (abierto
         ? "visibility:visible;opacity:1;transform:none;"
-        : "visibility:hidden;opacity:0;transform:translateY(8px);");
+        : "visibility:hidden;opacity:0;transform:translateY(8px) scale(0.98);");
     // En el celular, con el panel abierto, el contenedor cubre lo que queda bajo el rótulo con el
     // color del papel, de borde a borde: no asoma la página detrás ni el botón tapa su texto.
     var hojaCompleta = !ancho.matches && abierto;
@@ -82,7 +83,7 @@
     contenedor.style.left = hojaCompleta ? "0" : "auto";
     contenedor.style.top = hojaCompleta ? margenSuperior() + "px" : "auto";
     contenedor.style.padding = hojaCompleta ? "0 8px 8px 8px" : "0";
-    contenedor.style.background = hojaCompleta ? "#f6f2ea" : "transparent";
+    contenedor.style.background = hojaCompleta ? "#ecf1ee" : "transparent";
     contenedor.style.pointerEvents = hojaCompleta ? "auto" : "none";
     boton.textContent = abierto ? "Ocultar asistente" : "Asistente tributario";
     boton.setAttribute("aria-expanded", String(abierto));

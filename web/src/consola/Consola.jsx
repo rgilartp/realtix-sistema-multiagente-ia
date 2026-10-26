@@ -1,6 +1,6 @@
 // Consola (sección 3.6 y RF-OBS-02 y RF-OBS-03): bandeja de solo lectura para el funcionario y
 // métricas para el administrador, cada una con su token, y un enlace a LangSmith.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { mensajeParaMostrar, obtener } from "../api.js";
 
@@ -70,8 +70,8 @@ function valorDelResumen(valor) {
 
 function Vacio({ titulo, texto }) {
   return (
-    <div className="rounded-2xl border border-dashed border-borde-control/50 px-6 py-10 text-center">
-      <p className="font-titulo text-lg font-semibold">{titulo}</p>
+    <div className="rounded-casilla border border-dashed border-borde-control px-6 py-10 text-center">
+      <p className="font-titulo text-lg font-bold [font-stretch:87.5%]">{titulo}</p>
       <p className="mt-1 text-sm text-tinta-suave">{texto}</p>
     </div>
   );
@@ -79,26 +79,29 @@ function Vacio({ titulo, texto }) {
 
 function AvisoDeError({ texto }) {
   return texto ? (
-    <p className="rounded-xl bg-error-suave px-4 py-2 text-sm text-error" role="alert">
+    <p className="rounded-casilla border border-error bg-error-suave px-4 py-2 text-sm text-error" role="alert">
       {texto}
     </p>
   ) : null;
 }
 
+// Casilla de un token: el rótulo arriba, el campo y la ayuda ligada a él.
 function Token({ etiqueta, ayuda, valor, alCambiar, id }) {
   return (
-    <label className="flex flex-col gap-1.5 text-sm font-semibold" htmlFor={id}>
-      {etiqueta}
+    <div className="casilla-unida">
+      <label htmlFor={id}>{etiqueta}</label>
       <input
         id={id}
         type="password"
         value={valor}
         onChange={(e) => alCambiar(e.target.value)}
-        className="h-11 rounded-xl border border-borde-control bg-superficie px-3 font-normal"
+        aria-describedby={`${id}-ayuda`}
         autoComplete="off"
       />
-      <span className="text-xs font-normal text-tinta-suave">{ayuda}</span>
-    </label>
+      <span id={`${id}-ayuda`} className="text-xs font-normal text-tinta-suave">
+        {ayuda}
+      </span>
+    </div>
   );
 }
 
@@ -106,7 +109,7 @@ function Boton({ children, ...props }) {
   return (
     <button
       type="button"
-      className="h-10 rounded-xl bg-acento px-4 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte"
+      className="min-h-11 rounded-control bg-sello px-4 text-sm font-semibold text-hoja enabled:hover:bg-sello-fuerte disabled:cursor-wait disabled:bg-papel-2 disabled:text-tinta-suave"
       {...props}
     >
       {children}
@@ -118,6 +121,8 @@ function Bandeja({ token }) {
   const [casos, setCasos] = useState(null);
   const [detalle, setDetalle] = useState(null);
   const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
+  const tituloDetalle = useRef(null);
 
   useEffect(() => {
     // Otro token: lo cargado con el anterior no se sigue mostrando.
@@ -129,11 +134,14 @@ function Bandeja({ token }) {
   const [estado, setEstado] = useState("");
 
   const cargar = async () => {
+    setCargando(true);
     try {
       setCasos(await obtener("/api/v1/escalamiento/casos", token));
       setError("");
     } catch (e) {
       setError(mensajeParaMostrar(e));
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -144,6 +152,13 @@ function Bandeja({ token }) {
       setError(mensajeParaMostrar(e));
     }
   };
+
+  // Al abrir un caso, el foco pasa a su título: el lector de pantalla lo anuncia y, en el
+  // celular, el detalle (que queda debajo de la lista) entra en la pantalla.
+  const idDetalle = detalle?.id_caso;
+  useEffect(() => {
+    if (idDetalle) tituloDetalle.current?.focus();
+  }, [idDetalle]);
 
   const motivos = useMemo(() => [...new Set((casos ?? []).map((c) => c.motivo))], [casos]);
   const estados = useMemo(() => [...new Set((casos ?? []).map((c) => c.estado))], [casos]);
@@ -156,41 +171,38 @@ function Bandeja({ token }) {
   const detalleVisible = detalle && visibles.some((c) => c.id_caso === detalle.id_caso) ? detalle : null;
 
   return (
-    <section className="space-y-4" data-prueba="bandeja" aria-labelledby="titulo-bandeja">
+    <section className="space-y-4" data-prueba="bandeja" aria-labelledby="titulo-bandeja" aria-busy={cargando}>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 id="titulo-bandeja" className="font-titulo text-2xl font-semibold">
+          <h2 id="titulo-bandeja" className="text-xl font-bold md:text-2xl">
             Bandeja de casos
           </h2>
           <p className="text-sm text-tinta-suave">Solo lectura: los casos que escaló el sistema, con su resumen.</p>
         </div>
-        <Boton onClick={cargar}>Cargar casos</Boton>
+        <Boton onClick={cargar} disabled={cargando}>
+          Cargar casos
+        </Boton>
       </div>
       <AvisoDeError texto={error} />
 
       {casos && (
-        <div className="grid gap-3 rounded-2xl border border-borde bg-superficie p-4 sm:grid-cols-3">
-          <label className="flex flex-col gap-1 text-sm font-semibold">
+        <div className="casillas sm:grid-cols-3">
+          <label className="casilla-unida">
             Buscar
-            <input
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              placeholder="Caso o conversación"
-              className="h-10 rounded-xl border border-borde-control px-3 font-normal"
-            />
+            <input value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Caso o conversación" />
           </label>
-          <label className="flex flex-col gap-1 text-sm font-semibold">
+          <label className="casilla-unida">
             Motivo
-            <select value={motivo} onChange={(e) => setMotivo(e.target.value)} className="h-10 rounded-xl border border-borde-control bg-superficie px-3 font-normal">
+            <select value={motivo} onChange={(e) => setMotivo(e.target.value)}>
               <option value="">Todos</option>
               {motivos.map((m) => (
                 <option key={m}>{m}</option>
               ))}
             </select>
           </label>
-          <label className="flex flex-col gap-1 text-sm font-semibold">
+          <label className="casilla-unida">
             Estado
-            <select value={estado} onChange={(e) => setEstado(e.target.value)} className="h-10 rounded-xl border border-borde-control bg-superficie px-3 font-normal">
+            <select value={estado} onChange={(e) => setEstado(e.target.value)}>
               <option value="">Todos</option>
               {estados.map((e) => (
                 <option key={e}>{e}</option>
@@ -203,60 +215,72 @@ function Bandeja({ token }) {
       {!casos ? (
         <Vacio titulo="Sin casos cargados" texto="Escribe el token de funcionario y carga la bandeja." />
       ) : !visibles.length ? (
-        <Vacio titulo="No hay casos con esos filtros" texto="Cambia la búsqueda o el motivo." />
+        <Vacio titulo="No hay casos con esos filtros" texto="Cambia la búsqueda, el motivo o el estado." />
       ) : (
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-          <ul className="space-y-2" aria-label={`${visibles.length} casos`}>
-            {visibles.map((c) => (
-              <li key={c.id_caso}>
-                <button
-                  type="button"
-                  onClick={() => abrir(c.id_caso)}
-                  aria-pressed={detalleVisible?.id_caso === c.id_caso}
-                  className={`w-full rounded-2xl border bg-superficie p-4 text-left transition-colors duration-150 ease-out hover:border-acento ${
-                    detalleVisible?.id_caso === c.id_caso ? "border-acento ring-2 ring-acento/20" : "border-borde"
-                  }`}
-                >
-                  <span className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="font-semibold">{c.id_caso}</span>
-                    <span className="rounded-full bg-superficie-2 px-2.5 py-0.5 text-xs font-semibold text-tinta-suave">{c.estado}</span>
-                  </span>
-                  <span className="mt-1 block text-sm text-tinta">{c.motivo}</span>
-                  <span className="mt-1 block text-xs text-tinta-suave">
-                    {NOMBRES[c.categoria] ?? "Sin clasificar"} · confianza {numero(c.nivel_confianza, 2)} · {fecha(c.fecha_escalamiento)}
-                  </span>
-                </button>
-              </li>
-            ))}
+        <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+          <ul className="divide-y divide-renglon overflow-hidden rounded-casilla border border-borde-control bg-hoja" aria-label={`${visibles.length} casos`}>
+            {visibles.map((c) => {
+              const elegido = detalleVisible?.id_caso === c.id_caso;
+              return (
+                <li key={c.id_caso}>
+                  <button
+                    type="button"
+                    onClick={() => abrir(c.id_caso)}
+                    aria-pressed={elegido}
+                    className={`w-full px-4 py-3 text-left focus-visible:-outline-offset-3 active:scale-100 ${
+                      elegido
+                        ? "bg-sello-suave ring-2 ring-sello ring-inset focus-visible:outline-tinta focus-visible:-outline-offset-6"
+                        : "hover:bg-papel"
+                    }`}
+                  >
+                    <span className="flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="font-titulo text-lg font-bold [font-stretch:87.5%]">{c.id_caso}</span>
+                      <span className="rounded-casilla border border-borde-control px-2 text-xs font-semibold text-tinta-suave">{c.estado}</span>
+                    </span>
+                    <span className="mt-0.5 block text-sm text-tinta">{c.motivo}</span>
+                    <span className="mt-0.5 block text-xs text-tinta-suave">
+                      {c.categoria ? nombre(c.categoria) : "Sin clasificar"}, confianza {numero(c.nivel_confianza, 2)}. {fecha(c.fecha_escalamiento)}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
           {detalleVisible ? (
-            <article className="animate-entrada space-y-4 rounded-2xl border border-borde bg-superficie p-5" data-prueba="detalle">
-              <header>
-                <p className="text-xs font-semibold tracking-[0.12em] text-acento uppercase">Detalle del caso</p>
-                <h3 className="font-titulo text-xl font-semibold">{detalleVisible.id_caso}</h3>
-              </header>
-              <p className="rounded-xl bg-superficie-2 p-3 text-sm whitespace-pre-line">{detalleVisible.resumen}</p>
-              <div>
-                <h4 className="text-sm font-semibold">Resumen estructurado</h4>
-                <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
-                  {Object.entries(detalleVisible.resumen_estructurado ?? {}).map(([clave, valor]) => (
-                    <div key={clave} className="contents">
-                      <dt className="text-tinta-suave">{CLAVES_RESUMEN[clave] ?? clave}</dt>
-                      <dd className="font-medium tabular-nums">{valorDelResumen(valor)}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold">Conversación</h4>
-                <ol className="mt-2 space-y-2 text-sm">
-                  {detalleVisible.mensajes.map((m) => (
-                    <li key={m.indice} className="rounded-xl border border-borde px-3 py-2">
-                      <span className="text-xs font-semibold text-tinta-suave">{AUTORES[m.autor] ?? m.autor}</span>
-                      <p className="whitespace-pre-line">{m.texto}</p>
-                    </li>
-                  ))}
-                </ol>
+            <article
+              className="animate-entrada overflow-hidden rounded-casilla border border-sello bg-hoja"
+              data-prueba="detalle"
+              aria-labelledby="titulo-detalle"
+            >
+              <h3 id="titulo-detalle" ref={tituloDetalle} tabIndex={-1} className="banda scroll-mt-4 px-4 py-2 text-lg">
+                {detalleVisible.id_caso}
+              </h3>
+              <div className="space-y-5 p-4 md:p-5">
+                <p className="rounded-casilla bg-papel p-3 text-sm whitespace-pre-line text-wrap">{detalleVisible.resumen}</p>
+                <div>
+                  <h4 className="text-base font-bold">Resumen estructurado</h4>
+                  <dl className="mt-1 text-sm">
+                    {Object.entries(detalleVisible.resumen_estructurado ?? {}).map(([clave, valor]) => (
+                      <div key={clave} className="grid grid-cols-[10rem_1fr] gap-x-4 border-b border-renglon py-1.5">
+                        <dt className="text-tinta-suave">{CLAVES_RESUMEN[clave] ?? clave}</dt>
+                        <dd className="font-semibold tabular-nums">
+                          {clave === "categoria" && valor ? nombre(valor) : valorDelResumen(valor)}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+                <div>
+                  <h4 className="text-base font-bold">Conversación</h4>
+                  <ol className="mt-1 text-sm">
+                    {detalleVisible.mensajes.map((m) => (
+                      <li key={m.indice} className="border-b border-renglon py-2 last:border-b-0">
+                        <span className="text-xs font-semibold text-tinta-suave">{AUTORES[m.autor] ?? m.autor}</span>
+                        <p className="whitespace-pre-line text-wrap">{m.texto}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
               </div>
             </article>
           ) : (
@@ -268,28 +292,34 @@ function Bandeja({ token }) {
   );
 }
 
-// Intensidad del color según el valor; el texto siempre es tinta (contraste de 5:1 o más, porque
-// el acento llega como máximo al 55 % y el error al 40 %).
+// Intensidad del color según el valor; el texto siempre es tinta. El tope de cada color deja el
+// contraste en 4,5:1 o más (lo mide `npm run contraste`, que lee estos valores).
+const TOPE_ACIERTO = 40;
+const TOPE_ERROR = 35;
 function fondoCelda(valor, maximo, diagonal) {
   if (!valor) return undefined;
   const proporcion = valor / maximo;
-  const color = diagonal ? "var(--color-acento)" : "var(--color-error)";
-  const tope = diagonal ? 55 : 40;
-  return `color-mix(in srgb, ${color} ${Math.round(12 + proporcion * (tope - 12))}%, white)`;
+  const color = diagonal ? "var(--color-sello)" : "var(--color-error)";
+  const tope = diagonal ? TOPE_ACIERTO : TOPE_ERROR;
+  return `color-mix(in srgb, ${color} ${Math.round(10 + proporcion * (tope - 10))}%, white)`;
 }
 
 function Metricas({ token }) {
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
 
   useEffect(() => setDatos(null), [token]);
 
   const cargar = async () => {
+    setCargando(true);
     try {
       setDatos(await obtener("/api/v1/admin/metricas", token));
       setError("");
     } catch (e) {
       setError(mensajeParaMostrar(e));
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -305,48 +335,51 @@ function Metricas({ token }) {
     : 1;
 
   return (
-    <section className="space-y-4" data-prueba="metricas" aria-labelledby="titulo-metricas">
+    <section className="space-y-4" data-prueba="metricas" aria-labelledby="titulo-metricas" aria-busy={cargando}>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 id="titulo-metricas" className="font-titulo text-2xl font-semibold">
+          <h2 id="titulo-metricas" className="text-xl font-bold md:text-2xl">
             Métricas de enrutamiento y tiempos
           </h2>
           <p className="text-sm text-tinta-suave">Del registro de interacciones y las etiquetas de los escenarios.</p>
         </div>
-        <Boton onClick={cargar}>Cargar métricas</Boton>
+        <Boton onClick={cargar} disabled={cargando}>
+          Cargar métricas
+        </Boton>
       </div>
       <AvisoDeError texto={error} />
       {!datos ? (
         <Vacio titulo="Sin métricas cargadas" texto="Escribe el token de administrador y carga las métricas." />
       ) : (
         <div className="animate-entrada space-y-5">
-          <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <dl className="casillas grid-cols-2 md:grid-cols-4">
             {[
               ["Exactitud del enrutamiento", numero(datos.exactitud)],
               ["F1 macro", numero(datos.promedio_macro.f1)],
               ["Latencia p50", `${numero(datos.tiempos_ms.mediana, 0)} ms`],
               ["Latencia p95", `${numero(datos.tiempos_ms.p95, 0)} ms`],
               ["Turnos registrados", numero(datos.turnos)],
-              ["Conversaciones etiquetadas", numero(datos.turnos_etiquetados)],
+              ["Turnos etiquetados", numero(datos.turnos_etiquetados)],
               ["Conversaciones escaladas", numero(datos.conversaciones_escaladas)],
               ["Latencia máxima", `${numero(datos.tiempos_ms.maximo, 0)} ms`],
             ].map(([nombre, valor]) => (
-              <div key={nombre} className="rounded-2xl border border-borde bg-superficie p-4">
-                <dt className="text-xs text-tinta-suave">{nombre}</dt>
-                <dd className="mt-1 font-titulo text-2xl font-semibold tabular-nums">{valor}</dd>
+              <div key={nombre} className="bg-hoja px-3 py-2.5">
+                <dt className="text-xs font-semibold text-tinta-suave">{nombre}</dt>
+                <dd className="mt-0.5 font-titulo text-2xl font-bold tabular-nums [font-stretch:87.5%]">{valor}</dd>
               </div>
             ))}
           </dl>
 
-          <div className="rounded-2xl border border-borde bg-superficie">
-            <div className="px-4 pt-4 pb-2">
-              <h3 id="titulo-matriz" className="font-titulo text-lg font-semibold">
-                Matriz de confusión
-              </h3>
-              <p className="text-xs text-tinta-suave">
-                Filas: categoría esperada · columnas: la del sistema · la diagonal son los aciertos
+          <div className="overflow-hidden rounded-casilla border border-sello bg-hoja">
+            <h3 id="titulo-matriz" className="banda px-4 py-2 text-lg">
+              Matriz de confusión
+            </h3>
+            <div className="px-4 pt-3 pb-2">
+              <p className="text-sm text-tinta-suave">
+                Cada fila es la categoría esperada y cada columna, la que eligió el sistema; la
+                diagonal son los aciertos.
               </p>
-              <p className="text-xs text-tinta-suave sm:hidden">Desliza la tabla para ver todas las columnas.</p>
+              <p className="text-sm text-tinta-suave sm:hidden">Desliza la tabla para ver todas las columnas.</p>
             </div>
             <div className="overflow-x-auto">
             <table
@@ -372,7 +405,7 @@ function Metricas({ token }) {
               </thead>
               <tbody>
                 {categorias.map((fila) => (
-                  <tr key={fila} className="border-t border-borde">
+                  <tr key={fila} className="border-t border-renglon">
                     <th scope="row" className="px-3 py-2 text-left font-semibold">
                       {nombre(fila)}
                     </th>
@@ -395,9 +428,9 @@ function Metricas({ token }) {
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-borde bg-superficie">
+          <div className="overflow-x-auto rounded-casilla border border-sello bg-hoja">
             <table className="w-full text-sm tabular-nums">
-              <caption className="px-4 pt-4 pb-2 text-left font-titulo text-lg font-semibold">Por categoría</caption>
+              <caption className="banda px-4 py-2 text-left text-lg">Por categoría</caption>
               <thead>
                 <tr className="text-xs text-tinta-suave">
                   <th scope="col" className="px-4 py-2 text-left font-semibold">Categoría</th>
@@ -418,7 +451,7 @@ function Metricas({ token }) {
               </thead>
               <tbody>
                 {Object.entries(datos.por_categoria).map(([categoria, m]) => (
-                  <tr key={categoria} className="border-t border-borde">
+                  <tr key={categoria} className="border-t border-renglon">
                     <th scope="row" className="px-3 py-2 text-left font-semibold sm:px-4">
                       {nombre(categoria)}
                     </th>
@@ -428,8 +461,8 @@ function Metricas({ token }) {
                     <td className="px-2 py-2 sm:px-4">
                       <span className="flex items-center gap-2">
                         <span className="font-semibold sm:w-12 sm:text-right">{numero(m.f1, 3, true)}</span>
-                        <span className="hidden h-2 w-24 overflow-hidden rounded-full bg-superficie-2 sm:block" aria-hidden="true">
-                          <span className="block h-full rounded-full bg-acento" style={{ width: `${(m.f1 ?? 0) * 100}%` }} />
+                        <span className="hidden h-2 w-24 overflow-hidden rounded-[2px] bg-papel-2 sm:block" aria-hidden="true">
+                          <span className="block h-full bg-sello" style={{ width: `${(m.f1 ?? 0) * 100}%` }} />
                         </span>
                       </span>
                     </td>
@@ -458,32 +491,33 @@ export default function Consola() {
 
   return (
     <div className="min-h-dvh bg-papel font-texto text-tinta">
-      <div className="franja-simulada border-b border-advertencia-borde px-4 py-2 text-center text-sm font-semibold text-advertencia">
-        Entorno simulado de pruebas · datos sintéticos
+      <div className="rotulo px-4 py-2 text-center text-base md:text-lg">
+        Entorno simulado de pruebas con datos sintéticos
       </div>
-      <header className="border-b border-borde bg-superficie">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
+      <header className="border-b border-renglon bg-hoja">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-3 px-4 py-4 sm:px-6">
           <div>
-            <p className="text-xs font-semibold tracking-[0.14em] text-acento uppercase">Sistema multiagente de IA</p>
-            <h1 className="font-titulo text-2xl font-semibold md:text-3xl">Consola</h1>
+            <h1 className="text-2xl font-bold md:text-3xl">Consola</h1>
+            <p className="text-sm text-tinta-suave">Sistema multiagente de IA, para funcionarios y administradores</p>
           </div>
-          <div className="flex flex-wrap items-center gap-3 text-sm">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
             <span
               data-prueba="salud"
-              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold ${sano ? "bg-exito-suave text-exito" : "bg-superficie-2 text-tinta-suave"}`}
+              className={`inline-flex items-center gap-2 font-semibold ${sano ? "text-funcionario" : "text-tinta-suave"}`}
             >
-              <span className={`h-2 w-2 rounded-full ${sano ? "bg-exito" : "bg-tinta-suave"}`} aria-hidden="true" />
+              <span className={`h-2.5 w-2.5 rounded-full ${sano ? "bg-funcionario" : "bg-tinta-suave"}`} aria-hidden="true" />
               Servicio: {salud?.estado ?? "…"}
-              {salud?.version ? ` · v${salud.version}` : ""}
+              {salud?.version ? ` (v${salud.version})` : ""}
             </span>
-            <a href={LANGSMITH} target="_blank" rel="noreferrer" className="font-semibold text-acento underline underline-offset-4">
+            <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-block py-1 font-semibold text-sello underline">
               Trazas en LangSmith
+              <span className="sr-only"> (se abre en otra pestaña)</span>
             </a>
           </div>
         </div>
       </header>
       <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
-        <div className="grid gap-4 rounded-2xl border border-borde bg-superficie p-5 md:grid-cols-2">
+        <div className="casillas md:grid-cols-2">
           <Token
             id="token-funcionario"
             etiqueta="Token de funcionario (bandeja)"
@@ -505,7 +539,7 @@ export default function Consola() {
             }}
           />
         </div>
-        <nav className="inline-flex rounded-xl border border-borde bg-superficie p-1" aria-label="Vistas de la consola">
+        <nav className="flex gap-1 border-b-2 border-sello" aria-label="Vistas de la consola">
           {[
             ["bandeja", "Bandeja"],
             ["metricas", "Métricas"],
@@ -515,8 +549,8 @@ export default function Consola() {
               type="button"
               onClick={() => setVista(clave)}
               aria-pressed={vista === clave}
-              className={`rounded-lg px-5 py-2 text-sm font-semibold transition-colors duration-150 ease-out ${
-                vista === clave ? "bg-acento text-white" : "text-tinta-suave hover:text-tinta"
+              className={`min-h-11 rounded-t-control px-5 text-sm font-semibold active:scale-100 ${
+                vista === clave ? "bg-sello text-hoja" : "bg-papel-2 text-tinta hover:bg-sello-suave hover:text-sello"
               }`}
             >
               {nombre}

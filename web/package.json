@@ -9,11 +9,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "playwright test",
-    "capturas": "CAPTURAS=1 playwright test"
+    "capturas": "CAPTURAS=1 playwright test",
+    "contraste": "node scripts/contraste.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "5.3.0",
     "@fontsource-variable/atkinson-hyperlegible-next": "5.3.0",
-    "@fontsource-variable/literata": "5.3.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },

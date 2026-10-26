@@ -31,22 +31,22 @@ const SUGERENCIAS = [
   "¿Hasta cuándo pago el predial con descuento?",
   "¿Cuándo declaro el ICA este año?",
 ];
-// Etiqueta y color de cada interlocutor: el color acompaña, la etiqueta informa.
+// Pestaña y borde de cada interlocutor: el color acompaña, la etiqueta informa.
 const QUIEN = {
   agente: {
     etiqueta: "Asistente de IA",
-    chip: "bg-acento-suave text-acento",
-    burbuja: "border-l-acento",
+    pestana: "bg-sello text-hoja",
+    borde: "border-sello",
   },
   funcionario: {
     etiqueta: "Funcionario",
-    chip: "bg-exito-suave text-exito",
-    burbuja: "border-l-exito",
+    pestana: "bg-funcionario text-hoja",
+    borde: "border-funcionario",
   },
   sistema: {
     etiqueta: "Sistema",
-    chip: "bg-superficie-2 text-tinta-suave",
-    burbuja: "border-l-borde-control",
+    pestana: "bg-papel-2 text-tinta",
+    borde: "border-borde-control",
   },
 };
 const VUELVE = /Vuelvo a atender el (.+? [ap]\. m\.)/;
@@ -76,20 +76,17 @@ function IconoReloj() {
   );
 }
 
+// La pestaña de carpeta con el nombre de quien habla, pegada a su mensaje.
 function Etiqueta({ autor }) {
   const quien = QUIEN[autor] ?? QUIEN.sistema;
-  return (
-    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${quien.chip}`}>
-      {quien.etiqueta}
-    </span>
-  );
+  return <span className={`pestana ${quien.pestana}`}>{quien.etiqueta}</span>;
 }
 
 function Burbuja({ mensaje }) {
   if (mensaje.autor === "contribuyente") {
     return (
       <div className="flex animate-entrada justify-end">
-        <p className="max-w-[85%] rounded-burbuja rounded-br-md bg-acento-fuerte px-4 py-2.5 text-sm whitespace-pre-line text-white">
+        <p className="max-w-[85%] rounded-mensaje rounded-br-casilla bg-tinta px-4 py-2.5 text-base whitespace-pre-line text-wrap text-hoja">
           {mensaje.archivo ? (
             <span className="inline-flex items-center gap-1.5">
               <IconoClip />
@@ -106,18 +103,18 @@ function Burbuja({ mensaje }) {
   if (mensaje.estado === "fuera_de_horario") {
     const vuelve = VUELVE.exec(mensaje.texto)?.[1];
     return (
-      <article className="animate-entrada space-y-2 rounded-2xl border border-advertencia-borde bg-advertencia-suave p-4" data-autor={mensaje.autor}>
-        <div className="flex items-center gap-2">
-          <Etiqueta autor={mensaje.autor} />
-          <span className="text-xs font-semibold text-advertencia">Fuera del horario de atención</span>
+      <article className="flex animate-entrada flex-col items-start" data-autor={mensaje.autor}>
+        <Etiqueta autor={mensaje.autor} />
+        <div className="w-full space-y-2 rounded-mensaje rounded-tl-none border border-advertencia-borde bg-advertencia-suave p-4">
+          <p className="text-sm font-semibold text-advertencia">Fuera del horario de atención</p>
+          {vuelve && (
+            <p className="flex items-center gap-2 font-titulo text-lg leading-snug font-bold text-advertencia [font-stretch:87.5%]">
+              <IconoReloj />
+              Vuelve a atender el {vuelve}
+            </p>
+          )}
+          <p className="text-base text-tinta">{mensaje.texto}</p>
         </div>
-        {vuelve && (
-          <p className="flex items-center gap-2 font-titulo text-base font-semibold text-advertencia">
-            <IconoReloj />
-            Vuelve a atender el {vuelve}
-          </p>
-        )}
-        <p className="text-sm text-tinta">{mensaje.texto}</p>
       </article>
     );
   }
@@ -125,21 +122,20 @@ function Burbuja({ mensaje }) {
   const problema = mensaje.estado === "error" || mensaje.estado === "rechazo_acceso";
   const { cuerpo, fuentes } = separarFuentes(mensaje.texto);
   return (
-    <article className="flex animate-entrada flex-col items-start gap-1.5" data-autor={mensaje.autor}>
+    <article className="flex animate-entrada flex-col items-start" data-autor={mensaje.autor}>
       <Etiqueta autor={mensaje.autor} />
       <div
-        className={`max-w-[92%] rounded-burbuja rounded-tl-md border border-l-4 px-4 py-3 ${
-          problema ? "border-error/40 border-l-error bg-error-suave" : `border-borde bg-superficie ${quien.burbuja}`
+        className={`max-w-[92%] rounded-mensaje rounded-tl-none border px-4 py-3 ${
+          problema ? "border-error bg-error-suave" : `bg-hoja ${quien.borde}`
         }`}
       >
-        <p className="text-sm whitespace-pre-line text-tinta">{cuerpo}</p>
+        <p className="text-base whitespace-pre-line text-wrap text-tinta">{cuerpo}</p>
         {fuentes.length > 0 && (
-          <div className="mt-3 border-t border-borde pt-2">
-            <p className="text-xs font-semibold tracking-wide text-tinta-suave uppercase">Fuentes</p>
-            <ul className="mt-1 space-y-0.5 text-xs text-tinta-suave">
+          <div className="mt-3 border-t border-renglon pt-2">
+            <p className="text-sm font-semibold text-tinta">Fuentes</p>
+            <ul className="mt-1 space-y-1 text-sm text-tinta-suave">
               {fuentes.map((f) => (
-                <li key={f} className="flex gap-1.5">
-                  <span aria-hidden="true">·</span>
+                <li key={f} className="border-l border-borde-control pl-2.5">
                   {f}
                 </li>
               ))}
@@ -153,11 +149,11 @@ function Burbuja({ mensaje }) {
 
 function Escribiendo() {
   return (
-    <div className="flex animate-entrada items-center gap-2">
+    <div className="flex animate-entrada flex-col items-start">
       <Etiqueta autor="agente" />
-      <span className="flex gap-1 rounded-full bg-superficie px-3 py-2" aria-hidden="true">
+      <span className="flex gap-1.5 rounded-mensaje rounded-tl-none border border-sello bg-hoja px-4 py-3" aria-hidden="true">
         {[0, 150, 300].map((retraso) => (
-          <span key={retraso} className="h-1.5 w-1.5 animate-punto rounded-full bg-acento" style={{ animationDelay: `${retraso}ms` }} />
+          <span key={retraso} className="h-2 w-2 animate-punto rounded-full bg-sello" style={{ animationDelay: `${retraso}ms` }} />
         ))}
       </span>
       <span className="sr-only">El asistente está escribiendo</span>
@@ -324,20 +320,20 @@ export default function Widget() {
       ? "Te atiende un funcionario"
       : "Tu caso está con un funcionario"
     : "Te atiende un asistente de IA";
-  const punto = escalada ? "bg-exito-suave" : "bg-acento-suave";
+  const punto = escalada ? "bg-funcionario-suave" : "bg-sello-suave";
 
   return (
     <div className="flex h-dvh flex-col bg-papel font-texto text-tinta">
-      <header className="bg-acento px-4 pt-3 pb-3 text-white">
+      <header className="sobre-oscuro bg-sello px-4 pt-3 pb-3 text-hoja">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="font-titulo text-lg leading-tight font-semibold">Asistente tributario</h1>
-            <p className="mt-1 flex items-center gap-1.5 text-xs text-white" data-prueba="interlocutor" aria-live="polite">
+            <h1 className="text-xl leading-tight font-bold">Asistente tributario</h1>
+            <p className="mt-0.5 flex items-center gap-1.5 text-sm" data-prueba="interlocutor" aria-live="polite">
               <span className={`inline-block h-2 w-2 rounded-full ${punto}`} aria-hidden="true" />
               {estadoActual}
             </p>
           </div>
-          <span className="shrink-0 rounded-full border border-white/40 px-2.5 py-0.5 text-xs">
+          <span className="shrink-0 rounded-casilla border border-hoja/60 px-2 py-0.5 text-xs font-semibold">
             {token ? "Sesión iniciada" : "Sin sesión"}
           </span>
         </div>
@@ -345,7 +341,7 @@ export default function Widget() {
           type="button"
           onClick={funcionario}
           disabled={ocupado || escalada}
-          className="mt-3 w-full rounded-lg bg-white px-3 py-2 text-sm font-semibold text-acento-fuerte transition-colors duration-150 ease-out hover:bg-acento-suave focus-visible:outline-white disabled:cursor-default disabled:bg-white/15 disabled:text-white disabled:hover:bg-white/15"
+          className="mt-2.5 min-h-11 w-full rounded-control border border-hoja/80 px-3 text-sm font-semibold text-hoja enabled:hover:bg-hoja enabled:hover:text-sello disabled:cursor-default disabled:border-dashed disabled:border-hoja/60"
         >
           {escalada ? "Ya pediste un funcionario" : "Hablar con un funcionario"}
         </button>
@@ -353,27 +349,29 @@ export default function Widget() {
 
       <main ref={zona} className="flex-1 space-y-4 overflow-y-auto px-4 py-4" aria-live="polite" aria-relevant="additions">
         <section
-          className="rounded-2xl border border-acento/25 bg-acento-suave p-4 text-sm text-tinta"
+          className="overflow-hidden rounded-casilla border border-sello bg-hoja text-base text-tinta"
           data-prueba="aviso-ia"
           aria-label="Aviso de inteligencia artificial"
         >
-          <p className="mb-1 font-titulo text-base font-semibold text-acento-fuerte">Antes de empezar</p>
-          <p>{AVISO_IA}.</p>
+          <p className="bg-sello-suave px-4 py-1.5 font-titulo text-base font-bold text-sello [font-stretch:87.5%]">
+            Antes de empezar
+          </p>
+          <p className="px-4 py-3">{AVISO_IA}.</p>
         </section>
 
         {mensajes.length === 0 && !ocupado && (
-          <section className="space-y-3 rounded-2xl border border-dashed border-borde-control/50 p-4" aria-label="Sugerencias">
-            <p className="font-titulo text-base font-semibold">¿En qué te ayudo?</p>
+          <section className="space-y-2" aria-label="Sugerencias">
+            <p className="font-titulo text-lg font-bold [font-stretch:87.5%]">¿En qué te ayudo?</p>
             <p className="text-sm text-tinta-suave">
               Pregunta por el predial o el ICA, o adjunta tu recibo para revisarlo.
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-col items-start gap-2 pt-1">
               {SUGERENCIAS.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => preguntar(s)}
-                  className="rounded-full border border-borde-control bg-superficie px-3 py-1.5 text-left text-xs text-tinta transition-colors duration-150 ease-out hover:border-acento hover:text-acento"
+                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello hover:bg-sello-suave hover:text-sello"
                 >
                   {s}
                 </button>
@@ -388,7 +386,7 @@ export default function Widget() {
         {ocupado && <Escribiendo />}
       </main>
 
-      <form onSubmit={enviar} className="border-t border-borde bg-superficie px-3 pt-3 pb-2">
+      <form onSubmit={enviar} className="border-t border-renglon bg-hoja px-3 pt-3 pb-2">
         <div className="flex items-center gap-2">
           <input
             ref={archivo}
@@ -405,7 +403,7 @@ export default function Widget() {
             onClick={() => archivo.current?.click()}
             disabled={ocupado}
             aria-label="Adjuntar recibo (JPG, PNG o PDF, hasta 5 MB)"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-borde-control text-tinta-suave transition-colors duration-150 ease-out hover:border-acento hover:text-acento disabled:opacity-50"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-control border border-borde-control text-tinta-suave enabled:hover:border-sello enabled:hover:text-sello disabled:border-dashed disabled:text-tinta-suave/70"
           >
             <IconoClip />
           </button>
@@ -419,18 +417,18 @@ export default function Widget() {
             maxLength={2000}
             placeholder="Escribe tu consulta"
             autoComplete="off"
-            className="h-11 min-w-0 flex-1 rounded-xl border border-borde-control bg-superficie px-3 text-sm text-tinta placeholder:text-tinta-suave focus:border-acento"
+            className="h-11 min-w-0 flex-1 rounded-control border border-borde-control bg-hoja px-3 text-base text-tinta placeholder:text-tinta-suave focus:border-sello"
           />
           <button
             type="submit"
             disabled={ocupado || !texto.trim()}
-            className="h-11 shrink-0 rounded-xl bg-acento px-4 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:bg-superficie-2 disabled:text-tinta-suave"
+            className="h-11 shrink-0 rounded-control bg-sello px-4 text-sm font-semibold text-hoja enabled:hover:bg-sello-fuerte disabled:bg-papel-2 disabled:text-tinta-suave"
           >
             Enviar
           </button>
         </div>
         <p className="mt-1.5 text-xs text-tinta-suave">
-          Recibos en JPG, PNG o PDF, de hasta {TAMANO_MAXIMO_MB} MB · Entorno de pruebas con datos sintéticos
+          Recibos en JPG, PNG o PDF, de hasta {TAMANO_MAXIMO_MB} MB. Entorno de pruebas con datos sintéticos.
         </p>
       </form>
     </div>
