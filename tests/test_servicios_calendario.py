@@ -112,6 +112,7 @@ def test_el_viernes_13_de_noviembre_tras_las_5_pm_abre_el_martes_17_a_las_8() ->
     aviso = h.aviso_fuera_de_horario(_hora(13, 17, 30))
     assert "martes 17 de noviembre de 2026 a las 8:00 a. m." in aviso
     assert "8:00 a. m. a 5:00 p. m." in aviso and "festivos" in aviso
+    assert ".." not in aviso
 
 
 @pytest.mark.unit
