@@ -1,7 +1,8 @@
 // B11: OVT simulada, widget y consola (RF-UI-01 a RF-UI-04, RF-SYS-06, RF-ESC-05 y RNF-07),
 // con la API simulada en el navegador. Los 6 flujos corren en 1280 px y en 390 px; con
-// CAPTURAS=1, cada uno guarda su captura en docs/capturas/. Cada flujo lleva sus requerimientos
-// como anotación `req`, que lee scripts/trazabilidad.py.
+// CAPTURAS=1, cada uno guarda su captura en docs/capturas/ y cuatro de ellos, también la del modo
+// oscuro. Al final, las pruebas del tema claro u oscuro y del ancho mínimo (360 px). Cada flujo
+// lleva sus requerimientos como anotación `req`, que lee scripts/trazabilidad.py.
 import { expect, test } from "@playwright/test";
 
 import { TEXTOS, simularApi } from "./simulador.js";
@@ -14,6 +15,9 @@ const PNG = Buffer.from(
 );
 const ESCRITORIO = { width: 1280, height: 800 };
 const CELULAR = { width: 390, height: 844 };
+const MINIMO = { width: 360, height: 740 };
+// Capturas que también se toman en modo oscuro (con el sufijo _oscuro).
+const CAPTURAS_OSCURAS = ["ovt_simulada", "widget_respuesta", "widget_fuera_de_horario", "consola_metricas"];
 
 test.use({ testIdAttribute: "data-prueba" });
 
@@ -35,6 +39,10 @@ async function fuentesListas(page) {
 
 async function capturar(page, nombre, { completa = false } = {}) {
   if (!CAPTURAS) return;
+  if ((await page.locator("html").getAttribute("data-tema")) === "oscuro") {
+    if (!CAPTURAS_OSCURAS.includes(nombre)) return;
+    nombre = `${nombre}_oscuro`;
+  }
   await fuentesListas(page);
   await page.waitForTimeout(100); // el widget recalcula su altura con el rótulo ya dibujado
   // Con las fuentes cargadas cambia el alto del texto: la conversación vuelve al final (si hay
@@ -254,4 +262,160 @@ for (const { nombre, flujo, req } of FLUJOS) {
   const anotaciones = { annotation: req.map((r) => ({ type: "req", description: r })) };
   test(nombre, anotaciones, async ({ page }) => flujo(page, ESCRITORIO));
   test(`${nombre} (390 px)`, anotaciones, async ({ page }) => flujo(page, CELULAR));
+  // Las capturas del modo oscuro salen de los mismos flujos, con el sistema en modo oscuro: la
+  // página arranca oscura y le pasa el tema al widget.
+  if (CAPTURAS && CAPTURAS_OSCURAS.some((c) => flujo.toString().includes(`"${c}"`))) {
+    for (const tamano of [ESCRITORIO, CELULAR]) {
+      test(`${nombre} (modo oscuro, ${tamano.width} px)`, anotaciones, async ({ page }) => {
+        await page.emulateMedia({ colorScheme: "dark" });
+        await flujo(page, tamano);
+      });
+    }
+  }
+}
+
+// -- Tema claro u oscuro --------------------------------------------------------------------------
+
+const temaDe = (pagina) => pagina.locator("html");
+const widgetHtml = (page) => page.frameLocator("iframe[data-realtix-widget]").locator("html");
+
+for (const ruta of ["/ovt/", "/consola/"]) {
+  test(`tema en ${ruta}: el botón «Modo oscuro» cambia el tema y lo recuerda al recargar`, async ({ page }) => {
+    await simularApi(page);
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.goto(ruta);
+    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "claro"); // arranca con el del sistema
+    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await boton.click();
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
+    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await page.reload();
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro"); // la elección se recuerda
+    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await boton.click();
+    await page.reload();
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
+    await expect(boton).toHaveAttribute("aria-pressed", "false");
+  });
+
+  test(`tema en ${ruta}: arranca oscuro con el sistema y funciona sin localStorage`, async ({ page }) => {
+    const errores = [];
+    page.on("pageerror", (error) => errores.push(error.message));
+    await simularApi(page);
+    await page.addInitScript(() => {
+      Object.defineProperty(window, "localStorage", {
+        get() {
+          throw new Error("almacenamiento bloqueado");
+        },
+      });
+    });
+    await page.emulateMedia({ colorScheme: "dark" });
+    await page.goto(ruta);
+    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
+    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await boton.click();
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
+    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(errores).toEqual([]);
+  });
+}
+
+test(
+  "tema: el widget recibe el de la página y solo acepta «claro» u «oscuro» de quien lo inserta",
+  { annotation: [{ type: "req", description: "RF-UI-01 · Widget embebible" }] },
+  async ({ page }) => {
+    await simularApi(page);
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.setViewportSize(ESCRITORIO);
+    await page.goto("/ovt/");
+    const widget = page.frameLocator("iframe[data-realtix-widget]");
+    await expect(widget.getByTestId("aviso-ia")).toBeVisible();
+    await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
+    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    await boton.click();
+    await expect(widgetHtml(page)).toHaveAttribute("data-tema", "oscuro");
+    await boton.click();
+    await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
+
+    // Valores no válidos desde la página: se ignoran.
+    await page.evaluate(() => {
+      const destino = document.querySelector("iframe[data-realtix-widget]").contentWindow;
+      for (const tema of ["azul", "", null, 1, "oscuro ", "OSCURO", undefined]) {
+        destino.postMessage({ tipo: "realtix-tema", tema }, window.location.origin);
+      }
+    });
+    // Un tema válido enviado desde otro marco (no desde la página que lo inserta): se ignora.
+    await page.evaluate(
+      () =>
+        new Promise((listo) => {
+          const otro = document.createElement("iframe");
+          otro.srcdoc =
+            "<script>parent.document.querySelector('iframe[data-realtix-widget]').contentWindow" +
+            ".postMessage({ tipo: 'realtix-tema', tema: 'oscuro' }, '*');</" + "script>";
+          otro.onload = () => listo();
+          document.body.appendChild(otro);
+        }),
+    );
+    const marco = page.frames().find((f) => f.url().endsWith("/widget/"));
+    await marco.evaluate(() => new Promise((listo) => setTimeout(listo, 200))); // ya los procesó
+    await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
+    await expect(widgetHtml(page)).not.toHaveAttribute("data-tema-pendiente", /.*/);
+  },
+);
+
+test(
+  "tema: sin página que lo inserte, el widget sigue el del sistema",
+  { annotation: [{ type: "req", description: "RF-UI-01 · Widget embebible" }] },
+  async ({ page }) => {
+    await simularApi(page);
+    await page.emulateMedia({ colorScheme: "dark" });
+    await page.goto("/widget/");
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
+    await expect(page.getByTestId("aviso-ia")).toBeVisible();
+    await page.emulateMedia({ colorScheme: "light" });
+    await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
+  },
+);
+
+// Sin desplazamiento horizontal desde 360 px, en los dos modos. La matriz de la consola se desliza
+// dentro de su propio contenedor (y lo avisa), no la página.
+const sinDesborde = async (marco) =>
+  expect(await marco.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+
+for (const esquema of ["light", "dark"]) {
+  const modo = esquema === "dark" ? "oscuro" : "claro";
+  test(`ancho mínimo: sin desplazamiento horizontal desde 360 px (modo ${modo})`, async ({ page }) => {
+    await simularApi(page);
+    await page.emulateMedia({ colorScheme: esquema });
+    for (const ancho of [MINIMO, CELULAR]) {
+      await page.setViewportSize(ancho);
+      await page.goto("/ovt/");
+      await expect(temaDe(page)).toHaveAttribute("data-tema", modo);
+      await sinDesborde(page);
+      await page.getByRole("button", { name: "Asistente tributario" }).click();
+      const widget = page.frameLocator("iframe[data-realtix-widget]");
+      await expect(widget.getByTestId("aviso-ia")).toBeVisible();
+      await expect(widgetHtml(page)).toHaveAttribute("data-tema", modo);
+      await sinDesborde(page);
+      await sinDesborde(page.frames().find((f) => f.url().endsWith("/widget/")));
+
+      await page.goto("/widget/");
+      await sinDesborde(page);
+
+      await page.goto("/consola/");
+      await page.getByLabel("Token de funcionario (bandeja)").fill("token-funcionario");
+      await page.getByRole("button", { name: "Cargar casos" }).click();
+      await page.getByRole("button", { name: /CASO-conv-91bc/ }).click();
+      await expect(page.getByTestId("detalle")).toBeVisible();
+      await sinDesborde(page);
+      await page.getByRole("button", { name: "Métricas" }).click();
+      await page.getByLabel("Token de administrador (métricas)").fill("token-admin");
+      await page.getByRole("button", { name: "Cargar métricas" }).click();
+      await expect(page.getByTestId("matriz")).toBeVisible();
+      await sinDesborde(page);
+    }
+  });
 }
