@@ -14,15 +14,18 @@ from fastapi.responses import JSONResponse
 from langchain_core.messages import AIMessage, HumanMessage
 
 from src.agents.graph import configuracion_de_hilo
-from src.api.comun import Evaluacion, Servicios, SesionOpcional, turno
+from src.api.acceso import Sesion
+from src.api.comun import MENSAJE_CONVERSACION_AJENA, Evaluacion, Servicios, SesionOpcional, turno
 from src.api.esquemas import (
+    AVISO_IA,
     PATRON_ID,
     MensajeConversacion,
     MensajesConversacion,
+    Meta,
     RespuestaChat,
     SolicitudMensaje,
 )
-from src.api.turno import SolicitudTurno
+from src.api.turno import ConversacionAjenaError, SolicitudTurno, abrir_conversacion
 
 router = APIRouter(prefix="/api/v1/chat", tags=["chat"])
 
@@ -69,11 +72,21 @@ def documento(
     contenido = archivo.file.read(limite + 1)
 
     def rechazo(codigo: int, texto: str) -> JSONResponse:
+        """413 o 415 con el formato del chat; también abre la conversación y lleva el aviso de IA
+        si es la primera respuesta (sección 3.8)."""
+        nueva = False
+        if isinstance(sesion, Sesion) or sesion is None:
+            try:
+                nueva = abrir_conversacion(servicios, id_conversacion, sesion)
+            except ConversacionAjenaError:
+                raise HTTPException(status_code=403, detail=MENSAJE_CONVERSACION_AJENA) from None
         cuerpo = RespuestaChat(
             id_conversacion=id_conversacion,
             respuesta=texto,
+            aviso_ia=AVISO_IA if nueva else None,
             interlocutor="sistema",
             estado="aclaracion",
+            meta=Meta(version=servicios.version),
         )
         return JSONResponse(cuerpo.model_dump(), status_code=codigo)
 
@@ -115,7 +128,8 @@ def mensajes(
     if estado is None:
         raise HTTPException(status_code=404, detail="No encontré esa conversación.")
     dueno = servicios.almacen.contribuyente_de_conversacion(id_conversacion)
-    if dueno is not None and (sesion is None or sesion.contribuyente_id != dueno):
+    propia = isinstance(sesion, Sesion) and sesion.contribuyente_id == dueno
+    if dueno is not None and not propia:
         raise HTTPException(status_code=403, detail="Esta conversación pertenece a otra sesión.")
     lista = historial(servicios, id_conversacion)
     return MensajesConversacion(

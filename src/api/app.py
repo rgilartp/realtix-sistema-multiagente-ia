@@ -14,11 +14,12 @@ contenedor; las pruebas inyectan los suyos (SQLite, `MemorySaver` y modelos fals
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from http import HTTPStatus
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from langgraph.graph.state import CompiledStateGraph
 from starlette.exceptions import HTTPException
 
@@ -33,6 +34,11 @@ registro = logging.getLogger(__name__)
 
 CABECERAS_DE_PRUEBA = ("X-Escenario-Id", "X-Reloj-Simulado", "X-Falla-Inyectada")
 MENSAJE_FORMATO = "La solicitud no tiene el formato esperado: revisa los campos que enviaste."
+RUTAS_DE_DOCUMENTACION = ("/docs", "/redoc", "/openapi.json")
+MENSAJES_HTTP = {
+    404: "No encontré lo que buscas.",
+    405: "Esa ruta no acepta este método.",
+}
 MENSAJE_INTERNO = (
     "No pudimos atender la solicitud en este momento. Intenta de nuevo en unos minutos."
 )
@@ -95,26 +101,39 @@ def crear_app(servicios: ServiciosAPI | None = None) -> FastAPI:
     )
     politica = f"default-src 'none'; frame-ancestors {' '.join(origenes) or "'none'"}"
 
-    @app.middleware("http")
-    async def cabeceras_de_seguridad(request: Request, siguiente):  # noqa: ANN001, ANN202
-        respuesta = await siguiente(request)
-        respuesta.headers["Content-Security-Policy"] = politica
+    def poner_cabeceras(respuesta: Response, ruta: str) -> Response:
+        # La documentación interactiva (/docs) carga scripts y estilos: no lleva la CSP estricta.
+        if not ruta.startswith(RUTAS_DE_DOCUMENTACION):
+            respuesta.headers["Content-Security-Policy"] = politica
         respuesta.headers["X-Content-Type-Options"] = "nosniff"
         respuesta.headers["Referrer-Policy"] = "no-referrer"
         return respuesta
 
+    @app.middleware("http")
+    async def cabeceras_de_seguridad(request: Request, siguiente):  # noqa: ANN001, ANN202
+        return poner_cabeceras(await siguiente(request), request.url.path)
+
     @app.exception_handler(HTTPException)
     async def error_http(_: Request, error: HTTPException) -> JSONResponse:
-        return JSONResponse({"detalle": str(error.detail)}, status_code=error.status_code)
+        detalle = str(error.detail)
+        if detalle == HTTPStatus(error.status_code).phrase:  # los de Starlette, en inglés
+            detalle = MENSAJES_HTTP.get(error.status_code, MENSAJE_INTERNO)
+        return JSONResponse({"detalle": detalle}, status_code=error.status_code)
 
     @app.exception_handler(RequestValidationError)
     async def error_de_formato(_: Request, __: RequestValidationError) -> JSONResponse:
         return JSONResponse({"detalle": MENSAJE_FORMATO}, status_code=422)
 
     @app.exception_handler(Exception)
-    async def error_interno(_: Request, error: Exception) -> JSONResponse:
+    async def error_interno(request: Request, error: Exception) -> Response:
+        # Este manejador corre por fuera de los middlewares: las cabeceras se ponen aquí.
         registro.error("Error no controlado en la API", extra={"error": type(error).__name__})
-        return JSONResponse({"detalle": MENSAJE_INTERNO}, status_code=500)
+        respuesta = JSONResponse({"detalle": MENSAJE_INTERNO}, status_code=500)
+        origen = request.headers.get("origin")
+        if origen in origenes:  # para que el widget pueda leer el mensaje
+            respuesta.headers["Access-Control-Allow-Origin"] = origen
+            respuesta.headers["Vary"] = "Origin"
+        return poner_cabeceras(respuesta, request.url.path)
 
     for modulo in (chat, predios, escalamiento, admin, ovt_simulada):
         app.include_router(modulo.router)

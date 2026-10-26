@@ -4,11 +4,12 @@ from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException, Request
 
-from src.api.acceso import Sesion, resolver_sesion
+from src.api.acceso import Sesion, SesionNoVerificada, resolver_sesion
 from src.api.esquemas import RespuestaChat
 from src.api.evaluacion import EvaluacionTurno, leer_evaluacion
 from src.api.servicios import ServiciosAPI
 from src.api.turno import ConversacionAjenaError, SolicitudTurno, procesar_turno
+from src.integrations.robustez import ServicioNoDisponibleError
 
 MENSAJE_CONVERSACION_AJENA = (
     "Esta conversación pertenece a otra sesión. Abre una conversación nueva para continuar."
@@ -24,14 +25,17 @@ Servicios = Annotated[ServiciosAPI, Depends(obtener_servicios)]
 
 def obtener_sesion(
     servicios: Servicios, authorization: Annotated[str | None, Header()] = None
-) -> Sesion | None:
-    return resolver_sesion(
-        authorization,
-        servicios.settings.ovt_hmac_secret,
-        servicios.adaptador,
-        servicios.nombre_de,
-        servicios.settings.timeout_adaptador_s,
-    )
+) -> Sesion | SesionNoVerificada | None:
+    try:
+        return resolver_sesion(
+            authorization,
+            servicios.settings.ovt_hmac_secret,
+            servicios.adaptador,
+            servicios.nombre_de,
+            servicios.settings.timeout_adaptador_s,
+        )
+    except ServicioNoDisponibleError:  # RNF-08: el adaptador no respondió
+        return SesionNoVerificada()
 
 
 def obtener_evaluacion(
@@ -43,11 +47,16 @@ def obtener_evaluacion(
     return leer_evaluacion(servicios.settings, x_reloj_simulado, x_escenario_id, x_falla_inyectada)
 
 
-SesionOpcional = Annotated[Sesion | None, Depends(obtener_sesion)]
+SesionOpcional = Annotated[Sesion | SesionNoVerificada | None, Depends(obtener_sesion)]
 Evaluacion = Annotated[EvaluacionTurno, Depends(obtener_evaluacion)]
 
 
 def exigir_sesion(sesion: SesionOpcional) -> Sesion:
+    if isinstance(sesion, SesionNoVerificada):
+        raise HTTPException(
+            status_code=503,
+            detail="No pude verificar tu sesión ahora. Intenta de nuevo en unos minutos.",
+        )
     if sesion is None:
         raise HTTPException(
             status_code=401,

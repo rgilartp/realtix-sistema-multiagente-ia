@@ -35,6 +35,11 @@ class Sesion:
     nombres: tuple[str, ...] = ()
 
 
+class SesionNoVerificada:
+    """Hay un token válido pero el adaptador no respondió al cargar los predios: el turno da un
+    aviso en lugar de tratarlo como una consulta sin sesión."""
+
+
 def _b64(datos: bytes) -> str:
     return base64.urlsafe_b64encode(datos).rstrip(b"=").decode("ascii")
 

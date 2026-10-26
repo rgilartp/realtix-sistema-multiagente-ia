@@ -14,23 +14,22 @@ Orden: conversación (y su dueño) → horario → modo humano → grafo → res
 import logging
 import time
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Any
 
 from src.agents.agente import fuente_del_contrato
+from src.agents.dependencias import Dependencias
 from src.agents.graph import configuracion_de_hilo
-from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA, PREFACIOS
+from src.agents.nodes.escalamiento import crear_nodo_escalamiento
 from src.agents.state import entrada_de_turno
-from src.api.acceso import Sesion
+from src.api.acceso import Sesion, SesionNoVerificada
 from src.api.esquemas import AVISO_IA, Fuente, Meta, RespuestaChat
 from src.api.evaluacion import EvaluacionTurno
 from src.api.servicios import ServiciosAPI
-from src.data.models import CasoEscalado
 from src.integrations.costos import UsoPorNodo
 from src.integrations.robustez import falla_inyectada
-from src.integrations.trazas import nombres_de_sesion
+from src.integrations.trazas import metadatos_de_traza, nombres_de_sesion
 from src.services.horario import Horario, RelojFijo
-from src.services.resumen import construir_resumen
 
 registro = logging.getLogger(__name__)
 
@@ -38,7 +37,10 @@ AVISO_MODO_HUMANO = (
     "Tu caso ya está en manos de un funcionario, que te responderá por este medio. Guardé tu "
     "mensaje en el caso para que lo vea."
 )
-AVISO_FALLA = f"{PREFACIOS['fallo de servicio']} {AVISO_TRANSFERENCIA}"
+AVISO_SESION_NO_VERIFICADA = (
+    "En este momento no pude verificar tu sesión de la Oficina Virtual Tributaria. Intenta de "
+    "nuevo en unos minutos."
+)
 
 
 class ConversacionAjenaError(Exception):
@@ -49,7 +51,7 @@ class ConversacionAjenaError(Exception):
 class SolicitudTurno:
     id_conversacion: str
     mensaje: str
-    sesion: Sesion | None = None
+    sesion: Sesion | SesionNoVerificada | None = None
     evaluacion: EvaluacionTurno = EvaluacionTurno()
     documento_adjunto: dict[str, Any] | None = None
     solicitud_explicita: bool = False  # el botón «Hablar con un funcionario» (ADR-18)
@@ -83,6 +85,18 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
     inicio = time.perf_counter()
     id_conversacion = solicitud.id_conversacion
     momento = solicitud.evaluacion.ahora or servicios.reloj.ahora()
+    if isinstance(solicitud.sesion, SesionNoVerificada):
+        # El adaptador no respondió al cargar los predios: no se adivina la sesión ni se toca la
+        # conversación; el contribuyente recibe un aviso, no un error (RNF-08).
+        nueva = servicios.almacen.estado_conversacion(id_conversacion) is None
+        return RespuestaChat(
+            id_conversacion=id_conversacion,
+            respuesta=AVISO_SESION_NO_VERIFICADA,
+            aviso_ia=AVISO_IA if nueva else None,
+            interlocutor="sistema",
+            estado="aviso_sesion",
+            meta=Meta(version=servicios.version, tiempos_ms={"total": _ms(inicio)}),
+        )
     nueva = abrir_conversacion(servicios, id_conversacion, solicitud.sesion)
     aviso_ia = AVISO_IA if nueva else None
 
@@ -104,14 +118,16 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
         registrar_interaccion(servicios, respuesta, solicitud.evaluacion.escenario_id, por_modelo)
         return respuesta
 
+    escalada = servicios.almacen.estado_conversacion(id_conversacion) == "escalada"
+    caso = servicios.almacen.caso_de_conversacion(id_conversacion) if escalada else None
+    if caso:  # ADR-12 y sección 3.6: cada mensaje nuevo se guarda en el caso, a cualquier hora
+        servicios.almacen.guardar_mensaje(caso["id_caso"], "contribuyente", solicitud.mensaje)
+
     horario = Horario.desde_settings(servicios.settings, RelojFijo(momento))
     if not horario.en_horario():  # RNF-06 y RNF-07
         return responder(horario.aviso_fuera_de_horario(), "sistema", "fuera_de_horario")
 
-    if servicios.almacen.estado_conversacion(id_conversacion) == "escalada":  # ADR-12
-        caso = servicios.almacen.caso_de_conversacion(id_conversacion)
-        if caso:
-            servicios.almacen.guardar_mensaje(caso["id_caso"], "contribuyente", solicitud.mensaje)
+    if escalada:  # ADR-12: los agentes ya no responden
         return responder(
             AVISO_MODO_HUMANO,
             "sistema",
@@ -126,9 +142,9 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
             "Falla inesperada en el turno; se escala",
             extra={"id_conversacion": id_conversacion, "error": type(error).__name__},
         )
-        caso_id = escalar_por_falla(servicios, id_conversacion)
+        texto, caso_id = escalar_por_falla(servicios, id_conversacion)
         return responder(
-            AVISO_FALLA,
+            texto,
             "agente",
             "escalada",
             {
@@ -150,7 +166,7 @@ def correr_grafo(
     servicios: ServiciosAPI, solicitud: SolicitudTurno, momento: datetime
 ) -> tuple[dict[str, Any], dict[str, int], UsoPorNodo]:
     """Ejecuta el grafo y mide cada nodo; devuelve el estado final, los tiempos y los tokens."""
-    sesion = solicitud.sesion
+    sesion = solicitud.sesion if isinstance(solicitud.sesion, Sesion) else None
     entrada = entrada_de_turno(
         solicitud.mensaje,
         solicitud.id_conversacion,
@@ -163,7 +179,12 @@ def correr_grafo(
     simulado = momento.isoformat() if solicitud.evaluacion.ahora else None
     config: dict[str, Any] = configuracion_de_hilo(solicitud.id_conversacion, simulado)
     uso = UsoPorNodo()
-    config["callbacks"] = [uso]
+    config["callbacks"] = [uso, *servicios.trazadores()]
+    # Metadatos de LangSmith (sección 3.13): conversación, escenario y versión; nunca el
+    # contribuyente.
+    config["metadata"] = metadatos_de_traza(
+        solicitud.id_conversacion, solicitud.evaluacion.escenario_id, servicios.version
+    )
     tiempos: dict[str, float] = {}
     with (
         nombres_de_sesion(sesion.nombres if sesion else ()),
@@ -225,34 +246,23 @@ def interpretar_estado(
     return str(estado.get("respuesta_final") or ""), estado_api, meta
 
 
-def escalar_por_falla(servicios: ServiciosAPI, id_conversacion: str) -> str | None:
-    """Registra el caso de una falla inesperada; si tampoco se puede, sigue sin él."""
-    resumen, resumen_json = construir_resumen(
-        motivo="fallo de servicio",
-        categoria=None,
-        nivel_confianza=0.0,
-        intentos=0,
-        resueltas=[],
-        rechazadas=[],
+def escalar_por_falla(servicios: ServiciosAPI, id_conversacion: str) -> tuple[str, str | None]:
+    """Si el grafo se cae, la API ejecuta la función de `nodo_escalamiento` con «fallo de
+    servicio»: el caso lo sigue registrando solo ese nodo (ADR-18), que nunca falla y entrega el
+    aviso aunque el registro falle (RNF-08). Devuelve el texto y el caso, si se registró."""
+    nodo = crear_nodo_escalamiento(Dependencias(servicios.adaptador))
+    salida = nodo(
+        {
+            "id_conversacion": id_conversacion,
+            "motivo_escalamiento": "fallo de servicio",
+            "marcas": {"fallo_servicio": True},
+            "respuestas_parciales": [],
+            "categoria": "",
+            "intentos_clasificacion": 0,
+        }
     )
-    caso = CasoEscalado(
-        id_caso=f"CASO-{id_conversacion}",
-        id_conversacion=id_conversacion,
-        resumen=resumen,
-        nivel_confianza=0.0,
-        motivo="fallo de servicio",
-        resumen_json=resumen_json,
-        fecha_escalamiento=datetime.now(UTC),
-    )
-    try:
-        servicios.adaptador.registrar_caso_escalado(caso)
-    except Exception as error:
-        registro.error(
-            "Tampoco se pudo registrar el caso; se entrega el aviso",
-            extra={"id_conversacion": id_conversacion, "error": type(error).__name__},
-        )
-        return None
-    return caso.id_caso
+    registrado = not salida["marcas"].get("registro_fallido")
+    return salida["respuesta_final"], f"CASO-{id_conversacion}" if registrado else None
 
 
 def registrar_interaccion(

@@ -1,11 +1,16 @@
 """Métricas de enrutamiento y de tiempo (RF-OBS-02 y RF-OBS-03), sin LangGraph.
 
-Se calculan con el registro de interacciones y las etiquetas de los escenarios: cada turno con
-`escenario_id` compara la categoría que dio el sistema con la `categoria_esperada` del escenario
-(en una conversación de varios turnos, la del primer turno). Los escenarios sin categoría esperada
-(los de horario) no entran en la matriz. Los tiempos usan todos los turnos.
+Se calculan con el registro de interacciones y las etiquetas de los escenarios. De cada conversación
+con `escenario_id` entra en la matriz solo el primer turno: su categoría se compara con la
+`categoria_esperada` del escenario, que es la del primer turno (los turnos siguientes, el botón o el
+modo humano no son errores de enrutamiento). Los escenarios sin categoría esperada (los de horario)
+no entran. Los tiempos usan todos los turnos; las escaladas se cuentan por conversación.
+
+En el promedio macro, una categoría con soporte que el sistema nunca predijo cuenta con precisión
+0 (su precisión por categoría queda indefinida, `None`).
 """
 
+import math
 import statistics
 from collections.abc import Iterable, Mapping
 from typing import Any
@@ -22,7 +27,7 @@ def percentil(valores: list[float], p: float) -> float | None:
     if not valores:
         return None
     ordenados = sorted(valores)
-    posicion = max(1, round(p / 100 * len(ordenados) + 0.4999))
+    posicion = max(1, math.ceil(p / 100 * len(ordenados)))
     return ordenados[min(posicion, len(ordenados)) - 1]
 
 
@@ -67,17 +72,20 @@ def calcular_metricas(
     categorias: Iterable[str],
 ) -> dict[str, Any]:
     """Matriz de confusión, métricas por categoría (y su promedio macro) y tiempos."""
+    primeros: dict[Any, Mapping[str, Any]] = {}
+    for i in interacciones:  # vienen en orden de registro
+        primeros.setdefault(i.get("id_conversacion"), i)
     pares = [
         (str(etiquetas[i["escenario_id"]]), i.get("categoria") or SIN_CATEGORIA)
-        for i in interacciones
+        for i in primeros.values()
         if i.get("escenario_id") in etiquetas and etiquetas[i["escenario_id"]]
     ]
     matriz = matriz_de_confusion(pares, categorias)
     metricas = por_categoria(matriz)
     con_soporte = [m for m in metricas.values() if m["soporte"]]
     macro = {
-        clave: _redondear(statistics.fmean(v))
-        if (v := [m[clave] for m in con_soporte if m[clave] is not None])
+        clave: _redondear(statistics.fmean(m[clave] or 0.0 for m in con_soporte))
+        if con_soporte
         else None
         for clave in ("precision", "exhaustividad", "f1")
     }
@@ -101,5 +109,8 @@ def calcular_metricas(
             "maximo": max(duraciones) if duraciones else None,
         },
         "por_estado": estados,
-        "escaladas": sum(bool(i.get("escalada")) for i in interacciones),
+        "conversaciones": len(primeros),
+        "conversaciones_escaladas": len(
+            {i.get("id_conversacion") for i in interacciones if i.get("escalada")}
+        ),
     }

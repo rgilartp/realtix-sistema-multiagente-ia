@@ -53,10 +53,17 @@ class Almacen:
         for tabla in metadata.sorted_tables:
             existentes = {c["name"] for c in inspector.get_columns(tabla.name)}
             faltantes = [c for c in tabla.columns if c.name not in existentes]
+            # Con varias réplicas que arrancan a la vez (sección 3.7), PostgreSQL usa
+            # IF NOT EXISTS; SQLite (las pruebas) no lo admite y tiene un solo proceso.
+            si_falta = "IF NOT EXISTS " if self._motor.dialect.name == "postgresql" else ""
             with self._motor.begin() as c:
                 for columna in faltantes:
                     tipo = columna.type.compile(dialect=self._motor.dialect)
-                    c.execute(text(f'ALTER TABLE {tabla.name} ADD COLUMN "{columna.name}" {tipo}'))
+                    c.execute(
+                        text(
+                            f'ALTER TABLE {tabla.name} ADD COLUMN {si_falta}"{columna.name}" {tipo}'
+                        )
+                    )
 
     def comprobar(self) -> None:
         """Consulta mínima para `/health`; falla si la base no responde."""

@@ -8,6 +8,7 @@ recuperación.
 """
 
 import json
+import logging
 import time
 import uuid
 from collections.abc import Callable
@@ -22,6 +23,8 @@ from src.api.acceso import emitir_token
 from src.evaluacion.escenarios import DIR_ESCENARIOS
 from src.evaluacion.humo import CON_RECUPERACION, ORQUESTADOR, SIMPLES, resumir, sesiones
 from src.integrations.costos import costo_usd
+
+registro = logging.getLogger(__name__)
 
 META_MS = {"simple": 8000, "con_recuperacion": 15000, "orquestador": 15000}
 
@@ -97,7 +100,10 @@ def costo_de_interacciones(
         if fila["id_conversacion"] not in conversaciones:
             continue
         for modelo, t in ((fila.get("tokens") or {}).get("por_modelo") or {}).items():
-            total += costo_usd(modelo, t["entrada"], t["salida"])
+            try:
+                total += costo_usd(modelo, t["entrada"], t["salida"])
+            except KeyError:  # un modelo sin precio no tumba una corrida pagada
+                registro.warning("Modelo sin precio en el costo", extra={"modelo": modelo})
     return total
 
 

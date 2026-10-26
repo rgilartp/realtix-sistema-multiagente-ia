@@ -14,6 +14,7 @@ from zoneinfo import ZoneInfo
 import pytest
 from fastapi.testclient import TestClient
 from langchain_core.messages import AIMessage
+from langchain_core.runnables import RunnableConfig
 
 from src.agents.clasificador import ClasificadorLLM
 from src.agents.dependencias import ConfigGrafo, Dependencias
@@ -433,7 +434,7 @@ def test_el_nombre_de_la_sesion_no_llega_a_los_modelos(datos_sinteticos) -> None
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-SYS-06 · Aviso de interacción con IA (provisional)")
+@pytest.mark.req("RF-AUT-01 · Verificación de identidad")
 def test_ovt_simulada_emite_la_sesion_de_un_usuario_de_prueba(api) -> None:
     cliente, servicios = api
     usuarios = cliente.get("/api/v1/ovt-simulada/usuarios").json()
@@ -570,3 +571,109 @@ def test_cors_y_cabeceras_de_seguridad(api) -> None:
     assert r.headers["content-security-policy"] == f"default-src 'none'; frame-ancestors {ORIGEN}"
     assert r.headers["x-content-type-options"] == "nosniff"
     assert r.headers["referrer-policy"] == "no-referrer"
+
+
+# -- Hallazgos de la revisión independiente --------------------------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-05 · Notificación al contribuyente", "RNF-07 · Aviso fuera de horario")
+def test_en_una_conversacion_escalada_el_mensaje_fuera_de_horario_queda_en_el_caso(api) -> None:
+    cliente, servicios = api
+    cliente.post("/api/v1/escalamiento", json={"id_conversacion": "conv-noche"}, headers=token(U01))
+    domingo = {"X-Reloj-Simulado": "2026-10-04T21:00:00-05:00", **token(U01)}
+    r = chat(cliente, "conv-noche", "¿Siguen ahí?", **domingo)
+    assert r["estado"] == "fuera_de_horario"
+    assert [m["texto"] for m in servicios.almacen.mensajes_del_caso("CASO-conv-noche")] == [
+        "¿Siguen ahí?"
+    ]
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RNF-08 · Tiempos de espera y degradación", "RF-AUT-01 · Verificación de identidad"
+)
+def test_si_el_adaptador_no_responde_al_cargar_la_sesion_hay_aviso_y_no_error(api) -> None:
+    cliente, servicios = api
+
+    def caido(_: str) -> Any:
+        raise ConnectionError("adaptador caído")
+
+    servicios.adaptador.get_predios_contribuyente = caido
+    r = chat(cliente, "conv-caida", "¿Cuánto debo?", **token(U03))
+    assert r["estado"] == "aviso_sesion" and "no pude verificar tu sesión" in r["respuesta"]
+    assert r["aviso_ia"] == AVISO_IA and servicios.almacen.estado_conversacion("conv-caida") is None
+    predio = cliente.get(f"/api/v1/predios/{P03}/pagos", headers=token(U03))
+    assert predio.status_code == 503 and "sesión" in predio.json()["detalle"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-08 · Tiempos de espera y degradación")
+def test_errores_de_ruta_y_500_en_espanol_con_cabeceras(api) -> None:
+    cliente, servicios = api
+    assert cliente.get("/api/v1/no-existe").json() == {"detalle": "No encontré lo que buscas."}
+    assert cliente.get("/api/v1/chat/mensaje").json() == {
+        "detalle": "Esa ruta no acepta este método."
+    }
+    assert "content-security-policy" not in cliente.get("/docs").headers  # Swagger UI carga
+
+    def roto(*_: Any) -> Any:
+        raise RuntimeError("psycopg: detalle interno")
+
+    servicios.adaptador.get_estado_cuenta = roto
+    sin_excepciones = TestClient(cliente.app, raise_server_exceptions=False)
+    r = sin_excepciones.get(
+        f"/api/v1/predios/{P03}/estado-cuenta", headers={**token(U03), "Origin": ORIGEN}
+    )
+    assert r.status_code == 500 and "psycopg" not in r.text
+    assert r.headers["x-content-type-options"] == "nosniff"
+    assert r.headers["access-control-allow-origin"] == ORIGEN
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-OCR-01 · Carga de archivos", "RF-SYS-06 · Aviso de interacción con IA (provisional)"
+)
+def test_el_rechazo_del_recibo_abre_la_conversacion_con_el_aviso_de_ia(api) -> None:
+    cliente, servicios = api
+    r = cliente.post(
+        "/api/v1/chat/documento",
+        data={"id_conversacion": "conv-gif"},
+        files={"archivo": ("r.png", b"GIF89a", "image/png")},
+        headers=token(U03),
+    )
+    assert r.status_code == 415 and r.json()["aviso_ia"] == AVISO_IA
+    assert servicios.almacen.contribuyente_de_conversacion("conv-gif") == U03
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-01 · Traza del flujo entre agentes", "RNF-05 · Registro auditable")
+def test_langsmith_con_anonimizador_y_metadatos_sin_contribuyente(datos_sinteticos) -> None:
+    from langchain_core.tracers.langchain import LangChainTracer
+
+    from src.integrations.trazas import Anonimizador
+
+    vistos: list[dict[str, Any]] = []
+
+    def nodo_general(state: Any, config: RunnableConfig) -> Any:
+        vistos.append(dict(config.get("metadata", {})))
+        parcial = {"categoria": "general", "texto": "Hola.", "fuentes": [], "similitud": None,
+                   "suficiencia": "completa", "cobertura": 1.0, "rechazo_acceso": False,
+                   "fallo_servicio": False, "fuera_de_alcance": False}  # fmt: skip
+        return {"respuestas_parciales": [parcial]}
+
+    apagado, servicios_apagados = armar(datos_sinteticos)
+    assert servicios_apagados.trazadores() == []
+    cliente, servicios = armar(
+        datos_sinteticos,
+        settings=configuracion(langsmith_tracing=True, langsmith_api_key="clave-de-prueba"),
+        nodos={"nodo_general": nodo_general},
+    )
+    (trazador,) = servicios.trazadores()
+    assert isinstance(trazador, LangChainTracer)
+    assert isinstance(trazador.client._hide_inputs, Anonimizador)
+    assert isinstance(trazador.client._hide_outputs, Anonimizador)
+    servicios.trazadores = lambda: []  # sin red en la prueba
+    chat(cliente, "conv-traza", "Hola", **token(U01), **{"X-Escenario-Id": "AIA-01"})
+    assert vistos[0]["id_conversacion"] == "conv-traza" and vistos[0]["escenario_id"] == "AIA-01"
+    assert vistos[0]["version"] == "0.5.0" and U01 not in str(vistos[0])

@@ -59,6 +59,26 @@ class ServiciosAPI:
     version: str = field(default_factory=version_del_proyecto)
 
     @cached_property
+    def _cliente_langsmith(self) -> Any:
+        """Cliente de LangSmith con el anonimizador en entradas y salidas (RNF-05); `None` si
+        las trazas están apagadas."""
+        from src.integrations.trazas import Anonimizador, crear_cliente_langsmith
+
+        return crear_cliente_langsmith(self.settings, Anonimizador())
+
+    def trazadores(self) -> list[Any]:
+        """El trazador de LangSmith del turno, con el cliente anonimizado, si está encendido."""
+        if self._cliente_langsmith is None:
+            return []
+        from langchain_core.tracers.langchain import LangChainTracer
+
+        return [
+            LangChainTracer(
+                project_name=self.settings.langsmith_project, client=self._cliente_langsmith
+            )
+        ]
+
+    @cached_property
     def usuarios(self) -> list[dict[str, str]]:
         return usuarios_de_prueba()
 
