@@ -37,3 +37,6 @@ web/dist/
 
 # Claude Code: ajustes locales de cada máquina
 .claude/settings.local.json
+
+# Recibos sintéticos (se regeneran con src/data/generar/recibos.py)
+datos/recibos/
