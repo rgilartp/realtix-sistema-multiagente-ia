@@ -34,4 +34,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es el SPAC
   entonces: Recibe la definición, la fecha de la declaración inicial y el número de cuotas
-aprobado_por: ''
+aprobado_por: "Rodolfo Angel Gilart Pulido"
