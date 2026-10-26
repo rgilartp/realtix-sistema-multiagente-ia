@@ -63,6 +63,14 @@ async function iniciarSesion(page, tamano, usuario = "U03") {
   if (tamano.width < 640) await page.getByRole("button", { name: "Asistente tributario" }).click();
 }
 
+// El rótulo de entorno simulado sigue arriba y el widget no lo tapa (revisión externa de B11).
+async function rotuloVisible(page) {
+  const rotulo = await page.getByTestId("rotulo").boundingBox();
+  const panel = await page.locator("iframe[data-realtix-widget]").boundingBox();
+  expect(rotulo.y).toBe(0);
+  expect(panel.y).toBeGreaterThanOrEqual(rotulo.y + rotulo.height);
+}
+
 // Con el teclado: escribir y Enter (sin el ratón).
 const preguntar = async (widget, texto) => {
   const campo = widget.getByLabel("Escribe tu consulta");
@@ -92,6 +100,7 @@ async function flujoRespuesta(page, tamano) {
   await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un asistente de IA");
   await expect(widget.getByText("¿En qué te ayudo?")).toBeVisible(); // estado vacío
+  await expect(widget.getByTestId("aviso-ia")).toBeInViewport({ ratio: 1 }); // completo al abrir
   expect(await widget.locator("body").innerText()).not.toMatch(MARCAS_PROHIBIDAS);
   await capturar(page, "widget_inicio");
   await iniciarSesion(page, tamano);
@@ -105,6 +114,7 @@ async function flujoRespuesta(page, tamano) {
   const enviada = solicitudes.find((s) => s.ruta === "/api/v1/chat/mensaje");
   expect(enviada.auth).toBe("Bearer token-de-prueba-U03");
   expect(enviada.cuerpo.id_conversacion).toMatch(/^conv-[0-9a-f-]{36}$/);
+  await rotuloVisible(page);
   await capturar(page, "widget_respuesta");
 }
 
@@ -112,8 +122,8 @@ async function flujoFueraDeHorario(page, tamano) {
   const { widget } = await abrirOvt(page, tamano, { fueraDeHorario: true });
   await preguntar(widget, "Hola, necesito hablar con un funcionario");
   const aviso = widget.locator("[data-autor=sistema]");
-  await expect(aviso).toContainText("Vuelvo a atender el lunes 7 de octubre de 2030 a las 8:00 a. m.");
-  await expect(aviso.getByText("Vuelve a atender el lunes 7 de octubre de 2030 a las 8:00 a. m.")).toBeVisible();
+  await expect(aviso).toContainText("Vuelvo a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.");
+  await expect(aviso.getByText("Vuelve a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.")).toBeVisible();
   await expect(aviso.getByText("Sistema", { exact: true })).toBeVisible();
   await capturar(page, "widget_fuera_de_horario");
 }
@@ -130,6 +140,7 @@ async function flujoRecibo(page, tamano) {
   await expect(widget.getByText("¿Es correcto?")).toBeVisible();
   const subida = solicitudes.find((s) => s.ruta === "/api/v1/chat/documento");
   expect(subida.auth).toBe("Bearer token-de-prueba-U03");
+  await rotuloVisible(page);
   await capturar(page, "widget_recibo");
 }
 

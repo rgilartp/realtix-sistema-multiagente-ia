@@ -61,7 +61,7 @@ export default function Ovt() {
       <div
         role="note"
         data-realtix-respetar=""
-        className="franja-simulada border-b-2 border-advertencia-borde px-4 py-4 text-center text-xl leading-snug font-bold text-advertencia sm:text-2xl md:py-5 md:text-3xl"
+        className="franja-simulada sticky top-0 z-10 border-b-2 border-advertencia-borde px-4 py-4 text-center text-xl leading-snug font-bold text-advertencia sm:text-2xl md:py-5 md:text-3xl"
         data-prueba="rotulo"
       >
         {ROTULO}

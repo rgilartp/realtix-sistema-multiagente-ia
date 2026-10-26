@@ -301,6 +301,9 @@ def test_boton_modo_humano_y_bandeja(datos_sinteticos) -> None:
     assert (
         datos["meta"]["caso_id"] == "CASO-conv-boton" and AVISO_TRANSFERENCIA in datos["respuesta"]
     )
+    # El prefacio no repite «funcionario» (revisión externa de B11).
+    assert datos["respuesta"] == f"Con gusto. {AVISO_TRANSFERENCIA}"
+    assert datos["respuesta"].count("funcionario") == 1
     assert datos["meta"]["nivel_confianza"] == 0.0  # ADR-13
     # Modo humano (ADR-12): los agentes ya no responden y el mensaje queda en el caso.
     siguiente = chat(cliente, "conv-boton", "¿Ya me van a atender?", **token(U01))

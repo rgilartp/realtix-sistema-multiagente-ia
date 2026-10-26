@@ -26,7 +26,7 @@ AVISO_TRANSFERENCIA = (
 )
 # Explicación previa al aviso según el motivo; los demás motivos solo llevan el aviso.
 PREFACIOS = {
-    "solicitud explícita": "Con gusto te comunico con un funcionario.",
+    "solicitud explícita": "Con gusto.",
     "fuera de alcance": (
         "Tu consulta trata de un tema tributario que este asistente no cubre: atiende el impuesto "
         "predial unificado y el impuesto de industria y comercio de Bogotá, sin la retención del "

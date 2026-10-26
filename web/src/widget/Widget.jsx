@@ -180,7 +180,7 @@ export default function Widget() {
   const [interlocutor, setInterlocutor] = useState("agente");
   const desde = useRef(null);
   const archivo = useRef(null);
-  const final = useRef(null);
+  const zona = useRef(null);
 
   const reiniciar = useCallback(() => {
     const nueva = nuevaConversacion();
@@ -216,8 +216,12 @@ export default function Widget() {
     return () => window.removeEventListener("message", recibir);
   }, [reiniciar]);
 
+  // Solo se desplaza la zona de mensajes (scrollIntoView movería también la página que inserta el
+  // widget); sin mensajes, la conversación empieza arriba, con el aviso de IA completo.
   useEffect(() => {
-    final.current?.scrollIntoView?.({ block: "end" });
+    const elemento = zona.current;
+    if (!elemento) return;
+    elemento.scrollTop = mensajes.length || ocupado ? elemento.scrollHeight : 0;
   }, [mensajes, ocupado]);
 
   const agregar = (...nuevos) => setMensajes((lista) => [...lista, ...nuevos]);
@@ -347,7 +351,7 @@ export default function Widget() {
         </button>
       </header>
 
-      <main className="flex-1 space-y-4 overflow-y-auto px-4 py-4" aria-live="polite" aria-relevant="additions">
+      <main ref={zona} className="flex-1 space-y-4 overflow-y-auto px-4 py-4" aria-live="polite" aria-relevant="additions">
         <section
           className="rounded-2xl border border-acento/25 bg-acento-suave p-4 text-sm text-tinta"
           data-prueba="aviso-ia"
@@ -382,7 +386,6 @@ export default function Widget() {
           <Burbuja key={i} mensaje={mensaje} />
         ))}
         {ocupado && <Escribiendo />}
-        <div ref={final} />
       </main>
 
       <form onSubmit={enviar} className="border-t border-borde bg-superficie px-3 pt-3 pb-2">

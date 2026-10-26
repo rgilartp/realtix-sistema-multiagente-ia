@@ -118,6 +118,9 @@
   function montar() {
     document.body.appendChild(contenedor);
     medidas();
+    // Si el rótulo cambia de alto (otra anchura de ventana, fuentes cargadas), se recalcula.
+    var respetar = document.querySelector("[data-realtix-respetar]");
+    if (respetar && window.ResizeObserver) new ResizeObserver(medidas).observe(respetar);
   }
   // Con las fuentes cargadas cambia la altura del rótulo: se recalcula.
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(medidas);

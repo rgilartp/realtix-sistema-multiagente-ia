@@ -1,0 +1,109 @@
+{
+  "turnos": 48,
+  "turnos_etiquetados": 44,
+  "exactitud": 0.932,
+  "matriz_de_confusion": {
+    "ipu": {
+      "ipu": 15,
+      "ica": 0,
+      "general": 0,
+      "ocr": 0,
+      "fuera_de_alcance": 0,
+      "sin_categoria": 0
+    },
+    "ica": {
+      "ipu": 0,
+      "ica": 9,
+      "general": 1,
+      "ocr": 0,
+      "fuera_de_alcance": 0,
+      "sin_categoria": 0
+    },
+    "general": {
+      "ipu": 0,
+      "ica": 0,
+      "general": 7,
+      "ocr": 0,
+      "fuera_de_alcance": 0,
+      "sin_categoria": 0
+    },
+    "ocr": {
+      "ipu": 0,
+      "ica": 0,
+      "general": 0,
+      "ocr": 7,
+      "fuera_de_alcance": 0,
+      "sin_categoria": 0
+    },
+    "fuera_de_alcance": {
+      "ipu": 0,
+      "ica": 0,
+      "general": 2,
+      "ocr": 0,
+      "fuera_de_alcance": 3,
+      "sin_categoria": 0
+    },
+    "sin_categoria": {
+      "ipu": 0,
+      "ica": 0,
+      "general": 0,
+      "ocr": 0,
+      "fuera_de_alcance": 0,
+      "sin_categoria": 0
+    }
+  },
+  "por_categoria": {
+    "ipu": {
+      "soporte": 15,
+      "precision": 1.0,
+      "exhaustividad": 1.0,
+      "f1": 1.0
+    },
+    "ica": {
+      "soporte": 10,
+      "precision": 1.0,
+      "exhaustividad": 0.9,
+      "f1": 0.947
+    },
+    "general": {
+      "soporte": 7,
+      "precision": 0.7,
+      "exhaustividad": 1.0,
+      "f1": 0.824
+    },
+    "ocr": {
+      "soporte": 7,
+      "precision": 1.0,
+      "exhaustividad": 1.0,
+      "f1": 1.0
+    },
+    "fuera_de_alcance": {
+      "soporte": 5,
+      "precision": 1.0,
+      "exhaustividad": 0.6,
+      "f1": 0.75
+    },
+    "sin_categoria": {
+      "soporte": 0,
+      "precision": null,
+      "exhaustividad": null,
+      "f1": null
+    }
+  },
+  "promedio_macro": {
+    "precision": 0.94,
+    "exhaustividad": 0.9,
+    "f1": 0.904
+  },
+  "tiempos_ms": {
+    "mediana": 7077.700000000001,
+    "p95": 14269.9,
+    "maximo": 14269.9
+  },
+  "por_estado": {
+    "respondida": 44,
+    "fuera_de_horario": 4
+  },
+  "conversaciones": 48,
+  "conversaciones_escaladas": 6
+}

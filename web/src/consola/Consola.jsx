@@ -20,7 +20,7 @@ const CLAVES_RESUMEN = {
   motivo_original: "Motivo original",
   categoria: "Categoría",
   nivel_confianza: "Nivel de confianza",
-  intentos: "Intentos de clasificación",
+  intentos: "Reclasificaciones",
   partes_resueltas: "Partes resueltas",
   partes_rechazadas: "Partes rechazadas",
   duracion_resumen_ms: "Tiempo del resumen (ms)",

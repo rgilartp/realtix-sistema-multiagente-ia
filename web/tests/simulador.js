@@ -1,9 +1,12 @@
 // API simulada en el navegador para las pruebas de la web (contrato de la sección 3.8).
-// Los textos son los del sistema (Horario.aviso_fuera_de_horario, el aviso de transferencia, el
-// de modo humano y la confirmación del recibo de OCR-01). Los relojes simulados son de 2030, con
-// su día de la semana correcto, para que las capturas no muestren fechas del periodo del trabajo
-// (regla 9); las fechas tributarias del recibo sí van. Las consultas que
-// llegan quedan en `solicitudes`, para revisar el token y los cuerpos.
+// Los textos se copiaron tal cual del sistema: Horario.aviso_fuera_de_horario con el reloj del
+// sábado 3 de octubre de 2026 a las 10:00, AVISO_TRANSFERENCIA y PREFACIOS de
+// nodo_escalamiento, construir_resumen y la confirmación del recibo de OCR-01. Los casos de la
+// bandeja son del reloj de los escenarios (jueves 1 de octubre de 2026). Las métricas son de
+// ejemplo (scripts/metricas_de_ejemplo.py, con calcular_metricas); no son resultados.
+import { readFileSync } from "node:fs";
+
+const METRICAS = JSON.parse(readFileSync(new URL("./metricas_de_ejemplo.json", import.meta.url), "utf-8"));
 
 export const TEXTOS = {
   avisoIa:
@@ -14,12 +17,17 @@ export const TEXTOS = {
     "avalúo catastral y la tarifa que corresponde al predio (Acuerdo 105 de 2003, art. 2).",
   fueraDeHorario:
     "En este momento estoy fuera del horario de atención. Atiendo de lunes a viernes, de 8:00 a. m. " +
-    "a 5:00 p. m. (hora de Colombia), sin contar festivos. Vuelvo a atender el lunes 7 de octubre de " +
-    "2030 a las 8:00 a. m. Fuera de ese horario no puedo responder consultas ni transferirlas a un " +
+    "a 5:00 p. m. (hora de Colombia), sin contar festivos. Vuelvo a atender el lunes 5 de octubre de " +
+    "2026 a las 8:00 a. m. Fuera de ese horario no puedo responder consultas ni transferirlas a un " +
     "funcionario: escríbeme de nuevo entonces.",
+  // PREFACIOS["solicitud explícita"] + AVISO_TRANSFERENCIA
   transferencia:
-    "Con gusto te comunico con un funcionario. Voy a transferir tu consulta a un funcionario, que te " +
-    "atenderá a la brevedad. Ya le compartí un resumen para que no tengas que repetirlo.",
+    "Con gusto. Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le " +
+    "compartí un resumen para que no tengas que repetirlo.",
+  // AVISO_TRANSFERENCIA, sin prefacio (motivo «confianza insuficiente»)
+  avisoTransferencia:
+    "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un " +
+    "resumen para que no tengas que repetirlo.",
   confirmacion:
     "Estos son los datos que leí del recibo:\n- Matrícula catastral: 50C-9000301\n- Vigencia fiscal: " +
     "2026\n- Avalúo catastral: $350.000.000\n- Valor liquidado: $2.135.000\n- Descuento por pronto " +
@@ -41,6 +49,7 @@ function meta(extra = {}) {
   };
 }
 
+// Las consultas que llegan quedan en `solicitudes`, para revisar el token y los cuerpos.
 export async function simularApi(page, { fueraDeHorario = false } = {}) {
   const solicitudes = [];
   const conversaciones = new Set();
@@ -106,44 +115,34 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
       if (auth !== "Bearer token-funcionario") return json({ detalle: "Necesitas un token válido para esta consulta." }, 401);
       return json([
         { id_caso: "CASO-conv-7f3a", id_conversacion: "conv-7f3a", motivo: "solicitud explícita",
-          categoria: null, nivel_confianza: 0, estado: "abierto", fecha_escalamiento: "2030-10-01T15:12:00Z" },
+          categoria: null, nivel_confianza: 0, estado: "abierto", fecha_escalamiento: "2026-10-01T15:12:00Z" },
         { id_caso: "CASO-conv-91bc", id_conversacion: "conv-91bc", motivo: "confianza insuficiente",
-          categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2030-10-01T16:40:00Z" },
+          categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2026-10-01T16:40:00Z" },
       ]);
     }
     if (ruta.startsWith("/api/v1/escalamiento/casos/")) {
+      // resumen y resumen_estructurado: construir_resumen(motivo="confianza insuficiente",
+      // categoria="ipu", nivel_confianza=0.58, intentos=0, resueltas=[], rechazadas=[parte de ipu])
       return json({
         id_caso: "CASO-conv-91bc", id_conversacion: "conv-91bc", motivo: "confianza insuficiente",
-        categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2030-10-01T16:40:00Z",
-        resumen: "Motivo: confianza insuficiente. Categoría: ipu. Nivel de confianza: 0,58. Intentos de clasificación: 0.",
-        resumen_estructurado: { motivo: "confianza insuficiente", categoria: "ipu", nivel_confianza: 0.58 },
+        categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2026-10-01T16:40:00Z",
+        resumen:
+          "Motivo: confianza insuficiente. Categoría: ipu. Nivel de confianza: 0.58. Reclasificaciones: 0. " +
+          "Partes ya resueltas: 0. Partes rechazadas: 1.",
+        resumen_estructurado: {
+          motivo: "confianza insuficiente", categoria: "ipu", nivel_confianza: 0.58, intentos: 0,
+          partes_resueltas: [], partes_rechazadas: [{ categoria: "ipu", texto: "(respuesta de la parte)", nivel: 0.58 }],
+        },
         intentos: 0,
         mensajes: [
           { indice: 0, autor: "contribuyente", texto: "¿Cuánto puede subir mi predial de un año a otro?" },
-          { indice: 1, autor: "agente", texto: TEXTOS.transferencia },
+          { indice: 1, autor: "agente", texto: TEXTOS.avisoTransferencia },
         ],
       });
     }
     if (ruta === "/api/v1/admin/metricas") {
       if (auth !== "Bearer token-admin") return json({ detalle: "Necesitas un token válido para esta consulta." }, 401);
-      const fila = (valores) => ({ ipu: 0, ica: 0, general: 0, ocr: 0, fuera_de_alcance: 0, sin_categoria: 0, ...valores });
-      return json({
-        turnos: 64, turnos_etiquetados: 57, exactitud: 0.947,
-        matriz_de_confusion: {
-          ipu: fila({ ipu: 15 }), ica: fila({ ica: 9, general: 1 }), general: fila({ general: 7 }),
-          ocr: fila({ ocr: 7 }), fuera_de_alcance: fila({ fuera_de_alcance: 3, general: 2 }), sin_categoria: fila({}),
-        },
-        por_categoria: {
-          ipu: { soporte: 15, precision: 1, exhaustividad: 1, f1: 1 },
-          ica: { soporte: 10, precision: 1, exhaustividad: 0.9, f1: 0.947 },
-          general: { soporte: 7, precision: 0.7, exhaustividad: 1, f1: 0.824 },
-          ocr: { soporte: 7, precision: 1, exhaustividad: 1, f1: 1 },
-          fuera_de_alcance: { soporte: 5, precision: 1, exhaustividad: 0.6, f1: 0.75 },
-        },
-        promedio_macro: { precision: 0.94, exhaustividad: 0.9, f1: 0.904 },
-        tiempos_ms: { mediana: 6868, p95: 14270, maximo: 14270 },
-        por_estado: { respondida: 40 }, conversaciones: 57, conversaciones_escaladas: 9,
-      });
+      return json(METRICAS);
     }
     return json({ detalle: "No encontré lo que buscas." }, 404);
   });
