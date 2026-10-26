@@ -5,6 +5,7 @@ Si el reintento también falla, se levanta `ServicioNoDisponibleError`: el agent
 «fallo de servicio» y la confianza escala. El contribuyente nunca ve el error técnico.
 """
 
+import contextvars
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import TimeoutError as TiempoAgotado
@@ -24,7 +25,8 @@ class ServicioNoDisponibleError(RuntimeError):
 def _con_tiempo[T](funcion: Callable[[], T], timeout_s: float) -> T:
     pool = ThreadPoolExecutor(max_workers=1)
     try:
-        return pool.submit(funcion).result(timeout=timeout_s)
+        # El hilo hereda el contexto: trazas de LangSmith y el conteo de tokens siguen la llamada.
+        return pool.submit(contextvars.copy_context().run, funcion).result(timeout=timeout_s)
     except TiempoAgotado as error:
         raise TimeoutError(f"Sin respuesta en {timeout_s} s") from error
     finally:
