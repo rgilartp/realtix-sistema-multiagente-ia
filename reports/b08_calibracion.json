@@ -3,66 +3,96 @@
     {
       "consulta": "IPU-04",
       "tipo": "pertinente",
-      "coseno": 0.6887,
-      "fragmento": "Ley 44 de 1990, art. 2"
+      "busqueda": "definición, hecho generador y base gravable del impuesto predial unificado, tarifas y liquidación",
+      "coseno": 0.6756,
+      "fragmento": "Decreto Distrital 352 de 2002, cap. I, art. 14",
+      "coseno_con_texto": 0.6887,
+      "fragmento_con_texto": "Ley 44 de 1990, art. 2"
     },
     {
       "consulta": "IPU-09",
       "tipo": "pertinente",
-      "coseno": 0.5576,
-      "fragmento": "Acuerdo 648 de 2016, art. 1"
+      "busqueda": "límite del incremento anual del impuesto predial unificado respecto del año anterior",
+      "coseno": 0.6907,
+      "fragmento": "Ley 1995 de 2019, art. 2",
+      "coseno_con_texto": 0.5482,
+      "fragmento_con_texto": "Ley 44 de 1990, art. 6"
     },
     {
       "consulta": "ICA-01",
       "tipo": "pertinente",
-      "coseno": 0.6831,
-      "fragmento": "Ley 14 de 1983, art. 32"
+      "busqueda": "definición del impuesto de industria y comercio y sujeto pasivo del ICA en Bogotá",
+      "coseno": 0.7218,
+      "fragmento": "Decreto Distrital 352 de 2002, cap. II, art. 41",
+      "coseno_con_texto": 0.6831,
+      "fragmento_con_texto": "Ley 14 de 1983, art. 32"
     },
     {
       "consulta": "GEN-04",
       "tipo": "pertinente",
-      "coseno": 0.5171,
-      "fragmento": "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)"
+      "busqueda": "definición de SPAC en el glosario de la plataforma",
+      "coseno": 0.5273,
+      "fragmento": "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)",
+      "coseno_con_texto": 0.5171,
+      "fragmento_con_texto": "Glosario con fuentes (sintético), Sistema de Pago Alternativo por Cuotas (SPAC)"
     },
     {
       "consulta": "GEN-07",
       "tipo": "pertinente",
-      "coseno": 0.5721,
-      "fragmento": "Ley 1581 de 2012, art. 8"
+      "busqueda": "derechos del titular de datos personales habeas data tratamiento de datos personales",
+      "coseno": 0.6157,
+      "fragmento": "Ley 1581 de 2012, art. 8",
+      "coseno_con_texto": 0.5721,
+      "fragmento_con_texto": "Ley 1581 de 2012, art. 8"
     },
     {
       "consulta": "FA-01",
       "tipo": "sin_relacion",
-      "coseno": 0.4065,
-      "fragmento": "Acuerdo 1084 de 2026, art. 10"
+      "busqueda": "pronóstico del clima en Bogotá",
+      "coseno": 0.3927,
+      "fragmento": "Ley 14 de 1983, art. 29",
+      "coseno_con_texto": 0.4065,
+      "fragmento_con_texto": "Acuerdo 1084 de 2026, art. 10"
     },
     {
       "consulta": "FA-02",
       "tipo": "sin_relacion",
-      "coseno": 0.3566,
-      "fragmento": "Ley 14 de 1983, art. 57"
+      "busqueda": "renovación de la licencia de conducción trámite",
+      "coseno": 0.4008,
+      "fragmento": "Ley 14 de 1983, art. 54",
+      "coseno_con_texto": 0.3566,
+      "fragmento_con_texto": "Ley 14 de 1983, art. 57"
     },
     {
       "consulta": "receta",
       "tipo": "sin_relacion",
-      "coseno": 0.3196,
-      "fragmento": "Decreto Distrital 807 de 1993, art. 39"
+      "busqueda": "receta del ajiaco santafereño",
+      "coseno": 0.318,
+      "fragmento": "Decreto Distrital 807 de 1993, art. 39",
+      "coseno_con_texto": 0.3196,
+      "fragmento_con_texto": "Decreto Distrital 807 de 1993, art. 39"
     },
     {
       "consulta": "futbol",
       "tipo": "sin_relacion",
-      "coseno": 0.1959,
-      "fragmento": "Ley 14 de 1983, art. 69"
+      "busqueda": "resultado del último partido de la selección de fútbol",
+      "coseno": 0.2205,
+      "fragmento": "Ley 14 de 1983, art. 14",
+      "coseno_con_texto": 0.1959,
+      "fragmento_con_texto": "Ley 14 de 1983, art. 69"
     },
     {
       "consulta": "pelicula",
       "tipo": "sin_relacion",
-      "coseno": 0.2259,
-      "fragmento": "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario"
+      "busqueda": "recomendación de película de ciencia ficción",
+      "coseno": 0.2266,
+      "fragmento": "Manual de uso de la OVT simulada (sintético), Cómo usar el asistente",
+      "coseno_con_texto": 0.2259,
+      "fragmento_con_texto": "Manual de uso de la OVT simulada (sintético), Cómo hablar con un funcionario"
     }
   ],
   "escala": {
-    "minimo": 0.41,
-    "maximo": 0.57
+    "minimo": 0.4,
+    "maximo": 0.68
   }
 }

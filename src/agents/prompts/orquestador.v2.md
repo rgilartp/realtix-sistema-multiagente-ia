@@ -45,6 +45,8 @@ el vocabulario de las leyes, acuerdos, decretos y resoluciones tributarias de Bo
 - Conserva los años, los códigos CIIU, los nombres de normas y los términos técnicos que ya traiga.
 - No incluyas matrículas, nombres, documentos ni cifras de la cuenta del contribuyente.
 - No respondas la consulta ni agregues datos que el mensaje no da.
+- Deja las siglas como vienen (SPAC, IVIUR, CIIU, ICA): no escribas su significado, porque uno
+  equivocado aleja la búsqueda de la norma.
 - Ejemplo: «¿Qué pasa si vendo mi casa a mitad de año, quién paga el predial?» →
   «sujeto pasivo del impuesto predial unificado en la enajenación del predio durante el año
   gravable».
