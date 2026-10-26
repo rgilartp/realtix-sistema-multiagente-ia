@@ -7,6 +7,7 @@ escritas a mano. Las referencias no salen de los servicios: se comparan contra e
 """
 
 import copy
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -355,8 +356,11 @@ def test_la_hoja_empieza_por_la_adenda_y_los_ca(escenarios) -> None:
 def test_aprobar_llena_aprobado_por_sin_tocar_el_resto_ni_los_pendientes(tmp_path) -> None:
     copia = tmp_path / "escenarios"
     copia.mkdir()
-    for ruta in DIR_ESCENARIOS.glob("*.yaml"):
-        (copia / ruta.name).write_text(ruta.read_text("utf-8"), encoding="utf-8")
+    for ruta in DIR_ESCENARIOS.glob("*.yaml"):  # copia sin aprobar, como antes de la parada
+        sin_aprobar = re.sub(
+            r"^aprobado_por:.*$", "aprobado_por: ''", ruta.read_text("utf-8"), flags=re.M
+        )
+        (copia / ruta.name).write_text(sin_aprobar, encoding="utf-8")
     pendiente = copia / "OCR-04.yaml"  # se simula una referencia sin fuente
     datos = yaml.safe_load(pendiente.read_text("utf-8"))
     datos["respuesta_referencia"] = "PENDIENTE: falta la fuente"
