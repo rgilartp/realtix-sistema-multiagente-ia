@@ -1,40 +1,45 @@
 id: IPU-02
-titulo: Historial de pagos de un predio con cuotas del SPAC
+titulo: Estado de cuenta de todos los predios del contribuyente
 origen:
 - CA-02
 rf:
 - RF-IPU-02
 - RF-AUT-01
+- RF-AUT-02
 hu:
-- HU-06
+- HU-05
 grupo: ipu
 categoria_esperada: ipu
 comportamiento_esperado: responder
-sesion: U08
+sesion: U02
 reloj: '2026-10-01T10:00:00-05:00'
 tipo_latencia: simple
 turnos:
-- usuario: ¿Qué pagos tengo registrados de mi predio 50C-9000801?
+- usuario: Me identifico con la cédula CC-1000000002. Dame el estado de cuenta de todos mis predios
 verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 50C-9000201
+- tipo: contiene_texto
+  valor: 50C-9000202
 - tipo: contiene_valor
-  valor: '845.000'
+  valor: '2.520.000'
 - tipo: contiene_valor
-  valor: '1.690.000'
+  valor: '2.646.000'
+- tipo: contiene_valor
+  valor: '5.166.000'
 - tipo: no_escala
 respuesta_referencia: >-
-  El predio 50C-9000801 tiene pagados 2 de las 4 cuotas del SPAC de 2026 (el 5 de junio y el 14 de agosto
-  de 2026), de $845.000 cada una: $1.690.000 en total.
+  Los predios de U02 son dos. El 50C-9000201 está al día (saldo $0). El 50C-9000202 tiene vencidas las
+  vigencias 2025, por $2.520.000, y 2026, por $2.646.000, con un saldo pendiente de $5.166.000. La respuesta
+  habla solo de esos dos predios.
 fuentes_esperadas:
-- Usuario de prueba U08 (usuarios_prueba.yaml)
+- Usuario de prueba U02 (usuarios_prueba.yaml, del adaptador)
+- CA-02 (Tabla 11 del documento de grado)
 no_debe:
-- incluir pagos de otro predio
-- decir que ya pagó las cuatro cuotas
+- hablar de predios que no son de U02
+- pedir que elija un predio, si pidió todos
 dado_cuando_entonces:
-  dado: U08 con sesión y dos cuotas del SPAC pagadas
-  cuando: Pide el historial de pagos de su predio
-  entonces: Recibe los dos pagos de $845.000 y el total de $1.690.000
-nota_revision:
-- >-
-  El texto del criterio CA-02 no está en el repositorio (la especificación solo lo nombra); el contenido
-  se dedujo de RF-IPU-02 y de los valores de usuarios_prueba.yaml.
+  dado: un contribuyente autenticado que se identifica con su cédula o NIT
+  cuando: pide su estado de cuenta
+  entonces: el sistema obtiene sus predios mediante el adaptador y responde solo sobre ellos
 aprobado_por: ''

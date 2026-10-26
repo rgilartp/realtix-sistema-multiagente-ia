@@ -21,17 +21,18 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: 21 de diciembre de 2026
 respuesta_referencia: >-
-  Los obligados con obligaciones tributarias distritales pendientes pueden descontar el 60 % de los intereses
-  y las sanciones causados, siempre que, a más tardar el 21 de diciembre de 2026, paguen el 100 % del
-  capital adeudado y el 40 % de los intereses y las sanciones causados a la fecha de pago (Acuerdo 1084
-  de 2026, art. 7). El predio 50C-9000202 de U02 tiene 2 obligaciones vencidas (2025 y 2026) y un saldo
-  pendiente de $5.166.000.
+  Los obligados de los impuestos distritales que, a la fecha de publicación del Acuerdo 1084 de 2026,
+  tengan obligaciones tributarias pendientes de pago pueden descontar el 60 % de los intereses y las sanciones
+  causados, siempre que, a más tardar el 21 de diciembre de 2026, paguen el 100 % del capital adeudado
+  y el 40 % de los intereses y las sanciones causados a la fecha de pago (Acuerdo 1084 de 2026, art. 7.1).
+  El predio 50C-9000202 de U02 tiene 2 vigencias vencidas (2025 y 2026) y un saldo pendiente de $5.166.000.
 fuentes_esperadas:
 - Acuerdo 1084 de 2026, art. 7
 - Usuario de prueba U02 (usuarios_prueba.yaml)
 no_debe:
 - prometer un descuento sobre el capital
 - dar una fecha límite distinta del 21 de diciembre de 2026
+- omitir que la deuda debía estar pendiente a la publicación del acuerdo
 dado_cuando_entonces:
   dado: U02 con sesión y un predio con dos vigencias vencidas
   cuando: Pregunta si hay un beneficio en los intereses

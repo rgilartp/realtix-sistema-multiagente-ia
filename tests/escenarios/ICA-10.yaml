@@ -22,15 +22,18 @@ verificaciones_codigo:
   valor: funcionario
 - tipo: sin_error_tecnico
 respuesta_referencia: >-
-  Transfiere la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación,
-  para que no tenga que repetirlo; desde ese momento el asistente deja de responder en esa conversación.
+  Explica, antes de transferir, que la retención de ICA está fuera de lo que atiende este canal, que solo
+  cubre el impuesto predial unificado y el de industria y comercio de Bogotá, sin retenciones; luego transfiere
+  la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación.
 fuentes_esperadas:
+- RF-ICA-04 · Retenciones fuera de alcance
 - Manual de uso de la OVT simulada (plataforma_general)
 no_debe:
 - explicar cómo practicar o declarar la retención
+- transferir sin decir por qué
 - mostrar un error técnico
 dado_cuando_entonces:
   dado: U04 con sesión
   cuando: Pregunta por la retención de ICA
-  entonces: El caso se transfiere a un funcionario con su resumen
+  entonces: Recibe que el tema está fuera del canal y el caso se transfiere con su resumen
 aprobado_por: ''

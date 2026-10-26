@@ -2,7 +2,7 @@
 
 Un YAML por escenario en `tests/escenarios/`. Este módulo no ejecuta nada: valida que el formato y
 la distribución sean los de la especificación, aprueba las respuestas de referencia (ADR-22) y
-genera la hoja de revisión y el índice, para que los autores las vean antes de una corrida.
+genera la hoja de revisión y el índice, que revisa y aprueba Rodolfo antes de una corrida.
 """
 
 import json
@@ -69,6 +69,7 @@ CON_VALOR = (
 )
 SESIONES = tuple(f"U{n:02d}" for n in range(1, 13)) + ("TOKEN_INVALIDO", None)
 TIPOS_LATENCIA = ("simple", "rag")
+TIPOS_ADJUNTO = ("recibo_sintetico", "otro_documento")
 OBLIGATORIOS = (
     "id", "titulo", "origen", "rf", "hu", "grupo", "categoria_esperada", "comportamiento_esperado",
     "sesion", "reloj", "tipo_latencia", "turnos", "verificaciones_codigo", "respuesta_referencia",
@@ -128,7 +129,11 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
         errores.append("id con formato inválido")
     if esc["grupo"] not in DISTRIBUCION:
         errores.append(f"grupo desconocido ({esc['grupo']!r})")
-    if esc["categoria_esperada"] not in CATEGORIAS:
+    if esc["categoria_esperada"] is None and esc["grupo"] != "horario":
+        errores.append(
+            "solo los de horario van sin categoría (la API responde antes de clasificar)"
+        )
+    elif esc["categoria_esperada"] is not None and esc["categoria_esperada"] not in CATEGORIAS:
         errores.append(f"categoria_esperada desconocida ({esc['categoria_esperada']!r})")
     if esc["grupo"] == "multiagente":
         cats = esc.get("categorias_esperadas")
@@ -166,6 +171,13 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
                 or (adenda and int(adenda.group(1)) in ESCENARIOS_ADENDA)
             ):
                 errores.append(f"origen desconocido ({o!r})")
+    adjunto = esc.get("adjunto")
+    if adjunto is not None and (
+        not isinstance(adjunto, dict) or adjunto.get("tipo") not in TIPOS_ADJUNTO
+    ):
+        errores.append(f"adjunto con tipo desconocido ({adjunto!r})")
+    if esc["grupo"] == "ocr" and adjunto is None:
+        errores.append("un escenario de ocr necesita su adjunto simulado")
     turnos = esc["turnos"]
     if not (isinstance(turnos, list) and turnos and all(t.get("usuario") for t in turnos)):
         errores.append("turnos debe traer al menos un mensaje del usuario")
@@ -263,9 +275,6 @@ def hoja_de_revision(escenarios: list[dict[str, Any]]) -> str:
         "- El escenario 15 de la adenda (trazas sin identificadores) no es un escenario de "
         "conversación: es una revisión automática de las trazas de toda la corrida (B12, "
         "RNF-05).",
-        "- El texto de los criterios CA-01 a CA-06 no está en el repositorio: la especificación "
-        "solo los nombra. CA-04 a CA-06 se deducen de la tabla de la sección 6.3 (predio ajeno, "
-        "sin sesión y adaptador sin respuesta); CA-01 a CA-03 se dedujeron de RF-IPU-02.",
         "",
         "| ID | Grupo | Origen | Pregunta | Respuesta de referencia | Fuente | Pendiente | Nota "
         "| Aprobado por |",
@@ -347,6 +356,9 @@ def validar_enrutamiento(consultas: list[dict[str, Any]]) -> list[str]:
             errores.append(f"{c.get('id')}: texto vacío")
         if (c.get("categoria") == "ocr") != bool(c.get("adjunto")):
             errores.append(f"{c.get('id')}: solo las consultas de ocr llevan adjunto simulado")
+        adjunto = c.get("adjunto")
+        if adjunto and adjunto.get("tipo") not in TIPOS_ADJUNTO:
+            errores.append(f"{c.get('id')}: tipo de adjunto desconocido ({adjunto.get('tipo')!r})")
     for categoria in CATEGORIAS:
         n = sum(1 for c in consultas if c.get("categoria") == categoria)
         if n != 20:

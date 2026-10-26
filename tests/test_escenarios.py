@@ -185,8 +185,9 @@ def test_los_multiagente_declaran_sus_categorias(escenarios) -> None:
 def test_toda_referencia_con_contenido_cita_su_fuente_y_lo_pendiente_esta_marcado(
     escenarios,
 ) -> None:
-    pendientes = [e["id"] for e in escenarios if esc_con_pendientes(e)]
-    assert set(pendientes) == {"OCR-04", "OCR-05", "OCR-06", "HOR-01", "HOR-02", "ROB-01", "ROB-02"}
+    # Decisión de Rodolfo: en las referencias de comportamiento, sin datos tributarios, la fuente
+    # puede ser el requerimiento que lo define (RF, RNF, CA o la adenda). No queda ninguna.
+    assert [e["id"] for e in escenarios if esc_con_pendientes(e)] == []
     for e in escenarios:
         if not e["respuesta_referencia"].startswith("PENDIENTE"):
             assert e["fuentes_esperadas"], e["id"]
@@ -272,12 +273,21 @@ def test_las_referencias_con_usuarios_coinciden_con_usuarios_prueba_yaml(por_id)
     def saldo(usuario: str, predio: int = 0) -> str:
         return pesos(USUARIOS[usuario]["predios"][predio]["estado_cuenta"]["saldo"])
 
+    def obligaciones(usuario: str, predio: int, estado: str) -> list[str]:
+        return [
+            pesos(o["valor"])
+            for o in USUARIOS[usuario]["predios"][predio]["obligaciones"]
+            if o["estado"] == estado
+        ]
+
+    pagos_u03 = USUARIOS["U03"]["predios"][0]["pagos"]
     esperados = {
-        "IPU-01": [saldo("U03"), valor("U03")],
-        "IPU-03": [valor("U07", clave="valor_pagado"), valor("U07", clave="descuento")],
+        "IPU-01": [saldo("U03"), *obligaciones("U03", 0, "VENCIDO")],
+        "IPU-02": [saldo("U02", 1), *obligaciones("U02", 1, "VENCIDO")],
+        "IPU-03": [pesos(p["valor"]) for p in pagos_u03]
+        + [fecha_larga(p["fecha"]) for p in pagos_u03],
         "IPU-14": [saldo("U02", 1)],
         "IPU-15": [saldo("U08"), pesos(845_000)],
-        "IPU-02": [saldo("U08"), pesos(845_000)],
         "MULTI-01": [pesos(USUARIOS["U04"]["predios"][0]["estado_cuenta"]["saldo"]),
                      valor("U04")],
         "AMB-02": [saldo("U02", 1), valor("U02", 1)],
@@ -287,11 +297,15 @@ def test_las_referencias_con_usuarios_coinciden_con_usuarios_prueba_yaml(por_id)
         "OCR-03": [valor("U06"), valor("U06", clave="descuento")],
         "OCR-07": [valor("U03"), saldo("U03")],
         "ICA-05": [pesos(USUARIOS["U04"]["predios"][0]["estado_cuenta"]["saldo"])],
-        "MULTI-02": [pesos(USUARIOS["U12"]["predios"][0]["ipu_2026"]["valor"])],
+        "MULTI-02": [valor("U12", clave="valor_pagado")],
     }  # fmt: skip
     for id_, valores in esperados.items():
         for v in valores:
             assert v in por_id[id_]["respuesta_referencia"], (id_, v)
+    referencia_pagos = por_id["IPU-03"]["respuesta_referencia"].lower()
+    assert all(p["medio"].lower() in referencia_pagos for p in pagos_u03)
+    assert USUARIOS["U02"]["predios"][0]["estado_cuenta"]["saldo"] == 0
+    assert "al día (saldo $0)" in por_id["IPU-02"]["respuesta_referencia"]
 
 
 @pytest.mark.unit
@@ -343,11 +357,16 @@ def test_aprobar_llena_aprobado_por_sin_tocar_el_resto_ni_los_pendientes(tmp_pat
     copia.mkdir()
     for ruta in DIR_ESCENARIOS.glob("*.yaml"):
         (copia / ruta.name).write_text(ruta.read_text("utf-8"), encoding="utf-8")
+    pendiente = copia / "OCR-04.yaml"  # se simula una referencia sin fuente
+    datos = yaml.safe_load(pendiente.read_text("utf-8"))
+    datos["respuesta_referencia"] = "PENDIENTE: falta la fuente"
+    datos["pendiente"] = ["Falta la fuente del motivo del rechazo."]
+    pendiente.write_text(yaml.safe_dump(datos, allow_unicode=True, sort_keys=False), "utf-8")
     originales = {p.name: p.read_text("utf-8") for p in copia.glob("*.yaml")}
     aprobados, excluidos, pendientes = aprobar_referencias(
         "Rodolfo Angel Gilart Pulido", frozenset({"IPU-04"}), directorio=copia
     )
-    assert excluidos == ["IPU-04"] and "OCR-04" in pendientes and "IPU-04" not in aprobados
+    assert excluidos == ["IPU-04"] and pendientes == ["OCR-04"] and "IPU-04" not in aprobados
     assert len(aprobados) + len(excluidos) + len(pendientes) == 60
     for ruta in copia.glob("*.yaml"):
         nuevo = yaml.safe_load(ruta.read_text("utf-8"))
@@ -382,9 +401,9 @@ def test_el_conjunto_de_enrutamiento_son_100_consultas_20_por_categoria() -> Non
     por_categoria = {c: sum(1 for q in consultas if q["categoria"] == c) for c in
                      ("ipu", "ica", "general", "ocr", "fuera_de_alcance")}  # fmt: skip
     assert set(por_categoria.values()) == {20}
-    assert all(
-        q["adjunto"]["tipo"] == "recibo_sintetico" for q in consultas if q["categoria"] == "ocr"
-    )
+    tipos = [q["adjunto"]["tipo"] for q in consultas if q["categoria"] == "ocr"]
+    assert set(tipos) == {"recibo_sintetico", "otro_documento"}
+    assert tipos.count("otro_documento") == 2
 
 
 @pytest.mark.unit
@@ -422,3 +441,87 @@ def test_el_clasificador_simulado_acierta_las_consultas_inequivocas() -> None:
         partes = clasificar_por_palabras(q["texto"], estado).partes  # type: ignore[arg-type]
         aciertos += partes[0]["categoria"] == q["categoria"]
     assert aciertos / len(claras) >= 0.4  # solo detecta que las etiquetas no son absurdas
+
+
+CA_LITERAL = {
+    "CA-01": (
+        "un contribuyente sintético autenticado, con un predio que tiene obligaciones pendientes",
+        "pregunta por el estado de cuenta de ese predio",
+        "el sistema informa el saldo pendiente y las obligaciones por vigencia con su estado, "
+        "iguales a los que devuelve el adaptador para ese predio",
+    ),
+    "CA-02": (
+        "un contribuyente autenticado que se identifica con su cédula o NIT",
+        "pide su estado de cuenta",
+        "el sistema obtiene sus predios mediante el adaptador y responde solo sobre ellos",
+    ),
+    "CA-03": (
+        "el mismo contribuyente de CA-01",
+        "pide su historial de pagos",
+        "el sistema lista los pagos registrados con su fecha, valor y medio de pago, iguales a los "
+        "del adaptador, sin modificar ningún dato (RF-SYS-02)",
+    ),
+    "CA-04": (
+        "un contribuyente autenticado",
+        "consulta un predio con una matrícula catastral válida que no le pertenece",
+        "el sistema rechaza la consulta con un mensaje explícito, no revela ningún dato del predio "
+        "y no escala el caso (RF-AUT-02)",
+    ),
+    "CA-05": (
+        "una sesión sin autenticar",
+        "se pide el estado de cuenta de un predio",
+        "el sistema no entrega datos e indica que se debe iniciar sesión en la Oficina Virtual "
+        "Tributaria (RF-AUT-04)",
+    ),
+    "CA-06": (
+        "el adaptador de datos no responde dentro del tiempo máximo de espera",
+        "el agente consulta el estado de cuenta",
+        "el sistema no muestra un error técnico y deriva la consulta al escalamiento (RNF-08)",
+    ),
+}  # Tabla 11 del documento de grado, «Criterios de aceptación del requerimiento RF-IPU-02»
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-02 · Estado de cuenta e historial")
+def test_los_criterios_ca_van_literales_en_su_escenario(escenarios) -> None:
+    for e in escenarios:
+        for ca in (o for o in e["origen"] if o.startswith("CA-")):
+            gcd = e["dado_cuando_entonces"]
+            assert (gcd["dado"], gcd["cuando"], gcd["entonces"]) == CA_LITERAL[ca], e["id"]
+    texto = " ".join(str(e) for e in escenarios) + HOJA_REVISION.read_text("utf-8")
+    assert "no está en el repositorio" not in texto
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-07 · Aviso fuera de horario")
+def test_los_de_horario_van_sin_categoria_y_dicen_cuando_se_vuelve_a_atender(por_id) -> None:
+    from datetime import datetime
+
+    from src.services.horario import DIAS, MESES, Horario
+
+    for id_ in ("HOR-01", "HOR-02"):
+        e = por_id[id_]
+        assert e["categoria_esperada"] is None
+        apertura = Horario().proxima_apertura(datetime.fromisoformat(e["reloj"]))
+        cuando = (
+            f"{DIAS[apertura.weekday()]} {apertura.day} de {MESES[apertura.month - 1]} de "
+            f"{apertura.year} a las 8:00 a. m."
+        )
+        assert cuando in e["respuesta_referencia"], (id_, cuando)
+    otro = copy.deepcopy(por_id["IPU-04"])
+    otro["categoria_esperada"] = None
+    assert validar_escenario(otro)  # fuera de horario, nadie más va sin categoría
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-01 · Clasificación de la consulta")
+def test_la_regla_de_categorias_esta_escrita_y_se_cumple() -> None:
+    texto = (RAIZ / "tests/componentes/enrutamiento.yaml").read_text("utf-8")
+    assert "Regla de categorías" in texto and "glosario" in texto
+    consultas = {q["id"]: q for q in cargar_enrutamiento()}
+    assert consultas["ENR-GEN05"]["texto"] == "¿Qué es el SPAC?"
+    assert consultas["ENR-GEN05"]["categoria"] == "general"  # definición del glosario
+    ipu10 = consultas["ENR-IPU10"]
+    assert "sobretasa" in ipu10["texto"] and "2027" in ipu10["texto"]  # cálculo: su agente
+    definiciones = [q for q in consultas.values() if q["texto"].startswith("¿Qué es la sobretasa")]
+    assert all(q["categoria"] == "general" for q in definiciones)

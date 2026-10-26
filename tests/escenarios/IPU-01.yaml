@@ -1,5 +1,5 @@
 id: IPU-01
-titulo: Estado de cuenta de un predio propio con una obligación vencida
+titulo: Estado de cuenta de un predio propio con una vigencia vencida
 origen:
 - CA-01
 rf:
@@ -21,22 +21,22 @@ verificaciones_codigo:
 - tipo: contiene_valor
   valor: '2.135.000'
 - tipo: contiene_texto
-  valor: 1 obligación
+  valor: '2026'
 - tipo: no_escala
 respuesta_referencia: >-
-  El predio 50C-9000301 tiene 1 obligación pendiente o vencida (el predial de 2026, por $2.135.000) y
-  un saldo total pendiente de $2.135.000.
+  Estado de cuenta del predio 50C-9000301, por vigencia: 2023, 2024 y 2025 al día; 2026 vencida, por $2.135.000
+  (el plazo era el 10 de julio de 2026). Saldo pendiente: $2.135.000.
 fuentes_esperadas:
-- Usuario de prueba U03 (usuarios_prueba.yaml)
+- Usuario de prueba U03 (usuarios_prueba.yaml, del adaptador)
+- CA-01 (Tabla 11 del documento de grado)
 no_debe:
 - mostrar datos de otro predio
 - decir que el predio está al día
+- dar un estado distinto del que devuelve el adaptador
 dado_cuando_entonces:
-  dado: U03 con sesión y un predio sin pagar
-  cuando: Pide el estado de cuenta de su predio
-  entonces: Recibe 1 obligación pendiente y un saldo de $2.135.000
-nota_revision:
-- >-
-  El texto del criterio CA-01 no está en el repositorio (la especificación solo lo nombra); el contenido
-  se dedujo de RF-IPU-02 y de los valores de usuarios_prueba.yaml.
+  dado: un contribuyente sintético autenticado, con un predio que tiene obligaciones pendientes
+  cuando: pregunta por el estado de cuenta de ese predio
+  entonces: >-
+    el sistema informa el saldo pendiente y las obligaciones por vigencia con su estado, iguales a los
+    que devuelve el adaptador para ese predio
 aprobado_por: ''

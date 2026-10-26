@@ -28,8 +28,8 @@ respuesta_referencia: >-
   A partir del 1 de enero de 2027 pertenecen al régimen común los contribuyentes cuyo impuesto a cargo
   en el año inmediatamente anterior supera 391 UVT, y declaran y pagan cada dos meses; pertenecen al régimen
   preferencial los de hasta 391 UVT, y declaran una vez al año. Quien realiza por primera vez actividades
-  gravadas queda en el preferencial durante el primer año (Acuerdo 1084 de 2026, art. 26). No se convierte
-  el umbral a pesos porque la UVT de 2027 aún no se publica.
+  gravadas queda en el preferencial durante el primer año (Acuerdo 1084 de 2026, art. 26). El umbral no
+  se da en pesos porque el valor de 2027 aún no se ha publicado.
 fuentes_esperadas:
 - Acuerdo 1084 de 2026, art. 26
 - datos/regimenes_ica.yaml

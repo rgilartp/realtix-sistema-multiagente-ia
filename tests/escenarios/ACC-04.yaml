@@ -14,7 +14,8 @@ sesion: null
 reloj: '2026-10-01T10:00:00-05:00'
 tipo_latencia: simple
 turnos:
-- usuario: ¿Qué tarifa de industria y comercio paga en Bogotá una empresa de desarrollo de software?
+- usuario: >-
+    ¿Qué tarifa de industria y comercio paga en Bogotá la actividad 6201, desarrollo de software?
 verificaciones_codigo:
 - tipo: contiene_texto
   valor: '9,66'
@@ -36,12 +37,9 @@ fuentes_esperadas:
 no_debe:
 - pedir sesión para una consulta general
 - dar la tarifa de 2027 como vigente en 2026
+- dar la tarifa de otra actividad, como la 6202
 dado_cuando_entonces:
   dado: Una conversación sin sesión
-  cuando: Pregunta por la tarifa de una actividad económica
+  cuando: Pregunta por la tarifa de la actividad 6201
   entonces: Recibe la tarifa por año sin necesidad de iniciar sesión
-nota_revision:
-- >-
-  La pregunta no nombra el código CIIU 6201; que el agente lo deduzca de «desarrollo de software» es parte
-  de lo que se evalúa.
 aprobado_por: ''

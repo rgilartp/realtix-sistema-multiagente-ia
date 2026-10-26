@@ -21,14 +21,15 @@ verificaciones_codigo:
 respuesta_referencia: >-
   Los contribuyentes del predial de 2026 deben declarar y pagar, a más tardar, el 10 de julio de 2026
   (Resolución SDH-000195 de 2025, art. 3); con facturación, el valor total se paga a más tardar en esa
-  misma fecha (art. 4).
+  misma fecha (art. 4). Ese plazo ya venció.
 fuentes_esperadas:
 - Resolución SDH-000195 de 2025, arts. 3 y 4
 - datos/calendario/2026.yaml
 no_debe:
 - dar otra fecha como plazo general
+- presentar el plazo como vigente
 dado_cuando_entonces:
-  dado: Un contribuyente sin sesión
+  dado: Un contribuyente sin sesión; el reloj marca el 1 de octubre de 2026
   cuando: Pregunta el plazo del predial de 2026
-  entonces: Recibe el 10 de julio de 2026 con la cita
+  entonces: Recibe el 10 de julio de 2026 con la cita y que el plazo ya venció
 aprobado_por: ''

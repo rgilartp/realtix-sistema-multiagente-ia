@@ -10,9 +10,9 @@ Generado por `scripts/generar_hoja_escenarios.py`; no se edita a mano. 60 escena
 | ACC-02 · Estado de cuenta sin sesión iniciada | acceso | RF-AUT-04, RF-AUT-01 | HU-18 | adenda-4, CA-05 |
 | ACC-03 · Token de sesión inválido o vencido | acceso | RF-AUT-01, RF-AUT-04 | HU-18 | especificacion-6.3 |
 | ACC-04 · Consulta general sin sesión | acceso | RF-AUT-03, RF-ICA-02 | HU-02 | especificacion-6.3 |
-| IPU-01 · Estado de cuenta de un predio propio con una obligación vencida | ipu | RF-IPU-02, RF-AUT-01 | HU-05 | CA-01 |
-| IPU-02 · Historial de pagos de un predio con cuotas del SPAC | ipu | RF-IPU-02, RF-AUT-01 | HU-06 | CA-02 |
-| IPU-03 · Estado de cuenta de un predio al día | ipu | RF-IPU-02, RF-AUT-01 | HU-05 | CA-03 |
+| IPU-01 · Estado de cuenta de un predio propio con una vigencia vencida | ipu | RF-IPU-02, RF-AUT-01 | HU-05 | CA-01 |
+| IPU-02 · Estado de cuenta de todos los predios del contribuyente | ipu | RF-IPU-02, RF-AUT-01, RF-AUT-02 | HU-05 | CA-02 |
+| IPU-03 · Historial de pagos de un predio propio | ipu | RF-IPU-02, RF-AUT-01, RF-SYS-02 | HU-06 | CA-03 |
 | IPU-04 · Qué es el predial y cómo se calcula | ipu | RF-IPU-01, RF-IPU-05 | HU-01 | especificacion-6.3 |
 | IPU-05 · Cuándo se causa el predial y cuál es su período | ipu | RF-IPU-01, RF-IPU-05 | HU-01 | especificacion-6.3 |
 | IPU-06 · Tarifas preferenciales de los estratos 1, 2 y 3 en 2026 | ipu | RF-IPU-01, RF-IPU-05 | HU-01, HU-03 | especificacion-6.3 |

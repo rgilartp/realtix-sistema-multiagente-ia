@@ -16,7 +16,8 @@ sesion: U03
 reloj: '2026-10-01T10:00:00-05:00'
 tipo_latencia: simple
 adjunto:
-  recibo_sintetico: U03 / 50C-9000301 / 2026
+  tipo: recibo_sintetico
+  recibo: U03 / 50C-9000301 / 2026
   calidad: legible
 turnos:
 - usuario: Te envío mi recibo del predial para que lo revises

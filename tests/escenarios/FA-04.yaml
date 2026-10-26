@@ -22,9 +22,12 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: funcionario
 respuesta_referencia: >-
-  Transfiere la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación,
-  para que no tenga que repetirlo; desde ese momento el asistente deja de responder en esa conversación.
+  Explica, antes de transferir, que ese tema está fuera de lo que atiende este canal, que solo cubre el
+  impuesto predial unificado y el de industria y comercio de Bogotá; luego transfiere la consulta a un
+  funcionario y avisa que el caso queda registrado con un resumen de la conversación, para que no tenga
+  que repetirlo.
 fuentes_esperadas:
+- RF-SYS-03 · Tributos y municipio cubiertos
 - Manual de uso de la OVT simulada (plataforma_general)
 no_debe:
 - dar una fecha de pago del impuesto de vehículos
