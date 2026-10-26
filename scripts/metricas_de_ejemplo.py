@@ -3,7 +3,9 @@
 Arma un registro de interacciones a partir de una matriz de confusión de ejemplo y lo pasa por
 `calcular_metricas`, el mismo cálculo de `/admin/metricas`: la exactitud, el total etiquetado, la
 precisión, la exhaustividad y el F1 salen de los mismos pares, como en el sistema real. Las
-duraciones son las de la medición de B9 (`reports/b09_latencia.json`), repetidas en orden.
+duraciones de los turnos con modelo son las de la medición de B9 (`reports/b09_latencia.json`),
+repetidas en orden; los turnos fuera de horario no llevan duración inventada y no entran en las
+latencias. Los turnos escalados tienen el estado `escalada`, como en el sistema real.
 
 Escribe `web/tests/metricas_de_ejemplo.json`.
 Uso: uv run python scripts/metricas_de_ejemplo.py
@@ -56,7 +58,7 @@ def interacciones_de_ejemplo() -> tuple[list[dict], dict[str, str | None]]:
                     "escenario_id": escenario,
                     "categoria": predicha,
                     "duracion_ms": next(duraciones),
-                    "estado": "respondida",
+                    "estado": "escalada" if n <= ESCALADAS else "respondida",
                     "escalada": n <= ESCALADAS,
                 }  # fmt: skip
             )
@@ -66,7 +68,7 @@ def interacciones_de_ejemplo() -> tuple[list[dict], dict[str, str | None]]:
                 "id_conversacion": f"conv-sin-{i}",
                 "escenario_id": None,
                 "categoria": None,
-                "duracion_ms": next(duraciones),
+                "duracion_ms": None,
                 "estado": "fuera_de_horario",
                 "escalada": False,
             }  # fmt: skip

@@ -89,3 +89,18 @@ def test_tokens_y_modelo_por_nodo() -> None:
     assert uso.totales() == {"entrada": 120, "salida": 30}
     assert uso.modelo_por_nodo() == {"nodo_ipu": "claude-haiku-5-5"}
     assert uso.costo_usd() == Decimal("0.000027")
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-02 · Matriz de confusión de enrutamiento")
+def test_las_metricas_de_ejemplo_de_la_web_salen_de_calcular_metricas() -> None:
+    """El JSON de las capturas de la consola (B11) coincide con el cálculo real: si el cálculo
+    cambia, hay que regenerarlo con scripts/metricas_de_ejemplo.py."""
+    import json
+
+    from scripts.metricas_de_ejemplo import SALIDA, interacciones_de_ejemplo
+
+    interacciones, etiquetas = interacciones_de_ejemplo()
+    esperado = json.loads(json.dumps(calcular_metricas(interacciones, etiquetas, CATEGORIAS)))
+    assert json.loads(SALIDA.read_text(encoding="utf-8")) == esperado
+    assert esperado["exactitud"] == round(41 / 44, 3) and esperado["turnos_etiquetados"] == 44

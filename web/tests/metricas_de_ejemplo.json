@@ -96,12 +96,13 @@
     "f1": 0.904
   },
   "tiempos_ms": {
-    "mediana": 7077.700000000001,
+    "mediana": 7287.3,
     "p95": 14269.9,
     "maximo": 14269.9
   },
   "por_estado": {
-    "respondida": 44,
+    "escalada": 6,
+    "respondida": 38,
     "fuera_de_horario": 4
   },
   "conversaciones": 48,

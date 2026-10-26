@@ -37,6 +37,16 @@ async function capturar(page, nombre, { completa = false } = {}) {
   if (!CAPTURAS) return;
   await fuentesListas(page);
   await page.waitForTimeout(100); // el widget recalcula su altura con el rótulo ya dibujado
+  // Con las fuentes cargadas cambia el alto del texto: la conversación vuelve al final (si hay
+  // mensajes), como la deja el widget.
+  for (const marco of page.frames()) {
+    await marco
+      .evaluate(() => {
+        const zona = document.querySelector("main[aria-live]");
+        if (zona?.querySelector("[data-autor]")) zona.scrollTop = zona.scrollHeight;
+      })
+      .catch(() => {});
+  }
   const { width } = page.viewportSize();
   const path = `../docs/capturas/${nombre}_${width}.png`;
   await page.screenshot({ path, animations: "disabled", fullPage: completa });
@@ -90,6 +100,10 @@ async function flujoOvt(page, tamano) {
   await expect(page.locator("img, svg")).toHaveCount(0); // sin logos
   expect(await page.locator("body").innerText()).not.toMatch(MARCAS_PROHIBIDAS);
   await expect(page.locator("iframe[data-realtix-widget]")).toHaveAttribute("src", /\/widget\/$/);
+  // La captura de la OVT muestra la página con el asistente cerrado (en el celular ya lo está).
+  if (tamano.width >= 640) await page.getByRole("button", { name: "Ocultar asistente" }).click();
+  await page.evaluate(() => document.activeElement?.blur()); // sin el anillo de foco del clic
+  await expect(page.getByRole("button", { name: "Asistente tributario" })).toBeVisible();
   await capturar(page, "ovt_simulada");
 }
 
@@ -133,6 +147,7 @@ async function flujoFueraDeHorario(page, tamano) {
   await expect(aviso).toContainText("Vuelvo a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.");
   await expect(aviso.getByText("Vuelve a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.")).toBeVisible();
   await expect(aviso.getByText("Sistema", { exact: true })).toBeVisible();
+  await rotuloVisible(page);
   await capturar(page, "widget_fuera_de_horario");
 }
 
@@ -149,6 +164,12 @@ async function flujoRecibo(page, tamano) {
   const subida = solicitudes.find((s) => s.ruta === "/api/v1/chat/documento");
   expect(subida.auth).toBe("Bearer token-de-prueba-U03");
   await rotuloVisible(page);
+  // Al cambiar el tamaño de la ventana, el widget tampoco tapa el rótulo.
+  const otro = tamano.width < 640 ? ESCRITORIO : CELULAR;
+  await page.setViewportSize(otro);
+  await rotuloVisible(page);
+  await page.setViewportSize(tamano);
+  await rotuloVisible(page);
   await capturar(page, "widget_recibo");
 }
 
@@ -159,6 +180,7 @@ async function flujoEscalada(page, tamano) {
   await expect(widget.getByText(TEXTOS.transferencia)).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Tu caso está con un funcionario");
   await expect(widget.getByRole("button", { name: "Ya pediste un funcionario" })).toBeDisabled();
+  await rotuloVisible(page);
   await capturar(page, "widget_escalado"); // antes del mensaje de prueba del funcionario
   // La consulta periódica trae el mensaje del funcionario (RF-ESC-05 y RF-UI-03).
   await expect(widget.getByText(TEXTOS.funcionario)).toBeVisible({ timeout: 8000 });

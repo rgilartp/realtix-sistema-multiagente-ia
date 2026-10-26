@@ -74,8 +74,16 @@
       (abierto
         ? "visibility:visible;opacity:1;transform:none;"
         : "visibility:hidden;opacity:0;transform:translateY(8px);");
-    contenedor.style.right = borde + "px";
-    contenedor.style.bottom = borde + "px";
+    // En el celular, con el panel abierto, el contenedor cubre lo que queda bajo el rótulo con el
+    // color del papel, de borde a borde: no asoma la página detrás ni el botón tapa su texto.
+    var hojaCompleta = !ancho.matches && abierto;
+    contenedor.style.right = hojaCompleta ? "0" : borde + "px";
+    contenedor.style.bottom = hojaCompleta ? "0" : borde + "px";
+    contenedor.style.left = hojaCompleta ? "0" : "auto";
+    contenedor.style.top = hojaCompleta ? margenSuperior() + "px" : "auto";
+    contenedor.style.padding = hojaCompleta ? "0 8px 8px 8px" : "0";
+    contenedor.style.background = hojaCompleta ? "#f6f2ea" : "transparent";
+    contenedor.style.pointerEvents = hojaCompleta ? "auto" : "none";
     boton.textContent = abierto ? "Ocultar asistente" : "Asistente tributario";
     boton.setAttribute("aria-expanded", String(abierto));
   }

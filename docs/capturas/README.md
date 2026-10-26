@@ -10,6 +10,8 @@ Capturas de la OVT simulada, el widget y la consola, cada una en 1280 px (`_1280
   - los avisos de transferencia (`AVISO_TRANSFERENCIA` y `PREFACIOS` de `nodo_escalamiento`);
   - el resumen del caso (`construir_resumen`);
   - la confirmación del recibo de OCR-01.
+- **Los casos de la bandeja** (la pregunta, el nivel de confianza y los identificadores) son de
+  ejemplo; solo sus textos fijos salen del sistema.
 - **Las fechas** son las del reloj de los escenarios aprobados en B6: los casos de la bandeja son del
   jueves 1 de octubre de 2026.
 - **Las cifras de la consola son de ejemplo y no son resultados.** Salen de
