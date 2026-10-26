@@ -47,6 +47,7 @@ class Settings(BaseSettings):
 
     # Datos (ADR-05)
     realsit_db_path: Path = Path("datos/realsit_sintetico.db")
+    vigencia_actual: int = Field(default=2026, ge=2026)
     database_url: SecretStr
     chroma_host: str = "localhost"
     chroma_port: int = 8000

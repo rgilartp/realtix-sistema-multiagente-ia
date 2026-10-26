@@ -9,6 +9,7 @@ plazos:
   fechas:
   - '2026-04-17'
   articulo: 6
+  porcentaje_descuento: 10
 - concepto: predial_facturas_expedidas_a_mas_tardar
   fechas:
   - '2026-04-30'

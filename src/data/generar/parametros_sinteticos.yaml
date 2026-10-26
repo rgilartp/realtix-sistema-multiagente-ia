@@ -1,0 +1,76 @@
+# Parámetros del generador de datos sintéticos de RealSit (sección 4.1).
+# Todo lo que está aquí es SINTÉTICO: no es una norma ni un dato oficial. Las tarifas y los
+# plazos oficiales de 2026 salen siempre de datos/ (src/services/predial.py, ica.py y
+# datos_anuales.py); lo de este archivo solo completa las vigencias 2023 a 2025 y la forma de
+# la población.
+sintetico: true
+semilla_por_defecto: 42
+predios: 500
+mes_de_referencia: {anio: 2026, mes: 10}  # primer día hábil de octubre de 2026
+
+vigencias_de_ipu: [2023, 2024, 2025, 2026]
+vigencias_de_ica: [2023, 2024, 2025, 2026]
+
+# Las vigencias 2023 a 2025 se calculan con las reglas y el SMMLV de 2026 aplicados al avalúo
+# de esa vigencia (origen_tarifa = 'sintetica'). Nunca se consulta un año sin datos.
+crecimiento_anual_del_avaluo: "0.05"
+
+# Fechas de las vigencias 2023 a 2025 (sintéticas; las de 2026 salen del calendario oficial).
+fechas_sinteticas:
+  ipu:
+    2023: {descuento: "2023-04-21", limite: "2023-07-14"}
+    2024: {descuento: "2024-04-19", limite: "2024-07-12"}
+    2025: {descuento: "2025-04-17", limite: "2025-07-11"}
+  ica_anual:
+    2023: "2024-02-27"
+    2024: "2025-02-26"
+    2025: "2026-02-25"
+
+localidades:
+  - Usaquén
+  - Chapinero
+  - Santa Fe
+  - San Cristóbal
+  - Usme
+  - Tunjuelito
+  - Bosa
+  - Kennedy
+  - Fontibón
+  - Engativá
+  - Suba
+  - Barrios Unidos
+  - Teusaquillo
+  - Los Mártires
+  - Antonio Nariño
+  - Puente Aranda
+  - La Candelaria
+  - Rafael Uribe Uribe
+  - Ciudad Bolívar
+
+# CIIU presentes en ica_2026.yaml y en ica_2027.yaml.
+ciiu_de_muestra: ["5611", "6201", "6202", "8559", "4111", "1410", "5621", "8610", "6311", "9602",
+                  "5911", "4921", "5223"]
+
+proporciones:
+  persona_juridica: 0.35
+  natural_con_actividad: 0.20
+  dos_predios: 0.20
+  primer_predio_comercial_si_hay_actividad: 0.70
+  destino: {residencial: 0.75, comercial: 0.15, lote: 0.10}
+  estrato: {1: 0.08, 2: 0.20, 3: 0.30, 4: 0.20, 5: 0.12, 6: 0.10}
+  preferencial_entre_los_de_hasta_391_uvt: 0.30
+  # Estados al corte de la fecha de referencia
+  ipu_2026: {al_dia: 0.55, spac: 0.15}  # el resto, vencidas
+  ipu_2026_pagada_con_descuento: 0.45
+  mora_en_vigencias_anteriores: 0.04
+  bimestre_pagado: 0.90
+
+# Avalúo de 2026 en millones de pesos, por estrato (mínimo, máximo). Los mínimos de los
+# estratos 1 y 2 quedan por encima de 16 SMMLV incluso tres vigencias atrás.
+avaluo_millones:
+  estrato: {1: [40, 200], 2: [40, 260], 3: [60, 420], 4: [120, 700], 5: [200, 1100], 6: [300, 1600]}
+  comercial: [80, 1200]
+  lote: [20, 600]
+
+ingresos_anuales_millones: [40, 4000]
+medios_de_pago: ["PSE", "Corresponsal bancario", "Ventanilla"]
