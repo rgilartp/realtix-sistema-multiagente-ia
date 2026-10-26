@@ -1,0 +1,41 @@
+"""Resumen del caso para el funcionario, sin modelo (RF-ESC-03).
+
+Texto y JSON salen de los mismos datos. No lleva el texto de los mensajes del contribuyente ni
+datos personales: solo el motivo, la categoría, el nivel, los intentos y las partes del turno.
+"""
+
+from collections.abc import Mapping, Sequence
+from typing import Any
+
+
+def construir_resumen(
+    *,
+    motivo: str,
+    categoria: str | None,
+    nivel_confianza: float,
+    intentos: int,
+    resueltas: Sequence[Mapping[str, Any]],
+    rechazadas: Sequence[Mapping[str, Any]],
+    motivo_original: str | None = None,
+) -> tuple[str, dict[str, Any]]:
+    """Devuelve el resumen en texto y en JSON (la bandeja de B9 muestra ambos)."""
+    texto = (
+        f"Motivo: {motivo}. Categoría: {categoria or 'sin clasificar'}. "
+        f"Nivel de confianza: {nivel_confianza:.2f}. "
+        f"Reclasificaciones: {intentos}. "
+        f"Partes ya resueltas: {len(resueltas)}. Partes rechazadas: {len(rechazadas)}."
+    )
+    datos: dict[str, Any] = {
+        "motivo": motivo,
+        "categoria": categoria,
+        "nivel_confianza": nivel_confianza,
+        "intentos": intentos,
+        "partes_resueltas": [p["texto"] for p in resueltas],
+        "partes_rechazadas": [
+            {"categoria": p["categoria"], "texto": p["texto"], "nivel": p.get("nivel")}
+            for p in rechazadas
+        ],
+    }
+    if motivo_original is not None:
+        datos["motivo_original"] = motivo_original
+    return texto, datos

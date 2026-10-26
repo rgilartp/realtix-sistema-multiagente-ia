@@ -442,6 +442,17 @@ def test_caso_2_predio_ajeno_e_inexistente_mismo_mensaje_sin_escalar(grafo) -> N
 
 
 @pytest.mark.unit
+@pytest.mark.req("RF-ESC-01 · Cálculo del nivel de confianza")
+def test_cada_parte_dice_de_donde_sale_su_nivel(grafo) -> None:
+    ajeno = turno(grafo, f"Mi predio {AJENO}", "origen-1", U03, [P03])
+    conceptual = turno(grafo, "¿Qué es el impuesto predial?", "origen-2")
+    aclaracion = turno(grafo, "¿Cuánto debo de mi predio?", "origen-3", U02, P02)
+    assert ajeno["respuestas_parciales"][0]["origen_nivel"] == "rechazo_acceso"
+    assert conceptual["respuestas_parciales"][0]["origen_nivel"] == "formula"
+    assert aclaracion["respuestas_parciales"][0]["origen_nivel"] == "aclaracion"
+
+
+@pytest.mark.unit
 @pytest.mark.req("RF-ORQ-06 · Prevención de bucles")
 def test_caso_3_no_corresponde_con_el_tope_alcanzado_escala(deps) -> None:
     deps.config = ConfigGrafo(max_reclasificaciones=0)

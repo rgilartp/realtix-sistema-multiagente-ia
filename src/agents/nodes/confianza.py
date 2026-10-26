@@ -1,4 +1,4 @@
-"""`nodo_confianza` simulado: puntaje (ADR-17) y decisión de continuar, responder o escalar.
+"""`nodo_confianza`: aplica el servicio de confianza (ADR-17) y decide el camino del turno.
 
 Sin modelo (ADR-03). Escala por falla de un servicio, tributario fuera de alcance, falta de
 cobertura, confianza bajo el umbral o tope de reclasificaciones. La aclaración y el rechazo por
@@ -10,9 +10,11 @@ from typing import Any
 
 from src.agents.dependencias import Dependencias
 from src.agents.state import AgentState
-from src.services.confianza import calcular_nivel
-
-RESPUESTAS_VALIDAS_SIN_BASE = ("aclaracion",)
+from src.services.confianza import (
+    combinar_niveles,
+    evaluar_parte,
+    factor_cobertura,
+)
 
 
 def crear_nodo_confianza(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
@@ -58,20 +60,25 @@ def crear_nodo_confianza(deps: Dependencias) -> Callable[[AgentState], dict[str,
                     ultima["categoria"],
                 ],
             )
-        fija = ultima["suficiencia"] in RESPUESTAS_VALIDAS_SIN_BASE or ultima["rechazo_acceso"]
-        if fija:
-            nivel = 1.0
-        else:
-            nivel = calcular_nivel(
-                ultima["similitud"], ultima["suficiencia"], ultima["cobertura"], config.pesos
-            )
+        tributo = ultima["categoria"] if ultima["categoria"] in ("ipu", "ica") else None
+        municipio = "Medellín" if marcas.get("municipio_distinto") else None
+        evaluacion = evaluar_parte(
+            ultima["similitud"],
+            ultima["suficiencia"],
+            factor_cobertura(tributo, municipio, ultima["cobertura"]),
+            rechazo_acceso=ultima["rechazo_acceso"],
+            umbral=config.umbral_confianza,
+            pesos=config.pesos,
+            escala=config.escala_similitud,
+        )
+        ultima["origen_nivel"] = evaluacion.origen
         # En una consulta multiagente basta una parte bajo el umbral para escalar.
-        minimo = nivel if previo is None else min(previo, nivel)
-        if not fija and ultima["cobertura"] <= 0:
-            return escalar("sin cobertura", minimo)
+        minimo = combinar_niveles(previo, evaluacion.nivel)
+        if evaluacion.motivo == "sin cobertura":
+            return escalar(evaluacion.motivo, minimo)
         marcas["confianza_calculada"] = True
-        if nivel < config.umbral_confianza:
-            return escalar("confianza insuficiente", minimo)
-        return resultado(True, nivel, nivel_confianza=minimo)
+        if evaluacion.motivo:
+            return escalar(evaluacion.motivo, minimo)
+        return resultado(True, evaluacion.nivel, nivel_confianza=minimo)
 
     return nodo_confianza

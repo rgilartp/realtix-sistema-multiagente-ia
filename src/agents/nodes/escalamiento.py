@@ -7,6 +7,7 @@ falla; un motivo fuera de la lista se registra como «fallo de servicio» y cons
 """
 
 import logging
+import time
 from collections.abc import Callable
 from typing import Any
 
@@ -15,6 +16,7 @@ from langchain_core.messages import AIMessage
 from src.agents.dependencias import Dependencias
 from src.agents.state import MOTIVOS_ESCALAMIENTO, AgentState
 from src.data.models import CasoEscalado
+from src.services.resumen import construir_resumen
 
 registro = logging.getLogger(__name__)
 
@@ -26,6 +28,7 @@ AVISO_TRANSFERENCIA = (
 
 def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     def nodo_escalamiento(state: AgentState) -> dict[str, Any]:
+        inicio = time.perf_counter()
         marcas = dict(state.get("marcas", {}))
         original = state.get("motivo_escalamiento")
         motivo = original if original in MOTIVOS_ESCALAMIENTO else "fallo de servicio"
@@ -42,12 +45,17 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
         resueltas = [p for p in parciales if p.get("aprobada") and p["texto"]]
         rechazadas = [p for p in parciales if not p.get("aprobada") and p["texto"]]
         categoria = state.get("categoria") or None
-        resumen = (
-            f"Motivo: {motivo}. Categoría: {categoria or 'sin clasificar'}. "
-            f"Nivel de confianza: {nivel:.2f}. "
-            f"Reclasificaciones: {state.get('intentos_clasificacion', 0)}. "
-            f"Partes ya resueltas: {len(resueltas)}."
+        intentos = state.get("intentos_clasificacion", 0)
+        resumen, resumen_json = construir_resumen(
+            motivo=motivo,
+            categoria=categoria,
+            nivel_confianza=nivel,
+            intentos=intentos,
+            resueltas=resueltas,
+            rechazadas=rechazadas,
+            motivo_original=original if motivo != original else None,
         )
+        resumen_json["duracion_resumen_ms"] = round((time.perf_counter() - inicio) * 1000, 3)
         caso = CasoEscalado(
             id_caso=f"CASO-{state['id_conversacion']}",
             id_conversacion=state["id_conversacion"],
@@ -55,24 +63,14 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
             nivel_confianza=nivel,
             motivo=motivo,
             categoria=categoria,
-            resumen_json={
-                "motivo": motivo,
-                "categoria": categoria,
-                "nivel_confianza": nivel,
-                "intentos": state.get("intentos_clasificacion", 0),
-                "partes_resueltas": [p["texto"] for p in resueltas],
-                "partes_rechazadas": [
-                    {"categoria": p["categoria"], "texto": p["texto"], "nivel": p.get("nivel")}
-                    for p in rechazadas
-                ],
-                **({"motivo_original": original} if motivo != original else {}),
-            },
-            intentos=state.get("intentos_clasificacion", 0),
+            resumen_json=resumen_json,
+            intentos=intentos,
         )
         try:
             deps.adaptador.registrar_caso_escalado(caso)
         except Exception:  # RNF-08: el aviso se entrega aunque el registro falle
             marcas["registro_fallido"] = True
+        marcas["duracion_escalamiento_ms"] = round((time.perf_counter() - inicio) * 1000, 3)
         partes = "\n".join(p["texto"] for p in resueltas)
         respuesta = f"{partes}\n\n{AVISO_TRANSFERENCIA}" if partes else AVISO_TRANSFERENCIA
         return {

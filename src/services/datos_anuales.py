@@ -68,3 +68,12 @@ def umbral_ica_pesos(anio: int) -> int:
                 raise DatoNoPublicadoError("umbral del ICA en pesos", anio)
             return int(fila["umbral_pesos"])
     raise AnioSinDatosError(anio, "régimen del ICA")
+
+
+def regimen_ica_del_anio(anio: int) -> dict[str, Any]:
+    """Fila de `regimenes_ica.yaml` del año gravable."""
+    datos = _leer(RAIZ_DATOS / "regimenes_ica.yaml")
+    for fila in datos["anios"]:
+        if fila["anio_gravable"] == anio:
+            return dict(fila)
+    raise AnioSinDatosError(anio, "régimen del ICA")
