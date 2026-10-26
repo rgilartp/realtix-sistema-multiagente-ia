@@ -33,6 +33,10 @@ NOTA_TOPE_SOBRETASA = (
     "y de 1.200 UVT en los demás (Acuerdo 1084 de 2026, art. 15); como la UVT de 2027 aún no "
     "se publica, la estimación no aplica el tope y el valor de la factura puede ser menor."
 )
+NOTA_SOBRETASA_SIN_UVT = (
+    "La sobretasa de alumbrado público de los estratos 1, 2 y 3 depende de la UVT de 2027 "
+    "(el límite de 20.000 UVT), que aún no se publica; por eso no se estima."
+)
 NOTA_PROYECCION_ICA_ANUAL = (
     "El ICA anual de 2026 se estima como una proyección del año completo a partir de los ingresos "
     "que se indican; el impuesto definitivo depende de los ingresos reales del año."

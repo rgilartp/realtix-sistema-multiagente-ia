@@ -163,13 +163,16 @@ class LiquidacionPredial:
 
 def _sobretasa_2027(
     destino: Destino, estrato: int | None, avaluo: int
-) -> tuple[SobretasaAlumbrado, tuple[str, ...]]:
+) -> tuple[SobretasaAlumbrado | None, tuple[str, ...]]:
     datos = cargar_datos("tarifas/sobretasa_alumbrado_2027.yaml", 2027, "sobretasa de alumbrado")
     tarifas = {t["categoria"]: t for t in datos["tarifas_por_mil"]}
     topes = {t["categoria"]: t["valor_limite_uvt"] for t in datos["topes_uvt"]}
     if destino == "residencial":
         if estrato in (1, 2, 3):
-            grande = avaluo > 20000 * uvt(2027)  # falla si la UVT de 2027 aún no se publica
+            try:
+                grande = avaluo > 20000 * uvt(2027)
+            except DatoNoPublicadoError:  # sin la UVT no se sabe la categoría: no se estima
+                return None, (notas.NOTA_SOBRETASA_SIN_UVT,)
             categoria = (
                 "residencial_123_mas_de_20000_uvt_y_456"
                 if grande

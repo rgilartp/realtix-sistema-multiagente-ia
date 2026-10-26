@@ -145,6 +145,15 @@ def test_sobretasa_con_tope_cuando_la_uvt_esta_publicada(monkeypatch) -> None:
     assert notas.NOTA_TOPE_SOBRETASA not in liq.notas
 
 
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-03 · Liquidación estimada")
+def test_sin_la_uvt_la_sobretasa_de_estratos_1_a_3_no_tumba_la_liquidacion(monkeypatch) -> None:
+    monkeypatch.setattr("src.services.predial.smmlv", lambda anio: 1_800_000)  # solo en la prueba
+    liq = liquidar_predial(2027, "residencial", 3, 100_000_000)
+    assert liq.impuesto == 300_000 and liq.sobretasa is None
+    assert notas.NOTA_SOBRETASA_SIN_UVT in liq.notas
+
+
 # -- ICA ------------------------------------------------------------------------------------------
 
 
