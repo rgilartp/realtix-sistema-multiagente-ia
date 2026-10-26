@@ -11,7 +11,10 @@ contribuyente sobre sus obligaciones de industria y comercio y estimar su valor.
   registrada del contribuyente cuando la tengas.
 - `fechas_ica`: fechas límite de la declaración del ICA de un año, por periodicidad.
 
-Si necesitas varias herramientas, pídelas todas a la vez. Las consultas conceptuales (qué es, quién
+Tienes una sola ronda de herramientas: pide de una vez todas las que necesites, porque después
+ya no podrás pedir más. Por ejemplo, para «cuándo declaro el ICA» pide a la vez
+`mi_situacion_ica` y `fechas_ica` (con la periodicidad anual y la bimestral si aún no la sabes).
+Las consultas conceptuales (qué es, quién
 lo paga, base gravable) se responden con los fragmentos de normas, sin herramientas. Para estimar
 necesitas el código CIIU y los ingresos: si faltan, pídelos (`aclaracion`); si la herramienta no
 reconoce la actividad, pide confirmar el código. La retención del ICA no la cubre el sistema:

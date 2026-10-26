@@ -220,9 +220,11 @@ def test_ipu_10_estimacion_con_notas_tal_cual_e_intereses_por_vencimiento(adapta
     assert "Resolución SDH-000194 de 2025" in texto
     assert respuesta["similitud"] is None  # solo datos de los servicios: se renormaliza
     assert datos["predio"] == P03
-    _, parametros = modelo.llamadas[0]
-    assert parametros["output_config"] == FORMATO_SALIDA and parametros["tool_choice"] is None
-    assert modelo.llamadas[1][1]["tool_choice"] == {"type": "none"}  # la llamada 2, sin más
+    # Llamada 1: herramientas sin formato; llamada 2: sin más herramientas y con el JSON.
+    primera, segunda = (parametros for _, parametros in modelo.llamadas)
+    assert primera["tool_choice"] is None and "output_config" not in primera
+    assert segunda["tool_choice"] == {"type": "none"}
+    assert segunda["output_config"] == FORMATO_SALIDA
 
 
 @pytest.mark.unit
@@ -284,7 +286,11 @@ def test_un_predio_ajeno_se_rechaza_con_el_mensaje_unico_sin_segunda_llamada(ada
 @pytest.mark.req("RNF-08 · Tiempos de espera y degradación")
 @pytest.mark.parametrize(
     "guion",
-    [[negativa()], [AIMessage(content="no es JSON")], [TimeoutError("modelo")]],
+    [
+        [negativa()],
+        [AIMessage(content="El predial es…"), AIMessage(content="no es JSON")],
+        [TimeoutError("modelo")],
+    ],
     ids=["negativa", "salida-invalida", "tiempo"],
 )
 def test_una_falla_del_modelo_es_fallo_de_servicio(adaptador, guion) -> None:
@@ -352,7 +358,8 @@ def test_una_actividad_no_reconocida_pide_el_codigo(adaptador) -> None:
 @pytest.mark.req("RF-ICA-04 · Retenciones fuera de alcance")
 def test_la_retencion_del_ica_la_marca_el_agente_y_escala(adaptador) -> None:
     clasificar = lambda texto, state: Clasificacion([{"categoria": "ica", "texto": texto}], {})  # noqa: E731
-    modelo = ModeloFalso([final("", suficiencia="no_pudo", cobertura=0.0, fuera_del_mvp=True)])
+    sin_cobertura = final("", suficiencia="no_pudo", cobertura=0.0, fuera_del_mvp=True)
+    modelo = ModeloFalso([AIMessage(content="La retención no la cubro."), sin_cobertura])
     deps = dependencias(adaptador, modelo, clasificador=clasificar)
     r = construir_grafo(deps).invoke(
         entrada_de_turno("¿Cómo funciona la retención de ICA?", "ret", U04, [P04]),
@@ -392,7 +399,7 @@ def test_similitud_en_una_consulta_de_cuenta_y_en_una_conceptual(adaptador, recu
     )
     assert cuenta["similitud"] is None
     # IPU-04: conceptual, cita el fragmento 1: su similitud.
-    guion = [final("El predial es…", fragmentos_citados=[1])]
+    guion = [AIMessage(content="El predial es…"), final("El predial es…", fragmentos_citados=[1])]
     texto = "¿Qué es el impuesto predial unificado y cómo se calcula?"
     conceptual, _, modelo = correr(
         AGENTE_IPU, adaptador, guion, texto, U03, [P03], recuperador=recuperador
@@ -473,3 +480,22 @@ def test_el_reloj_del_turno_viaja_como_texto_con_el_checkpointer_postgres(adapta
         if isinstance(m, ToolMessage)
     ]
     assert vigencias[0] is True and vigencias[-1] is False
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-01 · Consultas conceptuales de IPU")
+def test_sin_herramientas_la_segunda_llamada_pide_el_json(adaptador) -> None:
+    guion = [AIMessage(content="El predial es…"), final("El predial es un impuesto…")]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "¿Qué es el predial?", U03, [P03])
+    assert respuesta["texto"].startswith("El predial es un impuesto")
+    mensajes, parametros = modelo.llamadas[1]
+    assert parametros["output_config"] == FORMATO_SALIDA
+    assert mensajes[-1].content.startswith("Entrega ahora la respuesta")
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-01 · Cálculo del nivel de confianza")
+def test_una_respuesta_vacia_cuenta_como_no_pudo(adaptador) -> None:
+    guion = [AIMessage(content=""), final("", suficiencia="aclaracion")]
+    respuesta, _, _ = correr(AGENTE_IPU, adaptador, guion, "¿Cuánto me toca?", U03, [P03])
+    assert respuesta["suficiencia"] == "no_pudo"

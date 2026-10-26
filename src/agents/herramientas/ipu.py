@@ -222,8 +222,10 @@ HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
     Herramienta(
         "estimar_predial",
         "Liquidación estimada del impuesto predial de un año gravable. Para un predio de la "
-        "sesión, da la matrícula (o nada, si la sesión tiene un solo predio); para un predio "
-        "cualquiera, da el avalúo, el destino y, si es residencial, el estrato.",
+        "sesión, da la matrícula (o nada, si la sesión tiene un solo predio): la herramienta ya "
+        "trae su destino, estrato y avalúo, y la situación de la obligación del año (si está "
+        "vencida). Para un predio cualquiera, da el avalúo, el destino y, si es residencial, el "
+        "estrato. No hace falta consultar antes los predios ni el estado de cuenta.",
         {
             **ANIO,
             **MATRICULA_OPCIONAL,

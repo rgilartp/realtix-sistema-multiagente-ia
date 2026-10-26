@@ -3,8 +3,10 @@
 Un turno de agente:
 
 1. recupera, sin modelo, los fragmentos de su colección vigentes en el año gravable de la parte;
-2. llamada 1 al modelo, con las herramientas (en paralelo si hacen falta varias) y la salida en
-   `json_schema`; si pide herramientas, las ejecuta y hace la llamada 2 sin más herramientas;
+2. llamada 1 al modelo, con las herramientas (en paralelo si hacen falta varias) y sin formato:
+   con la salida en `json_schema` desde la primera llamada, Haiku 5.5 tendía a contestar sin pedir
+   las herramientas (prueba de humo de B7). La llamada 2, sin más herramientas, entrega la
+   respuesta en `json_schema`. Un agente sin herramientas (el general) hace una sola llamada;
 3. arma la respuesta parcial: el texto del modelo, más las notas de los servicios tal cual y las
    fuentes, que pone el código (el modelo no las reescribe).
 
@@ -59,6 +61,10 @@ class SalidaAgente(BaseModel):
 
 
 FORMATO_SALIDA = {"format": {"type": "json_schema", "schema": transform_schema(SalidaAgente)}}
+PEDIR_JSON = (
+    "Entrega ahora la respuesta para el contribuyente en el JSON pedido; si ya la escribiste, "
+    "cópiala en `respuesta`."
+)
 
 
 @dataclass(frozen=True)
@@ -227,22 +233,25 @@ def ejecutar_agente(
     especificaciones = [h.especificacion() for h in config.herramientas]
     por_nombre = {h.nombre: h for h in config.herramientas}
 
-    def llamar(con_herramientas: bool) -> AIMessage:
+    def llamar(con_herramientas: bool, con_formato: bool) -> AIMessage:
+        enlazado: Any = modelo
         if especificaciones:
             eleccion = None if con_herramientas else {"type": "none"}
             enlazado = modelo.bind_tools(especificaciones, tool_choice=eleccion)
-        else:
-            enlazado = modelo
-        enlazado = enlazado.bind(output_config=FORMATO_SALIDA)
-        return con_tiempo_y_reintento(
+        if con_formato:
+            enlazado = enlazado.bind(output_config=FORMATO_SALIDA)
+        respuesta = con_tiempo_y_reintento(
             lambda: enlazado.invoke(mensajes), deps.config.timeout_modelo_s, servicio="modelo"
         )
+        texto_de_respuesta(respuesta)  # una negativa del modelo es una falla del servicio
+        return respuesta
 
     resultados: list[Resultado] = []
     try:
-        respuesta = llamar(con_herramientas=True)
-        if respuesta.tool_calls:
-            mensajes.append(respuesta)
+        respuesta = llamar(con_herramientas=True, con_formato=not especificaciones)
+        if especificaciones:
+            if respuesta.tool_calls or texto_de_respuesta(respuesta).strip():
+                mensajes.append(respuesta)
             for llamada in respuesta.tool_calls:
                 herramienta = por_nombre.get(llamada["name"])
                 if herramienta is None:
@@ -259,7 +268,9 @@ def ejecutar_agente(
                         tool_call_id=llamada["id"],
                     )
                 )
-            respuesta = llamar(con_herramientas=False)
+            if not respuesta.tool_calls:
+                mensajes.append(HumanMessage(PEDIR_JSON))
+            respuesta = llamar(con_herramientas=False, con_formato=True)
         salida = SalidaAgente.model_validate_json(texto_de_respuesta(respuesta))
     except _Rechazo:
         return parcial(categoria, MENSAJE_PREDIO_INACCESIBLE, rechazo_acceso=True), datos
@@ -267,6 +278,8 @@ def ejecutar_agente(
         return fallo("modelo o herramientas", error)
 
     suficiencia = salida.suficiencia
+    if not salida.respuesta.strip() and suficiencia != "no_corresponde":
+        suficiencia = "no_pudo"  # una respuesta vacía no es una respuesta
     if any(r.tipo == "actividad_no_reconocida" for r in resultados) and not any(
         r.tipo == "ok" for r in resultados
     ):
