@@ -112,7 +112,7 @@ class ClasificadorLLM:
             SalidaOrquestador, method="json_schema", include_raw=True
         )
         self._timeout_s = timeout_s
-        self._anonimizar = Anonimizador()
+        self._anonimizar = Anonimizador(para_modelos=True)
 
     def __call__(self, texto: str, state: AgentState) -> Clasificacion:
         mensajes = mensajes_del_orquestador(texto, state, self._anonimizar.texto)

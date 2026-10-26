@@ -26,11 +26,14 @@ RESPUESTA_IA = (
     "Soy un sistema de inteligencia artificial, no una persona. Si lo prefieres, puedo "
     "transferirte con un funcionario."
 )
-FUERA_DE_ALCANCE = (
-    "Ese tema no es tributario y queda fuera de lo que puedo atender en este canal. Puedo "
-    "ayudarte con el impuesto predial unificado y el impuesto de industria y comercio de Bogotá, "
-    "y con el uso de la Oficina Virtual Tributaria (entorno simulado de pruebas)."
+ALCANCE = (
+    "Puedo ayudarte con el impuesto predial unificado y el impuesto de industria y comercio de "
+    "Bogotá, y con el uso de la Oficina Virtual Tributaria (entorno simulado de pruebas)."
 )
+FUERA_DE_ALCANCE = (
+    f"Ese tema no es tributario y queda fuera de lo que puedo atender en este canal. {ALCANCE}"
+)
+FUERA_DEL_CANAL = f"Esa consulta queda fuera de lo que puedo atender en este canal. {ALCANCE}"
 
 
 def crear_nodo_general(deps: Dependencias) -> Callable[..., dict[str, Any]]:
@@ -47,7 +50,8 @@ def crear_nodo_general(deps: Dependencias) -> Callable[..., dict[str, Any]]:
             datos["oferta_transferencia"] = True
             respuesta = parcial("general", RESPUESTA_IA)
         elif state.get("categoria") == "fuera_de_alcance":
-            respuesta = parcial("general", FUERA_DE_ALCANCE)
+            no_tributario = marcas.get("no_tributario")
+            respuesta = parcial("general", FUERA_DE_ALCANCE if no_tributario else FUERA_DEL_CANAL)
         elif deps.modelos is None:
             respuesta = parcial(
                 "general",

@@ -31,12 +31,14 @@ from src.agents.graph import configuracion_de_hilo, construir_grafo
 from src.agents.herramientas.ica import HERRAMIENTAS_ICA
 from src.agents.herramientas.ipu import HERRAMIENTAS_IPU
 from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA
+from src.agents.nodes.general import FUERA_DE_ALCANCE, FUERA_DEL_CANAL
 from src.agents.prompts import cargar_prompt, prompt_de_agente
 from src.agents.state import entrada_de_turno
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE
 from src.data.memoria import RealSitEnMemoria
 from src.integrations.recuperador import Fragmento, RecuperadorEnMemoria
 from src.integrations.robustez import ServicioNoDisponibleError
+from src.integrations.trazas import Anonimizador
 from src.services import notas
 from src.store.almacen import Almacen, crear_motor
 from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
@@ -258,7 +260,7 @@ def test_un_dato_no_publicado_vuelve_al_modelo_y_no_se_estima(adaptador) -> None
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RNF-01 · Tiempo de respuesta")
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
 def test_este_anio_y_los_plazos_salen_del_reloj_del_turno(adaptador) -> None:
     def descuento(ahora: str) -> tuple[bool, str]:
         guion = [pide(("fechas_predial", {"anio": 2026})), final("Plazos.")]
@@ -424,7 +426,10 @@ def test_el_modelo_no_recibe_nombres_ni_documentos_de_u01_a_u12(
         predios = [p["matricula"] for p in usuario["predios"]]
         persona = personas[cid]
         direcciones = [p.direccion for p in datos_sinteticos.predios if p.id_contribuyente == cid]
-        texto = f"Soy {persona.tipo_documento} {persona.numero_documento}, ¿cuánto debo?"
+        texto = (
+            f"Me llamo {persona.nombre}, mi documento es {persona.tipo_documento} "
+            f"{persona.numero_documento} y la cédula {persona.numero_documento}. ¿Cuánto debo?"
+        )
         enviados = []
         for agente, herramienta in (
             (AGENTE_IPU, ("estado_cuenta_predial", {"matricula": predios[0]})),
@@ -499,3 +504,81 @@ def test_una_respuesta_vacia_cuenta_como_no_pudo(adaptador) -> None:
     guion = [AIMessage(content=""), final("", suficiencia="aclaracion")]
     respuesta, _, _ = correr(AGENTE_IPU, adaptador, guion, "¿Cuánto me toca?", U03, [P03])
     assert respuesta["suficiencia"] == "no_pudo"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-03 · Protección de datos personales", "RF-IPU-03 · Liquidación estimada")
+def test_para_los_modelos_se_conservan_las_cuantias_y_se_enmascaran_los_nombres() -> None:
+    modelos, trazas = Anonimizador(para_modelos=True), Anonimizador()
+    for cuantia in (
+        "Quiero estimar el predial con un avalúo de 280000000",
+        "Mis ingresos de 1.250.000.000 en la actividad 5611",
+        "Son 1500000000 pesos",
+    ):
+        assert modelos.texto(cuantia) == cuantia
+        assert "[DOCUMENTO]" in trazas.texto(cuantia)  # en las trazas se prefiere perder detalle
+    assert modelos.texto("Mi cédula es 1000000003") == "Mi cédula es [DOCUMENTO]"
+    assert modelos.texto("Me llamo Ana María de la Peña") == "Me llamo [NOMBRE]"
+    assert modelos.texto("Soy propietario del predio") == "Soy propietario del predio"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad")
+def test_un_codigo_ciiu_no_se_toma_por_el_anio() -> None:
+    hoy = hoy_del_turno(configuracion_de_hilo("c", RELOJ_ESCENARIOS), Dependencias(None))
+    assert anio_de_la_consulta("ICA de la actividad CIIU 2029 con ingresos de 2027", hoy) == 2027
+    assert anio_de_la_consulta("Mi código 2023, ¿cuánto pago?", hoy) == 2026
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-03 · Fechas de declaración", "RF-ICA-01 · Consultas conceptuales de ICA")
+def test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual(adaptador) -> None:
+    guion = [
+        pide(
+            ("mi_situacion_ica", {}),
+            ("regimen_ica", {"anio": 2026, "periodicidad": "anual"}),
+            ("fechas_ica", {"anio": 2026, "periodicidad": "anual"}),
+        ),
+        final("Declaras el ICA de 2026 una vez al año."),
+    ]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "¿Cuándo declaro el ICA?", U12, [P12])
+    situacion, regimen, fechas = resultados_de_herramientas(modelo)
+    assert situacion["periodicidad_registrada"] == "anual"
+    assert {r["regimen"] for r in regimen["reglas"]} == {"comun_anual", "preferencial"}
+    assert {r["periodicidad"] for r in regimen["reglas"]} == {"anual"}
+    assert fechas["fechas_limite_declaracion"] == [
+        {"fecha": "26 de febrero de 2027", "ya_paso": False}
+    ]
+    guion = [pide(("regimen_ica", {"anio": 2026, "periodicidad": "bimestral"})), final("Común.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Régimen bimestral", U04, [P04])
+    (bimestral,) = resultados_de_herramientas(modelo)
+    assert [r["regimen"] for r in bimestral["reglas"]] == ["comun_bimestral"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-08 · Tiempos de espera y degradación")
+def test_un_dato_que_no_se_encuentra_vuelve_al_modelo_y_no_es_falla(adaptador, monkeypatch) -> None:
+    def sin_avaluo(*_: Any) -> None:
+        raise LookupError("No hay avalúo del predio.")
+
+    monkeypatch.setattr(adaptador, "get_avaluo_catastral", sin_avaluo)
+    guion = [pide(("estimar_predial", {"anio": 2026})), final("No encuentro el avalúo.")]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Estima mi predial", U03, [P03])
+    (resultado,) = resultados_de_herramientas(modelo)
+    assert "falta_dato" in resultado and not respuesta["fallo_servicio"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-GEN-04 · Detección de fuera de alcance")
+def test_el_texto_de_fuera_de_alcance_depende_de_la_marca(adaptador) -> None:
+    def clasificador(marcas):
+        return lambda texto, state: Clasificacion(
+            [{"categoria": "fuera_de_alcance", "texto": texto}], dict(marcas)
+        )
+
+    for marcas, esperado in (({"no_tributario": True}, FUERA_DE_ALCANCE), ({}, FUERA_DEL_CANAL)):
+        deps = dependencias(adaptador, ModeloFalso(), clasificador=clasificador(marcas))
+        r = construir_grafo(deps).invoke(
+            entrada_de_turno("Algo", "fa"), configuracion_de_hilo("fa", RELOJ_ESCENARIOS)
+        )
+        assert r["respuesta_final"] == esperado

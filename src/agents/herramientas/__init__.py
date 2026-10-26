@@ -98,6 +98,8 @@ class Herramienta:
             )
         except FaltaDatoError as error:
             return Resultado({"falta_dato": str(error)}, tipo=error.tipo)
+        except LookupError as error:  # p. ej. el predio no tiene avalúo registrado
+            return Resultado({"falta_dato": str(error)}, tipo="falta_dato")
         except (ValueError, KeyError, TypeError) as error:
             return Resultado({"argumentos_invalidos": str(error)}, tipo="argumentos")
 

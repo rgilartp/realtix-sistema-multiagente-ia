@@ -26,6 +26,7 @@ from src.services.calendario_tributario import (
     fechas_ica,
     fuente_del_calendario,
     regimen_ica,
+    regimenes_posibles,
 )
 from src.services.errores import DatoNoPublicadoError
 from src.services.ica import EstimacionICA, PeriodoICA, estimar_ica, tabla_aplicable
@@ -149,13 +150,10 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
 
 def _regimen(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     anio = entero(argumentos, "anio") or contexto.hoy.year
-    periodicidad = argumentos.get("periodicidad")
     registrado = argumentos.get("regimen")
-    if registrado is None and periodicidad == "bimestral":
-        registrado = "comun_bimestral"
-    # Anual en 2026: común anual o preferencial; los dos declaran una vez al año.
-    anual = ["comun_anual", "preferencial"]
-    candidatos = [registrado] if anio >= 2027 or registrado else anual
+    candidatos = (
+        [registrado] if registrado else regimenes_posibles(anio, argumentos.get("periodicidad"))
+    )
     reglas = []
     for candidato in candidatos:
         regla = regimen_ica(anio, candidato)

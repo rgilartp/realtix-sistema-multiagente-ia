@@ -45,6 +45,7 @@ from src.services.horario import RelojSistema
 registro = logging.getLogger(__name__)
 
 ANIO_EN_TEXTO = re.compile(r"\b(20[2-3]\d)\b")
+CODIGO_ANTES = re.compile(r"(?:ciiu|c[oó]digo|actividad)\D{0,12}$", re.IGNORECASE)
 K_FRAGMENTOS = 5
 MAX_CARACTERES_FRAGMENTO = 3000  # el recuperador en memoria entrega artículos enteros
 
@@ -88,9 +89,14 @@ def hoy_del_turno(config: RunnableConfig | None, deps: Dependencias) -> date:
 
 
 def anio_de_la_consulta(texto: str, hoy: date) -> int:
-    """El año gravable que nombra la consulta o, si no nombra ninguno, el del reloj."""
-    encontrado = ANIO_EN_TEXTO.search(texto)
-    return int(encontrado.group(1)) if encontrado else hoy.year
+    """El año gravable que nombra la consulta o, si no nombra ninguno, el del reloj.
+
+    Un número que sigue a «CIIU», «código» o «actividad» es un código, no un año (CIIU 2029).
+    """
+    for encontrado in ANIO_EN_TEXTO.finditer(texto):
+        if not CODIGO_ANTES.search(texto[: encontrado.start()]):
+            return int(encontrado.group(1))
+    return hoy.year
 
 
 def similitud_de_la_parte(
@@ -213,8 +219,9 @@ def ejecutar_agente(
         caida = parcial(categoria, "", suficiencia="no_pudo", cobertura=0.0, fallo_servicio=True)
         return caida, datos
 
-    try:
-        fragmentos = recuperar(deps, config, texto, anio)
+    anonimizador = Anonimizador(para_modelos=True)
+    try:  # la consulta va anonimizada también a los embeddings
+        fragmentos = recuperar(deps, config, anonimizador.texto(texto), anio)
     except Exception as error:  # Chroma o los embeddings no respondieron (RNF-08)
         return fallo("recuperación", error)
 
@@ -227,7 +234,7 @@ def ejecutar_agente(
     )
     mensajes: list[BaseMessage] = [
         SystemMessage(config.prompt.texto),
-        HumanMessage(_contexto_del_turno(texto, state, hoy, fragmentos, Anonimizador())),
+        HumanMessage(_contexto_del_turno(texto, state, hoy, fragmentos, anonimizador)),
     ]
     modelo: BaseChatModel = deps.modelos(categoria)
     especificaciones = [h.especificacion() for h in config.herramientas]

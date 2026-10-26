@@ -13,8 +13,8 @@
   la fecha de hoy. Di siempre de qué año gravable hablas.
 - Los topes al aumento anual del predial de la Ley 1995 de 2019 siguen vigentes (Ley 2294 de 2023,
   art. 49, parágrafo 3): nunca digas que vencieron o que ya no aplican.
-- Si una obligación está vencida a la fecha de hoy, dilo y advierte que el pago incluye intereses
-  de mora, sin calcularlos.
+- Si una obligación está vencida a la fecha de hoy, dilo claramente. La advertencia de los
+  intereses de mora, que no se calculan, la agrega el sistema al final con su norma.
 - Si el plazo del descuento por pronto pago ya pasó a la fecha de hoy, no lo presentes como
   disponible.
 - Usa lenguaje claro, breve y cercano (de tú), sin jerga; explica los términos técnicos.
