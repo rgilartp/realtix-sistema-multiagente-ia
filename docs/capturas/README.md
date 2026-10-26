@@ -3,6 +3,12 @@
 Capturas de la OVT simulada, el widget y la consola, cada una en 1280 px (`_1280`) y en 390 px
 (`_390`). Se toman con Playwright: `cd web && npm run build && npm run capturas`.
 
+- **Modo claro y modo oscuro.** Las 16 capturas sin sufijo son del modo claro.
+  - Cuatro de ellas tienen también su versión en modo oscuro, con el sufijo `_oscuro`:
+    `ovt_simulada`, `widget_respuesta`, `widget_fuera_de_horario` y `consola_metricas` (8
+    capturas).
+  - Salen de los mismos flujos, con el modo oscuro del sistema emulado (`prefers-color-scheme:
+    dark`). La página arranca en oscuro y le pasa el tema al widget.
 - **Las capturas usan la API simulada en el navegador** (`web/tests/simulador.js`), no el backend.
   Los textos que muestran se copiaron tal cual del sistema:
   - el aviso fuera de horario, generado con `Horario.aviso_fuera_de_horario` para el sábado 3 de
