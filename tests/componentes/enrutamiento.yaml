@@ -7,10 +7,18 @@
 #   la solicitud de un funcionario.
 # - ipu o ica: las reglas, los cálculos, los plazos o la situación del contribuyente en ese tributo
 #   (cuánto, hasta cuándo, en qué régimen, cuánto debo, estimación).
-# - Excepción: «qué es el predial» y «qué es el ICA» son consultas conceptuales de su agente
-#   (RF-IPU-01 y RF-ICA-01), aunque el glosario defina el impuesto predial unificado.
+# - Excepciones:
+#   - «qué es el predial» y «qué es el ICA» son consultas conceptuales de su agente (RF-IPU-01 y
+#     RF-ICA-01), aunque el glosario defina el impuesto predial unificado;
+#   - una consulta personal sin sesión (o con un token inválido) es general: la atiende
+#     nodo_general con el aviso de sesión requerida (sección 3.4, caso 1; ADR-14);
+#   - la retención de ICA es ica: la detecta el agente de ICA y escala (RF-ICA-04), aunque el MVP
+#     no la cubra.
 # - ocr: la consulta llega con un archivo adjunto (recibo u otro documento).
-# - fuera_de_alcance: lo no tributario y los tributos o municipios que el MVP no cubre.
+# - fuera_de_alcance: lo no tributario y los demás tributos o municipios que el MVP no cubre.
+# - En una conversación de varios turnos, la categoría esperada es la del primer turno.
+# - Las consultas de este conjunto se clasifican con sesión iniciada: las personales no caen
+#   en la excepción de sesión requerida (esa la prueban los escenarios ACC-02 y ACC-03).
 #
 # Las de ocr llevan un adjunto simulado: tipo recibo_sintetico (con su calidad) u otro_documento.
 # Municipio distinto de Bogotá: Medellín.
@@ -109,7 +117,7 @@ consultas:
   texto: ¿Quién es sujeto pasivo del impuesto de industria y comercio?
   categoria: ica
 - id: ENR-ICA12
-  texto: ¿Qué es el impuesto de avisos y tableros?
+  texto: ¿Cuánto se paga de avisos y tableros sobre el impuesto de industria y comercio?
   categoria: ica
 - id: ENR-ICA13
   texto: ¿Cómo manejo la retención de ICA de mis ventas con tarjeta?
