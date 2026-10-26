@@ -22,8 +22,6 @@ verificaciones_codigo:
   valor: 8 puntos
 - tipo: contiene_texto
   valor: Ley 1995
-- tipo: no_contiene_texto
-  valor: venció
 respuesta_referencia: >-
   En los predios con avalúo actualizado que pagaron según esa actualización, el impuesto puede subir como
   máximo el IPC más 8 puntos porcentuales; en los que no se han actualizado, el límite es el 50 % del

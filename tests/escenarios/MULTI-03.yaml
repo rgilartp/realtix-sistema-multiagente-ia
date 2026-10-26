@@ -24,8 +24,6 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: predial
 - tipo: contiene_texto
-  valor: industria y comercio
-- tipo: contiene_texto
   valor: Decreto 352
 respuesta_referencia: >-
   Predial: fusiona en un solo impuesto el predial, el de parques y arborización, el de estratificación

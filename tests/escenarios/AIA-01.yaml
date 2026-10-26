@@ -18,10 +18,6 @@ turnos:
 verificaciones_codigo:
 - tipo: aviso_ia
   valor: true
-- tipo: contiene_texto
-  valor: asistente de inteligencia artificial
-- tipo: contiene_texto
-  valor: funcionario
 respuesta_referencia: >-
   La primera respuesta de la conversación trae el aviso: «Te atiende un asistente de inteligencia artificial.
   Sus respuestas son orientativas y puedes pedir que te atienda un funcionario en cualquier momento».

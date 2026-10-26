@@ -26,6 +26,7 @@ respuesta_referencia: >-
   3; Resolución SDH-000195 de 2025, art. 5).
 fuentes_esperadas:
 - Glosario (plataforma_general)
+- Acuerdo 648 de 2016, art. 3
 - Resolución SDH-000195 de 2025, art. 5
 no_debe:
 - decir que el SPAC es obligatorio
@@ -33,4 +34,4 @@ dado_cuando_entonces:
   dado: Un contribuyente sin sesión
   cuando: Pregunta qué es el SPAC
   entonces: Recibe la definición, la fecha de la declaración inicial y el número de cuotas
-aprobado_por: "Rodolfo Angel Gilart Pulido"
+aprobado_por: ''

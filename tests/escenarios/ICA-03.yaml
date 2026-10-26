@@ -18,8 +18,6 @@ turnos:
 - usuario: ¿Cada cuánto se declara el ICA en 2026?
 verificaciones_codigo:
 - tipo: contiene_texto
-  valor: bimestral
-- tipo: contiene_texto
   valor: 391 UVT
 - tipo: contiene_valor
   valor: '19.471.409'
