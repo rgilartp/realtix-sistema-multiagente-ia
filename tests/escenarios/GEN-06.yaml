@@ -1,0 +1,36 @@
+id: GEN-06
+titulo: Qué es un dato personal
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-02
+- RF-GEN-03
+hu:
+- HU-04
+- HU-18
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué es un dato personal?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: personas naturales
+- tipo: contiene_texto
+  valor: Ley 1581
+respuesta_referencia: >-
+  Es cualquier información vinculada o que pueda asociarse a una o varias personas naturales determinadas
+  o determinables (Ley 1581 de 2012, art. 3, literal c).
+fuentes_esperadas:
+- Glosario (plataforma_general)
+- Ley 1581 de 2012, art. 3
+no_debe:
+- omitir la cita de la ley
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta qué es un dato personal
+  entonces: Recibe la definición con la cita
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -1,0 +1,52 @@
+id: IPU-11
+titulo: Estimación del predial de 2027
+origen:
+- adenda-8
+rf:
+- RF-IPU-03
+- RF-AUT-01
+- RNF-09
+hu:
+- HU-07
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Y cuánto sería el predial de mi apartamento en 2027?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '2.135.000'
+- tipo: contiene_valor
+  valor: '140.000'
+- tipo: contiene_texto
+  valor: estimación
+- tipo: contiene_texto
+  valor: IVIUR
+respuesta_referencia: >-
+  La estimación usa el avalúo de 2026 ($350.000.000), porque el de 2027 aún no se conoce. Con la tabla
+  del Acuerdo 1084 de 2026, art. 20, tal como está, ese avalúo cae en el rango de 6,1 por mil: $2.135.000;
+  los rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica. Desde
+  el 1 de enero de 2027 se suma la sobretasa de alumbrado público sobre la misma base: 0,4 por mil para
+  los residenciales de estratos 4, 5 y 6 (Acuerdo 1084, arts. 13 y 14), es decir $350.000.000 × 0,4 /
+  1.000 = $140.000; el total estimado es $2.275.000. Hay dos cosas que todavía no se pueden estimar, por
+  razones distintas: el descuento por pronto pago de 2027 depende de la resolución de plazos de 2027,
+  que no se ha publicado; y el tope de la sobretasa (600 UVT, art. 15) necesita la UVT de 2027. Es una
+  estimación no vinculante.
+fuentes_esperadas:
+- Acuerdo 1084 de 2026, arts. 13, 14, 15 y 20
+- datos/tarifas/ipu_2027.yaml
+- datos/tarifas/sobretasa_alumbrado_2027.yaml
+no_debe:
+- usar la tarifa de 2026 para 2027 sin decirlo
+- inventar el descuento o el tope de 2027
+- presentar el avalúo de 2026 como el de 2027
+- omitir la nota de estimación no vinculante
+dado_cuando_entonces:
+  dado: U03 con sesión y un predio residencial de avalúo $350.000.000 en 2026
+  cuando: Pide la estimación del predial de 2027
+  entonces: >-
+    Recibe la estimación de 2027 con la sobretasa y las advertencias de lo que aún no se publica
+aprobado_por: "Rodolfo Angel Gilart Pulido"

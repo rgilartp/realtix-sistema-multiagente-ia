@@ -1,0 +1,39 @@
+id: ICA-10
+titulo: Consulta sobre retención de ICA
+origen:
+- adenda-12
+rf:
+- RF-ICA-04
+- RF-ESC-02
+hu:
+- HU-10
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: escalar
+sesion: U04
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cómo manejo la retención de ICA de mis ventas con tarjeta?
+verificaciones_codigo:
+- tipo: escala
+  motivo: fuera de alcance
+- tipo: contiene_texto
+  valor: funcionario
+- tipo: sin_error_tecnico
+respuesta_referencia: >-
+  Explica, antes de transferir, que la retención de ICA está fuera de lo que atiende este canal, que solo
+  cubre el impuesto predial unificado y el de industria y comercio de Bogotá, sin retenciones; luego transfiere
+  la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación.
+fuentes_esperadas:
+- RF-ICA-04 · Retenciones fuera de alcance
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- explicar cómo practicar o declarar la retención
+- transferir sin decir por qué
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: U04 con sesión
+  cuando: Pregunta por la retención de ICA
+  entonces: Recibe que el tema está fuera del canal y el caso se transfiere con su resumen
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -1,0 +1,38 @@
+id: ICA-07
+titulo: Fechas de declaración del ICA bimestral en 2026
+origen:
+- especificacion-6.3
+rf:
+- RF-ICA-03
+- RF-AUT-01
+hu:
+- HU-03
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: U04
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuándo tengo que declarar el ICA este año?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 9 de octubre
+- tipo: contiene_texto
+  valor: 11 de diciembre
+- tipo: contiene_texto
+  valor: 12 de febrero
+respuesta_referencia: >-
+  U04 es régimen común con declaración bimestral. Las fechas de 2026 son el 10 de abril, el 12 de junio,
+  el 21 de agosto, el 9 de octubre y el 11 de diciembre de 2026, y el 12 de febrero de 2027 (Resolución
+  SDH-000195 de 2025, art. 1). La próxima es el 9 de octubre de 2026.
+fuentes_esperadas:
+- Resolución SDH-000195 de 2025, art. 1
+- datos/calendario/2026.yaml
+no_debe:
+- dar las fechas del régimen anual a un contribuyente bimestral
+dado_cuando_entonces:
+  dado: U04 con sesión y régimen común bimestral
+  cuando: Pregunta cuándo declara el ICA
+  entonces: Recibe las seis fechas y la próxima, el 9 de octubre de 2026
+aprobado_por: "Rodolfo Angel Gilart Pulido"

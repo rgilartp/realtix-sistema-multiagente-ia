@@ -1,0 +1,36 @@
+id: GEN-07
+titulo: Derechos del titular de los datos personales
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-01
+- RF-GEN-03
+hu:
+- HU-18
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué derechos tengo sobre mis datos personales?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: conocer, actualizar y rectificar
+- tipo: contiene_texto
+  valor: Ley 1581
+respuesta_referencia: >-
+  El titular de los datos personales puede conocer, actualizar y rectificar sus datos; solicitar prueba
+  de la autorización otorgada; ser informado del uso que se les ha dado; presentar quejas ante la Superintendencia
+  de Industria y Comercio; revocar la autorización o solicitar la supresión del dato, en los casos que
+  la ley prevé; y acceder gratuitamente a sus datos (Ley 1581 de 2012, art. 8).
+fuentes_esperadas:
+- Ley 1581 de 2012, art. 8
+no_debe:
+- decir que el titular no puede revocar la autorización
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta por sus derechos sobre sus datos
+  entonces: Recibe la lista de derechos del titular con la cita
+aprobado_por: "Rodolfo Angel Gilart Pulido"

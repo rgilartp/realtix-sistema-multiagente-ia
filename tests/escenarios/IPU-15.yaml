@@ -1,0 +1,42 @@
+id: IPU-15
+titulo: Cuotas del SPAC pagadas y pendientes
+origen:
+- especificacion-6.3
+rf:
+- RF-IPU-02
+- RF-IPU-04
+- RF-AUT-01
+hu:
+- HU-05
+- HU-03
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U08
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: >-
+    Estoy en el pago por cuotas del predial, ¿cuántas cuotas me faltan y cuándo vence la siguiente?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '845.000'
+- tipo: contiene_texto
+  valor: 2 de octubre
+- tipo: contiene_texto
+  valor: 4 de diciembre
+respuesta_referencia: >-
+  En el SPAC de 2026 el pago es en cuatro cuotas iguales: el 5 de junio, el 14 de agosto, el 2 de octubre
+  y el 4 de diciembre de 2026 (Resolución SDH-000195 de 2025, art. 5). El predio 50C-9000801 de U08 pagó
+  las dos primeras ($845.000 cada una) y le faltan dos: la del 2 de octubre y la del 4 de diciembre de
+  2026, por un saldo de $1.690.000.
+fuentes_esperadas:
+- Resolución SDH-000195 de 2025, art. 5
+- Usuario de prueba U08 (usuarios_prueba.yaml)
+no_debe:
+- contar como pagadas las cuotas pendientes
+dado_cuando_entonces:
+  dado: U08 con sesión, dos cuotas del SPAC pagadas y dos pendientes
+  cuando: Pregunta cuántas cuotas le faltan y cuándo vence la siguiente
+  entonces: Recibe las dos cuotas pendientes, sus fechas y el saldo de $1.690.000
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -1,0 +1,35 @@
+id: ICA-02
+titulo: Base gravable del ICA
+origen:
+- especificacion-6.3
+rf:
+- RF-ICA-01
+hu:
+- HU-02
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Sobre qué ingresos se calcula el impuesto de industria y comercio?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: ingresos netos
+- tipo: contiene_texto
+  valor: bimestre
+respuesta_referencia: >-
+  El impuesto de cada bimestre se liquida con base en los ingresos netos del contribuyente obtenidos durante
+  el período: a la totalidad de los ingresos ordinarios y extraordinarios se les restan los de actividades
+  exentas y no sujetas, las devoluciones, rebajas y descuentos, las exportaciones y la venta de activos
+  fijos (Decreto 352 de 2002, art. 42).
+fuentes_esperadas:
+- Decreto 352 de 2002, art. 42
+no_debe:
+- decir que se calcula sobre los ingresos brutos sin exclusiones
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta sobre qué ingresos se calcula el ICA
+  entonces: Recibe la base gravable y las exclusiones, con la cita
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -1,0 +1,385 @@
+# Conjunto de enrutamiento (sección 6.2): 100 consultas etiquetadas, 20 por categoría.
+#
+# Regla de categorías (la misma va al prompt del orquestador en B7; los 60 escenarios la siguen):
+# - general: la definición en lenguaje sencillo de un término, como los del glosario de
+#   plataforma_general (sobretasa, SPAC, IVIUR, regímenes del ICA, dato personal) o el avalúo
+#   catastral; el uso de la OVT simulada; los datos personales; el saludo, la pregunta por la IA y
+#   la solicitud de un funcionario.
+# - ipu o ica: las reglas, los cálculos, los plazos o la situación del contribuyente en ese tributo
+#   (cuánto, hasta cuándo, en qué régimen, cuánto debo, estimación).
+# - Excepciones:
+#   - «qué es el predial» y «qué es el ICA» son consultas conceptuales de su agente (RF-IPU-01 y
+#     RF-ICA-01), aunque el glosario defina el impuesto predial unificado;
+#   - una consulta personal sin sesión (o con un token inválido) es general: la atiende
+#     nodo_general con el aviso de sesión requerida (sección 3.4, caso 1; ADR-14);
+#   - la retención de ICA es ica: la detecta el agente de ICA y escala (RF-ICA-04), aunque el MVP
+#     no la cubra.
+# - ocr: la consulta llega con un archivo adjunto (recibo u otro documento).
+# - fuera_de_alcance: lo no tributario y los demás tributos o municipios que el MVP no cubre.
+# - En una conversación de varios turnos, la categoría esperada es la del primer turno.
+# - Las consultas de este conjunto se clasifican con sesión iniciada: las personales no caen
+#   en la excepción de sesión requerida (esa la prueban los escenarios ACC-02 y ACC-03).
+#
+# Las de ocr llevan un adjunto simulado: tipo recibo_sintetico (con su calidad) u otro_documento.
+# Municipio distinto de Bogotá: Medellín.
+consultas:
+- id: ENR-IPU01
+  texto: ¿Qué es el impuesto predial unificado?
+  categoria: ipu
+- id: ENR-IPU02
+  texto: ¿Cuánto debo de predial de mi apartamento?
+  categoria: ipu
+- id: ENR-IPU03
+  texto: ¿Hasta cuándo puedo pagar el predial de este año?
+  categoria: ipu
+- id: ENR-IPU04
+  texto: Quiero estimar cuánto me tocaría pagar de predial por un avalúo de 280 millones
+  categoria: ipu
+- id: ENR-IPU05
+  texto: ¿De cuánto es el descuento por pronto pago del predial y hasta cuándo aplica?
+  categoria: ipu
+- id: ENR-IPU06
+  texto: ¿Cómo se calcula el predial de un lote?
+  categoria: ipu
+- id: ENR-IPU07
+  texto: ¿Qué tarifa de predial pagan los estratos 1 y 2?
+  categoria: ipu
+- id: ENR-IPU08
+  texto: Muéstrame los pagos que tengo registrados de mi predio
+  categoria: ipu
+- id: ENR-IPU09
+  texto: ¿En qué fechas se pagan las cuotas del SPAC este año?
+  categoria: ipu
+- id: ENR-IPU10
+  texto: ¿Cuánto será la sobretasa de alumbrado de mi predio en 2027?
+  categoria: ipu
+- id: ENR-IPU11
+  texto: ¿Cuánto puede subir el predial de un año a otro?
+  categoria: ipu
+- id: ENR-IPU12
+  texto: ¿Cómo me notifican la factura del predial?
+  categoria: ipu
+- id: ENR-IPU13
+  texto: ¿Estoy al día con el impuesto de mi predio 50C-9000701?
+  categoria: ipu
+- id: ENR-IPU14
+  texto: ¿Qué avalúo catastral tiene mi predio?
+  categoria: ipu
+- id: ENR-IPU15
+  texto: ¿Puedo pagar el predial sin presentar declaración?
+  categoria: ipu
+- id: ENR-IPU16
+  texto: ¿Cuándo se causa el impuesto predial?
+  categoria: ipu
+- id: ENR-IPU17
+  texto: ¿Qué pasa si no pago el predial a tiempo?
+  categoria: ipu
+- id: ENR-IPU18
+  texto: ¿Qué tarifa de predial tiene un local comercial en Bogotá?
+  categoria: ipu
+- id: ENR-IPU19
+  texto: Necesito saber el saldo pendiente de mi predio 50C-9000202
+  categoria: ipu
+- id: ENR-IPU20
+  texto: ¿Hay algún beneficio en los intereses de la deuda del predial?
+  categoria: ipu
+- id: ENR-ICA01
+  texto: ¿Qué es el impuesto de industria y comercio?
+  categoria: ica
+- id: ENR-ICA02
+  texto: ¿Cuándo debo declarar el ICA este año?
+  categoria: ica
+- id: ENR-ICA03
+  texto: ¿Qué tarifa de ICA tiene la actividad 6201?
+  categoria: ica
+- id: ENR-ICA04
+  texto: Quiero estimar el ICA con ingresos de 60 millones en la actividad 6201
+  categoria: ica
+- id: ENR-ICA05
+  texto: ¿En qué régimen del ICA quedo si mi impuesto del año pasado fue de 25 millones?
+  categoria: ica
+- id: ENR-ICA06
+  texto: ¿Cada cuánto se declara el ICA si pago más de 391 UVT?
+  categoria: ica
+- id: ENR-ICA07
+  texto: ¿Sobre qué base se calcula el impuesto de industria y comercio?
+  categoria: ica
+- id: ENR-ICA08
+  texto: ¿Cuál es la fecha de declaración del ICA anual de 2026?
+  categoria: ica
+- id: ENR-ICA09
+  texto: ¿Cómo será el régimen del ICA en 2027?
+  categoria: ica
+- id: ENR-ICA10
+  texto: ¿Cuánto pago de ICA si vendo comida y mis ingresos del bimestre son 250 millones?
+  categoria: ica
+- id: ENR-ICA11
+  texto: ¿Quién es sujeto pasivo del impuesto de industria y comercio?
+  categoria: ica
+- id: ENR-ICA12
+  texto: ¿Cuánto se paga de avisos y tableros sobre el impuesto de industria y comercio?
+  categoria: ica
+- id: ENR-ICA13
+  texto: ¿Cómo manejo la retención de ICA de mis ventas con tarjeta?
+  categoria: ica
+- id: ENR-ICA14
+  texto: Soy persona jurídica, ¿cuándo vence mi próxima declaración de ICA?
+  categoria: ica
+- id: ENR-ICA15
+  texto: ¿Qué actividad económica corresponde al código CIIU 5611?
+  categoria: ica
+- id: ENR-ICA16
+  texto: ¿Qué tarifa de ICA aplica desde 2027 a la edición de libros?
+  categoria: ica
+- id: ENR-ICA17
+  texto: ¿Debo retener ICA cuando pago a un proveedor?
+  categoria: ica
+- id: ENR-ICA18
+  texto: ¿Cuánto me falta por pagar de ICA de este año?
+  categoria: ica
+- id: ENR-ICA19
+  texto: ¿Cuál es el período gravable del ICA?
+  categoria: ica
+- id: ENR-ICA20
+  texto: ¿Qué ingresos se excluyen de la base del impuesto de industria y comercio?
+  categoria: ica
+- id: ENR-GEN01
+  texto: ¿Cómo entro a la OVT simulada?
+  categoria: general
+- id: ENR-GEN02
+  texto: ¿Cuánto dura mi sesión en la oficina virtual?
+  categoria: general
+- id: ENR-GEN03
+  texto: ¿Qué es un dato personal?
+  categoria: general
+- id: ENR-GEN04
+  texto: ¿Qué derechos tengo sobre mis datos personales?
+  categoria: general
+- id: ENR-GEN05
+  texto: ¿Qué es el SPAC?
+  categoria: general
+- id: ENR-GEN06
+  texto: ¿Qué es el IVIUR?
+  categoria: general
+- id: ENR-GEN07
+  texto: Hola, buenas tardes
+  categoria: general
+- id: ENR-GEN08
+  texto: ¿Estoy hablando con una persona?
+  categoria: general
+- id: ENR-GEN09
+  texto: Quiero hablar con un funcionario
+  categoria: general
+- id: ENR-GEN10
+  texto: ¿Qué puedes hacer por mí?
+  categoria: general
+- id: ENR-GEN11
+  texto: ¿Puedo pagar mi impuesto desde este chat?
+  categoria: general
+- id: ENR-GEN12
+  texto: ¿Qué significa avalúo catastral en palabras sencillas?
+  categoria: general
+- id: ENR-GEN13
+  texto: ¿Qué es una sobretasa?
+  categoria: general
+- id: ENR-GEN14
+  texto: ¿Cómo inicio sesión para ver mis predios?
+  categoria: general
+- id: ENR-GEN15
+  texto: ¿Qué es un tributo y para qué sirve?
+  categoria: general
+- id: ENR-GEN16
+  texto: ¿Quién es el responsable del tratamiento de mis datos?
+  categoria: general
+- id: ENR-GEN17
+  texto: No entiendo qué quiere decir tarifa por mil
+  categoria: general
+- id: ENR-GEN18
+  texto: ¿Mis datos están protegidos en esta plataforma?
+  categoria: general
+- id: ENR-GEN19
+  texto: Gracias por la ayuda
+  categoria: general
+- id: ENR-GEN20
+  texto: ¿El asistente da asesoría tributaria personalizada?
+  categoria: general
+- id: ENR-OCR01
+  texto: Te envío mi recibo del predial para que lo revises
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR02
+  texto: Adjunto la foto de mi factura del impuesto predial
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR03
+  texto: ¿Me puedes leer los datos de este recibo?
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR04
+  texto: Aquí está el recibo de mi lote
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR05
+  texto: Mira este documento que me llegó, ¿qué dice?
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR06
+  texto: Subo el PDF de mi recibo de pago
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR07
+  texto: Esta es la imagen de mi recibo, ¿está bien el avalúo?
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR08
+  texto: Te mando el recibo del año pasado
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR09
+  texto: Adjunto la captura de mi factura predial
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR10
+  texto: Revisa si el valor de este recibo es correcto
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR11
+  texto: Cargo el recibo de mi apartamento
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR12
+  texto: Necesito que extraigas los datos de este recibo
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR13
+  texto: Aquí va la foto del recibo, tiene la fecha límite
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR14
+  texto: ¿Puedes confirmar la matrícula que aparece en este recibo?
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-OCR15
+  texto: Te envío un recibo, pero la foto salió borrosa
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: desenfocado
+- id: ENR-OCR16
+  texto: Adjunto el recibo; la imagen quedó pequeña
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: baja_resolucion
+- id: ENR-OCR17
+  texto: Esta es la foto del recibo, está cortada por un lado
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: recortado
+- id: ENR-OCR18
+  texto: Te mando un documento de otra entidad, ¿lo puedes leer?
+  categoria: ocr
+  adjunto:
+    tipo: otro_documento
+    calidad: legible
+- id: ENR-OCR19
+  texto: Aquí tienes mi recibo de servicios públicos
+  categoria: ocr
+  adjunto:
+    tipo: otro_documento
+    calidad: legible
+- id: ENR-OCR20
+  texto: Envío el recibo para que compares el valor con mi estado de cuenta
+  categoria: ocr
+  adjunto:
+    tipo: recibo_sintetico
+    calidad: legible
+- id: ENR-FDA01
+  texto: ¿Cómo va a estar el clima mañana en Bogotá?
+  categoria: fuera_de_alcance
+- id: ENR-FDA02
+  texto: Dame una receta de ajiaco
+  categoria: fuera_de_alcance
+- id: ENR-FDA03
+  texto: ¿Quién ganó el partido de fútbol de anoche?
+  categoria: fuera_de_alcance
+- id: ENR-FDA04
+  texto: ¿Qué película me recomiendas para esta noche?
+  categoria: fuera_de_alcance
+- id: ENR-FDA05
+  texto: ¿Hoy tengo pico y placa?
+  categoria: fuera_de_alcance
+- id: ENR-FDA06
+  texto: ¿Cómo renuevo mi licencia de conducción?
+  categoria: fuera_de_alcance
+- id: ENR-FDA07
+  texto: ¿Cuál es la capital de Francia?
+  categoria: fuera_de_alcance
+- id: ENR-FDA08
+  texto: Cuéntame un chiste
+  categoria: fuera_de_alcance
+- id: ENR-FDA09
+  texto: ¿Cómo declaro renta como persona natural?
+  categoria: fuera_de_alcance
+- id: ENR-FDA10
+  texto: ¿Cuánto es el IVA de los servicios?
+  categoria: fuera_de_alcance
+- id: ENR-FDA11
+  texto: ¿Hasta cuándo pago el impuesto de mi vehículo?
+  categoria: fuera_de_alcance
+- id: ENR-FDA12
+  texto: ¿Cuánto es el predial de un apartamento en Medellín?
+  categoria: fuera_de_alcance
+- id: ENR-FDA13
+  texto: ¿Cuánto pago de industria y comercio en Medellín?
+  categoria: fuera_de_alcance
+- id: ENR-FDA14
+  texto: ¿Qué es la plusvalía y cómo se cobra?
+  categoria: fuera_de_alcance
+- id: ENR-FDA15
+  texto: ¿Cómo pago la contribución de valorización?
+  categoria: fuera_de_alcance
+- id: ENR-FDA16
+  texto: ¿Cuánto cuesta la licencia de delineación urbana?
+  categoria: fuera_de_alcance
+- id: ENR-FDA17
+  texto: ¿Cómo importo un producto y pago aduana?
+  categoria: fuera_de_alcance
+- id: ENR-FDA18
+  texto: ¿Dónde saco el certificado de tradición de un inmueble?
+  categoria: fuera_de_alcance
+- id: ENR-FDA19
+  texto: Recomiéndame un restaurante para el almuerzo
+  categoria: fuera_de_alcance
+- id: ENR-FDA20
+  texto: Ayúdame con mi tarea de matemáticas
+  categoria: fuera_de_alcance

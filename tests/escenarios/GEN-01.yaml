@@ -1,0 +1,35 @@
+id: GEN-01
+titulo: Cómo entrar a la OVT simulada
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-01
+- RF-GEN-03
+hu:
+- HU-04
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cómo entro a la OVT simulada y cuánto dura mi sesión?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 2 horas
+- tipo: contiene_texto
+  valor: usuario de prueba
+respuesta_referencia: >-
+  Se abre la página de la OVT simulada, se elige un usuario de prueba en el selector y la página da una
+  sesión que dura 2 horas; pasado ese tiempo hay que elegir el usuario otra vez. Sin sesión, el asistente
+  solo responde consultas generales.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- describir la OVT real de la Secretaría Distrital de Hacienda
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta cómo entrar a la OVT simulada
+  entonces: Recibe los pasos y la duración de la sesión
+aprobado_por: "Rodolfo Angel Gilart Pulido"

@@ -526,6 +526,8 @@ def convertir() -> dict[str, dict]:
             f"Fuente: {_principal(fuente)} (consultada en {mes})",
             "",
         ]
+        if fuente.get("publicacion"):
+            cuerpo += [f"> **Publicación.** {fuente['publicacion']}", ""]
         if fuente.get("vigencia"):
             cuerpo += [f"> **Vigencia por año gravable.** {fuente['vigencia']}", ""]
         anteriores = fuente.get("texto_anterior", {})

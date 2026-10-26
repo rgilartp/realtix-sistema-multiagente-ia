@@ -1,0 +1,38 @@
+id: ESC-01
+titulo: Solicitud explícita de un funcionario
+origen:
+- especificacion-6.3
+rf:
+- RF-ESC-02
+- RF-ESC-03
+- RF-ESC-05
+hu:
+- HU-10
+- HU-11
+- HU-12
+grupo: escalamiento
+categoria_esperada: general
+comportamiento_esperado: escalar
+sesion: U01
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Quiero hablar con una persona
+verificaciones_codigo:
+- tipo: escala
+  motivo: solicitud explícita
+- tipo: contiene_texto
+  valor: funcionario
+- tipo: sin_error_tecnico
+respuesta_referencia: >-
+  Transfiere la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación,
+  para que no tenga que repetirlo; desde ese momento el asistente deja de responder en esa conversación.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- seguir respondiendo como asistente después de transferir
+dado_cuando_entonces:
+  dado: U01 con sesión
+  cuando: Pide hablar con una persona
+  entonces: El caso se transfiere con su resumen y el contribuyente recibe el aviso de transferencia
+aprobado_por: "Rodolfo Angel Gilart Pulido"

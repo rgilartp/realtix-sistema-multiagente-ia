@@ -12,6 +12,10 @@
 # 107 = $187.346.835 y 135 = $236.372.175.
 #
 # Los grupos de `cubre` son los de la sección 6.3 de la especificación técnica.
+#
+# Excepción: `obligaciones` (por vigencia) y `pagos` se copiaron de la base sintética con la semilla
+# 42, porque las vigencias 2023 a 2025 usan valores sintéticos sin fuente normativa. Son la referencia
+# de los escenarios CA-01 a CA-03; test_usuarios_prueba.py comprueba que el adaptador los devuelva.
 sintetico: true
 fuente_general_ipu_2026: Resolución SDH-000194 de 2025, arts. 1 y 2
 fuente_preferencial_ipu_2026: Acuerdo 648 de 2016, art. 1, y Acuerdo 780 de 2020, art. 3, par. 2
@@ -53,6 +57,11 @@ usuarios:
           estado: AL_DIA
           valor_pagado: 990000
           fuente: Resolución SDH-000194 de 2025, art. 1 (rango de 0 a 194.307.000)
+        obligaciones:
+          - {vigencia: 2023, valor: 855201, estado: AL_DIA}
+          - {vigencia: 2024, valor: 897958, estado: AL_DIA}
+          - {vigencia: 2025, valor: 942860, estado: AL_DIA}
+          - {vigencia: 2026, valor: 990000, estado: AL_DIA}
         estado_cuenta: {pendientes: 0, saldo: 0}
       - matricula: 50C-9000202
         destino: residencial
@@ -67,6 +76,11 @@ usuarios:
           fuente: Resolución SDH-000194 de 2025, art. 1 (rango de 394.946.001 a 447.136.000)
         # 2025 (sintética): avalúo 420.000.000 / 1,05 = 400.000.000, misma tarifa de 6,3 por mil
         # = 2.520.000, vencido. Saldo = 2.520.000 + 2.646.000.
+        obligaciones:
+          - {vigencia: 2023, valor: 2213153, estado: AL_DIA}
+          - {vigencia: 2024, valor: 2361902, estado: AL_DIA}
+          - {vigencia: 2025, valor: 2520000, estado: VENCIDO}
+          - {vigencia: 2026, valor: 2646000, estado: VENCIDO}
         estado_cuenta: {pendientes: 2, saldo: 5166000}
 
   - id: U03
@@ -86,6 +100,16 @@ usuarios:
           valor_con_descuento: 1921500
           estado: VENCIDO
           fuente: Resolución SDH-000194 de 2025, art. 1 (rango de 332.318.001 a 363.632.000)
+        obligaciones:
+          - {vigencia: 2023, valor: 1814058, estado: AL_DIA}
+          - {vigencia: 2024, valor: 1904760, estado: AL_DIA}
+          - {vigencia: 2025, valor: 2033331, estado: AL_DIA}
+          - {vigencia: 2026, valor: 2135000, estado: VENCIDO, fecha_limite: "2026-07-10"}
+        # El predial de 2026 no tiene pagos.
+        pagos:
+          - {fecha: "2025-03-06", valor: 1829998, medio: Ventanilla}
+          - {fecha: "2024-05-26", valor: 1904760, medio: Ventanilla}
+          - {fecha: "2023-07-02", valor: 1814058, medio: Corresponsal bancario}
         estado_cuenta: {pendientes: 1, saldo: 2135000}
 
   - id: U04
@@ -202,7 +226,8 @@ usuarios:
           estado: PENDIENTE
           en_spac: true
           fecha_limite: "2026-10-02"
-          cuotas_pagadas: 2  # 5 de junio y 14 de agosto, de $845.000 cada una
+          cuotas_pagadas: 2  # pagadas el 3 de junio y el 12 de agosto de 2026, $845.000 cada una
+          # (el 5 de junio y el 14 de agosto son los plazos de esas cuotas)
           valor_pagado: 1690000
           fuente: Resolución SDH-000194 de 2025, art. 1 (rango de 499.330.001 a 551.518.000); SPAC en la Resolución SDH-000195 de 2025, art. 5
         estado_cuenta: {pendientes: 1, saldo: 1690000}

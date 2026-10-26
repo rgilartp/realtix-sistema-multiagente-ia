@@ -1,0 +1,43 @@
+id: HOR-01
+titulo: Mensaje en domingo
+origen:
+- especificacion-6.3
+rf:
+- RNF-06
+- RNF-07
+hu:
+- HU-10
+grupo: horario
+categoria_esperada: null
+comportamiento_esperado: aviso_fuera_de_horario
+sesion: U01
+reloj: '2026-10-04T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Hola, necesito hablar con un funcionario
+verificaciones_codigo:
+- tipo: fuera_de_horario
+- tipo: contiene_texto
+  valor: lunes
+- tipo: contiene_texto
+  valor: '8:00'
+- tipo: sin_error_tecnico
+- tipo: no_escala
+respuesta_referencia: >-
+  Informa que está fuera del horario de atención (días hábiles, de 8:00 a. m. a 5:00 p. m., hora de Bogotá)
+  y que vuelve a atender el lunes 5 de octubre de 2026 a las 8:00 a. m. No responde la consulta ni la
+  transfiere.
+fuentes_esperadas:
+- RNF-06 · Horario de atención
+- RNF-07 · Aviso fuera de horario
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- transferir el caso como si hubiera funcionarios disponibles
+- responder la consulta
+- dar una fecha de apertura que no sea día hábil
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: El reloj simulado marca el domingo 4 de octubre de 2026 a las 10:00
+  cuando: El contribuyente pide un funcionario
+  entonces: Recibe el aviso de fuera de horario con el horario y cuándo se vuelve a atender
+aprobado_por: "Rodolfo Angel Gilart Pulido"

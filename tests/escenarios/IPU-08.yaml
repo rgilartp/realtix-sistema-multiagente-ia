@@ -1,0 +1,35 @@
+id: IPU-08
+titulo: Plazo del predial de 2026
+origen:
+- adenda-6
+rf:
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-03
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuál es el plazo del predial de 2026?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 10 de julio de 2026
+respuesta_referencia: >-
+  Los contribuyentes del predial de 2026 deben declarar y pagar, a más tardar, el 10 de julio de 2026
+  (Resolución SDH-000195 de 2025, art. 3); con facturación, el valor total se paga a más tardar en esa
+  misma fecha (art. 4). Ese plazo ya venció.
+fuentes_esperadas:
+- Resolución SDH-000195 de 2025, arts. 3 y 4
+- datos/calendario/2026.yaml
+no_debe:
+- dar otra fecha como plazo general
+- presentar el plazo como vigente
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión; el reloj marca el 1 de octubre de 2026
+  cuando: Pregunta el plazo del predial de 2026
+  entonces: Recibe el 10 de julio de 2026 con la cita y que el plazo ya venció
+aprobado_por: "Rodolfo Angel Gilart Pulido"

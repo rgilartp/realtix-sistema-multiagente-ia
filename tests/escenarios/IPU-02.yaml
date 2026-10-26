@@ -1,0 +1,45 @@
+id: IPU-02
+titulo: Estado de cuenta de todos los predios del contribuyente
+origen:
+- CA-02
+rf:
+- RF-IPU-02
+- RF-AUT-01
+- RF-AUT-02
+hu:
+- HU-05
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U02
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Dame el estado de cuenta de todos mis predios
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 50C-9000201
+- tipo: contiene_texto
+  valor: 50C-9000202
+- tipo: contiene_valor
+  valor: '2.520.000'
+- tipo: contiene_valor
+  valor: '2.646.000'
+- tipo: contiene_valor
+  valor: '5.166.000'
+- tipo: no_escala
+respuesta_referencia: >-
+  Los predios de U02 son dos. El 50C-9000201 está al día (saldo $0). El 50C-9000202 tiene vencidas las
+  vigencias 2025, por $2.520.000, y 2026, por $2.646.000, con un saldo pendiente de $5.166.000. La respuesta
+  habla solo de esos dos predios.
+fuentes_esperadas:
+- Usuario de prueba U02 (usuarios_prueba.yaml, del adaptador)
+- CA-02 (Tabla 11 del documento de grado)
+no_debe:
+- hablar de predios que no son de U02
+- pedir que elija un predio, si pidió todos
+dado_cuando_entonces:
+  dado: un contribuyente autenticado que se identifica con su cédula o NIT
+  cuando: pide su estado de cuenta
+  entonces: el sistema obtiene sus predios mediante el adaptador y responde solo sobre ellos
+aprobado_por: "Rodolfo Angel Gilart Pulido"

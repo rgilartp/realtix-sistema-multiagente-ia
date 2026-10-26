@@ -42,6 +42,17 @@ obligaciones de nadie.
    guardan en el caso y la ventana te avisa de que está en manos de un funcionario.
 4. Fuera del horario de atención, la ventana lo indica con un mensaje.
 
+## Horario de atención
+
+- El asistente atiende en días hábiles, de 8:00 a. m. a 5:00 p. m., hora de Bogotá. No son días
+  hábiles los sábados, los domingos ni los festivos de Colombia.
+- Fuera de ese horario, la ventana muestra un mensaje que dice que está fuera del horario de
+  atención y cuándo vuelve a atender. En ese momento el asistente no responde la consulta ni la
+  transfiere a un funcionario.
+
+**Fuente:** requerimientos RNF-06 (horario de atención) y RNF-07 (aviso fuera de horario) del
+sistema multiagente de IA.
+
 ## Lo que el asistente no hace
 
 - No presenta declaraciones, no hace pagos y no modifica datos.

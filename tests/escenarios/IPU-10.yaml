@@ -1,0 +1,55 @@
+id: IPU-10
+titulo: Estimación del predial de 2026
+origen:
+- adenda-8
+rf:
+- RF-IPU-03
+- RF-AUT-01
+- RNF-09
+hu:
+- HU-07
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto me tocaría pagar de predial este año por mi apartamento?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '2.135.000'
+- tipo: contiene_texto
+  valor: 6,1 por mil
+- tipo: contiene_texto
+  valor: estimación
+- tipo: contiene_texto
+  valor: no vinculante
+- tipo: contiene_texto
+  valor: intereses
+respuesta_referencia: >-
+  El predio 50C-9000301 (residencial, estrato 4, avalúo de $350.000.000) cae en el rango de $332.318.001
+  a $363.632.000, con tarifa de 6,1 por mil (Resolución SDH-000194 de 2025, art. 1): $350.000.000 × 6,1
+  / 1.000 = $2.135.000. Con el 10 % de pronto pago habría sido $1.921.500, pero ese descuento venció el
+  17 de abril de 2026. Además, el predial de 2026 de este predio está vencido desde el 10 de julio de
+  2026 (Resolución SDH-000195 de 2025, art. 3), así que el pago ahora incluye intereses de mora (Decreto
+  807 de 1993, art. 66), que la estimación no calcula. Es una estimación no vinculante: en la factura
+  y en la declaración los valores se aproximan al múltiplo de mil más cercano (Decreto 807 de 1993, arts.
+  15 y 132).
+fuentes_esperadas:
+- Resolución SDH-000194 de 2025, art. 1
+- Resolución SDH-000195 de 2025, arts. 3 y 6
+- Decreto 807 de 1993, arts. 15, 66 y 132
+- Usuario de prueba U03 (usuarios_prueba.yaml)
+no_debe:
+- presentar como vigente el descuento del 10 %, que venció el 17 de abril de 2026
+- presentar el valor como si se pudiera pagar sin intereses
+- omitir la nota de estimación no vinculante
+dado_cuando_entonces:
+  dado: >-
+    U03 con sesión y un predio residencial de avalúo $350.000.000 con el predial de 2026 vencido
+  cuando: Pide la estimación del predial de este año
+  entonces: >-
+    Recibe la estimación de 2026 con tarifa, base y valor, que está vencido y causa intereses, y la nota
+    de estimación no vinculante
+aprobado_por: "Rodolfo Angel Gilart Pulido"

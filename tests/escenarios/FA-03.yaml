@@ -1,0 +1,39 @@
+id: FA-03
+titulo: 'Tributo fuera del MVP: renta'
+origen:
+- especificacion-6.3
+rf:
+- RF-ESC-02
+- RF-SYS-03
+hu:
+- HU-10
+- HU-14
+grupo: fuera_de_alcance
+categoria_esperada: fuera_de_alcance
+comportamiento_esperado: escalar
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cómo presento mi declaración de renta?
+verificaciones_codigo:
+- tipo: escala
+  motivo: fuera de alcance
+- tipo: contiene_texto
+  valor: funcionario
+respuesta_referencia: >-
+  Explica, antes de transferir, que ese tema está fuera de lo que atiende este canal, que solo cubre el
+  impuesto predial unificado y el de industria y comercio de Bogotá; luego transfiere la consulta a un
+  funcionario y avisa que el caso queda registrado con un resumen de la conversación, para que no tenga
+  que repetirlo.
+fuentes_esperadas:
+- RF-SYS-03 · Tributos y municipio cubiertos
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- explicar cómo presentar la declaración de renta
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta por un tributo que el sistema no cubre
+  entonces: Recibe que el tema está fuera del canal y el caso se transfiere con su resumen
+aprobado_por: "Rodolfo Angel Gilart Pulido"

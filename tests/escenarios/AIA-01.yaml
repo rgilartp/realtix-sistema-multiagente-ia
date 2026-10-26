@@ -1,0 +1,32 @@
+id: AIA-01
+titulo: Aviso de IA al iniciar la conversación
+origen:
+- adenda-1
+rf:
+- RF-SYS-06
+- RF-UI-03
+hu:
+- HU-12
+grupo: aviso_ia
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Hola, buenas tardes
+verificaciones_codigo:
+- tipo: aviso_ia
+  valor: true
+respuesta_referencia: >-
+  La primera respuesta de la conversación trae el aviso: «Te atiende un asistente de inteligencia artificial.
+  Sus respuestas son orientativas y puedes pedir que te atienda un funcionario en cualquier momento».
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- responder sin el aviso de IA en la primera respuesta de la conversación
+dado_cuando_entonces:
+  dado: Una conversación nueva, sin sesión
+  cuando: El contribuyente saluda
+  entonces: La primera respuesta incluye el aviso de IA y la posibilidad de pedir un funcionario
+aprobado_por: "Rodolfo Angel Gilart Pulido"

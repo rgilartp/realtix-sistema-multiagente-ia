@@ -1,0 +1,43 @@
+id: IPU-03
+titulo: Historial de pagos de un predio propio
+origen:
+- CA-03
+rf:
+- RF-IPU-02
+- RF-AUT-01
+- RF-SYS-02
+hu:
+- HU-06
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué pagos tengo registrados de mi predio 50C-9000301?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '1.829.998'
+- tipo: contiene_valor
+  valor: '1.904.760'
+- tipo: contiene_valor
+  valor: '1.814.058'
+- tipo: no_escala
+respuesta_referencia: >-
+  Pagos registrados del predio 50C-9000301: 6 de marzo de 2025, $1.829.998, en ventanilla; 26 de mayo
+  de 2024, $1.904.760, en ventanilla; 2 de julio de 2023, $1.814.058, en corresponsal bancario. El predial
+  de 2026 no tiene pagos. La consulta no modifica ningún dato.
+fuentes_esperadas:
+- Usuario de prueba U03 (usuarios_prueba.yaml, del adaptador)
+- CA-03 (Tabla 11 del documento de grado)
+no_debe:
+- inventar un pago del predial de 2026
+- ofrecer registrar o modificar un pago
+dado_cuando_entonces:
+  dado: el mismo contribuyente de CA-01
+  cuando: pide su historial de pagos
+  entonces: >-
+    el sistema lista los pagos registrados con su fecha, valor y medio de pago, iguales a los del adaptador,
+    sin modificar ningún dato (RF-SYS-02)
+aprobado_por: "Rodolfo Angel Gilart Pulido"

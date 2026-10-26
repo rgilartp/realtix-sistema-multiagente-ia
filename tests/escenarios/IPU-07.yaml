@@ -1,0 +1,36 @@
+id: IPU-07
+titulo: Hasta cuándo se paga el predial con descuento en 2026
+origen:
+- adenda-5
+rf:
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-03
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Hasta cuándo pago el predial con descuento en 2026?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 17 de abril de 2026
+- tipo: contiene_texto
+  valor: 10 %
+respuesta_referencia: >-
+  Quien declara y paga todo el impuesto de 2026, o paga el total por factura, a más tardar el 17 de abril
+  de 2026 tiene un descuento del 10 % sobre el valor a pagar (Resolución SDH-000195 de 2025, art. 6).
+  También aplica a quien se acogió al SPAC y decide pagar todo en esa fecha. Ese plazo ya venció.
+fuentes_esperadas:
+- Resolución SDH-000195 de 2025, art. 6
+- datos/calendario/2026.yaml
+no_debe:
+- presentar el descuento del 10 % como vigente, porque venció el 17 de abril de 2026
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión; el reloj está en octubre de 2026
+  cuando: Pregunta hasta cuándo hay descuento en 2026
+  entonces: Recibe la fecha y el porcentaje, y que el plazo ya venció
+aprobado_por: "Rodolfo Angel Gilart Pulido"

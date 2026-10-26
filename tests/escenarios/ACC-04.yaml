@@ -1,0 +1,45 @@
+id: ACC-04
+titulo: Consulta general sin sesión
+origen:
+- especificacion-6.3
+rf:
+- RF-AUT-03
+- RF-ICA-02
+hu:
+- HU-02
+grupo: acceso
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: >-
+    ¿Qué tarifa de industria y comercio paga en Bogotá la actividad 6201, desarrollo de software?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: '9,66'
+- tipo: contiene_texto
+  valor: '6201'
+- tipo: contiene_texto
+  valor: '2027'
+- tipo: no_pide_sesion
+respuesta_referencia: >-
+  Para la actividad 6201 (desarrollo de sistemas informáticos), la tarifa del ICA de 2026 es 9,66 por
+  mil (Acuerdo 65 de 2002, art. 3, texto original). Desde el 1 de enero de 2027 para los declarantes anuales,
+  y desde el bimestre 6 de 2026 para los bimestrales, la tarifa es 10 por mil (Acuerdo 1084 de 2026, art.
+  21). Es una consulta general: no requiere sesión.
+fuentes_esperadas:
+- Acuerdo 65 de 2002, art. 3
+- Acuerdo 1084 de 2026, art. 21
+- datos/tarifas/ica_2026.yaml
+- datos/tarifas/ica_2027.yaml
+no_debe:
+- pedir sesión para una consulta general
+- dar la tarifa de 2027 como vigente en 2026
+- dar la tarifa de otra actividad, como la 6202
+dado_cuando_entonces:
+  dado: Una conversación sin sesión
+  cuando: Pregunta por la tarifa de la actividad 6201
+  entonces: Recibe la tarifa por año sin necesidad de iniciar sesión
+aprobado_por: "Rodolfo Angel Gilart Pulido"

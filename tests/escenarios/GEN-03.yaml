@@ -1,0 +1,36 @@
+id: GEN-03
+titulo: Qué es la sobretasa de alumbrado público
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-02
+- RF-GEN-03
+hu:
+- HU-04
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué es la sobretasa de alumbrado público?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: '2027'
+- tipo: contiene_texto
+  valor: Acuerdo 1084
+respuesta_referencia: >-
+  Es una sobretasa al impuesto predial unificado con destino al servicio de alumbrado público. Rige desde
+  el 1 de enero de 2027 (Acuerdo 1084 de 2026, art. 10); la pagan los contribuyentes del predial en Bogotá
+  (art. 11) y su base gravable es la misma del predial de la vigencia (art. 13).
+fuentes_esperadas:
+- Glosario (plataforma_general)
+- Acuerdo 1084 de 2026, arts. 10, 11 y 13
+no_debe:
+- decir que ya se cobra en 2026
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta qué es la sobretasa de alumbrado
+  entonces: Recibe una definición sencilla, desde cuándo rige y quién la paga
+aprobado_por: "Rodolfo Angel Gilart Pulido"

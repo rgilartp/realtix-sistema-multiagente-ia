@@ -1,0 +1,38 @@
+id: ROB-02
+titulo: El adaptador de datos no responde
+origen:
+- CA-06
+rf:
+- RNF-08
+- RF-IPU-02
+hu:
+- HU-10
+grupo: robustez
+categoria_esperada: ipu
+comportamiento_esperado: escalar
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Quiero ver el estado de cuenta de mi predio 50C-9000301
+verificaciones_codigo:
+- tipo: escala
+  motivo: fallo de servicio
+- tipo: sin_error_tecnico
+- tipo: no_contiene_valor
+  valor: '2.135.000'
+respuesta_referencia: >-
+  No muestra un error técnico ni datos del predio y transfiere la consulta a un funcionario con el aviso
+  de transferencia.
+fuentes_esperadas:
+- RNF-08 · Tiempos de espera y degradación
+- CA-06 (Tabla 11 del documento de grado)
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- inventar un saldo
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: el adaptador de datos no responde dentro del tiempo máximo de espera
+  cuando: el agente consulta el estado de cuenta
+  entonces: el sistema no muestra un error técnico y deriva la consulta al escalamiento (RNF-08)
+aprobado_por: "Rodolfo Angel Gilart Pulido"

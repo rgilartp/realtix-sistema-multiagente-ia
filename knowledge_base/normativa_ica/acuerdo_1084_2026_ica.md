@@ -2,6 +2,8 @@
 
 Fuente: https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=194513 (consultada en octubre de 2026)
 
+> **Publicación.** Expedido el 8 de octubre de 2026 y publicado en el Registro Distrital No. 8679 del 9 de octubre de 2026; rige desde su publicación (art. 52), es decir, desde el 9 de octubre de 2026. Fuente de la fecha: ficha de la norma en el Régimen Legal de Bogotá (el mismo enlace de arriba), con «Fecha de Expedición: 08/10/2026», «Fecha de Entrada en Vigencia: 09/10/2026» y «Medio de Publicación: Registro Distrital No. 8679 del 09 de octubre de 2026».
+
 > **Vigencia por año gravable.** Las tarifas del art. 21 del Acuerdo 1084 de 2026 (texto nuevo del art. 3 del Acuerdo 65) se aplican, según el parágrafo del art. 21, a los declarantes anuales desde el 1 de enero de 2027 y a los bimestrales desde el bimestre siguiente a la aprobación del acuerdo (se aprobó en el bimestre 5 de 2026, por eso desde el bimestre 6 de 2026). Hasta esos periodos rigen el texto original del art. 3 y sus modificaciones (Acuerdos 780 de 2020 y 816 de 2021).
 
 ## Artículo 1

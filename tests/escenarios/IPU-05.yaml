@@ -1,0 +1,35 @@
+id: IPU-05
+titulo: Cuándo se causa el predial y cuál es su período
+origen:
+- especificacion-6.3
+rf:
+- RF-IPU-01
+- RF-IPU-05
+hu:
+- HU-01
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuándo se causa el predial y qué período cubre?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 1° de enero
+- tipo: contiene_texto
+  valor: Decreto 352
+respuesta_referencia: >-
+  El predial es un gravamen real sobre los bienes raíces ubicados en Bogotá y se genera por la existencia
+  del predio (Decreto 352 de 2002, art. 14). Se causa el 1° de enero del año gravable (art. 15) y el período
+  gravable es anual, del 1° de enero al 31 de diciembre (art. 16).
+fuentes_esperadas:
+- Decreto 352 de 2002, arts. 14, 15 y 16
+no_debe:
+- decir que se causa en otra fecha
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta cuándo se causa el predial
+  entonces: Recibe el hecho generador, la causación y el período, con la cita
+aprobado_por: "Rodolfo Angel Gilart Pulido"

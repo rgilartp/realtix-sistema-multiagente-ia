@@ -1,0 +1,43 @@
+id: MULTI-03
+titulo: Qué son el predial y el ICA
+origen:
+- especificacion-6.3
+rf:
+- RF-ORQ-03
+- RF-IPU-01
+- RF-ICA-01
+hu:
+- HU-01
+- HU-02
+grupo: multiagente
+categoria_esperada: ipu
+categorias_esperadas:
+- ipu
+- ica
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: rag
+turnos:
+- usuario: Explícame qué es el predial y qué es el ICA
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: predial
+- tipo: contiene_texto
+  valor: Decreto 352
+respuesta_referencia: >-
+  Predial: fusiona en un solo impuesto el predial, el de parques y arborización, el de estratificación
+  socioeconómica y la sobretasa de levantamiento catastral; su base es el avalúo catastral (Ley 44 de
+  1990, arts. 1 y 3). ICA: se genera por ejercer, de forma directa o indirecta, una actividad industrial,
+  comercial o de servicios en Bogotá (Decreto 352 de 2002, art. 32).
+fuentes_esperadas:
+- Ley 44 de 1990, arts. 1 y 3
+- Decreto 352 de 2002, art. 32
+no_debe:
+- responder solo una de las dos partes
+- repetir la misma explicación dos veces
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta por el predial y por el ICA en un solo mensaje
+  entonces: Recibe una explicación de cada impuesto, una sola vez, con su cita
+aprobado_por: "Rodolfo Angel Gilart Pulido"

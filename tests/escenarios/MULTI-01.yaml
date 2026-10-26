@@ -1,0 +1,44 @@
+id: MULTI-01
+titulo: Predial e ICA de una persona jurídica
+origen:
+- especificacion-6.3
+rf:
+- RF-ORQ-03
+- RF-IPU-02
+- RF-ICA-03
+hu:
+- HU-05
+- HU-03
+grupo: multiagente
+categoria_esperada: ipu
+categorias_esperadas:
+- ipu
+- ica
+comportamiento_esperado: responder
+sesion: U04
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: rag
+turnos:
+- usuario: ¿Cómo va mi predial y cuánto me falta de ICA, y para cuándo?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '3.450.000'
+- tipo: contiene_texto
+  valor: 9 de octubre
+- tipo: contiene_texto
+  valor: al día
+respuesta_referencia: >-
+  El predio comercial 50C-9000401 está al día: el predial de 2026, de $2.400.000, está pagado. En industria
+  y comercio (actividad 5611, régimen común bimestral) queda pendiente el bimestre 4, por $3.450.000,
+  que vence el 9 de octubre de 2026 (Resolución SDH-000195 de 2025, art. 1).
+fuentes_esperadas:
+- Usuario de prueba U04 (usuarios_prueba.yaml)
+- Resolución SDH-000195 de 2025, art. 1
+no_debe:
+- mezclar el saldo del ICA con el del predial
+- responder solo una de las dos partes
+dado_cuando_entonces:
+  dado: U04 con sesión, predio al día e ICA con un bimestre pendiente
+  cuando: Pregunta por el predial y por el ICA en un solo mensaje
+  entonces: Recibe una respuesta con las dos partes, cada una con sus valores
+aprobado_por: "Rodolfo Angel Gilart Pulido"

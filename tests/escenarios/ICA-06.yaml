@@ -1,0 +1,41 @@
+id: ICA-06
+titulo: Estimación del ICA de 2027
+origen:
+- especificacion-6.3
+rf:
+- RF-ICA-02
+- RF-AUT-01
+hu:
+- HU-07
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: U12
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Si en 2027 tuviera ingresos de $900.000.000 con la actividad 6201, ¿cuánto sería el ICA?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '9.000.000'
+- tipo: contiene_texto
+  valor: 10 por mil
+- tipo: contiene_texto
+  valor: estimación
+respuesta_referencia: >-
+  Para la actividad 6201 la tarifa de 2027 es 10 por mil (Acuerdo 1084 de 2026, art. 21): $900.000.000
+  × 10 / 1.000 = $9.000.000, frente a $8.694.000 con la tarifa de 9,66 por mil de 2026. Es una estimación
+  no vinculante. La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, Decreto
+  352 de 2002, art. 59) ni la sobretasa bomberil, que se suman cuando aplican.
+fuentes_esperadas:
+- Acuerdo 1084 de 2026, art. 21
+- datos/tarifas/ica_2027.yaml
+- Usuario de prueba U12
+no_debe:
+- usar la tarifa de 2026 para un periodo de 2027
+- omitir la nota de estimación
+dado_cuando_entonces:
+  dado: U12 con sesión y actividad 6201
+  cuando: Pide una estimación con $900.000.000 de ingresos de 2027
+  entonces: Recibe $9.000.000 con la tarifa de 10 por mil de 2027
+aprobado_por: "Rodolfo Angel Gilart Pulido"
