@@ -169,6 +169,36 @@ def recuperar(deps: Dependencias, config: ConfigAgente, texto: str, anio: int) -
     return encontrados[:K_FRAGMENTOS]  # una colección: el orden de la fusión RRF
 
 
+def fuente_del_contrato(
+    norma: str,
+    articulo: str | None = None,
+    coleccion: str | None = None,
+    puntaje: float | None = None,
+) -> dict[str, Any]:
+    """Una fuente con la forma de `meta.fuentes` de la sección 3.8."""
+    return {"norma": norma, "articulo": articulo, "coleccion": coleccion, "puntaje": puntaje}
+
+
+def fuentes_del_contrato(resultados: list[Resultado], citados: list[Fragmento]) -> list[dict]:
+    """Las fuentes de las herramientas (sin artículo ni puntaje) y las de los fragmentos citados,
+    con su colección y su coseno."""
+    salida = [
+        fuente_del_contrato(f)
+        for f in _sin_repetir([f for r in resultados if r.tipo == "ok" for f in r.fuentes])
+    ]
+    for fragmento in citados:
+        articulo = re.match(r"^Art[ií]culo\s+(.+)$", fragmento.seccion)
+        salida.append(
+            fuente_del_contrato(
+                fragmento.norma or fragmento.fuente,
+                articulo.group(1) if articulo else fragmento.seccion or None,
+                fragmento.fuente.split("/")[0] if "/" in fragmento.fuente else None,
+                round(fragmento.similitud, 3),
+            )
+        )
+    return salida
+
+
 def _sin_repetir(valores: list[str]) -> list[str]:
     return list(dict.fromkeys(v for v in valores if v))
 
@@ -322,6 +352,7 @@ def ejecutar_agente(
         categoria,
         texto_final,
         fuentes=tuple(fuentes),
+        fuentes_contrato=fuentes_del_contrato(resultados, citados),
         similitud=similitud_de_la_parte(fragmentos, citados, uso_datos),
         suficiencia=suficiencia,
         cobertura=max(0.0, min(1.0, salida.cobertura)),

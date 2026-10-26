@@ -71,5 +71,13 @@ interaccion = Table(
     Column("escalada", Boolean, nullable=False, default=False),
     Column("duracion_ms", Integer, nullable=False),
     Column("fecha", DateTime(timezone=True), nullable=False),
+    # B9 (sección 3.11): escenario, estado, motivo, agentes, tiempos, tokens y modelos del turno
+    Column("escenario_id", String(32), nullable=True),
+    Column("estado", String(32), nullable=True),
+    Column("motivo", String(64), nullable=True),
+    Column("agentes", JSON, nullable=True),
+    Column("tiempos_ms", JSON, nullable=True),
+    Column("tokens", JSON, nullable=True),
+    Column("modelos", JSON, nullable=True),
     Index("idx_interaccion_conversacion", "id_conversacion"),
 )

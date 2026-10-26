@@ -9,7 +9,7 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import Engine, create_engine, insert, select, update
+from sqlalchemy import Engine, create_engine, insert, inspect, select, text, update
 from sqlalchemy.pool import StaticPool
 
 from src.data.models import CasoEscalado
@@ -46,7 +46,22 @@ class Almacen:
         self._reloj = reloj
 
     def crear_esquema(self) -> None:
+        """Crea las tablas y agrega las columnas nuevas a una tabla que ya existía: `create_all`
+        no altera tablas (B9 sumó columnas a `interaccion`). Las columnas nuevas son nulables."""
         metadata.create_all(self._motor)
+        inspector = inspect(self._motor)
+        for tabla in metadata.sorted_tables:
+            existentes = {c["name"] for c in inspector.get_columns(tabla.name)}
+            faltantes = [c for c in tabla.columns if c.name not in existentes]
+            with self._motor.begin() as c:
+                for columna in faltantes:
+                    tipo = columna.type.compile(dialect=self._motor.dialect)
+                    c.execute(text(f'ALTER TABLE {tabla.name} ADD COLUMN "{columna.name}" {tipo}'))
+
+    def comprobar(self) -> None:
+        """Consulta mínima para `/health`; falla si la base no responde."""
+        with self._motor.connect() as c:
+            c.execute(text("SELECT 1"))
 
     # -- conversaciones ------------------------------------------------------------------------
 
@@ -71,6 +86,24 @@ class Almacen:
                         fecha_actualizacion=ahora,
                     )
                 )
+
+    def contribuyente_de_conversacion(self, id_conversacion: str) -> str | None:
+        with self._motor.connect() as c:
+            fila = c.execute(
+                select(conversacion.c.id_contribuyente).where(
+                    conversacion.c.id_conversacion == id_conversacion
+                )
+            ).first()
+        return fila[0] if fila else None
+
+    def asignar_contribuyente(self, id_conversacion: str, id_contribuyente: str) -> None:
+        """Una conversación que empezó sin sesión queda del contribuyente que inicia sesión."""
+        with self._motor.begin() as c:
+            c.execute(
+                update(conversacion)
+                .where(conversacion.c.id_conversacion == id_conversacion)
+                .values(id_contribuyente=id_contribuyente, fecha_actualizacion=self._reloj())
+            )
 
     def estado_conversacion(self, id_conversacion: str) -> str | None:
         with self._motor.connect() as c:
@@ -166,8 +199,18 @@ class Almacen:
         categoria: str | None = None,
         nivel_confianza: float | None = None,
         escalada: bool = False,
+        **detalle: Any,
     ) -> None:
-        """Una fila por turno, sin el texto de los mensajes ni datos personales (ADR-11)."""
+        """Una fila por turno, sin el texto de los mensajes ni datos personales (ADR-11).
+
+        `detalle`: `escenario_id`, `estado`, `motivo`, `agentes`, `tiempos_ms`, `tokens` y
+        `modelos` (sección 3.11).
+        """
+        permitidos = {"escenario_id", "estado", "motivo", "agentes", "tiempos_ms", "tokens",
+                      "modelos"}  # fmt: skip
+        desconocidos = set(detalle) - permitidos
+        if desconocidos:
+            raise ValueError(f"Campos de interacción desconocidos: {sorted(desconocidos)}")
         with self._motor.begin() as c:
             c.execute(
                 insert(interaccion).values(
@@ -177,8 +220,14 @@ class Almacen:
                     escalada=escalada,
                     duracion_ms=duracion_ms,
                     fecha=self._reloj(),
+                    **detalle,
                 )
             )
+
+    def todas_las_interacciones(self) -> list[dict[str, Any]]:
+        with self._motor.connect() as c:
+            filas = c.execute(select(interaccion).order_by(interaccion.c.id_interaccion)).all()
+        return [dict(f._mapping) for f in filas]
 
     def interacciones(self, id_conversacion: str) -> list[dict[str, Any]]:
         with self._motor.connect() as c:

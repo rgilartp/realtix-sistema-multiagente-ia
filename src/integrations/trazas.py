@@ -2,10 +2,18 @@
 
 Las trazas llevan el `id_conversacion`, nunca el `contribuyente_id`, y un anonimizador enmascara
 cédulas, NIT y nombres en las entradas y las salidas. La prueba de trazas de B12 lo verifica.
+
+El nombre de la sesión de la OVT simulada lo fija la capa de acceso (B9) en `NOMBRES_DE_SESION`
+durante el turno: todo `Anonimizador` lo enmascara, también escrito de otra forma («usuario de
+prueba 01» en minúsculas). No va en la configuración del grafo, que LangGraph copia a los
+metadatos del checkpoint, ni en el estado.
 """
 
 import re
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
+from functools import lru_cache
 from typing import Any
 
 from langsmith import Client
@@ -36,6 +44,29 @@ NOMBRE_DECLARADO = re.compile(
 )
 
 
+NOMBRES_DE_SESION: ContextVar[tuple[str, ...]] = ContextVar("nombres_de_sesion", default=())
+
+
+@contextmanager
+def nombres_de_sesion(nombres: Iterable[str]) -> Iterator[None]:
+    """Durante el bloque, los anonimizadores enmascaran también estos nombres."""
+    marca = NOMBRES_DE_SESION.set(tuple(n for n in nombres if n))
+    try:
+        yield
+    finally:
+        NOMBRES_DE_SESION.reset(marca)
+
+
+@lru_cache(maxsize=64)
+def _patron_de_nombres(nombres: tuple[str, ...]) -> re.Pattern[str] | None:
+    limpios = sorted({n.strip() for n in nombres if len(n.strip()) > 2}, key=len, reverse=True)
+    if not limpios:
+        return None
+    # Los espacios del nombre aceptan cualquier separador en blanco.
+    partes = (r"\s+".join(re.escape(p) for p in n.split()) for n in limpios)
+    return re.compile("|".join(partes), re.IGNORECASE)
+
+
 class Anonimizador:
     """Enmascara documentos y los nombres conocidos en cualquier estructura de texto.
 
@@ -45,10 +76,7 @@ class Anonimizador:
     """
 
     def __init__(self, nombres: Iterable[str] = (), *, para_modelos: bool = False) -> None:
-        limpios = sorted({n.strip() for n in nombres if len(n.strip()) > 2}, key=len, reverse=True)
-        self._nombres = (
-            re.compile("|".join(re.escape(n) for n in limpios), re.IGNORECASE) if limpios else None
-        )
+        self._nombres_propios = tuple(nombres)
         self._para_modelos = para_modelos
 
     def _sin_rotulo(self, encontrado: re.Match[str]) -> str:
@@ -66,8 +94,9 @@ class Anonimizador:
         valor = SIN_ROTULO.sub(self._sin_rotulo, valor)
         if self._para_modelos:
             valor = NOMBRE_DECLARADO.sub(lambda m: m.group(1) + MASCARA_NOMBRE, valor)
-        if self._nombres:
-            valor = self._nombres.sub(MASCARA_NOMBRE, valor)
+        nombres = _patron_de_nombres(self._nombres_propios + NOMBRES_DE_SESION.get())
+        if nombres:
+            valor = nombres.sub(MASCARA_NOMBRE, valor)
         return valor
 
     def __call__(self, valor: Any) -> Any:

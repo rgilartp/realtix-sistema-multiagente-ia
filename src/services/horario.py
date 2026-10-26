@@ -103,6 +103,8 @@ class Horario:
             f"de {apertura.year} a las {_hora(apertura.time())}."
         )
         return (
-            f"Atiendo de lunes a viernes, de {_hora(self.inicio)} a {_hora(self.fin)} (hora de "
-            f"Colombia), sin contar festivos. Vuelvo a atender el {cuando}"
+            "En este momento estoy fuera del horario de atención. Atiendo de lunes a viernes, de "
+            f"{_hora(self.inicio)} a {_hora(self.fin)} (hora de Colombia), sin contar festivos. "
+            f"Vuelvo a atender el {cuando} Fuera de ese horario no puedo responder consultas ni "
+            "transferirlas a un funcionario: escríbeme de nuevo entonces."
         )
