@@ -88,3 +88,32 @@ jobs:
         env:
           POSTGRES_OBLIGATORIO: "1"
           CHROMA_OBLIGATORIO: "1"
+
+  web:
+    name: Web (compilación y Playwright)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - name: Traer el repositorio
+        uses: actions/checkout@v7.0.1
+
+      - name: Instalar Node
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Instalar las dependencias
+        run: npm ci --no-audit --no-fund
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Instalar Chromium y sus dependencias del sistema
+        run: npx playwright install --with-deps chromium
+
+      - name: Pruebas de Playwright (API simulada en el navegador)
+        run: npx playwright test
