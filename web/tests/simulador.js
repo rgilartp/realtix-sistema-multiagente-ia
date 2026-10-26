@@ -8,8 +8,8 @@ export const TEXTOS = {
     "Te atiende un asistente de inteligencia artificial. Sus respuestas son orientativas y " +
     "puedes pedir que te atienda un funcionario en cualquier momento",
   predial:
-    "El impuesto predial unificado es un tributo anual sobre los predios de Bogotá; se calcula " +
-    "con el avalúo catastral y la tarifa que corresponde al predio (Acuerdo 105 de 2003, art. 2).",
+    "El impuesto predial unificado es un tributo anual sobre los predios; se calcula con el " +
+    "avalúo catastral y la tarifa que corresponde al predio (Acuerdo 105 de 2003, art. 2).",
   fueraDeHorario:
     "En este momento estoy fuera del horario de atención. Atiendo de lunes a viernes, de 8:00 a. m. " +
     "a 5:00 p. m. (hora de Colombia), sin contar festivos. Vuelvo a atender el lunes 5 de octubre de " +
@@ -72,7 +72,8 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
       if (fueraDeHorario) {
         return json(chat(cuerpo.id_conversacion, TEXTOS.fueraDeHorario, "sistema", "fuera_de_horario"));
       }
-      return json(chat(cuerpo.id_conversacion, TEXTOS.predial, "agente", "respondida", {
+      const texto = `${TEXTOS.predial}\n\nFuentes: Acuerdo 105 de 2003, art. 2; Ley 44 de 1990, art. 1.`;
+      return json(chat(cuerpo.id_conversacion, texto, "agente", "respondida", {
         categoria: "ipu", agentes_invocados: ["nodo_orquestador", "nodo_ipu", "nodo_confianza", "nodo_respuesta"],
         nivel_confianza: 0.86,
       }));

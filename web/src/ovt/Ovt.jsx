@@ -7,6 +7,13 @@ import { obtener, publicar } from "../api.js";
 
 export const ROTULO = "Entorno simulado de pruebas — no es la Oficina Virtual Tributaria real";
 
+const QUE_PROBAR = [
+  ["Consultas generales", "Sin sesión: qué es el predial o el ICA, plazos y descuentos."],
+  ["Tu cuenta", "Con sesión: lo que debes, tus pagos y una estimación del predial."],
+  ["Tu recibo", "Adjunta el recibo sintético y confirma los datos que lee el asistente."],
+  ["Un funcionario", "Pide que te atienda una persona en cualquier momento."],
+];
+
 function insertarWidget() {
   if (document.querySelector("script[data-realtix-embed]")) return;
   const script = document.createElement("script");
@@ -45,55 +52,66 @@ export default function Ovt() {
 
   const cerrar = () => {
     setSesion(null);
+    setElegido("");
     fijar(null);
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
+    <div className="min-h-dvh bg-papel font-texto text-tinta">
       <div
         role="note"
-        className="bg-amber-400 px-4 py-4 text-center text-xl font-bold text-amber-950 md:text-2xl"
+        className="franja-simulada border-b-2 border-advertencia-borde px-4 py-4 text-center text-xl leading-snug font-bold text-advertencia sm:text-2xl md:py-5 md:text-3xl"
         data-prueba="rotulo"
       >
         {ROTULO}
       </div>
-      <div className="mx-auto max-w-3xl space-y-6 px-4 py-8">
-        <header className="space-y-1">
-          <h1 className="text-2xl font-semibold">OVT simulada</h1>
-          <p className="text-sm text-slate-600">
-            Página de pruebas del sistema multiagente de IA, con datos sintéticos. Elige un usuario
-            de prueba para iniciar una sesión simulada; el asistente aparece abajo a la derecha.
+
+      {/* En escritorio, la columna derecha queda libre para el widget (400 px y su margen). */}
+      <div className="mx-auto max-w-4xl px-4 pt-8 pb-28 sm:px-6 md:pt-12 lg:mr-[448px] lg:ml-[max(1.5rem,calc(50vw-40rem))] lg:max-w-3xl">
+        <header className="max-w-2xl space-y-3">
+          <p className="text-xs font-semibold tracking-[0.14em] text-acento uppercase">
+            Datos sintéticos · Solo para pruebas
+          </p>
+          <h1 className="font-titulo text-3xl leading-tight font-semibold md:text-4xl">OVT simulada</h1>
+          <p className="text-base text-tinta-suave">
+            Esta página imita el portal donde vivirá el asistente. Elige un usuario de prueba para
+            iniciar una sesión simulada: el asistente tributario la recibe sin que tengas que
+            escribir nada.
           </p>
         </header>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <section className="mt-8 rounded-2xl border border-borde bg-superficie p-5 shadow-panel md:p-6" aria-labelledby="titulo-sesion">
+          <h2 id="titulo-sesion" className="font-titulo text-xl font-semibold">
+            Sesión simulada
+          </h2>
           {sesion ? (
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p data-prueba="sesion">
-                Sesión simulada de <strong>{sesion.nombre ?? sesion.usuario}</strong> ({sesion.usuario})
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+              <p data-prueba="sesion" className="text-base">
+                Sesión de <strong>{sesion.nombre ?? sesion.usuario}</strong>{" "}
+                <span className="text-tinta-suave">({sesion.usuario})</span>
               </p>
               <button
                 type="button"
                 onClick={cerrar}
-                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-100"
+                className="rounded-xl border border-borde-control px-4 py-2 text-sm font-semibold transition-colors duration-150 ease-out hover:border-acento hover:text-acento"
               >
                 Cerrar sesión
               </button>
             </div>
           ) : (
-            <form onSubmit={iniciar} className="flex flex-wrap items-end gap-3">
-              <label className="flex flex-col gap-1 text-sm">
+            <form onSubmit={iniciar} className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+              <label className="flex flex-1 flex-col gap-1.5 text-sm font-semibold">
                 Usuario de prueba
                 <select
                   value={elegido}
                   onChange={(e) => setElegido(e.target.value)}
-                  className="rounded-lg border border-slate-300 px-3 py-2"
+                  className="h-11 rounded-xl border border-borde-control bg-superficie px-3 text-base font-normal"
                   data-prueba="usuario"
                 >
                   <option value="">Elige un usuario</option>
                   {usuarios.map((u) => (
                     <option key={u.usuario} value={u.usuario}>
-                      {u.usuario} · {u.nombre} ({u.tipo_persona})
+                      {u.usuario} · {u.nombre} ({u.tipo_persona === "juridica" ? "persona jurídica" : "persona natural"})
                     </option>
                   ))}
                 </select>
@@ -101,18 +119,31 @@ export default function Ovt() {
               <button
                 type="submit"
                 disabled={!elegido}
-                className="rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+                className="h-11 rounded-xl bg-acento px-5 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:opacity-50"
               >
                 Iniciar sesión simulada
               </button>
             </form>
           )}
-          {aviso && <p className="mt-3 text-sm text-rose-700">{aviso}</p>}
+          {aviso && (
+            <p className="mt-3 rounded-lg bg-error-suave px-3 py-2 text-sm text-error" role="alert">
+              {aviso}
+            </p>
+          )}
         </section>
 
-        <section className="rounded-xl border border-dashed border-slate-300 p-5 text-sm text-slate-600">
-          Sin sesión, el asistente responde consultas generales. Con sesión, también las de los
-          predios del usuario de prueba elegido.
+        <section className="mt-8" aria-labelledby="titulo-probar">
+          <h2 id="titulo-probar" className="font-titulo text-xl font-semibold">
+            Qué puedes probar
+          </h2>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {QUE_PROBAR.map(([titulo, texto]) => (
+              <li key={titulo} className="rounded-2xl border border-borde bg-superficie p-4">
+                <p className="font-semibold text-acento-fuerte">{titulo}</p>
+                <p className="mt-1 text-sm text-tinta-suave">{texto}</p>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </div>
