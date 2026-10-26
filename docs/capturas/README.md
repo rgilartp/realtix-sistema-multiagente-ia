@@ -9,8 +9,7 @@ Capturas de la OVT simulada, el widget y la consola, cada una en 1280 px (`_1280
     octubre de 2026 a las 10:00;
   - los avisos de transferencia (`AVISO_TRANSFERENCIA` y `PREFACIOS` de `nodo_escalamiento`);
   - el resumen del caso (`construir_resumen`);
-  - la confirmación del recibo de OCR-01;
-  - la respuesta a «¿Qué es el predial?», tomada de una consulta real al sistema.
+  - la confirmación del recibo de OCR-01.
 - **Las fechas** son las del reloj de los escenarios aprobados en B6: los casos de la bandeja son del
   jueves 1 de octubre de 2026.
 - **Las cifras de la consola son de ejemplo y no son resultados.** Salen de
@@ -18,3 +17,7 @@ Capturas de la OVT simulada, el widget y la consola, cada una en 1280 px (`_1280
   mismo cálculo de `/admin/metricas`; por eso la exactitud, el total etiquetado, la precisión, la
   exhaustividad y el F1 son coherentes entre sí. Las duraciones son las de la medición de B9.
 - **La captura de las métricas para el documento de grado se tomará en B16**, con la corrida final.
+- **La captura con una respuesta sobre normas se tomará en B16**, con el sistema corregido. La
+  respuesta real a «¿Qué es el impuesto predial?» tiene una falla conocida (ver
+  `docs/resumenes/b11.md`, «Fallas conocidas»), y la respuesta de la API simulada en
+  `widget_respuesta` es solo un ejemplo de formato.
