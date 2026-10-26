@@ -12,7 +12,7 @@ from langchain_core.language_models import BaseChatModel
 
 from src.agents.state import AgentState
 from src.data.adapter import RealSitAdapter
-from src.integrations.recuperador import Recuperador
+from src.integrations.recuperador import ESCALA_SIMILITUD, Recuperador
 from src.services.confianza import EscalaSimilitud, Pesos
 from src.services.horario import Reloj
 
@@ -33,7 +33,7 @@ class ConfigGrafo:
     umbral_confianza: float = 0.7
     max_reclasificaciones: int = 2
     pesos: Pesos = Pesos()
-    escala_similitud: EscalaSimilitud = EscalaSimilitud()  # se fija en B8 (sección 3.3)
+    escala_similitud: EscalaSimilitud = ESCALA_SIMILITUD  # fijada en B8 (sección 3.3)
     timeout_modelo_s: float = 20.0
     timeout_recuperacion_s: float = 5.0
     timeout_adaptador_s: float = 5.0
@@ -62,3 +62,4 @@ class Dependencias:
     modelos: Callable[[str], BaseChatModel] | None = None  # None: agentes simulados
     recuperador: Recuperador | None = None
     reloj: Reloj | None = None  # None: el del sistema; el turno puede traer `ahora` (ADR-16)
+    modo_evaluacion: bool = False  # guarda los contextos y la versión del corpus (ADR-16, B12)

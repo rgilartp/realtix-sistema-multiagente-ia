@@ -12,6 +12,7 @@ from src.container import Contenedor
 from src.data.models import CasoEscalado
 from src.integrations.embeddings import DIMENSIONES, crear_embeddings
 from src.integrations.modelos import crear_modelo, nombre_del_modelo, texto_de_respuesta
+from src.integrations.recuperacion_hibrida import RecuperadorHibrido
 from src.integrations.recuperador import RecuperadorEnMemoria
 from src.integrations.robustez import ServicioNoDisponibleError, con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador, crear_cliente_langsmith, metadatos_de_traza
@@ -230,7 +231,8 @@ def test_el_contenedor_arma_las_dependencias_desde_la_configuracion(
     assert contenedor.deps.adaptador is contenedor.adaptador
     assert contenedor.modelo("orquestador").model == "claude-sonnet-5-5"
     assert contenedor.horario().inicio.hour == 8
-    assert contenedor.recuperador.recuperar("predial", k=1)
+    assert isinstance(contenedor.recuperador, RecuperadorHibrido)  # conecta con Chroma al usarlo
+    assert contenedor.deps.recuperador is contenedor.recuperador
 
 
 @pytest.mark.integration
