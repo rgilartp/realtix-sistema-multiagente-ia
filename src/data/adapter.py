@@ -38,6 +38,7 @@ __all__ = [
     "PredioNoEncontradoError",
     "RealSitAdapter",
     "RegistroDeCasos",
+    "verificar_predio_propio",
 ]
 
 VIGENCIA_ACTUAL = 2026
@@ -99,6 +100,18 @@ class RealSitAdapter(ABC):
     def registrar_caso_escalado(self, resumen: CasoEscalado) -> Ack: ...
 
 
+def verificar_predio_propio(predio: Predio | None, contribuyente_id: str) -> Predio:
+    """Regla única de RF-AUT-02: solo se atiende un predio que existe y es del contribuyente.
+
+    Inexistente y ajeno dan el mismo mensaje (OC-06). La usan el adaptador y `services.acceso`.
+    """
+    if predio is None:
+        raise PredioNoEncontradoError()
+    if predio.id_contribuyente != contribuyente_id:
+        raise PredioNoAutorizadoError()
+    return predio
+
+
 class AdaptadorBase(RealSitAdapter):
     """Reglas del contrato sobre un almacenamiento mínimo que cada implementación aporta."""
 
@@ -131,12 +144,7 @@ class AdaptadorBase(RealSitAdapter):
     # -- reglas comunes -------------------------------------------------------------------
 
     def _predio_o_falla(self, predio_id: str, contribuyente_id: str) -> Predio:
-        predio = self._predio(predio_id)
-        if predio is None:
-            raise PredioNoEncontradoError()
-        if predio.id_contribuyente != contribuyente_id:
-            raise PredioNoAutorizadoError()
-        return predio
+        return verificar_predio_propio(self._predio(predio_id), contribuyente_id)
 
     def get_predios_contribuyente(self, contribuyente_id: str) -> list[Predio]:
         return self._predios_de(contribuyente_id)
