@@ -1,7 +1,8 @@
 """Grafo de LangGraph: 8 nodos y 8 transiciones (Tablas 1 y 2 de arquitectura, ADR-14).
 
 Las funciones de enrutamiento son puras (solo leen el estado) y se prueban una por una. Los nodos
-se construyen con `Dependencias`; `nodos` permite sustituir cualquiera (B7 pone los reales).
+se construyen con `Dependencias`; `nodos` permite sustituir cualquiera. Con `deps.modelos`, los
+agentes son los reales de B7; sin él, los simulados de B4.
 """
 
 from collections.abc import Callable, Iterator
@@ -107,6 +108,14 @@ def checkpointer_postgres(database_url: str) -> Iterator[BaseCheckpointSaver]:
         yield saver
 
 
-def configuracion_de_hilo(id_conversacion: str) -> dict[str, Any]:
-    """`thread_id` = id de la conversación, como pide la Tabla 3."""
-    return {"configurable": {"thread_id": id_conversacion}}
+def configuracion_de_hilo(id_conversacion: str, ahora: str | None = None) -> dict[str, Any]:
+    """`thread_id` = id de la conversación, como pide la Tabla 3.
+
+    `ahora` es el momento del turno como fecha ISO (el reloj simulado del modo de evaluación,
+    ADR-16). Va como texto y no como objeto, para que el checkpointer de PostgreSQL no tenga que
+    serializarlo; sin él, los agentes usan el reloj del sistema.
+    """
+    configurable: dict[str, Any] = {"thread_id": id_conversacion}
+    if ahora is not None:
+        configurable["ahora"] = ahora
+    return {"configurable": configurable}

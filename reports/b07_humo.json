@@ -1,0 +1,335 @@
+{
+  "resultados": [
+    {
+      "escenario": "IPU-01",
+      "tipo": "simple",
+      "duracion_ms": 8503.9,
+      "categoria": "ipu",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 1.0,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "Este es el estado de cuenta de tu predio 50C-9000301 del impuesto predial unificado, a la fecha de hoy (1 de octubre de 2026):\n\n- Año gravable 2026: avalúo base $350.000.000, tarifa 6,1 por mil, valor liquidado $2.135.000. El descuento por pronto pago ($213.500) ya no está vigente (venció el 17 de abril de 2026). La fecha límite de pago era el 10 de julio de 2026 y la obligación está VENCIDA, sin pagos registrados. Saldo pendiente: $2.135.000. Como está vencida, el pago incluye intereses de mora, que no calculo aquí.\n\n- Año gravable 2025: avalúo base $333.333.000, tarifa 6,1 por mil, valor liquidado $2.033.331. Pagado $1.829.998 el 6 de marzo de 2025 en ventanilla. Está al día, saldo $0.\n\n- Año gravable 2024: avalúo base $317.460.000, tarifa 6 por mil, valor liquidado $1.904.760. Pagado completo el 26 de mayo de 2024 en ventanilla. Saldo $0.\n\n- Año gravable 2023: avalúo base $302.343.000, tarifa 6 por mil, valor liquidado $1.814.058. Pagado completo el 2 de julio de 2023 por corresponsal bancario. Saldo $0.\n\nEn total, tu saldo pendiente de predial es de $2.135.000, correspondiente al año 2026.\n\nComo hay obligaciones vencidas, el pago incluye intereses de mora (Decreto 807 de 1993, art. 66), que esta información no calcula; el valor exacto lo da la factura o la Secretaría Distrital de Hacienda.\n\nFuentes: Datos de tu cuenta en RealSit (base sintética de pruebas).",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2201,
+          "salida": 119
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 21723,
+          "salida": 675
+        }
+      ],
+      "costo_usd": "0.0081018"
+    },
+    {
+      "escenario": "IPU-10",
+      "tipo": "simple",
+      "duracion_ms": 5512.5,
+      "categoria": "ipu",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 0.85,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "Para 2026 tu apartamento (predio 50C-9000301, uso residencial, estrato 4, avalúo catastral de $350.000.000) tendría un impuesto estimado de $2.135.000, con una tarifa de 6,1 por mil (rango general residencial, Acuerdo 648 de 2016, art. 1). El descuento por pronto pago del 10% ($213.500) ya no está disponible, porque su plazo venció el 17 de abril de 2026; por eso el total sería el valor completo. Además, la obligación del año 2026 figura como VENCIDA, con un saldo de $2.135.000 y fecha límite de pago del 10 de julio de 2026. Al pagarla deberás incluir intereses de mora, que no calculo aquí.\n\nEsta es una estimación informativa y no vinculante: no reemplaza la factura, la declaración ni un pronunciamiento de la Secretaría Distrital de Hacienda.\n\nEn la factura y en la declaración los valores se aproximan al múltiplo de mil más cercano (Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar levemente; el que cuenta es el de la factura o la declaración.\n\nLa estimación no aplica los topes al aumento anual del impuesto predial de la Ley 1995 de 2019 (art. 2, vigente por la Ley 2294 de 2023, art. 49, parágrafo 3), que dependen del impuesto del año anterior; por eso el valor de la factura puede ser menor.\n\nComo hay obligaciones vencidas, el pago incluye intereses de mora (Decreto 807 de 1993, art. 66), que esta información no calcula; el valor exacto lo da la factura o la Secretaría Distrital de Hacienda.\n\nFuentes: Resolución SDH-000194 de 2025 (rangos del predial de 2026), arts. 1, 2 y 3; Acuerdos 780 de 2020, art. 3, y 105 de 2003, art. 2; tarifas preferenciales: Acuerdo 648 de 2016, art. 1, Acuerdo 780 de 2020, art. 3, parágrafo 2, y Decreto 639 de 2025, art. 207; Resolución SDH-000195 de 2025, arts. 3 y 6; Datos de tu cuenta en RealSit (base sintética de pruebas); Acuerdo 648 de 2016, art. 1.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2203,
+          "salida": 121
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 20517,
+          "salida": 392
+        }
+      ],
+      "costo_usd": "0.0078637"
+    },
+    {
+      "escenario": "ICA-05",
+      "tipo": "simple",
+      "duracion_ms": 7070.5,
+      "categoria": "ica",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 0.745,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "Con tus ingresos de $250.000.000 en la actividad 5611 (expendio a la mesa de comidas preparadas), el ICA estimado para un bimestre de 2026 es: $3.450.000 para cualquiera de los bimestres 1 a 5, con una tarifa de 13,8 por mil (Acuerdo 65 de 2002, art. 3, en su texto vigente en 2026). Para el bimestre 6 de 2026 la tarifa es de 12 por mil, es decir, $3.000.000 (Acuerdo 1084 de 2026, art. 21, que modifica el art. 3 del Acuerdo 65 de 2002). Tu obligación registrada de 2026 es bimestral, con un saldo pendiente de $3.450.000 y fecha límite de pago el 9 de octubre de 2026; no está vencida a la fecha de hoy. Ten en cuenta que esa obligación ya fue liquidada con ingresos base de $1.000.000.000, así que este cálculo es solo una estimación para el bimestre que indiques.\n\nEsta es una estimación informativa y no vinculante: no reemplaza la factura, la declaración ni un pronunciamiento de la Secretaría Distrital de Hacienda.\n\nEn la declaración los valores se aproximan al múltiplo de mil más cercano (Decreto 807 de 1993, art. 15), así que el valor a pagar puede variar levemente; el que cuenta es el de la declaración.\n\nLa estimación no incluye el complementario de avisos y tableros (15 % del impuesto, Decreto 352 de 2002, art. 59) ni la sobretasa bomberil (Resolución SDH-000195 de 2025, art. 2), que se suman cuando aplican.\n\nFuentes: Datos de tu cuenta en RealSit (base sintética de pruebas); Acuerdo 65 de 2002, art. 3, en su texto vigente en 2026: el original, modificado por el art. 6 del Acuerdo 780 de 2020 y el art. 4 del Acuerdo 816 de 2021; Acuerdo 1084 de 2026, art. 21 (modifica el art. 3 del Acuerdo 65 de 2002); Acuerdo 1084 de 2026, art. 21; Acuerdo 65 de 2002, art. 3.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2219,
+          "salida": 136
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 21590,
+          "salida": 669
+        }
+      ],
+      "costo_usd": "0.0082915"
+    },
+    {
+      "escenario": "ICA-08",
+      "tipo": "simple",
+      "duracion_ms": 5738.4,
+      "categoria": "ica",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 1.0,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "Para el año gravable 2026 tu obligación del ICA está registrada como anual, así que debes presentar la declaración anual a más tardar el 26 de febrero de 2027. Hoy, 1 de octubre de 2026, esa fecha aún no ha llegado y no tienes obligaciones vencidas. El valor liquidado para 2026 es de $8.694.000 (sobre ingresos base de $900.000.000 y una tarifa de 9,66 por mil), y está pendiente de pago. Si tu periodicidad fuera bimestral, las fechas de 2026 serían 9 de octubre, 11 de diciembre de 2026 y 12 de febrero de 2027 para los periodos pendientes, pero según tu registro no aplica. Te sugiero revisar con la administración que tu periodicidad registrada sea la correcta.\n\nFuentes: Datos de tu cuenta en RealSit (base sintética de pruebas); Resolución SDH-000195 de 2025, arts. 1 y 3 a 6.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2193,
+          "salida": 110
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 19573,
+          "salida": 545
+        }
+      ],
+      "costo_usd": "0.0077158"
+    },
+    {
+      "escenario": "AIA-02",
+      "tipo": "simple",
+      "duracion_ms": 1431.4,
+      "categoria": "general",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 1.0,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "Soy un sistema de inteligencia artificial, no una persona. Si lo prefieres, puedo transferirte con un funcionario.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2188,
+          "salida": 105
+        }
+      ],
+      "costo_usd": "0.005426"
+    },
+    {
+      "escenario": "IPU-04",
+      "tipo": "con_recuperacion",
+      "duracion_ms": 9324.0,
+      "categoria": "ipu",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 0.933,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "El impuesto predial unificado (IPU) es el impuesto que se paga cada año al Distrito por ser dueño de un predio (casa, apartamento, local, lote, finca) ubicado en Bogotá. El predial se causa el 1 de enero de cada año gravable (Decreto 352 de 2002, art. 15).\n\n¿Cómo se calcula? De forma general, el valor del impuesto es la base gravable (el avalúo catastral del predio) multiplicada por la tarifa que le corresponda, expresada en por mil. Es decir, por cada mil pesos de avalúo se paga la cantidad de pesos que indique la tarifa.\n\nLas tarifas dependen del tipo de predio y de su valor:\n\n- Tarifas preferenciales: aplican a predios residenciales urbanos de estratos 1, 2 o 3 con base gravable de hasta 135 salarios mínimos mensuales legales vigentes (SMMLV), y a algunos predios rurales. Para los estratos 1 y 2, los predios con base gravable inferior a 16 SMMLV están excluidos del impuesto. Para estos predios, las tarifas van de 1 a 3 por mil.\n- Tarifas generales: aplican a los demás predios. Para los residenciales, la tarifa sube por tramos según el avalúo, desde 5,5 por mil hasta 13,9 por mil para avalúos superiores a $4.411.881.000. Los predios no residenciales tienen sus propias categorías de tarifa.\n\nLas tarifas que rigen cada año están definidas en el Acuerdo Distrital 105 de 2003, art. 2, modificado por el Acuerdo Distrital 1084 de 2026, art. 20, que aplica desde el predial de 2027. Para el predial de 2026 rigen los rangos de la Resolución SDH-000194 de 2025 y las tarifas preferenciales del Acuerdo 648 de 2016.\n\nSi quieres saber cuánto te correspondería pagar en un predio específico, puedo hacer una estimación con su avalúo, destino y estrato.\n\nFuentes: Acuerdo 105 de 2003, art. 2; Acuerdo 1084 de 2026, art. 20.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2199,
+          "salida": 118
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 21900,
+          "salida": 1585
+        }
+      ],
+      "costo_usd": "0.0085605"
+    },
+    {
+      "escenario": "IPU-09",
+      "tipo": "con_recuperacion",
+      "duracion_ms": 7002.6,
+      "categoria": "ipu",
+      "escalado": true,
+      "motivo_escalamiento": "confianza insuficiente",
+      "nivel_confianza": 0.6,
+      "suficiencias": [
+        "parcial"
+      ],
+      "respuesta": "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un resumen para que no tengas que repetirlo.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2196,
+          "salida": 115
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 22868,
+          "salida": 953
+        }
+      ],
+      "costo_usd": "0.0083053"
+    },
+    {
+      "escenario": "ICA-01",
+      "tipo": "con_recuperacion",
+      "duracion_ms": 9419.3,
+      "categoria": "ica",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 0.933,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "El impuesto de industria y comercio (ICA) es un tributo que grava las actividades industriales, comerciales y de servicios que se realizan en el Distrito Capital de Bogotá. Lo paga la persona natural o jurídica, o la sociedad de hecho, que desarrolla alguna de estas actividades en Bogotá.\n\nSobre qué se considera servicio, la Ley 1819 de 2016 (art. 345) explica que son actividades de servicio todas las tareas, labores o trabajos que una persona ejecuta para otra, sin que medie una relación laboral, que generan una contraprestación en dinero o en especie y que se concretan en una obligación de hacer, sin importar si predomina el esfuerzo material o el intelectual.\n\nEn cuanto a los agentes de retención, el Decreto Distrital 807 de 1993 (art. 127-2) define quiénes deben retener el ICA a otros contribuyentes; ese tema de retención no lo cubre este sistema.\n\nSi quieres saber cuánto te corresponde pagar o qué obligaciones tienes registradas, puedo ayudarte con eso.\n\nFuentes: Decreto Distrital 807 de 1993, art. 127; Ley 1819 de 2016, arts. 342 y 345, art. 345.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2200,
+          "salida": 118
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 16042,
+          "salida": 913
+        }
+      ],
+      "costo_usd": "0.0076407"
+    },
+    {
+      "escenario": "GEN-04",
+      "tipo": "con_recuperacion",
+      "duracion_ms": 5234.9,
+      "categoria": "general",
+      "escalado": true,
+      "motivo_escalamiento": "confianza insuficiente",
+      "nivel_confianza": 0.6,
+      "suficiencias": [
+        "parcial"
+      ],
+      "respuesta": "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un resumen para que no tengas que repetirlo.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2186,
+          "salida": 103
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 2836,
+          "salida": 276
+        }
+      ],
+      "costo_usd": "0.0058236"
+    },
+    {
+      "escenario": "GEN-07",
+      "tipo": "con_recuperacion",
+      "duracion_ms": 5607.5,
+      "categoria": "general",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 0.886,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "Como titular de tus datos personales tienes estos derechos, según la Ley 1581 de 2012 y el Decreto 1074 de 2015:\n\n- **Conocer y acceder a tus datos** que la entidad tiene bajo su control. Puedes consultarlos de forma gratuita al menos una vez cada mes calendario, y cada vez que cambien de forma sustancial las políticas de tratamiento (Decreto 1074 de 2015, art. 2.2.2.25.4.2).\n- **Que te informen de manera clara y expresa** cuándo te piden autorización: para qué se usarán tus datos, si la respuesta a preguntas sobre datos sensibles o de niños, niñas y adolescentes es facultativa, cuáles son tus derechos y quién es el responsable del tratamiento con sus datos de contacto (Ley 1581 de 2012, art. 12; Decreto 1074 de 2015, art. 2.2.2.25.3.3).\n- **Conocer la política de tratamiento de la información** y cómo consultarla, incluidos los cambios sustanciales que se hagan en ella (Decreto 1074 de 2015, art. 2.2.2.25.3.3, num. 4).\n\nAdemás, el responsable debe poder demostrar, si la Superintendencia de Industria y Comercio lo pide, que cumple con estas obligaciones (Decreto 1074 de 2015, art. 2.2.2.25.6.1).\n\nNo tengo a la mano el procedimiento detallado para presentar una solicitud ni los canales específicos de la entidad; si quieres, te puedo transferir con un funcionario para orientarte.\n\nFuentes: Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.3.3; Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.4.2; Decreto 1074 de 2015, caps. 25 y 26, art. 2.2.2.25.6.1; Ley 1581 de 2012, art. 12.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2195,
+          "salida": 112
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 4539,
+          "salida": 627
+        }
+      ],
+      "costo_usd": "0.0062774"
+    },
+    {
+      "escenario": "MULTI-03",
+      "tipo": "orquestador",
+      "duracion_ms": 16601.7,
+      "categoria": "ica",
+      "escalado": false,
+      "motivo_escalamiento": null,
+      "nivel_confianza": 0.867,
+      "suficiencias": [
+        "completa",
+        "completa"
+      ],
+      "respuesta": "Predial: El impuesto predial unificado (IPU) es un tributo que se paga al Distrito Capital por ser propietario o poseedor de un predio (casa, apartamento, local, lote, finca, etc.) ubicado en Bogotá. Se liquida con base en el avalúo catastral del inmueble, que es el valor que le asigna el catastro distrital, y se aplica una tarifa expresada en \"por mil\" (por cada mil pesos del avalúo, se paga la cantidad indicada en la tarifa).\n\nLas tarifas dependen del tipo de predio y, en los residenciales, de su estrato. Por ejemplo, los predios residenciales urbanos de estratos 1, 2 o 3 cuya base gravable sea de hasta 135 salarios mínimos mensuales legales vigentes tienen tarifas preferenciales, que van de 1 a 3 por mil según el estrato y el valor del predio. Los demás predios tienen tarifas generales, que para residenciales van desde 5,5 por mil hasta 13,9 por mil según el valor del avalúo, y los predios no residenciales tienen sus propias tarifas por categoría. Además, los predios residenciales urbanos y rurales agropecuarios de estratos 1 y 2 con base gravable inferior a 16 salarios mínimos quedan excluidos del impuesto.\n\nEl impuesto se paga cada año (año gravable) al propietario o poseedor del predio a 1 de enero, y el Distrito fija plazos para pagarlo, con descuento por pronto pago si se cancela antes de la fecha límite.\n\nFundamento: Acuerdo 105 de 2003, art. 2 (modificado por el art. 20 del Acuerdo Distrital 1084 de 2026), que establece las tarifas del IPU en Bogotá.\n\nSi quieres saber cuánto te toca pagar en un año específico, o el estado de tu cuenta, indícame la matrícula de tu predio o consúltalo desde tu sesión.\n\nFuentes: Acuerdo 105 de 2003, art. 2.\n\nIndustria y comercio: El Impuesto de Industria y Comercio (ICA) es un tributo que cobra el Distrito Capital de Bogotá a las personas y empresas que realizan actividades industriales, comerciales o de servicios dentro de la ciudad. Se liquida sobre los ingresos que genera tu actividad (los ingresos gravables), aplicando una tarifa que depende de la actividad económica que realizas, identificada con su código CIIU.\n\nAlgunos puntos clave:\n- **Quién lo paga:** quien ejerza una actividad industrial, comercial o de servicios en Bogotá, de forma habitual.\n- **Base gravable:** los ingresos obtenidos en el periodo por esa actividad.\n- **Periodicidad:** según tu régimen, la declaración puede ser bimestral o anual. Para el año gravable 2026, los regímenes están establecidos en el Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205, que además indica que desde el 1 de enero de 2027 rigen los regímenes del Acuerdo 1084 de 2026, art. 26.\n- **Retención:** el ICA también puede ser retenido por ciertos agentes de retención, según el Decreto Distrital 807 de 1993, art. 127 y 127-2; esa parte no la cubre este sistema.\n\nSi quieres, puedo ayudarte a estimar el valor del ICA: solo necesito el código CIIU de tu actividad, tus ingresos gravables y el año.\n\nFuentes: Decreto 639 de 2025 (Decreto Único Distrital Tributario), art. 205; Decreto Distrital 807 de 1993, art. 127.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2192,
+          "salida": 130
+        },
+        {
+          "modelo": "claude-haiku-5-5",
+          "entrada": 37437,
+          "salida": 2660
+        }
+      ],
+      "costo_usd": "0.0107577"
+    },
+    {
+      "escenario": "FA-03",
+      "tipo": "orquestador",
+      "duracion_ms": 1615.2,
+      "categoria": "",
+      "escalado": true,
+      "motivo_escalamiento": "fuera de alcance",
+      "nivel_confianza": 0.0,
+      "suficiencias": [],
+      "respuesta": "Tu consulta trata de un tema tributario que este asistente no cubre: atiende el impuesto predial unificado y el impuesto de industria y comercio de Bogotá, sin la retención del ICA ni otros tributos o municipios. Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un resumen para que no tengas que repetirlo.",
+      "tokens": [
+        {
+          "modelo": "claude-sonnet-5-5",
+          "entrada": 2191,
+          "salida": 116
+        }
+      ],
+      "costo_usd": "0.005542"
+    }
+  ],
+  "resumen": {
+    "latencia": {
+      "con_recuperacion": {
+        "consultas": 5,
+        "mediana_ms": 7002.6,
+        "maximo_ms": 9419.3
+      },
+      "orquestador": {
+        "consultas": 2,
+        "mediana_ms": 9108.5,
+        "maximo_ms": 16601.7
+      },
+      "simple": {
+        "consultas": 5,
+        "mediana_ms": 5738.4,
+        "maximo_ms": 8503.9
+      }
+    },
+    "tokens": {
+      "claude-sonnet-5-5": {
+        "entrada": 26363,
+        "salida": 1403
+      },
+      "claude-haiku-5-5": {
+        "entrada": 189025,
+        "salida": 9295
+      }
+    },
+    "costo_total_usd": "0.0903060"
+  }
+}

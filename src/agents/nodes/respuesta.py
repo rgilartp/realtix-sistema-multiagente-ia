@@ -1,4 +1,7 @@
-"""`nodo_respuesta` simulado: consolida las partes aprobadas con una plantilla (ADR-03)."""
+"""`nodo_respuesta`: consolida las partes aprobadas, con sus fuentes, en una plantilla (ADR-03).
+
+Sin modelo: una sola parte va tal cual; varias van con la etiqueta de su tributo o tema.
+"""
 
 from collections.abc import Callable
 from typing import Any

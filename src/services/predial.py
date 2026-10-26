@@ -160,6 +160,11 @@ class LiquidacionPredial:
     fuentes: tuple[str, ...]
     notas: tuple[str, ...]
 
+    @property
+    def total_estimado(self) -> int:
+        """Impuesto más la sobretasa de alumbrado, si la hay, sin el descuento."""
+        return self.impuesto + (self.sobretasa.valor if self.sobretasa else 0)
+
 
 def _sobretasa_2027(
     destino: Destino, estrato: int | None, avaluo: int

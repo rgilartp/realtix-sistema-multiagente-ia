@@ -46,3 +46,16 @@ NOTA_COMPLEMENTARIOS_ICA = (
     "Decreto 352 de 2002, art. 59) ni la sobretasa bomberil (Resolución SDH-000195 de 2025, "
     "art. 2), que se suman cuando aplican."
 )
+NOTA_INTERESES_MORA = (
+    "Como hay obligaciones vencidas, el pago incluye intereses de mora (Decreto 807 de 1993, "
+    "art. 66), que esta información no calcula; el valor exacto lo da la factura o la Secretaría "
+    "Distrital de Hacienda."
+)
+
+
+def nota_avaluo_anterior(anio: int, anterior: int) -> str:
+    """El avalúo del año pedido aún no se conoce y la estimación usa el del año anterior."""
+    return (
+        f"El avalúo catastral de {anio} aún no se conoce; la estimación usa el de {anterior}, así "
+        "que el valor puede cambiar cuando se fije el nuevo avalúo."
+    )

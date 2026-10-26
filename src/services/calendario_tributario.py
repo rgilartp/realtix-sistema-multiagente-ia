@@ -7,7 +7,12 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 from src.data.models import RegimenICA
-from src.services.datos_anuales import calendario, regimen_ica_del_anio, umbral_ica_pesos
+from src.services.datos_anuales import (
+    calendario,
+    cargar_datos,
+    regimen_ica_del_anio,
+    umbral_ica_pesos,
+)
 
 Periodicidad = Literal["anual", "bimestral"]
 
@@ -84,6 +89,19 @@ def regimen_ica(
     )
 
 
+def regimenes_posibles(anio: int, periodicidad: Periodicidad | None) -> list[RegimenICA | None]:
+    """Regímenes del año que corresponden a una periodicidad, según `regimenes_ica.yaml`.
+
+    En 2026, «bimestral» es el común bimestral y «anual», el común anual o el preferencial (los dos
+    declaran una vez al año). Si el año trae solo la regla general (2027), devuelve `[None]`.
+    """
+    fila = regimen_ica_del_anio(anio)
+    regimenes: list[RegimenICA] = ["comun_bimestral", "comun_anual", "preferencial"]
+    if not all(r in fila for r in regimenes):
+        return [None]
+    return [r for r in regimenes if periodicidad is None or _periodicidad(r) == periodicidad]
+
+
 def fechas_ica(anio: int, periodicidad: Periodicidad) -> list[str]:
     """Fechas límite (ISO) de la declaración del ICA del año; `AnioSinDatosError` si no hay."""
     plazos = calendario(anio)
@@ -105,3 +123,8 @@ def fechas_predial(anio: int) -> dict[str, Any]:
         "spac_declaracion_inicial": plazos["spac_declaracion_inicial"][0],
         "spac_cuotas": list(plazos["spac_cuotas"]),
     }
+
+
+def fuente_del_calendario(anio: int) -> str:
+    """Norma de la que salen los plazos del año (p. ej. la Resolución SDH-000195 de 2025)."""
+    return str(cargar_datos(f"calendario/{anio}.yaml", anio, "calendario")["fuente"])

@@ -22,21 +22,50 @@ CON_PALABRA = re.compile(
     re.IGNORECASE,
 )
 SIN_ROTULO = re.compile(r"(?<![\w$.\-])(?:\d{1,3}(?:\.\d{3}){3}|\d{9,10})(?![\w.\-])")
+# Para los modelos: una cifra sin rótulo precedida de una palabra de cuantía (avalúo, ingresos…) o
+# seguida de «pesos» o «millones» es un valor, no un documento, y se conserva.
+CUANTIA_ANTES = re.compile(
+    r"(?:aval[uú]o|ingreso|valor|base|monto|cuant[ií]a|pesos|cop|\$)[^\d\n]{0,15}$", re.IGNORECASE
+)
+CUANTIA_DESPUES = re.compile(r"^\s*(?:pesos|millones|cop)\b", re.IGNORECASE)
+# Nombre que el contribuyente declara: «me llamo Ana Pérez», «mi nombre es…», «soy Ana Pérez».
+_PALABRA_NOMBRE = r"(?:[A-ZÁÉÍÓÚÑ][\w.áéíóúñü]*|\d{1,3})"
+NOMBRE_DECLARADO = re.compile(
+    r"(\b(?:[Mm]e llamo|[Mm]i nombre es|[Ss]oy)\s+)"
+    rf"({_PALABRA_NOMBRE}(?:\s+(?:(?:de|del|la|los|las|y)\s+)*{_PALABRA_NOMBRE}){{0,5}})"
+)
 
 
 class Anonimizador:
-    """Enmascara documentos y los nombres conocidos en cualquier estructura de texto."""
+    """Enmascara documentos y los nombres conocidos en cualquier estructura de texto.
 
-    def __init__(self, nombres: Iterable[str] = ()) -> None:
+    Para las trazas se prefiere perder detalle (toda cifra de 9 o 10 dígitos sin rótulo se
+    enmascara). Para lo que se envía a los modelos (`para_modelos=True`) se conservan las cuantías
+    (un avalúo o unos ingresos) y se enmascaran también los nombres que el contribuyente declara.
+    """
+
+    def __init__(self, nombres: Iterable[str] = (), *, para_modelos: bool = False) -> None:
         limpios = sorted({n.strip() for n in nombres if len(n.strip()) > 2}, key=len, reverse=True)
         self._nombres = (
             re.compile("|".join(re.escape(n) for n in limpios), re.IGNORECASE) if limpios else None
         )
+        self._para_modelos = para_modelos
+
+    def _sin_rotulo(self, encontrado: re.Match[str]) -> str:
+        texto = encontrado.string
+        if self._para_modelos and (
+            CUANTIA_ANTES.search(texto[: encontrado.start()])
+            or CUANTIA_DESPUES.match(texto[encontrado.end() :])
+        ):
+            return encontrado.group(0)
+        return MASCARA_DOCUMENTO
 
     def texto(self, valor: str) -> str:
         valor = CON_TIPO.sub(MASCARA_DOCUMENTO, valor)
         valor = CON_PALABRA.sub(lambda m: m.group(1) + MASCARA_DOCUMENTO, valor)
-        valor = SIN_ROTULO.sub(MASCARA_DOCUMENTO, valor)
+        valor = SIN_ROTULO.sub(self._sin_rotulo, valor)
+        if self._para_modelos:
+            valor = NOMBRE_DECLARADO.sub(lambda m: m.group(1) + MASCARA_NOMBRE, valor)
         if self._nombres:
             valor = self._nombres.sub(MASCARA_NOMBRE, valor)
         return valor
