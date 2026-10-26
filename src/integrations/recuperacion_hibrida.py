@@ -34,10 +34,11 @@ TTL_VERSION_S = 30.0
 COLECCIONES = ("normativa_ipu", "normativa_ica", "normativa_datos", "plataforma_general")
 
 
-def filtro_de_vigencia(anio: int | None) -> dict[str, Any] | None:
-    """Fragmentos que rigen en algún momento del año gravable; sin año, todos."""
+def filtro_de_vigencia(anio: int | None) -> dict[str, Any]:
+    """Fragmentos que rigen en algún momento del año gravable; sin año, todos los que rigen alguna
+    vez (un texto anterior sin vigencia conocida queda fuera siempre)."""
     if anio is None:
-        return None
+        return {"vigencia_hasta": {"$gt": SIN_INICIO}}
     return {
         "$and": [
             {"vigencia_desde": {"$lte": anio * 10000 + 1231}},
@@ -47,10 +48,10 @@ def filtro_de_vigencia(anio: int | None) -> dict[str, Any] | None:
 
 
 def rige_en(metadatos: dict[str, Any], anio: int | None) -> bool:
-    if anio is None:
-        return True
     desde = int(metadatos.get("vigencia_desde", SIN_INICIO))
     hasta = int(metadatos.get("vigencia_hasta", SIN_FIN))
+    if anio is None:
+        return hasta > SIN_INICIO
     return desde <= anio * 10000 + 1231 and hasta >= anio * 10000 + 101
 
 
@@ -124,11 +125,18 @@ class RecuperadorHibrido:
 
     @property
     def version_corpus(self) -> str | None:
-        """Versión del corpus guardada en Chroma por la ingesta (con caché corta)."""
+        """Versión del corpus guardada en Chroma por la ingesta (con caché corta). Se lee de la
+        primera colección que exista; todas guardan la misma."""
         leida, version = self._version
         if time.monotonic() - leida > self._ttl:
-            coleccion = self._cliente.get_collection(f"{self._prefijo}{COLECCIONES[0]}")
-            version = (coleccion.metadata or {}).get(CLAVE_VERSION)
+            version = None
+            for nombre in COLECCIONES:
+                try:
+                    coleccion = self._cliente.get_collection(f"{self._prefijo}{nombre}")
+                except Exception:  # noqa: S112 - esa colección no existe; se prueba la siguiente
+                    continue
+                version = (coleccion.metadata or {}).get(CLAVE_VERSION)
+                break
             self._version = (time.monotonic(), version)
         return version
 

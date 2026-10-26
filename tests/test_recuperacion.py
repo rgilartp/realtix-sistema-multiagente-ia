@@ -156,6 +156,23 @@ def test_los_textos_anteriores_van_aparte_con_su_vigencia(fragmentos) -> None:
             ley_14.metadatos["texto_anterior"] and ley_14.metadatos["vigencia_hasta"] == SIN_INICIO
         )
         assert "(texto anterior, no vigente)" in ley_14.texto.splitlines()[0]
+    # Decreto 807, art. 12: tras cada numeral reemplazado sigue el texto vigente (revisión de B8).
+    art_12 = de("normativa_ipu/decreto_807_1993_ipu.md", "Artículo 12")
+    vigente_12 = "\n".join(f.texto for f in art_12 if not f.metadatos["texto_anterior"])
+    anterior_12 = "\n".join(f.texto for f in art_12 if f.metadatos["texto_anterior"])
+    assert "3. Declaración mensual del impuesto al consumo sobre la producción" in vigente_12
+    assert "Parágrafo 1º" in vigente_12 and "Adicionado por el art.2, Decreto 349" in vigente_12
+    assert (
+        "2. Declaración bimestral del impuesto de industria y comercio, avisos y tableros."
+        in anterior_12
+    )
+    assert "Artículo 12. Declaraciones tributarias. A partir del 1° de enero de 1994" in anterior_12
+    assert "<El nuevo texto es el siguiente>" not in anterior_12
+    # Un artículo adicionado después del texto original del artículo es vigente (art. 11-1).
+    art_11 = de("normativa_ipu/decreto_807_1993_ipu.md", "Artículo 11")
+    assert "Artículo 11-1" in "\n".join(
+        f.texto for f in art_11 if not f.metadatos["texto_anterior"]
+    )
     # Un artículo sin regla rige siempre.
     (art_4,) = de("normativa_ipu/ley_44_1990.md", "Artículo 4")
     assert (art_4.metadatos["vigencia_desde"], art_4.metadatos["vigencia_hasta"]) == (
@@ -173,8 +190,9 @@ def test_un_texto_largo_se_parte_con_solape_y_uno_corto_queda_entero() -> None:
     trozos = partir(largo)
     assert len(trozos) > 1 and all(contar_tokens(t) <= MAX_TOKENS for t in trozos)
     for anterior, siguiente in zip(trozos, trozos[1:], strict=False):
-        cola = anterior[-60:].strip()
-        assert cola.split()[-1] in siguiente[:800]  # el siguiente empieza con el final del anterior
+        primero = siguiente.split("\n\n")[0]  # el solape: el final del trozo anterior
+        assert anterior.endswith(primero.removeprefix("[…] ")) or primero in anterior
+        assert 50 <= contar_tokens(primero.removeprefix("[…] ")) <= 100
 
 
 # -- Fusión, coseno y canales -------------------------------------------------------------------
@@ -205,19 +223,30 @@ def test_los_identificadores_literales_llegan_primero_por_bm25(
     assert any(f.fuente.endswith(archivo) for f in fusion)
 
 
+class EmbeddingsSinNormalizar(EmbeddingsFalsos):
+    """Como los falsos, pero con una norma distinta por texto: así 1 - d²/2 no da el coseno."""
+
+    def _vector(self, texto: str) -> list[float]:
+        return [x * (1 + len(texto) % 7) for x in super()._vector(texto)]
+
+
 @pytest.mark.unit
 @pytest.mark.req("RF-ESC-01 · Cálculo del nivel de confianza")
-def test_el_coseno_coincide_con_el_calculo_directo_en_numpy(base_falsa) -> None:
-    _, embeddings, _, _ = base_falsa
-    consulta = "tarifas del impuesto predial para estratos 1 y 2"
-    fragmentos = recuperador_de(base_falsa).recuperar(
-        consulta, coleccion="normativa_ipu", anio=2026
-    )
-    assert len(fragmentos) == 5
+def test_el_coseno_coincide_con_numpy_tambien_para_lo_que_solo_trae_bm25() -> None:
+    cliente, embeddings = chromadb.EphemeralClient(), EmbeddingsSinNormalizar()
+    prefijo = f"c{uuid.uuid4().hex[:8]}_"
+    ingestar(cliente, embeddings, prefijo=prefijo)
+    recuperador = RecuperadorHibrido(cliente, embeddings, prefijo=prefijo)
+    consulta = "artículo 354"
+    vector = recuperador._canal_vectorial("normativa_ipu", embeddings.embed_query(consulta), 2026)
+    fragmentos = recuperador.recuperar(consulta, coleccion="normativa_ipu", anio=2026)
+    solo_bm25 = [f for f in fragmentos if f.id not in vector]
+    assert any(f.fuente.endswith("ley_1819_2016.md") for f in solo_bm25)  # llegó solo por BM25
     q = np.array(embeddings.embed_query(consulta))
     for f in fragmentos:
         d = np.array(embeddings.embed_documents([f.texto])[0])
         assert f.similitud == pytest.approx(float(q @ d / (np.linalg.norm(q) * np.linalg.norm(d))))
+        assert f.similitud != pytest.approx(1 - float(np.sum((q - d) ** 2)) / 2)
 
 
 @pytest.mark.unit
@@ -232,15 +261,23 @@ def test_el_filtro_por_vigencia_de_2026_y_2027(base_falsa) -> None:
 
     for anio in (2026, 2027):
         for coleccion in ("normativa_ipu", "normativa_ica"):
-            anteriores = {i for i in ids(coleccion, anio) if "-anterior-" in i}
+            anteriores = {i for i in ids(coleccion, anio) if "#anterior-" in i}
             permitidos = (
                 {"acuerdo_65_2002.md", "acuerdo_1019_2025_ica.md"} if anio == 2026 else set()
             )
             assert {re.sub(r"#.*", "", i).split("/")[1] for i in anteriores} <= permitidos
-    nuevo_105 = "normativa_ipu/acuerdo_105_2003.md#001-vigente-1"
+    nuevo_105 = "normativa_ipu/acuerdo_105_2003.md#Artículo 2#vigente-1"
     assert nuevo_105 not in ids("normativa_ipu", 2026) and nuevo_105 in ids("normativa_ipu", 2027)
-    ica_nuevo = "normativa_ica/acuerdo_65_2002.md#001-vigente-1"
+    ica_nuevo = "normativa_ica/acuerdo_65_2002.md#Artículo 3#vigente-1"
     assert ica_nuevo in ids("normativa_ica", 2026)  # bimestre 6 de 2026
+    # Derogados por el Acuerdo 1084 que rigen solo en 2026, y tarifas de 2002 que no rigen.
+    acuerdo_98 = "normativa_ica/acuerdo_98_2003.md#Artículo 1#vigente-1"
+    assert acuerdo_98 in ids("normativa_ica", 2026) and acuerdo_98 not in ids("normativa_ica", 2027)
+    tarifas_2002 = "normativa_ica/decreto_352_2002_cap2.md#Artículo 53#vigente-1"
+    assert all(tarifas_2002 not in ids("normativa_ica", a) for a in (2026, 2027))
+    # Sin año tampoco salen los textos que no rigen.
+    sin_anio = ids("normativa_ipu", None)
+    assert not [i for i in sin_anio if "decreto_807_1993_ipu.md#Artículo 12#anterior" in i]
 
 
 # -- Ingesta ------------------------------------------------------------------------------------
@@ -257,6 +294,35 @@ def test_la_reingesta_sin_cambios_no_calcula_embeddings(base_falsa) -> None:
     assert all(r.embebidos == 0 and r.borrados == 0 and r.costo_usd == 0 for r in segunda)
     coleccion = cliente.get_collection(f"{prefijo}normativa_ipu")
     assert coleccion.metadata[CLAVE_VERSION] == version_del_corpus()
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-04 · Actualización de la base vectorial")
+def test_cambiar_una_vigencia_actualiza_ese_articulo_sin_volver_a_embeber(tmp_path) -> None:
+    raiz = tmp_path / "knowledge_base"
+    shutil.copytree(RAIZ_BASE, raiz)
+    cliente, embeddings = chromadb.EphemeralClient(), EmbeddingsFalsos()
+    prefijo = f"v{uuid.uuid4().hex[:8]}_"
+    ingestar(cliente, embeddings, raiz, prefijo=prefijo)
+    vigencias = raiz / "vigencias.yaml"
+    texto = vigencias.read_text("utf-8").replace(
+        "articulo: Artículo 20\n    vigente: {desde: 2027-01-01}",
+        "articulo: Artículo 20\n    vigente: {desde: 2027-02-01}",
+    )
+    vigencias.write_text(texto, "utf-8")
+    antes = embeddings.textos_embebidos
+    reportes = ingestar(cliente, embeddings, raiz, prefijo=prefijo)
+    ipu = next(r for r in reportes if r.coleccion == "normativa_ipu")
+    clave = "normativa_ipu/acuerdo_1084_2026.md#Artículo 20#"
+    del_art_20 = [f for f in segmentar_base(raiz)["normativa_ipu"] if f.id.startswith(clave)]
+    # El texto no cambió: se actualizan los metadatos y se reutiliza el embedding, sin costo.
+    assert ipu.reutilizados == len(del_art_20) > 0 and ipu.embebidos == 0
+    assert sum(r.reutilizados for r in reportes) == ipu.reutilizados
+    assert embeddings.textos_embebidos == antes
+    tienda = Chroma(collection_name=f"{prefijo}normativa_ipu", embedding_function=embeddings,
+                    client=cliente)  # fmt: skip
+    metadatos = tienda.get(ids=[del_art_20[0].id])["metadatas"][0]
+    assert metadatos["vigencia_desde"] == 20270201
 
 
 def _base_con_norma_nueva(tmp_path: Path) -> Path:

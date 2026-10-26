@@ -36,6 +36,17 @@ ANTERIOR = re.compile(
 NOTA_ENCABEZADO = re.compile(r"^> \*\*.+$", re.MULTILINE)
 NO_VIGENTE = re.compile(r"^> \*\*Texto anterior, no vigente\.\*\*", re.MULTILINE)
 FILA_TABLA = re.compile(r"^\|.*\|\s*$")
+ARTICULO = re.compile(r"^(?:art[ií]culo)\s+\d", re.IGNORECASE)
+# Fin de un bloque anterior: un artículo adicionado o una modificación con su texto nuevo.
+FIN_FUERTE = re.compile(
+    r"^(?:art[ií]culo)\s+\d+\s*[°º]?\s*-\s*\d+"
+    r"|<El (?:nuevo )?texto (?:adicionado )?es el siguiente>",
+    re.IGNORECASE,
+)
+# Fin de un bloque anterior que no es el artículo entero: el siguiente numeral, literal o parágrafo.
+FIN_PARCIAL = re.compile(
+    r"^(?:\d+(?:-\d+)?\s*[\.\)°º]|[a-z]\)|par[áa]grafo|otras modificaciones|nota\b)", re.IGNORECASE
+)
 
 
 @cache
@@ -61,12 +72,16 @@ def fecha_entera(valor: Any, por_defecto: int) -> int:
     return int(str(valor).replace("-", ""))
 
 
-@cache
 def reglas_de_vigencia(raiz: Path = RAIZ_BASE) -> dict[tuple[str, str], dict[str, Any]]:
-    """(`coleccion/archivo.md`, encabezado) -> regla de `vigencias.yaml`."""
+    """(`coleccion/archivo.md`, encabezado o «*») -> regla de `vigencias.yaml`."""
     ruta = raiz / "vigencias.yaml"
     if not ruta.is_file():
         return {}
+    return _leer_reglas(ruta, ruta.stat().st_mtime_ns)  # la caché se invalida si el archivo cambia
+
+
+@cache
+def _leer_reglas(ruta: Path, _modificado: int) -> dict[tuple[str, str], dict[str, Any]]:
     datos = yaml.safe_load(ruta.read_text(encoding="utf-8")) or {}
     reglas = {}
     for regla in datos.get("reglas", []):
@@ -81,6 +96,8 @@ def _vigencia(regla: dict[str, Any] | None, parte: str, anterior: bool) -> tuple
     tramo = (regla or {}).get(parte)
     if tramo is None:
         return (SIN_INICIO, SIN_INICIO) if anterior else (SIN_INICIO, SIN_FIN)
+    if tramo.get("no_rige"):
+        return SIN_INICIO, SIN_INICIO
     return fecha_entera(tramo.get("desde"), SIN_INICIO), fecha_entera(tramo.get("hasta"), SIN_FIN)
 
 
@@ -124,8 +141,9 @@ def _unir(piezas: list[tuple[str, str | None]]) -> str:
 
 
 def _cola(piezas: list[tuple[str, str | None]], solape: int) -> list[tuple[str, str | None]]:
-    """Solape del trozo siguiente: las últimas piezas enteras que caben en `solape` tokens (filas
-    de tabla con su encabezado) o, si la última es más larga, sus últimos `solape` tokens."""
+    """Solape del trozo siguiente, de unos `solape` tokens (entre 50 y 100): las últimas piezas
+    enteras que caben (las filas de tabla conservan su encabezado) y, si no alcanzan a la mitad, el
+    final de la pieza anterior, cortado en un límite de palabra."""
     cola: list[tuple[str, str | None]] = []
     tokens = 0
     for texto, encabezado in reversed(piezas):
@@ -134,10 +152,37 @@ def _cola(piezas: list[tuple[str, str | None]], solape: int) -> list[tuple[str, 
             break
         cola.insert(0, (texto, encabezado))
         tokens += n
-    if cola:
-        return cola
-    ultimo = _codificador().encode(piezas[-1][0])[-solape:]
-    return [(f"[…] {_codificador().decode(ultimo).strip()}", None)]
+    if tokens < solape // 2 + 13 and len(cola) < len(piezas):  # menos de unos 50 tokens
+        previo = piezas[len(piezas) - len(cola) - 1][0]
+        final = _final_en_palabras(previo, solape - tokens)
+        if final:
+            cola.insert(0, (f"[…] {final}", None))
+    return cola
+
+
+def _final_en_palabras(texto: str, tokens: int) -> str:
+    """Las últimas palabras de `texto` que suman como máximo `tokens` tokens."""
+    palabras = texto.split()
+    elegidas: list[str] = []
+    for palabra in reversed(palabras):
+        if contar_tokens(" ".join([palabra, *elegidas])) > tokens:
+            break
+        elegidas.insert(0, palabra)
+    return " ".join(elegidas)
+
+
+def _partir_en_palabras(texto: str, tokens: int) -> list[str]:
+    """Un párrafo enorme en pedazos de hasta `tokens` tokens, sin cortar palabras."""
+    pedazos: list[str] = []
+    actual: list[str] = []
+    for palabra in texto.split():
+        if actual and contar_tokens(" ".join([*actual, palabra])) > tokens:
+            pedazos.append(" ".join(actual))
+            actual = []
+        actual.append(palabra)
+    if actual:
+        pedazos.append(" ".join(actual))
+    return pedazos
 
 
 def partir(cuerpo: str, maximo: int = MAX_TOKENS, solape: int = SOLAPE_TOKENS) -> list[str]:
@@ -145,16 +190,13 @@ def partir(cuerpo: str, maximo: int = MAX_TOKENS, solape: int = SOLAPE_TOKENS) -
     y una tabla partida repite su encabezado. Un texto corto queda entero."""
     if contar_tokens(cuerpo) <= maximo:
         return [cuerpo.strip()]
-    codificador = _codificador()
     piezas: list[tuple[str, str | None]] = []
     for texto, encabezado in _unidades(cuerpo):
-        ids = codificador.encode(texto)
         paso = maximo - solape
-        if len(ids) <= paso:
+        if contar_tokens(texto) <= paso:
             piezas.append((texto, encabezado))
-        else:  # un párrafo enorme se corta por tokens
-            cortes = range(0, len(ids), paso)
-            piezas += [(codificador.decode(ids[i : i + paso]), None) for i in cortes]
+        else:  # un párrafo enorme se corta en límites de palabra
+            piezas += [(pedazo, None) for pedazo in _partir_en_palabras(texto, paso)]
     trozos: list[str] = []
     actual: list[tuple[str, str | None]] = []
     for pieza in piezas:
@@ -162,8 +204,8 @@ def partir(cuerpo: str, maximo: int = MAX_TOKENS, solape: int = SOLAPE_TOKENS) -
         if actual and contar_tokens(candidato) > maximo:
             trozos.append(_unir(actual))
             actual = _cola(actual, solape)
-            if contar_tokens(_unir([*actual, pieza])) > maximo:  # no cabe con el solape
-                actual = []
+            while actual and contar_tokens(_unir([*actual, pieza])) > maximo:
+                actual = actual[1:]  # no cabe con el solape completo: se acorta
         actual.append(pieza)
     trozos.append(_unir(actual))
     return trozos
@@ -183,12 +225,17 @@ def segmentar_archivo(ruta: Path, raiz: Path = RAIZ_BASE) -> list[FragmentoBase]
     notas = "\n".join(x for x in preambulo.splitlines() if x.startswith(">")).strip()
     reglas = reglas_de_vigencia(raiz)
     fragmentos: list[FragmentoBase] = []
-    for indice, seccion in enumerate(secciones, 1):
+    vistos: dict[str, int] = {}
+    for seccion in secciones:
         encabezado, _, cuerpo = seccion.partition("\n")
         encabezado = encabezado.strip()
-        regla = reglas.get((clave, encabezado))
+        vistos[encabezado] = vistos.get(encabezado, 0) + 1
+        clave_seccion = (
+            encabezado if vistos[encabezado] == 1 else f"{encabezado} ({vistos[encabezado]})"
+        )
+        regla = reglas.get((clave, encabezado)) or reglas.get((clave, "*"))
         todo_anterior = bool(NO_VIGENTE.search(cuerpo))
-        vigente, _, anterior = _separar(cuerpo)
+        vigente, anterior = _separar(cuerpo)
         for parte, cuerpo_parte, es_anterior in (
             ("vigente", vigente, todo_anterior),
             ("anterior", anterior, True),
@@ -208,33 +255,57 @@ def segmentar_archivo(ruta: Path, raiz: Path = RAIZ_BASE) -> list[FragmentoBase]
             presupuesto = MAX_TOKENS - contar_tokens(prefijo)
             for n, trozo in enumerate(partir(cuerpo_parte, maximo=max(presupuesto, 200)), 1):
                 contenido = prefijo + trozo
+                metadatos: dict[str, Any] = {
+                    "norma": norma,
+                    "articulo": encabezado,
+                    "coleccion": coleccion,
+                    "url": url,
+                    "vigencia_desde": desde,
+                    "vigencia_hasta": hasta,
+                    "archivo": clave,
+                    "parte": n,
+                    "texto_anterior": es_anterior,
+                }
+                # El hash cubre el texto y los metadatos: un cambio de vigencia o de URL reingiere.
+                metadatos["hash"] = _hash(contenido + repr(sorted(metadatos.items())))
                 fragmentos.append(
                     FragmentoBase(
-                        id=f"{clave}#{indice:03d}-{parte}-{n}",
+                        id=f"{clave}#{clave_seccion}#{parte}-{n}",
                         texto=contenido,
-                        metadatos={
-                            "norma": norma,
-                            "articulo": encabezado,
-                            "coleccion": coleccion,
-                            "url": url,
-                            "vigencia_desde": desde,
-                            "vigencia_hasta": hasta,
-                            "archivo": clave,
-                            "parte": n,
-                            "texto_anterior": es_anterior,
-                            "hash": _hash(contenido),
-                        },
+                        metadatos=metadatos,
                     )
                 )
     return fragmentos
 
 
-def _separar(cuerpo: str) -> tuple[str, str, str]:
-    """(texto vigente, marcador, texto anterior) según «El texto original era el siguiente:»."""
-    encontrado = ANTERIOR.search(cuerpo)
-    if not encontrado:
-        return cuerpo, "", ""
-    return cuerpo[: encontrado.start()], encontrado.group(0), cuerpo[encontrado.end() :]
+def _separar(cuerpo: str) -> tuple[str, str]:
+    """(texto vigente, textos anteriores) de una sección.
+
+    Tras «El texto original/anterior era el siguiente:» viene el texto reemplazado. Si es el
+    artículo entero («Artículo 12. …»), sigue hasta el final de la sección o hasta un artículo
+    adicionado («Artículo 11-1…»); si es un numeral, un literal o un parágrafo, termina donde
+    empieza el siguiente numeral, parágrafo o modificación, y sigue el texto vigente (Decreto 807).
+    """
+    vigente: list[str] = []
+    anterior: list[str] = []
+    en_anterior = False
+    articulo_entero = False
+    for parrafo in re.split(r"\n\s*\n", cuerpo.strip()):
+        texto = parrafo.strip()
+        if not texto:
+            continue
+        if ANTERIOR.fullmatch(texto):
+            en_anterior, articulo_entero = True, False
+            anterior.append(texto)
+            continue
+        if en_anterior:
+            primero = anterior[-1] if anterior else ""
+            if ANTERIOR.fullmatch(primero):  # primer párrafo del bloque anterior
+                articulo_entero = bool(ARTICULO.match(texto))
+            elif FIN_FUERTE.search(texto) or (not articulo_entero and FIN_PARCIAL.match(texto)):
+                en_anterior = False
+        (anterior if en_anterior else vigente).append(texto)
+    return "\n\n".join(vigente), "\n\n".join(anterior)
 
 
 def segmentar_base(raiz: Path = RAIZ_BASE) -> dict[str, list[FragmentoBase]]:
