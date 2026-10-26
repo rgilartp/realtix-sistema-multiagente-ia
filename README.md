@@ -49,7 +49,19 @@ uv run python -m src.data.generar.recibos
 ```
 
 Fuera del horario de atención (lunes a viernes no festivos, de 8:00 a. m. a 5:00 p. m.) la API
-responde el aviso de horario. Los puntos de acceso están en `/docs`. La web llega en B11.
+responde el aviso de horario. Los puntos de acceso están en `/docs`.
+
+Web (B11: OVT simulada, widget y consola), con la API anterior corriendo en el puerto 8001:
+
+```bash
+cd web
+npm ci
+npm run dev                 # http://localhost:5173/ovt/ y /consola/
+npm run build && npx playwright test   # pruebas con la API simulada en el navegador
+npm run capturas            # capturas en 390 y 1280 px en docs/capturas/
+```
+
+La OVT simulada necesita `OVT_SIMULADA_ACTIVA=true` en la API.
 
 ## Probar
 
