@@ -132,6 +132,10 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
         datos = dict(state.get("datos_extraidos", {}))
         texto = ultimo_texto(state)
 
+        if marcas.get("solicitud_explicita") and not state.get("respuestas_parciales"):
+            # El botón «Hablar con un funcionario» (ADR-18): escala sin llamar al modelo.
+            datos.pop("oferta_transferencia", None)
+            return escalar("solicitud explícita", marcas, intentos, datos_extraidos=datos)
         if marcas.pop("reclasificar", False):
             if intentos >= maximo:
                 return escalar("tope de reclasificaciones", marcas, intentos)

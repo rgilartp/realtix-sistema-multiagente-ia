@@ -76,8 +76,11 @@ def test_mensajes_del_funcionario_e_interacciones_sin_texto_del_contribuyente(
     fila = almacen.interacciones("CONV-1")[0]
     assert set(fila) == {
         "id_interaccion", "id_conversacion", "categoria", "nivel_confianza",
-        "escalada", "duracion_ms", "fecha",
+        "escalada", "duracion_ms", "fecha", "escenario_id", "estado", "motivo", "agentes",
+        "tiempos_ms", "tokens", "modelos",
     }  # fmt: skip
+    with pytest.raises(ValueError):  # no hay columna para el texto del mensaje
+        almacen.registrar_interaccion("CONV-1", 10, mensaje="¿Y mi predio?")
 
 
 @pytest.mark.unit

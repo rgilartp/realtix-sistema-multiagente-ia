@@ -33,7 +33,17 @@ docker compose exec postgres pg_isready          # PostgreSQL listo
 curl -s localhost:8000/api/v2/heartbeat          # Chroma listo
 ```
 
-La API, la ingesta y la web se agregan en los bloques siguientes (B5 a B11).
+API (B9), en el puerto 8001 para no chocar con Chroma:
+
+```bash
+uv run uvicorn --factory src.api.app:crear_app --port 8001
+curl -s localhost:8001/health
+curl -s localhost:8001/api/v1/chat/mensaje -H 'Content-Type: application/json' \
+  -d '{"id_conversacion": "prueba-1", "mensaje": "¿Qué es el predial?"}'
+```
+
+Fuera del horario de atención (lunes a viernes no festivos, de 8:00 a. m. a 5:00 p. m.) la API
+responde el aviso de horario. Los puntos de acceso están en `/docs`. La web llega en B11.
 
 ## Probar
 

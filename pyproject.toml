@@ -1,6 +1,6 @@
 [project]
 name = "realtix-sistema-multiagente-ia"
-version = "0.1.0.dev0"
+version = "0.5.0"
 description = "Sistema multiagente de IA para el soporte del proceso de facturación de Realtix"
 readme = "README.md"
 requires-python = "==3.12.*"
@@ -27,6 +27,7 @@ dependencies = [
     "pydantic-settings==2.16.0",
     "pypdfium2==5.14.0",
     "PyStemmer==3.1.0",
+    "python-multipart==0.0.32",
     "pyyaml==6.0.3",
     "sqlalchemy==2.1.5",
     "uvicorn==0.54.0",
