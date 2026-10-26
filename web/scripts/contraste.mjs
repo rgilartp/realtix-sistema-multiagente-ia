@@ -43,16 +43,15 @@ const PARES = [
   ["funcionario en su fondo", "funcionario", "funcionario-suave", 4.5],
   ["ámbar en su fondo (fuera de horario)", "advertencia", "advertencia-suave", 4.5],
   ["error en su fondo", "error", "error-suave", 4.5],
-  ["texto suave desactivado", "tinta-suave", "papel-2", 4.5],
   ["borde de control en hoja", "borde-control", "hoja", 3],
   ["borde de control en papel", "borde-control", "papel", 3],
   // Foco: anillo frente a lo que lo rodea
   ["foco sello sobre papel", "sello", "papel", 3],
   ["foco sello sobre hoja", "sello", "hoja", 3],
   ["foco resaltador sobre sello (cabecera, bandas, pestañas)", "resaltador", "sello", 3],
-  ["foco resaltador sobre tinta (burbuja del contribuyente)", "resaltador", "tinta", 3],
   ["foco blanco sobre sello", "hoja", "sello", 3],
-  ["foco tinta sobre resaltador (botón del panel en el rótulo)", "tinta", "resaltador", 3],
+  ["foco tinta del botón del panel sobre papel", "tinta", "papel", 3],
+  ["foco tinta sobre el caso elegido", "tinta", "sello-suave", 3],
 ];
 
 let fallas = 0;

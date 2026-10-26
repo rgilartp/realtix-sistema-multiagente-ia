@@ -228,7 +228,9 @@ function Bandeja({ token }) {
                     onClick={() => abrir(c.id_caso)}
                     aria-pressed={elegido}
                     className={`w-full px-4 py-3 text-left focus-visible:-outline-offset-3 active:scale-100 ${
-                      elegido ? "bg-sello-suave ring-2 ring-sello ring-inset" : "hover:bg-papel"
+                      elegido
+                        ? "bg-sello-suave ring-2 ring-sello ring-inset focus-visible:outline-tinta focus-visible:-outline-offset-6"
+                        : "hover:bg-papel"
                     }`}
                   >
                     <span className="flex flex-wrap items-baseline justify-between gap-2">
@@ -237,7 +239,7 @@ function Bandeja({ token }) {
                     </span>
                     <span className="mt-0.5 block text-sm text-tinta">{c.motivo}</span>
                     <span className="mt-0.5 block text-xs text-tinta-suave">
-                      {NOMBRES[c.categoria] ?? "Sin clasificar"}, confianza {numero(c.nivel_confianza, 2)}. {fecha(c.fecha_escalamiento)}
+                      {c.categoria ? nombre(c.categoria) : "Sin clasificar"}, confianza {numero(c.nivel_confianza, 2)}. {fecha(c.fecha_escalamiento)}
                     </span>
                   </button>
                 </li>
