@@ -28,6 +28,7 @@ from src.agents.state import (
 from src.data.memoria import RealSitEnMemoria
 from src.services.confianza import calcular_nivel
 from src.store.almacen import Almacen, crear_motor
+from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 
 U03, P03 = "CC-1000000003", "50C-9000301"
 U02, P02 = "CC-1000000002", ["50C-9000201", "50C-9000202"]
@@ -598,20 +599,17 @@ def test_ciclo_de_vida_de_los_campos() -> None:
 @pytest.mark.integration
 @pytest.mark.req("RF-ORQ-04 · Implementación en LangGraph")
 def test_checkpointer_en_postgresql_conserva_la_conversacion(deps) -> None:
-    import os
     import uuid
 
     import psycopg
 
     from src.agents.graph import checkpointer_postgres
 
-    url = os.environ.get(
-        "DATABASE_URL_PRUEBAS", "postgresql://realtix:realtix_dev@localhost:5432/realtix"
-    )
+    url = url_postgres_pruebas()
     try:
         psycopg.connect(url, connect_timeout=3).close()
-    except psycopg.OperationalError:
-        pytest.skip("PostgreSQL no responde: levanta `docker compose up -d postgres`.")
+    except psycopg.OperationalError as error:
+        exigir_postgres(error)
     conv = f"pg-{uuid.uuid4().hex[:8]}"
     with checkpointer_postgres(url) as saver:
         grafo = construir_grafo(deps, checkpointer=saver)
