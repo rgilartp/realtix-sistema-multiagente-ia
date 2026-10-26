@@ -18,6 +18,7 @@ from src.services.predial import buscar_tarifa_ipu, descuento_pronto_pago
 FIXTURE = Path(__file__).parent / "fixtures" / "usuarios_prueba.yaml"
 USUARIOS = yaml.safe_load(FIXTURE.read_text(encoding="utf-8"))["usuarios"]
 PREDIOS = [(u["id"], u["contribuyente_id"], p) for u in USUARIOS for p in u["predios"]]
+CON_COPIA = [c for c in PREDIOS if "obligaciones" in c[2] or "pagos" in c[2]]
 GRUPOS = {
     "aviso_ia", "acceso", "ipu", "ica", "general", "ocr", "fuera_de_alcance",
     "multiagente", "escalamiento", "ambiguas_varios_turnos", "horario", "robustez",
@@ -165,3 +166,25 @@ def test_2027_de_los_preferenciales_no_se_estima_sin_el_smmlv() -> None:
         if u in ("U09", "U10", "U11"):
             with pytest.raises(DatoNoPublicadoError):
                 buscar_tarifa_ipu(2027, p["destino"], p["estrato"], p["avaluo_2026"])
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-02 · Estado de cuenta e historial")
+@pytest.mark.parametrize("caso", CON_COPIA, ids=_id)
+def test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador(caso, adaptador) -> None:
+    _, contribuyente, predio = caso
+    cuenta = adaptador.get_estado_cuenta(predio["matricula"], contribuyente)
+    vigencias = {o.vigencia_fiscal: o for o in cuenta.obligaciones if o.tipo_tributo == "IPU"}
+    if "obligaciones" in predio:
+        assert sorted(vigencias) == [o["vigencia"] for o in predio["obligaciones"]]
+    for esperada in predio.get("obligaciones", []):
+        obtenida = vigencias[esperada["vigencia"]]
+        assert obtenida.valor_liquidado == esperada["valor"], esperada
+        assert obtenida.estado_pago == esperada["estado"], esperada
+        if "fecha_limite" in esperada:
+            assert obtenida.fecha_limite_pago.isoformat() == esperada["fecha_limite"]
+    pagos = adaptador.get_historial_pagos(predio["matricula"], contribuyente)
+    if "pagos" in predio:
+        obtenidos = sorted((p.fecha_pago.isoformat(), p.valor_pagado, p.medio_pago) for p in pagos)
+        esperados = sorted((p["fecha"], p["valor"], p["medio"]) for p in predio["pagos"])
+        assert obtenidos == esperados
