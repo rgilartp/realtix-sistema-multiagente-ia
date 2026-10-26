@@ -1,0 +1,54 @@
+id: OCR-03
+titulo: Recibo válido de un lote
+origen:
+- especificacion-6.3
+rf:
+- RF-OCR-02
+- RF-OCR-03
+- RF-OCR-06
+hu:
+- HU-08
+grupo: ocr
+categoria_esperada: ocr
+comportamiento_esperado: confirmar_datos
+sesion: U06
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+adjunto:
+  recibo_sintetico: U06 / 50C-9000601 / 2026
+  calidad: legible
+turnos:
+- usuario: Te mando el recibo de mi lote
+  adjunto: recibo_valido_U06
+verificaciones_codigo:
+- tipo: campo_ocr
+  valor: 50C-9000601
+  campo: matricula
+- tipo: campo_ocr
+  valor: '50.000.000'
+  campo: avaluo
+- tipo: campo_ocr
+  valor: '600.000'
+  campo: valor_liquidado
+- tipo: campo_ocr
+  valor: '60.000'
+  campo: descuento
+- tipo: contiene_texto
+  valor: ¿Es correcto?
+respuesta_referencia: >-
+  Presenta los datos leídos: matrícula 50C-9000601, vigencia 2026, avalúo catastral $50.000.000, valor
+  liquidado $600.000 (12 por mil, urbanizable no urbanizado) y descuento por pronto pago $60.000, y pide
+  la confirmación del contribuyente.
+fuentes_esperadas:
+- Usuario de prueba U06 (usuarios_prueba.yaml)
+no_debe:
+- aplicar la tarifa residencial a un lote
+dado_cuando_entonces:
+  dado: U06 con sesión y un recibo sintético legible de un lote
+  cuando: Carga el recibo
+  entonces: Recibe los campos extraídos y la petición de confirmación
+nota_revision:
+- >-
+  La fecha límite que muestre el recibo la fija la plantilla sintética de B10; aquí solo se verifica la
+  del calendario (datos/calendario/2026.yaml).
+aprobado_por: ''

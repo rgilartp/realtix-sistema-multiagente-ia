@@ -1,0 +1,40 @@
+id: AMB-02
+titulo: Referencia a un mensaje anterior
+origen:
+- especificacion-6.3
+rf:
+- RF-UI-02
+- RF-IPU-02
+hu:
+- HU-13
+- HU-05
+grupo: ambiguas_varios_turnos
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U02
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto debo del predio 50C-9000202?
+- usuario: ¿Y cuánto me liquidaron de impuesto este año por ese mismo predio?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '5.166.000'
+- tipo: contiene_valor
+  valor: '2.646.000'
+- tipo: no_escala
+respuesta_referencia: >-
+  Primer turno: el predio 50C-9000202 tiene 2 obligaciones vencidas (2025 y 2026) y un saldo de $5.166.000.
+  Segundo turno, entendiendo «ese mismo predio» como el mismo 50C-9000202: el predial de 2026 se liquidó
+  en $2.646.000 ($420.000.000 × 6,3 / 1.000).
+fuentes_esperadas:
+- Usuario de prueba U02 (usuarios_prueba.yaml)
+- Resolución SDH-000194 de 2025, art. 1
+no_debe:
+- pedir otra vez la matrícula en el segundo turno
+- responder sobre el otro predio (50C-9000201)
+dado_cuando_entonces:
+  dado: U02 con sesión que ya consultó el predio 50C-9000202
+  cuando: Pregunta por «ese mismo predio» en el segundo mensaje
+  entonces: El segundo turno responde sobre el predio del turno anterior
+aprobado_por: ''

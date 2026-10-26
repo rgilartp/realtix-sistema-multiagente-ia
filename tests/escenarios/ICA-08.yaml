@@ -1,0 +1,33 @@
+id: ICA-08
+titulo: Fecha de declaración del ICA anual en 2026
+origen:
+- especificacion-6.3
+rf:
+- RF-ICA-03
+- RF-AUT-01
+hu:
+- HU-03
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: U12
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuándo declaro el ICA de este año?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 26 de febrero de 2027
+respuesta_referencia: >-
+  U12 es régimen común con declaración anual (impuesto a cargo de 2025 de hasta 391 UVT). La declaración
+  del ICA del año gravable 2026 vence el 26 de febrero de 2027 (Resolución SDH-000195 de 2025, art. 1).
+fuentes_esperadas:
+- Resolución SDH-000195 de 2025, art. 1
+- datos/calendario/2026.yaml
+no_debe:
+- dar las fechas bimestrales a un contribuyente anual
+dado_cuando_entonces:
+  dado: U12 con sesión y régimen común anual
+  cuando: Pregunta cuándo declara el ICA
+  entonces: Recibe el 26 de febrero de 2027
+aprobado_por: ''

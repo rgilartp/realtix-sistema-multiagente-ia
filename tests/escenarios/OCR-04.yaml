@@ -1,0 +1,43 @@
+id: OCR-04
+titulo: Recibo desenfocado
+origen:
+- especificacion-6.3
+rf:
+- RF-OCR-04
+- RF-OCR-06
+hu:
+- HU-09
+grupo: ocr
+categoria_esperada: ocr
+comportamiento_esperado: pedir_nuevo_documento
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+adjunto:
+  recibo_sintetico: U03 / 50C-9000301 / 2026
+  calidad: desenfocado
+turnos:
+- usuario: Aquí está mi recibo
+  adjunto: recibo_desenfocado_U03
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: nuevo
+- tipo: sin_error_tecnico
+- tipo: no_contiene_valor
+  valor: '2.135.000'
+respuesta_referencia: >-
+  PENDIENTE: el texto del rechazo y del motivo específico no tiene fuente en datos/, knowledge_base/ ni
+  usuarios_prueba.yaml; el comportamiento sale de RF-OCR-04.
+fuentes_esperadas: []
+no_debe:
+- inventar los datos de un documento que no se puede leer
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: U03 con sesión y una imagen desenfocada
+  cuando: Carga el archivo
+  entonces: Recibe el motivo del rechazo y la petición de cargar un nuevo archivo
+pendiente:
+- >-
+  Texto de referencia: PENDIENTE: el texto del rechazo y del motivo específico no tiene fuente en datos/,
+  knowledge_base/ ni usuarios_prueba.yaml; el comportamiento sale de RF-OCR-04.
+aprobado_por: ''

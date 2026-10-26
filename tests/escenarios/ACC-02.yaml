@@ -1,0 +1,42 @@
+id: ACC-02
+titulo: Estado de cuenta sin sesión iniciada
+origen:
+- adenda-4
+- CA-05
+rf:
+- RF-AUT-04
+- RF-AUT-01
+hu:
+- HU-18
+grupo: acceso
+categoria_esperada: general
+comportamiento_esperado: pedir_sesion
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto debo de mi predio 50C-9000301?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: iniciar sesión
+- tipo: no_contiene_valor
+  valor: '2.135.000'
+- tipo: no_escala
+respuesta_referencia: >-
+  Indica que para consultar información de su cuenta necesita iniciar sesión en la Oficina Virtual Tributaria
+  (entorno simulado de pruebas). Sin sesión, el asistente solo responde consultas generales y no muestra
+  datos de predios ni de obligaciones.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- mostrar valores o estado del predio 50C-9000301
+- escalar el caso
+dado_cuando_entonces:
+  dado: Una conversación sin sesión
+  cuando: Pregunta cuánto debe de un predio concreto
+  entonces: Recibe el aviso de iniciar sesión y ningún dato del predio
+nota_revision:
+- >-
+  El texto del criterio CA-05 no está en el repositorio (la especificación solo lo nombra); el contenido
+  se dedujo de RF-IPU-02 y de los valores de usuarios_prueba.yaml.
+aprobado_por: ''

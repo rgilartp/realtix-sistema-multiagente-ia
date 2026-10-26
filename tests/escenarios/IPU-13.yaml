@@ -1,0 +1,42 @@
+id: IPU-13
+titulo: Pagar el predial sin declarar
+origen:
+- adenda-10
+rf:
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-03
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Puedo pagar el predial sin declarar?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: factura
+- tipo: contiene_texto
+  valor: 30 de abril
+respuesta_referencia: >-
+  Sí. Bogotá tiene un sistema mixto de declaración y facturación (Acuerdo 648 de 2016, art. 5): la facturación
+  es el sistema principal y el declarativo es el subsidiario (Decreto 474 de 2016, art. 10). Cuando se
+  opta por la facturación, el valor total se paga a más tardar el 10 de julio de 2026, y la Dirección
+  de Impuestos expide las facturas del predial a más tardar el 30 de abril de 2026 (Resolución SDH-000195
+  de 2025, art. 4).
+fuentes_esperadas:
+- Acuerdo 648 de 2016, art. 5
+- Decreto 474 de 2016, art. 10
+- Resolución SDH-000195 de 2025, art. 4
+no_debe:
+- decir que siempre hay que presentar declaración
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta si puede pagar sin declarar
+  entonces: Recibe que sí, con la factura, por el sistema mixto, con las fechas de 2026
+nota_revision:
+- >-
+  La adenda cita también el Decreto Ley 1421 de 1993; no se usó porque el artículo exacto no se verificó.
+aprobado_por: ''

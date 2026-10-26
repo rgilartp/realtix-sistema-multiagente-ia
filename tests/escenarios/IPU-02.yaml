@@ -1,0 +1,40 @@
+id: IPU-02
+titulo: Historial de pagos de un predio con cuotas del SPAC
+origen:
+- CA-02
+rf:
+- RF-IPU-02
+- RF-AUT-01
+hu:
+- HU-06
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U08
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué pagos tengo registrados de mi predio 50C-9000801?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '845.000'
+- tipo: contiene_valor
+  valor: '1.690.000'
+- tipo: no_escala
+respuesta_referencia: >-
+  El predio 50C-9000801 tiene pagados 2 de las 4 cuotas del SPAC de 2026 (el 5 de junio y el 14 de agosto
+  de 2026), de $845.000 cada una: $1.690.000 en total.
+fuentes_esperadas:
+- Usuario de prueba U08 (usuarios_prueba.yaml)
+no_debe:
+- incluir pagos de otro predio
+- decir que ya pagó las cuatro cuotas
+dado_cuando_entonces:
+  dado: U08 con sesión y dos cuotas del SPAC pagadas
+  cuando: Pide el historial de pagos de su predio
+  entonces: Recibe los dos pagos de $845.000 y el total de $1.690.000
+nota_revision:
+- >-
+  El texto del criterio CA-02 no está en el repositorio (la especificación solo lo nombra); el contenido
+  se dedujo de RF-IPU-02 y de los valores de usuarios_prueba.yaml.
+aprobado_por: ''

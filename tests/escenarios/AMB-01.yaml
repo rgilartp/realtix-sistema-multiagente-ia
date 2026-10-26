@@ -1,0 +1,40 @@
+id: AMB-01
+titulo: Consulta ambigua con dos predios
+origen:
+- especificacion-6.3
+rf:
+- RF-IPU-02
+- RF-AUT-02
+hu:
+- HU-05
+- HU-13
+grupo: ambiguas_varios_turnos
+categoria_esperada: ipu
+comportamiento_esperado: pedir_aclaracion
+sesion: U02
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto debo de mi predio?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 50C-9000201
+- tipo: contiene_texto
+  valor: 50C-9000202
+- tipo: no_escala
+- tipo: no_contiene_valor
+  valor: '5.166.000'
+respuesta_referencia: >-
+  Pregunta de cuál de sus dos predios quiere saber, mostrando las matrículas de la sesión (50C-9000201
+  y 50C-9000202), sin dar todavía ningún valor.
+fuentes_esperadas:
+- Usuario de prueba U02 (usuarios_prueba.yaml)
+no_debe:
+- elegir un predio por su cuenta
+- escalar
+- dar un saldo sin saber de cuál predio es
+dado_cuando_entonces:
+  dado: U02 con sesión y dos predios
+  cuando: Pregunta cuánto debe de «mi predio»
+  entonces: Recibe la pregunta de cuál predio, con las dos matrículas
+aprobado_por: ''

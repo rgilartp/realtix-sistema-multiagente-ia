@@ -1,0 +1,36 @@
+id: ICA-01
+titulo: Qué es el ICA y quién lo paga
+origen:
+- especificacion-6.3
+rf:
+- RF-ICA-01
+hu:
+- HU-02
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué es el impuesto de industria y comercio y quién lo paga?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: actividad
+- tipo: contiene_texto
+  valor: Decreto 352
+respuesta_referencia: >-
+  El hecho generador del impuesto de industria y comercio es el ejercicio o realización directa o indirecta
+  de cualquier actividad industrial, comercial o de servicios en la jurisdicción de Bogotá, de forma permanente
+  u ocasional, en inmueble determinado, con establecimientos de comercio o sin ellos (Decreto 352 de 2002,
+  art. 32). Es sujeto pasivo la persona natural o jurídica, o la sociedad de hecho, que realiza el hecho
+  generador (art. 41).
+fuentes_esperadas:
+- Decreto 352 de 2002, arts. 32 y 41
+no_debe:
+- omitir la cita de la norma
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta qué es el ICA y quién lo paga
+  entonces: Recibe el hecho generador y el sujeto pasivo, con la cita
+aprobado_por: ''

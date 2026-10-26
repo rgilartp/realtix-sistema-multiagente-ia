@@ -1,0 +1,36 @@
+id: GEN-04
+titulo: Qué es el SPAC
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-02
+- RF-GEN-03
+hu:
+- HU-04
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué es el SPAC?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: cuotas
+- tipo: contiene_texto
+  valor: voluntario
+respuesta_referencia: >-
+  Es el Sistema de Pago Alternativo por Cuotas Voluntario del impuesto predial unificado. En 2026 se presenta
+  la declaración inicial hasta el 8 de mayo y se paga en cuatro cuotas iguales (Acuerdo 648 de 2016, art.
+  3; Resolución SDH-000195 de 2025, art. 5).
+fuentes_esperadas:
+- Glosario (plataforma_general)
+- Resolución SDH-000195 de 2025, art. 5
+no_debe:
+- decir que el SPAC es obligatorio
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta qué es el SPAC
+  entonces: Recibe la definición, la fecha de la declaración inicial y el número de cuotas
+aprobado_por: ''

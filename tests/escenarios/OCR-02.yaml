@@ -1,0 +1,54 @@
+id: OCR-02
+titulo: Recibo válido de un predio al día
+origen:
+- especificacion-6.3
+rf:
+- RF-OCR-02
+- RF-OCR-03
+- RF-OCR-06
+hu:
+- HU-08
+grupo: ocr
+categoria_esperada: ocr
+comportamiento_esperado: confirmar_datos
+sesion: U01
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+adjunto:
+  recibo_sintetico: U01 / 50C-9000101 / 2026
+  calidad: legible
+turnos:
+- usuario: Adjunto la foto de mi recibo
+  adjunto: recibo_valido_U01
+verificaciones_codigo:
+- tipo: campo_ocr
+  valor: 50C-9000101
+  campo: matricula
+- tipo: campo_ocr
+  valor: '280.000.000'
+  campo: avaluo
+- tipo: campo_ocr
+  valor: '1.652.000'
+  campo: valor_liquidado
+- tipo: campo_ocr
+  valor: '165.200'
+  campo: descuento
+- tipo: contiene_texto
+  valor: ¿Es correcto?
+respuesta_referencia: >-
+  Presenta los datos leídos: matrícula 50C-9000101, vigencia 2026, avalúo catastral $280.000.000, valor
+  liquidado $1.652.000 (5,9 por mil) y descuento por pronto pago $165.200, y pide la confirmación del
+  contribuyente.
+fuentes_esperadas:
+- Usuario de prueba U01 (usuarios_prueba.yaml)
+no_debe:
+- confundir el valor liquidado con lo pagado
+dado_cuando_entonces:
+  dado: U01 con sesión y un recibo sintético legible
+  cuando: Carga el recibo
+  entonces: Recibe los campos extraídos y la petición de confirmación
+nota_revision:
+- >-
+  La fecha límite que muestre el recibo la fija la plantilla sintética de B10; aquí solo se verifica la
+  del calendario (datos/calendario/2026.yaml).
+aprobado_por: ''

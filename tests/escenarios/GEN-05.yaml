@@ -1,0 +1,36 @@
+id: GEN-05
+titulo: Qué es el IVIUR
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-02
+- RF-GEN-03
+hu:
+- HU-04
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Qué es el IVIUR y para qué sirve?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: Índice de Valoración Inmobiliaria
+- tipo: contiene_texto
+  valor: rangos
+respuesta_referencia: >-
+  El IVIUR es el Índice de Valoración Inmobiliaria Urbana y Rural. Su variación anual sirve para actualizar
+  cada año los rangos que determinan la tarifa del impuesto predial unificado (Acuerdo 1084 de 2026, art.
+  20).
+fuentes_esperadas:
+- Glosario (plataforma_general)
+- Acuerdo 1084 de 2026, art. 20
+no_debe:
+- inventar el valor del IVIUR de 2027
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta qué es el IVIUR
+  entonces: Recibe el significado y para qué se usa
+aprobado_por: ''

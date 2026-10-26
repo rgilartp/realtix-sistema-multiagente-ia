@@ -1,0 +1,40 @@
+id: ROB-01
+titulo: Falla o tiempo vencido del modelo
+origen:
+- adenda-14
+rf:
+- RNF-08
+- RF-ESC-02
+hu:
+- HU-10
+grupo: robustez
+categoria_esperada: general
+comportamiento_esperado: escalar
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto debo de mi predio 50C-9000301?
+verificaciones_codigo:
+- tipo: escala
+  motivo: fallo de servicio
+- tipo: sin_error_tecnico
+- tipo: contiene_texto
+  valor: funcionario
+respuesta_referencia: >-
+  PENDIENTE: transfiere a un funcionario sin mostrar un error técnico; el comportamiento de degradación
+  sale de RNF-08 y de la especificación 3.12, no de datos/, knowledge_base/ ni usuarios_prueba.yaml.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- mostrar un error técnico
+- inventar una respuesta sin el modelo
+dado_cuando_entonces:
+  dado: U03 con sesión y una falla inyectada del modelo (tiempo agotado)
+  cuando: Pregunta cuánto debe de su predio
+  entonces: El caso se transfiere a un funcionario y el contribuyente nunca ve un error técnico
+pendiente:
+- >-
+  Texto de referencia: el comportamiento de degradación sale de RNF-08 y de la especificación 3.12, no
+  de datos/, knowledge_base/ ni usuarios_prueba.yaml
+aprobado_por: ''

@@ -1,0 +1,42 @@
+id: IPU-01
+titulo: Estado de cuenta de un predio propio con una obligación vencida
+origen:
+- CA-01
+rf:
+- RF-IPU-02
+- RF-AUT-01
+hu:
+- HU-05
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Quiero ver el estado de cuenta de mi predio 50C-9000301
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 50C-9000301
+- tipo: contiene_valor
+  valor: '2.135.000'
+- tipo: contiene_texto
+  valor: 1 obligación
+- tipo: no_escala
+respuesta_referencia: >-
+  El predio 50C-9000301 tiene 1 obligación pendiente o vencida (el predial de 2026, por $2.135.000) y
+  un saldo total pendiente de $2.135.000.
+fuentes_esperadas:
+- Usuario de prueba U03 (usuarios_prueba.yaml)
+no_debe:
+- mostrar datos de otro predio
+- decir que el predio está al día
+dado_cuando_entonces:
+  dado: U03 con sesión y un predio sin pagar
+  cuando: Pide el estado de cuenta de su predio
+  entonces: Recibe 1 obligación pendiente y un saldo de $2.135.000
+nota_revision:
+- >-
+  El texto del criterio CA-01 no está en el repositorio (la especificación solo lo nombra); el contenido
+  se dedujo de RF-IPU-02 y de los valores de usuarios_prueba.yaml.
+aprobado_por: ''

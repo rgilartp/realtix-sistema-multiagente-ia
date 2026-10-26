@@ -1,0 +1,60 @@
+id: OCR-01
+titulo: Recibo válido de un predio residencial sin pagar
+origen:
+- especificacion-6.3
+rf:
+- RF-OCR-02
+- RF-OCR-03
+- RF-OCR-06
+- RF-UI-04
+hu:
+- HU-08
+grupo: ocr
+categoria_esperada: ocr
+comportamiento_esperado: confirmar_datos
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+adjunto:
+  recibo_sintetico: U03 / 50C-9000301 / 2026
+  calidad: legible
+turnos:
+- usuario: Te envío mi recibo del predial para que lo revises
+  adjunto: recibo_valido_U03
+verificaciones_codigo:
+- tipo: campo_ocr
+  valor: 50C-9000301
+  campo: matricula
+- tipo: campo_ocr
+  valor: '2026'
+  campo: vigencia
+- tipo: campo_ocr
+  valor: '350.000.000'
+  campo: avaluo
+- tipo: campo_ocr
+  valor: '2.135.000'
+  campo: valor_liquidado
+- tipo: campo_ocr
+  valor: '213.500'
+  campo: descuento
+- tipo: contiene_texto
+  valor: ¿Es correcto?
+respuesta_referencia: >-
+  Presenta los datos leídos del recibo: matrícula 50C-9000301, vigencia 2026, avalúo catastral $350.000.000,
+  valor liquidado $2.135.000 y descuento por pronto pago $213.500 (10 %), con la fecha límite de pago,
+  y pide al contribuyente que los confirme antes de usarlos.
+fuentes_esperadas:
+- Usuario de prueba U03 (usuarios_prueba.yaml)
+- Resolución SDH-000195 de 2025, arts. 3 y 6
+no_debe:
+- usar los datos sin pedir la confirmación
+- inventar un campo que el recibo no trae
+dado_cuando_entonces:
+  dado: U03 con sesión y un recibo sintético legible de su predio
+  cuando: Carga el recibo desde la conversación
+  entonces: Recibe los campos extraídos en formato estructurado y la petición de confirmarlos
+nota_revision:
+- >-
+  La fecha límite que muestre el recibo la fija la plantilla sintética de B10; aquí solo se verifica la
+  del calendario (datos/calendario/2026.yaml).
+aprobado_por: ''

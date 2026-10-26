@@ -1,0 +1,40 @@
+id: ICA-05
+titulo: Estimación bimestral del ICA de 2026
+origen:
+- especificacion-6.3
+rf:
+- RF-ICA-02
+- RF-AUT-01
+hu:
+- HU-07
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: U04
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Mis ingresos de un bimestre son $250.000.000 en la actividad 5611, ¿cuánto pago de ICA?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '3.450.000'
+- tipo: contiene_texto
+  valor: 13,8 por mil
+- tipo: contiene_texto
+  valor: estimación
+respuesta_referencia: >-
+  Para la actividad 5611 la tarifa de 2026 es 13,8 por mil (Acuerdo 65 de 2002, art. 3, en su texto vigente
+  en 2026): $250.000.000 × 13,8 / 1.000 = $3.450.000 por bimestre, como los de U04. Es una estimación
+  no vinculante. La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, Decreto
+  352 de 2002, art. 59) ni la sobretasa bomberil, que se suman cuando aplican.
+fuentes_esperadas:
+- Acuerdo 65 de 2002, art. 3
+- datos/tarifas/ica_2026.yaml
+- Usuario de prueba U04
+no_debe:
+- aplicar la tarifa de 2027 a un bimestre de 2026 anterior al sexto
+dado_cuando_entonces:
+  dado: U04 con sesión, régimen común bimestral y actividad 5611
+  cuando: Pide una estimación con $250.000.000 de ingresos del bimestre
+  entonces: Recibe $3.450.000 con la tarifa de 13,8 por mil
+aprobado_por: ''

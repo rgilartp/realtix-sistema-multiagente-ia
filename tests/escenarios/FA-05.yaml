@@ -1,0 +1,36 @@
+id: FA-05
+titulo: Predial en un municipio distinto de Bogotá
+origen:
+- especificacion-6.3
+rf:
+- RF-ESC-02
+- RF-SYS-03
+hu:
+- HU-10
+- HU-14
+grupo: fuera_de_alcance
+categoria_esperada: fuera_de_alcance
+comportamiento_esperado: escalar
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto es el predial de un apartamento en Medellín?
+verificaciones_codigo:
+- tipo: escala
+  motivo: fuera de alcance
+- tipo: no_contiene_texto
+  valor: 6,1 por mil
+respuesta_referencia: >-
+  Transfiere la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación,
+  para que no tenga que repetirlo; desde ese momento el asistente deja de responder en esa conversación.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- aplicar tarifas de Bogotá a Medellín
+- estimar un valor para Medellín
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta por el predial en Medellín
+  entonces: El caso se transfiere a un funcionario con su resumen
+aprobado_por: ''

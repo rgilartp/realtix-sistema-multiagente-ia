@@ -1,0 +1,36 @@
+id: ICA-10
+titulo: Consulta sobre retención de ICA
+origen:
+- adenda-12
+rf:
+- RF-ICA-04
+- RF-ESC-02
+hu:
+- HU-10
+grupo: ica
+categoria_esperada: ica
+comportamiento_esperado: escalar
+sesion: U04
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cómo manejo la retención de ICA de mis ventas con tarjeta?
+verificaciones_codigo:
+- tipo: escala
+  motivo: fuera de alcance
+- tipo: contiene_texto
+  valor: funcionario
+- tipo: sin_error_tecnico
+respuesta_referencia: >-
+  Transfiere la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación,
+  para que no tenga que repetirlo; desde ese momento el asistente deja de responder en esa conversación.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- explicar cómo practicar o declarar la retención
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: U04 con sesión
+  cuando: Pregunta por la retención de ICA
+  entonces: El caso se transfiere a un funcionario con su resumen
+aprobado_por: ''

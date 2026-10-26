@@ -1,0 +1,39 @@
+id: IPU-03
+titulo: Estado de cuenta de un predio al día
+origen:
+- CA-03
+rf:
+- RF-IPU-02
+- RF-AUT-01
+hu:
+- HU-05
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U07
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Estoy al día con mi predio 50C-9000701?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: al día
+- tipo: contiene_valor
+  valor: '1.593.000'
+- tipo: no_escala
+respuesta_referencia: >-
+  El predio 50C-9000701 está al día: no tiene obligaciones pendientes ni vencidas (saldo $0). El predial
+  de 2026, de $1.770.000, se pagó con el descuento de $177.000, es decir $1.593.000.
+fuentes_esperadas:
+- Usuario de prueba U07 (usuarios_prueba.yaml)
+no_debe:
+- decir que tiene saldo pendiente
+dado_cuando_entonces:
+  dado: U07 con sesión y un predio pagado con descuento
+  cuando: Pregunta si está al día
+  entonces: Recibe que no tiene saldo y el valor pagado de $1.593.000
+nota_revision:
+- >-
+  El texto del criterio CA-03 no está en el repositorio (la especificación solo lo nombra); el contenido
+  se dedujo de RF-IPU-02 y de los valores de usuarios_prueba.yaml.
+aprobado_por: ''

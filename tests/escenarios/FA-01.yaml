@@ -1,0 +1,34 @@
+id: FA-01
+titulo: 'Pregunta no tributaria: el clima'
+origen:
+- adenda-13
+rf:
+- RF-GEN-04
+hu:
+- HU-14
+grupo: fuera_de_alcance
+categoria_esperada: fuera_de_alcance
+comportamiento_esperado: informar_fuera_de_alcance
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cómo va a estar el clima mañana en Bogotá?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: no es tributario
+- tipo: no_escala
+respuesta_referencia: >-
+  Informa que ese tema no es tributario y queda fuera de lo que puede atender en este canal, sin transferir
+  el caso, y recuerda que puede preguntar por el impuesto predial unificado, el de industria y comercio,
+  los datos personales y el uso de la plataforma.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- responder la pregunta del clima
+- escalar el caso
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Hace una pregunta que no es tributaria
+  entonces: Recibe que el tema no está cubierto y no se escala
+aprobado_por: ''

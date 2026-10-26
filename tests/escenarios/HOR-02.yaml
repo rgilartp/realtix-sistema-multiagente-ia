@@ -1,0 +1,40 @@
+id: HOR-02
+titulo: Mensaje en un día festivo
+origen:
+- especificacion-6.3
+rf:
+- RNF-06
+- RNF-07
+hu:
+- HU-10
+grupo: horario
+categoria_esperada: general
+comportamiento_esperado: aviso_fuera_de_horario
+sesion: U01
+reloj: '2026-10-12T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Hola, necesito hablar con un funcionario
+verificaciones_codigo:
+- tipo: fuera_de_horario
+- tipo: contiene_texto
+  valor: martes
+- tipo: sin_error_tecnico
+respuesta_referencia: >-
+  PENDIENTE: la ventana indica que está fuera del horario de atención (manual de la OVT simulada); el
+  horario de atención y la fecha de la próxima apertura salen de la configuración y de RNF-06, no de datos/,
+  knowledge_base/ ni usuarios_prueba.yaml.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- tratar el festivo como día hábil
+- mostrar un error técnico
+dado_cuando_entonces:
+  dado: El reloj simulado marca el lunes 12 de octubre de 2026 (festivo) a las 10:00
+  cuando: El contribuyente pide un funcionario
+  entonces: Recibe el aviso de fuera de horario y que se vuelve a atender el martes siguiente
+pendiente:
+- >-
+  Texto de referencia: el horario de atención y la fecha de la próxima apertura salen de la configuración
+  y de RNF-06, no de datos/, knowledge_base/ ni usuarios_prueba.yaml
+aprobado_por: ''

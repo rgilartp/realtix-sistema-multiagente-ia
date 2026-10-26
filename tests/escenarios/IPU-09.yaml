@@ -1,0 +1,44 @@
+id: IPU-09
+titulo: Cuánto puede subir el predial (Ley 1995)
+origen:
+- adenda-7
+rf:
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-03
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuánto puede subir mi predial de un año a otro?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: IPC
+- tipo: contiene_texto
+  valor: 8 puntos
+- tipo: contiene_texto
+  valor: Ley 1995
+- tipo: no_contiene_texto
+  valor: venció
+respuesta_referencia: >-
+  En los predios con avalúo actualizado que pagaron según esa actualización, el impuesto puede subir como
+  máximo el IPC más 8 puntos porcentuales; en los que no se han actualizado, el límite es el 50 % del
+  monto liquidado el año anterior; en las viviendas de estratos 1 y 2 con avalúo de hasta 135 SMMLV, el
+  incremento no puede pasar del 100 % del IPC (Ley 1995 de 2019, art. 2, con excepciones como los terrenos
+  urbanizables no urbanizados). La Ley 1995 sigue vigente: la Ley 2294 de 2023, art. 49, parágrafo 3,
+  mantiene lo dispuesto en ella hasta que se expida una nueva ley.
+fuentes_esperadas:
+- Ley 1995 de 2019, art. 2
+- Ley 2294 de 2023, art. 49, par. 3
+no_debe:
+- decir que la Ley 1995 venció o ya no rige
+- dar un tope sin aclarar los casos especiales
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta cuánto puede subir su predial
+  entonces: Recibe los topes por tipo de predio y que la ley sigue vigente
+aprobado_por: ''

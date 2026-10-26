@@ -1,0 +1,35 @@
+id: GEN-02
+titulo: Qué puede hacer el asistente
+origen:
+- especificacion-6.3
+rf:
+- RF-GEN-01
+- RF-GEN-03
+hu:
+- HU-04
+grupo: general
+categoria_esperada: general
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Puedo pagar mi predial o presentar mi declaración con el asistente?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: declaraciones
+- tipo: no_contiene_texto
+  valor: sí puedo pagar
+respuesta_referencia: >-
+  No. El asistente no presenta declaraciones, no hace pagos y no modifica datos; tampoco da asesoría tributaria
+  personalizada, sus respuestas son orientativas. Sí puede responder sobre el impuesto predial unificado,
+  el de industria y comercio, los datos personales y el uso de la plataforma.
+fuentes_esperadas:
+- Manual de uso de la OVT simulada (plataforma_general)
+no_debe:
+- decir que puede presentar la declaración o registrar un pago
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta si puede pagar o declarar con el asistente
+  entonces: Recibe lo que el asistente no hace y lo que sí
+aprobado_por: ''

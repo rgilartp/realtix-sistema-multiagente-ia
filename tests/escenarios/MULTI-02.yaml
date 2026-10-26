@@ -1,0 +1,46 @@
+id: MULTI-02
+titulo: Estimar el predial y conocer la fecha del ICA
+origen:
+- especificacion-6.3
+rf:
+- RF-ORQ-03
+- RF-IPU-03
+- RF-ICA-03
+hu:
+- HU-07
+- HU-03
+grupo: multiagente
+categoria_esperada: ipu
+categorias_esperadas:
+- ipu
+- ica
+comportamiento_esperado: responder
+sesion: U12
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: rag
+turnos:
+- usuario: Estímame el predial de este año y dime cuándo declaro el ICA
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: '2.583.000'
+- tipo: contiene_texto
+  valor: 26 de febrero de 2027
+- tipo: contiene_texto
+  valor: estimación
+respuesta_referencia: >-
+  Predial de 2026 del predio 50C-9001201 (avalúo $410.000.000, tarifa 6,3 por mil, Resolución SDH-000194
+  de 2025, art. 1): $410.000.000 × 6,3 / 1.000 = $2.583.000, una estimación no vinculante; el 10 % de
+  pronto pago venció el 17 de abril de 2026. ICA: U12 es régimen común anual y declara el año gravable
+  2026 a más tardar el 26 de febrero de 2027 (Resolución SDH-000195 de 2025, art. 1).
+fuentes_esperadas:
+- Resolución SDH-000194 de 2025, art. 1
+- Resolución SDH-000195 de 2025, art. 1
+- Usuario de prueba U12 (usuarios_prueba.yaml)
+no_debe:
+- presentar vigente el descuento del 10 %
+- responder solo una de las dos partes
+dado_cuando_entonces:
+  dado: U12 con sesión, un predio residencial y ICA anual
+  cuando: Pide la estimación del predial y la fecha del ICA en un solo mensaje
+  entonces: Recibe la estimación del predial y la fecha de declaración del ICA
+aprobado_por: ''

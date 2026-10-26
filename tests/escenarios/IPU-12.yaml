@@ -1,0 +1,35 @@
+id: IPU-12
+titulo: Cómo se notifica la factura del predial
+origen:
+- adenda-9
+rf:
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-03
+grupo: ipu
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: null
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cómo me notifican la factura del predial?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: Registro Distrital
+- tipo: contiene_texto
+  valor: divulgación adicional
+respuesta_referencia: >-
+  Las facturas se notifican mediante publicación en el Registro Distrital y, simultáneamente, mediante
+  inserción en la página web de la Secretaría Distrital de Hacienda. El envío de la factura a la dirección
+  del contribuyente surte el efecto de divulgación adicional (Acuerdo 1084 de 2026, art. 27, numeral 3).
+fuentes_esperadas:
+- Acuerdo 1084 de 2026, art. 27, num. 3
+no_debe:
+- decir que la notificación se hace solo con el envío a la casa
+dado_cuando_entonces:
+  dado: Un contribuyente sin sesión
+  cuando: Pregunta cómo le notifican la factura
+  entonces: Recibe la publicación en el Registro Distrital y en la web, y que el envío es adicional
+aprobado_por: ''
