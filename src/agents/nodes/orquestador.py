@@ -150,6 +150,23 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
                 "categorias_pendientes": pendientes,
             }
 
+        ocr = datos.get("ocr") or {}
+        if (
+            ocr.get("pendiente")
+            and not state.get("documento_adjunto")
+            and "ocr" not in state.get("categorias_descartadas", [])
+        ):
+            # Hay datos de un recibo por confirmar (RF-OCR-03): la respuesta va al agente OCR,
+            # sin modelo; si no es una confirmación, el OCR la devuelve y aquí se reclasifica.
+            parte = {"categoria": "ocr", "texto": texto, "busqueda": texto}
+            return {
+                "categoria": "ocr",
+                "parte_actual": parte,
+                "categorias_pendientes": [],
+                "marcas": marcas,
+                "intentos_clasificacion": intentos,
+                "datos_extraidos": datos,
+            }
         try:
             clasificacion = clasificar(texto, state)
         except Exception:  # fallo del modelo del orquestador (RNF-08)
