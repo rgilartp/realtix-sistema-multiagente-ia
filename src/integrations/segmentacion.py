@@ -2,8 +2,10 @@
 
 - Un fragmento por `## Artículo`; los de más de unos 800 tokens se parten con 75 de solape, y las
   tablas repiten su encabezado en cada parte. Los cortos quedan enteros.
-- Lo que sigue a «El texto original/anterior era el siguiente:» va en un fragmento aparte, marcado
-  como texto anterior; también la sección que empieza con «Texto anterior, no vigente».
+- Lo que sigue a «El texto … era el siguiente:» (original, anterior, derogado, de los incisos
+  derogados…) va en un fragmento aparte, marcado como texto anterior; también la sección que empieza
+  con «Texto anterior, no vigente» y lo que sigue a la marca «<El texto derogado era el siguiente>»
+  dentro de un párrafo.
 - Las notas del encabezado del archivo («Vigencia por año gravable», «Publicación»…) van al
   inicio de cada fragmento del archivo, para que el agente las vea (nota de B2).
 - Metadatos: `norma`, `articulo`, `coleccion`, `url`, `vigencia_desde`, `vigencia_hasta` (enteros
@@ -29,9 +31,13 @@ MAX_TOKENS = 800
 SOLAPE_TOKENS = 75
 SIN_INICIO = 0
 SIN_FIN = 99991231
-ANTERIOR = re.compile(
-    r"^El texto (?:original|anterior)(?: del artículo)? era el siguiente:?\s*$",
-    re.IGNORECASE | re.MULTILINE,
+# Cualquier variante: «El texto original/anterior/derogado/de los incisos derogados era el
+# siguiente:».
+# `\bera\b` no confunde «será el siguiente», que aparece en textos vigentes.
+ANTERIOR = re.compile(r"^El texto\b[^.\n<>]{0,60}?\bera el siguiente:?\s*$", re.IGNORECASE)
+# La misma marca dentro de un párrafo: «Artículo 4º.- Derogado por… <El texto derogado era…> …».
+ANTERIOR_EN_LINEA = re.compile(
+    r"<\s*El texto\b[^.\n<>]{0,60}?\bera el siguiente\s*>:?", re.IGNORECASE
 )
 NOTA_ENCABEZADO = re.compile(r"^> \*\*.+$", re.MULTILINE)
 NO_VIGENTE = re.compile(r"^> \*\*Texto anterior, no vigente\.\*\*", re.MULTILINE)
@@ -281,10 +287,13 @@ def segmentar_archivo(ruta: Path, raiz: Path = RAIZ_BASE) -> list[FragmentoBase]
 def _separar(cuerpo: str) -> tuple[str, str]:
     """(texto vigente, textos anteriores) de una sección.
 
-    Tras «El texto original/anterior era el siguiente:» viene el texto reemplazado. Si es el
+    Tras «El texto … era el siguiente:» viene el texto reemplazado o derogado. Si es el
     artículo entero («Artículo 12. …»), sigue hasta el final de la sección o hasta un artículo
     adicionado («Artículo 11-1…»); si es un numeral, un literal o un parágrafo, termina donde
     empieza el siguiente numeral, parágrafo o modificación, y sigue el texto vigente (Decreto 807).
+    Si la marca va dentro de un párrafo («<El texto derogado era el siguiente>»), lo de antes es
+    vigente (la nota de la derogatoria) y lo de después, anterior; si el párrafo empieza con
+    «Artículo N», el bloque anterior es el artículo entero (Ley 14 de 1983, art. 4).
     """
     vigente: list[str] = []
     anterior: list[str] = []
@@ -297,6 +306,14 @@ def _separar(cuerpo: str) -> tuple[str, str]:
         if ANTERIOR.fullmatch(texto):
             en_anterior, articulo_entero = True, False
             anterior.append(texto)
+            continue
+        en_linea = ANTERIOR_EN_LINEA.search(texto)
+        if en_linea:
+            antes, despues = texto[: en_linea.start()].strip(), texto[en_linea.start() :].strip()
+            if antes:
+                (anterior if en_anterior else vigente).append(antes)
+            en_anterior, articulo_entero = True, bool(ARTICULO.match(texto))
+            anterior.append(despues)
             continue
         if en_anterior:
             primero = anterior[-1] if anterior else ""
