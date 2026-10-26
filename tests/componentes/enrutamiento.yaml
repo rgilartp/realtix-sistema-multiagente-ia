@@ -1,5 +1,19 @@
 # Conjunto de enrutamiento (sección 6.2): 100 consultas etiquetadas, 20 por categoría.
-# Las de ocr llevan un archivo adjunto simulado. Municipio distinto de Bogotá: Medellín.
+#
+# Regla de categorías (la misma va al prompt del orquestador en B7; los 60 escenarios la siguen):
+# - general: la definición en lenguaje sencillo de un término, como los del glosario de
+#   plataforma_general (sobretasa, SPAC, IVIUR, regímenes del ICA, dato personal) o el avalúo
+#   catastral; el uso de la OVT simulada; los datos personales; el saludo, la pregunta por la IA y
+#   la solicitud de un funcionario.
+# - ipu o ica: las reglas, los cálculos, los plazos o la situación del contribuyente en ese tributo
+#   (cuánto, hasta cuándo, en qué régimen, cuánto debo, estimación).
+# - Excepción: «qué es el predial» y «qué es el ICA» son consultas conceptuales de su agente
+#   (RF-IPU-01 y RF-ICA-01), aunque el glosario defina el impuesto predial unificado.
+# - ocr: la consulta llega con un archivo adjunto (recibo u otro documento).
+# - fuera_de_alcance: lo no tributario y los tributos o municipios que el MVP no cubre.
+#
+# Las de ocr llevan un adjunto simulado: tipo recibo_sintetico (con su calidad) u otro_documento.
+# Municipio distinto de Bogotá: Medellín.
 consultas:
 - id: ENR-IPU01
   texto: ¿Qué es el impuesto predial unificado?
@@ -14,7 +28,7 @@ consultas:
   texto: Quiero estimar cuánto me tocaría pagar de predial por un avalúo de 280 millones
   categoria: ipu
 - id: ENR-IPU05
-  texto: ¿Qué descuento hay por pronto pago del impuesto predial?
+  texto: ¿De cuánto es el descuento por pronto pago del predial y hasta cuándo aplica?
   categoria: ipu
 - id: ENR-IPU06
   texto: ¿Cómo se calcula el predial de un lote?
@@ -26,10 +40,10 @@ consultas:
   texto: Muéstrame los pagos que tengo registrados de mi predio
   categoria: ipu
 - id: ENR-IPU09
-  texto: ¿Cómo funciona el pago por cuotas del predial?
+  texto: ¿En qué fechas se pagan las cuotas del SPAC este año?
   categoria: ipu
 - id: ENR-IPU10
-  texto: ¿Qué es la sobretasa de alumbrado público y quién la paga?
+  texto: ¿Cuánto será la sobretasa de alumbrado de mi predio en 2027?
   categoria: ipu
 - id: ENR-IPU11
   texto: ¿Cuánto puede subir el predial de un año a otro?
@@ -74,7 +88,7 @@ consultas:
   texto: Quiero estimar el ICA con ingresos de 60 millones en la actividad 6201
   categoria: ica
 - id: ENR-ICA05
-  texto: ¿Qué diferencia hay entre el régimen común y el preferencial del ICA?
+  texto: ¿En qué régimen del ICA quedo si mi impuesto del año pasado fue de 25 millones?
   categoria: ica
 - id: ENR-ICA06
   texto: ¿Cada cuánto se declara el ICA si pago más de 391 UVT?
@@ -287,14 +301,14 @@ consultas:
   texto: Te mando un documento de otra entidad, ¿lo puedes leer?
   categoria: ocr
   adjunto:
-    tipo: recibo_sintetico
-    calidad: otro_documento
+    tipo: otro_documento
+    calidad: legible
 - id: ENR-OCR19
   texto: Aquí tienes mi recibo de servicios públicos
   categoria: ocr
   adjunto:
-    tipo: recibo_sintetico
-    calidad: otro_documento
+    tipo: otro_documento
+    calidad: legible
 - id: ENR-OCR20
   texto: Envío el recibo para que compares el valor con mi estado de cuenta
   categoria: ocr
