@@ -10,6 +10,7 @@ from functools import cached_property, lru_cache
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import OpenAIEmbeddings
 
+from src.agents.clasificador import ClasificadorLLM
 from src.agents.dependencias import ConfigGrafo, Dependencias
 from src.config import Settings, cargar_configuracion
 from src.data.adapter import MockRealSitAdapter, RealSitAdapter
@@ -49,8 +50,16 @@ class Contenedor:
 
     @cached_property
     def deps(self) -> Dependencias:
-        """Dependencias de los nodos: adaptador y parámetros de la confianza y el enrutamiento."""
-        return Dependencias(self.adaptador, ConfigGrafo.desde_settings(self.settings))
+        """Dependencias de los nodos reales (B7): adaptador, parámetros, clasificador del
+        orquestador, modelos de los agentes y recuperador."""
+        config = ConfigGrafo.desde_settings(self.settings)
+        return Dependencias(
+            self.adaptador,
+            config,
+            clasificador=ClasificadorLLM(self.modelo("orquestador"), config.timeout_modelo_s),
+            modelos=self.modelo,
+            recuperador=self.recuperador,
+        )
 
     @cached_property
     def recuperador(self) -> Recuperador:

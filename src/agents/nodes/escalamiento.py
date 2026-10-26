@@ -1,4 +1,4 @@
-"""`nodo_escalamiento` simulado: resumen del caso, registro y aviso de transferencia.
+"""`nodo_escalamiento`: resumen del caso, registro y aviso de transferencia, sin modelo (ADR-03).
 
 Único nodo que registra casos (ADR-18). Si la parte que escala no tiene confianza calculada guarda
 0.0 con su motivo (ADR-13). Entrega solo las partes aprobadas por la confianza (sección 3.4,
@@ -24,6 +24,16 @@ AVISO_TRANSFERENCIA = (
     "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. "
     "Ya le compartí un resumen para que no tengas que repetirlo."
 )
+# Explicación previa al aviso según el motivo; los demás motivos solo llevan el aviso.
+PREFACIOS = {
+    "solicitud explícita": "Con gusto te comunico con un funcionario.",
+    "fuera de alcance": (
+        "Tu consulta trata de un tema tributario que este asistente no cubre: atiende el impuesto "
+        "predial unificado y el impuesto de industria y comercio de Bogotá, sin la retención del "
+        "ICA ni otros tributos o municipios."
+    ),
+    "fallo de servicio": "En este momento no pude completar tu consulta por una falla técnica.",
+}
 
 
 def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
@@ -71,8 +81,10 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
         except Exception:  # RNF-08: el aviso se entrega aunque el registro falle
             marcas["registro_fallido"] = True
         marcas["duracion_escalamiento_ms"] = round((time.perf_counter() - inicio) * 1000, 3)
-        partes = "\n".join(p["texto"] for p in resueltas)
-        respuesta = f"{partes}\n\n{AVISO_TRANSFERENCIA}" if partes else AVISO_TRANSFERENCIA
+        prefacio = PREFACIOS.get(motivo)
+        aviso = f"{prefacio} {AVISO_TRANSFERENCIA}" if prefacio else AVISO_TRANSFERENCIA
+        partes = "\n\n".join(p["texto"] for p in resueltas)
+        respuesta = f"{partes}\n\n{aviso}" if partes else aviso
         return {
             "requiere_escalamiento": True,
             "motivo_escalamiento": motivo,
