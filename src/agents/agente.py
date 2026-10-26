@@ -162,8 +162,9 @@ def recuperar(deps: Dependencias, config: ConfigAgente, texto: str, anio: int) -
             deps.config.timeout_recuperacion_s,
             servicio="recuperación",
         )
-    encontrados.sort(key=lambda f: f.similitud, reverse=True)
-    return encontrados[:K_FRAGMENTOS]
+    if len(config.colecciones) > 1:  # varias colecciones: se juntan por similitud
+        encontrados.sort(key=lambda f: f.similitud, reverse=True)
+    return encontrados[:K_FRAGMENTOS]  # una colección: el orden de la fusión RRF
 
 
 def _sin_repetir(valores: list[str]) -> list[str]:
@@ -300,6 +301,12 @@ def ejecutar_agente(
     )
     if contexto.matriculas_usadas:
         datos["predio"] = contexto.matriculas_usadas[-1]
+    evaluacion: dict[str, Any] = {}
+    if deps.modo_evaluacion:  # para RAGAS en B12
+        evaluacion = {
+            "contextos": [f.texto for f in fragmentos],
+            "version_corpus": getattr(deps.recuperador, "version_corpus", None),
+        }
     respuesta_parcial = parcial(
         categoria,
         texto_final,
@@ -310,5 +317,6 @@ def ejecutar_agente(
         fuera_de_alcance=salida.fuera_del_mvp,
         prompt=config.prompt.version,
         anio_gravable=anio,
+        **evaluacion,
     )
     return respuesta_parcial, datos

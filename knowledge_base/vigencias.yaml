@@ -1,0 +1,98 @@
+# Vigencias que no salen del texto de la norma (sección 5.2 y notas de B2).
+#
+# Cada regla dice, para un artículo de un archivo, desde y hasta cuándo rige su texto vigente
+# (`vigente`) y el texto anterior que sigue a «El texto original/anterior era el siguiente:»
+# (`anterior`). Las fechas salen de la nota de vigencia del archivo o de la norma que se cita en
+# `fuente`. `articulo: "*"` vale para todos los artículos del archivo, y `no_rige: true` marca un
+# texto que no rige en ningún año gravable de la base. Sin regla, el texto vigente rige siempre, y
+# un texto anterior (o una sección marcada «Texto anterior, no vigente») no sale en ninguna
+# búsqueda. Cambiar una vigencia es editar este archivo y volver a ingerir, sin tocar el código
+# (RF-OBS-04).
+reglas:
+  - archivo: normativa_ica/acuerdo_65_2002.md
+    articulo: Artículo 3
+    vigente: {desde: 2026-11-01}
+    anterior: {hasta: 2026-12-31}
+    fuente: >-
+      Acuerdo 1084 de 2026, art. 21, parágrafo (nota de vigencia del archivo): el texto nuevo rige
+      para los bimestrales desde el bimestre 6 de 2026 y para los anuales desde el 1 de enero de
+      2027; hasta esos periodos rige el texto original con sus modificaciones.
+  - archivo: normativa_ica/acuerdo_1084_2026_ica.md
+    articulo: Artículo 21
+    vigente: {desde: 2026-11-01}
+    fuente: >-
+      Acuerdo 1084 de 2026, art. 21, parágrafo (nota de vigencia de acuerdo_65_2002.md): desde el
+      bimestre 6 de 2026 para los bimestrales y desde el 1 de enero de 2027 para los anuales.
+  - archivo: normativa_ica/acuerdo_1084_2026_ica.md
+    articulo: Artículo 24
+    vigente: {desde: 2027-01-01}
+    fuente: Acuerdo 1084 de 2026, art. 24 («A partir del 1° de enero de 2027»).
+  - archivo: normativa_ica/acuerdo_1084_2026_ica.md
+    articulo: Artículo 26
+    vigente: {desde: 2027-01-01}
+    fuente: Acuerdo 1084 de 2026, art. 26 («A partir del 1º de enero de 2027»).
+  - archivo: [normativa_ipu/decreto_807_1993_ipu.md, normativa_ica/decreto_807_1993_ica.md]
+    articulo: Artículo 27
+    vigente: {desde: 2027-01-01}
+    fuente: >-
+      Texto nuevo del art. 27 dado por el Acuerdo 1084 de 2026, art. 26 («A partir del 1º de enero
+      de 2027»); el texto original, de 1994, no rige.
+  - archivo: normativa_ica/acuerdo_1019_2025_ica.md
+    articulo: Artículo 44
+    vigente: {desde: 2027-01-01}
+    anterior: {desde: 2026-01-01, hasta: 2026-12-31}
+    fuente: >-
+      Acuerdo 1019 de 2025, art. 44 («la vigencia 2026»), derogado por el Acuerdo 1084 de 2026,
+      art. 52; desde el 1 de enero de 2027 aplica el art. 24 del Acuerdo 1084 (nota del archivo).
+  - archivo: normativa_ipu/acuerdo_105_2003.md
+    articulo: Artículo 2
+    vigente: {desde: 2027-01-01}
+    fuente: >-
+      Nota de vigencia del archivo: el texto nuevo (Acuerdo 1084 de 2026, art. 20) rige desde el
+      predial de 2027; el texto original de 2003 no rige.
+  - archivo: normativa_ipu/acuerdo_1084_2026.md
+    articulo: Artículo 20
+    vigente: {desde: 2027-01-01}
+    fuente: Nota de vigencia de acuerdo_105_2003.md (rige desde el predial de 2027).
+  - archivo: normativa_ica/acuerdo_98_2003.md
+    articulo: "*"
+    vigente: {hasta: 2026-12-31}
+    fuente: >-
+      Nota de vigencia del archivo: derogado por el Acuerdo 1084 de 2026, art. 52; rige para el año
+      gravable 2026 de los anuales y los bimestres 1 a 5 de 2026 de los bimestrales.
+  - archivo: normativa_ica/acuerdo_780_2020_ica.md
+    articulo: Artículo 7
+    vigente: {hasta: 2026-12-31}
+    fuente: >-
+      Nota de vigencia del artículo: rige para el año gravable 2026; derogado por el Acuerdo 1084
+      de 2026, art. 52.
+  - archivo: [normativa_ipu/decreto_639_2025.md, normativa_ica/decreto_639_2025_ica.md]
+    articulo: Artículo 205
+    vigente: {hasta: 2026-12-31}
+    fuente: >-
+      Nota de vigencia del artículo: rige para el año gravable 2026; desde el 1 de enero de 2027
+      los regímenes del ICA son los del art. 26 del Acuerdo 1084 de 2026.
+  - archivo: normativa_ipu/decreto_639_2025.md
+    articulo: Artículo 207
+    vigente: {hasta: 2026-12-31}
+    fuente: >-
+      Nota de vigencia del artículo: para 2026 rige este texto y desde 2027 la exclusión de los
+      estratos 1 y 2 está en el art. 20 del Acuerdo 1084 de 2026.
+  - archivo: normativa_ica/decreto_352_2002_cap2.md
+    articulo: Artículo 53
+    vigente: {no_rige: true}
+    fuente: >-
+      Nota de vigencia del artículo: son las tarifas del ICA de 2002 y 2003; en 2026 rigen las del
+      art. 3 del Acuerdo 65 de 2002 y desde el bimestre 6 de 2026 las del art. 21 del Acuerdo 1084.
+  - archivo: normativa_ica/decreto_352_2002_cap2.md
+    articulo: Artículo 55
+    vigente: {hasta: 2026-12-31}
+    fuente: >-
+      Nota de vigencia del artículo: desde 2027 los regímenes son los del art. 26 del Acuerdo 1084
+      de 2026.
+  - archivo: normativa_ipu/decreto_352_2002_cap1.md
+    articulo: Artículo 25
+    vigente: {no_rige: true}
+    fuente: >-
+      Nota de vigencia del artículo: son las tarifas de 2002; las de 2026 y 2027 están en el art. 2
+      del Acuerdo 105 de 2003 (texto anterior y texto nuevo).

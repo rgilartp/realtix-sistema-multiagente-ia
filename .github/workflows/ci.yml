@@ -35,6 +35,13 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
+      chromadb:
+        # La imagen no trae curl ni shell para un healthcheck; se espera desde el runner.
+        image: chromadb/chroma:1.5.9
+        env:
+          ANONYMIZED_TELEMETRY: "FALSE"
+        ports:
+          - 8000:8000
     steps:
       - name: Traer el repositorio con todo su historial
         uses: actions/checkout@v7.0.1
@@ -66,8 +73,18 @@ jobs:
           tar -xzf "$archivo" gitleaks
           ./gitleaks git --redact --verbose .
 
+      - name: Esperar a Chroma
+        run: |
+          for _ in $(seq 1 30); do
+            curl -sf localhost:8000/api/v2/heartbeat && exit 0
+            sleep 2
+          done
+          echo "Chroma no respondió" && exit 1
+
       - name: Pruebas con cobertura
-        # Con POSTGRES_OBLIGATORIO las pruebas de PostgreSQL fallan, no se saltan, si no responde.
+        # Con POSTGRES_OBLIGATORIO y CHROMA_OBLIGATORIO las pruebas de integración fallan, no se
+        # saltan, si el servicio no responde.
         run: uv run pytest -q --cov=src --cov=scripts --cov-report=term
         env:
           POSTGRES_OBLIGATORIO: "1"
+          CHROMA_OBLIGATORIO: "1"

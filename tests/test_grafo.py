@@ -26,7 +26,7 @@ from src.agents.state import (
     entrada_de_turno,
 )
 from src.data.memoria import RealSitEnMemoria
-from src.services.confianza import calcular_nivel
+from src.services.confianza import calcular_nivel, normalizar_similitud
 from src.store.almacen import Almacen, crear_motor
 from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 
@@ -213,7 +213,8 @@ def test_una_parte_bajo_el_umbral_escala_con_las_partes_resueltas(deps, almacen)
     assert "Respuesta dudosa" not in r["respuesta_final"]  # la rechazada no se le muestra
     assert "transferir" in r["respuesta_final"]
     caso = almacen.obtener_caso("CASO-multi-2")
-    assert caso["nivel_confianza"] == pytest.approx(0.4 * 0.2 + 0.4 * 0.5 + 0.2 * 1.0)
+    similitud = normalizar_similitud(0.2, deps.config.escala_similitud)  # escala de B8
+    assert caso["nivel_confianza"] == pytest.approx(0.4 * similitud + 0.4 * 0.5 + 0.2 * 1.0)
     assert almacen.estado_conversacion("multi-2") == "escalada"
     rechazadas = caso["resumen_json"]["partes_rechazadas"]  # sí van en el resumen del funcionario
     assert [p["texto"] for p in rechazadas] == ["Respuesta dudosa"]

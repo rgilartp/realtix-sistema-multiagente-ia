@@ -6,6 +6,7 @@ cada una como propiedad perezosa.
 """
 
 from functools import cached_property, lru_cache
+from typing import Any
 
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import OpenAIEmbeddings
@@ -16,7 +17,8 @@ from src.config import Settings, cargar_configuracion
 from src.data.adapter import MockRealSitAdapter, RealSitAdapter
 from src.integrations.embeddings import crear_embeddings
 from src.integrations.modelos import crear_modelo
-from src.integrations.recuperador import Recuperador, RecuperadorEnMemoria
+from src.integrations.recuperacion_hibrida import RecuperadorHibrido
+from src.integrations.recuperador import Recuperador
 from src.services.horario import Horario, Reloj
 from src.store.almacen import Almacen, crear_motor
 
@@ -59,12 +61,19 @@ class Contenedor:
             clasificador=ClasificadorLLM(self.modelo("orquestador"), config.timeout_modelo_s),
             modelos=self.modelo,
             recuperador=self.recuperador,
+            modo_evaluacion=self.settings.modo_evaluacion,
         )
+
+    def cliente_chroma(self) -> Any:
+        """Cliente HTTP del Chroma de Compose (se crea al primer uso)."""
+        import chromadb
+
+        return chromadb.HttpClient(host=self.settings.chroma_host, port=self.settings.chroma_port)
 
     @cached_property
     def recuperador(self) -> Recuperador:
-        """Recuperador provisional en memoria; B8 pone el híbrido (Chroma + BM25)."""
-        return RecuperadorEnMemoria()
+        """Recuperación híbrida: Chroma + BM25 + RRF (ADR-04); conecta con Chroma al primer uso."""
+        return RecuperadorHibrido(self.cliente_chroma, self.embeddings)
 
     def horario(self, reloj: Reloj | None = None) -> Horario:
         """Horario de atención; el modo de evaluación inyecta un reloj simulado (ADR-16)."""

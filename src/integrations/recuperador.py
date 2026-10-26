@@ -1,6 +1,6 @@
-"""Interfaz del recuperador y una implementación provisional en memoria.
+"""Interfaz del recuperador y una implementación en memoria, para las pruebas.
 
-B7 usa esta interfaz; B8 la reemplaza con la recuperación híbrida (Chroma + BM25 + RRF, ADR-04).
+El sistema usa la recuperación híbrida de `recuperacion_hibrida.py` (Chroma + BM25 + RRF, ADR-04).
 `RecuperadorEnMemoria` lee `knowledge_base/` y puntúa por solapamiento de palabras: sirve para
 probar el flujo, no para medir la calidad de la recuperación.
 """
@@ -13,7 +13,13 @@ from typing import Protocol
 
 import yaml
 
+from src.services.confianza import EscalaSimilitud
+
 RAIZ_BASE = Path(__file__).resolve().parent.parent.parent / "knowledge_base"
+# Escala del coseno de `text-embedding-3-large` sobre esta base, fijada en B8 con 10 consultas de
+# prueba (`scripts/calibrar_similitud.py`, `reports/b08_calibracion.json`): 0,41 es el coseno más
+# alto de las consultas sin relación (vale 0) y 0,57, la mediana de las pertinentes (vale 1).
+ESCALA_SIMILITUD = EscalaSimilitud(minimo=0.41, maximo=0.57)
 PALABRA = re.compile(r"[a-z0-9]{3,}")
 
 
@@ -25,6 +31,9 @@ class Fragmento:
     similitud: float  # coseno del canal vectorial (en memoria: solapamiento de palabras)
     norma: str = ""  # nombre de la norma, de `fuentes.yaml`
     url: str = ""
+    id: str = ""
+    vigencia_desde: int = 0  # AAAAMMDD
+    vigencia_hasta: int = 99991231
 
     @property
     def cita(self) -> str:
