@@ -42,6 +42,12 @@ curl -s localhost:8001/api/v1/chat/mensaje -H 'Content-Type: application/json' \
   -d '{"id_conversacion": "prueba-1", "mensaje": "¿Qué es el predial?"}'
 ```
 
+Recibos sintéticos para el agente OCR (B10), en `datos/recibos/`:
+
+```bash
+uv run python -m src.data.generar.recibos
+```
+
 Fuera del horario de atención (lunes a viernes no festivos, de 8:00 a. m. a 5:00 p. m.) la API
 responde el aviso de horario. Los puntos de acceso están en `/docs`. La web llega en B11.
 
