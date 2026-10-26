@@ -553,7 +553,7 @@ export default function Consola() {
               onClick={() => setVista(clave)}
               aria-pressed={vista === clave}
               className={`min-h-11 rounded-t-control px-5 text-sm font-semibold active:scale-100 ${
-                vista === clave ? "bg-sello text-blanco" : "bg-papel-2 text-tinta hover:bg-sello-suave hover:text-sello-texto"
+                vista === clave ? "bg-sello text-blanco shadow-[inset_0_4px_0_var(--color-sello-texto)]" : "bg-papel-2 text-tinta hover:bg-sello-suave hover:text-sello-texto"
               }`}
             >
               {nombre}

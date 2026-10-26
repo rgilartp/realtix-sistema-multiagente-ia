@@ -49,7 +49,6 @@
   /* Quien habla y estados. El verde nunca va con texto sobre el azul (1,7:1). */
   --color-funcionario: #188034; /* relleno, con texto blanco */
   --color-funcionario-texto: #16762f; /* el mismo verde, un poco más oscuro para texto */
-  --color-funcionario-suave: #e3f2e7;
   --color-advertencia: #6e4600;
   --color-advertencia-suave: #fff3cc;
   --color-advertencia-borde: #c9962b;
@@ -124,7 +123,6 @@
     --color-sello-suave: #163a60;
     --color-burbuja: #24476e;
     --color-funcionario-texto: #6fd08c;
-    --color-funcionario-suave: #12331f;
     --color-advertencia: #f2c56b;
     --color-advertencia-suave: #2e2408;
     --color-advertencia-borde: #8a6a1c;

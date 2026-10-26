@@ -3,6 +3,8 @@
 // CAPTURAS=1, cada uno guarda su captura en docs/capturas/ y cuatro de ellos, también la del modo
 // oscuro. Al final, las pruebas del tema claro u oscuro y del ancho mínimo (360 px). Cada flujo
 // lleva sus requerimientos como anotación `req`, que lee scripts/trazabilidad.py.
+import { readFileSync } from "node:fs";
+
 import { expect, test } from "@playwright/test";
 
 import { TEXTOS, simularApi } from "./simulador.js";
@@ -276,11 +278,13 @@ for (const { nombre, flujo, req } of FLUJOS) {
 
 // -- Tema claro u oscuro --------------------------------------------------------------------------
 
+// El botón del tema cambia también el del widget insertado: RF-UI-01.
+const TEMA_REQ = { annotation: [{ type: "req", description: "RF-UI-01 · Widget embebible" }] };
 const temaDe = (pagina) => pagina.locator("html");
 const widgetHtml = (page) => page.frameLocator("iframe[data-realtix-widget]").locator("html");
 
 for (const ruta of ["/ovt/", "/consola/"]) {
-  test(`tema en ${ruta}: el botón «Modo oscuro» cambia el tema y lo recuerda al recargar`, async ({ page }) => {
+  test(`tema en ${ruta}: el botón «Modo oscuro» cambia el tema y lo recuerda al recargar`, TEMA_REQ, async ({ page }) => {
     await simularApi(page);
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto(ruta);
@@ -299,7 +303,7 @@ for (const ruta of ["/ovt/", "/consola/"]) {
     await expect(boton).toHaveAttribute("aria-pressed", "false");
   });
 
-  test(`tema en ${ruta}: arranca oscuro con el sistema y funciona sin localStorage`, async ({ page }) => {
+  test(`tema en ${ruta}: arranca oscuro con el sistema y funciona sin localStorage`, TEMA_REQ, async ({ page }) => {
     const errores = [];
     page.on("pageerror", (error) => errores.push(error.message));
     await simularApi(page);
@@ -380,6 +384,48 @@ test(
   },
 );
 
+test("tema: el widget ignora el tema de una página de otro origen y no queda oculto", TEMA_REQ, async ({ page }) => {
+  await simularApi(page);
+  await page.emulateMedia({ colorScheme: "light" });
+  // Una página en otro origen (127.0.0.1) inserta el widget de localhost: no está entre sus
+  // orígenes permitidos, así que el widget no le avisa que está listo ni le acepta mensajes.
+  await page.route("http://127.0.0.1:4173/otra-pagina/", (ruta) =>
+    ruta.fulfill({
+      contentType: "text/html",
+      body:
+        '<!doctype html><html lang="es" data-tema="oscuro"><body>' +
+        '<script src="http://localhost:4173/widget/embed.js"></script></body></html>',
+    }),
+  );
+  // Las dos direcciones son locales: Chromium pide permiso de red local para cargar el widget.
+  await page.context().grantPermissions(["local-network-access"]);
+  await page.goto("http://127.0.0.1:4173/otra-pagina/");
+  const widget = page.frameLocator("iframe[data-realtix-widget]");
+  // Sin tema de la página, el widget se muestra igual al vencer la espera (400 ms).
+  await expect(widget.getByTestId("aviso-ia")).toBeVisible();
+  await expect(widgetHtml(page)).not.toHaveAttribute("data-tema-pendiente", /.*/);
+  await page.evaluate(() =>
+    document
+      .querySelector("iframe[data-realtix-widget]")
+      .contentWindow.postMessage({ tipo: "realtix-tema", tema: "oscuro" }, "http://localhost:4173"),
+  );
+  const marco = page.frames().find((f) => f.url().endsWith("/widget/"));
+  await marco.evaluate(() => new Promise((listo) => setTimeout(listo, 200)));
+  await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
+});
+
+// La CSP del despliegue (B13) bloquea los scripts en línea: ninguna página compilada los tiene.
+test("las páginas compiladas no tienen scripts en línea", async () => {
+  for (const pagina of ["index.html", "ovt/index.html", "widget/index.html", "consola/index.html"]) {
+    const html = readFileSync(new URL(`../dist/${pagina}`, import.meta.url), "utf-8");
+    const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)];
+    for (const [, atributos, cuerpo] of scripts) {
+      expect(atributos, pagina).toMatch(/\bsrc=/);
+      expect(cuerpo.trim(), pagina).toBe("");
+    }
+  }
+});
+
 // Sin desplazamiento horizontal desde 360 px, en los dos modos. La matriz de la consola se desliza
 // dentro de su propio contenedor (y lo avisa), no la página.
 const sinDesborde = async (marco) =>
@@ -387,7 +433,7 @@ const sinDesborde = async (marco) =>
 
 for (const esquema of ["light", "dark"]) {
   const modo = esquema === "dark" ? "oscuro" : "claro";
-  test(`ancho mínimo: sin desplazamiento horizontal desde 360 px (modo ${modo})`, async ({ page }) => {
+  test(`ancho mínimo: sin desplazamiento horizontal desde 360 px (modo ${modo})`, TEMA_REQ, async ({ page }) => {
     await simularApi(page);
     await page.emulateMedia({ colorScheme: esquema });
     for (const ancho of [MINIMO, CELULAR]) {

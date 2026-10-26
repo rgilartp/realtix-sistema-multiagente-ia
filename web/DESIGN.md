@@ -20,7 +20,6 @@ colors:
   resaltador: "#FFD54F"
   funcionario: "#188034"
   funcionario-texto: "#16762F"
-  funcionario-suave: "#E3F2E7"
   advertencia: "#6E4600"
   advertencia-suave: "#FFF3CC"
   advertencia-borde: "#C9962B"
@@ -135,7 +134,6 @@ El modo claro son los valores del frontmatter. El modo oscuro reemplaza estos to
 | sello-suave | `#163A60` |
 | burbuja | `#24476E` |
 | funcionario-texto | `#6FD08C` |
-| funcionario-suave | `#12331F` |
 | advertencia | `#F2C56B` |
 | advertencia-suave | `#2E2408` |
 | advertencia-borde | `#8A6A1C` |
@@ -170,9 +168,9 @@ El modo claro son los valores del frontmatter. El modo oscuro reemplaza estos to
 
 ## Elevation & Depth
 
-Solo el panel flotante del widget y su botón llevan sombra. En el modo oscuro, donde la sombra
-casi no se ve, un filete de `renglon` separa el panel de la página. Las secciones se separan con
-bordes, bandas y renglones.
+Solo el panel flotante del widget y su botón llevan sombra. El panel lleva además un filete de
+1 px: muy tenue en el modo claro y de `renglon` en el oscuro, donde la sombra casi no se ve. Las
+secciones se separan con bordes, bandas y renglones.
 
 ## Shapes
 
@@ -184,7 +182,7 @@ bordes, bandas y renglones.
 ## Components
 
 - **Rótulo:** franja fija arriba de la OVT con el texto exacto «Entorno simulado de pruebas — no
-  es la Oficina Virtual Tributaria real», grande y con un filete inferior de `tinta`. La consola
+  es la Oficina Virtual Tributaria real», grande y con un filete inferior de `tinta-oscura`, igual en los dos modos. La consola
   lleva una versión más baja.
 - **Banda:** el título de un bloque (sesión simulada, caso, matriz, tabla por categoría) en un
   rectángulo de `sello` con texto `blanco`. Las bandas y el rótulo concentran la audacia de la
@@ -193,6 +191,8 @@ bordes, bandas y renglones.
   entera.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
   mensaje.
+- **Pestañas de la consola:** la activa es un relleno de `sello` con una marca superior de
+  `sello-texto`, que la distingue de las inactivas en los dos modos.
 - **Botón «Modo oscuro»:** está en la OVT y en la consola. Es un botón con `aria-pressed` y una
   casilla de formulario que se marca con una X. El cambio de tema es instantáneo y no hace
   transiciones.
@@ -208,7 +208,8 @@ bordes, bandas y renglones.
 
 - Do: conservar el texto exacto del rótulo, grande y siempre visible.
 - Don't: usar marcas, logos, colores ni nombres reales (Alcaldía de Bogotá, Secretaría de
-  Hacienda, DIAN o bancos), ni copiar el estilo de un producto real.
+  Hacienda, DIAN o bancos), ni copiar el estilo de un producto real. La única excepción son los
+  colores del logo de Realtix (ver Colors).
 - Don't: poner fotos ni imágenes en la OVT.
 - Don't: dar al azul degradados, brillos ni íconos de magia o destellos.
 - Don't: juntar el verde y el azul con texto (1,7:1).

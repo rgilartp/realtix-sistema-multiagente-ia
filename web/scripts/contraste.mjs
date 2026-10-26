@@ -47,6 +47,9 @@ const PARES = [
   ["texto suave en papel", "tinta-suave", "papel", 4.5],
   ["texto suave en hoja", "tinta-suave", "hoja", 4.5],
   ["texto suave en zona secundaria", "tinta-suave", "papel-2", 4.5],
+  ["texto en zona secundaria (pestaña «Sistema», pestañas inactivas)", "tinta", "papel-2", 4.5],
+  ["texto en azul suave (caso elegido)", "tinta", "sello-suave", 4.5],
+  ["texto suave en azul suave (caso elegido)", "tinta-suave", "sello-suave", 4.5],
   ["azul de texto en hoja (enlaces)", "sello-texto", "hoja", 4.5],
   ["azul de texto en papel", "sello-texto", "papel", 4.5],
   ["azul de texto en zona secundaria (pestañas)", "sello-texto", "papel-2", 4.5],
@@ -60,8 +63,9 @@ const PARES = [
   ["verde de texto en hoja", "funcionario-texto", "hoja", 4.5],
   ["verde de texto en papel", "funcionario-texto", "papel", 4.5],
   ["verde de texto en zona secundaria", "funcionario-texto", "papel-2", 4.5],
-  ["verde de texto en su fondo", "funcionario-texto", "funcionario-suave", 4.5],
   ["ámbar en su fondo (fuera de horario)", "advertencia", "advertencia-suave", 4.5],
+  ["texto en el fondo ámbar", "tinta", "advertencia-suave", 4.5],
+  ["texto en el fondo de error", "tinta", "error-suave", 4.5],
   ["error en su fondo", "error", "error-suave", 4.5],
   ["error en hoja", "error", "hoja", 4.5],
   ["borde de control en hoja", "borde-control", "hoja", 3],
@@ -73,6 +77,8 @@ const PARES = [
   ["foco resaltador sobre azul (cabecera, bandas, pestañas)", "resaltador", "sello", 3],
   ["foco tinta sobre el caso elegido", "tinta", "sello-suave", 3],
   ["puntos de «escribiendo» y barras del F1 sobre hoja", "sello-texto", "hoja", 3],
+  ["marca de la pestaña activa de la consola frente a la inactiva", "sello-texto", "papel-2", 3],
+  ["marca de la pestaña activa frente a su relleno azul", "sello-texto", "sello", 3, "solo oscuro"],
 ];
 
 let fallas = 0;
@@ -84,7 +90,8 @@ const linea = (que, valor, minimo) => {
 
 for (const [modo, color] of Object.entries(MODOS)) {
   console.log(`\nModo ${modo}`);
-  for (const [que, a, b, minimo] of PARES) {
+  for (const [que, a, b, minimo, solo] of PARES) {
+    if (solo === "solo oscuro" && modo !== "oscuro") continue; // en claro, la marca es el mismo azul
     if (!color[a] || !color[b]) {
       console.log(`FALLA falta el color ${color[a] ? b : a} (${que})`);
       fallas += 1;
@@ -97,6 +104,8 @@ for (const [modo, color] of Object.entries(MODOS)) {
   const error = mezcla(color["celda-error"], tope.error, color.hoja);
   linea(`celda de acierto más intensa (${tope.acierto} %) con tinta`, contraste(color.tinta, acierto), 4.5);
   linea(`celda de error más intensa (${tope.error} %) con tinta`, contraste(color.tinta, error), 4.5);
+  // Borde blanco al 80 % del botón «Hablar con un funcionario», su único límite, sobre la cabecera.
+  linea("borde blanco al 80 % del botón de la cabecera sobre azul", contraste(mezcla(color.blanco, 80, color.sello), color.sello), 3);
   // embed.js: su fondo es el papel del modo y el foco del botón se ve sobre él.
   const [papel, foco] = [colorEmbed(modo, "papel"), colorEmbed(modo, "foco")];
   if (papel !== color.papel) {

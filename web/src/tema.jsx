@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 
 const CLAVE = "tema";
 export const TEMAS = ["claro", "oscuro"];
+// La elección de esta visita, por si el almacenamiento falla: así un cambio del tema del sistema
+// no la deshace.
+let elegido = null;
 
 const temaActual = () => (document.documentElement.getAttribute("data-tema") === "oscuro" ? "oscuro" : "claro");
 
 function guardado() {
+  if (elegido) return elegido;
   try {
     const valor = window.localStorage.getItem(CLAVE);
     return TEMAS.includes(valor) ? valor : null;
@@ -47,6 +51,7 @@ export function BotonTema() {
     const nuevo = tema === "oscuro" ? "claro" : "oscuro";
     aplicarTema(nuevo);
     setTema(nuevo);
+    elegido = nuevo;
     try {
       window.localStorage.setItem(CLAVE, nuevo);
     } catch {
