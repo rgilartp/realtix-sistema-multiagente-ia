@@ -72,7 +72,7 @@ class AgentState(TypedDict, total=False):
     marcas: dict[str, Any]
     respuesta_final: str
     categorias_descartadas: list[str]
-    parte_actual: dict[str, str]  # {"categoria", "texto"} de la parte que atiende el worker
+    parte_actual: dict[str, str]  # {"categoria", "texto", "busqueda"} de la parte del worker
 
 
 def entrada_de_turno(

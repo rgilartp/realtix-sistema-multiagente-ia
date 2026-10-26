@@ -3,8 +3,10 @@
 Tiene la firma `Clasificador` de B4, así que `nodo_orquestador` no cambia. El modelo devuelve las
 partes y las marcas en `json_schema` (Sonnet 5.5 no acepta `tool_choice` forzado); el código decide
 lo que no le toca al modelo: la sesión requerida sale de «consulta personal» y de si hay sesión, y
-un adjunto va siempre a `ocr`. Al modelo no llegan nombres, documentos ni identificadores: solo el
-texto anonimizado y si hay sesión, sí o no (RNF-03).
+un adjunto va siempre a `ocr`. Cada parte trae, en la misma llamada, una consulta de búsqueda en
+los términos de las normas (`busqueda`), con la que el agente recupera los fragmentos; el agente
+sigue respondiendo el texto del contribuyente (extensión de la sección 3.3). Al modelo no llegan
+nombres, documentos ni identificadores: solo el texto anonimizado y si hay sesión, sí o no (RNF-03).
 """
 
 from collections.abc import Callable
@@ -28,6 +30,7 @@ class Parte(BaseModel):
     model_config = ConfigDict(extra="forbid")
     categoria: Literal["ipu", "ica", "general", "ocr", "fuera_de_alcance"]
     texto: str
+    busqueda: str
 
 
 class SalidaOrquestador(BaseModel):
@@ -89,19 +92,28 @@ def interpretar(salida: SalidaOrquestador, state: AgentState) -> Clasificacion:
         )
         if getattr(salida, nombre)
     }
-    partes = [p.model_dump() for p in salida.partes if p.texto.strip()]
+    partes = [
+        {**p.model_dump(), "busqueda": p.busqueda.strip() or p.texto}
+        for p in salida.partes
+        if p.texto.strip()
+    ]
     adjunto = state.get("documento_adjunto") is not None
     if adjunto and not any(p["categoria"] == "ocr" for p in partes):
-        partes.insert(0, {"categoria": "ocr", "texto": partes[0]["texto"] if partes else ""})
-    texto_completo = " ".join(p["texto"] for p in partes)
+        primera = partes[0] if partes else {"texto": "", "busqueda": ""}
+        partes.insert(0, {"categoria": "ocr", **{k: primera[k] for k in ("texto", "busqueda")}})
+    unida = {
+        "categoria": "general",
+        "texto": " ".join(p["texto"] for p in partes),
+        "busqueda": " ".join(p["busqueda"] for p in partes),
+    }
     if (salida.consulta_personal or adjunto) and not state.get("contribuyente_id"):
         marcas["sesion_requerida"] = True
-        partes = [{"categoria": "general", "texto": texto_completo}]
+        partes = [unida]
     if marcas.get("pregunta_ia"):
-        partes = [{"categoria": "general", "texto": texto_completo}]
+        partes = [unida]
     descartadas = state.get("categorias_descartadas", [])
     partes = [p for p in partes if p["categoria"] not in descartadas]
-    return Clasificacion(partes or [{"categoria": "general", "texto": texto_completo}], marcas)
+    return Clasificacion(partes or [unida], marcas)
 
 
 class ClasificadorLLM:

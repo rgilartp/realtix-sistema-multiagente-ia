@@ -2,7 +2,9 @@
 
 Un turno de agente:
 
-1. recupera, sin modelo, los fragmentos de su colección vigentes en el año gravable de la parte;
+1. recupera, sin modelo, los fragmentos de su colección vigentes en el año gravable de la parte,
+   con la consulta de búsqueda que escribió el orquestador en los términos de las normas (el año,
+   el prompt y la respuesta salen del texto del contribuyente);
 2. llamada 1 al modelo, con las herramientas (en paralelo si hacen falta varias) y sin formato:
    con la salida en `json_schema` desde la primera llamada, Haiku 5.5 tendía a contestar sin pedir
    las herramientas (prueba de humo de B7). La llamada 2, sin más herramientas, entrega la
@@ -32,7 +34,7 @@ from pydantic import BaseModel, ConfigDict
 from src.agents.clasificador import historial_anonimizado
 from src.agents.dependencias import Dependencias
 from src.agents.herramientas import Contexto, Herramienta, Resultado, fecha
-from src.agents.nodes._comun import parcial, texto_de_la_parte
+from src.agents.nodes._comun import busqueda_de_la_parte, parcial, texto_de_la_parte
 from src.agents.prompts import Prompt
 from src.agents.state import AgentState
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE, PredioInaccesibleError
@@ -221,8 +223,9 @@ def ejecutar_agente(
         return caida, datos
 
     anonimizador = Anonimizador(para_modelos=True)
+    busqueda = anonimizador.texto(busqueda_de_la_parte(state))
     try:  # la consulta va anonimizada también a los embeddings
-        fragmentos = recuperar(deps, config, anonimizador.texto(texto), anio)
+        fragmentos = recuperar(deps, config, busqueda, anio)
     except Exception as error:  # Chroma o los embeddings no respondieron (RNF-08)
         return fallo("recuperación", error)
 

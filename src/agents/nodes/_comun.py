@@ -45,6 +45,12 @@ def texto_de_la_parte(state: AgentState) -> str:
     return state.get("parte_actual", {}).get("texto") or ultimo_texto(state)
 
 
+def busqueda_de_la_parte(state: AgentState) -> str:
+    """Consulta de búsqueda de la parte, en los términos de las normas (la escribe el orquestador);
+    sin ella, el texto de la parte."""
+    return state.get("parte_actual", {}).get("busqueda") or texto_de_la_parte(state)
+
+
 def agregar_parcial(state: AgentState, respuesta: dict[str, Any]) -> list[dict[str, Any]]:
     """Respuestas parciales con la nueva al final, anotada con la parte que responde."""
     return [

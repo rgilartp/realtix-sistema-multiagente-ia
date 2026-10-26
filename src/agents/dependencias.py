@@ -21,7 +21,7 @@ from src.services.horario import Reloj
 class Clasificacion:
     """Salida del orquestador: partes por categoría (en orden) y marcas de la consulta."""
 
-    partes: list[dict[str, str]] = field(default_factory=list)  # {"categoria", "texto"}
+    partes: list[dict[str, str]] = field(default_factory=list)  # {"categoria", "texto", "busqueda"}
     marcas: dict[str, Any] = field(default_factory=dict)
 
 

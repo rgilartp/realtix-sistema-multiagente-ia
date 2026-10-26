@@ -111,7 +111,7 @@ def regla_de_categorias() -> list[str]:
 @pytest.mark.req("RF-ORQ-01 · Clasificación de la consulta")
 def test_el_prompt_del_orquestador_lleva_la_regla_de_categorias_del_conjunto() -> None:
     prompt = cargar_prompt("orquestador")
-    assert prompt.version == "v1"
+    assert prompt.version == "v2"
     regla = regla_de_categorias()
     assert len(regla) >= 15
     for linea in regla:
@@ -158,18 +158,25 @@ def salida_orquestador(partes, **marcas) -> SalidaOrquestador:
 @pytest.mark.unit
 @pytest.mark.req("RF-AUT-04 · Aviso de sesión requerida")
 def test_la_sesion_requerida_la_decide_el_codigo_y_no_el_modelo() -> None:
-    s = salida_orquestador([{"categoria": "ipu", "texto": "¿Cuánto debo?"}], consulta_personal=True)
+    s = salida_orquestador(
+        [{"categoria": "ipu", "texto": "¿Cuánto debo?", "busqueda": "saldo del impuesto predial"}],
+        consulta_personal=True,
+    )
     sin_sesion = interpretar(s, estado("¿Cuánto debo?"))
     assert sin_sesion.marcas["sesion_requerida"] and sin_sesion.partes[0]["categoria"] == "general"
     con_sesion = interpretar(s, estado("¿Cuánto debo?", U03, [P03]))
     assert "sesion_requerida" not in con_sesion.marcas
-    assert con_sesion.partes == [{"categoria": "ipu", "texto": "¿Cuánto debo?"}]
+    assert con_sesion.partes == [
+        {"categoria": "ipu", "texto": "¿Cuánto debo?", "busqueda": "saldo del impuesto predial"}
+    ]
 
 
 @pytest.mark.unit
 @pytest.mark.req("RF-ORQ-01 · Clasificación de la consulta")
 def test_un_adjunto_va_a_ocr_y_las_categorias_descartadas_no_vuelven() -> None:
-    s = salida_orquestador([{"categoria": "ipu", "texto": "Revisa mi recibo"}])
+    s = salida_orquestador(
+        [{"categoria": "ipu", "texto": "Revisa mi recibo", "busqueda": "recibo"}]
+    )
     adjunto = estado("Revisa mi recibo", U03, [P03], documento_adjunto={"tipo": "imagen"})
     assert interpretar(s, adjunto).partes[0]["categoria"] == "ocr"
     descartada = estado("Algo", U03, [P03], categorias_descartadas=["ipu"])
@@ -180,7 +187,7 @@ def test_un_adjunto_va_a_ocr_y_las_categorias_descartadas_no_vuelven() -> None:
 @pytest.mark.req("RF-ORQ-05 · Modelo de razonamiento", "RNF-03 · Protección de datos personales")
 def test_el_clasificador_llm_anonimiza_y_trata_la_negativa_como_falla() -> None:
     respuesta = salida(
-        partes=[{"categoria": "ipu", "texto": "¿Cuánto debo?"}],
+        partes=[{"categoria": "ipu", "texto": "¿Cuánto debo?", "busqueda": "saldo del predial"}],
         consulta_personal=True, solicitud_explicita=False, pregunta_ia=False,
         tributario_fuera_mvp=False, municipio_distinto=False, no_tributario=False,
     )  # fmt: skip
@@ -194,6 +201,73 @@ def test_el_clasificador_llm_anonimiza_y_trata_la_negativa_como_falla() -> None:
     assert "Sesión iniciada: sí" in enviado
     with pytest.raises(ServicioNoDisponibleError):
         clasificar(texto, estado(texto, U03, [P03]))
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-03 · Consultas multiagente", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_cada_parte_trae_su_consulta_de_busqueda_en_los_terminos_de_la_norma() -> None:
+    """Revisión externa: el orquestador devuelve, en la misma llamada, la búsqueda de cada parte."""
+    s = salida_orquestador(
+        [
+            {"categoria": "ipu", "texto": "¿Cuánto sube mi predial?",
+             "busqueda": "límite al aumento anual del impuesto predial"},
+            {"categoria": "ica", "texto": "¿y el ICA?", "busqueda": ""},
+        ],
+        pregunta_ia=False,
+    )  # fmt: skip
+    partes = interpretar(s, estado("x", U03, [P03])).partes
+    assert partes[0]["busqueda"] == "límite al aumento anual del impuesto predial"
+    assert partes[1]["busqueda"] == "¿y el ICA?"  # sin búsqueda, el texto de la parte
+    # Al juntar las partes (pregunta por la IA, sesión requerida), se juntan las búsquedas.
+    (unida,) = interpretar(salida_orquestador(s.partes, pregunta_ia=True), estado("x")).partes
+    assert unida["busqueda"] == "límite al aumento anual del impuesto predial ¿y el ICA?"
+    assert "busqueda" in SalidaOrquestador.model_json_schema()["$defs"]["Parte"]["required"]
+    assert "## Consulta de búsqueda" in cargar_prompt("orquestador").texto
+
+
+class RecuperadorQueAnota:
+    """Recuperador falso que guarda cada consulta y no devuelve fragmentos."""
+
+    def __init__(self) -> None:
+        self.consultas: list[str] = []
+
+    def recuperar(self, consulta: str, **_: Any) -> list[Fragmento]:
+        self.consultas.append(consulta)
+        return []
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-IPU-01 · Consultas conceptuales de IPU", "RNF-03 · Protección de datos personales"
+)
+def test_el_agente_recupera_con_la_busqueda_y_responde_el_texto_del_contribuyente(
+    adaptador,
+) -> None:
+    texto = "Soy Ana Pérez, ¿cuánto puede subir mi predial de un año a otro?"
+    recuperador = RecuperadorQueAnota()
+    modelo = ModeloFalso([final("Respuesta.")])
+    deps = dependencias(adaptador, modelo, recuperador)
+    entrada = estado(texto)
+    entrada["parte_actual"] = {
+        "categoria": "ipu",
+        "texto": texto,
+        "busqueda": "límite al aumento anual del impuesto predial",
+    }
+    agente = ConfigAgente("ipu", prompt_de_agente("ipu"), ("normativa_ipu",))
+    ejecutar_agente(agente, deps, entrada, configuracion_de_hilo("c", RELOJ_ESCENARIOS))
+    assert recuperador.consultas == ["límite al aumento anual del impuesto predial"]
+    enviado = modelo.texto_enviado()
+    assert "¿cuánto puede subir mi predial de un año a otro?" in enviado  # «Parte que atiendes»
+    assert "límite al aumento anual" not in enviado and "Ana Pérez" not in enviado
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-01 · Clasificación de la consulta")
+def test_el_clasificador_simulado_usa_el_texto_como_busqueda(adaptador) -> None:
+    grafo = construir_grafo(Dependencias(adaptador))
+    entrada = entrada_de_turno("¿Qué es el predial?", "conv-busqueda")
+    final_ = grafo.invoke(entrada, configuracion_de_hilo("conv-busqueda", RELOJ_ESCENARIOS))
+    assert final_["parte_actual"]["busqueda"] == final_["parte_actual"]["texto"]
 
 
 # -- Agente del predial -------------------------------------------------------------------------
