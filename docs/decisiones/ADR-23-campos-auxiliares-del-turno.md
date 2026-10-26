@@ -16,6 +16,8 @@ Tres campos auxiliares, todos del turno (se reinician en cada mensaje):
 
 La oferta de transferencia tras la pregunta por la IA se guarda en `datos_extraidos` (campo que sí se conserva entre turnos), para tratar un «sí» posterior como solicitud explícita.
 
+`intentos_clasificacion` se acumula por conversación (sección 3.1), así que el tope de 2 reclasificaciones vale para toda la conversación y no por turno; si en B7 se quisiera un tope por turno, se consulta antes.
+
 ## Alternativas
 
 Usar solo los 14 campos, codificando las marcas dentro de `motivo_escalamiento` o `respuestas_parciales`; se descartó por frágil.

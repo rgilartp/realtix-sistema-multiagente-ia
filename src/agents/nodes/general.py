@@ -4,7 +4,7 @@ from collections.abc import Callable
 from typing import Any
 
 from src.agents.dependencias import Dependencias
-from src.agents.nodes._comun import parcial, ultimo_texto
+from src.agents.nodes._comun import parcial
 from src.agents.state import AgentState
 
 AVISO_SESION = (
@@ -31,7 +31,6 @@ def crear_nodo_general(deps: Dependencias) -> Callable[[AgentState], dict[str, A
         elif state.get("categoria") == "fuera_de_alcance":
             respuesta = parcial("general", FUERA_DE_ALCANCE)
         else:
-            _ = ultimo_texto(state)
             respuesta = parcial(
                 "general",
                 GENERAL,

@@ -134,7 +134,8 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
         partes = clasificacion.partes
         return {
             "categoria": partes[0]["categoria"],
-            "categorias_pendientes": pendientes + partes[1:],
+            "categorias_pendientes": pendientes
+            + [p for p in partes[1:] if p["categoria"] not in {x["categoria"] for x in pendientes}],
             "marcas": marcas,
             "intentos_clasificacion": intentos,
             "datos_extraidos": datos,
