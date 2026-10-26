@@ -3,24 +3,30 @@ version: alpha
 name: Formulario y sello
 description: Sistema visual de la OVT simulada, el widget del asistente tributario y la consola de funcionarios del sistema multiagente de IA.
 colors:
-  papel: "#ECF1EE"
-  papel-2: "#DFE7E2"
+  papel: "#F2F6FA"
+  papel-2: "#E1E9F1"
   hoja: "#FFFFFF"
-  renglon: "#C3D1CA"
-  borde-control: "#6B7A75"
-  tinta: "#1D2433"
-  tinta-suave: "#4A5560"
-  sello: "#4B2C85"
-  sello-fuerte: "#3A1F6C"
-  sello-suave: "#ECE6F5"
+  renglon: "#C4D2E0"
+  borde-control: "#66788C"
+  tinta: "#13233A"
+  tinta-suave: "#46566A"
+  tinta-oscura: "#13233A"
+  blanco: "#FFFFFF"
+  sello: "#074C91"
+  sello-fuerte: "#053A70"
+  sello-texto: "#074C91"
+  sello-suave: "#E3EDF8"
+  burbuja: "#13233A"
   resaltador: "#FFD54F"
-  funcionario: "#24613F"
-  funcionario-suave: "#E2F0E6"
+  funcionario: "#188034"
+  funcionario-texto: "#16762F"
   advertencia: "#6E4600"
   advertencia-suave: "#FFF3CC"
   advertencia-borde: "#C9962B"
   error: "#A3271F"
   error-suave: "#FBE9E7"
+  celda-acierto: "#074C91"
+  celda-error: "#A3271F"
 typography:
   titulo:
     fontFamily: Archivo Variable
@@ -56,11 +62,11 @@ rounded:
 components:
   rotulo:
     backgroundColor: "{colors.resaltador}"
-    textColor: "{colors.tinta}"
+    textColor: "{colors.tinta-oscura}"
     typography: "{typography.titulo}"
   banda:
     backgroundColor: "{colors.sello}"
-    textColor: "{colors.hoja}"
+    textColor: "{colors.blanco}"
     typography: "{typography.titulo}"
     rounded: "{rounded.casilla}"
   casilla:
@@ -69,34 +75,77 @@ components:
     rounded: "{rounded.casilla}"
   boton-principal:
     backgroundColor: "{colors.sello}"
-    textColor: "{colors.hoja}"
+    textColor: "{colors.blanco}"
     rounded: "{rounded.control}"
   boton-principal-hover:
     backgroundColor: "{colors.sello-fuerte}"
-    textColor: "{colors.hoja}"
+    textColor: "{colors.blanco}"
 ---
 
 ## Overview
 
 La oficina virtual tributaria simulada de un municipio colombiano, su asistente de IA y la
 consola de los funcionarios. La dirección sale de los materiales del trámite: el papel de
-seguridad verde pálido de los recibos, las casillas de los formularios con su rótulo dentro del
-borde, las bandas que encabezan cada bloque y la tinta morada de los sellos de radicado. No imita
-ningún formulario, sello ni marca real. El tono es institucional y sobrio; la cercanía la dan la
-letra legible y el lenguaje claro.
+seguridad de los recibos, las casillas de los formularios con su rótulo dentro del borde, las
+bandas que encabezan cada bloque y la tinta azul de los sellos de radicado. No imita ningún
+formulario, sello ni marca real. Los colores son los del logo de Realtix (azul, verde y blanco),
+sin el logo ni el nombre. El tono es institucional y sobrio; la cercanía la dan la letra legible y
+el lenguaje claro. Hay modo claro y modo oscuro, con los mismos colores.
 
 ## Colors
 
-- El fondo de las páginas es `papel`; lo que se lee o se llena va en `hoja`.
-- `sello` es el único acento: el asistente de IA, las bandas, los botones principales y el foco.
-  Es tinta plana.
-- `resaltador` se reserva para el rótulo de entorno simulado y para el anillo de foco sobre
-  `sello` o `tinta`.
-- Quien habla tiene un color fijo y siempre su nombre escrito: `sello` para el asistente de IA,
-  `funcionario` para el funcionario y `papel-2` con `tinta` para el sistema.
+- El fondo de las páginas es `papel`; lo que se lee o se llena va en `hoja`. Los neutros salen
+  del azul.
+- `sello` es el relleno de las bandas, los botones principales, la cabecera del widget y la
+  pestaña del asistente de IA, siempre con texto `blanco`. Es tinta plana.
+- `sello-texto` es el azul para texto, enlaces, el anillo de foco sobre `papel` y `hoja`, y el
+  anillo del caso elegido. En el modo claro coincide con `sello`; en el oscuro es más claro.
+- El verde es del funcionario y de los estados correctos: `funcionario` como relleno con texto
+  `blanco` y `funcionario-texto` para texto.
+- El verde y el azul nunca se juntan con texto.
+- `resaltador` se reserva para el rótulo de entorno simulado, con `tinta-oscura`, y para el anillo
+  de foco sobre `sello`.
+- El ámbar de fuera de horario y el rojo de error son avisos: conservan su color en los dos modos.
+- Quien habla tiene un color fijo y siempre su nombre escrito: azul para el asistente de IA, verde
+  para el funcionario y `papel-2` con `tinta` para el sistema. El mensaje del contribuyente va en
+  `burbuja` con texto `blanco`.
 - `renglon` solo separa filas y bloques. El borde de cualquier control usa `borde-control`.
-- Todo par de texto cumple 4,5:1 y todo control o anillo de foco, 3:1. `npm run contraste`
-  lo mide, junto con las celdas más intensas de la matriz de la consola.
+- La matriz de la consola mezcla `celda-acierto` o `celda-error` con la `hoja` del modo, hasta su
+  tope, y el texto es `tinta`.
+- En los dos modos, todo par de texto cumple 4,5:1, y todo control o anillo de foco, 3:1.
+  `npm run contraste` lo mide, junto con las celdas más intensas de la matriz, y la CI lo corre.
+
+## Themes
+
+El modo claro son los valores del frontmatter. El modo oscuro reemplaza estos tokens; los demás
+(`sello`, `blanco`, `resaltador`, `tinta-oscura` y `funcionario`) son iguales en los dos modos.
+
+| Token | Oscuro |
+|---|---|
+| papel | `#0A1626` |
+| papel-2 | `#182C47` |
+| hoja | `#11223A` |
+| renglon | `#2A4060` |
+| borde-control | `#7088A6` |
+| tinta | `#E6EDF5` |
+| tinta-suave | `#A8B8CB` |
+| sello-fuerte | `#0A5CAD` |
+| sello-texto | `#8CC2F5` |
+| sello-suave | `#163A60` |
+| burbuja | `#24476E` |
+| funcionario-texto | `#6FD08C` |
+| advertencia | `#F2C56B` |
+| advertencia-suave | `#2E2408` |
+| advertencia-borde | `#8A6A1C` |
+| error | `#FF9D91` |
+| error-suave | `#3A1714` |
+| celda-acierto | `#6AAEF0` |
+| celda-error | `#FF7B6E` |
+
+- El tema se marca con `data-tema="claro|oscuro"` en `<html>`.
+- Un archivo pequeño en el `<head>` lo fija antes de pintar la página: usa la elección guardada o,
+  si no hay ninguna, `prefers-color-scheme`.
+- El widget sigue el tema de la página que lo inserta. Sin esa página, sigue `prefers-color-scheme`.
 
 ## Typography
 
@@ -119,8 +168,9 @@ letra legible y el lenguaje claro.
 
 ## Elevation & Depth
 
-Solo el panel flotante del widget y su botón llevan sombra. Las secciones se separan con bordes,
-bandas y renglones.
+Solo el panel flotante del widget y su botón llevan sombra. El panel lleva además un filete de
+1 px: muy tenue en el modo claro y de `renglon` en el oscuro, donde la sombra casi no se ve. Las
+secciones se separan con bordes, bandas y renglones.
 
 ## Shapes
 
@@ -132,15 +182,20 @@ bandas y renglones.
 ## Components
 
 - **Rótulo:** franja fija arriba de la OVT con el texto exacto «Entorno simulado de pruebas — no
-  es la Oficina Virtual Tributaria real», grande y con un filete inferior de `tinta`. La consola
+  es la Oficina Virtual Tributaria real», grande y con un filete inferior de `tinta-oscura`, igual en los dos modos. La consola
   lleva una versión más baja.
 - **Banda:** el título de un bloque (sesión simulada, caso, matriz, tabla por categoría) en un
-  rectángulo de `sello` con texto `hoja`. Las bandas y el rótulo concentran la audacia de la
+  rectángulo de `sello` con texto `blanco`. Las bandas y el rótulo concentran la audacia de la
   página; lo demás queda en tinta sobre papel.
 - **Casilla:** el campo con su rótulo pequeño arriba, dentro del borde. El foco rodea la casilla
   entera.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
   mensaje.
+- **Pestañas de la consola:** la activa es un relleno de `sello` con una marca superior de
+  `sello-texto`, que la distingue de las inactivas en los dos modos.
+- **Botón «Modo oscuro»:** está en la OVT y en la consola. Es un botón con `aria-pressed` y una
+  casilla de formulario que se marca con una X. El cambio de tema es instantáneo y no hace
+  transiciones.
 - **Movimiento:** solo responde a una acción.
   - Un mensaje que llega o el caso que se abre aparece con un fundido y un desplazamiento corto,
     con salida suave.
@@ -153,9 +208,12 @@ bandas y renglones.
 
 - Do: conservar el texto exacto del rótulo, grande y siempre visible.
 - Don't: usar marcas, logos, colores ni nombres reales (Alcaldía de Bogotá, Secretaría de
-  Hacienda, DIAN o bancos), ni copiar el estilo de un producto real.
+  Hacienda, DIAN o bancos), ni copiar el estilo de un producto real. La única excepción son los
+  colores del logo de Realtix (ver Colors).
 - Don't: poner fotos ni imágenes en la OVT.
-- Don't: dar al morado degradados, brillos ni íconos de magia o destellos.
+- Don't: dar al azul degradados, brillos ni íconos de magia o destellos.
+- Don't: juntar el verde y el azul con texto (1,7:1).
+- Don't: poner el logo o los nombres de Realtix o RealSit en las páginas; solo se usan sus colores.
 - Don't: poner etiquetas en mayúsculas sobre los títulos ni unir datos con puntos medios.
 - Don't: agregar librerías de interfaz o de animación. Las fuentes nuevas solo entran como
   paquetes de fontsource con versión exacta.

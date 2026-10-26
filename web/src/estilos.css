@@ -2,13 +2,17 @@
  * Tema de la web del sistema multiagente de IA (registro completo en web/DESIGN.md).
  *
  * Dirección visual «Formulario y sello»: sale de los materiales del trámite, sin imitar ningún
- * formulario, sello ni marca real. Papel de seguridad verde pálido, tinta azul negra, casillas con
- * su rótulo dentro del borde, bandas de sección en tinta de sello morada (plana: sin degradados ni
- * brillos) y el amarillo de resaltador solo para el rótulo de entorno simulado. Sin colores, logos
- * ni nombres de la Alcaldía de Bogotá, la Secretaría de Hacienda, la DIAN o bancos.
+ * formulario, sello ni marca real. Papel de seguridad azul pálido, casillas con su rótulo dentro del
+ * borde, bandas de sección en tinta de sello azul (plana: sin degradados ni brillos) y el amarillo
+ * de resaltador solo para el rótulo de entorno simulado. Los colores son los del logo de Realtix:
+ * azul #074C91, verde #188034 y blanco; los neutros salen del azul. El ámbar y el rojo se conservan
+ * porque son avisos.
  *
- * Contraste: `npm run contraste` mide cada par (texto 4,5:1; controles y foco 3:1; celdas de la
- * matriz con texto en tinta 4,5:1).
+ * Dos modos: claro (los valores de @theme) y oscuro (`:root[data-tema="oscuro"]`, más abajo), con
+ * los mismos colores. public/tema.js fija data-tema en <html> antes de pintar la página.
+ *
+ * Contraste: `npm run contraste` mide cada par en los dos modos (texto 4,5:1; controles y foco 3:1;
+ * celdas de la matriz con texto en tinta 4,5:1).
  *
  * Tipografía autoalojada (fontsource, sin CDN): Archivo semicondensada para el rótulo, los títulos,
  * las bandas y las cifras; Atkinson Hyperlegible Next, hecha para la legibilidad, para el texto.
@@ -21,31 +25,39 @@
   --font-titulo: "Archivo Variable", "Arial Narrow", sans-serif;
   --font-texto: "Atkinson Hyperlegible Next Variable", system-ui, sans-serif;
 
-  /* Papel y tinta */
-  --color-papel: #ecf1ee; /* papel de seguridad: fondo de las páginas */
-  --color-papel-2: #dfe7e2; /* zonas secundarias y controles desactivados */
+  /* Papel y tinta (neutros derivados del azul) */
+  --color-papel: #f2f6fa; /* papel de seguridad: fondo de las páginas */
+  --color-papel-2: #e1e9f1; /* zonas secundarias y controles desactivados */
   --color-hoja: #ffffff; /* casillas, folios y mensajes */
-  --color-renglon: #c3d1ca; /* renglones y separadores (decorativos) */
-  --color-borde-control: #6b7a75; /* borde de casillas y controles (3:1 o más) */
-  --color-tinta: #1d2433;
-  --color-tinta-suave: #4a5560;
+  --color-renglon: #c4d2e0; /* renglones y separadores (decorativos) */
+  --color-borde-control: #66788c; /* borde de casillas y controles (3:1 o más) */
+  --color-tinta: #13233a;
+  --color-tinta-suave: #46566a;
+  --color-tinta-oscura: #13233a; /* texto sobre el resaltador, igual en los dos modos */
+  --color-blanco: #ffffff; /* texto sobre el azul y el verde, igual en los dos modos */
 
-  /* Tinta de sello: el único acento (el asistente, las bandas, los botones y el foco) */
-  --color-sello: #4b2c85;
-  --color-sello-fuerte: #3a1f6c;
-  --color-sello-suave: #ece6f5;
+  /* Tinta de sello azul: el acento (el asistente, las bandas, los botones y el foco) */
+  --color-sello: #074c91; /* relleno, con texto blanco */
+  --color-sello-fuerte: #053a70; /* relleno al pasar el puntero */
+  --color-sello-texto: #074c91; /* texto, enlaces, foco y anillos sobre papel y hoja */
+  --color-sello-suave: #e3edf8;
+  --color-burbuja: #13233a; /* mensaje del contribuyente, con texto blanco */
 
-  /* Resaltador: solo el rótulo de entorno simulado y el foco sobre fondos oscuros */
+  /* Resaltador: solo el rótulo de entorno simulado y el foco sobre el azul */
   --color-resaltador: #ffd54f;
 
-  /* Quien habla y estados */
-  --color-funcionario: #24613f;
-  --color-funcionario-suave: #e2f0e6;
+  /* Quien habla y estados. El verde nunca va con texto sobre el azul (1,7:1). */
+  --color-funcionario: #188034; /* relleno, con texto blanco */
+  --color-funcionario-texto: #16762f; /* el mismo verde, un poco más oscuro para texto */
   --color-advertencia: #6e4600;
   --color-advertencia-suave: #fff3cc;
   --color-advertencia-borde: #c9962b;
   --color-error: #a3271f;
   --color-error-suave: #fbe9e7;
+
+  /* Celdas de la matriz de la consola: se mezclan con la hoja hasta su tope */
+  --color-celda-acierto: #074c91;
+  --color-celda-error: #a3271f;
 
   /* Escala: 14 / 15 / 17 / 20 / 24 / 30 / 36 px */
   --text-xs: 0.875rem;
@@ -92,13 +104,49 @@
 }
 
 @layer base {
+  /* Modo oscuro: los mismos colores, con fondos azul noche derivados del #074C91 y variantes más
+     claras del azul y del verde para el texto. */
+  :root {
+    color-scheme: light;
+  }
+  :root[data-tema="oscuro"] {
+    color-scheme: dark;
+    --color-papel: #0a1626;
+    --color-papel-2: #182c47;
+    --color-hoja: #11223a;
+    --color-renglon: #2a4060;
+    --color-borde-control: #7088a6;
+    --color-tinta: #e6edf5;
+    --color-tinta-suave: #a8b8cb;
+    --color-sello-fuerte: #0a5cad;
+    --color-sello-texto: #8cc2f5;
+    --color-sello-suave: #163a60;
+    --color-burbuja: #24476e;
+    --color-funcionario-texto: #6fd08c;
+    --color-advertencia: #f2c56b;
+    --color-advertencia-suave: #2e2408;
+    --color-advertencia-borde: #8a6a1c;
+    --color-error: #ff9d91;
+    --color-error-suave: #3a1714;
+    --color-celda-acierto: #6aaef0;
+    --color-celda-error: #ff7b6e;
+  }
+  /* El cambio de tema es instantáneo: durante ese cuadro nada hace transición. */
+  .cambiando-tema,
+  .cambiando-tema * {
+    transition: none !important;
+  }
+  /* El widget insertado espera el tema de la página que lo inserta (public/tema.js). */
+  :root[data-tema-pendiente] body {
+    visibility: hidden;
+  }
   html {
     font-family: var(--font-texto);
     color: var(--color-tinta);
     background: var(--color-papel);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    caret-color: var(--color-sello);
+    caret-color: var(--color-sello-texto);
     scrollbar-color: var(--color-borde-control) transparent;
   }
   h1,
@@ -116,18 +164,18 @@
   }
   ::selection {
     background: var(--color-resaltador);
-    color: var(--color-tinta);
+    color: var(--color-tinta-oscura);
   }
   a {
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
   }
-  /* Foco siempre visible con el teclado: tinta de sello sobre papel y hoja… */
+  /* Foco siempre visible con el teclado: azul de sello sobre papel y hoja… */
   :focus-visible {
-    outline: 3px solid var(--color-sello);
+    outline: 3px solid var(--color-sello-texto);
     outline-offset: 2px;
   }
-  /* …y resaltador sobre los fondos de tinta o de sello. */
+  /* …y resaltador sobre el azul de sello (cabecera del widget, bandas y pestañas). */
   .sobre-oscuro :focus-visible {
     outline-color: var(--color-resaltador);
   }
@@ -152,11 +200,11 @@
 }
 
 @layer components {
-  /* Rótulo de entorno simulado: resaltador con filete de tinta. */
+  /* Rótulo de entorno simulado: resaltador con filete de tinta, igual en los dos modos. */
   .rotulo {
     background: var(--color-resaltador);
-    color: var(--color-tinta);
-    border-bottom: 3px solid var(--color-tinta);
+    color: var(--color-tinta-oscura);
+    border-bottom: 3px solid var(--color-tinta-oscura);
     font-family: var(--font-titulo);
     font-stretch: 87.5%;
     font-weight: 700;
@@ -166,7 +214,7 @@
   /* Banda de sección, como el encabezado de un bloque de formulario. */
   .banda {
     background: var(--color-sello);
-    color: var(--color-hoja);
+    color: var(--color-blanco);
     font-family: var(--font-titulo);
     font-stretch: 87.5%;
     font-weight: 650;
@@ -192,7 +240,7 @@
     color: var(--color-tinta-suave);
   }
   .casilla:focus-within {
-    outline: 3px solid var(--color-sello);
+    outline: 3px solid var(--color-sello-texto);
     outline-offset: 2px;
   }
   .casilla > input,
@@ -229,7 +277,7 @@
     color: var(--color-tinta-suave);
   }
   .casilla-unida:focus-within {
-    outline: 3px solid var(--color-sello);
+    outline: 3px solid var(--color-sello-texto);
     outline-offset: -3px;
   }
   .casilla-unida > input,

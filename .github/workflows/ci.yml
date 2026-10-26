@@ -110,6 +110,9 @@ jobs:
       - name: Instalar las dependencias
         run: npm ci --no-audit --no-fund
 
+      - name: Contraste WCAG de los dos modos
+        run: npm run contraste
+
       - name: Compilar
         run: npm run build
 

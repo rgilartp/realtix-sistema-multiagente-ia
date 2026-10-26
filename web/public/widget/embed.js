@@ -7,15 +7,32 @@
  * Monta un iframe con /widget/ (ADR-08) y un botón para abrirlo u ocultarlo. En pantallas anchas
  * empieza abierto; en un celular, cerrado, para no tapar la página. El token pasa por postMessage,
  * solo al origen del widget, nunca en la URL; el widget avisa cuando está listo.
+ *
+ * Tema: el widget sigue el de la página, que lo marca con data-tema="claro|oscuro" en <html>; si no
+ * lo marca, el de prefers-color-scheme. Se envía también por postMessage al origen del widget, al
+ * estar listo y en cada cambio.
  */
 (function () {
   var script = document.currentScript;
   var origen = new URL(script.src, window.location.href).origin;
   var ancho = window.matchMedia("(min-width: 640px)");
   var sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var oscuroDelSistema = window.matchMedia("(prefers-color-scheme: dark)");
+  // Fondo de la página, anillo de foco del botón y filete del panel en cada tema (web/DESIGN.md);
+  // en el modo oscuro la sombra casi no se ve y el filete separa el panel de la página.
+  var COLORES = {
+    claro: { papel: "#f2f6fa", foco: "#074c91", filete: "rgba(19,35,58,.08)" },
+    oscuro: { papel: "#0a1626", foco: "#8cc2f5", filete: "#2a4060" },
+  };
   var token = null;
   var listo = false;
   var abierto = ancho.matches;
+
+  function tema() {
+    var marcado = document.documentElement.getAttribute("data-tema");
+    if (marcado === "claro" || marcado === "oscuro") return marcado;
+    return oscuroDelSistema.matches ? "oscuro" : "claro";
+  }
 
   var contenedor = document.createElement("div");
   contenedor.setAttribute("data-realtix-contenedor", "");
@@ -33,11 +50,11 @@
   boton.type = "button";
   boton.setAttribute("aria-controls", "realtix-widget");
   boton.style.cssText =
-    "border:0;border-radius:6px;padding:12px 18px;background:#4b2c85;color:#fff;font:inherit;" +
-    "font-size:17px;font-weight:700;box-shadow:0 4px 14px rgba(29,36,51,.28);cursor:pointer;" +
+    "border:0;border-radius:6px;padding:12px 18px;background:#074c91;color:#fff;font:inherit;" +
+    "font-size:17px;font-weight:700;box-shadow:0 4px 14px rgba(19,35,58,.28);cursor:pointer;" +
     "pointer-events:auto";
   boton.addEventListener("focus", function () {
-    boton.style.outline = "3px solid #1d2433";
+    boton.style.outline = "3px solid " + COLORES[tema()].foco;
     boton.style.outlineOffset = "2px";
   });
   boton.addEventListener("blur", function () {
@@ -69,8 +86,9 @@
       ",visibility 0s linear " + (abierto ? "0s" : duracion);
     iframe.style.cssText =
       tamano +
-      "border:0;border-radius:6px;background:#ecf1ee;pointer-events:auto;transform-origin:100% 100%;" +
-      "box-shadow:0 1px 2px rgba(29,36,51,.08),0 12px 32px rgba(29,36,51,.2);" +
+      "border:0;border-radius:6px;background:" + COLORES[tema()].papel + ";pointer-events:auto;" +
+      "transform-origin:100% 100%;box-shadow:0 0 0 1px " + COLORES[tema()].filete +
+      ",0 12px 32px rgba(19,35,58,.2);" +
       "transition:" + transicion + ";" +
       (abierto
         ? "visibility:visible;opacity:1;transform:none;"
@@ -83,7 +101,7 @@
     contenedor.style.left = hojaCompleta ? "0" : "auto";
     contenedor.style.top = hojaCompleta ? margenSuperior() + "px" : "auto";
     contenedor.style.padding = hojaCompleta ? "0 8px 8px 8px" : "0";
-    contenedor.style.background = hojaCompleta ? "#ecf1ee" : "transparent";
+    contenedor.style.background = hojaCompleta ? COLORES[tema()].papel : "transparent";
     contenedor.style.pointerEvents = hojaCompleta ? "auto" : "none";
     boton.textContent = abierto ? "Ocultar asistente" : "Asistente tributario";
     boton.setAttribute("aria-expanded", String(abierto));
@@ -95,18 +113,38 @@
     }
   }
 
+  function enviarTema() {
+    if (listo && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ tipo: "realtix-tema", tema: tema() }, origen);
+    }
+  }
+
+  function cambioDeTema() {
+    medidas();
+    if (document.activeElement === boton) boton.style.outline = "3px solid " + COLORES[tema()].foco;
+    enviarTema();
+  }
+
   boton.addEventListener("click", function () {
     abierto = !abierto;
     medidas();
     if (abierto) iframe.focus();
   });
   ancho.addEventListener("change", medidas);
+  oscuroDelSistema.addEventListener("change", cambioDeTema);
+  if (window.MutationObserver) {
+    new MutationObserver(cambioDeTema).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-tema"],
+    });
+  }
   window.addEventListener("resize", medidas);
 
   window.addEventListener("message", function (evento) {
     if (evento.source !== iframe.contentWindow || evento.origin !== origen) return;
     if (evento.data && evento.data.tipo === "realtix-widget-listo") {
       listo = true;
+      enviarTema();
       enviar();
     }
   });
