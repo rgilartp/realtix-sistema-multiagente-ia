@@ -151,6 +151,7 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "estrato": estrato,
         "obligado_a_pagar": liq.tarifa.obligado,
         "tarifa": por_mil(liq.tarifa.tarifa_por_mil),
+        "fuente_de_la_tarifa": liq.tarifa.fuente,
         "regla_de_la_tarifa": liq.tarifa.regla,
         "impuesto": pesos(liq.impuesto),
     }

@@ -65,6 +65,23 @@ def test_estrato_1_y_2_bajo_el_limite_no_estan_obligados() -> None:
 
 
 @pytest.mark.unit
+@pytest.mark.req("RF-IPU-05 · Citación de la norma")
+@pytest.mark.parametrize(
+    ("destino", "estrato", "avaluo", "fuente"),
+    [
+        ("residencial", 4, 350_000_000, "Resolución SDH-000194 de 2025, art. 1"),
+        ("comercial", None, 300_000_000, "Resolución SDH-000194 de 2025, art. 2"),
+        ("lote", None, 50_000_000, "Resolución SDH-000194 de 2025, art. 2"),
+        ("residencial", 2, 100_000_000, "Acuerdo 648 de 2016, art. 1"),
+        ("residencial", 1, 20_000_000, "Decreto 639 de 2025, art. 207"),
+    ],
+)
+def test_la_tarifa_de_2026_trae_la_fuente_de_su_seccion(destino, estrato, avaluo, fuente) -> None:
+    """Revisión externa (IPU-10): la fuente de la cifra es la de la sección que la dio."""
+    assert buscar_tarifa_ipu(2026, destino, estrato, avaluo).fuente.startswith(fuente)
+
+
+@pytest.mark.unit
 @pytest.mark.req("RF-IPU-03 · Liquidación estimada")
 def test_2027_con_regla_en_smmlv_falla_y_no_usa_el_de_2026() -> None:
     for estrato in (1, 2, 3):

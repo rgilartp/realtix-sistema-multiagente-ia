@@ -123,7 +123,7 @@ def test_el_prompt_del_orquestador_lleva_la_regla_de_categorias_del_conjunto() -
 def test_los_prompts_de_los_agentes_llevan_las_reglas_comunes() -> None:
     for nombre in ("ipu", "ica", "general"):
         prompt = prompt_de_agente(nombre)
-        assert prompt.version == "v1+comun.v1"
+        assert prompt.version == "v1+comun.v2"
         texto = prompt.texto
         assert "Cita la norma y el artículo" in texto
         assert "Di siempre de qué año gravable hablas" in texto
@@ -301,6 +301,24 @@ def test_ipu_10_estimacion_con_notas_tal_cual_e_intereses_por_vencimiento(adapta
     assert primera["tool_choice"] is None and "output_config" not in primera
     assert segunda["tool_choice"] == {"type": "none"}
     assert segunda["output_config"] == FORMATO_SALIDA
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-05 · Citación de la norma", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_ipu_10_la_cifra_llega_al_modelo_con_la_fuente_de_la_herramienta(adaptador) -> None:
+    """Revisión externa: en la prueba de humo de B7, IPU-10 citó el Acuerdo 648 para la tarifa de
+    6,1 por mil, que en 2026 sale de la Resolución SDH-000194 de 2025, art. 1."""
+    guion = [pide(("estimar_predial", {"anio": 2026})), final("Tu predial de 2026 es $2.135.000.")]
+    _, _, modelo = correr(
+        AGENTE_IPU, adaptador, guion, "¿Cuánto me tocaría pagar de predial este año?", U03, [P03]
+    )
+    prompt = modelo.llamadas[0][0][0].content
+    assert "nunca con la norma de un fragmento" in prompt
+    (resultado,) = resultados_de_herramientas(modelo)
+    assert resultado["tarifa"] == "6,1 por mil"
+    assert resultado["fuente_de_la_tarifa"].startswith("Resolución SDH-000194 de 2025, art. 1")
+    assert any(f.startswith("Resolución SDH-000194 de 2025") for f in resultado["fuentes"])
+    assert not any("Acuerdo 648" in f for f in resultado["fuentes"])
 
 
 @pytest.mark.unit

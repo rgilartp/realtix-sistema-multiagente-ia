@@ -190,6 +190,14 @@ def componer_texto(
     return texto, fuentes
 
 
+def para_el_modelo(resultado: Resultado) -> dict[str, Any]:
+    """Lo que ve el modelo de un resultado: los datos y sus fuentes, para que cite cada cifra con
+    la fuente de la herramienta y no con la norma de un fragmento (revisión externa, IPU-10)."""
+    if not resultado.fuentes:
+        return resultado.datos
+    return {**resultado.datos, "fuentes": list(resultado.fuentes)}
+
+
 class _Rechazo(Exception):
     """Una herramienta encontró un predio ajeno o inexistente."""
 
@@ -275,7 +283,7 @@ def ejecutar_agente(
                 resultados.append(resultado)
                 mensajes.append(
                     ToolMessage(
-                        json.dumps(resultado.datos, ensure_ascii=False, default=str),
+                        json.dumps(para_el_modelo(resultado), ensure_ascii=False, default=str),
                         tool_call_id=llamada["id"],
                     )
                 )
