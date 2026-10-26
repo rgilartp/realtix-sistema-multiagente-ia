@@ -21,15 +21,22 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: divulgación adicional
 respuesta_referencia: >-
-  Las facturas se notifican mediante publicación en el Registro Distrital y, simultáneamente, mediante
-  inserción en la página web de la Secretaría Distrital de Hacienda. El envío de la factura a la dirección
-  del contribuyente surte el efecto de divulgación adicional (Acuerdo 1084 de 2026, art. 27, numeral 3).
+  Las facturas del predial se notifican mediante publicación en el Registro Distrital y, simultáneamente,
+  mediante inserción en la página web de la Secretaría Distrital de Hacienda (Acuerdo 648 de 2016, art.
+  5, modificado por el Acuerdo 927 de 2024, art. 283). El envío de la factura a la dirección del contribuyente
+  surte efecto de divulgación adicional (Ley 1819 de 2016, art. 354). El Acuerdo 1084 de 2026, art. 27,
+  numeral 3, mantiene la misma regla desde su publicación, el 9 de octubre de 2026.
 fuentes_esperadas:
+- Acuerdo 648 de 2016, art. 5
+- Ley 1819 de 2016, art. 354
 - Acuerdo 1084 de 2026, art. 27, num. 3
 no_debe:
 - decir que la notificación se hace solo con el envío a la casa
+- presentar la regla como nueva del Acuerdo 1084 de 2026
 dado_cuando_entonces:
-  dado: Un contribuyente sin sesión
+  dado: Un contribuyente sin sesión; el reloj marca el 1 de octubre de 2026
   cuando: Pregunta cómo le notifican la factura
-  entonces: Recibe la publicación en el Registro Distrital y en la web, y que el envío es adicional
-aprobado_por: "Rodolfo Angel Gilart Pulido"
+  entonces: >-
+    Recibe la publicación en el Registro Distrital y en la web, que el envío es adicional y que la regla
+    ya regía antes del Acuerdo 1084
+aprobado_por: ''

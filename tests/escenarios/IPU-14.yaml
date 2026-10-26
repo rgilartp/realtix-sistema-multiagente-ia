@@ -21,18 +21,20 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: 21 de diciembre de 2026
 respuesta_referencia: >-
-  Los obligados de los impuestos distritales que, a la fecha de publicación del Acuerdo 1084 de 2026,
-  tengan obligaciones tributarias pendientes de pago pueden descontar el 60 % de los intereses y las sanciones
-  causados, siempre que, a más tardar el 21 de diciembre de 2026, paguen el 100 % del capital adeudado
-  y el 40 % de los intereses y las sanciones causados a la fecha de pago, y siempre que hagan el pago
-  total en un solo momento, a más tardar en esa misma fecha (Acuerdo 1084 de 2026, art. 7.1 y parágrafo
-  3). El predio 50C-9000202 de U02 tiene 2 vigencias vencidas (2025 y 2026) y un saldo pendiente de $5.166.000.
+  El Acuerdo 1084 de 2026 creó un alivio que existe desde su publicación, el 9 de octubre de 2026. Los
+  obligados de los impuestos distritales que, a esa fecha, tengan obligaciones tributarias pendientes
+  de pago pueden descontar el 60 % de los intereses y las sanciones causados, siempre que, a más tardar
+  el 21 de diciembre de 2026, paguen el 100 % del capital adeudado y el 40 % de los intereses y las sanciones
+  causados a la fecha de pago, y siempre que hagan el pago total en un solo momento, a más tardar en esa
+  misma fecha (Acuerdo 1084 de 2026, art. 7.1 y parágrafo 3). El predio 50C-9000202 de U02 tiene 2 vigencias
+  vencidas (2025 y 2026) y un saldo pendiente de $5.166.000.
 fuentes_esperadas:
 - Acuerdo 1084 de 2026, art. 7
 - Usuario de prueba U02 (usuarios_prueba.yaml)
 no_debe:
 - prometer un descuento sobre el capital
 - dar una fecha límite distinta del 21 de diciembre de 2026
+- presentar el alivio como vigente antes del 9 de octubre de 2026
 - omitir que la deuda debía estar pendiente a la publicación del acuerdo
 - ofrecer el alivio con pagos parciales o por cuotas
 dado_cuando_entonces:
