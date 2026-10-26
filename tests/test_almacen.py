@@ -1,6 +1,5 @@
 """Almacén propio: SQLite en las unitarias y PostgreSQL en la prueba de integración."""
 
-import os
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 
@@ -11,8 +10,7 @@ from sqlalchemy.exc import OperationalError
 from src.data.adapter import MockRealSitAdapter
 from src.data.models import CasoEscalado
 from src.store.almacen import Almacen, crear_motor
-
-URL_COMPOSE = "postgresql://realtix:realtix_dev@localhost:5432/realtix"  # docker-compose.yml
+from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 
 
 @pytest.fixture
@@ -113,13 +111,12 @@ def test_el_adaptador_registra_en_el_almacen_y_no_en_realsit(
 @pytest.mark.integration
 @pytest.mark.req("RF-ORQ-04 · Implementación en LangGraph")
 def test_almacen_en_postgresql() -> None:
-    url = os.environ.get("DATABASE_URL_PRUEBAS", URL_COMPOSE)
-    motor = crear_motor(url)
+    motor = crear_motor(url_postgres_pruebas())
     try:
         with motor.connect() as c:
             c.execute(text("SELECT 1"))
-    except OperationalError:
-        pytest.skip("PostgreSQL no responde: levanta `docker compose up -d postgres`.")
+    except OperationalError as error:
+        exigir_postgres(error)
     almacen = Almacen(motor)
     almacen.crear_esquema()
     try:

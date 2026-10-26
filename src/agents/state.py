@@ -1,7 +1,7 @@
 """Estado compartido del grafo (Tabla 3 de arquitectura) y su ciclo de vida (sección 3.1).
 
-Los 14 campos de la Tabla 3 más tres auxiliares del turno (ADR-23): `marcas`, `respuesta_final`
-y `categorias_descartadas`. Ciclo de vida:
+Los 14 campos de la Tabla 3 más cuatro auxiliares del turno (ADR-23): `marcas`, `respuesta_final`,
+`categorias_descartadas` y `parte_actual`. Ciclo de vida:
 
 - se conservan entre turnos (checkpointer): `messages`, `id_conversacion`, `datos_extraidos`,
   `resumen_caso` e `intentos_clasificacion`;
@@ -9,15 +9,24 @@ y `categorias_descartadas`. Ciclo de vida:
 - el resto se reinicia en cada turno con `entrada_de_turno`.
 """
 
-from typing import Annotated, Any, Literal, TypedDict
+from typing import Annotated, Any, Literal, TypedDict, get_args
 
 from langchain_core.messages import AnyMessage, HumanMessage
 from langgraph.graph.message import add_messages
 
 Categoria = Literal["ipu", "ica", "general", "ocr", "fuera_de_alcance"]
 Suficiencia = Literal["completa", "parcial", "no_pudo", "aclaracion", "no_corresponde"]
+MotivoEscalamiento = Literal[
+    "confianza insuficiente",
+    "sin cobertura",
+    "solicitud explícita",
+    "fuera de alcance",
+    "fallo de servicio",
+    "tope de reclasificaciones",
+]
 
 CATEGORIAS: tuple[str, ...] = ("ipu", "ica", "general", "ocr", "fuera_de_alcance")
+MOTIVOS_ESCALAMIENTO: tuple[str, ...] = get_args(MotivoEscalamiento)
 CAMPOS_DE_CONVERSACION = (
     "messages",
     "id_conversacion",
@@ -37,6 +46,7 @@ CAMPOS_DEL_TURNO = (
     "marcas",
     "respuesta_final",
     "categorias_descartadas",
+    "parte_actual",
 )
 
 
@@ -62,6 +72,7 @@ class AgentState(TypedDict, total=False):
     marcas: dict[str, Any]
     respuesta_final: str
     categorias_descartadas: list[str]
+    parte_actual: dict[str, str]  # {"categoria", "texto"} de la parte que atiende el worker
 
 
 def entrada_de_turno(
@@ -92,4 +103,5 @@ def entrada_de_turno(
         "marcas": {},
         "respuesta_final": "",
         "categorias_descartadas": [],
+        "parte_actual": {},
     }

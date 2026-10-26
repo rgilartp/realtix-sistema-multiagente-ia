@@ -14,17 +14,21 @@ from src.agents.graph import (
     ruta_confianza,
     ruta_orquestador,
 )
-from src.agents.nodes._comun import parcial
+from src.agents.nodes._comun import agregar_parcial, parcial
+from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA
+from src.agents.nodes.orquestador import clasificar_por_palabras
 from src.agents.state import (
     CAMPOS_DE_ACCESO,
     CAMPOS_DE_CONVERSACION,
     CAMPOS_DEL_TURNO,
+    MOTIVOS_ESCALAMIENTO,
     AgentState,
     entrada_de_turno,
 )
 from src.data.memoria import RealSitEnMemoria
 from src.services.confianza import calcular_nivel
 from src.store.almacen import Almacen, crear_motor
+from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 
 U03, P03 = "CC-1000000003", "50C-9000301"
 U02, P02 = "CC-1000000002", ["50C-9000201", "50C-9000202"]
@@ -206,10 +210,88 @@ def test_una_parte_bajo_el_umbral_escala_con_las_partes_resueltas(deps, almacen)
     r = turno(grafo, "Explícame el predial y el ICA", "multi-2")
     assert r["requiere_escalamiento"] and r["motivo_escalamiento"] == "confianza insuficiente"
     assert "Explicación del impuesto predial" in r["respuesta_final"]  # parte ya resuelta
+    assert "Respuesta dudosa" not in r["respuesta_final"]  # la rechazada no se le muestra
     assert "transferir" in r["respuesta_final"]
     caso = almacen.obtener_caso("CASO-multi-2")
     assert caso["nivel_confianza"] == pytest.approx(0.4 * 0.2 + 0.4 * 0.5 + 0.2 * 1.0)
     assert almacen.estado_conversacion("multi-2") == "escalada"
+    rechazadas = caso["resumen_json"]["partes_rechazadas"]  # sí van en el resumen del funcionario
+    assert [p["texto"] for p in rechazadas] == ["Respuesta dudosa"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-05 · Notificación al contribuyente")
+@pytest.mark.parametrize(
+    ("respuesta", "motivo"),
+    [
+        (
+            dict(texto="Respuesta dudosa", similitud=0.2, suficiencia="parcial"),
+            "confianza insuficiente",
+        ),
+        (dict(texto="Sin base", suficiencia="no_pudo", cobertura=0.0), "sin cobertura"),
+    ],
+)
+def test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso(deps, respuesta, motivo) -> None:
+    def ipu_malo(state: AgentState) -> dict[str, Any]:
+        return {"respuestas_parciales": [parcial("ipu", **respuesta)]}
+
+    r = turno(
+        construir_grafo(deps, nodos={"nodo_ipu": ipu_malo}), "El predial", f"aviso-{motivo[:4]}"
+    )
+    assert r["motivo_escalamiento"] == motivo
+    assert r["respuesta_final"] == AVISO_TRANSFERENCIA
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-03 · Consultas multiagente")
+def test_reclasificar_la_parte_rechazada_no_repite_la_parte_respondida(deps) -> None:
+    textos: list[str] = []
+    base = deps.clasificador or clasificar_por_palabras
+
+    def clasificador(texto: str, state: AgentState) -> Clasificacion:
+        textos.append(texto)
+        return base(texto, state)
+
+    def ica_no_corresponde(state: AgentState) -> dict[str, Any]:
+        sin = parcial("ica", "", suficiencia="no_corresponde", cobertura=0.0)
+        return {"respuestas_parciales": agregar_parcial(state, sin)}
+
+    deps.clasificador = clasificador
+    grafo = construir_grafo(deps, nodos={"nodo_ica": ica_no_corresponde})
+    r = turno(grafo, "Explícame el predial y el ICA", "multi-3")
+    assert textos == ["Explícame el predial y el ICA", "el ICA"]  # reclasifica solo su parte
+    partes = [(p["categoria"], p["parte"]) for p in r["respuestas_parciales"]]
+    assert partes == [("ipu", "Explícame el predial"), ("ica", "el ICA"), ("general", "el ICA")]
+    assert len(set(partes)) == len(partes)
+    assert r["respuesta_final"].count("Explicación del impuesto predial") == 1
+    assert not r["requiere_escalamiento"] and r["parte_actual"]["categoria"] == "general"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-03 · Consultas multiagente")
+def test_cada_worker_recibe_su_parte(grafo) -> None:
+    r = turno(grafo, "Explícame el predial y el ICA", "multi-4")
+    assert [p["parte"] for p in r["respuestas_parciales"]] == ["Explícame el predial", "el ICA"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-06 · Prevención de bucles")
+def test_sin_categoria_nueva_para_la_parte_escala_sin_cobertura(deps, almacen) -> None:
+    ordenes = [
+        Clasificacion([{"categoria": "ipu", "texto": "t"}, {"categoria": "ica", "texto": "u"}]),
+        Clasificacion([{"categoria": "ipu", "texto": "t"}]),  # la parte «t» ya la respondió ipu
+    ]
+    deps.clasificador = lambda texto, state: ordenes.pop(0)
+
+    def ica_no_corresponde(state: AgentState) -> dict[str, Any]:
+        sin = parcial("ica", "", suficiencia="no_corresponde", cobertura=0.0)
+        return {"respuestas_parciales": agregar_parcial(state, sin)}
+
+    grafo = construir_grafo(deps, nodos={"nodo_ica": ica_no_corresponde})
+    r = turno(grafo, "algo", "dup-1")
+    assert r["motivo_escalamiento"] == "sin cobertura" and r["nivel_confianza"] == 0.0
+    assert r["respuesta_final"].count("Explicación del impuesto predial") == 1  # no se repite
+    assert almacen.obtener_caso("CASO-dup-1")["nivel_confianza"] == 0.0
 
 
 # -- Reclasificación hasta el tope (RF-ORQ-06) --------------------------------------------------
@@ -308,7 +390,7 @@ def test_falla_del_adaptador_escala(adaptador, almacen) -> None:
     adaptador.get_estado_cuenta = roto  # type: ignore[method-assign]
     grafo = construir_grafo(Dependencias(adaptador))
     r = turno(grafo, f"¿Cuánto debo de {P03}?", "falla-1", U03, [P03])
-    assert r["requiere_escalamiento"] and r["motivo_escalamiento"] == "fallo de un servicio"
+    assert r["requiere_escalamiento"] and r["motivo_escalamiento"] == "fallo de servicio"
     assert almacen.obtener_caso("CASO-falla-1")["nivel_confianza"] == 0.0
 
 
@@ -320,8 +402,8 @@ def test_falla_del_orquestador_escala(deps, almacen) -> None:
 
     deps.clasificador = roto
     r = turno(construir_grafo(deps), "hola", "falla-2")
-    assert r["motivo_escalamiento"] == "fallo del modelo"
-    assert almacen.obtener_caso("CASO-falla-2")["motivo"] == "fallo del modelo"
+    assert r["motivo_escalamiento"] == "fallo de servicio"
+    assert almacen.obtener_caso("CASO-falla-2")["motivo"] == "fallo de servicio"
 
 
 @pytest.mark.unit
@@ -375,7 +457,7 @@ def test_caso_3_no_corresponde_con_el_tope_alcanzado_escala(deps) -> None:
 
 @pytest.mark.unit
 @pytest.mark.req("RF-ESC-05 · Notificación al contribuyente")
-def test_caso_4_multiagente_escalada_entrega_lo_resuelto(deps) -> None:
+def test_caso_4_multiagente_escalada_entrega_lo_resuelto(deps, almacen) -> None:
     def ica_sin_servicio(state: AgentState) -> dict[str, Any]:
         roto = parcial("ica", "", suficiencia="no_pudo", cobertura=0.0, fallo_servicio=True)
         return {"respuestas_parciales": [*state["respuestas_parciales"], roto]}
@@ -383,8 +465,71 @@ def test_caso_4_multiagente_escalada_entrega_lo_resuelto(deps) -> None:
     r = turno(
         construir_grafo(deps, nodos={"nodo_ica": ica_sin_servicio}), "El predial y el ICA", "caso4"
     )
-    assert r["motivo_escalamiento"] == "fallo de un servicio"
+    assert r["motivo_escalamiento"] == "fallo de servicio"
     assert "Explicación del impuesto predial" in r["respuesta_final"]
+    # ADR-13: la parte que escala no tiene confianza; no hereda la del predial (0,94).
+    assert r["nivel_confianza"] == 0.0
+    assert almacen.obtener_caso("CASO-caso4")["nivel_confianza"] == 0.0
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-02 · Activación del escalamiento")
+def test_todo_escalamiento_lleva_un_motivo_de_la_lista(deps, adaptador) -> None:
+    def roto(*args: Any, **kwargs: Any) -> Any:
+        raise TimeoutError("sin respuesta")
+
+    def fallan(texto: str, state: AgentState) -> Clasificacion:
+        raise RuntimeError("modelo caído")
+
+    adaptador.get_estado_cuenta = roto  # type: ignore[method-assign]
+    casos = [
+        (construir_grafo(deps), "Quiero hablar con una persona", None, None),
+        (construir_grafo(deps), "¿Cómo declaro renta?", None, None),
+        (construir_grafo(deps), "¿Cómo manejo la retención de ICA?", None, None),
+        (construir_grafo(deps), f"¿Cuánto debo de {P03}?", U03, [P03]),
+        (construir_grafo(Dependencias(adaptador, clasificador=fallan)), "hola", None, None),
+    ]
+    motivos = []
+    for i, (grafo, mensaje, contribuyente, predios) in enumerate(casos):
+        r = turno(grafo, mensaje, f"motivo-{i}", contribuyente, predios)
+        assert r["requiere_escalamiento"]
+        motivos.append(r["motivo_escalamiento"])
+    assert set(motivos) <= set(MOTIVOS_ESCALAMIENTO)
+    assert motivos == [
+        "solicitud explícita",
+        "fuera de alcance",
+        "fuera de alcance",
+        "fallo de servicio",
+        "fallo de servicio",
+    ]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-08 · Tiempos de espera y degradación")
+def test_un_motivo_fuera_de_la_lista_no_impide_el_aviso(deps, almacen, caplog) -> None:
+    def motivo_raro(state: AgentState) -> dict[str, Any]:
+        return {"requiere_escalamiento": True, "motivo_escalamiento": "motivo inventado"}
+
+    grafo = construir_grafo(deps, nodos={"nodo_orquestador": motivo_raro})
+    with caplog.at_level("WARNING"):
+        r = turno(grafo, "hola", "raro-1")
+    assert r["motivo_escalamiento"] == "fallo de servicio" and "transferir" in r["respuesta_final"]
+    caso = almacen.obtener_caso("CASO-raro-1")
+    assert caso["motivo"] == "fallo de servicio"
+    assert caso["resumen_json"]["motivo_original"] == "motivo inventado"
+    assert any("fuera de la lista" in m for m in caplog.messages)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-02 · Enrutamiento y consolidación")
+def test_la_respuesta_final_omite_las_partes_no_aprobadas(deps) -> None:
+    from src.agents.nodes.respuesta import crear_nodo_respuesta
+
+    nodo = crear_nodo_respuesta(deps)
+    aprobada = {**parcial("ipu", "Bien"), "aprobada": True}
+    no_corresponde = {**parcial("ica", "Texto ajeno", suficiencia="no_corresponde")}
+    r = nodo({"respuestas_parciales": [aprobada, {**no_corresponde, "aprobada": False}]})
+    assert r["respuesta_final"] == "Bien"
 
 
 # -- Pregunta por la IA (RF-SYS-06) y continuidad (RF-UI-02) ------------------------------------
@@ -422,8 +567,8 @@ def test_una_bandera_de_escalamiento_no_pasa_al_turno_siguiente(grafo) -> None:
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-UI-02 · Contexto de la sesión")
-def test_las_intentos_de_clasificacion_se_acumulan_por_conversacion(deps) -> None:
+@pytest.mark.req("RF-ORQ-06 · Prevención de bucles")
+def test_los_intentos_de_clasificacion_se_acumulan_por_conversacion(deps) -> None:
     ordenes = [Clasificacion([{"categoria": "ipu", "texto": "t"}])] * 4 + [
         Clasificacion([{"categoria": "general", "texto": "t"}])
     ] * 4
@@ -448,26 +593,23 @@ def test_ciclo_de_vida_de_los_campos() -> None:
     assert set(entrada) <= todos
     assert set(CAMPOS_DEL_TURNO) <= set(entrada)  # los del turno se reinician siempre
     assert "intentos_clasificacion" not in entrada and "datos_extraidos" not in entrada
-    assert len(AgentState.__annotations__) == 14 + 3  # Tabla 3 más tres auxiliares (ADR-23)
+    assert len(AgentState.__annotations__) == 14 + 4  # Tabla 3 más cuatro auxiliares (ADR-23)
 
 
 @pytest.mark.integration
 @pytest.mark.req("RF-ORQ-04 · Implementación en LangGraph")
 def test_checkpointer_en_postgresql_conserva_la_conversacion(deps) -> None:
-    import os
     import uuid
 
     import psycopg
 
     from src.agents.graph import checkpointer_postgres
 
-    url = os.environ.get(
-        "DATABASE_URL_PRUEBAS", "postgresql://realtix:realtix_dev@localhost:5432/realtix"
-    )
+    url = url_postgres_pruebas()
     try:
         psycopg.connect(url, connect_timeout=3).close()
-    except psycopg.OperationalError:
-        pytest.skip("PostgreSQL no responde: levanta `docker compose up -d postgres`.")
+    except psycopg.OperationalError as error:
+        exigir_postgres(error)
     conv = f"pg-{uuid.uuid4().hex[:8]}"
     with checkpointer_postgres(url) as saver:
         grafo = construir_grafo(deps, checkpointer=saver)

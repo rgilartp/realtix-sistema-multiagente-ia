@@ -1,4 +1,4 @@
-"""`nodo_respuesta` simulado: consolida las respuestas parciales con una plantilla (ADR-03)."""
+"""`nodo_respuesta` simulado: consolida las partes aprobadas con una plantilla (ADR-03)."""
 
 from collections.abc import Callable
 from typing import Any
@@ -13,7 +13,9 @@ ETIQUETAS = {"ipu": "Predial", "ica": "Industria y comercio", "ocr": "Recibo", "
 
 def crear_nodo_respuesta(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     def nodo_respuesta(state: AgentState) -> dict[str, Any]:
-        parciales = [p for p in state.get("respuestas_parciales", []) if p["texto"]]
+        parciales = [
+            p for p in state.get("respuestas_parciales", []) if p.get("aprobada") and p["texto"]
+        ]
         if len(parciales) == 1:
             texto = parciales[0]["texto"]
         else:

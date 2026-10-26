@@ -4,7 +4,7 @@ from collections.abc import Callable
 from typing import Any
 
 from src.agents.dependencias import Dependencias
-from src.agents.nodes._comun import parcial
+from src.agents.nodes._comun import agregar_parcial, parcial
 from src.agents.state import AgentState
 
 AVISO_SESION = (
@@ -38,7 +38,7 @@ def crear_nodo_general(deps: Dependencias) -> Callable[[AgentState], dict[str, A
                 similitud=0.85,
             )
         return {
-            "respuestas_parciales": [*state.get("respuestas_parciales", []), respuesta],
+            "respuestas_parciales": agregar_parcial(state, respuesta),
             "datos_extraidos": datos,
         }
 

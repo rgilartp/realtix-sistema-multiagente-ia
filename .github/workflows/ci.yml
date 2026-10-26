@@ -14,11 +14,27 @@ concurrency:
 
 env:
   GITLEAKS_VERSION: 8.30.1
+  # Credenciales de desarrollo de .env.example; solo existen en el servicio efímero de la CI.
+  DATABASE_URL_PRUEBAS: postgresql://realtix:realtix_dev@localhost:5432/realtix
 
 jobs:
   verificar:
     name: Ganchos, secretos y pruebas
     runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: realtix
+          POSTGRES_PASSWORD: realtix_dev
+          POSTGRES_DB: realtix
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U realtix -d realtix"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - name: Traer el repositorio con todo su historial
         uses: actions/checkout@v7.0.1
@@ -51,4 +67,7 @@ jobs:
           ./gitleaks git --redact --verbose .
 
       - name: Pruebas con cobertura
+        # Con POSTGRES_OBLIGATORIO las pruebas de PostgreSQL fallan, no se saltan, si no responde.
         run: uv run pytest -q --cov=src --cov=scripts --cov-report=term
+        env:
+          POSTGRES_OBLIGATORIO: "1"
