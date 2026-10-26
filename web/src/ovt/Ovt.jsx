@@ -61,7 +61,7 @@ export default function Ovt() {
       <div
         role="note"
         data-realtix-respetar=""
-        className="franja-simulada sticky top-0 z-10 border-b-2 border-advertencia-borde px-4 py-4 text-center text-xl leading-snug font-bold text-advertencia sm:text-2xl md:py-5 md:text-3xl"
+        className="rotulo sticky top-0 z-10 px-4 py-3 text-center text-xl sm:text-2xl md:py-4 md:text-3xl"
         data-prueba="rotulo"
       >
         {ROTULO}
@@ -69,82 +69,82 @@ export default function Ovt() {
 
       {/* En escritorio, la columna derecha queda libre para el widget (400 px y su margen). */}
       <div className="mx-auto max-w-4xl px-4 pt-8 pb-28 sm:px-6 md:pt-12 lg:mr-[448px] lg:ml-[max(1.5rem,calc(50vw-40rem))] lg:max-w-3xl">
-        <header className="max-w-2xl space-y-3">
-          <p className="text-xs font-semibold tracking-[0.14em] text-acento uppercase">
-            Datos sintéticos · Solo para pruebas
-          </p>
-          <h1 className="font-titulo text-3xl leading-tight font-semibold md:text-4xl">OVT simulada</h1>
-          <p className="text-base text-tinta-suave">
+        <header className="max-w-[65ch]">
+          <h1 className="text-2xl font-bold md:text-3xl">OVT simulada</h1>
+          <p className="mt-3 text-base text-tinta-suave">
             Esta página imita el portal donde vivirá el asistente. Elige un usuario de prueba para
             iniciar una sesión simulada: el asistente tributario la recibe sin que tengas que
-            escribir nada.
+            escribir nada. Todos los datos son sintéticos.
           </p>
         </header>
 
-        <section className="mt-8 rounded-2xl border border-borde bg-superficie p-5 shadow-panel md:p-6" aria-labelledby="titulo-sesion">
-          <h2 id="titulo-sesion" className="font-titulo text-xl font-semibold">
+        <section className="mt-8 overflow-hidden rounded-casilla border border-sello bg-hoja" aria-labelledby="titulo-sesion">
+          <h2 id="titulo-sesion" className="banda px-4 py-2 text-lg">
             Sesión simulada
           </h2>
-          {sesion ? (
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-              <p data-prueba="sesion" className="text-base">
-                Sesión de <strong>{sesion.nombre ?? sesion.usuario}</strong>{" "}
-                <span className="text-tinta-suave">({sesion.usuario})</span>
-              </p>
-              <button
-                type="button"
-                onClick={cerrar}
-                className="rounded-xl border border-borde-control px-4 py-2 text-sm font-semibold transition-colors duration-150 ease-out hover:border-acento hover:text-acento"
-              >
-                Cerrar sesión
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={iniciar} className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
-              <label className="flex flex-1 flex-col gap-1.5 text-sm font-semibold">
-                Usuario de prueba
-                <select
-                  value={elegido}
-                  onChange={(e) => setElegido(e.target.value)}
-                  className="h-11 rounded-xl border border-borde-control bg-superficie px-3 text-base font-normal"
-                  data-prueba="usuario"
+          <div className="p-4 md:p-5">
+            {sesion ? (
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p data-prueba="sesion" className="text-base">
+                  Sesión de <strong>{sesion.nombre ?? sesion.usuario}</strong>{" "}
+                  <span className="text-tinta-suave">({sesion.usuario})</span>
+                </p>
+                <button
+                  type="button"
+                  onClick={cerrar}
+                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-4 text-sm font-semibold hover:border-sello hover:text-sello"
                 >
-                  <option value="">Elige un usuario</option>
-                  {usuarios.map((u) => (
-                    <option key={u.usuario} value={u.usuario}>
-                      {u.usuario} · {u.nombre} ({u.tipo_persona === "juridica" ? "persona jurídica" : "persona natural"})
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button
-                type="submit"
-                disabled={!elegido}
-                className="h-11 rounded-xl bg-acento px-5 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:bg-superficie-2 disabled:text-tinta-suave"
-              >
-                Iniciar sesión simulada
-              </button>
-            </form>
-          )}
-          {aviso && (
-            <p className="mt-3 rounded-lg bg-error-suave px-3 py-2 text-sm text-error" role="alert">
-              {aviso}
-            </p>
-          )}
+                  Cerrar sesión
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={iniciar} className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+                <label className="casilla flex-1">
+                  Usuario de prueba
+                  <select value={elegido} onChange={(e) => setElegido(e.target.value)} data-prueba="usuario">
+                    <option value="">Elige un usuario</option>
+                    {usuarios.map((u) => (
+                      <option key={u.usuario} value={u.usuario}>
+                        {u.nombre} ({u.usuario}), {u.tipo_persona === "juridica" ? "persona jurídica" : "persona natural"}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="submit"
+                  disabled={!elegido}
+                  aria-describedby={elegido ? undefined : "ayuda-sesion"}
+                  className="min-h-12 rounded-control bg-sello px-5 text-base font-semibold whitespace-nowrap text-hoja enabled:hover:bg-sello-fuerte disabled:bg-papel-2 disabled:text-tinta-suave"
+                >
+                  Iniciar sesión simulada
+                </button>
+              </form>
+            )}
+            {!sesion && !elegido && (
+              <p id="ayuda-sesion" className="mt-2 text-sm text-tinta-suave">
+                Elige un usuario para poder iniciar la sesión.
+              </p>
+            )}
+            {aviso && (
+              <p className="mt-3 rounded-casilla border border-error bg-error-suave px-3 py-2 text-sm text-error" role="alert">
+                {aviso}
+              </p>
+            )}
+          </div>
         </section>
 
-        <section className="mt-8" aria-labelledby="titulo-probar">
-          <h2 id="titulo-probar" className="font-titulo text-xl font-semibold">
+        <section className="mt-10" aria-labelledby="titulo-probar">
+          <h2 id="titulo-probar" className="text-xl font-bold">
             Qué puedes probar
           </h2>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+          <dl className="mt-3 border-t border-renglon">
             {QUE_PROBAR.map(([titulo, texto]) => (
-              <li key={titulo} className="rounded-2xl border border-borde bg-superficie p-4">
-                <p className="font-semibold text-acento-fuerte">{titulo}</p>
-                <p className="mt-1 text-sm text-tinta-suave">{texto}</p>
-              </li>
+              <div key={titulo} className="grid gap-1 border-b border-renglon py-3 sm:grid-cols-[11rem_1fr] sm:gap-6">
+                <dt className="font-semibold">{titulo}</dt>
+                <dd className="text-tinta-suave">{texto}</dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </section>
       </div>
     </div>
