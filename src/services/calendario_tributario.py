@@ -7,7 +7,12 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 from src.data.models import RegimenICA
-from src.services.datos_anuales import calendario, regimen_ica_del_anio, umbral_ica_pesos
+from src.services.datos_anuales import (
+    calendario,
+    cargar_datos,
+    regimen_ica_del_anio,
+    umbral_ica_pesos,
+)
 
 Periodicidad = Literal["anual", "bimestral"]
 
@@ -105,3 +110,8 @@ def fechas_predial(anio: int) -> dict[str, Any]:
         "spac_declaracion_inicial": plazos["spac_declaracion_inicial"][0],
         "spac_cuotas": list(plazos["spac_cuotas"]),
     }
+
+
+def fuente_del_calendario(anio: int) -> str:
+    """Norma de la que salen los plazos del año (p. ej. la Resolución SDH-000195 de 2025)."""
+    return str(cargar_datos(f"calendario/{anio}.yaml", anio, "calendario")["fuente"])
