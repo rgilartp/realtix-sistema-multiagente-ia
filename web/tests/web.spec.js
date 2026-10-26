@@ -37,6 +37,16 @@ async function capturar(page, nombre, { completa = false } = {}) {
   if (!CAPTURAS) return;
   await fuentesListas(page);
   await page.waitForTimeout(100); // el widget recalcula su altura con el rótulo ya dibujado
+  // Con las fuentes cargadas cambia el alto del texto: la conversación vuelve al final (si hay
+  // mensajes), como la deja el widget.
+  for (const marco of page.frames()) {
+    await marco
+      .evaluate(() => {
+        const zona = document.querySelector("main[aria-live]");
+        if (zona?.querySelector("[data-autor]")) zona.scrollTop = zona.scrollHeight;
+      })
+      .catch(() => {});
+  }
   const { width } = page.viewportSize();
   const path = `../docs/capturas/${nombre}_${width}.png`;
   await page.screenshot({ path, animations: "disabled", fullPage: completa });
@@ -63,6 +73,14 @@ async function iniciarSesion(page, tamano, usuario = "U03") {
   if (tamano.width < 640) await page.getByRole("button", { name: "Asistente tributario" }).click();
 }
 
+// El rótulo de entorno simulado sigue arriba y el widget no lo tapa (revisión externa de B11).
+async function rotuloVisible(page) {
+  const rotulo = await page.getByTestId("rotulo").boundingBox();
+  const panel = await page.locator("iframe[data-realtix-widget]").boundingBox();
+  expect(rotulo.y).toBe(0);
+  expect(panel.y).toBeGreaterThanOrEqual(rotulo.y + rotulo.height);
+}
+
 // Con el teclado: escribir y Enter (sin el ratón).
 const preguntar = async (widget, texto) => {
   const campo = widget.getByLabel("Escribe tu consulta");
@@ -82,6 +100,10 @@ async function flujoOvt(page, tamano) {
   await expect(page.locator("img, svg")).toHaveCount(0); // sin logos
   expect(await page.locator("body").innerText()).not.toMatch(MARCAS_PROHIBIDAS);
   await expect(page.locator("iframe[data-realtix-widget]")).toHaveAttribute("src", /\/widget\/$/);
+  // La captura de la OVT muestra la página con el asistente cerrado (en el celular ya lo está).
+  if (tamano.width >= 640) await page.getByRole("button", { name: "Ocultar asistente" }).click();
+  await page.evaluate(() => document.activeElement?.blur()); // sin el anillo de foco del clic
+  await expect(page.getByRole("button", { name: "Asistente tributario" })).toBeVisible();
   await capturar(page, "ovt_simulada");
 }
 
@@ -92,29 +114,40 @@ async function flujoRespuesta(page, tamano) {
   await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un asistente de IA");
   await expect(widget.getByText("¿En qué te ayudo?")).toBeVisible(); // estado vacío
+  await expect(widget.getByTestId("aviso-ia")).toBeInViewport({ ratio: 1 }); // completo al abrir
   expect(await widget.locator("body").innerText()).not.toMatch(MARCAS_PROHIBIDAS);
   await capturar(page, "widget_inicio");
+  // Sin sesión, una consulta personal recibe el aviso de sesión real (AVISO_SESION, ACC-02).
+  await preguntar(widget, "¿Cuánto debo de mi predio?");
+  const aviso = widget.locator("[data-autor=agente]");
+  await expect(aviso.getByText(TEXTOS.avisoSesion)).toBeVisible();
+  await expect(aviso.getByText("Asistente de IA", { exact: true })).toBeVisible();
+  const sinSesion = solicitudes.find((s) => s.ruta === "/api/v1/chat/mensaje");
+  expect(sinSesion.auth).toBeNull();
+  expect(sinSesion.cuerpo.id_conversacion).toMatch(/^conv-[0-9a-f-]{36}$/);
+  await rotuloVisible(page);
+  await capturar(page, "widget_respuesta");
+  // Con sesión, el token de la OVT llega al widget por postMessage y viaja en la cabecera
+  // (RF-UI-02). El texto es neutro y solo sirve para revisar la lista de fuentes: sin captura.
   await iniciarSesion(page, tamano);
   await expect(widget.getByText("Sesión iniciada")).toBeVisible();
-  await preguntar(widget, "¿Qué es el predial?");
-  const respuesta = widget.locator("[data-autor=agente]");
-  await expect(respuesta.getByText(TEXTOS.predial)).toBeVisible();
-  await expect(respuesta.getByText("Asistente de IA", { exact: true })).toBeVisible();
-  await expect(respuesta.getByRole("listitem").filter({ hasText: "Acuerdo 105 de 2003, art. 2" })).toBeVisible(); // fuente
-  // El token de la OVT llegó al widget por postMessage y viaja en la cabecera (RF-UI-02).
-  const enviada = solicitudes.find((s) => s.ruta === "/api/v1/chat/mensaje");
-  expect(enviada.auth).toBe("Bearer token-de-prueba-U03");
-  expect(enviada.cuerpo.id_conversacion).toMatch(/^conv-[0-9a-f-]{36}$/);
-  await capturar(page, "widget_respuesta");
+  await preguntar(widget, "Pregunta de prueba");
+  const respuesta = widget.locator("[data-autor=agente]").filter({ hasText: TEXTOS.pruebaFuentes });
+  await expect(respuesta.getByRole("listitem").filter({ hasText: "Fuente de prueba A" })).toBeVisible();
+  await expect(respuesta.getByRole("listitem").filter({ hasText: "Fuente de prueba B" })).toBeVisible();
+  const conSesion = solicitudes.filter((s) => s.ruta === "/api/v1/chat/mensaje").at(-1);
+  expect(conSesion.auth).toBe("Bearer token-de-prueba-U03");
+  await rotuloVisible(page);
 }
 
 async function flujoFueraDeHorario(page, tamano) {
   const { widget } = await abrirOvt(page, tamano, { fueraDeHorario: true });
   await preguntar(widget, "Hola, necesito hablar con un funcionario");
   const aviso = widget.locator("[data-autor=sistema]");
-  await expect(aviso).toContainText("Vuelvo a atender el lunes 7 de octubre de 2030 a las 8:00 a. m.");
-  await expect(aviso.getByText("Vuelve a atender el lunes 7 de octubre de 2030 a las 8:00 a. m.")).toBeVisible();
+  await expect(aviso).toContainText("Vuelvo a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.");
+  await expect(aviso.getByText("Vuelve a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.")).toBeVisible();
   await expect(aviso.getByText("Sistema", { exact: true })).toBeVisible();
+  await rotuloVisible(page);
   await capturar(page, "widget_fuera_de_horario");
 }
 
@@ -130,6 +163,13 @@ async function flujoRecibo(page, tamano) {
   await expect(widget.getByText("¿Es correcto?")).toBeVisible();
   const subida = solicitudes.find((s) => s.ruta === "/api/v1/chat/documento");
   expect(subida.auth).toBe("Bearer token-de-prueba-U03");
+  await rotuloVisible(page);
+  // Al cambiar el tamaño de la ventana, el widget tampoco tapa el rótulo.
+  const otro = tamano.width < 640 ? ESCRITORIO : CELULAR;
+  await page.setViewportSize(otro);
+  await rotuloVisible(page);
+  await page.setViewportSize(tamano);
+  await rotuloVisible(page);
   await capturar(page, "widget_recibo");
 }
 
@@ -140,11 +180,12 @@ async function flujoEscalada(page, tamano) {
   await expect(widget.getByText(TEXTOS.transferencia)).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Tu caso está con un funcionario");
   await expect(widget.getByRole("button", { name: "Ya pediste un funcionario" })).toBeDisabled();
+  await rotuloVisible(page);
+  await capturar(page, "widget_escalado"); // antes del mensaje de prueba del funcionario
   // La consulta periódica trae el mensaje del funcionario (RF-ESC-05 y RF-UI-03).
   await expect(widget.getByText(TEXTOS.funcionario)).toBeVisible({ timeout: 8000 });
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un funcionario");
   await expect(widget.locator("[data-autor=funcionario]").getByText("Funcionario", { exact: true })).toBeVisible();
-  await capturar(page, "widget_escalado");
 }
 
 async function flujoConsola(page, tamano) {
@@ -185,7 +226,7 @@ const FLUJOS = [
   {
     nombre: "widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
     flujo: flujoRespuesta,
-    req: ["RF-SYS-06 · Aviso de interacción con IA (provisional)", "RF-UI-02 · Contexto de la sesión", "RF-UI-03 · Identificación del interlocutor", "RF-GEN-03 · Respuesta sustentada en fuentes"],
+    req: ["RF-SYS-06 · Aviso de interacción con IA (provisional)", "RF-AUT-04 · Aviso de sesión requerida", "RF-UI-02 · Contexto de la sesión", "RF-UI-03 · Identificación del interlocutor", "RF-GEN-03 · Respuesta sustentada en fuentes"],
   },
   {
     nombre: "widget: fuera de horario destacado con la hora de regreso (RNF-07)",
