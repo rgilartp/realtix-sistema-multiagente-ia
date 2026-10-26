@@ -10,12 +10,13 @@ from typing import Any
 from src.agents.dependencias import Dependencias
 from src.agents.nodes._comun import (
     MATRICULA,
+    agregar_parcial,
     contiene,
     es_personal,
     formatear_pesos,
     normalizar,
     parcial,
-    ultimo_texto,
+    texto_de_la_parte,
 )
 from src.agents.nodes.orquestador import PALABRAS_IPU, _tiene_ica
 from src.agents.state import AgentState
@@ -38,7 +39,7 @@ def _resolver_predio(texto: str, state: AgentState) -> str | None:
 
 def crear_nodo_ipu(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     def responder(state: AgentState) -> tuple[dict[str, Any], dict[str, Any]]:
-        texto = ultimo_texto(state)
+        texto = texto_de_la_parte(state)
         datos = dict(state.get("datos_extraidos", {}))
         if _tiene_ica(texto) and not (contiene(texto, PALABRAS_IPU) or MATRICULA.search(texto)):
             return parcial("ipu", "", suficiencia="no_corresponde", cobertura=0.0), datos
@@ -79,7 +80,7 @@ def crear_nodo_ipu(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]
     def nodo_ipu(state: AgentState) -> dict[str, Any]:
         respuesta, datos = responder(state)
         return {
-            "respuestas_parciales": [*state.get("respuestas_parciales", []), respuesta],
+            "respuestas_parciales": agregar_parcial(state, respuesta),
             "datos_extraidos": datos,
         }
 

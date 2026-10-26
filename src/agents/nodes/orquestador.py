@@ -2,7 +2,8 @@
 
 Plan: categoría o categorías con su parte de la consulta, y las marcas (sesión requerida,
 solicitud explícita, pregunta por la IA, tributario fuera del MVP y municipio distinto de Bogotá).
-B7 lo reemplaza por Sonnet 5.5 con la misma firma.
+Guarda la parte actual (`parte_actual`) para que cada worker responda la suya y, al reclasificar,
+clasifica solo la parte rechazada (sección 3.3). B7 lo reemplaza por Sonnet 5.5 con la misma firma.
 """
 
 import re
@@ -48,6 +49,11 @@ def _tiene_ipu(texto: str) -> bool:
     )
 
 
+def _segmento(segmentos: list[str], detecta: Callable[[str], bool], completo: str) -> str:
+    """Primer segmento donde aparece la categoría; si no, el texto completo."""
+    return next((s for s in segmentos if detecta(s)), completo)
+
+
 def clasificar_por_palabras(texto: str, state: AgentState) -> Clasificacion:
     """Clasificador simulado y determinista. Respeta las categorías ya descartadas."""
     marcas: dict[str, Any] = {}
@@ -87,7 +93,19 @@ def clasificar_por_palabras(texto: str, state: AgentState) -> Clasificacion:
     if marcas.get("pregunta_ia"):
         candidatas = ["general"]
     descartadas = state.get("categorias_descartadas", [])
-    partes = [{"categoria": c, "texto": texto} for c in candidatas if c not in descartadas]
+    segmentos = [x.strip() for x in re.split(r"\s+y\s+|;", texto) if x.strip()]
+    detectores = {"ipu": _tiene_ipu, "ica": _tiene_ica}
+    multiple = len(candidatas) > 1
+    partes = [
+        {
+            "categoria": c,
+            "texto": _segmento(segmentos, detectores[c], texto)
+            if multiple and c in detectores
+            else texto,
+        }
+        for c in candidatas
+        if c not in descartadas
+    ]
     return Clasificacion(partes or [{"categoria": "general", "texto": texto}], marcas)
 
 
@@ -96,9 +114,11 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
     maximo = deps.config.max_reclasificaciones
 
     def escalar(motivo: str, marcas: dict[str, Any], intentos: int, **extra: Any) -> dict[str, Any]:
+        marcas["confianza_calculada"] = False  # ADR-13: sin confianza propia de esta parte
         return {
             "requiere_escalamiento": True,
             "motivo_escalamiento": motivo,
+            "nivel_confianza": 0.0,
             "marcas": marcas,
             "intentos_clasificacion": intentos,
             **extra,
@@ -115,15 +135,21 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
             if intentos >= maximo:
                 return escalar("tope de reclasificaciones", marcas, intentos)
             intentos += 1
+            # Solo se vuelve a clasificar la parte que el worker rechazó.
+            texto = state.get("parte_actual", {}).get("texto") or texto
         elif pendientes:  # siguiente parte de una consulta multiagente
             siguiente = pendientes.pop(0)
-            return {"categoria": siguiente["categoria"], "categorias_pendientes": pendientes}
+            return {
+                "categoria": siguiente["categoria"],
+                "parte_actual": siguiente,
+                "categorias_pendientes": pendientes,
+            }
 
         try:
             clasificacion = clasificar(texto, state)
         except Exception:  # fallo del modelo del orquestador (RNF-08)
             marcas["fallo_servicio"] = True
-            return escalar("fallo del modelo", marcas, intentos)
+            return escalar("fallo de servicio", marcas, intentos)
         marcas.update(clasificacion.marcas)
         datos.pop("oferta_transferencia", None)
 
@@ -131,11 +157,24 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
             return escalar("solicitud explícita", marcas, intentos, datos_extraidos=datos)
         if marcas.get("tributario_fuera_mvp"):
             return escalar("fuera de alcance", marcas, intentos, datos_extraidos=datos)
-        partes = clasificacion.partes
+        # Ninguna categoría responde dos veces la misma parte en un turno.
+        vistas = {
+            (p["categoria"], p.get("parte"))
+            for p in state.get("respuestas_parciales", [])
+            if p["suficiencia"] != "no_corresponde"
+        } | {(p["categoria"], p["texto"]) for p in pendientes}
+        partes: list[dict[str, str]] = []
+        for parte in clasificacion.partes:
+            clave = (parte["categoria"], parte["texto"])
+            if clave not in vistas:
+                vistas.add(clave)
+                partes.append(parte)
+        if not partes:  # nada nuevo que probar para esta parte
+            return escalar("sin cobertura", marcas, intentos, datos_extraidos=datos)
         return {
             "categoria": partes[0]["categoria"],
-            "categorias_pendientes": pendientes
-            + [p for p in partes[1:] if p["categoria"] not in {x["categoria"] for x in pendientes}],
+            "parte_actual": partes[0],
+            "categorias_pendientes": pendientes + partes[1:],
             "marcas": marcas,
             "intentos_clasificacion": intentos,
             "datos_extraidos": datos,

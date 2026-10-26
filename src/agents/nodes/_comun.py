@@ -40,6 +40,19 @@ def ultimo_texto(state: AgentState) -> str:
     return ""
 
 
+def texto_de_la_parte(state: AgentState) -> str:
+    """Texto de la parte del worker (sección 3.3); sin partes, el último mensaje."""
+    return state.get("parte_actual", {}).get("texto") or ultimo_texto(state)
+
+
+def agregar_parcial(state: AgentState, respuesta: dict[str, Any]) -> list[dict[str, Any]]:
+    """Respuestas parciales con la nueva al final, anotada con la parte que responde."""
+    return [
+        *state.get("respuestas_parciales", []),
+        {**respuesta, "parte": texto_de_la_parte(state)},
+    ]
+
+
 def formatear_pesos(valor: int) -> str:
     return "$" + f"{valor:,}".replace(",", ".")
 

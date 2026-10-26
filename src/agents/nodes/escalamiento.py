@@ -1,17 +1,22 @@
 """`nodo_escalamiento` simulado: resumen del caso, registro y aviso de transferencia.
 
-Único nodo que registra casos (ADR-18). Si escala antes de calcular la confianza guarda 0.0 con
-su motivo (ADR-13). Entrega las partes ya resueltas de una consulta multiagente (sección 3.4).
+Único nodo que registra casos (ADR-18). Si la parte que escala no tiene confianza calculada guarda
+0.0 con su motivo (ADR-13). Entrega solo las partes aprobadas por la confianza (sección 3.4,
+caso 4); las rechazadas van en el resumen para el funcionario. Es el último recurso (RNF-08): nunca
+falla; un motivo fuera de la lista se registra como «fallo de servicio» y conserva el original.
 """
 
+import logging
 from collections.abc import Callable
 from typing import Any
 
 from langchain_core.messages import AIMessage
 
 from src.agents.dependencias import Dependencias
-from src.agents.state import AgentState
+from src.agents.state import MOTIVOS_ESCALAMIENTO, AgentState
 from src.data.models import CasoEscalado
+
+registro = logging.getLogger(__name__)
 
 AVISO_TRANSFERENCIA = (
     "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. "
@@ -22,13 +27,20 @@ AVISO_TRANSFERENCIA = (
 def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     def nodo_escalamiento(state: AgentState) -> dict[str, Any]:
         marcas = dict(state.get("marcas", {}))
-        motivo = state.get("motivo_escalamiento") or "no especificado"
+        original = state.get("motivo_escalamiento")
+        motivo = original if original in MOTIVOS_ESCALAMIENTO else "fallo de servicio"
+        if motivo != original:
+            registro.warning(
+                "Motivo de escalamiento fuera de la lista; se registra como fallo de servicio",
+                extra={
+                    "id_conversacion": state.get("id_conversacion"),
+                    "motivo_original": original,
+                },
+            )
         nivel = state.get("nivel_confianza", 0.0) if marcas.get("confianza_calculada") else 0.0
-        resueltas = [
-            p
-            for p in state.get("respuestas_parciales", [])
-            if p["suficiencia"] in ("completa", "parcial", "aclaracion") and p["texto"]
-        ]
+        parciales = state.get("respuestas_parciales", [])
+        resueltas = [p for p in parciales if p.get("aprobada") and p["texto"]]
+        rechazadas = [p for p in parciales if not p.get("aprobada") and p["texto"]]
         categoria = state.get("categoria") or None
         resumen = (
             f"Motivo: {motivo}. Categoría: {categoria or 'sin clasificar'}. "
@@ -49,6 +61,11 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
                 "nivel_confianza": nivel,
                 "intentos": state.get("intentos_clasificacion", 0),
                 "partes_resueltas": [p["texto"] for p in resueltas],
+                "partes_rechazadas": [
+                    {"categoria": p["categoria"], "texto": p["texto"], "nivel": p.get("nivel")}
+                    for p in rechazadas
+                ],
+                **({"motivo_original": original} if motivo != original else {}),
             },
             intentos=state.get("intentos_clasificacion", 0),
         )

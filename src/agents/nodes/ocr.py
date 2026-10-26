@@ -4,7 +4,7 @@ from collections.abc import Callable
 from typing import Any
 
 from src.agents.dependencias import Dependencias
-from src.agents.nodes._comun import parcial
+from src.agents.nodes._comun import agregar_parcial, parcial
 from src.agents.state import AgentState
 
 
@@ -21,7 +21,7 @@ def crear_nodo_ocr(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]
             datos["ocr"] = {"campos": campos, "confirmado": False}  # RF-OCR-03
             respuesta = parcial("ocr", "Esto fue lo que leí del recibo. ¿Es correcto? (simulado)")
         return {
-            "respuestas_parciales": [*state.get("respuestas_parciales", []), respuesta],
+            "respuestas_parciales": agregar_parcial(state, respuesta),
             "datos_extraidos": datos,
         }
 

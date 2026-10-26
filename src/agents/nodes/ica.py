@@ -5,7 +5,14 @@ from collections.abc import Callable
 from typing import Any
 
 from src.agents.dependencias import Dependencias
-from src.agents.nodes._comun import MATRICULA, contiene, normalizar, parcial, ultimo_texto
+from src.agents.nodes._comun import (
+    MATRICULA,
+    agregar_parcial,
+    contiene,
+    normalizar,
+    parcial,
+    texto_de_la_parte,
+)
 from src.agents.nodes.orquestador import PALABRAS_IPU, _tiene_ica
 from src.agents.state import AgentState
 from src.services.errores import ActividadNoReconocidaError
@@ -15,7 +22,7 @@ CODIGO_CIIU = re.compile(r"\b\d{4}\b")
 
 def crear_nodo_ica(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     def responder(state: AgentState) -> dict[str, Any]:
-        texto = ultimo_texto(state)
+        texto = texto_de_la_parte(state)
         ipu = contiene(texto, PALABRAS_IPU) or MATRICULA.search(texto)
         if ipu and not _tiene_ica(texto):
             return parcial("ica", "", suficiencia="no_corresponde", cobertura=0.0)
@@ -50,6 +57,6 @@ def crear_nodo_ica(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]
         )
 
     def nodo_ica(state: AgentState) -> dict[str, Any]:
-        return {"respuestas_parciales": [*state.get("respuestas_parciales", []), responder(state)]}
+        return {"respuestas_parciales": agregar_parcial(state, responder(state))}
 
     return nodo_ica
