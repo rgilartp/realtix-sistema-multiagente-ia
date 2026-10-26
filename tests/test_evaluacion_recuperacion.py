@@ -22,6 +22,7 @@ from src.integrations.recuperador import Fragmento
         ("Ley 2294 de 2023, art. 49, par. 3", "ley 2294 2023", {"49"}),
         ("Acuerdo 1084 de 2026, arts. 13, 14 y 20", "acuerdo 1084 2026", {"13", "14", "20"}),
         ("Acuerdo 1084 de 2026, art. 27, num. 3", "acuerdo 1084 2026", {"27"}),
+        ("Decreto 807 de 1993 art. 18", "decreto 807 1993", {"18"}),  # sin coma
         ("Decreto Distrital 352 de 2002, cap. I", "decreto 352 2002", set()),
         ("Resolución SDH-000194 de 2025, art. 1", "resolucion 194 2025", {"1"}),
         ("Glosario (plataforma_general)", "glosario", set()),

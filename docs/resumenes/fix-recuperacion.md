@@ -5,7 +5,7 @@
 Una revisión externa, comprobada sobre `main`, encontró cuatro problemas que afectaban a IPU-09 y a IPU-10. Se corrigieron así:
 
 1. **Textos derogados indexados como vigentes** (`src/integrations/segmentacion.py`).
-   - El reconocimiento de textos anteriores solo aceptaba «El texto original/anterior era el siguiente». Ahora reconoce cualquier variante de «El texto … era el siguiente:». En la base hay cinco: original (201), derogado (44 bloques del Decreto 807, en las dos colecciones), original del artículo (12), anterior (3) y «de los incisos derogados» (1).
+   - El reconocimiento de textos anteriores solo aceptaba «El texto original/anterior era el siguiente». Ahora reconoce cualquier variante de «El texto … era el siguiente:». En la base hay cinco: original (201), derogado (44 bloques: 42 del Decreto 807, en las dos colecciones, y 2 de la Ley 14 de 1983), original del artículo (12), anterior (3) y «de los incisos derogados» (1).
    - También reconoce la marca dentro de un párrafo, «<El texto derogado era el siguiente>», que solo aparece en la Ley 14 de 1983, art. 4, derogado por la Ley 1955 de 2019. La nota de la derogatoria queda vigente y el artículo derogado pasa a texto anterior.
    - Acuerdo 648 de 2016, art. 1: los topes del 20 %, 15 %, 10 % y 18 %, el del IPC y el que remite al Decreto Ley 1421 son los incisos que derogó el Acuerdo 927 de 2024, art. 285, parágrafo. Se comprobó en la página del Régimen Legal, donde el texto vigente termina en el ajuste de los rangos con el IPVN. Ahora son texto anterior y no salen en ninguna búsqueda. La tabla de tarifas sigue vigente.
    - La base pasó de 1.117 a 1.148 fragmentos.
@@ -28,12 +28,15 @@ Una revisión externa, comprobada sobre `main`, encontró cuatro problemas que a
 ## Requerimientos
 
 - RF-ORQ-01 · Clasificación de la consulta
+- RF-ORQ-03 · Consultas multiagente
+- RF-IPU-01 · Consultas conceptuales de IPU
 - RF-IPU-04 · Plazos y descuentos
 - RF-IPU-05 · Citación de la norma
 - RF-GEN-03 · Respuesta sustentada en fuentes
 - RF-ESC-01 · Cálculo del nivel de confianza
 - RF-OBS-04 · Actualización de la base vectorial
 - RF-OBS-05 · Ejecución repetible de pruebas
+- RNF-03 · Protección de datos personales
 
 ## Cómo se verificó
 
@@ -59,17 +62,18 @@ Una revisión externa, comprobada sobre `main`, encontró cuatro problemas que a
 | Los que responden con fragmentos: escenarios con todas | 14 (45,2 %) | 19 (61,3 %) |
 
 - **IPU-09:** con la búsqueda («límite del incremento anual del impuesto predial unificado respecto del año anterior»), el art. 2 de la Ley 1995 llega primero; con el texto, no entra en los 5. El art. 49 de la Ley 2294 no llega por ninguna de las dos vías. Su vigencia la dice el prompt común y la nota de la Ley 1995 que agrega el código.
-- **Fuentes que entran con la búsqueda y no con el texto (11):**
+- **Fuentes que entran con la búsqueda y no con el texto (12):**
   - ICA-03, ICA-04, ICA-05 (Acuerdo 1084, art. 21), ICA-08 e ICA-09;
   - IPU-06 (Acuerdo 780), IPU-09, IPU-11 e IPU-12 (Ley 1819, art. 354);
-  - la parte de ICA de MULTI-02 y de MULTI-03.
+  - la parte de ICA de MULTI-02 y de MULTI-03;
+  - OCR-01 (Resolución SDH-000195, arts. 3 y 6).
 - **Fuentes que entran con el texto y no con la búsqueda (6):**
   - GEN-02 (manual de la OVT) e IPU-14 (Acuerdo 1084, art. 7);
   - IPU-10 (Resolución SDH-000195, arts. 3 y 6);
   - dos de IPU-12 (Acuerdo 648, art. 5, y Acuerdo 1084, art. 27);
   - la parte de IPU de MULTI-03 (Ley 44).
   - Se revisan en la corrida 1.
-- **No dependen de la recuperación** los 19 escenarios restantes: acceso, horario, fuera de alcance, robustez, OCR y aviso de IA. Su respuesta es un texto fijo, sale del adaptador o escala. Lo mismo pasa con las cifras de IPU-10 y MULTI-02, que entrega la herramienta con su fuente (corrección 4).
+- **No dependen de la recuperación** los 19 escenarios restantes: acceso, aviso de IA, escalamiento (ESC-01), horario, fuera de alcance, ambiguas en varios turnos (AMB-02), la retención del ICA que escala (ICA-10), robustez y OCR. Su respuesta es un texto fijo, sale del adaptador o escala. Lo mismo pasa con las cifras de IPU-10 y MULTI-02, que entrega la herramienta con su fuente (corrección 4).
 - La salida del orquestador varía de una corrida a otra. Una primera corrida, con el prompt anterior a la regla de las siglas, dio 36 y 40 aciertos de 69.
 
 ### Escala de la similitud
@@ -107,6 +111,13 @@ Gasto acumulado del proyecto: unos US$0,96 de US$25 en Anthropic y unos US$0,08 
 
 - **`fuentes_por_seccion` en `datos/tarifas/ipu_2026.yaml`.** Es un campo nuevo; los valores no cambian. Los artículos salen de los títulos de la resolución en `knowledge_base/`. Sin ese campo (2027), la fuente sigue siendo la del archivo.
 - **La prueba de la recuperación cuenta a todos los escenarios con fuentes de la base**, como se pidió, y también, aparte, a los que responden con fragmentos.
+- **Pendiente para la recalibración de B15 (ADR-17):** con el texto del contribuyente, FA-01 da un coseno de 0,4065, por encima del 0,40 que vale 0. Solo pesa si el orquestador no devuelve búsqueda y el agente usa el texto.
+- **Revisión independiente:** no hubo hallazgos críticos. Se corrigieron:
+  - el comando de revisión del PR;
+  - tres cifras y listas de este resumen, y la lista de requerimientos;
+  - una función privada que importaba un script;
+  - la coma opcional antes de «art.» en el evaluador;
+  - el nombre de la clave con las fuentes de la herramienta (`fuentes_de_la_herramienta`, para no pisar un campo `fuentes` de los datos).
 - **La consulta de búsqueda no tiene prueba de calidad propia.** La miden la tasa de aciertos y las corridas.
 
 ## Cambios frente al documento de grado

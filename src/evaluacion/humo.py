@@ -30,7 +30,7 @@ CON_RECUPERACION = ("IPU-04", "IPU-09", "ICA-01", "GEN-04", "GEN-07")
 ORQUESTADOR = ("MULTI-03", "FA-03")
 
 
-def _sesiones() -> dict[str, tuple[str, list[str]]]:
+def sesiones() -> dict[str, tuple[str, list[str]]]:
     usuarios = yaml.safe_load(USUARIOS.read_text(encoding="utf-8"))["usuarios"]
     return {
         u["id"]: (u["contribuyente_id"], [p["matricula"] for p in u["predios"]]) for u in usuarios
@@ -74,7 +74,7 @@ def correr_humo(
     al_avanzar: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     """Corre los 12 escenarios y, si se da `salida`, guarda el reporte en JSON."""
-    sesiones = _sesiones()
+    usuarios = sesiones()
     resultados = []
     for tipo, ids in (
         ("simple", SIMPLES),
@@ -85,7 +85,7 @@ def correr_humo(
             escenario = yaml.safe_load(
                 (DIR_ESCENARIOS / f"{id_escenario}.yaml").read_text(encoding="utf-8")
             )
-            resultado = correr_escenario(deps, escenario, tipo, sesiones)
+            resultado = correr_escenario(deps, escenario, tipo, usuarios)
             resultados.append(resultado)
             if al_avanzar:
                 al_avanzar(resultado)

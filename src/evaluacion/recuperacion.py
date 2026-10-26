@@ -31,7 +31,7 @@ NORMA = re.compile(
 )
 SINTETICAS = {"glosario": "glosario", "manual de uso de la ovt": "manual"}
 ARTICULO_EN_SECCION = re.compile(r"^Art[ií]culo\s+(\d+(?:-\d+)?)", re.IGNORECASE)
-ARTICULOS_EN_CITA = re.compile(r",\s*arts?\.\s*(\d+(?:-\d+)?(?:\s*(?:,|y)\s*\d+(?:-\d+)?)*)")
+ARTICULOS_EN_CITA = re.compile(r",?\s*\barts?\.\s*(\d+(?:-\d+)?(?:\s*(?:,|y)\s*\d+(?:-\d+)?)*)")
 
 
 @dataclass(frozen=True)

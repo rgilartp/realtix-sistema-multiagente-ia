@@ -317,8 +317,9 @@ def test_ipu_10_la_cifra_llega_al_modelo_con_la_fuente_de_la_herramienta(adaptad
     (resultado,) = resultados_de_herramientas(modelo)
     assert resultado["tarifa"] == "6,1 por mil"
     assert resultado["fuente_de_la_tarifa"].startswith("Resolución SDH-000194 de 2025, art. 1")
-    assert any(f.startswith("Resolución SDH-000194 de 2025") for f in resultado["fuentes"])
-    assert not any("Acuerdo 648" in f for f in resultado["fuentes"])
+    fuentes = resultado["fuentes_de_la_herramienta"]
+    assert any(f.startswith("Resolución SDH-000194 de 2025") for f in fuentes)
+    assert not any("Acuerdo 648" in f for f in fuentes)
 
 
 @pytest.mark.unit

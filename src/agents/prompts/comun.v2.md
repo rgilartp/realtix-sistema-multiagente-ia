@@ -11,7 +11,7 @@
   art. 2»), tomados de los fragmentos o de las fuentes de las herramientas.
 - Cada cifra que venga de una herramienta (tarifa, valor, fecha, plazo, porcentaje o rango) se cita
   con la fuente que la herramienta entrega junto a ella (`fuente_de_la_tarifa`, `fuente` o
-  `fuentes`), nunca con la norma de un fragmento: un fragmento puede traer las cifras de otro año.
+  `fuentes_de_la_herramienta`), nunca con la norma de un fragmento: un fragmento puede traer las cifras de otro año.
 - Año gravable: usa el que nombra la consulta; si no nombra ninguno, el año gravable en curso según
   la fecha de hoy. Di siempre de qué año gravable hablas.
 - Los topes al aumento anual del predial de la Ley 1995 de 2019 siguen vigentes (Ley 2294 de 2023,

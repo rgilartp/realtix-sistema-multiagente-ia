@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.container import Contenedor  # noqa: E402
 from src.evaluacion.escenarios import cargar_escenarios  # noqa: E402
-from src.evaluacion.humo import _sesiones  # noqa: E402
+from src.evaluacion.humo import sesiones  # noqa: E402
 from src.evaluacion.recuperacion import probar_recuperacion  # noqa: E402
 from src.integrations.costos import usos_desde_metadatos  # noqa: E402
 
@@ -42,7 +42,7 @@ def main() -> None:
 
     with get_usage_metadata_callback() as uso:
         reporte = probar_recuperacion(
-            cargar_escenarios(), deps.clasificador, deps, _sesiones(), avance
+            cargar_escenarios(), deps.clasificador, deps, sesiones(), avance
         )
     usos = usos_desde_metadatos(uso.usage_metadata)
     reporte["costo_anthropic_usd"] = str(sum((u.costo_usd for u in usos), Decimal(0)))

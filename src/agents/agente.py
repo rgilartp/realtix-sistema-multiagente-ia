@@ -195,7 +195,7 @@ def para_el_modelo(resultado: Resultado) -> dict[str, Any]:
     la fuente de la herramienta y no con la norma de un fragmento (revisión externa, IPU-10)."""
     if not resultado.fuentes:
         return resultado.datos
-    return {**resultado.datos, "fuentes": list(resultado.fuentes)}
+    return {**resultado.datos, "fuentes_de_la_herramienta": list(resultado.fuentes)}
 
 
 class _Rechazo(Exception):
