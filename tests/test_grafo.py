@@ -374,7 +374,7 @@ def test_caso_3_no_corresponde_con_el_tope_alcanzado_escala(deps) -> None:
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-ESC-05 · Transferencia con contexto")
+@pytest.mark.req("RF-ESC-05 · Notificación al contribuyente")
 def test_caso_4_multiagente_escalada_entrega_lo_resuelto(deps) -> None:
     def ica_sin_servicio(state: AgentState) -> dict[str, Any]:
         roto = parcial("ica", "", suficiencia="no_pudo", cobertura=0.0, fallo_servicio=True)
