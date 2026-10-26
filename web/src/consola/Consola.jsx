@@ -2,7 +2,7 @@
 // métricas para el administrador, cada una con su token, y un enlace a LangSmith.
 import { useEffect, useMemo, useState } from "react";
 
-import { obtener } from "../api.js";
+import { mensajeParaMostrar, obtener } from "../api.js";
 
 const LANGSMITH = import.meta.env.VITE_LANGSMITH_URL ?? "https://smith.langchain.com/";
 const CATEGORIAS = ["ipu", "ica", "general", "ocr", "fuera_de_alcance", "sin_categoria"];
@@ -14,8 +14,10 @@ const NOMBRES = {
   fuera_de_alcance: "Fuera de alcance",
   sin_categoria: "Sin categoría",
 };
+const nombre = (categoria) => NOMBRES[categoria] ?? categoria.replaceAll("_", " ");
 const CLAVES_RESUMEN = {
   motivo: "Motivo",
+  motivo_original: "Motivo original",
   categoria: "Categoría",
   nivel_confianza: "Nivel de confianza",
   intentos: "Intentos de clasificación",
@@ -47,15 +49,21 @@ function fecha(valor) {
     : "";
 }
 
-function numero(valor, decimales = 3) {
+function numero(valor, decimales = 3, fijos = false) {
   if (valor === null || valor === undefined) return "—";
   return typeof valor === "number"
-    ? valor.toLocaleString("es-CO", { maximumFractionDigits: decimales })
+    ? valor.toLocaleString("es-CO", {
+        maximumFractionDigits: decimales,
+        minimumFractionDigits: fijos ? decimales : 0,
+      })
     : String(valor);
 }
 
 function valorDelResumen(valor) {
-  if (Array.isArray(valor)) return valor.length ? valor.map((p) => p.categoria ?? JSON.stringify(p)).join(", ") : "ninguna";
+  if (Array.isArray(valor)) {
+    if (!valor.length) return "ninguna";
+    return valor.map((p) => (typeof p === "string" ? p : (p.categoria ?? JSON.stringify(p)))).join(", ");
+  }
   if (valor && typeof valor === "object") return JSON.stringify(valor);
   return numero(valor);
 }
@@ -110,6 +118,12 @@ function Bandeja({ token }) {
   const [casos, setCasos] = useState(null);
   const [detalle, setDetalle] = useState(null);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Otro token: lo cargado con el anterior no se sigue mostrando.
+    setCasos(null);
+    setDetalle(null);
+  }, [token]);
   const [busqueda, setBusqueda] = useState("");
   const [motivo, setMotivo] = useState("");
   const [estado, setEstado] = useState("");
@@ -119,7 +133,7 @@ function Bandeja({ token }) {
       setCasos(await obtener("/api/v1/escalamiento/casos", token));
       setError("");
     } catch (e) {
-      setError(e.message);
+      setError(mensajeParaMostrar(e));
     }
   };
 
@@ -127,7 +141,7 @@ function Bandeja({ token }) {
     try {
       setDetalle(await obtener(`/api/v1/escalamiento/casos/${encodeURIComponent(id)}`, token));
     } catch (e) {
-      setError(e.message);
+      setError(mensajeParaMostrar(e));
     }
   };
 
@@ -139,6 +153,7 @@ function Bandeja({ token }) {
       (!estado || c.estado === estado) &&
       (!busqueda || `${c.id_caso} ${c.id_conversacion}`.toLowerCase().includes(busqueda.toLowerCase())),
   );
+  const detalleVisible = detalle && visibles.some((c) => c.id_caso === detalle.id_caso) ? detalle : null;
 
   return (
     <section className="space-y-4" data-prueba="bandeja" aria-labelledby="titulo-bandeja">
@@ -197,9 +212,9 @@ function Bandeja({ token }) {
                 <button
                   type="button"
                   onClick={() => abrir(c.id_caso)}
-                  aria-pressed={detalle?.id_caso === c.id_caso}
+                  aria-pressed={detalleVisible?.id_caso === c.id_caso}
                   className={`w-full rounded-2xl border bg-superficie p-4 text-left transition-colors duration-150 ease-out hover:border-acento ${
-                    detalle?.id_caso === c.id_caso ? "border-acento ring-2 ring-acento/20" : "border-borde"
+                    detalleVisible?.id_caso === c.id_caso ? "border-acento ring-2 ring-acento/20" : "border-borde"
                   }`}
                 >
                   <span className="flex flex-wrap items-center justify-between gap-2">
@@ -214,17 +229,17 @@ function Bandeja({ token }) {
               </li>
             ))}
           </ul>
-          {detalle ? (
+          {detalleVisible ? (
             <article className="animate-entrada space-y-4 rounded-2xl border border-borde bg-superficie p-5" data-prueba="detalle">
               <header>
                 <p className="text-xs font-semibold tracking-[0.12em] text-acento uppercase">Detalle del caso</p>
-                <h3 className="font-titulo text-xl font-semibold">{detalle.id_caso}</h3>
+                <h3 className="font-titulo text-xl font-semibold">{detalleVisible.id_caso}</h3>
               </header>
-              <p className="rounded-xl bg-superficie-2 p-3 text-sm whitespace-pre-line">{detalle.resumen}</p>
+              <p className="rounded-xl bg-superficie-2 p-3 text-sm whitespace-pre-line">{detalleVisible.resumen}</p>
               <div>
                 <h4 className="text-sm font-semibold">Resumen estructurado</h4>
                 <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
-                  {Object.entries(detalle.resumen_estructurado ?? {}).map(([clave, valor]) => (
+                  {Object.entries(detalleVisible.resumen_estructurado ?? {}).map(([clave, valor]) => (
                     <div key={clave} className="contents">
                       <dt className="text-tinta-suave">{CLAVES_RESUMEN[clave] ?? clave}</dt>
                       <dd className="font-medium tabular-nums">{valorDelResumen(valor)}</dd>
@@ -235,7 +250,7 @@ function Bandeja({ token }) {
               <div>
                 <h4 className="text-sm font-semibold">Conversación</h4>
                 <ol className="mt-2 space-y-2 text-sm">
-                  {detalle.mensajes.map((m) => (
+                  {detalleVisible.mensajes.map((m) => (
                     <li key={m.indice} className="rounded-xl border border-borde px-3 py-2">
                       <span className="text-xs font-semibold text-tinta-suave">{AUTORES[m.autor] ?? m.autor}</span>
                       <p className="whitespace-pre-line">{m.texto}</p>
@@ -267,17 +282,26 @@ function Metricas({ token }) {
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState("");
 
+  useEffect(() => setDatos(null), [token]);
+
   const cargar = async () => {
     try {
       setDatos(await obtener("/api/v1/admin/metricas", token));
       setError("");
     } catch (e) {
-      setError(e.message);
+      setError(mensajeParaMostrar(e));
     }
   };
 
+  // Las categorías salen de la respuesta, en el orden conocido y luego las nuevas.
+  const categorias = datos
+    ? [
+        ...CATEGORIAS.filter((c) => c in datos.matriz_de_confusion),
+        ...Object.keys(datos.matriz_de_confusion).filter((c) => !CATEGORIAS.includes(c)),
+      ]
+    : [];
   const maximo = datos
-    ? Math.max(1, ...CATEGORIAS.flatMap((f) => CATEGORIAS.map((c) => datos.matriz_de_confusion[f]?.[c] ?? 0)))
+    ? Math.max(1, ...categorias.flatMap((f) => categorias.map((c) => datos.matriz_de_confusion[f]?.[c] ?? 0)))
     : 1;
 
   return (
@@ -332,27 +356,27 @@ function Metricas({ token }) {
             >
               <colgroup>
                 <col className="w-40" />
-                {CATEGORIAS.map((c) => (
+                {categorias.map((c) => (
                   <col key={c} />
                 ))}
               </colgroup>
               <thead>
                 <tr className="text-xs text-tinta-suave">
                   <th scope="col" className="px-3 py-2 text-left font-semibold">Esperada</th>
-                  {CATEGORIAS.map((c) => (
+                  {categorias.map((c) => (
                     <th key={c} scope="col" className="px-1 py-2 text-center font-semibold break-words">
-                      {c.replaceAll("_", " ")}
+                      {nombre(c)}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {CATEGORIAS.map((fila) => (
+                {categorias.map((fila) => (
                   <tr key={fila} className="border-t border-borde">
                     <th scope="row" className="px-3 py-2 text-left font-semibold">
-                      {fila.replaceAll("_", " ")}
+                      {nombre(fila)}
                     </th>
-                    {CATEGORIAS.map((col) => {
+                    {categorias.map((col) => {
                       const valor = datos.matriz_de_confusion[fila]?.[col] ?? 0;
                       return (
                         <td
@@ -396,14 +420,14 @@ function Metricas({ token }) {
                 {Object.entries(datos.por_categoria).map(([categoria, m]) => (
                   <tr key={categoria} className="border-t border-borde">
                     <th scope="row" className="px-3 py-2 text-left font-semibold sm:px-4">
-                      {NOMBRES[categoria] ?? categoria}
+                      {nombre(categoria)}
                     </th>
                     <td className="px-2 py-2 text-right sm:px-3">{m.soporte}</td>
-                    <td className="px-2 py-2 text-right sm:px-3">{numero(m.precision)}</td>
-                    <td className="px-2 py-2 text-right sm:px-3">{numero(m.exhaustividad)}</td>
+                    <td className="px-2 py-2 text-right sm:px-3">{numero(m.precision, 3, true)}</td>
+                    <td className="px-2 py-2 text-right sm:px-3">{numero(m.exhaustividad, 3, true)}</td>
                     <td className="px-2 py-2 sm:px-4">
                       <span className="flex items-center gap-2">
-                        <span className="font-semibold sm:w-12 sm:text-right">{numero(m.f1)}</span>
+                        <span className="font-semibold sm:w-12 sm:text-right">{numero(m.f1, 3, true)}</span>
                         <span className="hidden h-2 w-24 overflow-hidden rounded-full bg-superficie-2 sm:block" aria-hidden="true">
                           <span className="block h-full rounded-full bg-acento" style={{ width: `${(m.f1 ?? 0) * 100}%` }} />
                         </span>

@@ -1,7 +1,7 @@
 // B11: OVT simulada, widget y consola (RF-UI-01 a RF-UI-04, RF-SYS-06, RF-ESC-05 y RNF-07),
-// con la API simulada en el navegador. Las 6 pruebas corren en 1280 px; con CAPTURAS=1, cada una
-// guarda su captura en docs/capturas/ y se repiten los mismos flujos en 390 px para las capturas
-// del celular.
+// con la API simulada en el navegador. Los 6 flujos corren en 1280 px y en 390 px; con
+// CAPTURAS=1, cada uno guarda su captura en docs/capturas/. Cada flujo lleva sus requerimientos
+// como anotación `req`, que lee scripts/trazabilidad.py.
 import { expect, test } from "@playwright/test";
 
 import { TEXTOS, simularApi } from "./simulador.js";
@@ -17,9 +17,26 @@ const CELULAR = { width: 390, height: 844 };
 
 test.use({ testIdAttribute: "data-prueba" });
 
+// Espera a que las dos fuentes estén cargadas en la página y en el iframe del widget.
+async function fuentesListas(page) {
+  for (const marco of page.frames()) {
+    await marco
+      .evaluate(async () => {
+        await Promise.all([
+          document.fonts.load('600 1em "Literata Variable"'),
+          document.fonts.load('400 1em "Atkinson Hyperlegible Next Variable"'),
+          document.fonts.load('700 1em "Atkinson Hyperlegible Next Variable"'),
+        ]);
+        await document.fonts.ready;
+      })
+      .catch(() => {});
+  }
+}
+
 async function capturar(page, nombre, { completa = false } = {}) {
   if (!CAPTURAS) return;
-  await page.evaluate(() => document.fonts.ready);
+  await fuentesListas(page);
+  await page.waitForTimeout(100); // el widget recalcula su altura con el rótulo ya dibujado
   const { width } = page.viewportSize();
   const path = `../docs/capturas/${nombre}_${width}.png`;
   await page.screenshot({ path, animations: "disabled", fullPage: completa });
@@ -95,8 +112,8 @@ async function flujoFueraDeHorario(page, tamano) {
   const { widget } = await abrirOvt(page, tamano, { fueraDeHorario: true });
   await preguntar(widget, "Hola, necesito hablar con un funcionario");
   const aviso = widget.locator("[data-autor=sistema]");
-  await expect(aviso).toContainText("Vuelvo a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.");
-  await expect(aviso.getByText("Vuelve a atender el lunes 5 de octubre de 2026 a las 8:00 a. m.")).toBeVisible();
+  await expect(aviso).toContainText("Vuelvo a atender el lunes 7 de octubre de 2030 a las 8:00 a. m.");
+  await expect(aviso.getByText("Vuelve a atender el lunes 7 de octubre de 2030 a las 8:00 a. m.")).toBeVisible();
   await expect(aviso.getByText("Sistema", { exact: true })).toBeVisible();
   await capturar(page, "widget_fuera_de_horario");
 }
@@ -122,7 +139,7 @@ async function flujoEscalada(page, tamano) {
   await boton.click();
   await expect(widget.getByText(TEXTOS.transferencia)).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Tu caso está con un funcionario");
-  await expect(boton).toBeDisabled();
+  await expect(widget.getByRole("button", { name: "Ya pediste un funcionario" })).toBeDisabled();
   // La consulta periódica trae el mensaje del funcionario (RF-ESC-05 y RF-UI-03).
   await expect(widget.getByText(TEXTOS.funcionario)).toBeVisible({ timeout: 8000 });
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un funcionario");
@@ -150,9 +167,9 @@ async function flujoConsola(page, tamano) {
   await page.getByLabel("Token de administrador (métricas)").fill("token-admin");
   await page.getByRole("button", { name: "Cargar métricas" }).click();
   const matriz = page.getByTestId("matriz");
-  await expect(matriz).toContainText("fuera de alcance");
-  // La fila cuya primera celda es exactamente «ica» (no la del encabezado).
-  const filaIca = matriz.locator("tbody tr").filter({ has: page.locator("th", { hasText: /^ica$/ }) });
+  await expect(matriz).toContainText("Fuera de alcance");
+  // La fila cuya primera celda es exactamente la del ICA (no la del encabezado).
+  const filaIca = matriz.locator("tbody tr").filter({ has: page.locator("th", { hasText: /^ICA$/ }) });
   await expect(filaIca).toHaveCount(1);
   await expect(filaIca.locator("td").nth(1)).toHaveText("9");
   await expect(page.getByText("Latencia p95")).toBeVisible();
@@ -160,21 +177,40 @@ async function flujoConsola(page, tamano) {
 }
 
 const FLUJOS = [
-  ["OVT simulada: rótulo, sin marcas reales y widget en un iframe", flujoOvt],
-  ["widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes", flujoRespuesta],
-  ["widget: fuera de horario destacado con la hora de regreso (RNF-07)", flujoFueraDeHorario],
-  ["widget: carga del recibo desde la conversación (RF-UI-04)", flujoRecibo],
-  ["widget: botón del funcionario y mensajes nuevos de la conversación escalada", flujoEscalada],
-  ["consola: bandeja con filtros y métricas con sus tokens", flujoConsola],
+  {
+    nombre: "OVT simulada: rótulo, sin marcas reales y widget en un iframe",
+    flujo: flujoOvt,
+    req: ["RF-UI-01 · Widget embebible", "RNF-04 · Uso exclusivo de datos sintéticos"],
+  },
+  {
+    nombre: "widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
+    flujo: flujoRespuesta,
+    req: ["RF-SYS-06 · Aviso de interacción con IA (provisional)", "RF-UI-02 · Contexto de la sesión", "RF-UI-03 · Identificación del interlocutor", "RF-GEN-03 · Respuesta sustentada en fuentes"],
+  },
+  {
+    nombre: "widget: fuera de horario destacado con la hora de regreso (RNF-07)",
+    flujo: flujoFueraDeHorario,
+    req: ["RNF-07 · Aviso fuera de horario"],
+  },
+  {
+    nombre: "widget: carga del recibo desde la conversación (RF-UI-04)",
+    flujo: flujoRecibo,
+    req: ["RF-UI-04 · Carga desde la conversación", "RF-OCR-01 · Carga de archivos"],
+  },
+  {
+    nombre: "widget: botón del funcionario y mensajes nuevos de la conversación escalada",
+    flujo: flujoEscalada,
+    req: ["RF-ESC-05 · Notificación al contribuyente", "RF-UI-03 · Identificación del interlocutor"],
+  },
+  {
+    nombre: "consola: bandeja con filtros y métricas con sus tokens",
+    flujo: flujoConsola,
+    req: ["RF-OBS-02 · Matriz de confusión de enrutamiento", "RF-OBS-03 · Métricas de precisión y tiempo"],
+  },
 ];
 
-for (const [nombre, flujo] of FLUJOS) {
-  test(nombre, async ({ page }) => flujo(page, ESCRITORIO));
+for (const { nombre, flujo, req } of FLUJOS) {
+  const anotaciones = { annotation: req.map((r) => ({ type: "req", description: r })) };
+  test(nombre, anotaciones, async ({ page }) => flujo(page, ESCRITORIO));
+  test(`${nombre} (390 px)`, anotaciones, async ({ page }) => flujo(page, CELULAR));
 }
-
-test.describe("capturas en 390 px", () => {
-  test.skip(!CAPTURAS, "Solo con CAPTURAS=1 (npm run capturas)");
-  for (const [nombre, flujo] of FLUJOS) {
-    test(`${nombre} (390 px)`, async ({ page }) => flujo(page, CELULAR));
-  }
-});

@@ -11,11 +11,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   AVISO_IA,
-  SIN_CONEXION,
   TAMANO_MAXIMO_MB,
   TIPOS_ADMITIDOS,
   enviarDocumento,
   enviarMensaje,
+  mensajeParaMostrar,
   mensajesNuevos,
   nuevaConversacion,
   pedirFuncionario,
@@ -69,7 +69,7 @@ function IconoClip() {
 
 function IconoReloj() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="shrink-0">
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v5l3 2" />
     </svg>
@@ -153,7 +153,7 @@ function Burbuja({ mensaje }) {
 
 function Escribiendo() {
   return (
-    <div className="flex animate-entrada items-center gap-2" role="status">
+    <div className="flex animate-entrada items-center gap-2">
       <Etiqueta autor="agente" />
       <span className="flex gap-1 rounded-full bg-superficie px-3 py-2" aria-hidden="true">
         {[0, 150, 300].map((retraso) => (
@@ -170,6 +170,9 @@ export default function Widget() {
   // Una conversación nueva por carga y por sesión: los mensajes no se guardan en el navegador.
   const [conversacion, setConversacion] = useState(nuevaConversacion);
   const tokenActual = useRef(null);
+  // La conversación vigente: una respuesta que llega después de cambiar de sesión se descarta.
+  const conversacionActual = useRef(conversacion);
+  conversacionActual.current = conversacion;
   const [mensajes, setMensajes] = useState([]);
   const [texto, setTexto] = useState("");
   const [ocupado, setOcupado] = useState(false);
@@ -180,7 +183,9 @@ export default function Widget() {
   const final = useRef(null);
 
   const reiniciar = useCallback(() => {
-    setConversacion(nuevaConversacion());
+    const nueva = nuevaConversacion();
+    conversacionActual.current = nueva;
+    setConversacion(nueva);
     setMensajes([]);
     setEscalada(false);
     setInterlocutor("agente");
@@ -190,7 +195,7 @@ export default function Widget() {
   // El token de la OVT llega por postMessage desde la página que inserta el widget.
   useEffect(() => {
     function recibir(evento) {
-      if (!ORIGENES_PERMITIDOS.includes(evento.origin)) return;
+      if (evento.source !== window.parent || !ORIGENES_PERMITIDOS.includes(evento.origin)) return;
       if (evento.data?.tipo !== "realtix-sesion") return;
       const nuevo = evento.data.token ?? null;
       if (nuevo === tokenActual.current) return;
@@ -201,7 +206,11 @@ export default function Widget() {
     window.addEventListener("message", recibir);
     if (window.parent !== window) {
       for (const origen of ORIGENES_PERMITIDOS) {
-        window.parent.postMessage({ tipo: "realtix-widget-listo" }, origen);
+        try {
+          window.parent.postMessage({ tipo: "realtix-widget-listo" }, origen);
+        } catch {
+          /* un origen mal configurado no rompe el widget */
+        }
       }
     }
     return () => window.removeEventListener("message", recibir);
@@ -220,11 +229,15 @@ export default function Widget() {
   };
 
   const conEspera = async (accion) => {
+    const enCurso = conversacionActual.current;
     setOcupado(true);
     try {
-      recibir(await accion());
+      const respuesta = await accion();
+      if (enCurso === conversacionActual.current) recibir(respuesta);
     } catch (error) {
-      agregar({ autor: "sistema", texto: error?.message || SIN_CONEXION, estado: "error" });
+      if (enCurso === conversacionActual.current) {
+        agregar({ autor: "sistema", texto: mensajeParaMostrar(error), estado: "error" });
+      }
     } finally {
       setOcupado(false);
     }
@@ -288,12 +301,14 @@ export default function Widget() {
           }
         }
         desde.current = datos.siguiente;
-      } catch {
-        /* se reintenta en la siguiente consulta */
+      } catch (error) {
+        // Un 4xx no se arregla reintentando (conversación ajena o inexistente): se deja de
+        // consultar; una falla de red se reintenta en la siguiente consulta.
+        if (error?.estado >= 400 && error?.estado < 500) clearInterval(temporizador);
       }
     }
-    consultar();
     const temporizador = setInterval(consultar, CONSULTA_MS);
+    consultar();
     return () => {
       activo = false;
       clearInterval(temporizador);
@@ -328,7 +343,7 @@ export default function Widget() {
           disabled={ocupado || escalada}
           className="mt-3 w-full rounded-lg bg-white px-3 py-2 text-sm font-semibold text-acento-fuerte transition-colors duration-150 ease-out hover:bg-acento-suave focus-visible:outline-white disabled:cursor-default disabled:bg-white/15 disabled:text-white disabled:hover:bg-white/15"
         >
-          Hablar con un funcionario
+          {escalada ? "Ya pediste un funcionario" : "Hablar con un funcionario"}
         </button>
       </header>
 
@@ -354,7 +369,7 @@ export default function Widget() {
                   key={s}
                   type="button"
                   onClick={() => preguntar(s)}
-                  className="rounded-full border border-borde-control/60 bg-superficie px-3 py-1.5 text-left text-xs text-tinta transition-colors duration-150 ease-out hover:border-acento hover:text-acento"
+                  className="rounded-full border border-borde-control bg-superficie px-3 py-1.5 text-left text-xs text-tinta transition-colors duration-150 ease-out hover:border-acento hover:text-acento"
                 >
                   {s}
                 </button>
@@ -406,7 +421,7 @@ export default function Widget() {
           <button
             type="submit"
             disabled={ocupado || !texto.trim()}
-            className="h-11 shrink-0 rounded-xl bg-acento px-4 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:opacity-50"
+            className="h-11 shrink-0 rounded-xl bg-acento px-4 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:bg-superficie-2 disabled:text-tinta-suave"
           >
             Enviar
           </button>

@@ -13,6 +13,29 @@ function cabeceras(token, extra = {}) {
   return token ? { ...extra, Authorization: `Bearer ${token}` } : extra;
 }
 
+// Un error que se puede mostrar al contribuyente: el mensaje es de la API (en español) o el de
+// «sin conexión». Cualquier otro error (red caída, respuesta que no es JSON) se convierte en este.
+export class ErrorApi extends Error {
+  constructor(mensaje, estado = 0) {
+    super(mensaje);
+    this.estado = estado;
+  }
+}
+
+export function mensajeParaMostrar(error) {
+  return error instanceof ErrorApi ? error.message : SIN_CONEXION;
+}
+
+async function pedir(ruta, opciones) {
+  let respuesta;
+  try {
+    respuesta = await fetch(ruta, opciones);
+  } catch {
+    throw new ErrorApi(SIN_CONEXION); // la red falló: nunca «Failed to fetch»
+  }
+  return leer(respuesta);
+}
+
 // La API responde con el formato del chat también en los rechazos (413 y 415); en los demás
 // errores, con {"detalle": …}. Ningún mensaje técnico llega al contribuyente.
 async function leer(respuesta) {
@@ -23,17 +46,17 @@ async function leer(respuesta) {
     cuerpo = null;
   }
   if (cuerpo && typeof cuerpo.respuesta === "string") return cuerpo;
-  if (!respuesta.ok) throw new Error(cuerpo?.detalle ?? SIN_CONEXION);
+  if (!respuesta.ok) throw new ErrorApi(cuerpo?.detalle ?? SIN_CONEXION, respuesta.status);
+  if (cuerpo === null) throw new ErrorApi(SIN_CONEXION, respuesta.status);
   return cuerpo;
 }
 
 export async function enviarMensaje(idConversacion, mensaje, token) {
-  const r = await fetch("/api/v1/chat/mensaje", {
+  return pedir("/api/v1/chat/mensaje", {
     method: "POST",
     headers: cabeceras(token, { "Content-Type": "application/json" }),
     body: JSON.stringify({ id_conversacion: idConversacion, mensaje }),
   });
-  return leer(r);
 }
 
 export async function enviarDocumento(idConversacion, archivo, mensaje, token) {
@@ -41,43 +64,33 @@ export async function enviarDocumento(idConversacion, archivo, mensaje, token) {
   datos.append("id_conversacion", idConversacion);
   datos.append("archivo", archivo);
   if (mensaje) datos.append("mensaje", mensaje);
-  const r = await fetch("/api/v1/chat/documento", {
-    method: "POST",
-    headers: cabeceras(token),
-    body: datos,
-  });
-  return leer(r);
+  return pedir("/api/v1/chat/documento", { method: "POST", headers: cabeceras(token), body: datos });
 }
 
 export async function pedirFuncionario(idConversacion, token) {
-  const r = await fetch("/api/v1/escalamiento", {
+  return pedir("/api/v1/escalamiento", {
     method: "POST",
     headers: cabeceras(token, { "Content-Type": "application/json" }),
     body: JSON.stringify({ id_conversacion: idConversacion }),
   });
-  return leer(r);
 }
 
 export async function mensajesNuevos(idConversacion, desde, token) {
-  const r = await fetch(
-    `/api/v1/chat/${encodeURIComponent(idConversacion)}/mensajes?desde=${desde}`,
-    { headers: cabeceras(token) },
-  );
-  return leer(r);
+  return pedir(`/api/v1/chat/${encodeURIComponent(idConversacion)}/mensajes?desde=${desde}`, {
+    headers: cabeceras(token),
+  });
 }
 
 export async function obtener(ruta, token) {
-  const r = await fetch(ruta, { headers: cabeceras(token) });
-  return leer(r);
+  return pedir(ruta, { headers: cabeceras(token) });
 }
 
 export async function publicar(ruta, cuerpo) {
-  const r = await fetch(ruta, {
+  return pedir(ruta, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(cuerpo),
   });
-  return leer(r);
 }
 
 export function nuevaConversacion() {

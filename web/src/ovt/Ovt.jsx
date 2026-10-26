@@ -31,7 +31,7 @@ export default function Ovt() {
   useEffect(() => {
     insertarWidget();
     obtener("/api/v1/ovt-simulada/usuarios")
-      .then(setUsuarios)
+      .then((lista) => setUsuarios(Array.isArray(lista) ? lista : []))
       .catch(() => setAviso("No se pudo cargar la lista de usuarios de prueba."));
   }, []);
 
@@ -60,6 +60,7 @@ export default function Ovt() {
     <div className="min-h-dvh bg-papel font-texto text-tinta">
       <div
         role="note"
+        data-realtix-respetar=""
         className="franja-simulada border-b-2 border-advertencia-borde px-4 py-4 text-center text-xl leading-snug font-bold text-advertencia sm:text-2xl md:py-5 md:text-3xl"
         data-prueba="rotulo"
       >
@@ -119,7 +120,7 @@ export default function Ovt() {
               <button
                 type="submit"
                 disabled={!elegido}
-                className="h-11 rounded-xl bg-acento px-5 text-sm font-semibold text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:opacity-50"
+                className="h-11 rounded-xl bg-acento px-5 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-150 ease-out hover:bg-acento-fuerte disabled:bg-superficie-2 disabled:text-tinta-suave"
               >
                 Iniciar sesión simulada
               </button>

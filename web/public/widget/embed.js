@@ -21,7 +21,7 @@
   contenedor.setAttribute("data-realtix-contenedor", "");
   contenedor.style.cssText =
     "position:fixed;right:16px;bottom:16px;z-index:2147483000;display:flex;flex-direction:column;" +
-    "align-items:flex-end;gap:10px;font-family:inherit";
+    "align-items:flex-end;gap:10px;font-family:inherit;pointer-events:none";
 
   var iframe = document.createElement("iframe");
   iframe.id = "realtix-widget";
@@ -34,7 +34,8 @@
   boton.setAttribute("aria-controls", "realtix-widget");
   boton.style.cssText =
     "border:0;border-radius:999px;padding:12px 18px;background:#0e5a64;color:#fff;font:inherit;" +
-    "font-size:15px;font-weight:600;box-shadow:0 6px 18px rgba(28,34,38,.25);cursor:pointer";
+    "font-size:15px;font-weight:600;box-shadow:0 6px 18px rgba(28,34,38,.25);cursor:pointer;" +
+    "pointer-events:auto";
   boton.addEventListener("focus", function () {
     boton.style.outline = "3px solid #1c2226";
     boton.style.outlineOffset = "2px";
@@ -43,21 +44,37 @@
     boton.style.outline = "none";
   });
 
+  // Margen superior: el panel no tapa el elemento marcado con data-realtix-respetar (en la OVT
+  // simulada, el rótulo de entorno de pruebas).
+  function margenSuperior() {
+    var respetar = document.querySelector("[data-realtix-respetar]");
+    var abajo = respetar ? respetar.getBoundingClientRect().bottom : 0;
+    return Math.max(16, Math.round(abajo) + 12);
+  }
+
   function medidas() {
-    var transicion = sinMovimiento.matches
-      ? "none"
-      : "opacity 200ms cubic-bezier(.23,1,.32,1), transform 200ms cubic-bezier(.23,1,.32,1)";
+    var duracion = sinMovimiento.matches ? "0ms" : "200ms";
+    var curva = "cubic-bezier(.23,1,.32,1)";
+    var borde = ancho.matches ? 16 : 8;
+    var alto = window.innerHeight - margenSuperior() - borde - 48 - 10; // botón y separación
     var tamano = ancho.matches
-      ? "width:400px;height:min(680px, calc(100vh - 190px));" // el rótulo de la página queda visible
-      : "width:calc(100vw - 16px);height:calc(100dvh - 190px);";
+      ? "width:400px;height:" + Math.min(680, alto) + "px;"
+      : "width:calc(100vw - 16px);height:" + alto + "px;";
+    // visibility (y no display) para que la transición de abrir y cerrar se vea; al cerrar, el
+    // panel se oculta al terminar la transición.
+    var transicion =
+      "opacity " + duracion + " " + curva + ",transform " + duracion + " " + curva +
+      ",visibility 0s linear " + (abierto ? "0s" : duracion);
     iframe.style.cssText =
       tamano +
-      "border:0;border-radius:18px;background:#fff;" +
+      "border:0;border-radius:18px;background:#fff;pointer-events:auto;" +
       "box-shadow:0 1px 2px rgba(28,34,38,.06),0 12px 32px rgba(28,34,38,.18);" +
       "transition:" + transicion + ";" +
-      (abierto ? "opacity:1;transform:none;" : "opacity:0;transform:translateY(8px);display:none;");
-    contenedor.style.right = ancho.matches ? "16px" : "8px";
-    contenedor.style.bottom = ancho.matches ? "16px" : "8px";
+      (abierto
+        ? "visibility:visible;opacity:1;transform:none;"
+        : "visibility:hidden;opacity:0;transform:translateY(8px);");
+    contenedor.style.right = borde + "px";
+    contenedor.style.bottom = borde + "px";
     boton.textContent = abierto ? "Ocultar asistente" : "Asistente tributario";
     boton.setAttribute("aria-expanded", String(abierto));
   }
@@ -74,6 +91,7 @@
     if (abierto) iframe.focus();
   });
   ancho.addEventListener("change", medidas);
+  window.addEventListener("resize", medidas);
 
   window.addEventListener("message", function (evento) {
     if (evento.source !== iframe.contentWindow || evento.origin !== origen) return;
@@ -96,7 +114,13 @@
 
   contenedor.appendChild(iframe);
   contenedor.appendChild(boton);
-  medidas();
-  if (document.body) document.body.appendChild(contenedor);
-  else document.addEventListener("DOMContentLoaded", function () { document.body.appendChild(contenedor); });
+
+  function montar() {
+    document.body.appendChild(contenedor);
+    medidas();
+  }
+  // Con las fuentes cargadas cambia la altura del rótulo: se recalcula.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medidas);
+  if (document.body) montar();
+  else document.addEventListener("DOMContentLoaded", montar);
 })();

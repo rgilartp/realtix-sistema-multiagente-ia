@@ -9,12 +9,15 @@ Uso: uv run python scripts/trazabilidad.py [rutas de pruebas] [--salida reports]
 
 import argparse
 import csv
+import re
 import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
+
+RAIZ = Path(__file__).resolve().parent.parent
 
 
 @dataclass(frozen=True)
@@ -47,6 +50,23 @@ def recolectar(rutas: list[str]) -> list[Evidencia]:
     if codigo not in (pytest.ExitCode.OK, pytest.ExitCode.NO_TESTS_COLLECTED):
         raise RuntimeError(f"pytest no pudo recolectar las pruebas (código {codigo})")
     return recolector.evidencias
+
+
+# Pruebas de la web (Playwright, B11): cada flujo de `web/tests/*.spec.js` declara su nombre y
+# sus requerimientos (`nombre: "…", flujo: …, req: ["RF-… · nombre corto", …]`), que la prueba
+# lleva como anotación `req`.
+FLUJO_WEB = re.compile(r'nombre:\s*"([^"]+)",\s*flujo:\s*\w+,\s*req:\s*\[([^\]]*)\]')
+TEXTO = re.compile(r'"([^"]+)"')
+
+
+def recolectar_web(raiz: Path = RAIZ / "web" / "tests") -> list[Evidencia]:
+    """Evidencias de las pruebas de la web, leídas de sus anotaciones `req`."""
+    evidencias = []
+    for archivo in sorted(raiz.glob("*.spec.js")):
+        ruta = archivo.relative_to(RAIZ).as_posix()
+        for nombre, lista in FLUJO_WEB.findall(archivo.read_text(encoding="utf-8")):
+            evidencias += [Evidencia(r, f"{ruta}::{nombre}") for r in TEXTO.findall(lista)]
+    return evidencias
 
 
 def agrupar(evidencias: list[Evidencia]) -> dict[str, list[str]]:
@@ -92,7 +112,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--salida", type=Path, default=Path("reports"))
     args = parser.parse_args(argv)
 
-    matriz = agrupar(recolectar(args.rutas))
+    evidencias = recolectar(args.rutas)
+    if args.rutas == ["tests"]:  # la matriz completa suma las pruebas de la web
+        evidencias += recolectar_web()
+    matriz = agrupar(evidencias)
     ruta_md, ruta_csv = escribir(matriz, args.salida)
     print(f"{len(matriz)} requerimientos con evidencia; matriz en {ruta_md} y {ruta_csv}")
     return 0

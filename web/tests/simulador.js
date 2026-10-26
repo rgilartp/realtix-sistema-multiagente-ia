@@ -1,6 +1,8 @@
 // API simulada en el navegador para las pruebas de la web (contrato de la sección 3.8).
-// Los textos son los del sistema (Horario.aviso_fuera_de_horario para HOR-01, el aviso de
-// transferencia, el de modo humano y la confirmación del recibo de OCR-01). Las consultas que
+// Los textos son los del sistema (Horario.aviso_fuera_de_horario, el aviso de transferencia, el
+// de modo humano y la confirmación del recibo de OCR-01). Los relojes simulados son de 2030, con
+// su día de la semana correcto, para que las capturas no muestren fechas del periodo del trabajo
+// (regla 9); las fechas tributarias del recibo sí van. Las consultas que
 // llegan quedan en `solicitudes`, para revisar el token y los cuerpos.
 
 export const TEXTOS = {
@@ -12,8 +14,8 @@ export const TEXTOS = {
     "avalúo catastral y la tarifa que corresponde al predio (Acuerdo 105 de 2003, art. 2).",
   fueraDeHorario:
     "En este momento estoy fuera del horario de atención. Atiendo de lunes a viernes, de 8:00 a. m. " +
-    "a 5:00 p. m. (hora de Colombia), sin contar festivos. Vuelvo a atender el lunes 5 de octubre de " +
-    "2026 a las 8:00 a. m. Fuera de ese horario no puedo responder consultas ni transferirlas a un " +
+    "a 5:00 p. m. (hora de Colombia), sin contar festivos. Vuelvo a atender el lunes 7 de octubre de " +
+    "2030 a las 8:00 a. m. Fuera de ese horario no puedo responder consultas ni transferirlas a un " +
     "funcionario: escríbeme de nuevo entonces.",
   transferencia:
     "Con gusto te comunico con un funcionario. Voy a transferir tu consulta a un funcionario, que te " +
@@ -104,15 +106,15 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
       if (auth !== "Bearer token-funcionario") return json({ detalle: "Necesitas un token válido para esta consulta." }, 401);
       return json([
         { id_caso: "CASO-conv-7f3a", id_conversacion: "conv-7f3a", motivo: "solicitud explícita",
-          categoria: null, nivel_confianza: 0, estado: "abierto", fecha_escalamiento: "2026-10-01T15:12:00Z" },
+          categoria: null, nivel_confianza: 0, estado: "abierto", fecha_escalamiento: "2030-10-01T15:12:00Z" },
         { id_caso: "CASO-conv-91bc", id_conversacion: "conv-91bc", motivo: "confianza insuficiente",
-          categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2026-10-01T16:40:00Z" },
+          categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2030-10-01T16:40:00Z" },
       ]);
     }
     if (ruta.startsWith("/api/v1/escalamiento/casos/")) {
       return json({
         id_caso: "CASO-conv-91bc", id_conversacion: "conv-91bc", motivo: "confianza insuficiente",
-        categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2026-10-01T16:40:00Z",
+        categoria: "ipu", nivel_confianza: 0.58, estado: "abierto", fecha_escalamiento: "2030-10-01T16:40:00Z",
         resumen: "Motivo: confianza insuficiente. Categoría: ipu. Nivel de confianza: 0,58. Intentos de clasificación: 0.",
         resumen_estructurado: { motivo: "confianza insuficiente", categoria: "ipu", nivel_confianza: 0.58 },
         intentos: 0,

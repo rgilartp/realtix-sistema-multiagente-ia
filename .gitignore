@@ -42,6 +42,5 @@ web/dist/
 datos/recibos/
 
 # Web: compilación y resultados de Playwright
-web/dist/
 web/test-results/
 web/playwright-report/

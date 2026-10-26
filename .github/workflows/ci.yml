@@ -92,6 +92,7 @@ jobs:
   web:
     name: Web (compilación y Playwright)
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: web
