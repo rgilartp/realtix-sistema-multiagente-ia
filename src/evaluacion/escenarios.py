@@ -19,6 +19,7 @@ from typing import Any
 import yaml
 
 from src.agents.state import CATEGORIAS, MOTIVOS_ESCALAMIENTO
+from src.services.citas import DISTRITAL
 
 RAIZ = Path(__file__).resolve().parent.parent.parent
 DIR_ESCENARIOS = RAIZ / "tests" / "escenarios"
@@ -533,9 +534,6 @@ def aprobar_referencias(
 
 _ESPACIO_ANTES_DE_PORCENTAJE = re.compile(r"(\d)\s+%")
 _ORDINAL = re.compile(r"(\d)\s*[°º]")
-# «Decreto Distrital 123» es «Decreto 123» (F3 de la corrida 1): el adjetivo entre el tipo de la
-# norma y su número no cambia la norma.
-_DISTRITAL = re.compile(r"\b(decreto|acuerdo)\s+distrital\s+(?=(?:no\.?\s*)?\d)")
 
 
 def normalizar_texto(texto: str) -> str:
@@ -545,7 +543,7 @@ def normalizar_texto(texto: str) -> str:
         c for c in unicodedata.normalize("NFD", texto.lower()) if unicodedata.category(c) != "Mn"
     )
     sin_tildes = _ORDINAL.sub(r"\1", _ESPACIO_ANTES_DE_PORCENTAJE.sub(r"\1%", sin_tildes))
-    sin_tildes = _DISTRITAL.sub(r"\1 ", sin_tildes)
+    sin_tildes = DISTRITAL.sub(r"\1 ", sin_tildes)  # F3: la misma regla del verificador de citas
     return " ".join(sin_tildes.split())
 
 
