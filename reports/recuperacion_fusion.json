@@ -1,0 +1,46 @@
+{
+  "que_es": "Sin modelos: fuentes esperadas que aparecen entre los 5 fragmentos con la búsqueda sola (el sistema hasta la corrida 2) y con la fusión RRF de la búsqueda y el texto, con las partes guardadas en reports/recuperacion.json",
+  "fuentes": 69,
+  "aciertos": {
+    "busqueda": 40,
+    "fusion": 42
+  },
+  "cambios": [
+    {
+      "escenario": "ACC-02",
+      "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+      "busqueda": true,
+      "fusion": false
+    },
+    {
+      "escenario": "ACC-03",
+      "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+      "busqueda": true,
+      "fusion": false
+    },
+    {
+      "escenario": "GEN-02",
+      "fuente": "Manual de uso de la OVT simulada (plataforma_general)",
+      "busqueda": false,
+      "fusion": true
+    },
+    {
+      "escenario": "IPU-12",
+      "fuente": "Acuerdo 1084 de 2026, art. 27, num. 3",
+      "busqueda": false,
+      "fusion": true
+    },
+    {
+      "escenario": "IPU-14",
+      "fuente": "Acuerdo 1084 de 2026, art. 7",
+      "busqueda": false,
+      "fusion": true
+    },
+    {
+      "escenario": "MULTI-03",
+      "fuente": "Ley 44 de 1990, arts. 1 y 3",
+      "busqueda": false,
+      "fusion": true
+    }
+  ]
+}
