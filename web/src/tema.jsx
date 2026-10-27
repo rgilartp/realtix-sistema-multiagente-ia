@@ -1,6 +1,8 @@
 // Tema claro u oscuro (web/DESIGN.md). public/tema.js fija data-tema en <html> antes de pintar;
-// aquí están el botón de la OVT simulada y de la consola, y el cambio que también usa el widget.
+// aquí están el interruptor de la OVT simulada y de la consola, y el cambio que también usa el widget.
 import { useEffect, useState } from "react";
+
+import { IconoLuna, IconoSol } from "./iconos.jsx";
 
 const CLAVE = "tema";
 export const TEMAS = ["claro", "oscuro"];
@@ -30,7 +32,7 @@ export function aplicarTema(tema) {
   requestAnimationFrame(() => raiz.classList.remove("cambiando-tema"));
 }
 
-// Botón «Modo oscuro» (aria-pressed), con una casilla de formulario que se marca con una X.
+// Interruptor «Modo oscuro» (role="switch"), con el sol o la luna en la perilla.
 export function BotonTema() {
   const [tema, setTema] = useState(temaActual);
 
@@ -63,16 +65,14 @@ export function BotonTema() {
   return (
     <button
       type="button"
-      aria-pressed={oscuro}
+      role="switch"
+      aria-checked={oscuro}
       onClick={cambiar}
       data-prueba="boton-tema"
-      className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-control border border-borde-control bg-hoja px-3 text-sm font-semibold text-tinta hover:border-sello-texto"
+      className="interruptor inline-flex min-h-11 shrink-0 items-center gap-2.5 text-sm font-semibold"
     >
-      <span
-        aria-hidden="true"
-        className="grid h-5 w-5 place-items-center rounded-casilla border-2 border-tinta font-titulo text-sm leading-none font-bold"
-      >
-        {oscuro ? "X" : ""}
+      <span aria-hidden="true" className="interruptor-riel">
+        <span className="interruptor-perilla">{oscuro ? <IconoLuna tamano={14} /> : <IconoSol tamano={14} />}</span>
       </span>
       Modo oscuro
     </button>

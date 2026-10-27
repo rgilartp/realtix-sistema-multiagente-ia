@@ -61,9 +61,21 @@ rounded:
   mensaje: 12px
 components:
   rotulo:
-    backgroundColor: "{colors.resaltador}"
-    textColor: "{colors.tinta-oscura}"
+    backgroundColor: "{colors.advertencia-suave}"
+    textColor: "{colors.advertencia}"
+    typography: "{typography.texto}"
+  encabezado:
+    backgroundColor: "{colors.sello}"
+    textColor: "{colors.blanco}"
     typography: "{typography.titulo}"
+  interruptor:
+    backgroundColor: "{colors.sello}"
+    textColor: "{colors.blanco}"
+    rounded: "{rounded.control}"
+  tarjeta:
+    backgroundColor: "{colors.hoja}"
+    textColor: "{colors.tinta}"
+    rounded: "{rounded.casilla}"
   banda:
     backgroundColor: "{colors.sello}"
     textColor: "{colors.blanco}"
@@ -96,16 +108,17 @@ el lenguaje claro. Hay modo claro y modo oscuro, con los mismos colores.
 
 - El fondo de las páginas es `papel`; lo que se lee o se llena va en `hoja`. Los neutros salen
   del azul.
-- `sello` es el relleno de las bandas, los botones principales, la cabecera del widget y la
-  pestaña del asistente de IA, siempre con texto `blanco`. Es tinta plana.
+- `sello` es el relleno del encabezado de portal, las bandas, los botones principales, la cabecera
+  del widget y la pestaña del asistente de IA, siempre con texto `blanco`. Es tinta plana.
 - `sello-texto` es el azul para texto, enlaces, el anillo de foco sobre `papel` y `hoja`, y el
   anillo del caso elegido. En el modo claro coincide con `sello`; en el oscuro es más claro.
 - El verde es del funcionario y de los estados correctos: `funcionario` como relleno con texto
   `blanco` y `funcionario-texto` para texto.
 - El verde y el azul nunca se juntan con texto.
-- `resaltador` se reserva para el rótulo de entorno simulado, con `tinta-oscura`, y para el anillo
-  de foco sobre `sello`.
-- El ámbar de fuera de horario y el rojo de error son avisos: conservan su color en los dos modos.
+- `resaltador` se reserva para la selección de texto, con `tinta-oscura`, y para el anillo de foco
+  sobre `sello`.
+- El ámbar es el de los avisos: el rótulo de entorno simulado y fuera de horario. El ámbar y el
+  rojo de error conservan su papel en los dos modos.
 - Quien habla tiene un color fijo y siempre su nombre escrito: azul para el asistente de IA, verde
   para el funcionario y `papel-2` con `tinta` para el sistema. El mensaje del contribuyente va en
   `burbuja` con texto `blanco`.
@@ -149,10 +162,10 @@ El modo claro son los valores del frontmatter. El modo oscuro reemplaza estos to
 
 ## Typography
 
-- `titulo` (Archivo, semicondensada) se usa en el rótulo, los títulos, las
-  bandas, los identificadores de caso y las cifras grandes.
-- `texto` (Atkinson Hyperlegible Next) se usa en todo lo demás. Los mensajes del widget van en
-  `base`, para lectores mayores o con baja visión.
+- `titulo` (Archivo, semicondensada) se usa en los títulos, las bandas, los identificadores de
+  caso y las cifras grandes.
+- `texto` (Atkinson Hyperlegible Next) se usa en todo lo demás, incluido el rótulo. Los mensajes
+  del widget van en `base`, para lectores mayores o con baja visión.
 - Los títulos se escriben en oración, nunca en mayúsculas espaciadas.
 - Las tablas y los identificadores llevan cifras tabulares.
 - Las fuentes son autoalojadas, con fontsource y sin CDN.
@@ -160,10 +173,13 @@ El modo claro son los valores del frontmatter. El modo oscuro reemplaza estos to
 ## Layout
 
 - El texto va alineado a la izquierda, con líneas de 65 a 75 caracteres.
-- En escritorio, la OVT deja libre la columna derecha para el panel del widget.
+- En escritorio, la OVT deja libre la columna derecha para el panel del widget. El encabezado y
+  el contenido usan la misma columna, que llega hasta el borde del panel.
 - Desde 360 px no hay desplazamiento horizontal. La matriz de la consola es la excepción: avisa
   que se desliza.
-- Una lista de datos se escribe como renglones, no como tarjetas. Los campos relacionados van
+- Una lista de datos se escribe como renglones, no como tarjetas. Las excepciones son «Qué puedes
+  probar» y las sugerencias del widget, que orientan en lugar de listar datos: tarjetas con ícono,
+  sin sombra, en dos columnas en escritorio y en una en el celular. Los campos relacionados van
   en casillas unidas: el filete entre ellas es el fondo `borde-control`.
 
 ## Elevation & Depth
@@ -181,21 +197,33 @@ secciones se separan con bordes, bandas y renglones.
 
 ## Components
 
-- **Rótulo:** franja fija arriba de la OVT con el texto exacto «Entorno simulado de pruebas — no
-  es la Oficina Virtual Tributaria real», grande y con un filete inferior de `tinta-oscura`, igual en los dos modos. La consola
-  lleva una versión más baja.
+- **Rótulo:** franja delgada (unos 38 px en una línea; en el celular ocupa dos), fija arriba y
+  siempre visible, con el texto exacto «Entorno simulado de pruebas — no es la Oficina Virtual
+  Tributaria real» en 14 a 15 px seminegrita, el ícono de aviso y el ámbar de los avisos
+  (`advertencia` sobre `advertencia-suave`, con un filete de `advertencia-borde`). La consola lleva
+  su versión: «Entorno simulado de pruebas con datos sintéticos». Antes era una franja grande de
+  `resaltador`; la franja delgada la aprobó Rodolfo.
+- **Encabezado de portal:** barra de `sello` con texto `blanco` bajo el rótulo, con el nombre de la
+  página («OVT simulada» o «Consola»), un subtítulo corto y, a la derecha, el interruptor del tema.
+  En la consola lleva también el estado del servicio (punto blanco lleno si está bien y vacío si no)
+  y el enlace a las trazas.
 - **Banda:** el título de un bloque (sesión simulada, caso, matriz, tabla por categoría) en un
-  rectángulo de `sello` con texto `blanco`. Las bandas y el rótulo concentran la audacia de la
-  página; lo demás queda en tinta sobre papel.
+  rectángulo de `sello` con texto `blanco`. Las bandas y el encabezado de portal concentran la
+  audacia de la página; lo demás queda en tinta sobre papel.
 - **Casilla:** el campo con su rótulo pequeño arriba, dentro del borde. El foco rodea la casilla
   entera.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
   mensaje.
 - **Pestañas de la consola:** la activa es un relleno de `sello` con una marca superior de
   `sello-texto`, que la distingue de las inactivas en los dos modos.
-- **Botón «Modo oscuro»:** está en la OVT y en la consola. Es un botón con `aria-pressed` y una
-  casilla de formulario que se marca con una X. El cambio de tema es instantáneo y no hace
-  transiciones.
+- **Interruptor «Modo oscuro»:** está en el encabezado de la OVT y de la consola. Es un botón con
+  `role="switch"` y `aria-checked`: un riel con esquinas de `control` y una perilla cuadrada blanca
+  con el sol (claro) o la luna (oscuro); encendido, el riel se llena de `tinta-oscura`. El cambio de
+  tema es instantáneo y no hace transiciones.
+- **Tarjeta:** `hoja` con un filete de `renglon`, radio de `casilla` y sin sombra; el ícono va en un
+  cuadro de `sello-suave` con `sello-texto`.
+- **Íconos:** de trazo, propios (`src/iconos.jsx`, sin librerías) y decorativos (`aria-hidden`),
+  siempre junto a un texto que dice lo mismo.
 - **Movimiento:** solo responde a una acción.
   - Un mensaje que llega o el caso que se abre aparece con un fundido y un desplazamiento corto,
     con salida suave.
@@ -206,11 +234,11 @@ secciones se separan con bordes, bandas y renglones.
 
 ## Do's and Don'ts
 
-- Do: conservar el texto exacto del rótulo, grande y siempre visible.
+- Do: conservar el texto exacto del rótulo, siempre visible, en su franja delgada de aviso.
 - Don't: usar marcas, logos, colores ni nombres reales (Alcaldía de Bogotá, Secretaría de
   Hacienda, DIAN o bancos), ni copiar el estilo de un producto real. La única excepción son los
   colores del logo de Realtix (ver Colors).
-- Don't: poner fotos ni imágenes en la OVT.
+- Don't: poner fotos ni imágenes en la OVT; solo los íconos de trazo decorativos.
 - Don't: dar al azul degradados, brillos ni íconos de magia o destellos.
 - Don't: juntar el verde y el azul con texto (1,7:1).
 - Don't: poner el logo o los nombres de Realtix o RealSit en las páginas; solo se usan sus colores.

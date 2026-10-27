@@ -3,7 +3,7 @@
  * <head> de la OVT simulada, la consola y el widget, no en línea: la CSP del despliegue bloquea los
  * scripts en línea.
  *
- * - En una página: la elección guardada por el botón «Modo oscuro»; si no hay, prefers-color-scheme.
+ * - En una página: la elección guardada por el interruptor «Modo oscuro»; si no hay, prefers-color-scheme.
  * - En el widget insertado (dentro de un iframe): prefers-color-scheme, y la página queda oculta
  *   hasta que llega el tema de la página que lo inserta (embed.js), con 400 ms como máximo.
  */
