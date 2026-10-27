@@ -1,4 +1,6 @@
 {
+  "commit": "7695209 (main con las correcciones)",
+  "entorno": "este equipo (WSL 2), sin el juez; el clasificador real (Sonnet 5.5) y el agente del IPU real (Haiku 5.5) con la configuración local; 3 repeticiones",
   "IPU-09_clasificador": [
     {
       "partes": [
