@@ -840,6 +840,21 @@ def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptad
     assert respuesta["texto"].startswith("Tienes una obligación vencida.")
 
 
+# -- El agente general no inventa el canal de un trámite (G1 de la corrida 2) ------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-GEN-01 · Consultas transversales", "RF-GEN-03 · Respuesta sustentada en fuentes"
+)
+def test_el_prompt_general_no_inventa_donde_se_hace_un_tramite() -> None:
+    prompt = prompt_de_agente("general")
+    assert prompt.version.startswith("v2+")
+    texto = " ".join(prompt.texto.split())
+    assert "No digas dónde, cómo ni por qué canal se hace un trámite" in texto
+    assert "ofrece pasar con un funcionario" in texto
+
+
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
 
 
