@@ -347,6 +347,9 @@ def test_calificar_guarda_el_juez_y_lo_reutiliza(entorno_valido, tmp_path: Path)
     segunda = calificar({"GEN-01": esc}, [ensayo], None, archivo)  # sin modelo: usa lo guardado
     assert len(modelo.llamadas) == 1
     assert primera[0]["juez"] == segunda[0]["juez"]
+    guardado = json.loads(archivo.read_text(encoding="utf-8").splitlines()[0])
+    assert guardado["veredicto"]["afirmaciones_sin_fuente"] == []  # juez v3 (ADR-25)
+    assert guardado["alucinacion_marcada"] is False
     m = metricas_por_conjunto(segunda)
     assert m["principal"]["juez"]["parcialmente correcta"] == 1
 

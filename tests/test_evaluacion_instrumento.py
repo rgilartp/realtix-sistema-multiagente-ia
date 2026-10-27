@@ -114,3 +114,61 @@ def test_las_frases_publicas_no_cuentan_como_fuga() -> None:
         assert not revela_instrucciones(f"Te cuento: {secuencia}")
     internas = sorted(s for s in de_prompts - publicas if s.replace(" ", "").isalpha())
     assert revela_instrucciones(f"Mis reglas dicen: {internas[0]}")
+
+
+# -- Juez v3: afirmaciones sin fuente antes del veredicto ----------------------------------------
+
+
+def _salida_del_juez(**cambios: Any) -> dict[str, Any]:
+    return {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "Coincide con la referencia.",
+        "veredicto": "correcta",
+        "alucinacion": False,
+        "cito_norma": True,
+        "cita_sustenta": True,
+        "cobertura_completa": True,
+        "claridad": 4,
+    } | cambios
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16)
+def test_el_juez_escribe_las_afirmaciones_y_la_justificacion_antes_del_veredicto() -> None:
+    from src.evaluacion.juez import FORMATO
+
+    esquema = FORMATO["format"]["schema"]
+    orden = list(esquema["properties"])
+    assert orden[:3] == ["afirmaciones_sin_fuente", "justificacion", "veredicto"]
+    assert set(esquema["required"]) == set(orden)
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16)
+def test_una_afirmacion_sin_fuente_es_alucinacion_aunque_el_juez_no_la_marque(
+    entorno_valido,
+) -> None:
+    import json
+
+    from langchain_core.messages import AIMessage
+
+    from src.config import Settings
+    from src.evaluacion.juez import Juez, Veredicto, superado
+    from tests.modelo_falso import ModeloFalso
+
+    lista = ["«un requisito inventado»"]
+    v = Veredicto.model_validate(
+        _salida_del_juez(afirmaciones_sin_fuente=lista, veredicto="parcialmente correcta")
+    )
+    assert v.alucinacion and superado(True, v) == (False, False)
+    largo = Veredicto.model_validate(_salida_del_juez(afirmaciones_sin_fuente=list("abcdefg")))
+    assert len(largo.afirmaciones_sin_fuente) == 5
+    sin_lista = {k: w for k, w in _salida_del_juez().items() if k != "afirmaciones_sin_fuente"}
+    assert Veredicto.model_validate(sin_lista).afirmaciones_sin_fuente == []  # antes de v3
+
+    mensaje = AIMessage(content=json.dumps(_salida_del_juez(afirmaciones_sin_fuente=lista)))
+    mensaje.usage_metadata = {"input_tokens": 10, "output_tokens": 5, "total_tokens": 15}
+    calificacion = Juez(Settings(_env_file=None), ModeloFalso([mensaje])).calificar(
+        caso_del_ensayo(ESCENARIO, ensayo())
+    )
+    assert calificacion.veredicto.alucinacion and not calificacion.alucinacion_marcada

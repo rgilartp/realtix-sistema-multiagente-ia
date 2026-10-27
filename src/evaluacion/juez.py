@@ -23,7 +23,7 @@ from typing import Any, Literal
 from anthropic import transform_schema
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from src.api.servicios import usuarios_de_prueba
 from src.config import Settings
@@ -31,25 +31,51 @@ from src.integrations.modelos import PARAMETROS, crear_modelo, texto_de_respuest
 from src.integrations.robustez import con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador
 
-INSTRUCCIONES = Path(__file__).resolve().parent / "juez.v2.md"
-VERSION = "juez.v2"
+INSTRUCCIONES = Path(__file__).resolve().parent / "juez.v3.md"
+VERSION = "juez.v3"
+MAX_AFIRMACIONES = 5
 TIEMPO_MAXIMO_S = 120.0
 
 
 class Veredicto(BaseModel):
-    """Lo que devuelve el juez (sección 6.4)."""
+    """Lo que devuelve el juez (sección 6.4), en el orden en que lo escribe (juez v3, ADR-25):
+    primero las afirmaciones sin fuente y la justificación, y al final el veredicto. Así decide
+    después de revisar las afirmaciones, no antes.
+
+    La alucinación es la bandera del juez o la lista no vacía; la bandera tal como la dio el
+    juez queda en `Calificacion.alucinacion_marcada`."""
 
     model_config = ConfigDict(extra="forbid")
+    afirmaciones_sin_fuente: list[str] = Field(
+        default_factory=list,
+        description=f"Hasta {MAX_AFIRMACIONES} citas breves de afirmaciones (cifra, fecha, "
+        "porcentaje, norma, artículo, requisito o procedimiento) que no salen de ninguna fuente "
+        "válida o que la contradicen; vacía si no hay",
+    )
+    justificacion: str
     veredicto: Literal["correcta", "parcialmente correcta", "incorrecta"]
     alucinacion: bool
     cito_norma: bool
     cita_sustenta: bool = Field(description="false si no citó o si la cita no sustenta lo dicho")
     cobertura_completa: bool
     claridad: int = Field(ge=1, le=5)
-    justificacion: str
+
+    @model_validator(mode="after")
+    def _alucinacion_con_la_lista(self) -> "Veredicto":
+        self.afirmaciones_sin_fuente = self.afirmaciones_sin_fuente[:MAX_AFIRMACIONES]
+        self.alucinacion = self.alucinacion or bool(self.afirmaciones_sin_fuente)
+        return self
 
 
-FORMATO = {"format": {"type": "json_schema", "schema": transform_schema(Veredicto)}}
+def _formato() -> dict[str, Any]:
+    """El esquema JSON del juez; la lista es obligatoria para el modelo (las calificaciones
+    guardadas antes de v3 no la traen y se leen con la lista vacía)."""
+    esquema = transform_schema(Veredicto)
+    esquema["required"] = list(esquema["properties"])
+    return {"format": {"type": "json_schema", "schema": esquema}}
+
+
+FORMATO = _formato()
 
 
 @cache
@@ -67,7 +93,8 @@ def huella_del_juez(settings: Settings) -> str:
         "parametros": PARAMETROS["juez"],
         "version": VERSION,
         "instrucciones": instrucciones(),
-        "esquema": Veredicto.model_json_schema(),
+        "esquema": FORMATO,
+        "validacion": inspect.getsource(Veredicto),
         "plantilla": "".join(
             inspect.getsource(f)
             for f in (CasoJuez, _cita, _json, fuentes_del_sistema, caso_del_ensayo)
@@ -194,6 +221,7 @@ class Calificacion:
     veredicto: Veredicto
     entrada: int
     salida: int
+    alucinacion_marcada: bool  # la bandera tal como la dio el juez, antes de sumar la lista
 
 
 class Juez:
@@ -215,10 +243,12 @@ class Juez:
         llamar: Callable[[], Any] = lambda: self._modelo.invoke(mensajes)  # noqa: E731
         respuesta = con_tiempo_y_reintento(llamar, TIEMPO_MAXIMO_S, servicio="juez")
         uso = getattr(respuesta, "usage_metadata", None) or {}
+        crudo = json.loads(texto_de_respuesta(respuesta))
         return Calificacion(
-            Veredicto.model_validate_json(texto_de_respuesta(respuesta)),
+            Veredicto.model_validate(crudo),
             int(uso.get("input_tokens", 0)),
             int(uso.get("output_tokens", 0)),
+            bool(crudo.get("alucinacion")),
         )
 
 
