@@ -1,0 +1,453 @@
+{
+  "corridas": [
+    "corrida-1",
+    "corrida-2"
+  ],
+  "umbral_actual": 0.7,
+  "turnos_con_formula": 40,
+  "escalaron_por_confianza": 2,
+  "niveles": [
+    0.635,
+    0.64,
+    0.724,
+    0.794,
+    0.799,
+    0.833,
+    0.835,
+    0.852,
+    0.853,
+    0.856,
+    0.871,
+    0.876,
+    0.88,
+    0.882,
+    0.889,
+    0.9,
+    0.904,
+    0.908,
+    0.915,
+    0.917,
+    0.918,
+    0.926,
+    0.928,
+    0.928,
+    0.939,
+    0.944,
+    0.946,
+    0.951,
+    0.955,
+    0.959,
+    0.959,
+    0.963,
+    0.965,
+    0.965,
+    0.971,
+    0.973,
+    0.98,
+    0.985,
+    0.987,
+    0.996
+  ],
+  "por_umbral": [
+    {
+      "umbral": 0.5,
+      "escalarian": 0,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 0
+    },
+    {
+      "umbral": 0.525,
+      "escalarian": 0,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 0
+    },
+    {
+      "umbral": 0.55,
+      "escalarian": 0,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 0
+    },
+    {
+      "umbral": 0.575,
+      "escalarian": 0,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 0
+    },
+    {
+      "umbral": 0.6,
+      "escalarian": 0,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 0
+    },
+    {
+      "umbral": 0.625,
+      "escalarian": 0,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 0
+    },
+    {
+      "umbral": 0.65,
+      "escalarian": 2,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 2
+    },
+    {
+      "umbral": 0.675,
+      "escalarian": 2,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 2
+    },
+    {
+      "umbral": 0.7,
+      "escalarian": 2,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 2
+    },
+    {
+      "umbral": 0.725,
+      "escalarian": 3,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 3
+    },
+    {
+      "umbral": 0.75,
+      "escalarian": 3,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 3
+    },
+    {
+      "umbral": 0.775,
+      "escalarian": 3,
+      "de_escenarios_superados": 0,
+      "de_escenarios_no_superados": 3
+    },
+    {
+      "umbral": 0.8,
+      "escalarian": 5,
+      "de_escenarios_superados": 1,
+      "de_escenarios_no_superados": 4
+    }
+  ],
+  "turnos": [
+    {
+      "corrida": "corrida-1",
+      "escenario": "AIA-01",
+      "turno": 1,
+      "nivel": 0.794,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "AMB-01",
+      "turno": 1,
+      "nivel": 0.88,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "GEN-02",
+      "turno": 1,
+      "nivel": 0.724,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "GEN-03",
+      "turno": 1,
+      "nivel": 0.965,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "GEN-04",
+      "turno": 1,
+      "nivel": 0.963,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "GEN-05",
+      "turno": 1,
+      "nivel": 0.971,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "GEN-06",
+      "turno": 1,
+      "nivel": 0.9,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "GEN-07",
+      "turno": 1,
+      "nivel": 0.871,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "ICA-02",
+      "turno": 1,
+      "nivel": 0.955,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "ICA-08",
+      "turno": 1,
+      "nivel": 0.959,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-01",
+      "turno": 1,
+      "nivel": 0.835,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-03",
+      "turno": 1,
+      "nivel": 0.833,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-05",
+      "turno": 1,
+      "nivel": 0.973,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-10",
+      "turno": 1,
+      "nivel": 0.985,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-12",
+      "turno": 1,
+      "nivel": 0.915,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-13",
+      "turno": 1,
+      "nivel": 0.926,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "IPU-15",
+      "turno": 1,
+      "nivel": 0.928,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "MULTI-01",
+      "turno": 1,
+      "nivel": 0.951,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-1",
+      "escenario": "MULTI-02",
+      "turno": 1,
+      "nivel": 0.918,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "AIA-01",
+      "turno": 1,
+      "nivel": 0.799,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "AMB-02",
+      "turno": 1,
+      "nivel": 0.917,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-01",
+      "turno": 1,
+      "nivel": 0.882,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-02",
+      "turno": 1,
+      "nivel": 0.635,
+      "escalo": true,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-03",
+      "turno": 1,
+      "nivel": 0.928,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-04",
+      "turno": 1,
+      "nivel": 0.996,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-05",
+      "turno": 1,
+      "nivel": 0.98,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-06",
+      "turno": 1,
+      "nivel": 0.852,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "GEN-07",
+      "turno": 1,
+      "nivel": 0.908,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "ICA-02",
+      "turno": 1,
+      "nivel": 0.946,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "ICA-05",
+      "turno": 1,
+      "nivel": 0.987,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "ICA-07",
+      "turno": 1,
+      "nivel": 0.965,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "ICA-08",
+      "turno": 1,
+      "nivel": 0.959,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "IPU-02",
+      "turno": 1,
+      "nivel": 0.856,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "IPU-03",
+      "turno": 1,
+      "nivel": 0.876,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "IPU-12",
+      "turno": 1,
+      "nivel": 0.853,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "IPU-13",
+      "turno": 1,
+      "nivel": 0.904,
+      "escalo": false,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "IPU-14",
+      "turno": 1,
+      "nivel": 0.64,
+      "escalo": true,
+      "superado": false
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "IPU-15",
+      "turno": 1,
+      "nivel": 0.939,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "MULTI-01",
+      "turno": 1,
+      "nivel": 0.889,
+      "escalo": false,
+      "superado": true
+    },
+    {
+      "corrida": "corrida-2",
+      "escenario": "MULTI-02",
+      "turno": 1,
+      "nivel": 0.944,
+      "escalo": false,
+      "superado": true
+    }
+  ]
+}

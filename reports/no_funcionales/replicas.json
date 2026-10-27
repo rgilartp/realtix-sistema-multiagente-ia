@@ -1,0 +1,40 @@
+{
+  "conversacion": "nf-replicas (identificador con un sufijo numérico, omitido)",
+  "turnos": [
+    {
+      "codigo_http": 200,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_respuesta"
+      ],
+      "latencia_cliente_ms": 8175,
+      "paso": 1
+    },
+    {
+      "codigo_http": 200,
+      "estado": "respondida",
+      "motivo_escalamiento": null,
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_respuesta"
+      ],
+      "latencia_cliente_ms": 8423,
+      "paso": 2
+    }
+  ],
+  "servidor": {
+    "replicas": 2,
+    "turno_1_atendido_por": "realtix-backend-2 (la réplica nueva: la única petición desde que arrancó)",
+    "antes_del_turno_2": "docker stop realtix-backend-2",
+    "turno_2_atendido_por": "realtix-backend-1",
+    "turnos_registrados_en_el_almacen": 2
+  }
+}
