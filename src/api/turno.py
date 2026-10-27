@@ -159,6 +159,8 @@ def procesar_turno(servicios: ServiciosAPI, solicitud: SolicitudTurno) -> Respue
     meta["tokens"] = uso.totales()
     meta["modelo_por_nodo"] = uso.modelo_por_nodo()
     por_modelo.update(uso.por_modelo())
+    if servicios.settings.modo_evaluacion:  # el costo de una corrida contra el despliegue
+        meta["tokens_por_modelo"] = uso.por_modelo()
     return responder(texto, "agente", estado_api, meta)
 
 

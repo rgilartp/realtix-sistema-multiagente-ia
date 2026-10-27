@@ -51,6 +51,7 @@ class Meta(BaseModel):
     datos_extraidos: dict[str, Any] | None = None
     tiempos_ms: dict[str, int] = {}
     tokens: dict[str, int] = {}
+    tokens_por_modelo: dict[str, dict[str, int]] | None = None  # solo en el modo de evaluación
     modelo_por_nodo: dict[str, str] = {}
     version: str = "dev"
 

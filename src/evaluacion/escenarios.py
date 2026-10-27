@@ -23,6 +23,11 @@ DIR_ESCENARIOS = RAIZ / "tests" / "escenarios"
 ARCHIVO_ENRUTAMIENTO = RAIZ / "tests" / "componentes" / "enrutamiento.yaml"
 HOJA_REVISION = RAIZ / "docs" / "revision_referencias.md"
 INDICE = DIR_ESCENARIOS / "INDICE.md"
+# Conjuntos que se reportan aparte de los 60 (ADR-24): R1, R3 y R4.
+DIR_ADICIONALES = RAIZ / "tests" / "escenarios_adicionales"
+ARCHIVO_GENERALIZACION = DIR_ADICIONALES / "generalizacion.yaml"
+GRUPOS_ADICIONALES = {"generalizacion": "R1", "cadena": "R3", "seguridad": "R4"}
+ORIGEN_ADICIONAL = re.compile(r"^adr-24-R[134]$")
 
 # Distribución exacta de la tabla de la sección 6.3.
 DISTRIBUCION: dict[str, int] = {
@@ -62,6 +67,8 @@ TIPOS_VERIFICACION = (
     "sin_error_tecnico",
     "no_pide_sesion",
     "fuera_de_horario",
+    "no_revela_instrucciones",  # R4: escenarios de seguridad (ADR-24)
+    "sin_claves",
 )
 CON_VALOR = (
     "contiene_valor",
@@ -87,6 +94,8 @@ ID_ESCENARIO = re.compile(r"^[A-Z]+-\d{2}$")
 ORIGEN_ADENDA = re.compile(r"^adenda-(\d{1,2})$")
 ORIGEN_CA = re.compile(r"^CA-0[1-6]$")
 ORIGEN_SPEC = "especificacion-6.3"
+# `X-Falla-Inyectada` que el ejecutor manda en cada turno (ROB-01 y ROB-02; sección 3.12).
+FALLA_INYECTADA = re.compile(r"^(orquestador|modelo|recuperacion|adaptador):(tiempo|error)$")
 PENDIENTE = "PENDIENTE"
 ESCENARIOS_ADENDA = range(1, 15)  # el 15 (trazas) es una revisión automática de toda la corrida
 ESCENARIOS_ADENDA_DIVIDIDOS = {
@@ -124,8 +133,11 @@ def _validar_verificacion(v: Any, indice: int) -> list[str]:
     return errores
 
 
-def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = None) -> list[str]:
-    """Errores del esquema de un escenario (lista vacía si está bien)."""
+def validar_escenario(
+    esc: dict[str, Any], requerimientos: set[str] | None = None, adicional: bool = False
+) -> list[str]:
+    """Errores del esquema de un escenario (lista vacía si está bien). Los adicionales (ADR-24)
+    llevan un grupo de `GRUPOS_ADICIONALES` y el origen `adr-24-R…`."""
     id_ = esc.get("id", "?")
     faltan = [c for c in OBLIGATORIOS if c not in esc]
     if faltan:
@@ -133,7 +145,7 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
     errores: list[str] = []
     if not ID_ESCENARIO.match(str(esc["id"])):
         errores.append("id con formato inválido")
-    if esc["grupo"] not in DISTRIBUCION:
+    if esc["grupo"] not in (GRUPOS_ADICIONALES if adicional else DISTRIBUCION):
         errores.append(f"grupo desconocido ({esc['grupo']!r})")
     if esc["categoria_esperada"] is None and esc["grupo"] not in GRUPOS_SIN_CATEGORIA:
         errores.append("solo horario y robustez pueden ir sin categoría (no se llega a clasificar)")
@@ -171,7 +183,10 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
     else:
         for o in origen:
             adenda = ORIGEN_ADENDA.match(str(o))
-            if not (
+            if adicional:
+                if not ORIGEN_ADICIONAL.match(str(o)):
+                    errores.append(f"origen desconocido ({o!r})")
+            elif not (
                 o == ORIGEN_SPEC
                 or ORIGEN_CA.match(str(o))
                 or (adenda and int(adenda.group(1)) in ESCENARIOS_ADENDA)
@@ -184,6 +199,9 @@ def validar_escenario(esc: dict[str, Any], requerimientos: set[str] | None = Non
         or adjunto.get("calidad") not in CALIDADES
     ):
         errores.append(f"adjunto con tipo desconocido ({adjunto!r})")
+    falla = esc.get("falla_inyectada")
+    if falla is not None and not FALLA_INYECTADA.match(str(falla)):
+        errores.append(f"falla_inyectada desconocida ({falla!r})")
     if esc["grupo"] == "ocr" and adjunto is None:
         errores.append("un escenario de ocr necesita su adjunto simulado")
     turnos = esc["turnos"]
@@ -341,6 +359,84 @@ def indice(escenarios: list[dict[str, Any]]) -> str:
             f"{', '.join(esc['hu'])} | {', '.join(esc['origen'])} |"
         )
     return "\n".join(lineas) + "\n"
+
+
+# -- Conjuntos adicionales (ADR-24) ----------------------------------------------------
+
+
+def variantes_de_generalizacion(
+    principales: list[dict[str, Any]], ruta: Path = ARCHIVO_GENERALIZACION
+) -> list[dict[str, Any]]:
+    """R1: cada variante es su escenario de origen con otra redacción del turno y la misma
+    referencia. Las que aún no tienen texto se omiten."""
+    por_id = {e["id"]: e for e in principales}
+    salida = []
+    for v in yaml.safe_load(ruta.read_text(encoding="utf-8"))["variantes"]:
+        texto = str(v.get("variante") or "").strip()
+        if not texto:
+            continue
+        origen = por_id[v["id_origen"]]
+        salida.append(
+            {
+                **origen,
+                "id": v["id"],
+                "titulo": f"Variante de {origen['id']}: {origen['titulo']}",
+                "grupo": "generalizacion",
+                "origen": ["adr-24-R1"],
+                "id_origen": origen["id"],
+                "turnos": [{"usuario": texto}],
+                "aprobado_por": v.get("aprobado_por") or "",
+            }
+        )
+    return salida
+
+
+def cargar_adicionales(directorio: Path = DIR_ADICIONALES) -> list[dict[str, Any]]:
+    """R3 y R4: un YAML por escenario, con el mismo formato de los 60."""
+    return [
+        yaml.safe_load(r.read_text(encoding="utf-8"))
+        for r in sorted(directorio.glob("*.yaml"))
+        if r != ARCHIVO_GENERALIZACION
+    ]
+
+
+def cargar_conjunto(conjuntos: list[str]) -> list[dict[str, Any]]:
+    """Escenarios de los conjuntos pedidos: «principal» (los 60), «R1», «R3» y «R4»."""
+    principales = cargar_escenarios()
+    salida = list(principales) if "principal" in conjuntos else []
+    if "R1" in conjuntos:
+        salida += variantes_de_generalizacion(principales)
+    salida += [e for e in cargar_adicionales() if GRUPOS_ADICIONALES[e["grupo"]] in conjuntos]
+    return salida
+
+
+def validar_generalizacion(
+    principales: list[dict[str, Any]], ruta: Path = ARCHIVO_GENERALIZACION
+) -> list[str]:
+    """10 variantes de escenarios de un turno con recuperación, de orígenes distintos."""
+    variantes = yaml.safe_load(ruta.read_text(encoding="utf-8"))["variantes"]
+    por_id = {e["id"]: e for e in principales}
+    errores = [] if len(variantes) == 10 else [f"se esperaban 10 variantes, hay {len(variantes)}"]
+    origenes = [v.get("id_origen") for v in variantes]
+    errores += [
+        f"origen repetido: {o}" for o in sorted({o for o in origenes if origenes.count(o) > 1})
+    ]
+    for v in variantes:
+        origen = por_id.get(v.get("id_origen"))
+        if not ID_ESCENARIO.match(str(v.get("id"))):
+            errores.append(f"{v.get('id')}: id con formato inválido")
+        if origen is None:
+            errores.append(f"{v.get('id')}: origen desconocido ({v.get('id_origen')!r})")
+        elif len(origen["turnos"]) != 1 or origen["grupo"] not in ("ipu", "ica", "general"):
+            errores.append(f"{v.get('id')}: el origen debe ser de un turno, de un agente con RAG")
+        texto = str(v.get("variante") or "").strip()
+        if (
+            origen
+            and texto
+            and normalizar_texto(texto) == normalizar_texto(origen["turnos"][0]["usuario"])
+        ):
+            errores.append(f"{v.get('id')}: la variante repite la pregunta original")
+    return errores
 
 
 # -- Conjunto de enrutamiento (componentes) ---------------------------------------------

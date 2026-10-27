@@ -124,9 +124,11 @@ def test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8(api) -> N
     }
     assert set(primera["meta"]) == {
         "categoria", "agentes_invocados", "nivel_confianza", "motivo_escalamiento", "caso_id",
-        "fuentes", "contextos", "datos_extraidos", "tiempos_ms", "tokens", "modelo_por_nodo",
-        "version",
+        "fuentes", "contextos", "datos_extraidos", "tiempos_ms", "tokens", "tokens_por_modelo",
+        "modelo_por_nodo", "version",
     }  # fmt: skip
+    # Como `contextos`, el desglose por modelo solo va en el modo de evaluación (costo de B12).
+    assert isinstance(segunda["meta"]["tokens_por_modelo"], dict)
     assert segunda["interlocutor"] == "agente" and segunda["estado"] == "respondida"
     meta = segunda["meta"]
     assert meta["categoria"] == "ipu" and meta["version"] == "0.5.0"
@@ -273,7 +275,7 @@ def test_sin_modo_de_evaluacion_las_cabeceras_de_prueba_se_ignoran(
     r = chat(cliente, "conv-normal", "¿Qué es el predial?", **cabeceras)
     assert r["estado"] == "respondida"  # el reloj de la API (jueves) y sin falla
     assert servicios.almacen.interacciones("conv-normal")[0]["escenario_id"] is None
-    assert r["meta"]["contextos"] is None
+    assert r["meta"]["contextos"] is None and r["meta"]["tokens_por_modelo"] is None
     assert cliente.post("/api/v1/ovt-simulada/sesion", json={"usuario": "U01"}).status_code == 404
 
 
