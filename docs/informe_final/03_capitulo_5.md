@@ -38,13 +38,15 @@ documento con el lugar donde se miden (`docs/plan_de_pruebas.md`; ADR-24, A1).
   respuesta real y aprobaron su versión fiel; un evaluador más económico de RAGAS no la detectó y se
   descartó (`docs/resumenes/b12.md`; ADR-24).
 - **Después de la corrida 1:** 12 de los 31 escenarios no superados habían fallado por el instrumento
-  y no por el sistema (`reports/corrida-1/fallas.md`, F1 y F3).
+  y no por el sistema (`reports/corrida-1/fallas.md`, F1 y F3); otra falla del instrumento (F10)
+  afectó a un escenario de seguridad de R4.
   - El juez y RAGAS no veían los datos de las herramientas, las notas del sistema, los datos del
-    recibo ni el aviso de IA.
-  - La verificación de texto no reconocía «Decreto Distrital».
-  - El detector de fuga marcaba textos públicos (F10).
-  - Se corrigieron de forma general (ADR-25).
-- **Juez v3.** Una revisión externa encontró que la bandera de alucinación cambiaba entre
+    recibo ni el aviso de IA (F1).
+  - La verificación de texto no reconocía «Decreto Distrital» (F3).
+  - El detector de fuga marcaba textos públicos (F10, en R4).
+  - Se corrigieron de forma general (ADR-25). La corrección de F1 produjo el juez v2, que ya veía
+    esas fuentes.
+- **Juez v3.** Una revisión externa encontró que la bandera de alucinación del juez v2 cambiaba entre
   ejecuciones, así que el juez pasó a v3: lista primero las afirmaciones sin fuente y la
   justificación, y al final da el veredicto (ADR-25).
 - **Validación A4 repetida:** se hizo con el criterio de la tasa de la meta y tres repeticiones, y
@@ -68,7 +70,7 @@ componentes y RAGAS (`reports/corrida-1/reporte.md`, `constancias.md`).
 | Veredictos del juez (v1) | correcta, 32; parcialmente correcta, 19; incorrecta, 9; con alucinación, 21,7 % | `reports/corrida-1/metricas.json` |
 | Orquestador (componentes) | exactitud de 99,0 %, kappa de 0,99, F1 macro de 99,0 % (clase mayoritaria: 20,0 %) | `reports/corrida-1/reporte.md` |
 | Agentes (componentes) | 19 de 34 escenarios superados | `reports/corrida-1/metricas.json` |
-| RAGAS (38 casos) | precisión del contexto de 69,5 %, exhaustividad de 61,5 %, fidelidad de 65,5 % y relevancia de 64,1 % | ídem |
+| RAGAS (38 casos) | precisión del contexto de 69,5 %, exhaustividad de 61,5 %, fidelidad de 65,5 % y relevancia de 64,1 % (los casos con sesión no veían los datos de las herramientas; ver la nota de 5.5) | ídem |
 | RAGAS sin sesión (22 casos) | precisión de 87,1 %, exhaustividad de 82,2 % y fidelidad de 84,4 % | `reports/corrida-1/fallas.md` |
 | Latencia del servidor | con RAG, p50 de 6.333 ms y p95 de 10.499 ms; sin fragmentos, p50 de 1.772 ms y p95 de 5.200 ms; todos bajo las metas | `reports/corrida-1/reporte.md` |
 | Trazas | 1.279 ejecuciones de 63 conversaciones, ninguna con identificadores | `reports/corrida-1/constancias.md` |
@@ -81,8 +83,9 @@ Se corrigieron en nueve PR las tres fallas del instrumento y las nueve del siste
 pasó a la calibración (`docs/resumenes/correcciones-corrida-1.md`).
 
 - En la verificación local, la mayoría de los escenarios afectados se superaron.
-- De los 29 escenarios superados en la corrida 1, 26 se mantuvieron en una regresión local con el
-  juez v3 (`reports/regresion-correcciones-corrida-1/`).
+- De los 29 escenarios superados en la corrida 1, 26 se mantuvieron con el juez v3: 25 de 28 en la
+  regresión local (`reports/regresion-correcciones-corrida-1/`) más uno de acceso que se verificó
+  aparte (`docs/resumenes/correcciones-corrida-1.md`).
   - Dos de los otros tres fallaron igual con el código anterior a las correcciones (debilidades
     previas).
   - En el tercero, el juez nuevo detectó una afirmación sin fuente.
@@ -106,6 +109,11 @@ RAGAS (`reports/corrida-2/reporte.md`, PR de B15).
 | Trazas | 1.277 ejecuciones de 63 conversaciones, ninguna con identificadores | `reports/corrida-2/trazas.json` |
 | Costo | US$2,55 en Anthropic y US$0,54 en OpenAI | `docs/resumenes/b15.md` |
 
+Nota sobre RAGAS (ADR-25): desde la corrida 2, los contextos de RAGAS incluyen los datos de las
+herramientas, las notas y los del recibo. Por eso los promedios generales de las corridas 1 y 2 no se
+comparan directo: en los casos con sesión, la corrida 2 también mide las herramientas. La comparación
+limpia de la recuperación es la de los casos sin sesión (las filas «RAGAS sin sesión»).
+
 Pruebas no funcionales (`reports/no_funcionales/README.md`):
 
 - **RNF-02 · Escalamiento horizontal:** la conversación continuó en otra réplica.
@@ -123,23 +131,29 @@ del sistema, desalineación entre agentes o verificación de la tarea.
   - En el sistema predominó el diseño del sistema: F2, F4, F7, F8, F9, F12 y F13 (umbral).
   - Luego, la desalineación entre agentes (F6 y F11) y la verificación de la tarea (F5).
   - Por el origen según RAGAS, predominó la generación con un contexto suficiente; la recuperación
-    explicó dos casos.
+    explicó un caso y, en parte, otro (`reports/corrida-1/fallas.md`).
 - **Corrida 2** (`reports/corrida-2/fallas.md`): 7 fallas del sistema, G1 a G7, ninguna del
   instrumento.
-  - Una de umbral (G1);
-  - dos de recuperación (G2 y G3; G3 también de generación);
-  - tres de generación (G4, G5 y G7);
-  - una de enrutamiento (G6).
-- **Segunda ronda de correcciones** (PR #49 a #51), con un tope de US$1,0 que se agotó (US$1,007).
-  Ninguna se fusionó ni se desplegó:
+  - Por su causa técnica: una de umbral (G1); dos de recuperación (G2 y G3; G3 también de
+    generación); tres de generación (G4, G5 y G7), y una de enrutamiento (G6).
+  - Por la familia de MAST: diseño del sistema (G1, G2, G4 y G6), verificación de la tarea (G3 y
+    G5) y desalineación entre agentes (G7).
+- **Segunda ronda de correcciones** (PR #49 a #51), con un tope de US$1,0 que se agotó: US$1,004, la
+  suma de `reports/verif-fix-busqueda/costos.md`, `reports/verif-fix-fechas-relativas/costos.md`,
+  `reports/verif-fix-fechas-relativas-2/costos.md` y `reports/verif-fix-general-canal/costos.md`
+  (US$1,002), en las ramas de esos PR, más US$0,002 del agente general corrido directo (PR #51). Ninguna se fusionó ni se desplegó:
   - la fusión de la búsqueda y el texto en la recuperación (G2 y G3): de 40 a 42 de 69 fuentes
-    esperadas sin modelos, y uno de los dos escenarios se superó en la verificación local. Queda
-    **pendiente de una decisión** sobre la técnica y sobre la similitud que alimenta la confianza;
+    esperadas sin modelos (`reports/recuperacion_fusion.json`, PR #49), y uno de los dos escenarios
+    se superó en la verificación local. Esa verificación se hizo antes de las correcciones de la
+    revisión y no se repitió. Quedó **pendiente de una decisión** sobre la técnica y sobre la
+    similitud que alimenta la confianza;
   - los días que faltan calculados por código (G4): superó el escenario afectado, pero en una
-    muestra otro escenario que se superaba nombró «hoy» una fecha de mañana. Queda **pendiente**;
+    muestra otro escenario que se superaba nombró «hoy» una fecha de mañana
+    (`reports/verif-fix-fechas-relativas-2/`, PR #50). Quedó **pendiente**;
   - una regla del agente general que no inventa el canal de un trámite (G1, la parte de
-    generación): 0 de 3 respuestas directas lo nombraron. Queda **pendiente** de verificar dos
-    escenarios.
+    generación): 0 de 3 respuestas directas lo nombraron
+    (`reports/verif-fix-general-canal/agente_directo.json`, PR #51). Quedó **pendiente** de
+    verificar dos escenarios generales y uno de aviso de IA.
   - El umbral (G1) y el orquestador (G6) quedaron propuestos, sin aplicar.
 
 ## 5.7 Corrida 3 (final)

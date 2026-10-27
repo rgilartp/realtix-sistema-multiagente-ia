@@ -8,10 +8,10 @@ y RNF cubre, cómo se verificó y sus cifras, cada una con su archivo de origen.
 
 **Qué se construyó.** Una base SQLite sintética con el esquema v2 del contrato de RealSit, abierta
 siempre en solo lectura (`mode=ro`, ADR-05), y un adaptador con los siete métodos de la Tabla 7, en
-el que la regla de acceso a predios propios vive una sola vez. El generador produjo exactamente 500
+el que la regla de acceso a predios propios quedó en un solo lugar. El generador produjo exactamente 500
 predios con cuatro vigencias del impuesto predial unificado (2.000 obligaciones) y las obligaciones
 del ICA de los contribuyentes con actividad, más 12 usuarios de prueba fijos con sus valores
-esperados escritos a mano desde la norma. La base se identifica con una huella SHA-256 sobre su
+esperados escritos a mano desde la norma. La base se identificó con una huella SHA-256 sobre su
 contenido (`docs/resumenes/b03.md`). Para el agente OCR se generaron recibos sintéticos con los
 ocho campos de la plantilla y la leyenda de documento sintético, sin marcas reales, y variantes
 degradadas (`docs/resumenes/b10.md`).
@@ -48,14 +48,16 @@ en fuentes; RF-IPU-05 · Citación de la norma.
   los textos nuevos (US$0,02). La mediana de una consulta fue de 423 ms (`docs/resumenes/b08.md`).
 - Una revisión externa de la recuperación llevó la base de 1.117 a 1.148 fragmentos
   (`docs/resumenes/fix-recuperacion.md`); ese corpus (`408d90bdb6af2d40`) fue el de las corridas 1 y
-  2 (`reports/corrida-1/criterios_de_entrada.md`).
-- Un verificador automático confirmó que las 167 cifras de las respuestas de referencia coinciden
-  con los datos por año gravable, con el adaptador o con las normas citadas
+  2 (`reports/corrida-1/criterios_de_entrada.md` y, para la corrida 2, la sección «Despliegue» de
+  `docs/resumenes/correcciones-corrida-1.md` y `reports/no_funcionales/volumenes.json`, con 1.148
+  fragmentos).
+- Un verificador automático confirmó las 167 cifras de las respuestas de referencia: 48 con los datos
+  por año gravable, 106 con el usuario de prueba y el adaptador, 4 con las normas citadas, 2 con los
+  mensajes del contribuyente y 7 derivadas (sumas, base por tarifa y el siguiente día hábil)
   (`docs/resumenes/b12.md`).
 - Después de la corrida 2 se propuso fusionar la búsqueda del orquestador y el texto del
   contribuyente: sin modelos, las fuentes esperadas recuperadas subieron de 40 a 42 de 69
-  (`reports/recuperacion_fusion.json`, PR #49). Queda pendiente de una decisión de Rodolfo, sin
-  fusionar.
+  (`reports/recuperacion_fusion.json`, PR #49). Quedó pendiente de una decisión, sin fusionar.
 
 ## 4.3 Orquestador y grafo
 
@@ -71,8 +73,8 @@ RF-ORQ-05 · Modelo de razonamiento; RF-ORQ-06 · Prevención de bucles.
 
 **Cómo se verificó y cifras.** Con 100 consultas etiquetadas (20 por categoría), el clasificador
 tuvo una exactitud de 99,0 %, un kappa de 0,99 y un F1 macro de 99,0 %, frente a una exactitud de
-20,0 % de la clase mayoritaria (`reports/corrida-1/reporte.md`, componentes). Una prueba exige que
-la figura del grafo coincida con el grafo implementado (`docs/figuras/grafo_implementado.mmd`).
+20,0 % de la clase mayoritaria (`reports/corrida-1/reporte.md`, componentes). Una prueba exigió que
+la figura del grafo coincidiera con el grafo implementado (`docs/figuras/grafo_implementado.mmd`).
 
 ## 4.4 Agentes con RAG
 
@@ -81,8 +83,8 @@ general, con Claude Haiku 5.5, recuperaron los fragmentos de su colección y con
 y los servicios de dominio mediante herramientas; una segunda llamada entregó la respuesta
 estructurada, a la que el código agregó, sin modificarlas, las notas y las fuentes
 (`docs/resumenes/b07.md`). Los servicios de dominio (nivel de confianza, liquidación estimada,
-estimación del ICA, régimen y fechas, resumen, acceso, horario y minimización) no conocen LangGraph
-y calculan todo con `datos/` (`docs/resumenes/b05.md`). Después de la corrida 1 se agregaron,
+estimación del ICA, régimen y fechas, resumen, acceso, horario y minimización) se escribieron sin
+LangGraph y calcularon todo con `datos/` (`docs/resumenes/b05.md`). Después de la corrida 1 se agregaron,
 entre otras, la regla de la periodicidad registrada del ICA, un verificador de citas sin modelo con
 una reescritura, herramientas de tarifas por año sin sesión y el rechazo previo de un predio ajeno
 (`docs/resumenes/correcciones-corrida-1.md`). Las correcciones de la corrida 2 quedaron propuestas,
@@ -105,10 +107,10 @@ fuentes; RF-ESC-01 · Cálculo del nivel de confianza; RNF-03 · Protección de 
 
 ## 4.5 Agente OCR
 
-**Qué se construyó.** El agente OCR rechaza por código los documentos de baja resolución, recortados
-o desenfocados; lee los demás con el modelo de visión y salida estructurada; presenta los seis
-campos para que el contribuyente los confirme; y, tras la confirmación, los contrasta con la
-obligación registrada sin modificarla (`docs/resumenes/b10.md`).
+**Qué se construyó.** Un agente OCR que rechazó por código los documentos de baja resolución,
+recortados o desenfocados; leyó los demás con el modelo de visión y salida estructurada; presentó
+los seis campos para que el contribuyente los confirmara, y, tras la confirmación, los contrastó con
+la obligación registrada sin modificarla (`docs/resumenes/b10.md`).
 
 **Requerimientos:** RF-OCR-01 · Carga de archivos; RF-OCR-02 · Extracción de campos; RF-OCR-03 ·
 Confirmación de datos extraídos; RF-OCR-04 · Rechazo de documentos ilegibles; RF-OCR-05 · Modelo de
@@ -124,9 +126,9 @@ otro tipo se rechazaron con su motivo, por US$0,0088 (`docs/resumenes/b10.md`,
 
 **Qué se construyó.** El escalamiento por baja confianza (ADR-17: 0,4 × similitud + 0,4 ×
 suficiencia + 0,2 × cobertura, umbral de 0,7), por solicitud explícita, por un tema fuera del MVP o
-por una falla de servicio. Un caso que escala antes de la confianza queda con nivel 0,0 y su motivo
-(ADR-13). Solo `nodo_escalamiento` registra el caso, con un resumen para el funcionario (ADR-18), y
-la conversación escalada pasa a modo humano (ADR-12). La API tiene un botón de escalamiento
+por una falla de servicio. Un caso que escalaba antes de la confianza quedó con nivel 0,0 y su motivo
+(ADR-13). Solo `nodo_escalamiento` registró el caso, con un resumen para el funcionario (ADR-18), y
+la conversación escalada pasó a modo humano (ADR-12). La API recibió un botón de escalamiento
 (`docs/resumenes/b04.md`, `b05.md` y `b09.md`).
 
 **Requerimientos:** RF-ESC-01 · Cálculo del nivel de confianza; RF-ESC-02 · Activación del
@@ -136,7 +138,7 @@ Notificación al contribuyente; RNF-08 · Tiempos de espera y degradación.
 **Cómo se verificó y cifras.** En la corrida 2, ocho fallas inyectadas (orquestador, modelo,
 recuperación y adaptador, por tiempo y por error) escalaron por «fallo de servicio» sin mostrar un
 error técnico (`reports/no_funcionales/fallas_inyectadas.json`, PR de B15). El umbral se revisó con
-las corridas 1 y 2 (`reports/umbral/propuesta.md`): **PENDIENTE (calibración)** la aprobación del
+las corridas 1 y 2 (`reports/umbral/propuesta.md`, PR de B15): **PENDIENTE (calibración)** la aprobación del
 valor.
 
 ## 4.7 Interfaz
@@ -144,8 +146,8 @@ valor.
 **Qué se construyó.** La interfaz web con Vite, React y Tailwind (ADR-08): una OVT simulada rotulada
 como entorno de pruebas, el widget en un iframe (aviso de IA, interlocutor, fuentes, aviso de fuera
 de horario, carga del recibo y botón para hablar con un funcionario) y la consola con la bandeja de
-casos y las métricas de enrutamiento. La identidad visual propia, «Formulario y sello», usa los
-colores de Realtix sin su logo ni su nombre, y cumple el contraste WCAG 2.2 AA en modo claro y
+casos y las métricas de enrutamiento. La identidad visual propia, «Formulario y sello», usó los
+colores de Realtix sin su logo ni su nombre y cumplió el contraste WCAG 2.2 AA en modo claro y
 oscuro (`docs/resumenes/b11.md`).
 
 **Requerimientos:** RF-UI-01 · Widget embebible; RF-UI-02 · Contexto de la sesión; RF-UI-03 ·
@@ -176,10 +178,10 @@ conversaciones en la corrida 2 (`reports/corrida-2/trazas.json`, PR de B15).
 
 **Qué se construyó.** El sistema multiagente de IA se empaquetó en contenedores y se desplegó en una
 instancia EC2 m7i-flex.large con Docker Compose (ADR-10), detrás de un proxy Caddy con HTTPS
-automático y DuckDNS (ADR-09), cabeceras de seguridad y límites de tamaño. La imagen del backend es
-multietapa, sin secretos ni privilegios; la configuración no secreta está versionada y los secretos
-van en un archivo de entorno. Un flujo de GitHub Actions revisa `/health` cada 15 minutos en el
-horario hábil (`docs/resumenes/b13.md`).
+automático y DuckDNS (ADR-09), cabeceras de seguridad y límites de tamaño. La imagen del backend se construyó
+en varias etapas, sin secretos ni privilegios; la configuración no secreta se versionó y los
+secretos quedaron en un archivo de entorno. Un flujo de GitHub Actions revisó `/health` cada 15
+minutos en el horario hábil (`docs/resumenes/b13.md`).
 
 **Requerimientos:** RNF-02 · Escalamiento horizontal; RNF-06 · Horario de atención; RNF-12 ·
 Imágenes de contenedor; RNF-13 · Orquestación con Compose; RNF-14 · Configuración por entorno;
