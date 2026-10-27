@@ -65,7 +65,15 @@ class Contenedor:
         )
 
     def cliente_chroma(self) -> Any:
-        """Cliente HTTP del Chroma de Compose (se crea al primer uso)."""
+        """Cliente HTTP del Chroma de Compose, uno solo por proceso (se crea al primer uso).
+
+        `/health` lo pide en cada chequeo: un cliente nuevo por llamada dejaba abiertas sus
+        conexiones y agotaba los descriptores del proceso en unas dos horas (502 del proxy).
+        """
+        return self._chroma
+
+    @cached_property
+    def _chroma(self) -> Any:
         import chromadb
 
         return chromadb.HttpClient(host=self.settings.chroma_host, port=self.settings.chroma_port)
