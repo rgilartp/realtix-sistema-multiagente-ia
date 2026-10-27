@@ -24,7 +24,7 @@ REPORTS = RAIZ / "reports"
 # Gasto hasta B11 (docs/resumenes/b11.md) y de B12 antes de las corridas: dos validaciones del juez
 # (A4), las pruebas de RAGAS con gpt-4o-mini y gpt-4.1-mini y su depuración, y la mini corrida.
 GASTO_PREVIO = {"anthropic": Decimal("1.21"), "openai": Decimal("0.08")}
-GASTO_B12 = {"anthropic": Decimal("0.22"), "openai": Decimal("0.09")}
+GASTO_B12 = {"anthropic": Decimal("0.21"), "openai": Decimal("0.08")}
 RESERVA_CORRECCIONES = {"anthropic": Decimal("2.00"), "openai": Decimal("0.20")}
 # B7 (reports/b07_humo.json): una llamada al orquestador y una respuesta de un agente con RAG.
 ORQUESTADOR_B7 = costo_usd("claude-sonnet-5-5", 2199, 118)

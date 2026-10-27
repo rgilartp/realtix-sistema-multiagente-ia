@@ -114,6 +114,9 @@ Fuera de esas paradas, no se pide confirmación.
     otra.
 12. Ahorrar tokens (sección 0.1).
 13. No cambiar una decisión de la sección 2 (ADR) sin consultarla.
+14. Sobreajuste (A8, ADR-24): ningún texto, pregunta ni cifra de los escenarios va en prompts ni en
+    código; cada corrección es general y trae su caso de regresión
+    (`tests/test_evaluacion_sobreajuste.py` lo vigila).
 
 ## Convenciones
 
@@ -170,3 +173,5 @@ uv run python scripts/trazabilidad.py
 - ADR-21: usabilidad interna con SUS y evaluación heurística de los dos autores.
 - ADR-22: respuestas de referencia de los autores, cada una con su fuente.
 - ADR-23: tres campos auxiliares del turno en `AgentState` (marcas, respuesta final, descartadas).
+- ADR-24: ajustes al plan de pruebas A1 a A9 (Wilson con n = escenarios, juez validado y
+  congelado, verificador de referencias, regla contra el sobreajuste) y mejoras R1 a R4.
