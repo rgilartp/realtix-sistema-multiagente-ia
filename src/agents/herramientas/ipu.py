@@ -24,7 +24,7 @@ from src.agents.herramientas import (
     resolver_matricula,
 )
 from src.services import obligaciones
-from src.services.calendario_tributario import fechas_predial, fuente_del_calendario
+from src.services.calendario_tributario import dias_hasta, fechas_predial, fuente_del_calendario
 from src.services.datos_anuales import porcentaje_pronto_pago
 from src.services.errores import AnioSinDatosError
 from src.services.minimizacion import minimizar
@@ -193,6 +193,10 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "facturas_expedidas_a_mas_tardar": fecha(plazos["facturas_a_mas_tardar"]),
         "spac_declaracion_inicial": fecha(plazos["spac_declaracion_inicial"]),
         "spac_cuotas": [fecha(f) for f in plazos["spac_cuotas"]],
+        "dias_que_faltan": {
+            "pago_con_descuento": dias_hasta(plazos["pronto_pago"], hoy),
+            "pago_sin_descuento": dias_hasta(plazos["sin_descuento"], hoy),
+        },
         "descuento_aun_vigente": obligaciones.descuento_vigente(plazos["pronto_pago"], hoy),
         "plazo_sin_descuento_ya_paso": not obligaciones.descuento_vigente(
             plazos["sin_descuento"], hoy

@@ -4,6 +4,7 @@ Lee `datos/`; si falta el año o el valor, falla de forma explícita y no estima
 """
 
 from dataclasses import dataclass
+from datetime import date
 from typing import Any, Literal
 
 from src.data.models import RegimenICA
@@ -129,3 +130,11 @@ def fechas_predial(anio: int) -> dict[str, Any]:
 def fuente_del_calendario(anio: int) -> str:
     """Norma de la que salen los plazos del año (p. ej. la Resolución SDH-000195 de 2025)."""
     return str(cargar_datos(f"calendario/{anio}.yaml", anio, "calendario")["fuente"])
+
+
+def dias_hasta(fecha: date | str, hoy: date) -> int:
+    """Días que faltan desde hoy hasta la fecha (0 si es hoy; negativo si ya pasó). Lo calcula el
+    código para que el modelo no diga «mañana» o «en una semana» por su cuenta (G4 de la corrida
+    2)."""
+    destino = date.fromisoformat(fecha) if isinstance(fecha, str) else fecha
+    return (destino - hoy).days

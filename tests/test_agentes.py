@@ -671,8 +671,8 @@ def test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual(adap
     assert situacion["periodicidad_registrada"] == "anual"
     assert {r["regimen"] for r in regimen["reglas"]} == {"comun_anual", "preferencial"}
     assert {r["periodicidad"] for r in regimen["reglas"]} == {"anual"}
-    assert fechas["fechas_limite_declaracion"] == [
-        {"fecha": "26 de febrero de 2027", "ya_paso": False}
+    assert [(f["fecha"], f["ya_paso"]) for f in fechas["fechas_limite_declaracion"]] == [
+        ("26 de febrero de 2027", False)
     ]
     guion = [pide(("regimen_ica", {"anio": 2026, "periodicidad": "bimestral"})), final("Común.")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Régimen bimestral", U04, [P04])
@@ -838,6 +838,36 @@ def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptad
     assert respuesta["texto"].count(notas.NOTA_INTERESES_MORA) == 1
     assert respuesta["texto"].lower().count("intereses de mora") == 1
     assert respuesta["texto"].startswith("Tienes una obligación vencida.")
+
+
+# -- Fechas relativas calculadas por código (G4 de la corrida 2) -------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-03 · Fechas de declaración", "RF-IPU-04 · Plazos y descuentos")
+def test_las_herramientas_de_fechas_dicen_cuantos_dias_faltan(adaptador) -> None:
+    """El modelo no calcula «mañana»: cada fecha trae los días que faltan desde hoy, calculados por
+    código (negativos si ya pasó), y los prompts del IPU y del ICA lo piden."""
+    from datetime import date
+
+    from src.services.calendario_tributario import dias_hasta
+
+    hoy = date(2091, 3, 10)  # fechas inventadas
+    assert dias_hasta("2091-03-11", hoy) == 1 and dias_hasta(date(2091, 3, 10), hoy) == 0
+    assert dias_hasta("2091-03-01", hoy) == -9
+    guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", U04, [P04])
+    (fechas,) = resultados_de_herramientas(modelo)
+    for f in fechas["fechas_limite_declaracion"]:
+        assert f["ya_paso"] == (f["dias_que_faltan"] < 0)
+    guion = [pide(("fechas_predial", {"anio": 2026})), final("Plazos.")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos", U03, [P03])
+    (plazos,) = resultados_de_herramientas(modelo)
+    assert plazos["dias_que_faltan"]["pago_sin_descuento"] < 0  # ese plazo ya pasó con este reloj
+    for nombre in ("ipu", "ica"):
+        assert "usa `dias_que_faltan` de la herramienta" in " ".join(
+            prompt_de_agente(nombre).texto.split()
+        )
 
 
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
