@@ -849,10 +849,12 @@ def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptad
 )
 def test_el_prompt_general_no_inventa_donde_se_hace_un_tramite() -> None:
     prompt = prompt_de_agente("general")
-    assert prompt.version.startswith("v2+")
+    assert prompt.version == "v2+comun.v3"
     texto = " ".join(prompt.texto.split())
     assert "No digas dónde, cómo ni por qué canal se hace un trámite" in texto
-    assert "ofrece pasar con un funcionario" in texto
+    # Como el manual: el botón o sus palabras (una oferta suelta no lleva la marca que escala).
+    assert "con el botón «Hablar con un funcionario» o con sus palabras" in texto
+    assert "di lo que hacen y lo que no hacen" not in texto  # zona gris de A8, quitada
 
 
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
