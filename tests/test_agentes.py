@@ -127,7 +127,7 @@ def test_los_prompts_de_los_agentes_llevan_las_reglas_comunes() -> None:
         texto = prompt.texto
         assert "Cita la norma y el artículo" in texto
         assert "Di siempre de qué año gravable hablas" in texto
-        assert "no digas que\n  vencieron" in texto  # Ley 1995 (adenda), condicional desde comun.v3
+        assert "no digas que vencieron" in " ".join(texto.split())  # Ley 1995, condicional
         assert "lenguaje claro" in texto
         assert "sistema de inteligencia artificial" in texto
         assert "No pidas ni menciones nombres ni números de documento" in texto

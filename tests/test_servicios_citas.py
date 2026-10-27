@@ -52,3 +52,49 @@ def test_sin_distrital_y_con_capitulo_coincide_con_el_encabezado() -> None:
 def test_una_cita_que_solo_esta_en_una_nota_del_sistema_tiene_fuente() -> None:
     nota = "El pago incluye un recargo inventado (Ley 900 de 2091, arts. 7 y 8)."
     assert citas_sin_fuente("Hay un recargo (Ley 900 de 2091, art. 8).", [nota]) == []
+
+
+@pytest.mark.unit
+@pytest.mark.req(F5)
+def test_formas_reales_de_encabezado_paréntesis_capitulos_puntos_y_rangos() -> None:
+    """Revisión independiente: paréntesis después del año, «caps.», artículos con puntos, rangos
+    «N a M», «Decreto Ley» igual a «Decreto» y una cifra que no es artículo (normas inventadas)."""
+    fuentes = [
+        "Resolución XYZ-000001 de 2091 (rangos inventados), art. 2",
+        "Decreto 5555 de 2092, caps. 25 y 26, art. 2.2.2.25.1.1",
+        "Acuerdo 77 de 2093, arts. 13 a 15",
+        "Decreto Ley 4321 de 2094, art. 9",
+    ]
+    texto = (
+        "Lo dicen la Resolución XYZ-000001 de 2091, art. 2; el Decreto 5555 de 2092, art. "
+        "2.2.2.25.1.1; el Acuerdo 77 de 2093, art. 14, y el Decreto 4321 de 2094, art. 9."
+    )
+    assert citas_sin_fuente(texto, fuentes) == []
+    assert citas_sin_fuente("El Decreto 5555 de 2092, art. 2.2.2.25.1.2.", fuentes) == [
+        "decreto 5555 de 2092, art. 2.2.2.25.1.2"
+    ]
+    assert [c.articulo for c in extraer_citas("Ley 900 de 2091, art. 14, 2093 es el año.")] == [
+        "14"
+    ]
+
+
+@pytest.mark.unit
+@pytest.mark.req(F5)
+def test_un_fragmento_sustenta_su_norma_su_articulo_y_su_linea_de_fuente() -> None:
+    """La norma que vale es la primera del encabezado (no la que compila), y la línea «Fuente»
+    del texto (como en el glosario) también sustenta."""
+    from src.services.citas import fuentes_de_fragmento
+
+    compila = fuentes_de_fragmento(
+        "Decreto 888 de 2095 (compilación inventada), arts. que compilan el Decreto 111 de 2090",
+        "Artículo 224",
+        "ARTÍCULO 224. Texto inventado.",
+    )
+    assert citas_sin_fuente("Decreto 888 de 2095, art. 224.", compila) == []
+    assert citas_sin_fuente("Decreto 111 de 2090, art. 224.", compila) == [
+        "decreto 111 de 2090, art. 224"
+    ]
+    glosario = fuentes_de_fragmento(
+        "Glosario inventado", "Término", "Definición.\n\n**Fuente:** Ley 900 de 2091, art. 1."
+    )
+    assert citas_sin_fuente("Así lo define la Ley 900 de 2091, art. 1.", glosario) == []

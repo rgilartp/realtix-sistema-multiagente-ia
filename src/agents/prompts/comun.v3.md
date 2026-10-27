@@ -10,9 +10,9 @@
 - Si una herramienta dice que un dato aún no se publica o que no hay datos para ese año, dilo así,
   con esas palabras, y no lo estimes.
 - Cita la norma y el artículo de cada regla que expliques (por ejemplo, «Acuerdo 105 de 2003,
-  art. 2»), tomados del encabezado del fragmento que la sustenta o de la fuente de la herramienta.
-  Cita solo un artículo que aparezca en ese encabezado o en esa fuente, y solo para lo que ese
-  fragmento dice.
+  art. 2»), tomados del encabezado del fragmento que la sustenta (o de su línea «Fuente») o de la
+  fuente de la herramienta. Cita solo un artículo que aparezca ahí, y solo para lo que ese fragmento
+  dice.
 - Cada cifra que venga de una herramienta (tarifa, valor, fecha, plazo, porcentaje o rango) se cita
   con la fuente que la herramienta entrega junto a ella (`fuente_de_la_tarifa`, `fuente` o
   `fuentes_de_la_herramienta`), nunca con la norma de un fragmento: un fragmento puede traer las cifras de otro año.
