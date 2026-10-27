@@ -424,7 +424,6 @@ test("tema: el widget ignora el tema de una página de otro origen y no queda oc
 // quedaba texto claro sobre el blanco del navegador (hallazgo de la usabilidad). El select y cada
 // opción llevan fondo opaco y texto con 4,5:1 en los dos modos, en la OVT y en la consola (el
 // widget no tiene listas).
-const LISTA_REQ = { annotation: [{ type: "req", description: "RF-UI-01 · Widget embebible" }] };
 const luminanciaCss = (css) => {
   const [r, g, b] = css.match(/[\d.]+/g).slice(0, 3).map((v) => {
     const c = Number(v) / 255;
@@ -445,12 +444,12 @@ async function listaLegible(select) {
 
 for (const esquema of ["light", "dark"]) {
   const modo = esquema === "dark" ? "oscuro" : "claro";
-  test(`listas desplegables legibles en la OVT y la consola (modo ${modo})`, LISTA_REQ, async ({ page }) => {
+  test(`listas desplegables legibles en la OVT y la consola (modo ${modo})`, TEMA_REQ, async ({ page }) => {
     await simularApi(page);
     await page.emulateMedia({ colorScheme: esquema });
     await page.goto("/ovt/");
     await expect(temaDe(page)).toHaveAttribute("data-tema", modo);
-    await expect(page.getByTestId("usuario").locator("option")).not.toHaveCount(1); // ya cargó
+    await expect(page.getByTestId("usuario").locator("option").nth(1)).toBeAttached(); // ya cargó
     await listaLegible(page.getByTestId("usuario"));
     await page.goto("/consola/");
     await page.getByLabel("Token de funcionario (bandeja)").fill("token-funcionario");
