@@ -33,6 +33,7 @@ from src.agents.nodes._comun import (
     formatear_pesos,
     parcial,
     texto_de_la_parte,
+    ultimo_texto,
 )
 from src.agents.nodes.general import AVISO_SESION
 from src.agents.state import AgentState
@@ -40,6 +41,7 @@ from src.agents.vision import abrir_documento, leer_documento
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE, PredioInaccesibleError
 from src.integrations.robustez import con_tiempo_y_reintento
 from src.services import obligaciones
+from src.services.acceso import rechazo_previo
 from src.services.documentos import (
     CamposRecibo,
     contrastar,
@@ -223,7 +225,17 @@ def crear_nodo_ocr(deps: Dependencias) -> Callable[..., dict[str, Any]]:
             respuesta, datos = _respuesta_simulada(state)
         else:
             datos = dict(state.get("datos_extraidos", {}))
-            if state.get("documento_adjunto"):
+            if rechazo_previo(
+                ultimo_texto(state),
+                state.get("contribuyente_id"),
+                state.get("predios_autorizados", []),
+            ):  # control previo sin modelo (F9, RF-AUT-02); un recibo pendiente se conserva
+                registro.info(
+                    "Rechazo previo por un predio ajeno",
+                    extra={"id_conversacion": state.get("id_conversacion"), "agente": "ocr"},
+                )
+                respuesta = parcial("ocr", MENSAJE_PREDIO_INACCESIBLE, rechazo_acceso=True)
+            elif state.get("documento_adjunto"):
                 respuesta = leer(state, datos)
             elif (datos.get("ocr") or {}).get("pendiente"):
                 respuesta = confirmar(state, datos, config)

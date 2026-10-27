@@ -1,14 +1,14 @@
 """Utilidades compartidas por los nodos simulados: texto, marcas y respuestas parciales."""
 
-import re
 import unicodedata
 from typing import Any
 
 from langchain_core.messages import HumanMessage
 
 from src.agents.state import AgentState
+from src.services.acceso import MATRICULA_EN_TEXTO
 
-MATRICULA = re.compile(r"\b50C-\d{7}\b", re.IGNORECASE)
+MATRICULA = MATRICULA_EN_TEXTO  # una sola definición, en el servicio de acceso
 PALABRAS_PERSONALES = (
     "mi predio", "mis predios", "mi impuesto", "cuanto debo", "cuanto pago", "mi saldo",
     "mi estado de cuenta", "mi recibo", "mis pagos", "mi avaluo", "mi factura", "debo",

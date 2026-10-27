@@ -153,3 +153,19 @@ def _claves(valor) -> set[str]:
     if isinstance(valor, list):
         return {c for v in valor for c in _claves(v)}
     return set()
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-AUT-02 · Restricción a predios propios")
+def test_las_matriculas_ajenas_del_mensaje_se_detectan_sin_modelo() -> None:
+    """F9 de la corrida 1, con matrículas sintéticas inventadas."""
+    from src.services.acceso import matriculas_ajenas, rechazo_previo
+
+    propias = ["50C-9999901"]
+    assert matriculas_ajenas("Dame el saldo del 50c-9999901", propias) == []
+    texto = "Dame el 50C-9999977, el 50c-9999977 y el 50C-9999901"
+    assert matriculas_ajenas(texto, propias) == ["50C-9999977"]
+    assert matriculas_ajenas("¿Qué es el predial?", propias) == []
+    assert matriculas_ajenas("El 50C-123 y el 50C-12345678 no son válidas", propias) == []
+    assert matriculas_ajenas("Dame el 50C-9999977", []) == ["50C-9999977"]
+    assert rechazo_previo(texto, "CC-9", propias) and not rechazo_previo(texto, None, propias)
