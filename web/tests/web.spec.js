@@ -107,7 +107,13 @@ async function flujoOvt(page, tamano) {
   await expect(page.getByTestId("rotulo")).toHaveText(
     "Entorno simulado de pruebas — no es la Oficina Virtual Tributaria real",
   );
-  await expect(page.locator("img, svg")).toHaveCount(0); // sin logos
+  // Sin logos ni imágenes: solo íconos de trazo decorativos, junto al texto que dicen.
+  await expect(page.locator("img")).toHaveCount(0);
+  await expect(page.locator('svg:not([aria-hidden="true"])')).toHaveCount(0);
+  // El rótulo es una franja delgada de aviso: una línea de unos 38 px en escritorio.
+  const { height } = await page.getByTestId("rotulo").boundingBox();
+  expect(height).toBeLessThanOrEqual(tamano.width >= 1024 ? 40 : 64);
+  await expect(page.getByTestId("que-probar").getByRole("listitem")).toHaveCount(4);
   expect(await page.locator("body").innerText()).not.toMatch(MARCAS_PROHIBIDAS);
   await expect(page.locator("iframe[data-realtix-widget]")).toHaveAttribute("src", /\/widget\/$/);
   // La captura de la OVT muestra la página con el asistente cerrado (en el celular ya lo está).
@@ -278,29 +284,29 @@ for (const { nombre, flujo, req } of FLUJOS) {
 
 // -- Tema claro u oscuro --------------------------------------------------------------------------
 
-// El botón del tema cambia también el del widget insertado: RF-UI-01.
+// El interruptor del tema cambia también el del widget insertado: RF-UI-01.
 const TEMA_REQ = { annotation: [{ type: "req", description: "RF-UI-01 · Widget embebible" }] };
 const temaDe = (pagina) => pagina.locator("html");
 const widgetHtml = (page) => page.frameLocator("iframe[data-realtix-widget]").locator("html");
 
 for (const ruta of ["/ovt/", "/consola/"]) {
-  test(`tema en ${ruta}: el botón «Modo oscuro» cambia el tema y lo recuerda al recargar`, TEMA_REQ, async ({ page }) => {
+  test(`tema en ${ruta}: el interruptor «Modo oscuro» cambia el tema y lo recuerda al recargar`, TEMA_REQ, async ({ page }) => {
     await simularApi(page);
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto(ruta);
-    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    const boton = page.getByRole("switch", { name: "Modo oscuro" });
     await expect(temaDe(page)).toHaveAttribute("data-tema", "claro"); // arranca con el del sistema
-    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(boton).toHaveAttribute("aria-checked", "false");
     await boton.click();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
-    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await expect(boton).toHaveAttribute("aria-checked", "true");
     await page.reload();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro"); // la elección se recuerda
-    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await expect(boton).toHaveAttribute("aria-checked", "true");
     await boton.click();
     await page.reload();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
-    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(boton).toHaveAttribute("aria-checked", "false");
   });
 
   test(`tema en ${ruta}: arranca oscuro con el sistema y funciona sin localStorage`, TEMA_REQ, async ({ page }) => {
@@ -316,12 +322,12 @@ for (const ruta of ["/ovt/", "/consola/"]) {
     });
     await page.emulateMedia({ colorScheme: "dark" });
     await page.goto(ruta);
-    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    const boton = page.getByRole("switch", { name: "Modo oscuro" });
     await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
-    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await expect(boton).toHaveAttribute("aria-checked", "true");
     await boton.click();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
-    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(boton).toHaveAttribute("aria-checked", "false");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     expect(errores).toEqual([]);
   });
@@ -338,7 +344,7 @@ test(
     const widget = page.frameLocator("iframe[data-realtix-widget]");
     await expect(widget.getByTestId("aviso-ia")).toBeVisible();
     await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
-    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    const boton = page.getByRole("switch", { name: "Modo oscuro" });
     await boton.click();
     await expect(widgetHtml(page)).toHaveAttribute("data-tema", "oscuro");
     await boton.click();

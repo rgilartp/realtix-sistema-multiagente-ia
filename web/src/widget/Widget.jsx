@@ -21,6 +21,7 @@ import {
   nuevaConversacion,
   pedirFuncionario,
 } from "../api.js";
+import { IconoCalendario, IconoLibro } from "../iconos.jsx";
 import { TEMAS, aplicarTema } from "../tema.jsx";
 
 const CONSULTA_MS = 5000;
@@ -29,9 +30,9 @@ const ORIGENES_PERMITIDOS = [
   ...(import.meta.env.VITE_ORIGENES_OVT ?? "").split(",").map((o) => o.trim()).filter(Boolean),
 ];
 const SUGERENCIAS = [
-  "¿Qué es el impuesto predial?",
-  "¿Hasta cuándo pago el predial con descuento?",
-  "¿Cuándo declaro el ICA este año?",
+  [IconoLibro, "¿Qué es el impuesto predial?"],
+  [IconoCalendario, "¿Hasta cuándo pago el predial con descuento?"],
+  [IconoCalendario, "¿Cuándo declaro el ICA este año?"],
 ];
 // Pestaña y borde de cada interlocutor: el color acompaña, la etiqueta informa.
 const QUIEN = {
@@ -385,14 +386,17 @@ export default function Widget() {
             <p className="text-sm text-tinta-suave">
               Pregunta por el predial o el ICA, o adjunta tu recibo para revisarlo.
             </p>
-            <div className="flex flex-col items-start gap-2 pt-1">
-              {SUGERENCIAS.map((s) => (
+            <div className="grid gap-2 pt-1">
+              {SUGERENCIAS.map(([Icono, s]) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => preguntar(s)}
-                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello-texto hover:bg-sello-suave hover:text-sello-texto"
+                  className="flex min-h-11 items-center gap-3 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello-texto hover:bg-sello-suave hover:text-sello-texto"
                 >
+                  <span className="text-sello-texto">
+                    <Icono tamano={18} />
+                  </span>
                   {s}
                 </button>
               ))}

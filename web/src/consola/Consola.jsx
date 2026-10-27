@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { mensajeParaMostrar, obtener } from "../api.js";
-import { BotonTema } from "../tema.jsx";
+import { Encabezado, Rotulo } from "../portal.jsx";
 
 const LANGSMITH = import.meta.env.VITE_LANGSMITH_URL ?? "https://smith.langchain.com/";
 const CATEGORIAS = ["ipu", "ica", "general", "ocr", "fuera_de_alcance", "sin_categoria"];
@@ -493,32 +493,24 @@ export default function Consola() {
 
   return (
     <div className="min-h-dvh bg-papel font-texto text-tinta">
-      <div className="rotulo px-4 py-2 text-center text-base md:text-lg">
-        Entorno simulado de pruebas con datos sintéticos
-      </div>
-      <header className="border-b border-renglon bg-hoja">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-3 px-4 py-4 sm:px-6">
-          <div>
-            <h1 className="text-2xl font-bold md:text-3xl">Consola</h1>
-            <p className="text-sm text-tinta-suave">Sistema multiagente de IA, para funcionarios y administradores</p>
-          </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-            <span
-              data-prueba="salud"
-              className={`inline-flex items-center gap-2 font-semibold ${sano ? "text-funcionario-texto" : "text-tinta-suave"}`}
-            >
-              <span className={`h-2.5 w-2.5 rounded-full ${sano ? "bg-funcionario" : "bg-tinta-suave"}`} aria-hidden="true" />
-              Servicio: {salud?.estado ?? "…"}
-              {salud?.version ? ` (v${salud.version})` : ""}
-            </span>
-            <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-block py-1 font-semibold text-sello-texto underline">
-              Trazas en LangSmith
-              <span className="sr-only"> (se abre en otra pestaña)</span>
-            </a>
-            <BotonTema />
-          </div>
-        </div>
-      </header>
+      <Rotulo>Entorno simulado de pruebas con datos sintéticos</Rotulo>
+      <Encabezado
+        titulo="Consola"
+        subtitulo="Sistema multiagente de IA, para funcionarios y administradores"
+        columna="mx-auto max-w-6xl px-4 sm:px-6"
+      >
+        {/* Sobre el azul: punto blanco lleno si el servicio está bien y vacío si no (el texto de
+            al lado dice el estado). */}
+        <span data-prueba="salud" className="inline-flex items-center gap-2 text-sm font-semibold">
+          <span className={`h-2.5 w-2.5 rounded-full ${sano ? "bg-blanco" : "border-2 border-blanco"}`} aria-hidden="true" />
+          Servicio: {salud?.estado ?? "…"}
+          {salud?.version ? ` (v${salud.version})` : ""}
+        </span>
+        <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-block py-1 text-sm font-semibold text-blanco underline">
+          Trazas en LangSmith
+          <span className="sr-only"> (se abre en otra pestaña)</span>
+        </a>
+      </Encabezado>
       <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
         <div className="casillas md:grid-cols-2">
           <Token
