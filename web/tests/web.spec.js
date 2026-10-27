@@ -7,6 +7,7 @@ import { readFileSync } from "node:fs";
 
 import { expect, test } from "@playwright/test";
 
+import { conversacionAlFinal, fuentesListas } from "./capturas.js";
 import { TEXTOS, simularApi } from "./simulador.js";
 
 const CAPTURAS = process.env.CAPTURAS === "1";
@@ -23,22 +24,6 @@ const CAPTURAS_OSCURAS = ["ovt_simulada", "widget_respuesta", "widget_fuera_de_h
 
 test.use({ testIdAttribute: "data-prueba" });
 
-// Espera a que las dos fuentes estén cargadas en la página y en el iframe del widget.
-async function fuentesListas(page) {
-  for (const marco of page.frames()) {
-    await marco
-      .evaluate(async () => {
-        await Promise.all([
-          document.fonts.load('700 1em "Archivo Variable"'),
-          document.fonts.load('400 1em "Atkinson Hyperlegible Next Variable"'),
-          document.fonts.load('700 1em "Atkinson Hyperlegible Next Variable"'),
-        ]);
-        await document.fonts.ready;
-      })
-      .catch(() => {});
-  }
-}
-
 async function capturar(page, nombre, { completa = false } = {}) {
   if (!CAPTURAS) return;
   if ((await page.locator("html").getAttribute("data-tema")) === "oscuro") {
@@ -47,16 +32,7 @@ async function capturar(page, nombre, { completa = false } = {}) {
   }
   await fuentesListas(page);
   await page.waitForTimeout(100); // el widget recalcula su altura con el rótulo ya dibujado
-  // Con las fuentes cargadas cambia el alto del texto: la conversación vuelve al final (si hay
-  // mensajes), como la deja el widget.
-  for (const marco of page.frames()) {
-    await marco
-      .evaluate(() => {
-        const zona = document.querySelector("main[aria-live]");
-        if (zona?.querySelector("[data-autor]")) zona.scrollTop = zona.scrollHeight;
-      })
-      .catch(() => {});
-  }
+  await conversacionAlFinal(page);
   const { width } = page.viewportSize();
   const path = `../docs/capturas/${nombre}_${width}.png`;
   await page.screenshot({ path, animations: "disabled", fullPage: completa });

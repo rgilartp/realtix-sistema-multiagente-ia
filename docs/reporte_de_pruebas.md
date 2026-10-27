@@ -10,8 +10,8 @@ dice **PENDIENTE (corrida 3)**, **PENDIENTE (calibración)** o **PENDIENTE (usab
 - Objeto: el sistema multiagente de IA desplegado, con datos sintéticos.
 - Versión evaluada: **PENDIENTE (corrida 3)** (commit; sin cambios de código desde la última
   fusión).
-- Huella del juez: la de `reports/calibracion/huella_juez.txt` (juez v3, ADR-25), exigida con
-  `--exigir-huella`.
+- Huella del juez: la de `reports/calibracion/huella_juez.txt` (juez v3, ADR-25); `evaluar.py` la
+  exige con `--exigir-huella` y, siempre, con más de un ensayo por escenario.
 - Resultado frente a la meta de RNF-16 · Tasa de respuestas correctas (85 %): **PENDIENTE (corrida
   3)**.
 
@@ -25,6 +25,8 @@ dice **PENDIENTE (corrida 3)**, **PENDIENTE (calibración)** o **PENDIENTE (usab
 
 ## 3. Criterios de entrada de la corrida 3
 
+Se registran también en `reports/corrida-3/criterios_de_entrada.md`, como en la corrida 1.
+
 | Criterio | Cómo se verifica | Resultado |
 |---|---|---|
 | El sistema desplegado responde `/health` | `curl https://<subdominio>.duckdns.org/health` | PENDIENTE (corrida 3) |
@@ -32,6 +34,10 @@ dice **PENDIENTE (corrida 3)**, **PENDIENTE (calibración)** o **PENDIENTE (usab
 | Corpus cargado | Salida de la ingesta de `deploy/desplegar.sh` | PENDIENTE (corrida 3) |
 | Juez calibrado | `tests/test_preparacion_b16.py` y `--exigir-huella` | PENDIENTE (corrida 3) |
 | Sin cambios de código desde la última fusión | `git log` frente al commit desplegado | PENDIENTE (corrida 3) |
+| Referencias aprobadas, incluidas las de R1 (nuevas en la corrida 3) | Campo de aprobación de cada escenario; la corrida se detiene sin `--sin-aprobar` | PENDIENTE (corrida 3) |
+| Verificador de referencias (A7) sin nada sin resolver | `uv run python scripts/verificar_referencias.py` | PENDIENTE (corrida 3) |
+| LangSmith encendido (la corrida usa `--trazas`, RNF-05 · Registro auditable) | Trazas de una prueba de humo | PENDIENTE (corrida 3) |
+| Modo de evaluación encendido solo durante la corrida (A9) | `desplegar.sh --evaluacion` al empezar y sin él al terminar, verificado desde afuera | PENDIENTE (corrida 3) |
 
 ## 4. Resultados del nivel de sistema (corrida 3)
 
@@ -71,7 +77,8 @@ la evolución desde las corridas 1 y 2: **PENDIENTE (corrida 3)**.
 ## 10. Latencia y costo
 
 - p50 y p95 del servidor y del cliente, con y sin recuperación: **PENDIENTE (corrida 3)**.
-- Costo de la corrida, costo por consulta y costo total del proyecto: **PENDIENTE (corrida 3)**.
+- Costo de la corrida (`reports/corrida-3/costos.md`), costo por consulta y costo total del
+  proyecto frente al presupuesto de la sección 7 del plan: **PENDIENTE (corrida 3)**.
 
 ## 11. Trazabilidad y criterios de salida
 
@@ -83,6 +90,17 @@ la evolución desde las corridas 1 y 2: **PENDIENTE (corrida 3)**.
 | Matriz de trazabilidad completa (`reports/trazabilidad.md` y `.csv`) | PENDIENTE (corrida 3) |
 | Reporte generado | PENDIENTE (corrida 3) |
 
-## 12. Conclusiones
+Calificación de cada uno de los 65 requerimientos (cumple, cumple en parte o no cumple) y el
+porcentaje global de cumplimiento (secciones 6.11 y 8.17 de la especificación; sección 11 del plan),
+desde `reports/trazabilidad.md`: **PENDIENTE (corrida 3)**.
+
+## 12. Impedimentos, riesgos y lecciones (cierre CTFL v4.0.1)
+
+- Impedimentos y cómo se resolvieron: **PENDIENTE (corrida 3)**.
+- Riesgos de la sección 4 del plan que no se mitigaron y fallas que no se corrigieron:
+  **PENDIENTE (corrida 3)**.
+- Lecciones aprendidas: **PENDIENTE (corrida 3)**.
+
+## 13. Conclusiones
 
 **PENDIENTE (corrida 3).**
