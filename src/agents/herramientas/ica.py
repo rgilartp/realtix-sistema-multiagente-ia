@@ -67,7 +67,7 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
                     "tarifa": por_mil(o.tarifa_por_mil),
                     "valor_liquidado": pesos(o.valor_liquidado),
                     "fecha_limite_pago": fecha(o.fecha_limite_pago),
-                    "dias_que_faltan_para_el_limite": dias_hasta(o.fecha_limite_pago, contexto.hoy),
+                    "dias_que_faltan": dias_hasta(o.fecha_limite_pago, contexto.hoy),
                     "estado_pago": o.estado_pago,
                     "vencida_a_hoy": s.vencida,
                     "pagado": pesos(s.pagado),
@@ -260,7 +260,7 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         return [
             {
                 "fecha": fecha(f),
-                "ya_paso": f < contexto.hoy.isoformat(),
+                "ya_paso": dias_hasta(f, contexto.hoy) < 0,
                 "dias_que_faltan": dias_hasta(f, contexto.hoy),
             }
             for f in fechas_ica(anio, cual)  # type: ignore[arg-type]

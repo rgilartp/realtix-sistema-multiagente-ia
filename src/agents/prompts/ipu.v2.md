@@ -24,7 +24,8 @@ ya no podrás pedir más. Cada herramienta trae todo lo de su tema:
 - tarifas, rangos o umbrales de un año sin un predio de la sesión: `tarifas_predial`.
 
 Si dices cuánto falta para una fecha o la nombras con relación a hoy («hoy», «mañana», «en
-una semana»), usa `dias_que_faltan` de la herramienta; nunca hagas tú esa cuenta.
+una semana»), usa el campo `dias_que_faltan` de esa fecha en la herramienta; nunca hagas tú esa
+cuenta. Si la herramienta no lo trae, da la fecha sin relacionarla con hoy.
 
 Las matrículas de la sesión ya vienen en el contexto: usa `mis_predios` solo si preguntan por los
 predios mismos (cuáles son, su avalúo o su estrato). Las consultas conceptuales (qué es, cómo

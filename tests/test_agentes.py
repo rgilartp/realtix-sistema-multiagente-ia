@@ -864,8 +864,17 @@ def test_las_herramientas_de_fechas_dicen_cuantos_dias_faltan(adaptador) -> None
     _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos", U03, [P03])
     (plazos,) = resultados_de_herramientas(modelo)
     assert plazos["dias_que_faltan"]["pago_sin_descuento"] < 0  # ese plazo ya pasó con este reloj
+    assert all(set(c) == {"fecha", "dias_que_faltan"} for c in plazos["spac_cuotas"])
+    guion = [pide(("estado_cuenta_predial", {})), final("Cuenta.")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Cuenta", U04, [P04])
+    (predial,) = resultados_de_herramientas(modelo)
+    assert all("dias_que_faltan" in o for o in predial["obligaciones"])
+    guion = [pide(("mi_situacion_ica", {})), final("ICA.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "ICA", U04, [P04])
+    (ica,) = resultados_de_herramientas(modelo)
+    assert all(isinstance(o["dias_que_faltan"], int) for o in ica["obligaciones"])
     for nombre in ("ipu", "ica"):
-        assert "usa `dias_que_faltan` de la herramienta" in " ".join(
+        assert "usa el campo `dias_que_faltan` de esa fecha" in " ".join(
             prompt_de_agente(nombre).texto.split()
         )
 
