@@ -62,7 +62,7 @@ def exportar(
     ruta = destino / "muestra.csv"
     clave = {}
     with ruta.open("w", newline="", encoding="utf-8") as archivo:
-        escritor = csv.writer(archivo)
+        escritor = csv.writer(archivo, lineterminator="\n")
         escritor.writerow(
             ["muestra", "pregunta", "respuesta", "referencia", "fuentes", *COLUMNAS_EVALUADORES]
         )
@@ -234,7 +234,7 @@ def _html(nombre: str, bloques: list[str]) -> str:
         "<meta name=viewport content='width=device-width,initial-scale=1'>"
         f"<title>Calibración del juez · {html.escape(nombre)}</title><style>{estilo}</style>"
         f"</head><body><h1>Calibración del juez · {html.escape(nombre)}</h1>"
-        f"{RUBRICA_PARA_PERSONAS}<p>{indice}</p>{''.join(bloques)}</body></html>"
+        f"{RUBRICA_PARA_PERSONAS}<p>{indice}</p>{''.join(bloques)}</body></html>\n"
     )
 
 
@@ -336,7 +336,7 @@ def importar_calificaciones(destino: Path) -> int:
             veredicto, alucinacion = de_la_persona.get(fila["muestra"], ("", ""))
             fila[f"{persona}_veredicto"], fila[f"{persona}_alucinacion"] = veredicto, alucinacion
     with ruta_csv.open("w", newline="", encoding="utf-8") as archivo:
-        escritor = csv.DictWriter(archivo, fieldnames=columnas)
+        escritor = csv.DictWriter(archivo, fieldnames=columnas, lineterminator="\n")
         escritor.writeheader()
         escritor.writerows(filas_csv)
     return sum(all(f[c] for c in COLUMNAS_EVALUADORES) for f in filas_csv)
