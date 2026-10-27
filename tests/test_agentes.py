@@ -845,38 +845,41 @@ def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptad
 
 @pytest.mark.unit
 @pytest.mark.req("RF-ICA-03 · Fechas de declaración", "RF-IPU-04 · Plazos y descuentos")
-def test_las_herramientas_de_fechas_dicen_cuantos_dias_faltan(adaptador) -> None:
-    """El modelo no calcula «mañana»: cada fecha trae los días que faltan desde hoy, calculados por
-    código (negativos si ya pasó), y los prompts del IPU y del ICA lo piden."""
-    from datetime import date
-
-    from src.services.calendario_tributario import dias_hasta
+def test_las_herramientas_de_fechas_dan_la_frase_respecto_a_hoy(adaptador) -> None:
+    """El modelo no calcula «mañana»: cada fecha trae, calculada por código, la frase que la
+    relaciona con hoy («hoy», «mañana», «en N días» o «hace N días»), y los prompts del IPU y del
+    ICA piden copiarla tal cual y solo cuando la respuesta relaciona la fecha con hoy."""
+    from src.services.calendario_tributario import dias_hasta, respecto_a_hoy
 
     hoy = date(2091, 3, 10)  # fechas inventadas
-    assert dias_hasta("2091-03-11", hoy) == 1 and dias_hasta(date(2091, 3, 10), hoy) == 0
-    assert dias_hasta("2091-03-01", hoy) == -9
+    assert dias_hasta("2091-03-11", hoy) == 1 and dias_hasta("2091-03-01", hoy) == -9
+    assert [
+        respecto_a_hoy(f, hoy)
+        for f in ("2091-03-10", "2091-03-11", "2091-03-18", "2091-03-09", "2091-03-01")
+    ] == ["hoy", "mañana", "en 8 días", "hace 1 día", "hace 9 días"]
     guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", U04, [P04])
     (fechas,) = resultados_de_herramientas(modelo)
     for f in fechas["fechas_limite_declaracion"]:
-        assert f["ya_paso"] == (f["dias_que_faltan"] < 0)
+        assert f["ya_paso"] == f["respecto_a_hoy"].startswith("hace")
     guion = [pide(("fechas_predial", {"anio": 2026})), final("Plazos.")]
     _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos", U03, [P03])
     (plazos,) = resultados_de_herramientas(modelo)
-    assert plazos["dias_que_faltan"]["pago_sin_descuento"] < 0  # ese plazo ya pasó con este reloj
-    assert all(set(c) == {"fecha", "dias_que_faltan"} for c in plazos["spac_cuotas"])
+    assert plazos["respecto_a_hoy"]["pago_sin_descuento"].startswith("hace")  # ya pasó
+    assert all(set(c) == {"fecha", "respecto_a_hoy"} for c in plazos["spac_cuotas"])
+    assert "dias_que_faltan" not in json.dumps(plazos)  # sin cuentas sueltas para el modelo
     guion = [pide(("estado_cuenta_predial", {})), final("Cuenta.")]
     _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Cuenta", U04, [P04])
     (predial,) = resultados_de_herramientas(modelo)
-    assert all("dias_que_faltan" in o for o in predial["obligaciones"])
+    assert all("fecha_limite_pago_respecto_a_hoy" in o for o in predial["obligaciones"])
     guion = [pide(("mi_situacion_ica", {})), final("ICA.")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "ICA", U04, [P04])
     (ica,) = resultados_de_herramientas(modelo)
-    assert all(isinstance(o["dias_que_faltan"], int) for o in ica["obligaciones"])
+    assert all(isinstance(o["fecha_limite_pago_respecto_a_hoy"], str) for o in ica["obligaciones"])
     for nombre in ("ipu", "ica"):
-        assert "usa el campo `dias_que_faltan` de esa fecha" in " ".join(
-            prompt_de_agente(nombre).texto.split()
-        )
+        texto = " ".join(prompt_de_agente(nombre).texto.split())
+        assert "cópiala tal cual, sin cambiarla ni hacer tú la cuenta" in texto
+        assert "No digas cuántos días faltan si nadie lo preguntó" in texto
 
 
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------

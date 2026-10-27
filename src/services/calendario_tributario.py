@@ -138,3 +138,16 @@ def dias_hasta(fecha: date | str, hoy: date) -> int:
     2)."""
     destino = date.fromisoformat(fecha) if isinstance(fecha, str) else fecha
     return (destino - hoy).days
+
+
+def respecto_a_hoy(fecha: date | str, hoy: date) -> str:
+    """La fecha con relación a hoy, lista para copiar: «hoy», «mañana», «en N días» o «hace N
+    días». El modelo la copia tal cual en lugar de hacer la cuenta (G4 de la corrida 2)."""
+    dias = dias_hasta(fecha, hoy)
+    if dias == 0:
+        return "hoy"
+    if dias == 1:
+        return "mañana"
+    if dias > 1:
+        return f"en {dias} días"
+    return "hace 1 día" if dias == -1 else f"hace {-dias} días"
