@@ -16,7 +16,7 @@
 | diskcache 5.6.3 | PYSEC-2026-2447 (CVE-2025-69872) | Quien pueda escribir en el directorio de la caché ejecuta código (usa `pickle`) | Sin versión | No |
 | ragas 0.4.3 | PYSEC-2026-3046 (CVE-2026-6587) | Falsificación de peticiones desde el servidor en la utilidad de la métrica de fidelidad multimodal | Sin versión | No |
 
-Comprobado en el servidor, en solo lectura:
+Comprobado en el servidor, en solo lectura y antes de este cambio:
 
 - Desde afuera, el anfitrión escucha solo en los puertos 22, 80 y 443. Chroma publica `127.0.0.1:8000` y PostgreSQL `127.0.0.1:5432`, como pide la sección 3.11 («no se exponen fuera del host»).
 - Caddy no enruta nada a Chroma: `/api/*` y `/health` van al backend, y lo demás, a los archivos de la web.
@@ -28,7 +28,7 @@ Comprobado en el servidor, en solo lectura:
 2. **En el servidor, Chroma no publica su puerto** ni en el `127.0.0.1` del anfitrión. `deploy/compose.servidor.yml` lo quita (`ports: !reset []`) y `deploy/desplegar.sh` lo agrega con `-f`. Queda solo en la red de Compose, donde lo usa el backend. En el equipo se conserva, porque lo usan las pruebas y la ingesta locales.
 3. **Riesgos aceptados, con su mitigación:**
    - **chromadb (4 avisos).** No hay versión corregida, y cambiar de base vectorial antes de la corrida 3 cambiaría ADR-04 y el sistema que se mide. Mitigación:
-     - nadie fuera de la red de Compose llega a la API de Chroma: no tiene puerto en el servidor y el proxy no la enruta;
+     - solo el anfitrión y los contenedores de Compose llegan a la API de Chroma: en el servidor no publica puerto y el proxy no la enruta;
      - el sistema no usa funciones de embeddings de Chroma ni modelos de Hugging Face: los vectores los calcula el backend con `text-embedding-3-large` de OpenAI, a través de LangChain;
      - hay un solo inquilino, el predeterminado, sin usuarios ni roles, así que los avisos de autorización no tienen a quién aplicarse.
    - **ragas y diskcache.** Solo están en el grupo `eval`, en el equipo de Rodolfo, para las corridas; no van en la imagen ni en el servidor. Mitigación:
