@@ -1,0 +1,48 @@
+{
+  "commit": "805f2ef (v0.9.0, el de la corrida 1)",
+  "entorno": "este equipo (WSL 2), sin el juez; el clasificador real (Sonnet 5.5) y el agente del IPU real (Haiku 5.5) con la configuración local; 3 repeticiones",
+  "IPU-09_clasificador": [
+    {
+      "partes": [
+        "general"
+      ],
+      "marcas": [
+        "sesion_requerida"
+      ]
+    },
+    {
+      "partes": [
+        "general"
+      ],
+      "marcas": [
+        "sesion_requerida"
+      ]
+    },
+    {
+      "partes": [
+        "general"
+      ],
+      "marcas": [
+        "sesion_requerida"
+      ]
+    }
+  ],
+  "IPU-13_agente": [
+    {
+      "suficiencia": "completa",
+      "nombra_30_de_abril": false,
+      "fuentes": " Resolución SDH-000195 de 2025, art. 3; Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224."
+    },
+    {
+      "suficiencia": "completa",
+      "nombra_30_de_abril": false,
+      "fuentes": " Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224; Ley 44 de 1990, art. 12."
+    },
+    {
+      "suficiencia": "completa",
+      "nombra_30_de_abril": false,
+      "fuentes": " Resolución SDH-000195 de 2025, art. 3; Decreto 639 de 2025 (Decreto Único Distrital Tributario), arts. que compilan el Decreto 474 de 2016, art. 224; Ley 44 de 1990, art. 12."
+    }
+  ],
+  "costo_usd": "0.0253234"
+}

@@ -1,0 +1,174 @@
+{
+  "commit_evaluado": null,
+  "huella_juez": "afecd5c1b4f62d52fc605ac6b350363cddee4604ae704f30247703146aa39805",
+  "conjuntos": {
+    "principal": {
+      "ensayos": 28,
+      "escenarios": 28,
+      "tasa_meta": {
+        "escenarios": 28,
+        "ensayos": 28,
+        "tasa": 0.8928571428571429,
+        "wilson95": [
+          0.7280414845132785,
+          0.9628816331707
+        ],
+        "bootstrap95": [
+          0.75,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 28,
+        "ensayos": 28,
+        "tasa": 0.6785714285714286,
+        "wilson95": [
+          0.49338843180857617,
+          0.8206675307750504
+        ],
+        "bootstrap95": [
+          0.5,
+          0.8571428571428571
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 0.8928571428571429,
+        "pass^1": 0.8928571428571429
+      },
+      "codigo_pasa": 0.9285714285714286,
+      "juez": {
+        "calificados": 28,
+        "correcta": 19,
+        "parcialmente correcta": 8,
+        "incorrecta": 1,
+        "alucinacion": 0.03571428571428571,
+        "cito_norma": 0.5,
+        "cita_sustenta": 0.5,
+        "cobertura_completa": 0.7142857142857143,
+        "claridad_media": 4.785714285714286
+      },
+      "enrutamiento": {
+        "pares": 25,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 9,
+            "precision": 1.0,
+            "exhaustividad": 0.889,
+            "f1": 0.941
+          },
+          "ica": {
+            "soporte": 2,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 9,
+            "precision": 0.9,
+            "exhaustividad": 1.0,
+            "f1": 0.947
+          },
+          "ocr": {
+            "soporte": 5,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 8,
+            "ica": 0,
+            "general": 1,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 2,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 9,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 5,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 10,
+          "meta_ms": 8000,
+          "servidor_p50_ms": 1963.0,
+          "servidor_p95_ms": 4040.0,
+          "cliente_p50_ms": 1992.7,
+          "cliente_p95_ms": 4052.3,
+          "cumplen_meta": 10
+        },
+        "rag": {
+          "turnos": 15,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 6954.0,
+          "servidor_p95_ms": 13297.0,
+          "cliente_p50_ms": 6965.3,
+          "cliente_p95_ms": 13306.5,
+          "cumplen_meta": 15
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.2010341",
+        "juez": "0.728588"
+      },
+      "errores_de_ejecucion": 0
+    }
+  },
+  "costos": {
+    "Sistema (principal)": "0.2010341",
+    "Juez (principal)": "0.728588",
+    "Total": "0.9296221"
+  }
+}
