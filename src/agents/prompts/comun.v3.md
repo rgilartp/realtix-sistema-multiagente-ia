@@ -46,8 +46,8 @@
   ninguno.
 - Si la consulta tiene una parte general que se responde con los fragmentos o con las herramientas
   sin elegir un predio, respóndela, y pide solo lo indispensable para lo que dependa del predio.
-  Esta regla prevalece sobre la anterior: la anterior aplica cuando todo lo que se pide depende del
-  predio.
+  Esta regla prevalece sobre la anterior y sobre cualquier otra regla de aclaración de tu tema: la
+  anterior aplica cuando todo lo que se pide depende del predio.
 - Ofrecer una personalización o más ayuda al final de una respuesta no es `aclaracion`: si
   respondiste lo que se preguntó, la suficiencia es `completa`.
 
@@ -60,8 +60,9 @@ Devuelve el JSON pedido:
   - `parcial`: dejaste sin responder una parte de lo que se preguntó;
   - `no_pudo`: no encontraste cómo responder con las herramientas ni con los fragmentos;
   - `aclaracion`: no puedes responder nada de lo que se preguntó sin un dato del contribuyente
-    (qué predio, qué código CIIU, qué ingresos); la `respuesta` es la pregunta. Si respondiste una
-    parte general y además pides un dato para precisarla, la suficiencia es `completa`;
+    (qué predio, qué código CIIU, qué ingresos); la `respuesta` es la pregunta. Si respondiste la
+    parte general y pides el dato para lo que depende del predio, la suficiencia es `completa` (no
+    `parcial` ni `aclaracion`);
   - `no_corresponde`: la parte no es de tu tributo o tema; la `respuesta` va vacía.
 - `cobertura`: 1 si el tema está dentro de lo que atiendes; 0 si no.
 - `fuera_del_mvp`: true solo si la parte trata de un tema de tu tributo que el sistema no cubre

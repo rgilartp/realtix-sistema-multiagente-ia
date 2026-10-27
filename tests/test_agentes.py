@@ -744,6 +744,32 @@ def test_con_varios_predios_el_agente_recibe_los_predios_y_las_reglas_de_aclarac
     assert respuesta["suficiencia"] == "aclaracion" and "Fuentes" not in respuesta["texto"]
 
 
+@pytest.mark.unit
+@pytest.mark.req("RF-UI-02 · Contexto de la sesión", "RF-IPU-01 · Consultas conceptuales de IPU")
+def test_la_parte_general_respondida_con_la_pregunta_del_predio_es_completa(
+    adaptador, recuperador
+) -> None:
+    """Regla 2: con varios predios, la parte general se responde (con su fuente) y se pide el
+    predio solo para lo personal; la parte queda completa, pasa por la fórmula de la confianza y el
+    prompt del IPU ya no manda la aclaración sin excepción."""
+    predios = ["50C-9999901", "50C-9999902"]
+    texto = "En general, se explica así. ¿De cuál de tus dos predios quieres el detalle?"
+    guion = [AIMessage(content=""), final(texto, fragmentos_citados=[1])]
+    respuesta, _, modelo = correr(
+        AGENTE_IPU,
+        adaptador,
+        guion,
+        "¿Qué es el predial?",
+        "CC-9",
+        predios,
+        recuperador=recuperador,
+    )
+    assert respuesta["suficiencia"] == "completa" and "Fuentes:" in respuesta["texto"]
+    prompt = " ".join(modelo.llamadas[0][0][0].content.split())
+    assert "pregunta de cuál (`aclaracion`)" not in prompt
+    assert "sigue las reglas de «Cuándo pedir una aclaración»" in prompt
+
+
 # -- Periodicidad del ICA y estimación en la primera ronda (F4 y F8 de la corrida 1) ------------
 
 
