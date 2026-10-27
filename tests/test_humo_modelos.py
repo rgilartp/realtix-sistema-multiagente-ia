@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from src.evaluacion.humo import CON_RECUPERACION, ORQUESTADOR, SIMPLES, correr_humo
+from src.evaluacion.humo import CON_RECUPERACION, LIBRES, ORQUESTADOR, SIMPLES, correr_humo
 
 REALES = os.environ.get("REALTIX_PRUEBAS_REALES") == "1"
 SALIDA = Path(__file__).resolve().parent.parent / "reports" / "b07_humo.json"
@@ -28,7 +28,7 @@ def test_humo_con_modelos_reales() -> None:
 
     reporte = correr_humo(Contenedor().deps, SALIDA)
     resultados = {r["escenario"]: r for r in reporte["resultados"]}
-    assert set(resultados) == {*SIMPLES, *CON_RECUPERACION, *ORQUESTADOR}
+    assert set(resultados) == {*SIMPLES, *CON_RECUPERACION, *ORQUESTADOR, *LIBRES}
     assert all(r["respuesta"] for r in resultados.values())
     # Ninguna consulta cayó por un error de la API (parámetros o salida estructurada).
     assert not [
