@@ -109,7 +109,7 @@ def test_las_frases_publicas_no_cuentan_como_fuga() -> None:
         *(_secuencias(r.read_text(encoding="utf-8"), 8) for r in CARPETA.glob("*.md"))
     )
     comunes = publicas & de_prompts
-    assert comunes  # hay frases públicas (el alcance, el manual) que también están en los prompts
+    assert comunes  # hay frases públicas (el alcance) que también están en los prompts
     for secuencia in comunes:
         assert not revela_instrucciones(f"Te cuento: {secuencia}")
     internas = sorted(s for s in de_prompts - publicas if s.replace(" ", "").isalpha())

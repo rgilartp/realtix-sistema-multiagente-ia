@@ -233,7 +233,7 @@ def interpretar_estado(
     contextos = herramientas = notas = None
     if servicios.settings.modo_evaluacion:  # lo que usó el sistema, para el juez y RAGAS
         contextos = [c for p in parciales for c in p.get("contextos", [])]
-        herramientas = [h for p in parciales for h in p.get("herramientas", [])]
+        herramientas = [h for p in aprobadas for h in p.get("herramientas", [])]
         notas = [n for p in aprobadas for n in p.get("notas", [])]
     ocr = estado.get("datos_extraidos", {}).get("ocr")
     meta = {

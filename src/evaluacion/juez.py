@@ -59,8 +59,8 @@ def instrucciones() -> str:
 
 def huella_del_juez(settings: Settings) -> str:
     """SHA-256 de todo lo que define al juez: modelo, parámetros, instrucciones, esquema y la
-    plantilla de lo que ve (el código de `CasoJuez`, `caso_del_ensayo` y `fuentes_del_sistema`,
-    con el anonimizador).
+    plantilla de lo que ve (el código de `CasoJuez`, `_cita`, `_json`, `fuentes_del_sistema` y
+    `caso_del_ensayo`, con el anonimizador).
     Si cambia, se repite la calibración (A5)."""
     definicion = {
         "modelo": settings.modelo_juez,
@@ -69,7 +69,8 @@ def huella_del_juez(settings: Settings) -> str:
         "instrucciones": instrucciones(),
         "esquema": Veredicto.model_json_schema(),
         "plantilla": "".join(
-            inspect.getsource(f) for f in (CasoJuez, fuentes_del_sistema, caso_del_ensayo)
+            inspect.getsource(f)
+            for f in (CasoJuez, _cita, _json, fuentes_del_sistema, caso_del_ensayo)
         ),
         "anonimizador": inspect.getsource(Anonimizador),
     }

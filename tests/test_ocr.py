@@ -213,6 +213,9 @@ def test_en_el_modo_de_evaluacion_el_contraste_reporta_sus_datos_y_notas(
     meta = chat(cliente, "conv-ocr-eval", "Sí, los datos son correctos", **token(U03))["meta"]
     (visto,) = meta["herramientas"]
     assert visto["resultado"]["obligaciones_vencidas"] >= 1
+    assert (
+        visto["resultado"]["avaluo_registrado"] and visto["resultado"]["valor_liquidado_registrado"]
+    )
     assert visto["resultado"]["fuentes_de_la_herramienta"]
     assert notas.NOTA_INTERESES_MORA in meta["notas"]
 

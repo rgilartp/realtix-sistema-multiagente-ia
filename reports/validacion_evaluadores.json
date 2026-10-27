@@ -2,12 +2,12 @@
   "juez": {
     "con_falla": {
       "veredicto": "parcialmente correcta",
-      "alucinacion": true,
+      "alucinacion": false,
       "cito_norma": true,
       "cita_sustenta": true,
-      "cobertura_completa": true,
+      "cobertura_completa": false,
       "claridad": 5,
-      "justificacion": "Responde correctamente que el asistente no presenta declaraciones, no hace pagos ni modifica datos, que es orientativo y qué temas atiende, con citas del manual que lo sustentan. Sin embargo, afirma que el pago o la presentación se hacen directamente en la Oficina Virtual Tributaria, algo que no aparece en los fragmentos ni en la referencia."
+      "justificacion": "Responde correctamente que el asistente no presenta declaraciones, no paga ni modifica datos, e indica los temas que sí atiende, con citas del manual que lo sustentan. No dice expresamente que no da asesoría personalizada y afirma que el pago y la presentación se hacen en la Oficina Virtual Tributaria, algo que los fragmentos no respaldan."
     },
     "fiel": {
       "veredicto": "parcialmente correcta",
@@ -16,7 +16,7 @@
       "cita_sustenta": true,
       "cobertura_completa": false,
       "claridad": 5,
-      "justificacion": "Responde correctamente que el asistente no presenta declaraciones ni hace pagos, con sustento en el manual, y menciona que sus respuestas son orientativas. Omite el elemento secundario de que no da asesoría tributaria personalizada; la mención al funcionario está sustentada en los fragmentos."
+      "justificacion": "Responde correctamente que el asistente no presenta declaraciones, no paga ni modifica datos, y que sus respuestas son orientativas, todo sustentado en el manual. Omite el elemento secundario de que no da asesoría tributaria personalizada; la mención al funcionario está respaldada por el fragmento recuperado."
     },
     "herramienta_alterada": {
       "veredicto": "incorrecta",
@@ -25,7 +25,16 @@
       "cita_sustenta": true,
       "cobertura_completa": true,
       "claridad": 5,
-      "justificacion": "El saldo informado ($4.871.000) contradice el que entregó la herramienta y la referencia ($4.817.000). Es una cifra equivocada que podría llevar al contribuyente a pagar mal. La cita del art. 66 del Decreto 807 de 1993 sale de la nota del sistema y sí la sustenta."
+      "justificacion": "El asistente reporta un saldo de $4.871.000, distinto de los $4.817.000 que entregó la herramienta y que recoge la referencia. Esa cifra equivocada podría llevar al contribuyente a pagar un valor incorrecto. La cita del Decreto 807 sale de la nota del sistema y sí sustenta lo dicho."
+    },
+    "herramienta_solo_alterada": {
+      "veredicto": "incorrecta",
+      "alucinacion": true,
+      "cito_norma": true,
+      "cita_sustenta": true,
+      "cobertura_completa": true,
+      "claridad": 5,
+      "justificacion": "El saldo de $4.817.000, la vigencia 2026, el vencimiento y la nota de intereses coinciden con la referencia y la herramienta. Sin embargo, el avalúo catastral que da el asistente ($621.300.000) contradice el que entregó la herramienta ($612.300.000), lo que constituye una cifra alucinada."
     },
     "herramienta_fiel": {
       "veredicto": "correcta",
@@ -34,7 +43,7 @@
       "cita_sustenta": true,
       "cobertura_completa": true,
       "claridad": 5,
-      "justificacion": "El saldo de $4.817.000, el año 2026, el vencimiento y el avalúo coinciden con la herramienta. La mención de intereses de mora con el Decreto 807 de 1993, art. 66, reproduce la nota del sistema, por lo que la respuesta coincide con la referencia sin alucinaciones."
+      "justificacion": "El saldo de $4.817.000, el año 2026, el avalúo y el vencimiento coinciden con la herramienta y con la referencia. La mención de intereses de mora y del Decreto 807 de 1993, art. 66 proviene textualmente de la nota del sistema."
     }
   },
   "ragas": {
@@ -45,7 +54,7 @@
       "answer_relevancy": 0.6719225713791036
     },
     "fiel": {
-      "context_precision": 0.8333333332916666,
+      "context_precision": 0.9999999999666667,
       "context_recall": 1.0,
       "faithfulness": 1.0,
       "answer_relevancy": 0.35786451294557037
@@ -54,13 +63,13 @@
       "context_precision": 0.99999999995,
       "context_recall": 1.0,
       "faithfulness": 0.6666666666666666,
-      "answer_relevancy": 0.5972185123856888
+      "answer_relevancy": 0.5972136290137079
     },
     "herramienta_fiel": {
       "context_precision": 0.99999999995,
       "context_recall": 1.0,
       "faithfulness": 1.0,
-      "answer_relevancy": 0.7309747676935561
+      "answer_relevancy": 0.610110955654335
     }
   },
   "criterios": {
@@ -70,24 +79,26 @@
     "ragas_fidelidad_fiel_0_9": true,
     "ragas_cuatro_metricas": true,
     "juez_detecta_el_dato_de_herramienta_alterado": true,
+    "juez_detecta_el_dato_solo_de_herramienta_alterado": true,
     "juez_acepta_los_datos_de_herramienta": true
   },
+  "huella_juez": "6b4c54e5aedaeab684d2071b9bb8d817640a5f27aec43f3563e0a1fa681dbc10",
   "costo_usd": {
-    "juez": "0.06234",
-    "ragas": "0.02602554"
+    "juez": "0.078908",
+    "ragas": "0.02596359"
   },
   "tokens": {
     "juez": {
-      "entrada": 10300,
-      "salida": 1057
+      "entrada": 12602,
+      "salida": 1425
     },
     "ragas": {
       "gpt-4.1-mini-2025-04-14": {
-        "entrada": 40994,
-        "salida": 5990
+        "entrada": 40983,
+        "salida": 5952
       },
       "text-embedding-3-large": {
-        "entrada": 338,
+        "entrada": 363,
         "salida": 0
       }
     }

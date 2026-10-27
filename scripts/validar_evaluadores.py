@@ -8,13 +8,14 @@ Caso fiel: la misma respuesta sin esa frase y con cada afirmación tal como la s
 Casos con datos de herramientas (ADR-25, después de F1): una consulta inventada de saldo, con un
 resultado inventado de `estado_cuenta_predial` y la nota de mora del sistema, armada con el mismo
 `caso_del_ensayo` de las corridas. La respuesta fiel usa un dato que solo da la herramienta (el
-avalúo); la alterada cambia el saldo.
+avalúo); una alterada cambia el saldo (que también está en la referencia) y otra cambia el avalúo
+(que solo da la herramienta).
 
 Criterios:
 - juez: el caso con falla tiene alucinación o no es «correcta»; el fiel es correcta o parcialmente
   correcta, sin alucinación;
-- juez con herramientas: la respuesta con el saldo alterado tiene alucinación (si no, es una
-  parada); la fiel es correcta o parcialmente correcta, sin alucinación;
+- juez con herramientas: las respuestas con el saldo o el avalúo alterados tienen alucinación (si
+  no, es una parada); la fiel es correcta o parcialmente correcta, sin alucinación;
 - RAGAS (ajuste 2 de Rodolfo): la fidelidad del caso con falla es menor que la del fiel, y la del
   fiel es 0,9 o más.
 Los dos casos son también la prueba inicial de RAGAS en español (A9): se miden las cuatro métricas y
@@ -32,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.config import cargar_configuracion  # noqa: E402
 from src.evaluacion.escenarios import RAIZ, cargar_escenarios  # noqa: E402
-from src.evaluacion.juez import CasoJuez, Juez, caso_del_ensayo  # noqa: E402
+from src.evaluacion.juez import CasoJuez, Juez, caso_del_ensayo, huella_del_juez  # noqa: E402
 from src.evaluacion.ragas_eval import CasoRagas, EvaluadorRagas  # noqa: E402
 from src.integrations.costos import costo_usd  # noqa: E402
 from src.services.notas import NOTA_INTERESES_MORA  # noqa: E402
@@ -80,6 +81,8 @@ SALDO_FIEL = (
     "$4.817.000 del predial de 2026, y la obligación ya está vencida."
 )
 SALDO_ALTERADO = SALDO_FIEL.replace("$4.817.000", "$4.871.000")
+# El avalúo solo lo da la herramienta (no está en la referencia): aísla lo que aporta F1.
+AVALUO_ALTERADO = SALDO_FIEL.replace("$612.300.000", "$621.300.000")
 
 
 def caso_con_herramienta(respuesta: str) -> CasoJuez:
@@ -139,6 +142,7 @@ def main() -> int:
         for nombre, respuesta in (("con_falla", CON_FALLA), ("fiel", FIEL))
     }
     casos_juez["herramienta_alterada"] = caso_con_herramienta(SALDO_ALTERADO)
+    casos_juez["herramienta_solo_alterada"] = caso_con_herramienta(AVALUO_ALTERADO)
     casos_juez["herramienta_fiel"] = caso_con_herramienta(SALDO_FIEL)
     for nombre, caso in casos_juez.items():
         calificacion = juez.calificar(caso)
@@ -180,11 +184,15 @@ def main() -> int:
             v is not None for n in ("con_falla", "fiel") for v in r[n].values()
         ),
         "juez_detecta_el_dato_de_herramienta_alterado": j["herramienta_alterada"]["alucinacion"],
+        "juez_detecta_el_dato_solo_de_herramienta_alterado": j["herramienta_solo_alterada"][
+            "alucinacion"
+        ],
         "juez_acepta_los_datos_de_herramienta": j["herramienta_fiel"]["veredicto"] != "incorrecta"
         and not j["herramienta_fiel"]["alucinacion"],
     }
     costo_juez = costo_usd(settings.modelo_juez, tokens_juez["entrada"], tokens_juez["salida"])
     resultado["criterios"] = criterios
+    resultado["huella_juez"] = huella_del_juez(settings)
     resultado["costo_usd"] = {"juez": str(costo_juez), "ragas": str(ragas.consumo.costo_usd())}
     resultado["tokens"] = {"juez": tokens_juez, "ragas": ragas.consumo.por_modelo}
     salida = RAIZ / "reports" / "validacion_evaluadores.json"

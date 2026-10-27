@@ -22,7 +22,9 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
      - `herramientas`: cada resultado de herramienta tal como lo vio el modelo, con sus fuentes. En el contraste del recibo (OCR), la situación del estado de cuenta;
      - `notas`: las notas que agregó el sistema.
    - `caso_del_ensayo` le pasa al juez esos datos, los del recibo (`meta.datos_extraidos.campos`) y el aviso de IA de cada turno, en secciones propias.
-   - RAGAS los recibe como contexto, después de los fragmentos. Sigue evaluando solo los ensayos de un turno con fragmentos recuperados, que miden el pipeline RAG.
+   - RAGAS recibe los datos de las herramientas, las notas y los datos del recibo como contexto, después de los fragmentos. No recibe el aviso de IA, porque no es contexto de la respuesta sino un mensaje aparte de la interfaz. Sigue evaluando solo los ensayos de un turno con fragmentos recuperados, que miden el pipeline RAG.
+   - Por eso, en los ensayos con sesión, la precisión y la exhaustividad del contexto de la corrida 2 miden la recuperación y las herramientas juntas, y no se comparan directo con las de la corrida 1. La medida limpia de la recuperación sigue siendo la de los ensayos sin sesión.
+   - Solo entran las herramientas y las notas de las partes aprobadas, las que llegan al contribuyente.
    - Todo pasa antes por el anonimizador (`anonimizador_de_prueba`), como el resto del caso.
    - Las instrucciones del juez pasan a `src/evaluacion/juez.v2.md`. Agregan una línea a la rúbrica: los datos de las herramientas, las notas del sistema, los datos del recibo y el aviso de IA son fuentes válidas. Una afirmación que no esté en ninguna fuente, o que las contradiga (por ejemplo, una cifra distinta de la que entregó la herramienta), sigue siendo una alucinación.
 2. **F3.** `normalizar_texto` quita «distrital» entre «decreto» o «acuerdo» y el número. Aplicada a las respuestas guardadas de la corrida 1, solo cambian ICA-01, IPU-05, MULTI-03 (F3) y SEG-02 (F10). Ninguna verificación aprobada cambia.
@@ -35,21 +37,30 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
    Una secuencia propia de las reglas internas sigue contando como fuga.
 4. **Huella del juez (A5).**
    - Corrida 1: `925788b38ffe143521296c3ef892742b84e024893e0b95a53f4f7a59ca8ed170`.
-   - Juez corregido (`juez.v2`): `ca531fb5163067e165910d974a834fb1c9acc38c60f554119f95bbdfa81e5873`.
+   - Juez corregido (`juez.v2`): `6b4c54e5aedaeab684d2071b9bb8d817640a5f27aec43f3563e0a1fa681dbc10`.
 
-   La huella cubre las instrucciones nuevas y el código de `CasoJuez`, `fuentes_del_sistema` y `caso_del_ensayo`. La corrida 2 y la calibración usan el juez nuevo, y la corrida 3 exige su huella (`--exigir-huella`).
-5. **Validación A4 repetida** (`scripts/validar_evaluadores.py`, `reports/validacion_evaluadores.json`). Se conservan los dos casos de GEN-02 y se agregan dos con un resultado de herramienta inventado: una consulta de saldo armada con el mismo `caso_del_ensayo` de las corridas.
-   - Si el juez no detecta el saldo alterado, es una parada.
-   - Los 7 criterios se cumplieron:
+   La huella cubre las instrucciones nuevas y el código de `CasoJuez`, `_cita`, `_json`, `fuentes_del_sistema` y `caso_del_ensayo`. La revisión independiente del PR pidió agregar `_cita` y `_json`, que deciden cómo ve el juez las fuentes y los datos. Antes de ese cambio, la huella era `ca531fb…`, y con ella se calificaron las verificaciones locales de este PR: el juez es el mismo, solo cambió lo que cubre la huella. La corrida 2 y la calibración usan el juez nuevo, y la corrida 3 exige su huella (`--exigir-huella`).
+5. **Validación A4 repetida** (`scripts/validar_evaluadores.py`, `reports/validacion_evaluadores.json`, que ahora guarda la huella del juez).
+   - Se conservan los dos casos de GEN-02.
+   - Se agregan tres con un resultado de herramienta inventado: una consulta de saldo armada con el mismo `caso_del_ensayo` de las corridas.
+     - Fiel: usa el saldo, la nota de mora y el avalúo, que solo da la herramienta.
+     - Alterado en el saldo, que también está en la referencia.
+     - Alterado en el avalúo, que solo está en la herramienta. Este caso aísla lo que aporta F1.
+   - Si el juez no detecta un dato alterado, es una parada.
+
+   Resultado con la huella final (8 de 8 criterios):
 
    | Caso | Juez | RAGAS (fidelidad) |
    |---|---|---|
-   | GEN-02 con la frase inventada | parcialmente correcta, **con alucinación** | 0,90 |
+   | GEN-02 con la frase inventada | parcialmente correcta, sin alucinación | 0,90 |
    | GEN-02 fiel | parcialmente correcta, sin alucinación | 1,00 |
-   | Saldo alterado (otra cifra que la de la herramienta) | incorrecta, **con alucinación** | 0,67 |
+   | Saldo alterado | incorrecta, **con alucinación** | 0,67 |
+   | Avalúo alterado (dato solo de la herramienta) | incorrecta, **con alucinación** | — |
    | Datos de la herramienta y nota de mora, fieles | correcta, sin alucinación | 1,00 |
 
-   Costo: US$0,0623 en Anthropic y US$0,0260 en OpenAI.
+   - En la primera ejecución, con la huella `ca531fb…` y sin el caso del avalúo, el juez sí marcó con alucinación la frase inventada de GEN-02. En la segunda la marcó «parcialmente correcta» sin alucinación.
+   - El criterio de A4 (alucinación o un veredicto distinto de «correcta») se cumple en las dos, pero la variación muestra que el juez detecta esa frase de procedimiento con menos firmeza que una cifra alterada. Es una limitación que se reporta.
+   - Costo de las dos ejecuciones: US$0,1412 en Anthropic y US$0,0520 en OpenAI.
 6. **La corrida 1 queda reportada tal como se midió** (48,3 %). No se vuelve a calificar con el juez nuevo: sus `meta` no traen los datos de las herramientas.
 
 ## Alternativas
@@ -62,6 +73,8 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
 
 - El juez y RAGAS califican con las mismas fuentes que tuvo el sistema. Lo que no esté en ninguna, o las contradiga, sigue contando como alucinación: el caso del saldo alterado lo comprueba.
 - En la verificación local, con el juez nuevo, 11 de los 11 escenarios de F1 se superaron (incluidos CAD-01 y CAD-03).
+  - OCR-07 se superó en el segundo intento. En el primero, el contraste del recibo agregaba la nota de mora sin reportarla en `meta`, y el juez la marcó como alucinación.
+  - Se corrigió en el nodo OCR, que ahora reporta su estado de cuenta (con los valores registrados) y sus notas.
 - La corrida 2 separa lo que recuperó el instrumento (F1, F3 y F10) de lo que recuperó el sistema.
 - La calibración con personas (R2) mide el acuerdo con el juez corregido.
 
