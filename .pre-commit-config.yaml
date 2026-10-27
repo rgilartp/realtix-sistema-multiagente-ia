@@ -24,10 +24,13 @@ repos:
         args: [--fix=lf]
         exclude: *referencia
       - id: check-yaml
-        # deploy/compose.servidor.yml usa la etiqueta `!reset` de Compose, que este gancho no
-        # conoce; lo valida `docker compose config -q` y tests/test_despliegue.py.
         exclude: >-
           ^(docs/(paquete/|06_ADENDA_MARCO_JURIDICO_Y_PRUEBAS\.md$|ESPECIFICACION_TECNICA\.md$)|deploy/compose\.servidor\.yml$)
+      - id: check-yaml
+        name: check yaml (Compose del servidor, con la etiqueta !reset)
+        # Solo la sintaxis: el gancho no conoce las etiquetas de Compose.
+        args: [--unsafe]
+        files: ^deploy/compose\.servidor\.yml$
       - id: check-toml
         exclude: *referencia
 
