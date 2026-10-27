@@ -531,8 +531,13 @@ def normalizar_texto(texto: str) -> str:
     return " ".join(sin_tildes.split())
 
 
-def contiene(respuesta: str, esperado: str) -> bool:
+def contiene(respuesta: str, esperado: str, raiz: bool = False) -> bool:
     """`contiene_texto` y `contiene_valor` comparan así: sin fallar por la forma de escribir y sin
-    tomar una parte de otra palabra o cifra («1 de julio» no está en «11 de julio»)."""
-    patron = rf"(?<!\w){re.escape(normalizar_texto(esperado))}(?!\w)"
+    tomar una parte de otra palabra o cifra («1 de julio» no está en «11 de julio»). Con
+    `raiz=True` (los textos), un esperado que termina en letra es una raíz: «desenfocad» está en
+    «desenfocada»; uno que termina en cifra sigue exigiendo el límite («Ley 44» no está en «Ley
+    440»)."""
+    normal = normalizar_texto(esperado)
+    derecha = "" if raiz and normal[-1:].isalpha() else r"(?!\w)"
+    patron = rf"(?<!\w){re.escape(normal)}{derecha}"
     return re.search(patron, normalizar_texto(respuesta)) is not None

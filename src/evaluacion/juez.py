@@ -10,6 +10,7 @@
 """
 
 import hashlib
+import inspect
 import json
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -55,13 +56,17 @@ def instrucciones() -> str:
 
 
 def huella_del_juez(settings: Settings) -> str:
-    """SHA-256 de todo lo que define al juez; si cambia, se repite la calibración (A5)."""
+    """SHA-256 de todo lo que define al juez: modelo, parámetros, instrucciones, esquema y la
+    plantilla de lo que ve (el código de `CasoJuez` y de `caso_del_ensayo`, con el anonimizador).
+    Si cambia, se repite la calibración (A5)."""
     definicion = {
         "modelo": settings.modelo_juez,
         "parametros": PARAMETROS["juez"],
         "version": VERSION,
         "instrucciones": instrucciones(),
         "esquema": Veredicto.model_json_schema(),
+        "plantilla": inspect.getsource(CasoJuez) + inspect.getsource(caso_del_ensayo),
+        "anonimizador": inspect.getsource(Anonimizador),
     }
     return hashlib.sha256(
         json.dumps(definicion, ensure_ascii=False, sort_keys=True).encode()

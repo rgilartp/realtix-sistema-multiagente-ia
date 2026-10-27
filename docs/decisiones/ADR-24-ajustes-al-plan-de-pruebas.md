@@ -60,7 +60,7 @@ Detalles de implementación decididos en B12:
 - La calibración tiene una muestra más grande y equilibrada, aunque estratificada. El reporte lo advierte, porque la prevalencia de la muestra no es la de la corrida.
 - Una referencia mal transcrita se detecta antes de pagar una corrida.
 - Las correcciones de la corrida 1 no pueden copiar los escenarios.
-- Costo previsto con R1 a R4: unos US$16,70 de 25 en Anthropic y US$2,16 de 10 en OpenAI (`reports/presupuesto.md`).
+- Costo previsto con R1 a R4: unos US$16,70 de 25 en Anthropic y US$3,06 de 10 en OpenAI (`reports/presupuesto.md`).
 
 ## Cambio en el documento de grado
 

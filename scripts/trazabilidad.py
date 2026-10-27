@@ -163,11 +163,12 @@ def resultados_de_escenarios(ruta: Path) -> dict[str, bool]:
 
 
 def calificacion(resultados: list[bool | None], observacion: str | None) -> int | None:
-    conocidos = [r for r in resultados if r is not None]
-    if not conocidos:
-        return None
-    if not all(conocidos):
+    """0 si falla alguna evidencia; sin calificar si alguna no tiene resultado (no se ejecutó: no
+    se puede decir que pasan todas, sección 6.11); 100, u 80 con una limitación documentada."""
+    if any(r is False for r in resultados):
         return 0
+    if not resultados or any(r is None for r in resultados):
+        return None
     return 80 if observacion else 100
 
 
@@ -204,6 +205,7 @@ def matriz_completa(
                     else None
                 ),
                 "observacion": observaciones.get(id_),
+                "sin_resultado": sum(r is None for r in resultados),
                 "calificacion": calificacion(resultados, observaciones.get(id_)),
             }
         )
@@ -236,7 +238,12 @@ def escribir_completa(filas: list[dict[str, Any]], salida: Path) -> tuple[Path, 
         )
         evidencias = [f"`{p}`" for p in f["pruebas"]] + [f"escenario {e}" for e in f["escenarios"]]
         nota = f" ({f['observacion']})" if f["observacion"] else ""
-        valor = "sin calificar" if f["calificacion"] is None else f"{f['calificacion']} %{nota}"
+        valor = f"{f['calificacion']} %{nota}"
+        if f["calificacion"] is None:
+            faltan = f["sin_resultado"]
+            valor = (
+                f"sin calificar ({faltan} evidencias sin resultado)" if faltan else "sin calificar"
+            )
         lineas.append(
             "| "
             + " | ".join(

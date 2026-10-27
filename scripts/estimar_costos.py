@@ -61,10 +61,11 @@ def conteos() -> dict[str, int]:
     principales = cargar_escenarios()
     r3 = cargar_conjunto(["R3"])
     r4 = cargar_conjunto(["R4"])
+    # RAGAS evalúa todo ensayo de un turno que recupere fragmentos, con sesión o sin ella; se
+    # cuentan todos los de los agentes, aunque algunos respondan solo con datos del adaptador.
     un_turno_con_rag = [
         e for e in principales
         if len(e["turnos"]) == 1 and e["grupo"] in ("ipu", "ica", "general", "multiagente")
-        and str(e["respuesta_referencia"]).strip() and not e.get("sesion")
     ]  # fmt: skip
     return {
         "escenarios": len(principales),
@@ -120,14 +121,15 @@ def main() -> None:
         "Generado por `scripts/estimar_costos.py`. Precios oficiales en US$ por millón de tokens "
         "(entrada / salida), comprobados en octubre de 2026 en la página de cada proveedor:",
         "",
-        *[f"- `{m}`: {p[0]} / {p[1]}".replace(".", ",") for m, p in PRECIOS.items()],
+        *[f"- `{m}`: {_coma(p[0])} / {_coma(p[1])}" for m, p in PRECIOS.items()],
         "",
         "Costos unitarios medidos (se toma el mayor de B9 y de la mini corrida para el turno):",
         "",
-        f"- turno del sistema: US${u['turno']:.4f}; calificación del juez: US${u['juez']:.4f};",
-        f"- caso de RAGAS (`gpt-4.1-mini` y embeddings): US${u['ragas_caso']:.4f};",
-        f"- clasificación del orquestador: US${u['orquestador']:.4f}; respuesta de un agente: "
-        f"US${u['agente']:.4f}.",
+        f"- turno del sistema: US${_coma(round(u['turno'], 4))}; calificación del juez: "
+        f"US${_coma(round(u['juez'], 4))};",
+        f"- caso de RAGAS (`gpt-4.1-mini` y embeddings): US${_coma(round(u['ragas_caso'], 4))};",
+        f"- clasificación del orquestador: US${_coma(round(u['orquestador'], 4))}; respuesta de "
+        f"un agente: US${_coma(round(u['agente'], 4))}.",
         "",
         f"Conteos: {n['escenarios']} escenarios con {n['turnos']} turnos; {n['enrutamiento']} "
         f"consultas de enrutamiento; {n['agentes']} escenarios de agente; unos {n['ragas_casos']} "

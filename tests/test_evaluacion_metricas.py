@@ -108,21 +108,20 @@ def test_por_escenario_ordena_los_ensayos() -> None:
 
 @pytest.mark.unit
 @pytest.mark.req("RNF-01 · Tiempo de respuesta")
-def test_latencias_separa_servidor_y_cliente() -> None:
+def test_latencias_por_turno_y_solo_con_agentes() -> None:
+    """A9 y revisión de B12: «rag» si el turno recuperó fragmentos; los turnos sin agentes (modo
+    humano, horario, falla inyectada) no cuentan."""
+
+    def turno(servidor, cliente, rag, agentes=True):
+        return {"latencia_servidor_ms": servidor, "latencia_cliente_ms": cliente,
+                "con_recuperacion": rag, "con_agentes": agentes}  # fmt: skip
+
     ensayos = [
-        {
-            "tipo_latencia": "simple",
-            "turnos": [{"latencia_servidor_ms": 5000, "latencia_cliente_ms": 5200}],
-        },
-        {
-            "tipo_latencia": "simple",
-            "turnos": [{"latencia_servidor_ms": 9000, "latencia_cliente_ms": 9400}],
-        },
-        {
-            "tipo_latencia": "rag",
-            "turnos": [{"latencia_servidor_ms": 12000, "latencia_cliente_ms": 12100}],
-        },
+        {"turnos": [turno(5000, 5200, False), turno(13, 20, False, agentes=False)]},
+        {"turnos": [turno(9000, 9400, False)]},
+        {"turnos": [turno(12000, 12100, True)]},
     ]
     lat = latencias(ensayos)
+    assert lat["simple"]["turnos"] == 2 and lat["rag"]["turnos"] == 1
     assert lat["simple"]["servidor_p50_ms"] == 5000 and lat["simple"]["cliente_p95_ms"] == 9400
     assert lat["simple"]["cumplen_meta"] == 1 and lat["rag"]["cumplen_meta"] == 1

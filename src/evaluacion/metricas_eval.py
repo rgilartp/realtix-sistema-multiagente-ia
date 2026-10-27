@@ -147,17 +147,18 @@ def consistencia(resultados: dict[str, list[bool]]) -> dict[str, Any]:
 
 
 def latencias(ensayos: Sequence[dict[str, Any]]) -> dict[str, Any]:
-    """p50 y p95 por tipo de latencia del escenario (RNF-01), del servidor y del cliente (A9)."""
+    """p50 y p95 de RNF-01, del servidor y del cliente (A9), por turno: «rag» si el turno recuperó
+    fragmentos y «simple» si no. Solo cuentan los turnos que llegaron a los agentes (los de modo
+    humano, horario o falla inyectada responden sin modelo y bajarían la mediana)."""
     salida: dict[str, Any] = {}
     meta_ms = {"simple": 8000, "rag": 15000}
+    turnos = [t for e in ensayos for t in e.get("turnos", []) if t.get("con_agentes")]
     for tipo in ("simple", "rag"):
-        turnos = [t for e in ensayos if e.get("tipo_latencia") == tipo for t in e.get("turnos", [])]
-        servidor = [
-            float(t["latencia_servidor_ms"]) for t in turnos if t.get("latencia_servidor_ms")
-        ]
-        cliente = [float(t["latencia_cliente_ms"]) for t in turnos if t.get("latencia_cliente_ms")]
+        delt = [t for t in turnos if bool(t.get("con_recuperacion")) == (tipo == "rag")]
+        servidor = [float(t["latencia_servidor_ms"]) for t in delt if t.get("latencia_servidor_ms")]
+        cliente = [float(t["latencia_cliente_ms"]) for t in delt if t.get("latencia_cliente_ms")]
         salida[tipo] = {
-            "turnos": len(turnos),
+            "turnos": len(delt),
             "meta_ms": meta_ms[tipo],
             "servidor_p50_ms": percentil(servidor, 50),
             "servidor_p95_ms": percentil(servidor, 95),

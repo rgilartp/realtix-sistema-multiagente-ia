@@ -1,5 +1,5 @@
 {
-  "huella_juez": "1accca8f20de28933ff8958f40a922f665b5badbcc8a237e2844562bbcdd6108",
+  "huella_juez": "925788b38ffe143521296c3ef892742b84e024893e0b95a53f4f7a59ca8ed170",
   "conjuntos": {
     "principal": {
       "ensayos": 5,
@@ -140,22 +140,22 @@
       },
       "latencia": {
         "simple": {
-          "turnos": 6,
+          "turnos": 1,
           "meta_ms": 8000,
           "servidor_p50_ms": 3955.0,
-          "servidor_p95_ms": 16178.0,
+          "servidor_p95_ms": 3955.0,
           "cliente_p50_ms": 7586.1,
-          "cliente_p95_ms": 16186.1,
-          "cumplen_meta": 3
+          "cliente_p95_ms": 7586.1,
+          "cumplen_meta": 1
         },
         "rag": {
-          "turnos": 0,
+          "turnos": 3,
           "meta_ms": 15000,
-          "servidor_p50_ms": null,
-          "servidor_p95_ms": null,
-          "cliente_p50_ms": null,
-          "cliente_p95_ms": null,
-          "cumplen_meta": 0
+          "servidor_p50_ms": 12422.0,
+          "servidor_p95_ms": 16178.0,
+          "cliente_p50_ms": 12429.4,
+          "cliente_p95_ms": 16186.1,
+          "cumplen_meta": 2
         }
       },
       "costo_usd": {

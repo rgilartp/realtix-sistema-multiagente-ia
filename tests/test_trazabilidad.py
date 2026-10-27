@@ -76,7 +76,9 @@ def test_recolecta_los_requerimientos_de_las_pruebas_de_la_web() -> None:
 def test_califica_con_100_80_y_0() -> None:
     from scripts.trazabilidad import calificacion
 
-    assert calificacion([True, True, None], None) == 100
+    assert calificacion([True, True], None) == 100
+    assert calificacion([True, True, None], None) is None  # una evidencia no se ejecutó
+    assert calificacion([True, False, None], None) == 0
     assert calificacion([True], "medido en un solo ensayo") == 80
     assert calificacion([True, False], None) == 0
     assert calificacion([None], None) is None

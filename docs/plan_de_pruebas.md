@@ -132,7 +132,11 @@ evidencias U e I de la matriz de trazabilidad.
 - **Personas:**
   - Rodolfo y Dayanna califican a ciegas 30 respuestas de la corrida 2, estratificadas por el
     veredicto del juez (R2), cada uno por separado y luego en consenso;
-  - el kappa se calcula entre el juez y el consenso y entre los dos evaluadores (A6).
+  - la muestra la exporta `scripts/calibracion.py exportar`, sin el veredicto del juez y con los
+    nombres y documentos enmascarados (la dirección del predio, sintética, no se enmascara);
+  - el kappa (`scripts/calibracion.py kappa`) se calcula entre el juez y el consenso y entre los
+    dos evaluadores (A6);
+  - cada calificación del juez guarda su huella, y una de otro juez no se reutiliza.
 - **Escenario superado (meta):** pasa todas las verificaciones de código y el juez lo califica
   «correcta» o «parcialmente correcta», sin alucinación. La **tasa estricta** exige «correcta»
   (A3).
@@ -145,7 +149,7 @@ evidencias U e I de la matriz de trazabilidad.
 | Recuperación | Precisión y exhaustividad del contexto | RAGAS, con las referencias |
 | Generación | Fidelidad y relevancia de la respuesta; exactitud | RAGAS; juez guiado por referencia |
 | Consistencia | pass@1 promedio, pass@3 y pass^3 | 3 ensayos por escenario en la corrida 3 |
-| Operativas | Latencia p50 y p95 (simple y con RAG), del servidor y del cliente; costo por consulta | `meta.tiempos_ms.total` (meta de RNF-01) y el tiempo del cliente (A9); ecuación 9 con los tokens reales |
+| Operativas | Latencia p50 y p95 (simple y con RAG), del servidor y del cliente; costo por consulta | `meta.tiempos_ms.total` (meta de RNF-01) y el tiempo del cliente (A9), por turno: «con RAG» si el turno recuperó fragmentos; los turnos que no llegan a los agentes (modo humano, horario, falla inyectada) no cuentan. Costo con la ecuación 9 y los tokens reales (los de un turno que escala por una falla no se registran) |
 | Meta del OE4 | Tasa de escenarios superados, y la estricta | Promedio de los 3 ensayos por escenario; intervalo de Wilson al 95 % con n = 60 escenarios y bootstrap por escenario (A2) |
 | Calibración | Kappa binario y ponderado lineal de 3 niveles, con intervalo | Juez frente al consenso, y entre los dos evaluadores (A6) |
 
@@ -210,10 +214,10 @@ Con los precios oficiales y los costos unitarios medidos en B7, B9 y la mini cor
 | Gastado hasta B12 | 1,42 | 0,16 |
 | Corrida 1 | 3,10 | 0,00 |
 | Corrida 2 | 1,75 | 0,00 |
-| Corrida 3 | 6,59 | 1,20 |
+| Corrida 3 | 6,59 | 2,10 |
 | Reserva para las correcciones | 2,00 | 0,20 |
 | R1, R3 y R4 (R2 no tiene costo) | 1,83 | 0,60 |
-| **Total** | **16,70 de 25** | **2,16 de 10** |
+| **Total** | **16,70 de 25** | **3,06 de 10** |
 
 ## 8. Cronograma
 
@@ -277,4 +281,6 @@ escenarios, y cada una trae su caso de regresión.
 
 Escribe `reports/trazabilidad.md` y `.csv`. Por requerimiento muestra el caso «dado, cuando,
 entonces», lo obtenido, las evidencias y la calificación: 100, 80 (con una limitación documentada)
-o 0. El cumplimiento global es el promedio de los calificados.
+o 0. Un requerimiento con alguna evidencia sin resultado (una prueba que no se ejecutó) queda sin
+calificar: no se puede decir que pasan todas. El cumplimiento global es el promedio de los
+calificados.

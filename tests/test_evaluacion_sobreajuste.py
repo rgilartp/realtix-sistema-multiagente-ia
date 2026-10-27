@@ -6,8 +6,9 @@ sistema multiagente de IA: una corrección debe ser general. Se revisan:
   de la API), en todo `src/` salvo el arnés de evaluación y el generador de datos sintéticos (que es
   de donde salen los valores de los usuarios de prueba);
 - las secuencias de 8 palabras de las respuestas de referencia, en los prompts versionados;
-- las cifras en pesos de $10.000 o más de las verificaciones y de las referencias, en los prompts y
-  en `src/agents/` (las menores, como el «/ 1.000» del por mil, no son propias de un escenario).
+- las cifras en pesos de $10.000 o más de las verificaciones y de las referencias, en los prompts,
+  en `src/agents/` y en `src/services/`, donde vive la lógica tributaria (las menores, como el
+  «/ 1.000» del por mil, no son propias de un escenario).
 """
 
 import re
@@ -89,7 +90,14 @@ def test_ninguna_referencia_esta_en_los_prompts() -> None:
 @pytest.mark.unit
 @pytest.mark.req(OBS05, "RNF-16 · Tasa de respuestas correctas")
 def test_ninguna_cifra_de_un_escenario_esta_en_los_agentes() -> None:
-    agentes = _texto([r for r in (SRC / "agents").rglob("*") if r.suffix in (".py", ".md")])
+    agentes = _texto(
+        [
+            r
+            for d in ("agents", "services")
+            for r in (SRC / d).rglob("*")
+            if r.suffix in (".py", ".md")
+        ]
+    )
     cifras = set()
     for e in _todos():
         valores = [str(v.get("valor", "")) for v in e["verificaciones_codigo"]]

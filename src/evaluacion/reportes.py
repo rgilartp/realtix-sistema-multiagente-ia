@@ -100,9 +100,10 @@ def figura_latencias(calificados: list[dict[str, Any]], ruta: Path) -> None:
         valores = [
             t["latencia_servidor_ms"]
             for c in calificados
-            if c["tipo_latencia"] == tipo
             for t in c["turnos"]
-            if t.get("latencia_servidor_ms")
+            if t.get("con_agentes")
+            and bool(t.get("con_recuperacion")) == (tipo == "rag")
+            and t.get("latencia_servidor_ms")
         ]
         if valores:
             series[tipo] = (valores, meta)

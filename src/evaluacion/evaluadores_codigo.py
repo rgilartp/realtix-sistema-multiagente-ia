@@ -82,9 +82,9 @@ def verificar(v: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bool, str]:
     texto = _respuestas(ensayo)
     tipo, valor = v["tipo"], v.get("valor")
     if tipo in ("contiene_texto", "contiene_valor"):
-        return contiene(texto, valor), f"«{valor}»"
+        return contiene(texto, valor, raiz=tipo == "contiene_texto"), f"«{valor}»"
     if tipo in ("no_contiene_texto", "no_contiene_valor"):
-        return not contiene(texto, valor), f"sin «{valor}»"
+        return not contiene(texto, valor, raiz=tipo == "no_contiene_texto"), f"sin «{valor}»"
     if tipo == "aviso_ia":
         aviso = normalizar_texto(str(ensayo["turnos"][0].get("aviso_ia") or ""))
         return "inteligencia artificial" in aviso and "funcionario" in aviso, "aviso en el inicio"
@@ -128,9 +128,19 @@ def verificar_categoria(esc: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bo
 
 
 def verificar_comportamiento(esc: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bool, str]:
+    """El estado del último turno; en el OCR, además, si quedaron datos por confirmar: los hay al
+    pedir la confirmación y no los hay al pedir un documento nuevo."""
     esperado = esc["comportamiento_esperado"]
-    estado = ensayo["turnos"][-1].get("estado")
-    return estado in ESTADOS_DEL_COMPORTAMIENTO[esperado], f"{esperado} (estado: {estado})"
+    ultimo = ensayo["turnos"][-1]
+    estado = ultimo.get("estado")
+    ok = estado in ESTADOS_DEL_COMPORTAMIENTO[esperado]
+    datos = (ultimo.get("meta") or {}).get("datos_extraidos") or {}
+    por_confirmar = bool(datos.get("pendiente")) if isinstance(datos, dict) else False
+    if esperado == "confirmar_datos":
+        ok = ok and por_confirmar
+    elif esperado == "pedir_nuevo_documento":
+        ok = ok and not por_confirmar
+    return ok, f"{esperado} (estado: {estado}; datos por confirmar: {por_confirmar})"
 
 
 def evaluar_codigo(esc: dict[str, Any], ensayo: dict[str, Any]) -> dict[str, Any]:

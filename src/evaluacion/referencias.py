@@ -14,9 +14,13 @@
      festivos de Colombia, del paquete `holidays`), que es lo que anuncia el aviso fuera de horario.
 El «/ 1.000» de una operación por mil no es una cifra del escenario.
 
-Limitación: se comprueba que la cifra exista en su fuente y con su tipo, no que sea la fila
-correcta de una tabla (una tarifa de otro rango pasaría); ese error lo delata el valor en pesos
-derivado, que sí debe cuadrar.
+Limitaciones:
+- se comprueba que la cifra exista en su fuente y con su tipo, no que sea la fila correcta de una
+  tabla (una tarifa de otro rango pasaría); ese error lo delata el valor en pesos derivado, que sí
+  debe cuadrar;
+- las cifras en pesos y en UVT se comparan con todos los números de `datos/` (de todos los años) y
+  del texto de las normas citadas, así que una cifra podría coincidir por azar con otro número; el
+  reporte dice dónde coincidió cada una, para revisarlo.
 Lo que no coincide se lista; ninguna referencia aprobada se cambia sin que Rodolfo lo decida.
 """
 

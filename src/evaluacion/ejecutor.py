@@ -15,9 +15,14 @@ from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Any, Protocol
 
-from src.data.generar.recibos import DESTINO as DIR_RECIBOS
+from src.data.generar.recibos import DESTINO
+from src.evaluacion.escenarios import RAIZ
+
+DIR_RECIBOS = RAIZ / DESTINO  # absoluta: el ejecutor puede correr desde otra carpeta
 
 TOKEN_INVALIDO = "token-invalido-de-prueba"
+# El token de la OVT simulada vence a las 2 horas (src/api/acceso.py); se renueva a la hora.
+RENOVAR_TOKEN_S = 3600
 TIPO_ADJUNTO = "image/png"
 
 
@@ -59,7 +64,7 @@ class Ejecutor:
         self.corrida = corrida
         self.dir_recibos = dir_recibos
         self._reloj = reloj
-        self._tokens: dict[str, str] = {}
+        self._tokens: dict[str, tuple[str, float]] = {}  # usuario -> (token, cuándo se emitió)
 
     def autorizacion(self, sesion: str | None) -> dict[str, str]:
         """Cabecera de la sesión: token de la OVT simulada, uno inválido o ninguno."""
@@ -67,15 +72,17 @@ class Ejecutor:
             return {}
         if sesion == "TOKEN_INVALIDO":
             return {"Authorization": f"Bearer {TOKEN_INVALIDO}"}
-        if sesion not in self._tokens:
+        token, emitido = self._tokens.get(sesion, ("", float("-inf")))
+        if time.monotonic() - emitido > RENOVAR_TOKEN_S:
             r = self.cliente.post("/api/v1/ovt-simulada/sesion", json={"usuario": sesion})
             if r.status_code != 200:
                 raise RuntimeError(
                     f"La OVT simulada no dio sesión a {sesion} (HTTP {r.status_code}); "
                     "¿OVT_SIMULADA_ACTIVA está encendida?"
                 )
-            self._tokens[sesion] = r.json()["token"]
-        return {"Authorization": f"Bearer {self._tokens[sesion]}"}
+            token = r.json()["token"]
+            self._tokens[sesion] = (token, time.monotonic())
+        return {"Authorization": f"Bearer {token}"}
 
     def cabeceras(self, esc: dict[str, Any]) -> dict[str, str]:
         cabeceras = {"X-Escenario-Id": str(esc["id"]), "X-Reloj-Simulado": str(esc["reloj"])}

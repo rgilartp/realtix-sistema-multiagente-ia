@@ -18,6 +18,7 @@ import logging
 import os
 import sys
 import types
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any
@@ -91,8 +92,7 @@ def caso_del_ensayo(esc: dict[str, Any], ensayo: dict[str, Any]) -> CasoRagas | 
 class EvaluadorRagas:
     def __init__(self, settings: Settings, modelo: str = MODELO_EVALUADOR) -> None:
         preparar_importacion()
-        import httpx2
-        from openai import AsyncOpenAI
+        from openai import AsyncOpenAI, DefaultAsyncHttpxClient
         from ragas.embeddings import OpenAIEmbeddings
         from ragas.llms import llm_factory
         from ragas.metrics.collections import (
@@ -119,7 +119,7 @@ class EvaluadorRagas:
 
         cliente = AsyncOpenAI(
             api_key=settings.openai_api_key.get_secret_value(),
-            http_client=httpx2.AsyncClient(event_hooks={"response": [contar]}, timeout=60),
+            http_client=DefaultAsyncHttpxClient(event_hooks={"response": [contar]}, timeout=60),
         )
         # El tope de salida de RAGAS (1.024) no alcanza para los veredictos de una respuesta larga.
         llm = llm_factory(modelo, client=cliente, max_tokens=MAX_TOKENS_EVALUADOR)
@@ -166,8 +166,20 @@ class EvaluadorRagas:
                 puntajes[nombre] = None
         return puntajes
 
-    def evaluar_varios(self, casos: list[CasoRagas]) -> list[dict[str, float | None]]:
+    def evaluar_varios(
+        self,
+        casos: list[CasoRagas],
+        al_avanzar: Callable[[int, dict[str, float | None]], None] | None = None,
+    ) -> list[dict[str, float | None]]:
+        """Evalúa los casos en orden; `al_avanzar(i, puntajes)` permite guardarlos al momento."""
+
         async def todos() -> list[dict[str, float | None]]:
-            return [await self.evaluar(c) for c in casos]
+            salida = []
+            for i, caso in enumerate(casos):
+                puntajes = await self.evaluar(caso)
+                salida.append(puntajes)
+                if al_avanzar:
+                    al_avanzar(i, puntajes)
+            return salida
 
         return asyncio.run(todos())

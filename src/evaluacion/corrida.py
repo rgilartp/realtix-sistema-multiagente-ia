@@ -26,6 +26,19 @@ SIN_CATEGORIA = "sin_categoria"
 CONJUNTOS_APARTE = {"generalizacion": "R1", "cadena": "R3", "seguridad": "R4"}
 
 
+def resumen_del_turno(turno: dict[str, Any]) -> dict[str, Any]:
+    """Latencias y estado del turno, si llegó a los agentes (gastó tokens) y si recuperó
+    fragmentos: la latencia de RNF-01 se separa así, no por el `tipo_latencia` del YAML."""
+    meta = turno.get("meta") or {}
+    return {
+        "latencia_cliente_ms": turno.get("latencia_cliente_ms"),
+        "latencia_servidor_ms": turno.get("latencia_servidor_ms"),
+        "estado": turno.get("estado"),
+        "con_agentes": sum((meta.get("tokens") or {}).values()) > 0,
+        "con_recuperacion": bool(meta.get("contextos")),
+    }
+
+
 def vigentes(ensayos: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
     """El último resultado de cada (escenario, ensayo): al reanudar se repiten los fallidos."""
     ultimos: dict[tuple[str, int], dict[str, Any]] = {}
@@ -40,12 +53,25 @@ def calificar(
     juez: Juez | None,
     archivo_juez: Path,
     al_avanzar: Callable[[dict[str, Any]], None] | None = None,
+    huella: str | None = None,
+    al_juzgar: Callable[[dict[str, Any]], None] | None = None,
 ) -> list[dict[str, Any]]:
-    """Código y juez de cada ensayo; `juez=None` reutiliza lo ya guardado (y no llama al modelo)."""
+    """Código y juez de cada ensayo; `juez=None` reutiliza lo ya guardado (y no llama al modelo).
+
+    Cada calificación guarda la huella del juez que la hizo; con `huella`, una calificación de
+    otro juez no se reutiliza en silencio (A5). `al_juzgar` recibe solo las calificaciones nuevas
+    (las que se pagan), para llevar el gasto de la corrida."""
     previas = {
         (j["escenario"], j["ensayo"], j["id_conversacion"]): j
         for j in leer_resultados(archivo_juez)
     }
+    if huella:
+        distintas = sorted({j["escenario"] for j in previas.values() if j.get("huella") != huella})
+        if distintas:
+            raise RuntimeError(
+                f"{archivo_juez} tiene calificaciones de otro juez ({', '.join(distintas)}); "
+                "con el juez cambiado hay que volver a calificar en un archivo nuevo (A5)."
+            )
     calificados = []
     for ensayo in vigentes(ensayos):
         esc = escenarios[ensayo["escenario"]]
@@ -62,9 +88,12 @@ def calificar(
                 "tokens_por_modelo": {
                     juez.modelo_id: {"entrada": calificacion.entrada, "salida": calificacion.salida}
                 },
+                "huella": huella,
             }
             with archivo_juez.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(registro_juez, ensure_ascii=False) + "\n")
+            if al_juzgar:
+                al_juzgar(registro_juez)
         veredicto = Veredicto(**registro_juez["veredicto"]) if registro_juez else None
         meta, estricta = superado(codigo["pasa"], veredicto)
         primera = (ensayo["turnos"][0].get("meta") or {}) if ensayo["turnos"] else {}
@@ -84,10 +113,7 @@ def calificar(
             "juez": veredicto.model_dump() if veredicto else None,
             "superado": meta,
             "superado_estricto": estricta,
-            "turnos": [
-                {k: t.get(k) for k in ("latencia_cliente_ms", "latencia_servidor_ms", "estado")}
-                for t in ensayo["turnos"]
-            ],
+            "turnos": [resumen_del_turno(t) for t in ensayo["turnos"]],
             "tokens_sistema": tokens_por_modelo(ensayo),
             "tokens_juez": (registro_juez or {}).get("tokens_por_modelo", {}),
             "error": ensayo.get("error"),

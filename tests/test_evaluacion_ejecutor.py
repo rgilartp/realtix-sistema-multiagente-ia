@@ -314,3 +314,76 @@ def test_calificar_guarda_el_juez_y_lo_reutiliza(entorno_valido, tmp_path: Path)
     assert primera[0]["juez"] == segunda[0]["juez"]
     m = metricas_por_conjunto(segunda)
     assert m["principal"]["juez"]["parcialmente correcta"] == 1
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16, "RF-OCR-04 · Rechazo de documentos ilegibles")
+def test_contiene_texto_acepta_raices_y_los_valores_no() -> None:
+    """Revisión de B12: OCR-04 y OCR-05 piden «desenfocad» y «recortad» (raíces)."""
+    from src.agents.nodes.ocr import texto_de_rechazo
+    from src.evaluacion.escenarios import contiene
+
+    cargar_un = escenario
+    for id_, problemas in (
+        ("OCR-04", ["desenfocado"]),
+        ("OCR-05", ["recortado", "baja_resolucion"]),
+    ):
+        ensayo = ensayo_con({"respuesta": texto_de_rechazo(problemas), "estado": "aclaracion"})
+        verificaciones = cargar_un(id_)["verificaciones_codigo"]
+        texto = [v for v in verificaciones if v["tipo"] == "contiene_texto"]
+        assert all(verificar(v, ensayo)[0] for v in texto), (id_, texto)
+    assert contiene("Ley 44 de 1990", "Ley 44", raiz=True)
+    assert not contiene("Ley 440 de 1990", "Ley 44", raiz=True)  # termina en cifra: exige límite
+    assert not contiene("$2.135.0001", "2.135.000")  # los valores siguen exigiendo los dos límites
+
+
+@pytest.mark.unit
+@pytest.mark.req(OBS05)
+def test_el_token_de_la_sesion_se_renueva_a_la_hora(monkeypatch) -> None:
+    import src.evaluacion.ejecutor as ejecutor
+
+    reloj = {"t": 1000.0}
+    monkeypatch.setattr(ejecutor.time, "monotonic", lambda: reloj["t"])
+    api = APIFalsa([])
+    e = Ejecutor(api, "prueba")
+    e.autorizacion("U03")
+    e.autorizacion("U03")
+    reloj["t"] += ejecutor.RENOVAR_TOKEN_S + 1
+    e.autorizacion("U03")
+    assert sum(u.endswith("/ovt-simulada/sesion") for u, _ in api.llamadas) == 2
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16, "RF-OCR-03 · Confirmación de datos extraídos")
+def test_comportamiento_del_ocr_mira_si_quedan_datos_por_confirmar() -> None:
+    from src.evaluacion.evaluadores_codigo import verificar_comportamiento
+
+    con_datos = {
+        "estado": "aclaracion",
+        "meta": {"datos_extraidos": {"campos": {}, "pendiente": True}},
+    }
+    sin_datos = {"estado": "aclaracion", "meta": {"datos_extraidos": None}}
+    assert verificar_comportamiento(escenario("OCR-01"), ensayo_con(con_datos))[0]
+    assert not verificar_comportamiento(escenario("OCR-01"), ensayo_con(sin_datos))[0]
+    assert verificar_comportamiento(escenario("OCR-04"), ensayo_con(sin_datos))[0]
+    assert not verificar_comportamiento(escenario("OCR-04"), ensayo_con(con_datos))[0]
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16)
+def test_no_se_reutiliza_una_calificacion_de_otro_juez(entorno_valido, tmp_path: Path) -> None:
+    from src.config import Settings
+
+    settings = Settings(_env_file=None)
+    esc = escenario("GEN-01")
+    ensayo = {"escenario": "GEN-01", "ensayo": 1, "id_conversacion": "c1", "error": None,
+              **ensayo_con({"respuesta": "x", "meta": {"categoria": "general"}})}  # fmt: skip
+    archivo = tmp_path / "juez.jsonl"
+    pagadas = []
+    calificar({"GEN-01": esc}, [ensayo], Juez(settings, ModeloFalso([veredicto()])), archivo,
+              huella="h1", al_juzgar=pagadas.append)  # fmt: skip
+    assert len(pagadas) == 1 and leer_resultados(archivo)[0]["huella"] == "h1"
+    calificar({"GEN-01": esc}, [ensayo], None, archivo, huella="h1", al_juzgar=pagadas.append)
+    assert len(pagadas) == 1  # reutilizada: no se paga de nuevo
+    with pytest.raises(RuntimeError, match="otro juez"):
+        calificar({"GEN-01": esc}, [ensayo], None, archivo, huella="h2")

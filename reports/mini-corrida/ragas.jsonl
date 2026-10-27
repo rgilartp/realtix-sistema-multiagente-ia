@@ -1,3 +1,2 @@
-{"escenario": "GEN-02", "ensayo": 1, "context_precision": 0.99999999998, "context_recall": 1.0, "faithfulness": 0.75, "answer_relevancy": 0.7879436023516794}
-{"escenario": "IPU-04", "ensayo": 1, "context_precision": 0.8666666666377778, "context_recall": 0.3333333333333333, "faithfulness": null, "answer_relevancy": 0.8062452415365794}
-{"escenario": "IPU-04", "ensayo": 1, "context_precision": 0.8666666666377778, "context_recall": 0.3333333333333333, "faithfulness": 0.7058823529411765, "answer_relevancy": 0.8358932557072295}
+{"escenario": "GEN-02", "ensayo": 1, "context_precision": 0.99999999998, "context_recall": 1.0, "faithfulness": 0.75, "answer_relevancy": 0.7879436023516794, "id_conversacion": "mini-corrida-GEN-02-1-dcdf3a69"}
+{"escenario": "IPU-04", "ensayo": 1, "context_precision": 0.8666666666377778, "context_recall": 0.3333333333333333, "faithfulness": 0.7058823529411765, "answer_relevancy": 0.8358932557072295, "id_conversacion": "mini-corrida-IPU-04-1-4a464566"}

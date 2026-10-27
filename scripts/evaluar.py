@@ -15,8 +15,9 @@ Ejemplos:
 
 Todo queda en `reports/<corrida>/`. Los ensayos y las calificaciones del juez se guardan a medida
 que llegan; volver a correr el mismo comando reanuda sin pagar dos veces. `--tope-usd` detiene la
-corrida si el gasto del sistema y del juez lo supera. El modo de evaluación debe estar encendido en
-el servidor solo durante la corrida (A9); el script se detiene si la API no lo tiene.
+corrida si el gasto en Anthropic (sistema, juez y componentes, contando lo ya guardado) lo supera.
+El modo de evaluación debe estar encendido en el servidor solo durante la corrida (A9); el script
+se detiene si la API no lo tiene.
 """
 
 import argparse
@@ -49,17 +50,48 @@ class ModoEvaluacionApagado(SystemExit):
     pass
 
 
+class Gasto:
+    """Gasto en Anthropic de la corrida (sistema y juez), contado desde lo ya guardado: una corrida
+    reanudada no reinicia la cuenta. `--tope-usd` la detiene al superarlo."""
+
+    def __init__(self, destino: Path, tope: float | None) -> None:
+        self.tope = Decimal(str(tope)) if tope else None
+        self.usd = Decimal(0)
+        for e in leer_resultados(destino / "resultados.jsonl"):
+            self.usd += costo_de(
+                (t.get("meta") or {}).get("tokens_por_modelo") or {} for t in e["turnos"]
+            )
+        for archivo in (
+            "juez.jsonl",
+            "componentes_juez.jsonl",
+            "componentes_enrutamiento.jsonl",
+            "componentes_agentes.jsonl",
+        ):
+            for fila in leer_resultados(destino / archivo):
+                self.usd += costo_de([fila.get("tokens_por_modelo") or {}])
+
+    def sumar(self, tokens_por_modelo: dict[str, dict[str, int]]) -> None:
+        self.usd += costo_de([tokens_por_modelo])
+        if self.tope and self.usd > self.tope:
+            raise SystemExit(f"Se superó el tope de US${self.tope} (lleva US${self.usd:.4f}).")
+
+
 def _jsonl(ruta: Path, filas: list[dict[str, Any]]) -> None:
     ruta.write_text(
         "".join(json.dumps(f, ensure_ascii=False) + "\n" for f in filas), encoding="utf-8"
     )
 
 
+def _agregar(ruta: Path, fila: dict[str, Any]) -> None:
+    with ruta.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(fila, ensure_ascii=False) + "\n")
+
+
 def correr_ensayos(
-    args: argparse.Namespace, escenarios: list[dict[str, Any]], destino: Path
+    args: argparse.Namespace, escenarios: list[dict[str, Any]], destino: Path, gasto: Gasto
 ) -> None:
     settings = cargar_configuracion()
-    gasto = {"usd": Decimal(0)}
+    por_id = {e["id"]: e for e in escenarios}
 
     def avance(ensayo: dict[str, Any]) -> None:
         turnos = ensayo["turnos"]
@@ -68,13 +100,17 @@ def correr_ensayos(
             raise ModoEvaluacionApagado(
                 "La API no está en el modo de evaluación (MODO_EVALUACION=true); corrida detenida."
             )
-        for t in turnos:
-            gasto["usd"] += costo_de([(t.get("meta") or {}).get("tokens_por_modelo") or {}])
         estados = ", ".join(str(t.get("estado")) for t in turnos)
         error = ensayo["error"] or ""
         print(f"{ensayo['escenario']:<8} ensayo {ensayo['ensayo']}  {estados}  {error}")
-        if args.tope_usd and gasto["usd"] > Decimal(str(args.tope_usd)):
-            raise SystemExit(f"Se superó el tope de US${args.tope_usd}; corrida detenida.")
+        motivos = {(t.get("meta") or {}).get("motivo_escalamiento") for t in turnos}
+        if (
+            por_id[ensayo["escenario"]].get("falla_inyectada")
+            and "fallo de servicio" not in motivos
+        ):
+            print("  Aviso: no hubo «fallo de servicio»; ¿FALLAS_INYECTABLES está encendida?")
+        for t in turnos:
+            gasto.sumar((t.get("meta") or {}).get("tokens_por_modelo") or {})
 
     with ExitStack() as pila:
         if args.local:
@@ -106,13 +142,18 @@ def correr_ensayos(
         Ejecutor(cliente, args.corrida).correr(
             escenarios, args.k, destino / "resultados.jsonl", avance
         )
-    print(f"Gasto del sistema en esta ejecución: US${gasto['usd']:.4f}")
 
 
 def correr_componentes(
-    destino: Path, escenarios: list[dict[str, Any]], juez: Juez | None
+    destino: Path,
+    escenarios: list[dict[str, Any]],
+    juez: Juez | None,
+    huella: str,
+    gasto: Gasto,
+    evaluar: bool,
 ) -> dict[str, Any]:
-    from src.container import Contenedor
+    """Enrutamiento y agentes; cada resultado se guarda al llegar y se reanuda por id. Sin
+    `evaluar` (`--solo-reporte`) no llama a ningún modelo: usa lo guardado."""
     from src.evaluacion.componentes import (
         clasificar_consultas,
         como_ensayo,
@@ -122,36 +163,50 @@ def correr_componentes(
     )
     from src.evaluacion.escenarios import cargar_enrutamiento
 
-    deps = Contenedor().deps
     ruta = destino / "componentes_enrutamiento.jsonl"
-    enrutamiento = leer_resultados(ruta)
-    if not enrutamiento:
-        enrutamiento = clasificar_consultas(
-            deps,
-            cargar_enrutamiento(),
-            lambda f: print(f"{f['id']:<11} {f['esperada']:<17} {f['predicha']}"),
-        )
-        _jsonl(ruta, enrutamiento)
     ruta_agentes = destino / "componentes_agentes.jsonl"
-    agentes = leer_resultados(ruta_agentes)
+    hechas = {f["id"] for f in leer_resultados(ruta)}
     propios = escenarios_de_agente([e for e in escenarios if e["grupo"] in _GRUPOS_PRINCIPALES])
-    if not agentes:
-        agentes = [correr_agente(deps, e) for e in propios]
-        _jsonl(ruta_agentes, agentes)
+    corridos = {a["escenario"] for a in leer_resultados(ruta_agentes)}
+    if evaluar:
+        from src.container import Contenedor
+
+        deps = Contenedor().deps
+
+        def guardar_consulta(fila: dict[str, Any]) -> None:
+            _agregar(ruta, fila)
+            gasto.sumar(fila["tokens_por_modelo"])
+            print(f"{fila['id']:<11} {fila['esperada']:<17} {fila['predicha']}")
+
+        pendientes = [c for c in cargar_enrutamiento() if c["id"] not in hechas]
+        clasificar_consultas(deps, pendientes, guardar_consulta)
+        for esc in (e for e in propios if e["id"] not in corridos):
+            resultado = correr_agente(deps, esc)
+            _agregar(ruta_agentes, resultado)
+            gasto.sumar(resultado["tokens_por_modelo"])
+    enrutamiento = leer_resultados(ruta)
+    agentes = leer_resultados(ruta_agentes)
     por_id = {e["id"]: e for e in propios}
     ensayos = [
         como_ensayo(a, por_id[a["escenario"]])
         | {"id_conversacion": f"componentes-{a['escenario']}"}
         for a in agentes
     ]
-    calificados = calificar(por_id, ensayos, juez, destino / "componentes_juez.jsonl")
+    calificados = calificar(
+        por_id,
+        ensayos,
+        juez,
+        destino / "componentes_juez.jsonl",
+        huella=huella,
+        al_juzgar=lambda r: gasto.sumar(r["tokens_por_modelo"]),
+    )
     superados = [
         c
         for c in calificados
         if c["juez"] and c["juez"]["veredicto"] != "incorrecta" and not c["juez"]["alucinacion"]
     ]
     return {
-        "enrutamiento": metricas_de_enrutamiento(enrutamiento),
+        "enrutamiento": metricas_de_enrutamiento(enrutamiento) if enrutamiento else None,
         "agentes": {
             "escenarios": len(calificados),
             "superados": len(superados),
@@ -174,6 +229,8 @@ _GRUPOS_PRINCIPALES = frozenset(
 def correr_ragas(
     destino: Path, escenarios: dict[str, dict[str, Any]], limite: int | None, evaluar: bool
 ) -> dict[str, Any]:
+    """RAGAS de los ensayos de un turno con fragmentos; cada caso se guarda al llegar, con su
+    `id_conversacion` (un ensayo repetido se vuelve a evaluar) y su costo."""
     from src.evaluacion.corrida import vigentes
     from src.evaluacion.ragas_eval import (
         METRICAS,
@@ -183,50 +240,52 @@ def correr_ragas(
     )
 
     ruta = destino / "ragas.jsonl"
-    # Un caso con alguna métrica vacía (falló al calcularse) se vuelve a evaluar.
-    hechos = {
-        (r["escenario"], r["ensayo"]): r
-        for r in leer_resultados(ruta)
-        if all(r.get(m) is not None for m in METRICAS)
-    }
+    ruta_costo = destino / "ragas_costo.json"
     ensayos = [
         e
         for e in vigentes(leer_resultados(destino / "resultados.jsonl"))
         if escenarios[e["escenario"]]["grupo"] in _GRUPOS_PRINCIPALES
     ]
+    vigentes_ids = {e["id_conversacion"] for e in ensayos}
+    # Un caso con alguna métrica vacía (falló al calcularse) se vuelve a evaluar.
+    hechos = {
+        r["id_conversacion"]: r
+        for r in leer_resultados(ruta)
+        if r.get("id_conversacion") in vigentes_ids and all(r.get(m) is not None for m in METRICAS)
+    }
     casos = [(e, c) for e in ensayos if (c := caso_del_ensayo(escenarios[e["escenario"]], e))]
     if limite:
         casos = casos[:limite]
-    pendientes = [(e, c) for e, c in casos if (e["escenario"], e["ensayo"]) not in hechos]
+    pendientes = [(e, c) for e, c in casos if e["id_conversacion"] not in hechos]
     if pendientes and evaluar:
         evaluador = EvaluadorRagas(cargar_configuracion())
-        puntajes = evaluador.evaluar_varios([c for _, c in pendientes])
-        with ruta.open("a", encoding="utf-8") as f:
-            for (e, _), p in zip(pendientes, puntajes, strict=True):
-                fila = {"escenario": e["escenario"], "ensayo": e["ensayo"], **p}
-                hechos[(e["escenario"], e["ensayo"])] = fila
-                f.write(json.dumps(fila, ensure_ascii=False) + "\n")
-        consumo = evaluador.consumo
         previo = (
-            json.loads((destino / "ragas_costo.json").read_text())
-            if (destino / "ragas_costo.json").exists()
-            else {"usd": "0"}
+            Decimal(json.loads(ruta_costo.read_text())["usd"])
+            if ruta_costo.exists()
+            else Decimal(0)
         )
-        total = Decimal(previo["usd"]) + consumo.costo_usd()
-        (destino / "ragas_costo.json").write_text(
-            json.dumps({"usd": str(total)}) + "\n", encoding="utf-8"
-        )
-        print(f"RAGAS: {len(pendientes)} casos, US${consumo.costo_usd():.4f}")
+
+        def guardar(i: int, puntajes: dict[str, float | None]) -> None:
+            e = pendientes[i][0]
+            fila = {
+                "escenario": e["escenario"],
+                "ensayo": e["ensayo"],
+                "id_conversacion": e["id_conversacion"],
+                **puntajes,
+            }
+            hechos[e["id_conversacion"]] = fila
+            _agregar(ruta, fila)
+            total = previo + evaluador.consumo.costo_usd()
+            ruta_costo.write_text(json.dumps({"usd": str(total)}) + "\n", encoding="utf-8")
+
+        evaluador.evaluar_varios([c for _, c in pendientes], guardar)
+        print(f"RAGAS: {len(pendientes)} casos, US${evaluador.consumo.costo_usd():.4f}")
     filas = list(hechos.values())
     promedios = {}
     for m in METRICAS:
         valores = [f[m] for f in filas if f.get(m) is not None]
         promedios[m] = sum(valores) / len(valores) if valores else None
-    costo = (
-        json.loads((destino / "ragas_costo.json").read_text())["usd"]
-        if (destino / "ragas_costo.json").exists()
-        else "0"
-    )
+    costo = json.loads(ruta_costo.read_text())["usd"] if ruta_costo.exists() else "0"
     return {
         "casos": len(filas),
         "modelo": MODELO_EVALUADOR,
@@ -298,18 +357,30 @@ def main() -> None:
             "corrida (criterio de entrada); --sin-aprobar solo para pruebas."
         )
 
+    gasto = Gasto(destino, args.tope_usd)
+    print(f"Gasto ya registrado en esta corrida: US${gasto.usd:.4f}")
     if not args.solo_reporte:
         if not (args.api or args.local):
             raise SystemExit("Falta --api URL o --local.")
-        correr_ensayos(args, escenarios, destino)
+        correr_ensayos(args, escenarios, destino, gasto)
     juez = None if args.solo_reporte else Juez(settings)
     ensayos = [e for e in leer_resultados(destino / "resultados.jsonl") if e["escenario"] in por_id]
-    calificados = calificar(por_id, ensayos, juez, destino / "juez.jsonl")
+    calificados = calificar(
+        por_id,
+        ensayos,
+        juez,
+        destino / "juez.jsonl",
+        huella=huella,
+        al_juzgar=lambda r: gasto.sumar(r["tokens_por_modelo"]),
+    )
     _jsonl(destino / "calificados.jsonl", calificados)
 
     datos: dict[str, Any] = {"huella_juez": huella, "conjuntos": metricas_por_conjunto(calificados)}
-    if args.componentes or (destino / "componentes_enrutamiento.jsonl").exists():
-        datos["componentes"] = correr_componentes(destino, list(por_id.values()), juez)
+    componentes_guardados = (destino / "componentes_enrutamiento.jsonl").exists()
+    if (args.componentes and not args.solo_reporte) or componentes_guardados:
+        datos["componentes"] = correr_componentes(
+            destino, list(por_id.values()), juez, huella, gasto, evaluar=not args.solo_reporte
+        )
     if (args.ragas and not args.solo_reporte) or (destino / "ragas.jsonl").exists():
         evaluar = args.ragas and not args.solo_reporte
         datos["ragas"] = correr_ragas(destino, por_id, args.ragas_limite, evaluar)
@@ -333,7 +404,9 @@ def main() -> None:
         estricta = principal["tasa_estricta"]["tasa"]
         print(f"Tasa de la meta: {t['tasa']:.3f} (Wilson {bajo:.3f} a {alto:.3f})")
         print(f"Tasa estricta: {estricta:.3f}")
-    print(f"Costo total registrado: US${costos['Total']}; reportes en {destino}")
+    print(f"Costo total registrado: US${costos['Total']}")
+    print(f"Gasto en Anthropic de esta corrida: US${gasto.usd:.4f}")
+    print(f"Reportes en {destino}")
 
 
 if __name__ == "__main__":
