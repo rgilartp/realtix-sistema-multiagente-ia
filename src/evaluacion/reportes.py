@@ -193,6 +193,8 @@ def reporte_md(corrida: str, datos: dict[str, Any]) -> str:
         "de Wilson usa n = escenarios, porque los ensayos de un mismo escenario no son "
         "independientes (ADR-24).",
         "",
+        f"Commit evaluado: `{datos.get('commit_evaluado') or '—'}`.",
+        "",
         f"Huella del juez: `{datos.get('huella_juez', '—')}`.",
         "",
     ]
@@ -237,11 +239,15 @@ def reporte_md(corrida: str, datos: dict[str, Any]) -> str:
     return "\n".join(lineas)
 
 
+# Marca del esqueleto de `fallas.md`; sin ella, el archivo ya tiene el análisis y no se sobrescribe.
+ESQUELETO = "Esqueleto generado por `scripts/evaluar.py`"
+
+
 def fallas_md(corrida: str, calificados: list[dict[str, Any]]) -> str:
     lineas = [
         f"# Fallas de la {corrida}",
         "",
-        "Esqueleto generado por `scripts/evaluar.py`: una fila por ensayo no superado. La causa "
+        f"{ESQUELETO}: una fila por ensayo no superado. La causa "
         "técnica (enrutamiento, recuperación, prompt, datos, umbral o infraestructura) y la "
         "familia de MAST (diseño del sistema, desalineación entre agentes o verificación de la "
         "tarea) se "
@@ -292,7 +298,13 @@ def guardar_reportes(
     texto = json.dumps(datos, ensure_ascii=False, indent=2) + "\n"
     (destino / "metricas.json").write_text(texto, encoding="utf-8")
     (destino / "reporte.md").write_text(reporte_md(corrida, datos), encoding="utf-8")
-    (destino / "fallas.md").write_text(fallas_md(corrida, calificados), encoding="utf-8")
+    fallas = destino / "fallas.md"
+    if not fallas.exists() or ESQUELETO in fallas.read_text(encoding="utf-8"):
+        fallas.write_text(fallas_md(corrida, calificados), encoding="utf-8")
+    else:  # ya tiene el análisis (sección 6.6): el esqueleto va aparte y no lo borra
+        (destino / "fallas_esqueleto.md").write_text(
+            fallas_md(corrida, calificados), encoding="utf-8"
+        )
     (destino / "costos.md").write_text(
         costos_md(corrida, datos.get("costos", {})), encoding="utf-8"
     )

@@ -76,6 +76,14 @@ class Gasto:
             raise SystemExit(f"Se superó el tope de US${self.tope} (lleva US${self.usd:.4f}).")
 
 
+def _commit_guardado(destino: Path) -> str | None:
+    """El commit de una ejecución anterior de la corrida, para que `--solo-reporte` no lo pierda."""
+    ruta = destino / "metricas.json"
+    if not ruta.exists():
+        return None
+    return json.loads(ruta.read_text(encoding="utf-8")).get("commit_evaluado")
+
+
 def _jsonl(ruta: Path, filas: list[dict[str, Any]]) -> None:
     ruta.write_text(
         "".join(json.dumps(f, ensure_ascii=False) + "\n" for f in filas), encoding="utf-8"
@@ -327,6 +335,7 @@ def main() -> None:
     parser.add_argument("--exigir-huella", action="store_true", help="juez igual al calibrado (A5)")
     parser.add_argument("--solo-reporte", action="store_true", help="no llama a ningún modelo")
     parser.add_argument("--tope-usd", type=float)
+    parser.add_argument("--commit", help="commit evaluado en el servidor (queda en el reporte)")
     parser.add_argument(
         "--sin-aprobar", action="store_true", help="permite referencias sin aprobar"
     )
@@ -375,7 +384,11 @@ def main() -> None:
     )
     _jsonl(destino / "calificados.jsonl", calificados)
 
-    datos: dict[str, Any] = {"huella_juez": huella, "conjuntos": metricas_por_conjunto(calificados)}
+    datos: dict[str, Any] = {
+        "commit_evaluado": args.commit or _commit_guardado(destino),
+        "huella_juez": huella,
+        "conjuntos": metricas_por_conjunto(calificados),
+    }
     componentes_guardados = (destino / "componentes_enrutamiento.jsonl").exists()
     if (args.componentes and not args.solo_reporte) or componentes_guardados:
         datos["componentes"] = correr_componentes(

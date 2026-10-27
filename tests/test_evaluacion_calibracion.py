@@ -154,12 +154,14 @@ def test_escenarios_de_agente_son_de_un_turno_y_responden() -> None:
 def test_reportes_sin_fechas_y_con_conjuntos_aparte(tmp_path: Path) -> None:
     calificados = [calificado(i, i % 3 != 0) for i in range(1, 13)] + [calificado(1, True, "R4")]
     datos = {
+        "commit_evaluado": "805f2ef",
         "huella_juez": "h",
         "conjuntos": metricas_por_conjunto(calificados),
         "costos": {"Total": "0.5"},
     }
     guardar_reportes(tmp_path, "corrida de prueba", datos, calificados)
     reporte = (tmp_path / "reporte.md").read_text(encoding="utf-8")
+    assert "Commit evaluado: `805f2ef`" in reporte and "Huella del juez: `h`" in reporte
     assert "## Escenarios del nivel de sistema" in reporte and "## R4 · Seguridad" in reporte
     assert "Wilson" in reporte and "Estricta" in reporte
     assert (tmp_path / "matriz_confusion.png").exists() and (tmp_path / "latencias.png").exists()
@@ -169,6 +171,11 @@ def test_reportes_sin_fechas_y_con_conjuntos_aparte(tmp_path: Path) -> None:
     for archivo in ("reporte.md", "fallas.md", "costos.md", "metricas.json"):
         assert not re.search(r"\d{4}-\d{2}-\d{2}", (tmp_path / archivo).read_text(encoding="utf-8"))
     assert b"CreationDate" not in (tmp_path / "matriz_confusion.png").read_bytes()
+    # Con el análisis ya escrito, volver a generar no lo borra: el esqueleto va aparte.
+    (tmp_path / "fallas.md").write_text("# Fallas\n\nAnálisis de la corrida.\n", encoding="utf-8")
+    guardar_reportes(tmp_path, "corrida de prueba", datos, calificados)
+    assert "Análisis" in (tmp_path / "fallas.md").read_text(encoding="utf-8")
+    assert "IPU-03" in (tmp_path / "fallas_esqueleto.md").read_text(encoding="utf-8")
 
 
 @pytest.mark.unit
