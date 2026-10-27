@@ -718,6 +718,32 @@ def test_la_cita_de_una_nota_del_sistema_no_provoca_reescritura(adaptador) -> No
     assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "completa"
 
 
+# -- Cuándo pedir una aclaración (F6 de la corrida 1) -------------------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-UI-02 · Contexto de la sesión", "RF-IPU-02 · Estado de cuenta e historial")
+def test_con_varios_predios_el_agente_recibe_los_predios_y_las_reglas_de_aclaracion(
+    adaptador,
+) -> None:
+    """Un contribuyente inventado con dos predios: el modelo ve los dos en el contexto y las tres
+    reglas (elegir sin dar valores, responder la parte general primero, personalizar no es
+    aclaración); su pregunta de cuál predio sale como aclaración, sin anexos."""
+    predios = ["50C-9999901", "50C-9999902"]
+    guion = [AIMessage(content=""), final("¿De cuál de tus dos predios?", suficiencia="aclaracion")]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "¿Cuánto debo?", "CC-9", predios)
+    sistema, contexto = (m.content for m in modelo.llamadas[0][0][:2])
+    plano = " ".join(sistema.split())
+    assert "pregunta de cuál se trata y no des valores de ninguno" in plano
+    assert "Esta regla prevalece sobre la anterior" in plano
+    assert (
+        "Ofrecer una personalización o más ayuda al final de una respuesta no es `aclaracion`"
+        in plano
+    )
+    assert all(p in contexto for p in predios)
+    assert respuesta["suficiencia"] == "aclaracion" and "Fuentes" not in respuesta["texto"]
+
+
 # -- Periodicidad del ICA y estimación en la primera ronda (F4 y F8 de la corrida 1) ------------
 
 
