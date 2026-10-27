@@ -816,6 +816,30 @@ def test_el_predio_propio_o_sin_sesion_no_activa_el_rechazo_previo(adaptador) ->
     assert not respuesta["rechazo_acceso"] and len(modelo.llamadas) == 2
 
 
+# -- Notas del sistema que el modelo no debe repetir (F11 de la corrida 1) ---------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-02 · Estado de cuenta e historial", "RNF-09 · Lenguaje accesible")
+def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptador) -> None:
+    from src.agents.agente import NOTAS_DEL_SISTEMA
+
+    # El modelo escribe su propia advertencia, parecida a la nota: el sistema la quita y deja la
+    # nota con su norma una sola vez.
+    propia = (
+        "Tienes una obligación vencida. Por estar vencida, el pago incluye intereses de mora, que "
+        "esta información no calcula; el valor exacto lo da la factura o la Secretaría Distrital "
+        "de Hacienda."
+    )
+    guion = [pide(("estado_cuenta_predial", {})), final(propia)]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "¿Cuánto debo?", U03, [P03])
+    (resultado,) = resultados_de_herramientas(modelo)
+    assert notas.NOTA_INTERESES_MORA in resultado[NOTAS_DEL_SISTEMA]
+    assert respuesta["texto"].count(notas.NOTA_INTERESES_MORA) == 1
+    assert respuesta["texto"].lower().count("intereses de mora") == 1
+    assert respuesta["texto"].startswith("Tienes una obligación vencida.")
+
+
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
 
 

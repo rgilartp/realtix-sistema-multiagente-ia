@@ -50,6 +50,7 @@ from src.integrations.trazas import Anonimizador
 from src.services.acceso import rechazo_previo
 from src.services.citas import citas_sin_fuente, fuentes_de_fragmento
 from src.services.horario import RelojSistema
+from src.services.notas import sin_repetir_notas
 
 registro = logging.getLogger(__name__)
 
@@ -225,13 +226,15 @@ def _sin_repetir(valores: list[str]) -> list[str]:
 def componer_texto(
     respuesta: str, resultados: list[Resultado], citados: list[Fragmento], con_anexos: bool
 ) -> tuple[str, list[str]]:
-    """Texto final: la respuesta del modelo, las notas tal cual y la lista de fuentes."""
+    """Texto final: la respuesta del modelo (sin las copias de las notas, F11), las notas tal
+    cual y la lista de fuentes."""
     texto = respuesta.strip()
     exitosos = [r for r in resultados if r.tipo == "ok"]
     fuentes = _sin_repetir([f for r in exitosos for f in r.fuentes] + [f.cita for f in citados])
     if not con_anexos:
         return texto, fuentes
     notas = [n for n in notas_del_sistema(resultados) if n not in texto]
+    texto = sin_repetir_notas(texto, notas).strip()  # F11: sin la nota que el modelo copió
     if notas:
         texto += "\n\n" + "\n\n".join(notas)
     if fuentes:
@@ -244,12 +247,19 @@ def notas_del_sistema(resultados: list[Resultado]) -> list[str]:
     return _sin_repetir([n for r in resultados if r.tipo == "ok" for n in r.notas])
 
 
+NOTAS_DEL_SISTEMA = "notas_que_el_sistema_agrega_al_final_no_las_repitas"
+
+
 def para_el_modelo(resultado: Resultado) -> dict[str, Any]:
     """Lo que ve el modelo de un resultado: los datos y sus fuentes, para que cite cada cifra con
-    la fuente de la herramienta y no con la norma de un fragmento (revisión externa, IPU-10)."""
-    if not resultado.fuentes:
-        return resultado.datos
-    return {**resultado.datos, "fuentes_de_la_herramienta": list(resultado.fuentes)}
+    la fuente de la herramienta y no con la norma de un fragmento (revisión externa, IPU-10), y
+    las notas que el sistema agregará al final, para que no escriba las suyas (F11)."""
+    visto = dict(resultado.datos)
+    if resultado.fuentes:
+        visto["fuentes_de_la_herramienta"] = list(resultado.fuentes)
+    if resultado.notas and resultado.tipo == "ok":
+        visto[NOTAS_DEL_SISTEMA] = list(resultado.notas)
+    return visto
 
 
 class _Rechazo(Exception):

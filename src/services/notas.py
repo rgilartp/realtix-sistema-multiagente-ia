@@ -1,8 +1,11 @@
-"""Notas que acompañan toda liquidación o estimación (sin modelo; el texto no se reescribe).
+"""Notas que acompañan toda liquidación o estimación (sin modelo; el texto de la nota no cambia).
 
 La aproximación al múltiplo de mil es una decisión de Rodolfo (B5): la estimación calcula y muestra
 los valores exactos y solo advierte que la factura o la declaración los aproximan.
 """
+
+import re
+import unicodedata
 
 NOTA_ESTIMACION = (
     "Esta es una estimación informativa y no vinculante: no reemplaza la factura, la declaración "
@@ -59,3 +62,41 @@ def nota_avaluo_anterior(anio: int, anterior: int) -> str:
         f"El avalúo catastral de {anio} aún no se conoce; la estimación usa el de {anterior}, así "
         "que el valor puede cambiar cuando se fije el nuevo avalúo."
     )
+
+
+_FIN_DE_ORACION = re.compile(r"(?<=[.!?:;])\s+(?=[*_«\"(\[]*[¿¡A-ZÁÉÍÓÚÑ])")
+_PALABRA = re.compile(r"\b[^\W\d_]{4,}\b")  # palabras de 4 letras o más; las cifras no cuentan
+_NUMERO = re.compile(r"\d[\d.,]*\d|\d")
+COINCIDENCIA_MINIMA = 0.6  # parte de las palabras de la oración que también están en la nota
+
+
+def _palabras(texto: str) -> set[str]:
+    sin_tildes = "".join(
+        c for c in unicodedata.normalize("NFD", texto.lower()) if unicodedata.category(c) != "Mn"
+    )
+    return set(_PALABRA.findall(sin_tildes))
+
+
+def sin_repetir_notas(texto: str, notas_que_se_agregan: list[str]) -> str:
+    """Quita de la respuesta del modelo las copias casi literales de una nota que el sistema
+    agrega al final (F11 de la corrida 1): las oraciones que comparten al menos el 60 % de sus
+    palabras (de cuatro letras o más, sin contar cifras, y como mínimo seis) con alguna nota, y que
+    no traen ninguna cifra que la nota no tenga. Sin modelo; las demás oraciones no cambian."""
+    if not notas_que_se_agregan:
+        return texto
+    de_las_notas = [(_palabras(n), set(_NUMERO.findall(n))) for n in notas_que_se_agregan]
+
+    def repite(oracion: str) -> bool:
+        propias, cifras = _palabras(oracion), set(_NUMERO.findall(oracion))
+        return any(
+            cifras <= cifras_nota
+            and len(propias & nota) >= max(6, COINCIDENCIA_MINIMA * len(propias))
+            for nota, cifras_nota in de_las_notas
+        )
+
+    parrafos = []
+    for parrafo in texto.split("\n"):
+        oraciones = [o for o in _FIN_DE_ORACION.split(parrafo) if not repite(o)]
+        if oraciones or not parrafo.strip():
+            parrafos.append(" ".join(oraciones))
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(parrafos)).strip()

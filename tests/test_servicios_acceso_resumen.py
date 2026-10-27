@@ -87,7 +87,7 @@ def test_resumen_en_texto_y_en_json_con_las_mismas_cifras() -> None:
         rechazadas=rechazadas,
     )
     assert texto.startswith("Motivo: confianza insuficiente. Categoría: ica.")
-    assert "Nivel de confianza: 0.48" in texto and "Partes ya resueltas: 1" in texto
+    assert "Nivel de confianza: 0,48" in texto and "Partes ya resueltas: 1" in texto
     assert datos["partes_resueltas"] == ["Predial resuelto"]
     assert datos["partes_rechazadas"] == [{"categoria": "ica", "texto": "Dudosa", "nivel": 0.48}]
     assert datos["intentos"] == 1 and "motivo_original" not in datos
@@ -169,3 +169,19 @@ def test_las_matriculas_ajenas_del_mensaje_se_detectan_sin_modelo() -> None:
     assert matriculas_ajenas("El 50C-123 y el 50C-12345678 no son válidas", propias) == []
     assert matriculas_ajenas("Dame el 50C-9999977", []) == ["50C-9999977"]
     assert rechazo_previo(texto, "CC-9", propias) and not rechazo_previo(texto, None, propias)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-03 · Resumen del caso")
+def test_el_nivel_del_resumen_lleva_coma_decimal_y_el_json_conserva_el_numero() -> None:
+    """F12 de la corrida 1, con un nivel inventado de dos decimales."""
+    texto, datos = construir_resumen(
+        motivo="confianza insuficiente",
+        categoria="ipu",
+        nivel_confianza=0.37,
+        intentos=0,
+        resueltas=[],
+        rechazadas=[],
+    )
+    assert "Nivel de confianza: 0,37." in texto and "0.37" not in texto
+    assert datos["nivel_confianza"] == 0.37
