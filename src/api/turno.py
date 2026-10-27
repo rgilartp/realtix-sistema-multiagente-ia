@@ -237,7 +237,8 @@ def interpretar_estado(
         notas = [n for p in aprobadas for n in p.get("notas", [])]
     ocr = estado.get("datos_extraidos", {}).get("ocr")
     meta = {
-        "categoria": next((p["categoria"] for p in parciales), None)
+        "categoria": marcas.get("categoria_clasificada")
+        or next((p["categoria"] for p in parciales), None)
         or estado.get("categoria")
         or None,
         "nivel_confianza": round(float(estado.get("nivel_confianza") or 0.0), 3),

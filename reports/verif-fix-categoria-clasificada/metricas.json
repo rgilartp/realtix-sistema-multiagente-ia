@@ -1,0 +1,174 @@
+{
+  "commit_evaluado": null,
+  "huella_juez": "6b4c54e5aedaeab684d2071b9bb8d817640a5f27aec43f3563e0a1fa681dbc10",
+  "conjuntos": {
+    "principal": {
+      "ensayos": 6,
+      "escenarios": 6,
+      "tasa_meta": {
+        "escenarios": 6,
+        "ensayos": 6,
+        "tasa": 1,
+        "wilson95": [
+          0.6096657120978346,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 6,
+        "ensayos": 6,
+        "tasa": 0.6666666666666666,
+        "wilson95": [
+          0.299993315138392,
+          0.9032285888942195
+        ],
+        "bootstrap95": [
+          0.3333333333333333,
+          1
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 1.0,
+        "pass^1": 1.0
+      },
+      "codigo_pasa": 1,
+      "juez": {
+        "calificados": 6,
+        "correcta": 4,
+        "parcialmente correcta": 2,
+        "incorrecta": 0,
+        "alucinacion": 0,
+        "cito_norma": 0,
+        "cita_sustenta": 0,
+        "cobertura_completa": 0.6666666666666666,
+        "claridad_media": 5
+      },
+      "enrutamiento": {
+        "pares": 6,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ica": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "general": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ocr": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "fuera_de_alcance": {
+            "soporte": 5,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 1,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 5,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 6,
+          "meta_ms": 8000,
+          "servidor_p50_ms": 1998.0,
+          "servidor_p95_ms": 2616.0,
+          "cliente_p50_ms": 2013.6,
+          "cliente_p95_ms": 2644.5,
+          "cumplen_meta": 6
+        },
+        "rag": {
+          "turnos": 0,
+          "meta_ms": 15000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.040496",
+        "juez": "0.073584"
+      },
+      "errores_de_ejecucion": 0
+    }
+  },
+  "costos": {
+    "Sistema (principal)": "0.040496",
+    "Juez (principal)": "0.073584",
+    "Total": "0.114080"
+  }
+}

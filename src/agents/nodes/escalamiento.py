@@ -54,7 +54,8 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
         parciales = state.get("respuestas_parciales", [])
         resueltas = [p for p in parciales if p.get("aprobada") and p["texto"]]
         rechazadas = [p for p in parciales if not p.get("aprobada") and p["texto"]]
-        categoria = state.get("categoria") or None
+        # Si escala antes del agente, la de la clasificación (F2 de la corrida 1).
+        categoria = state.get("categoria") or marcas.get("categoria_clasificada") or None
         intentos = state.get("intentos_clasificacion", 0)
         resumen, resumen_json = construir_resumen(
             motivo=motivo,

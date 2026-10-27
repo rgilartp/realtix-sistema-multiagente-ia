@@ -111,6 +111,18 @@ def clasificar_por_palabras(texto: str, state: AgentState) -> Clasificacion:
     return Clasificacion(partes or [{"categoria": "general", "texto": texto}], marcas)
 
 
+def categoria_clasificada(clasificacion: Clasificacion, marcas: dict[str, Any]) -> str:
+    """Una de las 5 clases de RF-ORQ-01: la de la primera parte si la pregunta es sobre la IA o
+    pide sesión (`interpretar` ya las unió en `general`); fuera de alcance si es no tributario o
+    tributario fuera del MVP; si no, la de la primera parte."""
+    primera = clasificacion.partes[0]["categoria"] if clasificacion.partes else "general"
+    if marcas.get("pregunta_ia") or marcas.get("sesion_requerida"):
+        return primera
+    if marcas.get("no_tributario") or marcas.get("tributario_fuera_mvp"):
+        return "fuera_de_alcance"
+    return primera
+
+
 def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     clasificar = deps.clasificador or clasificar_por_palabras
     maximo = deps.config.max_reclasificaciones
@@ -181,6 +193,10 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
             marcas["fallo_servicio"] = True
             return escalar("fallo de servicio", marcas, intentos)
         marcas.update(clasificacion.marcas)
+        # La primera clasificación del turno es la que reporta la API (F2 de la corrida 1), como
+        # en la matriz de componentes: lo no tributario va a nodo_general (ADR-14), pero se
+        # clasificó fuera de alcance. Se guarda antes de escalar; una reclasificación no la cambia.
+        marcas.setdefault("categoria_clasificada", categoria_clasificada(clasificacion, marcas))
         datos.pop("oferta_transferencia", None)
 
         if marcas.get("solicitud_explicita"):
