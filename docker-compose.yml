@@ -1,11 +1,83 @@
-# Servicios del sistema multiagente de IA (RNF-13 · Orquestación con Compose).
-# En desarrollo: docker compose up -d postgres chromadb
-# El backend y el proxy se agregan en B13. Los puertos se publican solo en 127.0.0.1:
-# Chroma y PostgreSQL no se exponen fuera del host (sección 3.11).
+# Servicios del sistema multiagente de IA (RNF-13 · Orquestación con Compose; sección 3.7).
+#
+# En desarrollo:  docker compose up -d postgres chromadb
+# Todo el sistema: docker compose --env-file .env --env-file deploy/servidor.env up -d --build
+#                  (deploy/desplegar.sh lo hace en el servidor, con la ingesta y la verificación).
+#                  En el equipo, con DOMINIO=localhost delante (la variable de la terminal gana):
+#                  así Caddy usa su autoridad local y no pide a Let's Encrypt el dominio real.
+# Dos réplicas:    ... up -d --scale backend=2   (RNF-02; el backend no tiene nombre ni puerto fijo)
+#
+# Secretos solo en el .env de Rodolfo, que se copia sin cambios (sección 3.10): la conexión a
+# PostgreSQL y a Chroma, la ruta de RealSit y el origen permitido se arman aquí. El modo de
+# evaluación y las fallas inyectables salen de REALTIX_MODO_EVALUACION, que solo define
+# `deploy/desplegar.sh --evaluacion`: apagados por defecto, aunque el .env diga otra cosa (A9).
+# Chroma y PostgreSQL publican sus puertos solo en 127.0.0.1: no se exponen fuera del host
+# (sección 3.11).
 
 name: realtix
 
+x-backend: &backend
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: realtix-backend:local
+  env_file:
+    - path: .env
+      required: false
+    - path: deploy/servidor.env
+      required: true
+  environment:
+    DATABASE_URL: postgresql://${POSTGRES_USER:-realtix}:${POSTGRES_PASSWORD:-realtix_dev}@postgres:5432/${POSTGRES_DB:-realtix}
+    CHROMA_HOST: chromadb
+    CHROMA_PORT: "8000"
+    REALSIT_DB_PATH: /realsit/realsit_sintetico.db
+    CORS_ORIGENES: https://${DOMINIO:-localhost}
+    MODO_EVALUACION: ${REALTIX_MODO_EVALUACION:-false}
+    FALLAS_INYECTABLES: ${REALTIX_MODO_EVALUACION:-false}
+
 services:
+  proxy:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.proxy
+    image: realtix-proxy:local
+    restart: unless-stopped
+    environment:
+      DOMINIO: ${DOMINIO:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  backend:
+    <<: *backend
+    restart: unless-stopped
+    expose:
+      - "8001"
+    volumes:
+      - datos-sinteticos:/realsit:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+
+  # Genera la base sintética de RealSit (semilla 42) en su volumen; el backend la monta en solo
+  # lectura (ADR-05). Se corre una vez: docker compose --profile herramientas run --rm generar-realsit
+  generar-realsit:
+    <<: *backend
+    volumes:
+      - datos-sinteticos:/realsit
+    command:
+      ["python", "-m", "src.data.generar.generate_synthetic_data", "--salida", "/realsit/realsit_sintetico.db"]
+    profiles: ["herramientas"]
+
   postgres:
     image: postgres:16
     restart: unless-stopped
@@ -33,9 +105,12 @@ services:
       - "127.0.0.1:8000:8000"
     volumes:
       - chroma-data:/data
-    # La imagen no trae curl, wget ni shell para un healthcheck interno; su salud se verifica
-    # desde el host con: curl -s localhost:8000/api/v2/heartbeat
+    # La imagen no trae curl, wget ni shell para un healthcheck interno: el /health del backend
+    # comprueba Chroma (heartbeat con tiempo máximo y reintento).
 
 volumes:
   postgres-data:
   chroma-data:
+  caddy-data:
+  caddy-config:
+  datos-sinteticos:
