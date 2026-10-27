@@ -1,5 +1,7 @@
 """Preparación de B16 (sección 8.17): la corrida 3 exige el juez calibrado (A5, ADR-25)."""
 
+import importlib.util
+import sys
 from pathlib import Path
 
 import pytest
@@ -24,11 +26,33 @@ def test_la_huella_calibrada_es_la_del_juez_actual(entorno_valido) -> None:
     assert GUARDADA.read_text(encoding="utf-8").strip() == huella_del_juez(Settings(_env_file=None))
 
 
+def _evaluar(raiz: Path, monkeypatch: pytest.MonkeyPatch, *argumentos: str) -> None:
+    """Corre `main()` de `scripts/evaluar.py` con `RAIZ` en una carpeta temporal."""
+    from src.config import Settings
+
+    ruta = RAIZ / "scripts" / "evaluar.py"
+    especificacion = importlib.util.spec_from_file_location("evaluar_b16", ruta)
+    assert especificacion and especificacion.loader
+    modulo = importlib.util.module_from_spec(especificacion)
+    especificacion.loader.exec_module(modulo)
+    monkeypatch.setattr(modulo, "RAIZ", raiz)
+    monkeypatch.setattr(modulo, "cargar_configuracion", lambda: Settings(_env_file=None))
+    monkeypatch.setattr(sys, "argv", ["evaluar.py", "--corrida", "prueba", "--local", *argumentos])
+    modulo.main()
+
+
 @pytest.mark.unit
-@pytest.mark.req(RNF16)
-def test_la_corrida_3_documenta_que_exige_la_huella() -> None:
-    """El comando de la corrida 3 en `scripts/evaluar.py` lleva `--exigir-huella`, y el guion
-    detiene la corrida si la huella guardada no es la del juez actual."""
-    texto = (RAIZ / "scripts" / "evaluar.py").read_text(encoding="utf-8")
-    assert "--k 3" in texto and "--exigir-huella" in texto
-    assert "El juez cambió desde la calibración (A5)" in texto
+@pytest.mark.req(RNF16, "RF-OBS-05 · Ejecución repetible de pruebas")
+@pytest.mark.parametrize("argumentos", [("--k", "3"), ("--exigir-huella",)])
+def test_la_corrida_3_se_detiene_sin_la_huella_calibrada(
+    entorno_valido, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, argumentos: tuple[str, ...]
+) -> None:
+    """Con 3 ensayos (la corrida 3) o con `--exigir-huella`, el guion se detiene antes de llamar a
+    ningún modelo si no hay huella calibrada o si no es la del juez actual."""
+    with pytest.raises(SystemExit, match="No hay huella de la calibración"):
+        _evaluar(tmp_path, monkeypatch, *argumentos)
+    calibracion = tmp_path / "reports" / "calibracion"
+    calibracion.mkdir(parents=True)
+    (calibracion / "huella_juez.txt").write_text("otra\n", encoding="utf-8")
+    with pytest.raises(SystemExit, match="El juez cambió desde la calibración"):
+        _evaluar(tmp_path, monkeypatch, *argumentos)
