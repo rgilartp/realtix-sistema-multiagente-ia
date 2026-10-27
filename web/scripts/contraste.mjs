@@ -44,6 +44,7 @@ const PARES = [
   // [qué, primer plano, fondo, mínimo]
   ["texto en papel", "tinta", "papel", 4.5],
   ["texto en hoja", "tinta", "hoja", 4.5],
+  ["lista de un select: opciones y valor elegido en hoja", "tinta", "hoja", 4.5],
   ["texto suave en papel", "tinta-suave", "papel", 4.5],
   ["texto suave en hoja", "tinta-suave", "hoja", 4.5],
   ["texto suave en zona secundaria", "tinta-suave", "papel-2", 4.5],

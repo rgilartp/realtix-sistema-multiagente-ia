@@ -212,6 +212,8 @@ secciones se separan con bordes, bandas y renglones.
   audacia de la página; lo demás queda en tinta sobre papel.
 - **Casilla:** el campo con su rótulo pequeño arriba, dentro del borde. El foco rodea la casilla
   entera.
+  Un `select` y sus opciones llevan fondo `hoja` y texto `tinta` explícitos de cada modo, nunca
+  transparente: la lista nativa toma el fondo del select y, sin él, el blanco del navegador.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
   mensaje.
 - **Pestañas de la consola:** la activa es un relleno de `sello` con una marca superior de
