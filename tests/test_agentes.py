@@ -714,16 +714,43 @@ def test_con_sesion_las_fechas_son_solo_las_de_la_periodicidad_registrada(adapta
 def test_la_estimacion_sin_periodicidad_usa_la_de_la_sesion_en_la_primera_ronda(adaptador) -> None:
     """Con el CIIU y los ingresos basta una ronda: la periodicidad sale de la sesión. Sin sesión,
     la herramienta pide la periodicidad en lugar de suponerla."""
-    args = {"ciiu": "5611", "ingresos": 12_345_000, "anio": 2026}
+    args = {"ciiu": "9602", "ingresos": 12_345_000, "anio": 2026}
     guion = [pide(("estimar_ica", args)), final("Estimación.")]
-    respuesta, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Estimación", U04, [P04])
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Estimación", U04, [P04])
     (resultado,) = resultados_de_herramientas(modelo)
     assert resultado["periodicidad"] == "bimestral" and resultado["estimaciones"]
-    assert len(modelo.llamadas) == 2  # una ronda de herramientas y la respuesta
+    assert "falta_dato" not in resultado and "aviso_periodicidad" not in resultado
     guion = [pide(("estimar_ica", args)), final("¿Declaras anual o bimestral?")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Estimación", None, None)
     (sin_sesion,) = resultados_de_herramientas(modelo)
     assert "anual o bimestral" in sin_sesion["falta_dato"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad", "RF-ICA-03 · Fechas de declaración")
+def test_se_avisa_la_periodicidad_supuesta_o_distinta_de_la_registrada(adaptador) -> None:
+    otro_anio = {"ciiu": "9602", "ingresos": 12_345_000, "anio": 2027}
+    distinta = {"ciiu": "9602", "ingresos": 12_345_000, "anio": 2026, "periodicidad": "anual"}
+    guion = [pide(("estimar_ica", otro_anio), ("estimar_ica", distinta)), final("Estimación.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Estimación", U04, [P04])
+    supuesta, pedida = resultados_de_herramientas(modelo)
+    assert "se supone la periodicidad de 2026" in supuesta["aviso_periodicidad"]
+    assert pedida["periodicidad"] == "anual" and pedida["periodicidad_registrada"] == "bimestral"
+    assert pedida["aviso_periodicidad"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-08 · Tiempos de espera y degradación", "RF-ICA-03 · Fechas de declaración")
+def test_si_el_adaptador_falla_las_fechas_siguen_como_sin_sesion(adaptador, monkeypatch) -> None:
+    def caido(*_args: Any) -> None:
+        raise ServicioNoDisponibleError("adaptador", TimeoutError())
+
+    monkeypatch.setattr(adaptador, "get_predios_contribuyente", caido)
+    guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
+    respuesta, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", U04, [P04])
+    (fechas,) = resultados_de_herramientas(modelo)
+    assert [p["periodicidad"] for p in fechas["por_periodicidad"]] == ["anual", "bimestral"]
+    assert not respuesta["fallo_servicio"]
 
 
 @pytest.mark.unit
@@ -733,8 +760,10 @@ def test_el_prompt_del_ica_pide_estimar_en_la_primera_ronda_y_una_sola_periodici
     assert "la bimestral si aún no la sabes" not in texto
     assert "da solo las fechas\n  de esa periodicidad" in texto
     assert "llama\n  `estimar_ica` en esta primera ronda" in texto
-    assert "La tarifa de una actividad\n  nunca se toma de los fragmentos" in texto
-    assert "o de su base gravable, di cuál\n  es la periodicidad que corresponde" in texto
+    assert "Para estimar, la tarifa de\n  una actividad nunca se toma de los fragmentos" in texto
+    assert "di cuál es la periodicidad que\n  corresponde" in texto
+    assert "Conserva el periodo que nombra la norma que citas" in texto
+    assert "aviso_periodicidad" in texto
     esquema = next(h for h in HERRAMIENTAS_ICA if h.nombre == "estimar_ica").especificacion()
     assert "periodicidad" not in esquema["input_schema"]["required"]
 

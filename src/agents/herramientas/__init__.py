@@ -42,6 +42,7 @@ class Contexto:
     hoy: date
     timeout_adaptador_s: float = 5.0
     matriculas_usadas: list[str] = field(default_factory=list)
+    memoria: dict[Any, Any] = field(default_factory=dict)  # lecturas que se repiten en la ronda
 
     def llamar(self, funcion: Callable[[], T]) -> T:
         """Llamada al adaptador con tiempo máximo y un reintento."""
