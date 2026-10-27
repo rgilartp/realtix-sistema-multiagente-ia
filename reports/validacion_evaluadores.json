@@ -1,56 +1,246 @@
 {
+  "repeticiones_del_juez": 3,
   "juez": {
-    "con_falla": {
-      "veredicto": "parcialmente correcta",
-      "alucinacion": false,
-      "cito_norma": true,
-      "cita_sustenta": true,
-      "cobertura_completa": false,
-      "claridad": 5,
-      "justificacion": "Responde correctamente que el asistente no presenta declaraciones, no paga ni modifica datos, e indica los temas que sí atiende, con citas del manual que lo sustentan. No dice expresamente que no da asesoría personalizada y afirma que el pago y la presentación se hacen en la Oficina Virtual Tributaria, algo que los fragmentos no respaldan."
-    },
-    "fiel": {
-      "veredicto": "parcialmente correcta",
-      "alucinacion": false,
-      "cito_norma": true,
-      "cita_sustenta": true,
-      "cobertura_completa": false,
-      "claridad": 5,
-      "justificacion": "Responde correctamente que el asistente no presenta declaraciones, no paga ni modifica datos, y que sus respuestas son orientativas, todo sustentado en el manual. Omite el elemento secundario de que no da asesoría tributaria personalizada; la mención al funcionario está respaldada por el fragmento recuperado."
-    },
-    "herramienta_alterada": {
-      "veredicto": "incorrecta",
-      "alucinacion": true,
-      "cito_norma": true,
-      "cita_sustenta": true,
-      "cobertura_completa": true,
-      "claridad": 5,
-      "justificacion": "El asistente reporta un saldo de $4.871.000, distinto de los $4.817.000 que entregó la herramienta y que recoge la referencia. Esa cifra equivocada podría llevar al contribuyente a pagar un valor incorrecto. La cita del Decreto 807 sale de la nota del sistema y sí sustenta lo dicho."
-    },
-    "herramienta_solo_alterada": {
-      "veredicto": "incorrecta",
-      "alucinacion": true,
-      "cito_norma": true,
-      "cita_sustenta": true,
-      "cobertura_completa": true,
-      "claridad": 5,
-      "justificacion": "El saldo de $4.817.000, la vigencia 2026, el vencimiento y la nota de intereses coinciden con la referencia y la herramienta. Sin embargo, el avalúo catastral que da el asistente ($621.300.000) contradice el que entregó la herramienta ($612.300.000), lo que constituye una cifra alucinada."
-    },
-    "herramienta_fiel": {
-      "veredicto": "correcta",
-      "alucinacion": false,
-      "cito_norma": true,
-      "cita_sustenta": true,
-      "cobertura_completa": true,
-      "claridad": 5,
-      "justificacion": "El saldo de $4.817.000, el año 2026, el avalúo y el vencimiento coinciden con la herramienta y con la referencia. La mención de intereses de mora y del Decreto 807 de 1993, art. 66 proviene textualmente de la nota del sistema."
-    }
+    "con_falla": [
+      {
+        "afirmaciones_sin_fuente": [
+          "Para pagar o presentar, debes hacerlo directamente en la Oficina Virtual Tributaria."
+        ],
+        "justificacion": "Lo esencial coincide con la referencia y el fragmento [3]: el asistente no presenta, no paga, no modifica datos, y aclara sobre qué temas sí responde. Sin embargo, afirma que el pago y la presentación se hacen directamente en la Oficina Virtual Tributaria, procedimiento que no aparece en ninguna fuente, y no menciona de forma explícita que no da asesoría personalizada y que sus respuestas son orientativas.",
+        "veredicto": "parcialmente correcta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": false,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "Para pagar o presentar, debes hacerlo directamente en la Oficina Virtual Tributaria"
+        ],
+        "justificacion": "La respuesta acierta en lo esencial: el asistente no presenta, no paga y no modifica datos, y menciona los temas que sí atiende. Pero indica que el pago o la declaración se hacen directamente en la OVT, un procedimiento que no aparece en ninguna fuente, y no explicita que no da asesoría personalizada.",
+        "veredicto": "parcialmente correcta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": false,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "Para pagar o presentar, debes hacerlo directamente en la Oficina Virtual Tributaria."
+        ],
+        "justificacion": "Responde bien que el asistente no presenta declaraciones, no paga y no modifica datos, y qué temas atiende. Pero afirma sin sustento en las fuentes que el pago y la presentación se hacen en la OVT, y omite que no da asesoría personalizada.",
+        "veredicto": "parcialmente correcta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": false,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      }
+    ],
+    "fiel": [
+      {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "La respuesta coincide con la referencia: niega presentar declaraciones, hacer pagos o modificar datos, indica que las respuestas son orientativas y lo que sí puede atender, todo sustentado en los fragmentos del manual. Omite mencionar explícitamente que no da asesoría tributaria personalizada, aunque sí dice que sus respuestas son orientativas; la mención del funcionario está en el fragmento recuperado.",
+        "veredicto": "correcta",
+        "alucinacion": false,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": false
+      },
+      {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "La respuesta coincide con la referencia y está sustentada en los fragmentos del manual. Omite de forma explícita que el asistente no da asesoría tributaria personalizada, aunque sí dice que sus respuestas son orientativas. La mención del funcionario sale del fragmento recuperado.",
+        "veredicto": "correcta",
+        "alucinacion": false,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": false
+      },
+      {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "La respuesta coincide con la referencia: niega que el asistente presente declaraciones, pague o modifique datos, indica que sus respuestas son orientativas y enumera los temas que sí atiende, todo sustentado en el manual citado. La mención del funcionario sale del fragmento recuperado y no menciona expresamente la ausencia de asesoría personalizada, aunque sí que es orientativo.",
+        "veredicto": "correcta",
+        "alucinacion": false,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": false
+      }
+    ],
+    "herramienta_con_requisito": [
+      {
+        "afirmaciones_sin_fuente": [
+          "Para pagar, debes presentar también el certificado de tradición y libertad del predio."
+        ],
+        "justificacion": "El saldo, el avalúo, el año y el vencimiento coinciden con la herramienta, y la nota de mora es del sistema. Sin embargo, el requisito de presentar el certificado de tradición y libertad para pagar no sale de ninguna fuente y podría llevar al contribuyente a actuar mal.",
+        "veredicto": "incorrecta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 4,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "Para pagar, debes presentar también el certificado de tradición y libertad del predio."
+        ],
+        "justificacion": "El saldo, el avalúo, la vigencia, el vencimiento y la nota de intereses coinciden con la herramienta y la referencia. Sin embargo, la respuesta inventa el requisito de presentar el certificado de tradición y libertad para pagar, lo que podría llevar al contribuyente a actuar mal.",
+        "veredicto": "incorrecta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 4,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "Para pagar, debes presentar también el certificado de tradición y libertad del predio."
+        ],
+        "justificacion": "El saldo, el avalúo, el año, el vencimiento y la nota de mora coinciden con la herramienta y la nota del sistema, pero el requisito de presentar el certificado de tradición y libertad para pagar no sale de ninguna fuente y podría llevar al contribuyente a hacer un trámite innecesario.",
+        "veredicto": "incorrecta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 4,
+        "alucinacion_marcada": true
+      }
+    ],
+    "herramienta_alterada": [
+      {
+        "afirmaciones_sin_fuente": [
+          "saldo pendiente de $4.871.000 del predial de 2026"
+        ],
+        "justificacion": "El asistente da un saldo de $4.871.000, distinto del $4.817.000 que entregó la herramienta y que fija la referencia; es una cifra equivocada que podría llevar al contribuyente a pagar mal. Lo demás (vencida, intereses de mora con su nota del sistema) sí está sustentado.",
+        "veredicto": "incorrecta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": false,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "saldo pendiente de $4.871.000 del predial de 2026"
+        ],
+        "justificacion": "El asistente da un saldo de $4.871.000, distinto del $4.817.000 que entregó la herramienta y que figura en la referencia; es una cifra equivocada que podría llevar al contribuyente a pagar mal.",
+        "veredicto": "incorrecta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "saldo pendiente de $4.871.000 del predial de 2026"
+        ],
+        "justificacion": "El asistente da un saldo de $4.871.000, distinto del $4.817.000 que entregó la herramienta y que trae la referencia. Es una cifra equivocada que podría llevar al contribuyente a pagar mal.",
+        "veredicto": "incorrecta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      }
+    ],
+    "herramienta_solo_alterada": [
+      {
+        "afirmaciones_sin_fuente": [
+          "con un avalúo catastral de $621.300.000"
+        ],
+        "justificacion": "El saldo, el año y el vencimiento coinciden con la herramienta y con la referencia, pero el avalúo catastral ($621.300.000) contradice el dato de la herramienta ($612.300.000). Es una cifra equivocada atribuida a los datos del contribuyente, lo que constituye una alucinación.",
+        "veredicto": "parcialmente correcta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "avalúo catastral de $621.300.000"
+        ],
+        "justificacion": "El saldo, el año y el vencimiento coinciden con la herramienta y la referencia, pero el avalúo catastral ($621.300.000) contradice el dato de la herramienta ($612.300.000). Es una cifra alterada y cuenta como alucinación, aunque no cambie la conclusión sobre el saldo.",
+        "veredicto": "parcialmente correcta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      },
+      {
+        "afirmaciones_sin_fuente": [
+          "avalúo catastral de $621.300.000"
+        ],
+        "justificacion": "El saldo, el año y el vencimiento coinciden con la herramienta y la referencia, pero el avalúo catastral ($621.300.000) contradice el dato de la herramienta ($612.300.000), lo que constituye una alucinación de cifra. Es un dato secundario que no cambia la conclusión sobre el saldo pendiente.",
+        "veredicto": "parcialmente correcta",
+        "alucinacion": true,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": true
+      }
+    ],
+    "herramienta_fiel": [
+      {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "La respuesta reproduce el saldo, el año, el avalúo y el estado vencido que entregó la herramienta, y la nota del sistema sobre intereses de mora con su norma; coincide con la referencia sin agregar datos sin fuente.",
+        "veredicto": "correcta",
+        "alucinacion": false,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": false
+      },
+      {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "La respuesta reproduce fielmente los datos de la herramienta (avalúo, saldo de $4.817.000, vencida) y la nota del sistema sobre los intereses de mora, en coincidencia con la referencia.",
+        "veredicto": "correcta",
+        "alucinacion": false,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": false
+      },
+      {
+        "afirmaciones_sin_fuente": [],
+        "justificacion": "La respuesta reproduce fielmente los datos de la herramienta (saldo de $4.817.000, año 2026, obligación vencida, avalúo) y la nota del sistema sobre los intereses de mora, y coincide con la referencia sin agregar nada sin fuente.",
+        "veredicto": "correcta",
+        "alucinacion": false,
+        "cito_norma": true,
+        "cita_sustenta": true,
+        "cobertura_completa": true,
+        "claridad": 5,
+        "alucinacion_marcada": false
+      }
+    ]
   },
   "ragas": {
     "con_falla": {
-      "context_precision": 0.8333333332916666,
+      "context_precision": 0.9999999999666667,
       "context_recall": 1.0,
-      "faithfulness": 0.9,
+      "faithfulness": 0.5,
       "answer_relevancy": 0.6719225713791036
     },
     "fiel": {
@@ -69,36 +259,37 @@
       "context_precision": 0.99999999995,
       "context_recall": 1.0,
       "faithfulness": 1.0,
-      "answer_relevancy": 0.610110955654335
+      "answer_relevancy": 0.6229840724844945
     }
   },
   "criterios": {
-    "juez_detecta_la_falla": true,
-    "juez_aprueba_la_fiel": true,
-    "ragas_fidelidad_menor_con_falla": true,
-    "ragas_fidelidad_fiel_0_9": true,
-    "ragas_cuatro_metricas": true,
+    "juez_no_supera_la_falla_y_lista_la_frase": true,
+    "juez_supera_la_fiel_sin_lista": true,
+    "juez_detecta_el_requisito_inventado": true,
     "juez_detecta_el_dato_de_herramienta_alterado": true,
     "juez_detecta_el_dato_solo_de_herramienta_alterado": true,
-    "juez_acepta_los_datos_de_herramienta": true
+    "juez_supera_los_datos_de_herramienta_sin_lista": true,
+    "ragas_fidelidad_menor_con_falla": true,
+    "ragas_fidelidad_fiel_0_9": true,
+    "ragas_cuatro_metricas": true
   },
-  "huella_juez": "6b4c54e5aedaeab684d2071b9bb8d817640a5f27aec43f3563e0a1fa681dbc10",
+  "huella_juez": "afecd5c1b4f62d52fc605ac6b350363cddee4604ae704f30247703146aa39805",
   "costo_usd": {
-    "juez": "0.078908",
-    "ragas": "0.02596359"
+    "juez": "0.314364",
+    "ragas": "0.02602629"
   },
   "tokens": {
     "juez": {
-      "entrada": 12602,
-      "salida": 1425
+      "entrada": 56046,
+      "salida": 4509
     },
     "ragas": {
       "gpt-4.1-mini-2025-04-14": {
-        "entrada": 40983,
-        "salida": 5952
+        "entrada": 41007,
+        "salida": 5986
       },
       "text-embedding-3-large": {
-        "entrada": 363,
+        "entrada": 353,
         "salida": 0
       }
     }
