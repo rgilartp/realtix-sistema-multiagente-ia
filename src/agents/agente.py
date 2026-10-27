@@ -3,8 +3,9 @@
 Un turno de agente:
 
 1. recupera, sin modelo, los fragmentos de su colección vigentes en el año gravable de la parte,
-   con la consulta de búsqueda que escribió el orquestador en los términos de las normas (el año,
-   el prompt y la respuesta salen del texto del contribuyente);
+   con la consulta de búsqueda que escribió el orquestador en los términos de las normas y con el
+   texto del contribuyente, fusionadas por rango recíproco (G2 y G3 de la corrida 2; el año, el
+   prompt y la respuesta salen del texto del contribuyente);
 2. llamada 1 al modelo, con las herramientas (en paralelo si hacen falta varias) y sin formato:
    con la salida en `json_schema` desde la primera llamada, Haiku 5.5 tendía a contestar sin pedir
    las herramientas (prueba de humo de B7). La llamada 2, sin más herramientas, entrega la
@@ -193,23 +194,43 @@ def recuperar(deps: Dependencias, config: ConfigAgente, texto: str, anio: int) -
 def recuperar_con_dos_consultas(
     deps: Dependencias, config: ConfigAgente, busqueda: str, texto: str, anio: int
 ) -> list[Fragmento]:
-    """Los 5 fragmentos de fusionar, por rango recíproco (RRF, k = 60, como los canales), lo que
-    se recupera con la búsqueda del orquestador y con el texto del contribuyente (G2 y G3 de la
-    corrida 2). La búsqueda en los términos de la norma acierta más, pero a veces pierde el
-    artículo que el texto sí encuentra; con la fusión no se pierde ninguno de los dos primeros."""
+    """Los 5 fragmentos de fusionar, por rango recíproco (RRF, k = 60, como los canales de ADR-04),
+    lo que se recupera con la búsqueda del orquestador y con el texto del contribuyente (G2 y G3 de
+    la corrida 2). La búsqueda en los términos de la norma acierta más, pero a veces pierde el
+    artículo que el texto sí encuentra.
+
+    - Los empates se deciden a favor de la búsqueda (primero su canal y luego el rango), no por el
+      nombre del archivo.
+    - Un fragmento que está en las dos listas conserva la similitud de la búsqueda, la que calibró
+      la escala de la confianza (B8); uno que solo trae el texto conserva la suya.
+    - Si la consulta con el texto falla, se usa la búsqueda sola (RNF-08): la búsqueda ya respondió.
+    """
     con_busqueda = recuperar(deps, config, busqueda, anio)
     if " ".join(texto.split()) == " ".join(busqueda.split()):
         return con_busqueda
-    con_texto = recuperar(deps, config, texto, anio)
+    try:
+        con_texto = recuperar(deps, config, texto, anio)
+    except Exception as error:  # noqa: BLE001 — la búsqueda basta; la falla queda en el registro
+        registro.warning(
+            "Falló la recuperación con el texto; se usa la búsqueda sola",
+            extra={"agente": config.categoria, "error": type(error).__name__},
+        )
+        return con_busqueda
+
+    def clave(f: Fragmento) -> str:
+        return f.id or f"{f.fuente}#{f.seccion}"
+
     por_id: dict[str, Fragmento] = {}
-    for f in con_busqueda + con_texto:
-        clave = f.id or f"{f.fuente}#{f.seccion}"
-        if clave not in por_id or f.similitud > por_id[clave].similitud:
-            por_id[clave] = f
-    canales = [
-        [f.id or f"{f.fuente}#{f.seccion}" for f in lista] for lista in (con_busqueda, con_texto)
-    ]
-    return [por_id[clave] for clave, _ in fusion_rrf(canales)[:K_FRAGMENTOS]]
+    for f in con_busqueda + con_texto:  # primero la búsqueda: su similitud manda
+        por_id.setdefault(clave(f), f)
+    canales = [[clave(f) for f in lista] for lista in (con_busqueda, con_texto)]
+    puntajes = dict(fusion_rrf(canales))
+    orden: dict[str, tuple[int, int]] = {}
+    for n, lista in enumerate(canales):  # el primer lugar donde aparece: canal y rango
+        for r, c in enumerate(lista):
+            orden.setdefault(c, (n, r))
+    elegidos = sorted(puntajes, key=lambda c: (-puntajes[c], *orden[c]))
+    return [por_id[c] for c in elegidos[:K_FRAGMENTOS]]
 
 
 def fuente_del_contrato(

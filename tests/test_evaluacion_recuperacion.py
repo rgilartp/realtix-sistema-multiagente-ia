@@ -60,3 +60,44 @@ def test_resumen_con_texto_y_con_busqueda() -> None:
     assert resumen["con_texto"]["aciertos_por_fuente"] == 0
     assert resumen["con_busqueda"]["tasa_por_fuente"] == 0.5
     assert resumen["responden_con_fragmentos"]["con_busqueda"]["tasa_por_escenario"] == 1.0
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_la_fusion_de_dos_consultas_desempata_a_favor_de_la_busqueda() -> None:
+    """Revisión del PR #49: dos fragmentos con el mismo puntaje RRF (cada uno en una sola lista y
+    en el mismo rango) se ordenan por canal (primero la búsqueda) y no por el nombre del archivo;
+    el que está en las dos listas conserva la similitud de la búsqueda; si el texto falla, queda
+    la búsqueda sola. Fragmentos inventados."""
+    from typing import Any
+
+    from src.agents.agente import ConfigAgente, recuperar_con_dos_consultas
+    from src.agents.dependencias import Dependencias
+    from src.agents.prompts import Prompt
+    from src.integrations.recuperador import Fragmento
+
+    def frag(id_: str, similitud: float) -> Fragmento:
+        return Fragmento("Texto inventado.", f"normativa_ipu/{id_}.md", "Artículo 1", similitud,
+                         norma="Norma inventada", id=id_)  # fmt: skip
+
+    busqueda = [frag("z1", 0.6), frag("z2", 0.6), frag("z3", 0.6), frag("z4", 0.6), frag("z5", 0.6)]
+    texto = [frag("z1", 0.45), frag("a2", 0.5), frag("a3", 0.5), frag("a4", 0.5), frag("a5", 0.5)]
+
+    class Recuperador:
+        def __init__(self, falla: bool = False) -> None:
+            self.falla = falla
+
+        def recuperar(self, consulta: str, **_: Any) -> list[Fragmento]:
+            if consulta == "t" and self.falla:
+                raise TimeoutError("texto")
+            return list(busqueda if consulta == "b" else texto)
+
+    config = ConfigAgente("ipu", Prompt("", "", ""), ("normativa_ipu",))
+    deps = Dependencias(None, recuperador=Recuperador())  # type: ignore[arg-type]
+    fusion = recuperar_con_dos_consultas(deps, config, "b", "t", 2026)
+    assert [f.id for f in fusion] == ["z1", "z2", "a2", "z3", "a3"]  # empates: la búsqueda primero
+    assert fusion[0].similitud == 0.6  # en las dos listas: la similitud de la búsqueda
+    deps_con_falla = Dependencias(None, recuperador=Recuperador(falla=True))  # type: ignore[arg-type]
+    assert [f.id for f in recuperar_con_dos_consultas(deps_con_falla, config, "b", "t", 2026)] == [
+        "z1", "z2", "z3", "z4", "z5"
+    ]  # fmt: skip
