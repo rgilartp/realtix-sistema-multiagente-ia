@@ -76,6 +76,27 @@ class Gasto:
             raise SystemExit(f"Se superó el tope de US${self.tope} (lleva US${self.usd:.4f}).")
 
 
+def _commit_guardado(destino: Path) -> str | None:
+    """El commit de una ejecución anterior de la corrida, para que `--solo-reporte` no lo pierda."""
+    ruta = destino / "metricas.json"
+    if not ruta.exists():
+        return None
+    return json.loads(ruta.read_text(encoding="utf-8")).get("commit_evaluado")
+
+
+def _commit_de_la_corrida(args: argparse.Namespace, destino: Path) -> str | None:
+    """El commit evaluado. Contra el despliegue es obligatorio; al reanudar debe ser el mismo; con
+    `--solo-reporte` sin `--commit`, se conserva el guardado."""
+    guardado = _commit_guardado(destino)
+    if args.solo_reporte:
+        return args.commit or guardado
+    if args.api and not args.commit:
+        raise SystemExit("Falta --commit: el commit desplegado (git rev-parse HEAD).")
+    if args.commit and guardado and args.commit != guardado:
+        raise SystemExit(f"La corrida guardada es del commit {guardado}, no de {args.commit}.")
+    return args.commit
+
+
 def _jsonl(ruta: Path, filas: list[dict[str, Any]]) -> None:
     ruta.write_text(
         "".join(json.dumps(f, ensure_ascii=False) + "\n" for f in filas), encoding="utf-8"
@@ -327,6 +348,7 @@ def main() -> None:
     parser.add_argument("--exigir-huella", action="store_true", help="juez igual al calibrado (A5)")
     parser.add_argument("--solo-reporte", action="store_true", help="no llama a ningún modelo")
     parser.add_argument("--tope-usd", type=float)
+    parser.add_argument("--commit", help="commit evaluado en el servidor (queda en el reporte)")
     parser.add_argument(
         "--sin-aprobar", action="store_true", help="permite referencias sin aprobar"
     )
@@ -357,6 +379,7 @@ def main() -> None:
             "corrida (criterio de entrada); --sin-aprobar solo para pruebas."
         )
 
+    commit = _commit_de_la_corrida(args, destino)
     gasto = Gasto(destino, args.tope_usd)
     print(f"Gasto ya registrado en esta corrida: US${gasto.usd:.4f}")
     if not args.solo_reporte:
@@ -375,7 +398,11 @@ def main() -> None:
     )
     _jsonl(destino / "calificados.jsonl", calificados)
 
-    datos: dict[str, Any] = {"huella_juez": huella, "conjuntos": metricas_por_conjunto(calificados)}
+    datos: dict[str, Any] = {
+        "commit_evaluado": commit,
+        "huella_juez": huella,
+        "conjuntos": metricas_por_conjunto(calificados),
+    }
     componentes_guardados = (destino / "componentes_enrutamiento.jsonl").exists()
     if (args.componentes and not args.solo_reporte) or componentes_guardados:
         datos["componentes"] = correr_componentes(
@@ -384,8 +411,16 @@ def main() -> None:
     if (args.ragas and not args.solo_reporte) or (destino / "ragas.jsonl").exists():
         evaluar = args.ragas and not args.solo_reporte
         datos["ragas"] = correr_ragas(destino, por_id, args.ragas_limite, evaluar)
-    if args.trazas:
+    ruta_trazas = destino / "trazas.json"
+    if args.trazas and not args.solo_reporte:
         datos["trazas"] = revisar_trazas(args.corrida, args.trazas_horas)
+        ruta_trazas.write_text(
+            json.dumps(datos["trazas"], ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+    elif ruta_trazas.exists():  # guardada antes (o revisada donde está la llave de LangSmith)
+        datos["trazas"] = json.loads(ruta_trazas.read_text(encoding="utf-8"))
+    if (ruta_constancias := destino / "constancias.md").exists():
+        datos["constancias"] = ruta_constancias.read_text(encoding="utf-8")
     costos = {}
     for nombre, m in datos["conjuntos"].items():
         costos[f"Sistema ({nombre})"] = m["costo_usd"]["sistema"]

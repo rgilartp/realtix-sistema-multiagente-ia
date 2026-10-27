@@ -59,4 +59,4 @@ dado_cuando_entonces:
   dado: U03 con sesión que cargó un recibo y confirmó los datos
   cuando: Hace en una misma conversación las preguntas de OCR-07, IPU-07
   entonces: Cada respuesta cumple lo de su escenario aprobado, sin perder el contexto de los turnos anteriores
-aprobado_por: ''
+aprobado_por: "Rodolfo"

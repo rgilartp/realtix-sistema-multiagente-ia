@@ -81,4 +81,4 @@ dado_cuando_entonces:
   dado: un contribuyente sintético autenticado, con un predio que tiene obligaciones pendientes
   cuando: Hace en una misma conversación las preguntas de IPU-01, IPU-10, IPU-08
   entonces: Cada respuesta cumple lo de su escenario aprobado, sin perder el contexto de los turnos anteriores
-aprobado_por: ''
+aprobado_por: "Rodolfo"

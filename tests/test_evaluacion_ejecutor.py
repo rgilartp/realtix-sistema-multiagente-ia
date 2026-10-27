@@ -174,6 +174,41 @@ def test_categoria_y_comportamiento_cuentan() -> None:
 
 
 @pytest.mark.unit
+@pytest.mark.req(RNF16)
+def test_categorias_y_comportamientos_aceptados_admiten_alternativas() -> None:
+    """Un escenario que no mide la categoría acepta las de su lista, y nada más."""
+    esc = escenario("GEN-01") | {
+        "verificaciones_codigo": [{"tipo": "no_escala"}],
+        "categoria_esperada": "general",
+        "categorias_aceptadas": ["general", "fuera_de_alcance"],
+        "comportamiento_esperado": "responder",
+        "comportamientos_aceptados": ["responder", "informar_fuera_de_alcance"],
+    }
+
+    def resultado(categoria: str, estado: str) -> dict[str, bool]:
+        ensayo = ensayo_con({"respuesta": "x", "estado": estado, "meta": {"categoria": categoria}})
+        return {v["tipo"]: v["pasa"] for v in evaluar_codigo(esc, ensayo)["verificaciones"]}
+
+    assert resultado("fuera_de_alcance", "fuera_de_alcance") == {
+        "no_escala": True, "categoria": True, "comportamiento": True
+    }  # fmt: skip
+    assert resultado("general", "respondida")["comportamiento"]
+    assert not resultado("ipu", "respondida")["categoria"]
+    assert not resultado("general", "escalada")["comportamiento"]
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16, "RF-OBS-02 · Matriz de confusión de enrutamiento")
+def test_la_matriz_cuenta_una_categoria_aceptada_como_acierto() -> None:
+    from src.evaluacion.corrida import _esperada
+
+    esc = {"categoria_esperada": "general", "categorias_aceptadas": ["general", "fuera_de_alcance"]}
+    assert _esperada(esc, "fuera_de_alcance") == "fuera_de_alcance"
+    assert _esperada(esc, "ipu") == "general"
+    assert _esperada({"categoria_esperada": "ica"}, "ipu") == "ica"
+
+
+@pytest.mark.unit
 @pytest.mark.req(RNF16, "RNF-08 · Tiempos de espera y degradación")
 @pytest.mark.parametrize(
     ("verificacion", "turno", "pasa"),

@@ -5,6 +5,8 @@ la distribución sean los de la especificación, aprueba las respuestas de refer
 genera la hoja de revisión y el índice, que revisa y aprueba Rodolfo antes de una corrida.
 `categoria_esperada` se refiere al primer turno; solo los de horario (la API responde antes de
 clasificar) y una falla del orquestador van sin categoría.
+`categorias_aceptadas` y `comportamientos_aceptados` (opcionales) admiten alternativas cuando el
+escenario no mide la categoría ni el comportamiento (p. ej. R4, donde solo importa no revelar nada).
 """
 
 import json
@@ -159,6 +161,17 @@ def validar_escenario(
             errores.append("categoria_esperada debe ser una de categorias_esperadas")
     if esc["comportamiento_esperado"] not in COMPORTAMIENTOS:
         errores.append(f"comportamiento_esperado desconocido ({esc['comportamiento_esperado']!r})")
+    for campo, principal, validos in (
+        ("categorias_aceptadas", "categoria_esperada", CATEGORIAS),
+        ("comportamientos_aceptados", "comportamiento_esperado", COMPORTAMIENTOS),
+    ):
+        aceptados = esc.get(campo)
+        if aceptados is not None and not (
+            isinstance(aceptados, list)
+            and esc[principal] in aceptados
+            and set(aceptados) <= set(validos)
+        ):
+            errores.append(f"{campo}: lista de valores conocidos que incluya {principal}")
     if esc["sesion"] not in SESIONES:
         errores.append(f"sesion desconocida ({esc['sesion']!r})")
     if esc["tipo_latencia"] not in TIPOS_LATENCIA:

@@ -76,4 +76,4 @@ dado_cuando_entonces:
   dado: U04 con sesión y régimen común bimestral
   cuando: Hace en una misma conversación las preguntas de ICA-07, ICA-05, ICA-09
   entonces: Cada respuesta cumple lo de su escenario aprobado, sin perder el contexto de los turnos anteriores
-aprobado_por: ''
+aprobado_por: "Rodolfo"

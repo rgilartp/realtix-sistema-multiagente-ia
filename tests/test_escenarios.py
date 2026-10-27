@@ -575,6 +575,16 @@ def test_el_validador_cuida_la_aprobacion_las_categorias_y_los_adjuntos(por_id) 
     fuentes["fuentes_esperadas"] = "Ley 44 de 1990"
     assert validar_escenario(fuentes)
     assert por_id["ROB-01"]["categoria_esperada"] is None  # falla del orquestador: sin clasificar
+    alternativas = copy.deepcopy(por_id["GEN-01"])
+    alternativas["categorias_aceptadas"] = ["general", "fuera_de_alcance"]
+    alternativas["comportamientos_aceptados"] = ["responder", "informar_fuera_de_alcance"]
+    assert not validar_escenario(alternativas)
+    sin_principal = copy.deepcopy(alternativas)
+    sin_principal["categorias_aceptadas"] = ["fuera_de_alcance"]
+    assert any("categorias_aceptadas" in e for e in validar_escenario(sin_principal))
+    desconocido = copy.deepcopy(alternativas)
+    desconocido["comportamientos_aceptados"] = ["responder", "adivinar"]
+    assert any("comportamientos_aceptados" in e for e in validar_escenario(desconocido))
 
 
 @pytest.mark.unit

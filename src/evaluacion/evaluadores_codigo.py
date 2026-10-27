@@ -112,13 +112,15 @@ def verificar(v: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bool, str]:
 
 
 def verificar_categoria(esc: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bool, str] | None:
-    """Categoría del primer turno; en multiagente, además, que se invocaran todos sus agentes."""
+    """Categoría del primer turno (o una de `categorias_aceptadas`); en multiagente, además, que
+    se invocaran todos sus agentes."""
     esperada = esc.get("categoria_esperada")
     if esperada is None:
         return None
     meta = ensayo["turnos"][0].get("meta") or {}
-    ok = meta.get("categoria") == esperada
-    detalle = f"categoría {esperada} (hubo: {meta.get('categoria')})"
+    aceptadas = esc.get("categorias_aceptadas") or [esperada]
+    ok = meta.get("categoria") in aceptadas
+    detalle = f"categoría {' o '.join(aceptadas)} (hubo: {meta.get('categoria')})"
     if esc.get("categorias_esperadas"):
         invocados = set(meta.get("agentes_invocados") or [])
         faltan = [c for c in esc["categorias_esperadas"] if f"nodo_{c}" not in invocados]
@@ -128,19 +130,21 @@ def verificar_categoria(esc: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bo
 
 
 def verificar_comportamiento(esc: dict[str, Any], ensayo: dict[str, Any]) -> tuple[bool, str]:
-    """El estado del último turno; en el OCR, además, si quedaron datos por confirmar: los hay al
-    pedir la confirmación y no los hay al pedir un documento nuevo."""
+    """El estado del último turno (o uno de `comportamientos_aceptados`); en el OCR, además, si
+    quedaron datos por confirmar: los hay al pedir la confirmación y no al pedir un documento
+    nuevo."""
     esperado = esc["comportamiento_esperado"]
     ultimo = ensayo["turnos"][-1]
     estado = ultimo.get("estado")
-    ok = estado in ESTADOS_DEL_COMPORTAMIENTO[esperado]
+    aceptados = esc.get("comportamientos_aceptados") or [esperado]
+    ok = any(estado in ESTADOS_DEL_COMPORTAMIENTO[c] for c in aceptados)
     datos = (ultimo.get("meta") or {}).get("datos_extraidos") or {}
     por_confirmar = bool(datos.get("pendiente")) if isinstance(datos, dict) else False
     if esperado == "confirmar_datos":
         ok = ok and por_confirmar
     elif esperado == "pedir_nuevo_documento":
         ok = ok and not por_confirmar
-    return ok, f"{esperado} (estado: {estado}; datos por confirmar: {por_confirmar})"
+    return ok, f"{' o '.join(aceptados)} (estado: {estado}; datos por confirmar: {por_confirmar})"
 
 
 def evaluar_codigo(esc: dict[str, Any], ensayo: dict[str, Any]) -> dict[str, Any]:

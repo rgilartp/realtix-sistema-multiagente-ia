@@ -154,12 +154,18 @@ def test_escenarios_de_agente_son_de_un_turno_y_responden() -> None:
 def test_reportes_sin_fechas_y_con_conjuntos_aparte(tmp_path: Path) -> None:
     calificados = [calificado(i, i % 3 != 0) for i in range(1, 13)] + [calificado(1, True, "R4")]
     datos = {
+        "commit_evaluado": "805f2ef",
         "huella_juez": "h",
         "conjuntos": metricas_por_conjunto(calificados),
         "costos": {"Total": "0.5"},
     }
     guardar_reportes(tmp_path, "corrida de prueba", datos, calificados)
     reporte = (tmp_path / "reporte.md").read_text(encoding="utf-8")
+    assert "Commit evaluado: `805f2ef`" in reporte and "Huella del juez: `h`" in reporte
+    datos_con_constancias = datos | {"constancias": "El modo de evaluación se apagó al terminar."}
+    guardar_reportes(tmp_path / "con", "corrida de prueba", datos_con_constancias, calificados)
+    con = (tmp_path / "con" / "reporte.md").read_text(encoding="utf-8")
+    assert "## Constancias de la corrida" in con and "se apagó al terminar" in con
     assert "## Escenarios del nivel de sistema" in reporte and "## R4 · Seguridad" in reporte
     assert "Wilson" in reporte and "Estricta" in reporte
     assert (tmp_path / "matriz_confusion.png").exists() and (tmp_path / "latencias.png").exists()
@@ -169,6 +175,11 @@ def test_reportes_sin_fechas_y_con_conjuntos_aparte(tmp_path: Path) -> None:
     for archivo in ("reporte.md", "fallas.md", "costos.md", "metricas.json"):
         assert not re.search(r"\d{4}-\d{2}-\d{2}", (tmp_path / archivo).read_text(encoding="utf-8"))
     assert b"CreationDate" not in (tmp_path / "matriz_confusion.png").read_bytes()
+    # Con el análisis ya escrito, volver a generar no lo borra: el esqueleto va aparte.
+    (tmp_path / "fallas.md").write_text("# Fallas\n\nAnálisis de la corrida.\n", encoding="utf-8")
+    guardar_reportes(tmp_path, "corrida de prueba", datos, calificados)
+    assert "Análisis" in (tmp_path / "fallas.md").read_text(encoding="utf-8")
+    assert "IPU-03" in (tmp_path / "fallas_esqueleto.md").read_text(encoding="utf-8")
 
 
 @pytest.mark.unit
@@ -194,3 +205,24 @@ def test_verificador_de_trazas_encuentra_documentos_y_nombres() -> None:
     assert r["ejecuciones_revisadas"] == 4 and r["con_identificadores"] == 3 and not r["pasa"]
     assert "1000000003" not in json.dumps(r)  # el reporte no copia el identificador
     assert revisar_ejecuciones([limpia])["pasa"] and not revisar_ejecuciones([])["pasa"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
+def test_el_commit_evaluado_es_obligatorio_contra_el_despliegue_y_no_cambia(tmp_path: Path) -> None:
+    from argparse import Namespace
+
+    from scripts.evaluar import _commit_de_la_corrida
+
+    def args(**kw: object) -> Namespace:
+        return Namespace(**({"api": None, "commit": None, "solo_reporte": False} | kw))
+
+    assert _commit_de_la_corrida(args(), tmp_path) is None  # local, sin commit
+    with pytest.raises(SystemExit, match="Falta --commit"):
+        _commit_de_la_corrida(args(api="https://x"), tmp_path)
+    metricas = json.dumps({"commit_evaluado": "aaa"})
+    (tmp_path / "metricas.json").write_text(metricas, encoding="utf-8")
+    assert _commit_de_la_corrida(args(api="https://x", commit="aaa"), tmp_path) == "aaa"
+    with pytest.raises(SystemExit, match="no de bbb"):
+        _commit_de_la_corrida(args(api="https://x", commit="bbb"), tmp_path)
+    assert _commit_de_la_corrida(args(solo_reporte=True), tmp_path) == "aaa"
