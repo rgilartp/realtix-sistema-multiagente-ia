@@ -25,7 +25,8 @@ from src.api.app import crear_app
 from src.api.esquemas import AVISO_IA
 from src.api.servicios import ServiciosAPI, version_del_proyecto
 from src.api.turno import AVISO_MODO_HUMANO
-from src.config import Settings
+from src.config import Settings, cargar_configuracion
+from src.container import Contenedor
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE
 from src.data.memoria import RealSitEnMemoria
 from src.integrations.recuperador import RecuperadorEnMemoria
@@ -559,6 +560,30 @@ def test_health_con_dependencias(datos_sinteticos) -> None:
                         "dependencias": {"postgres": "ok", "chroma": "falla"}}  # fmt: skip
     sano, _ = armar(datos_sinteticos, salud={"postgres": lambda: None})
     assert sano.get("/health").status_code == 200
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-06 · Horario de atención")
+def test_el_cliente_de_chroma_se_crea_una_sola_vez(
+    entorno_valido: pytest.MonkeyPatch,
+) -> None:
+    """Regresión del 502: el contenedor entrega siempre el mismo cliente de Chroma (el chequeo de
+    Chroma de `/health` lo pide en cada llamada), en lugar de abrir uno nuevo."""
+    import chromadb
+
+    creados: list[object] = []
+
+    def cliente_falso(**_: object) -> object:
+        creados.append(object())
+        return creados[-1]
+
+    entorno_valido.setattr(chromadb, "HttpClient", cliente_falso)
+    contenedor = Contenedor(cargar_configuracion(env_file=None))
+
+    clientes = {id(contenedor.cliente_chroma()) for _ in range(3)}
+
+    assert len(creados) == 1
+    assert clientes == {id(creados[0])}
 
 
 @pytest.mark.unit
