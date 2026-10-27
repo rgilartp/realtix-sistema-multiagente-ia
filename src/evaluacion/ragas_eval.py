@@ -24,7 +24,7 @@ from decimal import Decimal
 from typing import Any
 
 from src.config import Settings
-from src.evaluacion.juez import anonimizador_de_prueba
+from src.evaluacion.juez import anonimizador_de_prueba, fuentes_del_sistema
 from src.integrations.costos import costo_usd
 
 registro = logging.getLogger(__name__)
@@ -78,13 +78,27 @@ class Consumo:
 
 
 def caso_del_ensayo(esc: dict[str, Any], ensayo: dict[str, Any]) -> CasoRagas | None:
-    """Solo escenarios de un turno con fragmentos recuperados y referencia con contenido."""
+    """Solo escenarios de un turno con fragmentos recuperados y referencia con contenido. El
+    contexto lleva también lo que usó el sistema además de los fragmentos: los datos de las
+    herramientas, las notas y los datos del recibo (F1, ADR-25)."""
     if len(ensayo.get("turnos", [])) != 1 or ensayo.get("error"):
         return None
     turno = ensayo["turnos"][0]
-    contextos = (turno.get("meta") or {}).get("contextos") or []
+    contextos = list((turno.get("meta") or {}).get("contextos") or [])
+    if not contextos:
+        return None
+    sistema = fuentes_del_sistema(turno)
+    contextos += [
+        f"{titulo}: {valor}"
+        for clave, titulo in (
+            ("datos_herramientas", "Dato de una herramienta del sistema"),
+            ("notas_sistema", "Nota del sistema"),
+            ("datos_recibo", "Datos leídos del recibo"),
+        )
+        for valor in sistema[clave]
+    ]
     referencia = str(esc["respuesta_referencia"]).strip()
-    if not contextos or referencia.startswith("PENDIENTE"):
+    if referencia.startswith("PENDIENTE"):
         return None
     return CasoRagas(turno["usuario"], turno.get("respuesta") or "", contextos, referencia)
 
