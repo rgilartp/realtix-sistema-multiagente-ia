@@ -41,7 +41,9 @@ git log --oneline -1
 
 DOMINIO=$(grep -E '^DOMINIO=' deploy/servidor.env | cut -d= -f2-)
 export REALTIX_MODO_EVALUACION="${EVALUACION}"
-compose=(docker compose --env-file .env --env-file deploy/servidor.env)
+# deploy/compose.servidor.yml quita el puerto de Chroma en el anfitrión (ADR-26).
+compose=(docker compose -f docker-compose.yml -f deploy/compose.servidor.yml
+  --env-file .env --env-file deploy/servidor.env)
 
 echo "2/6 Imágenes"
 "${compose[@]}" build --pull --quiet

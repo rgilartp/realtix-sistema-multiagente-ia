@@ -97,3 +97,21 @@ def test_los_scripts_de_despliegue_tienen_sintaxis_valida() -> None:
         resultado = subprocess.run(["bash", "-n", str(script)], capture_output=True, text=True)
         assert resultado.returncode == 0, (script.name, resultado.stderr)
     assert 'user: "0"' not in (RAIZ / "docker-compose.yml").read_text(encoding="utf-8")
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-13 · Orquestación con Compose", "RNF-12 · Imágenes de contenedor")
+def test_chroma_sin_puerto_en_el_servidor_y_la_evaluacion_fuera_de_la_imagen() -> None:
+    # ADR-26: los avisos de chromadb, ragas y diskcache no tienen versión corregida.
+    import tomllib
+
+    servidor = (RAIZ / "deploy" / "compose.servidor.yml").read_text(encoding="utf-8")
+    assert re.search(r"^  chromadb:\n    ports: !reset \[\]$", servidor, flags=re.MULTILINE)
+    desplegar = (RAIZ / "deploy" / "desplegar.sh").read_text(encoding="utf-8")
+    assert "-f docker-compose.yml -f deploy/compose.servidor.yml" in desplegar
+    proyecto = tomllib.loads((RAIZ / "pyproject.toml").read_text(encoding="utf-8"))
+    assert not [d for d in proyecto["project"]["dependencies"] if d.startswith("ragas")]
+    assert any(d.startswith("ragas==") for d in proyecto["dependency-groups"]["eval"])
+    assert "eval" not in proyecto["tool"]["uv"].get("default-groups", ["dev"])
+    dockerfile = (RAIZ / "Dockerfile").read_text(encoding="utf-8")
+    assert "--group" not in dockerfile and "--all-groups" not in dockerfile
