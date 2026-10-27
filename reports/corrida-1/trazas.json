@@ -1,0 +1,10 @@
+{
+  "ejecuciones_revisadas": 1279,
+  "con_identificadores": 0,
+  "hallazgos": [],
+  "pasa": true,
+  "trazas": 71,
+  "conversaciones": 63,
+  "ejecuciones_del_proyecto": 1279,
+  "donde": "servidor (backend de v0.9.0, con la llave de LangSmith de su .env); conversaciones corrida-1-*, últimas 6 horas"
+}
