@@ -104,7 +104,7 @@ def calificar(
             "grupo": esc["grupo"],
             "conjunto": CONJUNTOS_APARTE.get(esc["grupo"], "principal"),
             "tipo_latencia": esc.get("tipo_latencia"),
-            "categoria_esperada": esc.get("categoria_esperada"),
+            "categoria_esperada": _esperada(esc, primera.get("categoria")),
             "categoria": primera.get("categoria"),
             "con_recuperacion": any(
                 (t.get("meta") or {}).get("contextos") for t in ensayo["turnos"]
@@ -122,6 +122,13 @@ def calificar(
         if al_avanzar:
             al_avanzar(fila)
     return calificados
+
+
+def _esperada(esc: dict[str, Any], hubo: str | None) -> str | None:
+    """La categoría esperada para la matriz: si hubo una de `categorias_aceptadas`, esa."""
+    if hubo in (esc.get("categorias_aceptadas") or []):
+        return hubo
+    return esc.get("categoria_esperada")
 
 
 def costo_de(tokens: Iterable[dict[str, dict[str, int]]]) -> Decimal:
