@@ -60,7 +60,10 @@ def _turno(cliente: Any, conversacion: str, mensaje: str, cabeceras: dict[str, s
         headers=cabeceras,
         json={"id_conversacion": conversacion, "mensaje": mensaje},
     )
-    datos = r.json() if r.status_code < 500 else {}
+    try:
+        datos = r.json() if r.status_code < 500 else {}
+    except ValueError:  # una respuesta que no es JSON cuenta como fallida, sin romper el guion
+        datos = {}
     meta = datos.get("meta") or {}
     return {
         "codigo_http": r.status_code,
@@ -120,7 +123,8 @@ def turno(api: str, conversacion: str, paso: int) -> int:
     with _cliente(api) as cliente:
         fila = _turno(cliente, conversacion, mensaje, cabeceras) | {"paso": paso}
     ruta = DESTINO / "replicas.json"
-    previos = json.loads(ruta.read_text(encoding="utf-8"))["turnos"] if ruta.exists() else []
+    anterior = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {}
+    previos = anterior.get("turnos", []) if anterior.get("conversacion") == conversacion else []
     _guardar("replicas.json", {"conversacion": conversacion, "turnos": [*previos, fila]})
     print(json.dumps(fila, ensure_ascii=False))
     return 0 if fila["codigo_http"] == 200 and fila["estado"] == "respondida" else 1

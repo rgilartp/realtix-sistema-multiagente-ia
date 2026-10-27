@@ -254,6 +254,9 @@ def _hoja(ruta: Path, codigos: list[str], titulo: str) -> None:
     )
     alucinacion = DataValidation(type="list", formula1='"sí,no"', allow_blank=False)
     for validacion, columna in ((veredictos, "B"), (alucinacion, "C")):
+        validacion.showErrorMessage = (
+            True  # Excel y LibreOffice rechazan un valor fuera de la lista
+        )
         validacion.error = "Elige un valor de la lista."
         hoja.add_data_validation(validacion)
         validacion.add(f"{columna}2:{columna}{ultima}")
@@ -307,6 +310,30 @@ def exportar_para_evaluadores(
     return [*rutas, hoja]
 
 
+def _alucinacion(valor: Any) -> str:
+    texto = str(valor).strip().lower()
+    if texto in SI:
+        return "sí"
+    if texto in ("no", "n", "false", "0"):
+        return "no"
+    raise ValueError(f"Valor de alucinación desconocido en la hoja: «{valor}»")
+
+
+def hojas_con_calificaciones(destino: Path) -> list[Path]:
+    """Las hojas de los evaluadores o del consenso que ya tienen algún veredicto (B15): exportar
+    otra vez las borraría."""
+    from openpyxl import load_workbook
+
+    con_datos = []
+    for ruta in sorted(destino.glob("*/calificaciones_*.xlsx")):
+        libro = load_workbook(ruta, read_only=True)
+        filas = list(libro["Calificaciones"].iter_rows(values_only=True))[1:]
+        libro.close()
+        if any(f[1] for f in filas if len(f) > 1):
+            con_datos.append(ruta)
+    return con_datos
+
+
 def importar_calificaciones(destino: Path) -> int:
     """Pasa las hojas de los evaluadores y del consenso a `muestra.csv`; devuelve cuántas filas
     quedaron completas. Un veredicto fuera de la lista detiene la importación."""
@@ -316,13 +343,11 @@ def importar_calificaciones(destino: Path) -> int:
     hojas["consenso"] = destino / "consenso" / "calificaciones_consenso.xlsx"
     calificaciones: dict[str, dict[str, tuple[str, str]]] = {}
     for persona, ruta in hojas.items():
-        filas = load_workbook(ruta, read_only=True)["Calificaciones"].iter_rows(values_only=True)
-        next(filas)
+        libro = load_workbook(ruta, read_only=True)
+        filas = list(libro["Calificaciones"].iter_rows(values_only=True))[1:]
+        libro.close()
         calificaciones[persona] = {
-            str(m): (
-                _veredicto(str(v)) if v else "",
-                ("sí" if str(a).lower() in SI else "no") if a else "",
-            )
+            str(m): (_veredicto(str(v)) if v else "", _alucinacion(a) if a else "")
             for m, v, a, *_ in filas
             if m
         }

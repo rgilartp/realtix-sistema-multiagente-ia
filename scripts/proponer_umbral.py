@@ -1,17 +1,14 @@
 """Propuesta del umbral de confianza con los datos de las corridas (B15, sección 8.16). Sin red.
 
-Toma cada turno atendido por los agentes que pasó por la fórmula de la confianza: los respondidos y
-las aclaraciones con un nivel menor de 1, y los que escalaron por «confianza insuficiente». Con cada
-umbral candidato cuenta:
+Toma los turnos con un nivel de confianza menor de 1 (los respondidos y las aclaraciones con ese
+nivel, y los que escalaron por «confianza insuficiente»). Los de nivel 1 no cambian con ningún
+umbral candidato: vienen de la fórmula sin fragmentos o de una regla (aclaración, rechazo). Con
+cada umbral cuenta los turnos que escalarían, y entre ellos los de un escenario superado
+(escalamientos de más) y los de uno no superado (escalamientos que evitan una respuesta mala).
 
-- los turnos que escalarían, y entre ellos los de un escenario superado (escalamientos de más: una
-  respuesta aceptable que no llega al contribuyente) y los de uno no superado (escalamientos que
-  evitan una respuesta mala);
-- con el umbral actual, cuántos escalaron.
-
-Los turnos con un nivel de 1 que no viene de la fórmula (aclaración, rechazo de acceso) y los que
-escalaron por otro motivo no cuentan. Los pesos no cambian (ADR-17). El escalamiento de un escenario
-superado solo se infiere: el juez calificó la respuesta que el contribuyente recibió.
+Los pesos no cambian (ADR-17). El escalamiento de un escenario superado solo se infiere: el juez
+calificó la respuesta que el contribuyente recibió. Los resultados de la corrida 1 son del juez v1,
+antes de las correcciones del instrumento (ADR-25).
 
 Uso: uv run python scripts/proponer_umbral.py --corridas corrida-1,corrida-2 [--actual 0.7]
 Escribe `reports/umbral/propuesta.json` y `reports/umbral/propuesta.md`.
@@ -93,7 +90,7 @@ def main() -> int:
     resultado = {
         "corridas": args.corridas.split(","),
         "umbral_actual": args.actual,
-        "turnos_con_formula": len(filas),
+        "turnos_con_nivel_menor_de_1": len(filas),
         "escalaron_por_confianza": sum(f["escalo"] for f in filas),
         "niveles": sorted(round(f["nivel"], 3) for f in filas),
         "por_umbral": tabla(filas),
@@ -116,8 +113,9 @@ def main() -> int:
         )
     texto = (
         f"# Umbral de confianza: datos de {', '.join(resultado['corridas'])}\n\n"
-        f"Turnos que pasaron por la fórmula: {len(filas)}; escalaron por confianza con el umbral "
-        f"actual: {resultado['escalaron_por_confianza']}.\n\n" + "\n".join(lineas) + "\n"
+        f"Turnos con un nivel menor de 1: {len(filas)}; escalaron por confianza con el umbral "
+        f"actual: {resultado['escalaron_por_confianza']}. Los resultados de la corrida 1 son del "
+        "juez v1 (ADR-25).\n\n" + "\n".join(lineas) + "\n"
     )
     (destino / "propuesta.md").write_text(texto, encoding="utf-8")
     print(texto)

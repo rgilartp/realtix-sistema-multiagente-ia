@@ -277,7 +277,18 @@ def test_material_de_cada_evaluador_sin_veredicto_y_con_las_fuentes_del_juez(
             hoja.cell(fila, 2, "parcialmente correcta" if persona == "dayanna" else "correcta")
             hoja.cell(fila, 3, "no")
         libro.save(ruta)
+    from src.evaluacion.calibracion import hojas_con_calificaciones
+
+    assert len(hojas_con_calificaciones(tmp_path)) == 3  # exportar ya no las reemplaza sin --forzar
     assert importar_calificaciones(tmp_path) == 4
+    ruta = tmp_path / "rodolfo" / "calificaciones_rodolfo.xlsx"
+    libro = load_workbook(ruta)
+    libro["Calificaciones"].cell(2, 3, "quizás")
+    libro.save(ruta)
+    with pytest.raises(ValueError, match="alucinación desconocido"):
+        importar_calificaciones(tmp_path)
+    for validacion in load_workbook(ruta)["Calificaciones"].data_validations.dataValidation:
+        assert validacion.showErrorMessage  # la hoja rechaza un valor fuera de la lista
     with (tmp_path / "muestra.csv").open(encoding="utf-8") as f:
         fila = next(csv.DictReader(f))
     assert (

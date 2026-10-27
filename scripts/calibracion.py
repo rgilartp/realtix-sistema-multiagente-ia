@@ -28,6 +28,7 @@ from src.evaluacion.calibracion import (  # noqa: E402
     elegir,
     exportar,
     exportar_para_evaluadores,
+    hojas_con_calificaciones,
     importar_calificaciones,
 )
 from src.evaluacion.corrida import vigentes  # noqa: E402
@@ -57,6 +58,8 @@ def main() -> int:
     if args.accion == "exportar":
         if ya_calificada(DESTINO / "muestra.csv") and not args.forzar:
             raise SystemExit("La muestra ya tiene calificaciones; no se reemplaza sin --forzar.")
+        if hojas_con_calificaciones(DESTINO) and not args.forzar:
+            raise SystemExit("Hay hojas con calificaciones; no se reemplazan sin --forzar.")
         calificados = leer_resultados(corrida / "calificados.jsonl")
         ensayos = {
             e["id_conversacion"]: e for e in vigentes(leer_resultados(corrida / "resultados.jsonl"))
