@@ -258,10 +258,51 @@ def test_el_agente_recupera_con_la_busqueda_y_responde_el_texto_del_contribuyent
     }
     agente = ConfigAgente("ipu", prompt_de_agente("ipu"), ("normativa_ipu",))
     ejecutar_agente(agente, deps, entrada, configuracion_de_hilo("c", RELOJ_ESCENARIOS))
-    assert recuperador.consultas == ["límite al aumento anual del impuesto predial"]
+    # Desde la corrida 2 (G2), con la búsqueda y con el texto, anonimizado, para fusionarlas.
+    busqueda, con_texto = recuperador.consultas
+    assert busqueda == "límite al aumento anual del impuesto predial"
+    assert "¿cuánto puede subir mi predial" in con_texto and "Ana Pérez" not in con_texto
     enviado = modelo.texto_enviado()
     assert "¿cuánto puede subir mi predial de un año a otro?" in enviado  # «Parte que atiendes»
     assert "límite al aumento anual" not in enviado and "Ana Pérez" not in enviado
+
+
+class RecuperadorPorConsulta:
+    """Recuperador falso que devuelve una lista fija para cada consulta."""
+
+    def __init__(self, listas: dict[str, list[Fragmento]]) -> None:
+        self.listas = listas
+
+    def recuperar(self, consulta: str, **_: Any) -> list[Fragmento]:
+        return list(self.listas.get(consulta, []))
+
+
+def _fragmento(n: int) -> Fragmento:
+    return Fragmento(f"Texto inventado {n}.", "normativa_ipu/inventada.md", f"Artículo {n}",
+                     0.5, norma="Norma inventada", id=f"f{n}")  # fmt: skip
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-IPU-01 · Consultas conceptuales de IPU", "RF-GEN-03 · Respuesta sustentada en fuentes"
+)
+def test_la_fusion_de_las_dos_consultas_conserva_lo_mejor_de_cada_una(adaptador) -> None:
+    """G2 y G3 de la corrida 2: el artículo que solo encuentra el texto del contribuyente entra al
+    prompt junto con los mejores de la búsqueda (fusión RRF de las dos listas)."""
+    from src.agents.agente import recuperar_con_dos_consultas
+
+    busqueda, texto = "búsqueda inventada", "texto inventado"
+    listas = {
+        busqueda: [_fragmento(n) for n in range(1, 6)],
+        texto: [_fragmento(99), _fragmento(1)],
+    }
+    deps = dependencias(adaptador, ModeloFalso([]), RecuperadorPorConsulta(listas))
+    agente = ConfigAgente("ipu", prompt_de_agente("ipu"), ("normativa_ipu",))
+    fusionados = recuperar_con_dos_consultas(deps, agente, busqueda, texto, 2026)
+    ids = [f.id for f in fusionados]
+    assert len(ids) == 5 and ids[0] == "f1" and "f99" in ids  # el primero de los dos canales
+    solo = recuperar_con_dos_consultas(deps, agente, busqueda, busqueda, 2026)
+    assert [f.id for f in solo] == [f"f{n}" for n in range(1, 6)]  # una sola consulta: igual
 
 
 @pytest.mark.unit

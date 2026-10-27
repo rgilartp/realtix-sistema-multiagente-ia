@@ -44,6 +44,7 @@ from src.agents.prompts import Prompt
 from src.agents.state import AgentState
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE, PredioInaccesibleError
 from src.integrations.modelos import texto_de_respuesta
+from src.integrations.recuperacion_hibrida import fusion_rrf
 from src.integrations.recuperador import Fragmento
 from src.integrations.robustez import con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador
@@ -189,6 +190,28 @@ def recuperar(deps: Dependencias, config: ConfigAgente, texto: str, anio: int) -
     return encontrados[:K_FRAGMENTOS]  # una colección: el orden de la fusión RRF
 
 
+def recuperar_con_dos_consultas(
+    deps: Dependencias, config: ConfigAgente, busqueda: str, texto: str, anio: int
+) -> list[Fragmento]:
+    """Los 5 fragmentos de fusionar, por rango recíproco (RRF, k = 60, como los canales), lo que
+    se recupera con la búsqueda del orquestador y con el texto del contribuyente (G2 y G3 de la
+    corrida 2). La búsqueda en los términos de la norma acierta más, pero a veces pierde el
+    artículo que el texto sí encuentra; con la fusión no se pierde ninguno de los dos primeros."""
+    con_busqueda = recuperar(deps, config, busqueda, anio)
+    if " ".join(texto.split()) == " ".join(busqueda.split()):
+        return con_busqueda
+    con_texto = recuperar(deps, config, texto, anio)
+    por_id: dict[str, Fragmento] = {}
+    for f in con_busqueda + con_texto:
+        clave = f.id or f"{f.fuente}#{f.seccion}"
+        if clave not in por_id or f.similitud > por_id[clave].similitud:
+            por_id[clave] = f
+    canales = [
+        [f.id or f"{f.fuente}#{f.seccion}" for f in lista] for lista in (con_busqueda, con_texto)
+    ]
+    return [por_id[clave] for clave, _ in fusion_rrf(canales)[:K_FRAGMENTOS]]
+
+
 def fuente_del_contrato(
     norma: str,
     articulo: str | None = None,
@@ -308,7 +331,9 @@ def ejecutar_agente(
     anonimizador = Anonimizador(para_modelos=True)
     busqueda = anonimizador.texto(busqueda_de_la_parte(state))
     try:  # la consulta va anonimizada también a los embeddings
-        fragmentos = recuperar(deps, config, busqueda, anio)
+        fragmentos = recuperar_con_dos_consultas(
+            deps, config, busqueda, anonimizador.texto(texto), anio
+        )
     except Exception as error:  # Chroma o los embeddings no respondieron (RNF-08)
         return fallo("recuperación", error)
 
