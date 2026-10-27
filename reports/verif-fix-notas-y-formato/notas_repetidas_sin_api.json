@@ -1,0 +1,17 @@
+{
+  "que_es": "sin_repetir_notas aplicada sin API a las respuestas guardadas de esta verificación (antes de la regla)",
+  "resultados": [
+    {
+      "escenario": "IPU-02",
+      "menciones_de_mora_antes": 2,
+      "menciones_de_mora_despues": 1,
+      "caracteres_quitados": 194
+    },
+    {
+      "escenario": "IPU-10",
+      "menciones_de_mora_antes": 2,
+      "menciones_de_mora_despues": 1,
+      "caracteres_quitados": 170
+    }
+  ]
+}
