@@ -230,9 +230,11 @@ def interpretar_estado(
             fuente_del_contrato(f) for f in parcial.get("fuentes", [])
         ]
         fuentes += [f for f in propias if f not in fuentes]
-    contextos = None
-    if servicios.settings.modo_evaluacion:
+    contextos = herramientas = notas = None
+    if servicios.settings.modo_evaluacion:  # lo que usó el sistema, para el juez y RAGAS
         contextos = [c for p in parciales for c in p.get("contextos", [])]
+        herramientas = [h for p in aprobadas for h in p.get("herramientas", [])]
+        notas = [n for p in aprobadas for n in p.get("notas", [])]
     ocr = estado.get("datos_extraidos", {}).get("ocr")
     meta = {
         "categoria": next((p["categoria"] for p in parciales), None)
@@ -243,6 +245,8 @@ def interpretar_estado(
         "caso_id": caso["id_caso"] if caso else None,
         "fuentes": [Fuente(**f) for f in fuentes],
         "contextos": contextos,
+        "herramientas": herramientas,
+        "notas": notas,
         "datos_extraidos": ocr if isinstance(ocr, dict) else None,
     }
     return str(estado.get("respuesta_final") or ""), estado_api, meta

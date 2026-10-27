@@ -188,7 +188,35 @@ def crear_nodo_ocr(deps: Dependencias) -> Callable[..., dict[str, Any]]:
         texto = texto_del_contraste(campos, cuenta)
         datos["ocr"] = {**datos["ocr"], "pendiente": False, "confirmado": True}
         datos["predio"] = campos.matricula
-        return parcial("ocr", texto, fuentes=(FUENTE_REALSIT,))
+        evaluacion: dict[str, Any] = {}
+        if deps.modo_evaluacion:  # lo que usó el sistema, para el juez y RAGAS (F1, ADR-25)
+            registrada = next(
+                (
+                    o.obligacion
+                    for o in cuenta.obligaciones
+                    if o.obligacion.vigencia_fiscal == campos.vigencia
+                ),
+                None,
+            )
+            situacion = {
+                "matricula": campos.matricula,
+                "vigencia": campos.vigencia,
+                "avaluo_registrado": formatear_pesos(registrada.base_gravable)
+                if registrada
+                else None,
+                "valor_liquidado_registrado": (
+                    formatear_pesos(registrada.valor_liquidado) if registrada else None
+                ),
+                "obligaciones_pendientes": cuenta.pendientes,
+                "obligaciones_vencidas": cuenta.vencidas,
+                "saldo": formatear_pesos(cuenta.saldo),
+                "fuentes_de_la_herramienta": [FUENTE_REALSIT],
+            }
+            evaluacion = {
+                "herramientas": [{"herramienta": "estado_de_cuenta", "resultado": situacion}],
+                "notas": list(cuenta.notas),
+            }
+        return parcial("ocr", texto, fuentes=(FUENTE_REALSIT,), **evaluacion)
 
     def nodo_ocr(state: AgentState, config: RunnableConfig) -> dict[str, Any]:
         if deps.modelos is None:

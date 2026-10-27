@@ -175,3 +175,5 @@ uv run python scripts/trazabilidad.py
 - ADR-23: tres campos auxiliares del turno en `AgentState` (marcas, respuesta final, descartadas).
 - ADR-24: ajustes al plan de pruebas A1 a A9 (Wilson con n = escenarios, juez validado y
   congelado, verificador de referencias, regla contra el sobreajuste) y mejoras R1 a R4.
+- ADR-25: correcciones del instrumento después de la corrida 1 (el juez y RAGAS ven herramientas,
+  notas, recibo y aviso; juez v2 con huella nueva; «Distrital»; fuga sin textos públicos).

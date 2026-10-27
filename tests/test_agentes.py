@@ -323,6 +323,33 @@ def test_ipu_10_la_cifra_llega_al_modelo_con_la_fuente_de_la_herramienta(adaptad
 
 
 @pytest.mark.unit
+@pytest.mark.req("RNF-16 · Tasa de respuestas correctas")
+def test_en_el_modo_de_evaluacion_el_parcial_lleva_lo_que_vio_el_modelo(adaptador) -> None:
+    """F1 de la corrida 1 (ADR-25): el juez y RAGAS reciben cada resultado de herramienta tal
+    como lo vio el modelo y las notas que agregó el sistema; fuera del modo de evaluación, no."""
+    guion = lambda: [pide(("estimar_predial", {"anio": 2026})), final("Tu estimación.")]  # noqa: E731
+    texto = "¿Cuánto pagaría de predial?"
+    for modo in (True, False):
+        modelo = ModeloFalso(guion())
+        deps = dependencias(adaptador, modelo, modo_evaluacion=modo)
+        respuesta, _ = ejecutar_agente(
+            AGENTE_IPU,
+            deps,
+            estado(texto, U03, [P03]),
+            configuracion_de_hilo("c", RELOJ_ESCENARIOS),
+        )
+        if not modo:
+            assert "herramientas" not in respuesta and "notas" not in respuesta
+            continue
+        (visto,) = respuesta["herramientas"]
+        assert visto["herramienta"] == "estimar_predial"
+        assert visto["resultado"] == resultados_de_herramientas(modelo)[0]
+        assert visto["resultado"]["fuentes_de_la_herramienta"]
+        assert notas.NOTA_ESTIMACION in respuesta["notas"]
+        assert all(n in respuesta["texto"] for n in respuesta["notas"])
+
+
+@pytest.mark.unit
 @pytest.mark.req("RF-IPU-03 · Liquidación estimada")
 def test_ipu_11_estimacion_de_2027_con_lo_que_aun_no_se_publica(adaptador) -> None:
     guion = [pide(("estimar_predial", {"anio": 2027})), final("Estimación de 2027.")]

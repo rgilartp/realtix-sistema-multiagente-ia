@@ -1,8 +1,10 @@
 """Juez guiado por referencia (sección 6.4 y ADR-24): `claude-opus-5-5`, salida JSON.
 
 - Recibe solo la conversación, la referencia, sus fuentes, lo que no debe hacer y, si los hay, los
-  fragmentos recuperados y las fuentes citadas. Nunca ve qué modelo respondió (ni `meta`) y todo
-  pasa antes por el anonimizador con los nombres y documentos de los usuarios de prueba.
+  fragmentos recuperados, las fuentes citadas, los datos de las herramientas, las notas del
+  sistema, los datos leídos del recibo y el aviso de IA (F1 de la corrida 1, ADR-25). Nunca ve
+  qué modelo respondió (ni el resto de `meta`) y todo pasa antes por el anonimizador con los
+  nombres y documentos de los usuarios de prueba.
 - No se le pide el razonamiento paso a paso: devuelve el veredicto y una justificación breve. Sin
   `temperature` (los modelos 5.5 la rechazan).
 - `huella_del_juez()` resume el modelo, las instrucciones, la rúbrica, el esquema y los parámetros:
@@ -13,7 +15,7 @@ import hashlib
 import inspect
 import json
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field, fields
 from functools import cache
 from pathlib import Path
 from typing import Any, Literal
@@ -29,8 +31,8 @@ from src.integrations.modelos import PARAMETROS, crear_modelo, texto_de_respuest
 from src.integrations.robustez import con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador
 
-INSTRUCCIONES = Path(__file__).resolve().parent / "juez.v1.md"
-VERSION = "juez.v1"
+INSTRUCCIONES = Path(__file__).resolve().parent / "juez.v2.md"
+VERSION = "juez.v2"
 TIEMPO_MAXIMO_S = 120.0
 
 
@@ -57,7 +59,8 @@ def instrucciones() -> str:
 
 def huella_del_juez(settings: Settings) -> str:
     """SHA-256 de todo lo que define al juez: modelo, parámetros, instrucciones, esquema y la
-    plantilla de lo que ve (el código de `CasoJuez` y de `caso_del_ensayo`, con el anonimizador).
+    plantilla de lo que ve (el código de `CasoJuez`, `_cita`, `_json`, `fuentes_del_sistema` y
+    `caso_del_ensayo`, con el anonimizador).
     Si cambia, se repite la calibración (A5)."""
     definicion = {
         "modelo": settings.modelo_juez,
@@ -65,7 +68,10 @@ def huella_del_juez(settings: Settings) -> str:
         "version": VERSION,
         "instrucciones": instrucciones(),
         "esquema": Veredicto.model_json_schema(),
-        "plantilla": inspect.getsource(CasoJuez) + inspect.getsource(caso_del_ensayo),
+        "plantilla": "".join(
+            inspect.getsource(f)
+            for f in (CasoJuez, _cita, _json, fuentes_del_sistema, caso_del_ensayo)
+        ),
         "anonimizador": inspect.getsource(Anonimizador),
     }
     return hashlib.sha256(
@@ -90,17 +96,14 @@ class CasoJuez:
     no_debe: list[str]
     contextos: list[str]
     fuentes_citadas: list[str]
+    datos_herramientas: list[str] = field(default_factory=list)
+    notas_sistema: list[str] = field(default_factory=list)
+    datos_recibo: list[str] = field(default_factory=list)
+    avisos: list[str] = field(default_factory=list)
 
     def anonimizado(self) -> "CasoJuez":
         a = anonimizador_de_prueba()
-        return CasoJuez(
-            a(self.conversacion),
-            a(self.referencia),
-            a(self.fuentes_referencia),
-            a(self.no_debe),
-            a(self.contextos),
-            a(self.fuentes_citadas),
-        )
+        return CasoJuez(*(a(getattr(self, c.name)) for c in fields(self)))
 
     def como_texto(self) -> str:
         partes = ["## Conversación"]
@@ -122,6 +125,15 @@ class CasoJuez:
         if self.contextos:
             partes += ["", "## Fragmentos que recuperó el asistente"]
             partes += [f"[{i}] {c}" for i, c in enumerate(self.contextos, 1)]
+        secciones = (
+            ("Datos que entregaron las herramientas del sistema", self.datos_herramientas),
+            ("Notas que agregó el sistema", self.notas_sistema),
+            ("Datos que el sistema leyó del recibo", self.datos_recibo),
+            ("Aviso de IA que vio el contribuyente", self.avisos),
+        )
+        for titulo, valores in secciones:
+            if valores:
+                partes += ["", f"## {titulo}", *(f"- {v}" for v in valores)]
         return "\n".join(partes)
 
 
@@ -129,14 +141,40 @@ def _cita(fuente: dict[str, Any]) -> str:
     return ", ".join(str(fuente[k]) for k in ("norma", "articulo") if fuente.get(k))
 
 
+def _json(valor: Any) -> str:
+    return json.dumps(valor, ensure_ascii=False, sort_keys=True, default=str)
+
+
+def fuentes_del_sistema(turno: dict[str, Any]) -> dict[str, list[str]]:
+    """Lo que el sistema usó en un turno además de los fragmentos: el resultado de cada
+    herramienta como lo vio el modelo (con su fuente), las notas del sistema, los datos leídos
+    del recibo y el aviso de IA (F1)."""
+    meta = turno.get("meta") or {}
+    recibo = (meta.get("datos_extraidos") or {}).get("campos")
+    return {
+        "datos_herramientas": [
+            f"{h.get('herramienta')}: {_json(h.get('resultado'))}"
+            for h in meta.get("herramientas") or []
+        ],
+        "notas_sistema": list(meta.get("notas") or []),
+        "datos_recibo": [_json(recibo)] if recibo else [],
+        "avisos": [turno["aviso_ia"]] if turno.get("aviso_ia") else [],
+    }
+
+
 def caso_del_ensayo(esc: dict[str, Any], ensayo: dict[str, Any]) -> CasoJuez:
-    """Arma lo que ve el juez; de `meta` toma solo los fragmentos y las fuentes citadas."""
+    """Arma lo que ve el juez; de `meta` toma los fragmentos, las fuentes citadas y lo que el
+    sistema usó además de los fragmentos (`fuentes_del_sistema`)."""
     contextos: list[str] = []
     citadas: list[str] = []
+    sistema: dict[str, list[str]] = {}
     for turno in ensayo["turnos"]:
         meta = turno.get("meta") or {}
         contextos += [c for c in meta.get("contextos") or [] if c not in contextos]
         citadas += [c for f in meta.get("fuentes") or [] if (c := _cita(f)) and c not in citadas]
+        for clave, valores in fuentes_del_sistema(turno).items():
+            ya = sistema.setdefault(clave, [])
+            ya += [v for v in valores if v not in ya]
     return CasoJuez(
         [
             {"contribuyente": t["usuario"], "asistente": t.get("respuesta") or ""}
@@ -147,6 +185,7 @@ def caso_del_ensayo(esc: dict[str, Any], ensayo: dict[str, Any]) -> CasoJuez:
         list(esc.get("no_debe") or []),
         contextos,
         citadas,
+        **sistema,
     )
 
 

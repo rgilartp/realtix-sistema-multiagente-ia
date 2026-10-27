@@ -23,6 +23,7 @@ from src.data.generar.recibos import (
     recibos_del_conjunto,
     textos_del_documento,
 )
+from src.services import notas
 from src.services.documentos import (
     CamposRecibo,
     a_fecha,
@@ -196,6 +197,27 @@ def test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste(api_ocr, archivos) -> 
     assert "1 obligación vencida con un saldo de $2.135.000" in texto
     assert servicios.adaptador.get_estado_cuenta("50C-9000301", U03) == antes
     assert len(modelo.llamadas) == 1  # la confirmación no llama al modelo
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-16 · Tasa de respuestas correctas")
+def test_en_el_modo_de_evaluacion_el_contraste_reporta_sus_datos_y_notas(
+    datos_sinteticos, archivos
+) -> None:
+    """F1 de la corrida 1 (ADR-25): el juez ve el estado de cuenta del contraste y las notas que
+    agregó el sistema, como en los agentes con herramientas."""
+    modelo = ModeloFalso([lectura()])
+    deps = {"modelos": lambda _n: modelo, "modo_evaluacion": True}
+    cliente, _ = armar(datos_sinteticos, deps_extra=deps)
+    subir(cliente, archivos["recibo_valido_U03"]["png"], "conv-ocr-eval")
+    meta = chat(cliente, "conv-ocr-eval", "Sí, los datos son correctos", **token(U03))["meta"]
+    (visto,) = meta["herramientas"]
+    assert visto["resultado"]["obligaciones_vencidas"] >= 1
+    assert (
+        visto["resultado"]["avaluo_registrado"] and visto["resultado"]["valor_liquidado_registrado"]
+    )
+    assert visto["resultado"]["fuentes_de_la_herramienta"]
+    assert notas.NOTA_INTERESES_MORA in meta["notas"]
 
 
 @pytest.mark.unit
