@@ -1,0 +1,63 @@
+{
+  "juez": {
+    "con_falla": {
+      "veredicto": "parcialmente correcta",
+      "alucinacion": true,
+      "cito_norma": true,
+      "cita_sustenta": true,
+      "cobertura_completa": false,
+      "claridad": 5,
+      "justificacion": "Responde bien lo esencial: el asistente no presenta declaraciones, no hace pagos y no modifica datos, y menciona los temas que sí atiende. Pero afirma sin sustento en los fragmentos que el pago o la presentación se hacen «directamente en la Oficina Virtual Tributaria», y omite que sus respuestas son orientativas y que no da asesoría personalizada."
+    },
+    "fiel": {
+      "veredicto": "parcialmente correcta",
+      "alucinacion": false,
+      "cito_norma": true,
+      "cita_sustenta": true,
+      "cobertura_completa": false,
+      "claridad": 5,
+      "justificacion": "Responde correctamente que no presenta declaraciones ni hace pagos, menciona lo que sí puede orientar y sustenta todo en el manual. Sin embargo, omite que tampoco da asesoría tributaria personalizada, elemento secundario de la referencia. La mención del funcionario está sustentada en los fragmentos."
+    }
+  },
+  "ragas": {
+    "con_falla": {
+      "context_precision": 0.9999999999666667,
+      "context_recall": 1.0,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.5672365519012592
+    },
+    "fiel": {
+      "context_precision": 0.9999999999666667,
+      "context_recall": 1.0,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.35786451294557037
+    }
+  },
+  "criterios": {
+    "juez_detecta_la_falla": true,
+    "juez_aprueba_la_fiel": true,
+    "ragas_fidelidad_menor_con_falla": true,
+    "ragas_fidelidad_fiel_0_9": true,
+    "ragas_cuatro_metricas": true
+  },
+  "costo_usd": {
+    "juez": "0.037228",
+    "ragas": "0.01693044"
+  },
+  "tokens": {
+    "juez": {
+      "entrada": 5332,
+      "salida": 795
+    },
+    "ragas": {
+      "gpt-4.1-mini-2025-04-14": {
+        "entrada": 24242,
+        "salida": 4509
+      },
+      "text-embedding-3-large": {
+        "entrada": 148,
+        "salida": 0
+      }
+    }
+  }
+}

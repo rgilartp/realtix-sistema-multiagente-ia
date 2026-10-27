@@ -69,3 +69,65 @@ def test_recolecta_los_requerimientos_de_las_pruebas_de_la_web() -> None:
                      "RF-UI-04 · Carga desde la conversación"):  # fmt: skip
         assert esperado in requerimientos
     assert all(e.prueba.startswith("web/tests/web.spec.js::") for e in evidencias)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
+def test_califica_con_100_80_y_0() -> None:
+    from scripts.trazabilidad import calificacion
+
+    assert calificacion([True, True], None) == 100
+    assert calificacion([True, True, None], None) is None  # una evidencia no se ejecutó
+    assert calificacion([True, False, None], None) == 0
+    assert calificacion([True], "medido en un solo ensayo") == 80
+    assert calificacion([True, False], None) == 0
+    assert calificacion([None], None) is None
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
+def test_matriz_completa_cruza_pruebas_escenarios_y_resultados(tmp_path: Path) -> None:
+    from scripts.trazabilidad import (
+        escribir_completa,
+        matriz_completa,
+        resultados_de_escenarios,
+        resultados_junit,
+    )
+
+    junit = tmp_path / "junit.xml"
+    junit.write_text(
+        '<testsuites><testsuite><testcase classname="tests.test_a" name="test_x"/>'
+        '<testcase classname="tests.test_a" name="test_y"><failure/></testcase>'
+        "</testsuite></testsuites>",
+        encoding="utf-8",
+    )
+    calificados = tmp_path / "calificados.jsonl"
+    calificados.write_text(
+        '{"escenario": "E-01", "superado": true}\n{"escenario": "E-01", "superado": true}\n',
+        encoding="utf-8",
+    )
+    assert resultados_junit(junit) == {
+        "tests/test_a.py::test_x": True,
+        "tests/test_a.py::test_y": False,
+    }
+    escenario = {
+        "id": "E-01",
+        "rf": ["RF-AUT-02"],
+        "dado_cuando_entonces": {"dado": "d", "cuando": "c", "entonces": "e"},
+    }
+    filas = matriz_completa(
+        [
+            Evidencia("RF-AUT-02 · Restricción a predios propios", "tests/test_a.py::test_x"),
+            Evidencia("RNF-14 · Configuración por entorno", "tests/test_a.py::test_y"),
+        ],
+        [escenario],
+        resultados_junit(junit),
+        resultados_de_escenarios(calificados),
+    )
+    por_id = {f["requerimiento"].split(" ·")[0]: f for f in filas}
+    assert len(filas) == 65
+    assert por_id["RF-AUT-02"]["calificacion"] == 100
+    assert por_id["RF-AUT-02"]["obtenido"] == "1 de 1 escenarios superados"
+    assert por_id["RNF-14"]["calificacion"] == 0
+    ruta_md, _ = escribir_completa(filas, tmp_path)
+    assert "Cumplimiento global: 50,0 %" in ruta_md.read_text(encoding="utf-8")

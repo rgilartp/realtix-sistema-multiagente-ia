@@ -1,0 +1,84 @@
+# R3 (ADR-24): encadena los escenarios aprobados IPU-01, IPU-10, IPU-08, con sus turnos, sus
+# verificaciones y sus referencias tal cual. Se reporta aparte de los 60.
+id: CAD-01
+titulo: Estado de cuenta, estimación y plazo del predial en una conversación
+origen:
+- adr-24-R3
+encadena:
+- IPU-01
+- IPU-10
+- IPU-08
+rf:
+- RF-IPU-02
+- RF-AUT-01
+- RF-IPU-03
+- RNF-09
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-05
+- HU-07
+- HU-03
+grupo: cadena
+categoria_esperada: ipu
+comportamiento_esperado: responder
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: Quiero ver el estado de cuenta de mi predio 50C-9000301
+- usuario: ¿Cuánto me tocaría pagar de predial este año por mi apartamento?
+- usuario: ¿Cuál es el plazo del predial de 2026?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 50C-9000301
+- tipo: contiene_valor
+  valor: 2.135.000
+- tipo: contiene_texto
+  valor: '2026'
+- tipo: no_escala
+- tipo: contiene_texto
+  valor: 6,1 por mil
+- tipo: contiene_texto
+  valor: estimación
+- tipo: contiene_texto
+  valor: no vinculante
+- tipo: contiene_texto
+  valor: intereses
+- tipo: contiene_texto
+  valor: 10 de julio de 2026
+respuesta_referencia: 'Parte 1 (IPU-01): Estado de cuenta del predio 50C-9000301, por vigencia: 2023,
+  2024 y 2025 al día; 2026 vencida, por $2.135.000 (el plazo era el 10 de julio de 2026). Saldo pendiente:
+  $2.135.000. Parte 2 (IPU-10): El predio 50C-9000301 (residencial, estrato 4, avalúo de $350.000.000)
+  cae en el rango de $332.318.001 a $363.632.000, con tarifa de 6,1 por mil (Resolución SDH-000194 de
+  2025, art. 1): $350.000.000 × 6,1 / 1.000 = $2.135.000. Con el 10 % de pronto pago habría sido $1.921.500,
+  pero ese descuento venció el 17 de abril de 2026. Además, el predial de 2026 de este predio está vencido
+  desde el 10 de julio de 2026 (Resolución SDH-000195 de 2025, art. 3), así que el pago ahora incluye
+  intereses de mora (Decreto 807 de 1993, art. 66), que la estimación no calcula. Es una estimación no
+  vinculante: en la factura y en la declaración los valores se aproximan al múltiplo de mil más cercano
+  (Decreto 807 de 1993, arts. 15 y 132). Parte 3 (IPU-08): Los contribuyentes del predial de 2026 deben
+  declarar y pagar, a más tardar, el 10 de julio de 2026 (Resolución SDH-000195 de 2025, art. 3); con
+  facturación, el valor total se paga a más tardar en esa misma fecha (art. 4). Ese plazo ya venció.'
+fuentes_esperadas:
+- Usuario de prueba U03 (usuarios_prueba.yaml, del adaptador)
+- CA-01 (Tabla 11 del documento de grado)
+- Resolución SDH-000194 de 2025, art. 1
+- Resolución SDH-000195 de 2025, arts. 3 y 6
+- Decreto 807 de 1993, arts. 15, 66 y 132
+- Usuario de prueba U03 (usuarios_prueba.yaml)
+- Resolución SDH-000195 de 2025, arts. 3 y 4
+- datos/calendario/2026.yaml
+no_debe:
+- mostrar datos de otro predio
+- decir que el predio está al día
+- dar un estado distinto del que devuelve el adaptador
+- presentar como vigente el descuento del 10 %, que venció el 17 de abril de 2026
+- presentar el valor como si se pudiera pagar sin intereses
+- omitir la nota de estimación no vinculante
+- dar otra fecha como plazo general
+- presentar el plazo como vigente
+dado_cuando_entonces:
+  dado: un contribuyente sintético autenticado, con un predio que tiene obligaciones pendientes
+  cuando: Hace en una misma conversación las preguntas de IPU-01, IPU-10, IPU-08
+  entonces: Cada respuesta cumple lo de su escenario aprobado, sin perder el contexto de los turnos anteriores
+aprobado_por: ''

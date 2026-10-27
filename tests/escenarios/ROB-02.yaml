@@ -13,6 +13,7 @@ comportamiento_esperado: escalar
 sesion: U03
 reloj: '2026-10-01T10:00:00-05:00'
 tipo_latencia: simple
+falla_inyectada: adaptador:tiempo
 turnos:
 - usuario: Quiero ver el estado de cuenta de mi predio 50C-9000301
 verificaciones_codigo:

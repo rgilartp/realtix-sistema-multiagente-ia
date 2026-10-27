@@ -5,7 +5,12 @@ Fuentes, consultadas en octubre de 2026:
 - Anthropic: https://platform.claude.com/docs/en/about-claude/pricing (Sonnet 5.5, $2 y $10 por
   millón de tokens de entrada y de salida; Haiku 5.5, $0,10 y $0,50 con prompts de hasta 100.000
   tokens; Opus 5.5, $4 y $20).
-- OpenAI: https://platform.openai.com/docs/pricing (`text-embedding-3-large`, $0,13 por millón).
+- OpenAI: https://developers.openai.com/api/docs/pricing (`text-embedding-3-large`, $0,13 por
+  millón; `gpt-4.1-mini`, el evaluador de RAGAS, $0,40 y $1,60; `gpt-4o-mini`, que no pasó la
+  validación de A4, $0,15 y $0,60).
+
+Haiku 5.5 cobra $0,50 y $2,50 con prompts de más de 100.000 tokens; los del sistema multiagente de
+IA no pasan de unos 25.000.
 
 Presupuesto del proyecto: US$25 en Anthropic y US$10 en OpenAI.
 """
@@ -26,6 +31,8 @@ PRECIOS: dict[str, tuple[Decimal, Decimal]] = {
     "claude-haiku-5-5": (Decimal("0.10"), Decimal("0.50")),
     "claude-opus-5-5": (Decimal("4"), Decimal("20")),
     "text-embedding-3-large": (Decimal("0.13"), Decimal("0")),
+    "gpt-4o-mini": (Decimal("0.15"), Decimal("0.60")),
+    "gpt-4.1-mini": (Decimal("0.40"), Decimal("1.60")),
 }
 PRESUPUESTO_USD = {"anthropic": Decimal("25"), "openai": Decimal("10")}
 

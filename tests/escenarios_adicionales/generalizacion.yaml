@@ -1,0 +1,46 @@
+# R1 (ADR-24): conjunto de generalización. 10 variantes parafraseadas de escenarios aprobados de un
+# turno con recuperación, con la misma referencia, las mismas verificaciones y la misma sesión de su
+# escenario de origen. Dayanna escribe cada variante en `variante`, con otras palabras y sin copiar
+# la pregunta original; una variante vacía no se corre. Solo corren en la corrida 3 y se reportan
+# aparte de los 60. Regla A8: ningún texto de estas variantes puede aparecer en prompts ni en código.
+variantes:
+  - id: VAR-01
+    id_origen: IPU-05  # ¿Cuándo se causa el predial y qué período cubre?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-02
+    id_origen: IPU-07  # ¿Hasta cuándo pago el predial con descuento en 2026?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-03
+    id_origen: IPU-08  # ¿Cuál es el plazo del predial de 2026?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-04
+    id_origen: IPU-09  # ¿Cuánto puede subir mi predial de un año a otro?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-05
+    id_origen: IPU-12  # ¿Cómo me notifican la factura del predial?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-06
+    id_origen: IPU-13  # ¿Puedo pagar el predial sin declarar?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-07
+    id_origen: ICA-01  # ¿Qué es el impuesto de industria y comercio y quién lo paga?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-08
+    id_origen: ICA-02  # ¿Sobre qué ingresos se calcula el impuesto de industria y comercio?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-09
+    id_origen: ICA-09  # ¿Cómo será el régimen del ICA en 2027?
+    variante: ""
+    aprobado_por: ""
+  - id: VAR-10
+    id_origen: GEN-07  # ¿Qué derechos tengo sobre mis datos personales?
+    variante: ""
+    aprobado_por: ""

@@ -82,7 +82,7 @@ class CamposRecibo:
 
 
 def a_pesos(texto: str | None) -> int | None:
-    """«$2.135.000» o «2135000» -> 2135000; con centavos o letras, `None`."""
+    """«$1.234.000» o «1234000» -> 1234000; con centavos o letras, `None`."""
     if texto is None:
         return None
     limpio = re.sub(r"[\s$]|COP", "", str(texto), flags=re.IGNORECASE)

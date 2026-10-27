@@ -47,7 +47,8 @@ def regimen_ica(
     """Régimen del ICA del año gravable.
 
     El preferencial no se deduce del impuesto: viene registrado (`regimen_ica` de la base). En 2026
-    el común se parte con el umbral de $19.471.409 (391 UVT) si se da el impuesto a cargo de 2025.
+    el común se parte con el umbral de 391 UVT (en pesos, con la UVT de `datos/`) si se da el
+    impuesto a cargo de 2025.
     En 2027 devuelve la regla en UVT del art. 26 del Acuerdo 1084; solo la conversión a pesos falla.
     """
     fila = regimen_ica_del_anio(anio)
