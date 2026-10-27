@@ -23,7 +23,7 @@ from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA
 from src.api.acceso import emitir_token, validar_token
 from src.api.app import crear_app
 from src.api.esquemas import AVISO_IA
-from src.api.servicios import ServiciosAPI
+from src.api.servicios import ServiciosAPI, version_del_proyecto
 from src.api.turno import AVISO_MODO_HUMANO
 from src.config import Settings
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE
@@ -32,6 +32,8 @@ from src.integrations.recuperador import RecuperadorEnMemoria
 from src.services.horario import RelojFijo
 from src.store.almacen import Almacen, crear_motor
 from tests.modelo_falso import ModeloFalso, final, pide, salida
+
+VERSION = version_del_proyecto()  # la de pyproject.toml, la que informa la API
 
 BOGOTA = ZoneInfo("America/Bogota")
 JUEVES = datetime(2026, 10, 1, 10, 0, tzinfo=BOGOTA)
@@ -131,7 +133,7 @@ def test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8(api) -> N
     assert isinstance(segunda["meta"]["tokens_por_modelo"], dict)
     assert segunda["interlocutor"] == "agente" and segunda["estado"] == "respondida"
     meta = segunda["meta"]
-    assert meta["categoria"] == "ipu" and meta["version"] == "0.5.0"
+    assert meta["categoria"] == "ipu" and meta["version"] == VERSION
     assert meta["agentes_invocados"][0] == "nodo_orquestador"
     assert meta["agentes_invocados"][-1] == "nodo_respuesta"
     assert meta["tiempos_ms"]["total"] >= meta["tiempos_ms"]["nodo_orquestador"] >= 0
@@ -551,7 +553,7 @@ def test_health_con_dependencias(datos_sinteticos) -> None:
     cliente, _ = armar(datos_sinteticos, salud={"postgres": lambda: None, "chroma": falla})
     r = cliente.get("/health")
     assert r.status_code == 503
-    assert r.json() == {"estado": "degradado", "version": "0.5.0",
+    assert r.json() == {"estado": "degradado", "version": VERSION,
                         "dependencias": {"postgres": "ok", "chroma": "falla"}}  # fmt: skip
     sano, _ = armar(datos_sinteticos, salud={"postgres": lambda: None})
     assert sano.get("/health").status_code == 200
@@ -681,4 +683,4 @@ def test_langsmith_con_anonimizador_y_metadatos_sin_contribuyente(datos_sintetic
     servicios.trazadores = lambda: []  # sin red en la prueba
     chat(cliente, "conv-traza", "Hola", **token(U01), **{"X-Escenario-Id": "AIA-01"})
     assert vistos[0]["id_conversacion"] == "conv-traza" and vistos[0]["escenario_id"] == "AIA-01"
-    assert vistos[0]["version"] == "0.5.0" and U01 not in str(vistos[0])
+    assert vistos[0]["version"] == VERSION and U01 not in str(vistos[0])
