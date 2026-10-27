@@ -42,6 +42,7 @@ from src.integrations.modelos import texto_de_respuesta
 from src.integrations.recuperador import Fragmento
 from src.integrations.robustez import con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador
+from src.services.citas import citas_sin_fuente, fuentes_de_fragmento
 from src.services.horario import RelojSistema
 
 registro = logging.getLogger(__name__)
@@ -67,6 +68,12 @@ FORMATO_SALIDA = {"format": {"type": "json_schema", "schema": transform_schema(S
 PEDIR_JSON = (
     "Entrega ahora la respuesta para el contribuyente en el JSON pedido; si ya la escribiste, "
     "cópiala en `respuesta`."
+)
+CITAS_SIN_FUENTE = (
+    "Revisa la respuesta: cita {citas}, y ese artículo no está en los encabezados de los "
+    "fragmentos, en las fuentes de las herramientas ni en las notas del sistema. Corrígela: "
+    "cita solo artículos que estén ahí, o quita la cita, sin cambiar lo demás. Devuelve el JSON "
+    "completo."
 )
 
 
@@ -329,12 +336,48 @@ def ejecutar_agente(
     except Exception as error:  # modelo, negativa, salida inválida o adaptador (RNF-08)
         return fallo("modelo o herramientas", error)
 
+    # Verificador de citas sin modelo (F5): una cita «norma, art. N» que no está en los
+    # encabezados de los fragmentos, en las fuentes de las herramientas ni en las notas pide una
+    # sola reescritura; si persiste, la parte queda «parcial» y lo decide la confianza.
+    validas = [
+        c for f in fragmentos for c in fuentes_de_fragmento(f.norma or f.fuente, f.seccion, f.texto)
+    ] + [f for r in resultados if r.tipo == "ok" for f in (*r.fuentes, *r.notas)]
+    solo_actividad_no_reconocida = any(
+        r.tipo == "actividad_no_reconocida" for r in resultados
+    ) and not any(r.tipo == "ok" for r in resultados)  # la parte será una aclaración
+    sin_fuente = (
+        citas_sin_fuente(salida.respuesta, validas)
+        if salida.suficiencia in ("completa", "parcial") and not solo_actividad_no_reconocida
+        else []
+    )
+    reescrituras = 0
+    if sin_fuente:
+        reescrituras = 1
+        registro.info(
+            "Reescritura por citas sin fuente",
+            extra={"id_conversacion": id_conversacion, "agente": categoria},
+        )
+        mensajes += [respuesta, HumanMessage(CITAS_SIN_FUENTE.format(citas="; ".join(sin_fuente)))]
+        try:
+            respuesta = llamar(con_herramientas=False, con_formato=True)
+            salida = SalidaAgente.model_validate_json(texto_de_respuesta(respuesta))
+        except Exception as error:  # se queda la primera respuesta, que pasa a «parcial»
+            registro.warning(
+                "Falló la reescritura por citas sin fuente",
+                extra={
+                    "id_conversacion": id_conversacion,
+                    "agente": categoria,
+                    "error": type(error).__name__,
+                },
+            )
+        sin_fuente = citas_sin_fuente(salida.respuesta, validas)
+
     suficiencia = salida.suficiencia
+    if sin_fuente and suficiencia == "completa":
+        suficiencia = "parcial"
     if not salida.respuesta.strip() and suficiencia != "no_corresponde":
         suficiencia = "no_pudo"  # una respuesta vacía no es una respuesta
-    if any(r.tipo == "actividad_no_reconocida" for r in resultados) and not any(
-        r.tipo == "ok" for r in resultados
-    ):
+    if solo_actividad_no_reconocida:
         suficiencia = "aclaracion"
     if suficiencia == "no_corresponde":
         return parcial(categoria, "", suficiencia="no_corresponde", cobertura=0.0), datos
@@ -355,6 +398,7 @@ def ejecutar_agente(
             "notas": notas_del_sistema(resultados)
             if suficiencia in ("completa", "parcial")
             else [],
+            "reescrituras": reescrituras,
             "version_corpus": getattr(deps.recuperador, "version_corpus", None),
         }
     respuesta_parcial = parcial(

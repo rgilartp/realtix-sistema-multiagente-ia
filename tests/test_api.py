@@ -126,8 +126,8 @@ def test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8(api) -> N
     }
     assert set(primera["meta"]) == {
         "categoria", "agentes_invocados", "nivel_confianza", "motivo_escalamiento", "caso_id",
-        "fuentes", "contextos", "herramientas", "notas", "datos_extraidos", "tiempos_ms", "tokens",
-        "tokens_por_modelo", "modelo_por_nodo", "version",
+        "fuentes", "contextos", "herramientas", "notas", "reescrituras", "datos_extraidos",
+        "tiempos_ms", "tokens", "tokens_por_modelo", "modelo_por_nodo", "version",
     }  # fmt: skip
     # Como `contextos`, el desglose por modelo solo va en el modo de evaluación (costo de B12).
     assert isinstance(segunda["meta"]["tokens_por_modelo"], dict)

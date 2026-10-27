@@ -28,6 +28,9 @@ USUARIOS = RAIZ / "tests" / "fixtures" / "usuarios_prueba.yaml"
 SIMPLES = ("IPU-01", "IPU-10", "ICA-05", "ICA-08", "AIA-02")
 CON_RECUPERACION = ("IPU-04", "IPU-09", "ICA-01", "GEN-04", "GEN-07")
 ORQUESTADOR = ("MULTI-03", "FA-03")
+# Consultas que no son de ningún escenario, con su falla conocida (F5 de la corrida 1: afirmaciones
+# y citas sin fuente). Corren sin sesión y con el reloj del primer escenario simple.
+LIBRES = {"LIBRE-01": "¿Qué es el impuesto predial?"}
 
 
 def sesiones() -> dict[str, tuple[str, list[str]]]:
@@ -35,6 +38,12 @@ def sesiones() -> dict[str, tuple[str, list[str]]]:
     return {
         u["id"]: (u["contribuyente_id"], [p["matricula"] for p in u["predios"]]) for u in usuarios
     }
+
+
+def reloj_base() -> str:
+    """El reloj del primer escenario simple: la fecha de referencia del conjunto sintético."""
+    primero = yaml.safe_load((DIR_ESCENARIOS / f"{SIMPLES[0]}.yaml").read_text(encoding="utf-8"))
+    return str(primero["reloj"])
 
 
 def correr_escenario(
@@ -73,7 +82,7 @@ def correr_humo(
     salida: Path | None = None,
     al_avanzar: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
-    """Corre los 12 escenarios y, si se da `salida`, guarda el reporte en JSON."""
+    """Corre los 12 escenarios y las consultas libres y, si se da `salida`, guarda el reporte."""
     usuarios = sesiones()
     resultados = []
     for tipo, ids in (
@@ -89,6 +98,12 @@ def correr_humo(
             resultados.append(resultado)
             if al_avanzar:
                 al_avanzar(resultado)
+    for id_libre, pregunta in LIBRES.items():
+        libre = {"id": id_libre, "turnos": [{"usuario": pregunta}], "reloj": reloj_base()}
+        resultado = correr_escenario(deps, libre, "libre", usuarios)
+        resultados.append(resultado)
+        if al_avanzar:
+            al_avanzar(resultado)
     reporte = {"resultados": resultados, "resumen": resumir(resultados)}
     if salida:
         salida.parent.mkdir(parents=True, exist_ok=True)

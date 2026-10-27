@@ -230,11 +230,12 @@ def interpretar_estado(
             fuente_del_contrato(f) for f in parcial.get("fuentes", [])
         ]
         fuentes += [f for f in propias if f not in fuentes]
-    contextos = herramientas = notas = None
+    contextos = herramientas = notas = reescrituras = None
     if servicios.settings.modo_evaluacion:  # lo que usó el sistema, para el juez y RAGAS
         contextos = [c for p in parciales for c in p.get("contextos", [])]
         herramientas = [h for p in aprobadas for h in p.get("herramientas", [])]
         notas = [n for p in aprobadas for n in p.get("notas", [])]
+        reescrituras = sum(p.get("reescrituras", 0) for p in parciales)  # F5
     ocr = estado.get("datos_extraidos", {}).get("ocr")
     meta = {
         "categoria": marcas.get("categoria_clasificada")
@@ -248,6 +249,7 @@ def interpretar_estado(
         "contextos": contextos,
         "herramientas": herramientas,
         "notas": notas,
+        "reescrituras": reescrituras,
         "datos_extraidos": ocr if isinstance(ocr, dict) else None,
     }
     return str(estado.get("respuesta_final") or ""), estado_api, meta

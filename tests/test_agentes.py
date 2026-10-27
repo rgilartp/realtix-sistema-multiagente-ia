@@ -123,11 +123,11 @@ def test_el_prompt_del_orquestador_lleva_la_regla_de_categorias_del_conjunto() -
 def test_los_prompts_de_los_agentes_llevan_las_reglas_comunes() -> None:
     for nombre in ("ipu", "ica", "general"):
         prompt = prompt_de_agente(nombre)
-        assert prompt.version.endswith("+comun.v2")
+        assert prompt.version.endswith("+comun.v3")
         texto = prompt.texto
         assert "Cita la norma y el artículo" in texto
         assert "Di siempre de qué año gravable hablas" in texto
-        assert "nunca digas que vencieron" in texto  # Ley 1995 (adenda)
+        assert "no digas que vencieron" in " ".join(texto.split())  # Ley 1995, condicional
         assert "lenguaje claro" in texto
         assert "sistema de inteligencia artificial" in texto
         assert "No pidas ni menciones nombres ni números de documento" in texto
@@ -673,6 +673,49 @@ def test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual(adap
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Régimen bimestral", U04, [P04])
     (bimestral,) = resultados_de_herramientas(modelo)
     assert [r["regimen"] for r in bimestral["reglas"]] == ["comun_bimestral"]
+
+
+# -- Citas sin fuente (F5 de la corrida 1) ------------------------------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-05 · Citación de la norma", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_una_cita_sin_fuente_provoca_una_sola_reescritura(adaptador) -> None:
+    pregunta = "¿Cuánto debo?"
+    for segunda, suficiencia in (
+        ("Debes lo que dice tu cuenta.", "completa"),
+        ("Debes lo que dice tu cuenta (Ley 900 de 2091, art. 7).", "parcial"),
+    ):
+        guion = [
+            pide(("estado_cuenta_predial", {})),
+            final("Debes lo que dice tu cuenta (Ley 900 de 2091, art. 7)."),
+            final(segunda),
+        ]
+        modelo = ModeloFalso(guion)
+        deps = dependencias(adaptador, modelo, modo_evaluacion=True)
+        respuesta, _ = ejecutar_agente(
+            AGENTE_IPU,
+            deps,
+            estado(pregunta, U03, [P03]),
+            configuracion_de_hilo("c", RELOJ_ESCENARIOS),
+        )
+        assert len(modelo.llamadas) == 3 and respuesta["reescrituras"] == 1
+        observacion = modelo.llamadas[-1][0][-1].content
+        assert "ley 900 de 2091, art. 7" in observacion
+        assert respuesta["suficiencia"] == suficiencia
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-05 · Citación de la norma")
+def test_la_cita_de_una_nota_del_sistema_no_provoca_reescritura(adaptador) -> None:
+    """La nota de mora la agrega el sistema con su norma: citarla tiene fuente."""
+    guion = [
+        pide(("estado_cuenta_predial", {})),
+        final("Tienes una obligación vencida (Decreto 807 de 1993, art. 66)."),
+    ]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "¿Cuánto debo?", U03, [P03])
+    assert notas.NOTA_INTERESES_MORA in respuesta["texto"]
+    assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "completa"
 
 
 # -- Periodicidad del ICA y estimación en la primera ronda (F4 y F8 de la corrida 1) ------------

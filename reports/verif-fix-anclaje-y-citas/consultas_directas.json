@@ -1,0 +1,36 @@
+{
+  "libres": [
+    {
+      "escenario": "LIBRE-01",
+      "escalado": false,
+      "nivel_confianza": 1.0,
+      "suficiencias": [
+        "completa"
+      ],
+      "respuesta": "El impuesto predial unificado (IPU) es un gravamen real: recae sobre los bienes raíces ubicados en Bogotá y se genera por la existencia del predio, es decir, por el solo hecho de ser dueño de un inmueble en la ciudad (Decreto Distrital 352 de 2002, cap. I, art. 14). El Distrito Capital de Bogotá es quien lo cobra y tiene las facultades para administrarlo, controlarlo, liquidarlo, recaudarlo y cobrarlo (Decreto Distrital 352 de 2002, cap. I, art. 17).\n\nFuentes: Decreto Distrital 352 de 2002, cap. I, art. 14; Decreto Distrital 352 de 2002, cap. I, art. 17.",
+      "costo_usd": "0.0080079"
+    }
+  ],
+  "agente_general_directo": [
+    {
+      "escenario": "GEN-02",
+      "suficiencia": "completa",
+      "respuesta": "No. El asistente no presenta declaraciones, no hace pagos y no modifica datos, según el manual de uso de la Oficina Virtual Tributaria simulada. Solo te orienta sobre el impuesto predial unificado, el impuesto de industria y comercio, tus datos personales y el uso de la plataforma. Si necesitas presentar o pagar, debes hacerlo por los canales de la OVT. Si quieres, puedo explicarte algo más sobre el tema o pasarte con un funcionario.\n\nFuentes: Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace.",
+      "costo_usd": "0.0005236"
+    },
+    {
+      "escenario": "GEN-02",
+      "suficiencia": "completa",
+      "respuesta": "No. El asistente no presenta declaraciones, no hace pagos y no modifica datos. Puede explicarte cómo funciona el sistema y resolver dudas generales, pero los pagos y las declaraciones tienes que hacerlos por tu cuenta en la Oficina Virtual Tributaria. Si quieres, también puedo pasarte con un funcionario.\n\nFuentes: Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace.",
+      "costo_usd": "0.0005006"
+    }
+  ],
+  "reescritura_forzada": {
+    "pregunta": "¿El asistente puede hacer trámites por mí?",
+    "suficiencia": "completa",
+    "reescrituras": 1,
+    "fallo_servicio": false,
+    "texto": "El asistente no hace trámites por ti. Según el manual de uso de la OVT simulada, no presenta declaraciones, no hace pagos y no modifica datos, y sus respuestas son orientativas.\n\nFuentes: Manual de uso de la OVT simulada (sintético), Cómo usar el asistente; Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace.",
+    "costo_usd": "0.0004974"
+  }
+}
