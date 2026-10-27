@@ -397,8 +397,14 @@ def main() -> None:
     if (args.ragas and not args.solo_reporte) or (destino / "ragas.jsonl").exists():
         evaluar = args.ragas and not args.solo_reporte
         datos["ragas"] = correr_ragas(destino, por_id, args.ragas_limite, evaluar)
-    if args.trazas:
+    ruta_trazas = destino / "trazas.json"
+    if args.trazas and not args.solo_reporte:
         datos["trazas"] = revisar_trazas(args.corrida, args.trazas_horas)
+        ruta_trazas.write_text(json.dumps(datos["trazas"], ensure_ascii=False, indent=2) + "\n")
+    elif ruta_trazas.exists():  # guardada antes (o revisada donde está la llave de LangSmith)
+        datos["trazas"] = json.loads(ruta_trazas.read_text(encoding="utf-8"))
+    if (ruta_constancias := destino / "constancias.md").exists():
+        datos["constancias"] = ruta_constancias.read_text(encoding="utf-8")
     costos = {}
     for nombre, m in datos["conjuntos"].items():
         costos[f"Sistema ({nombre})"] = m["costo_usd"]["sistema"]

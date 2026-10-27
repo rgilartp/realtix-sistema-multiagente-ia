@@ -236,6 +236,8 @@ def reporte_md(corrida: str, datos: dict[str, Any]) -> str:
             "",
         ]
     lineas += ["![Latencias](latencias.png)", ""]
+    if datos.get("constancias"):  # `constancias.md` de la corrida, escrito por el operador
+        lineas += ["## Constancias de la corrida", "", datos["constancias"].strip(), ""]
     return "\n".join(lineas)
 
 

@@ -162,6 +162,10 @@ def test_reportes_sin_fechas_y_con_conjuntos_aparte(tmp_path: Path) -> None:
     guardar_reportes(tmp_path, "corrida de prueba", datos, calificados)
     reporte = (tmp_path / "reporte.md").read_text(encoding="utf-8")
     assert "Commit evaluado: `805f2ef`" in reporte and "Huella del juez: `h`" in reporte
+    datos_con_constancias = datos | {"constancias": "El modo de evaluación se apagó al terminar."}
+    guardar_reportes(tmp_path / "con", "corrida de prueba", datos_con_constancias, calificados)
+    con = (tmp_path / "con" / "reporte.md").read_text(encoding="utf-8")
+    assert "## Constancias de la corrida" in con and "se apagó al terminar" in con
     assert "## Escenarios del nivel de sistema" in reporte and "## R4 · Seguridad" in reporte
     assert "Wilson" in reporte and "Estricta" in reporte
     assert (tmp_path / "matriz_confusion.png").exists() and (tmp_path / "latencias.png").exists()
