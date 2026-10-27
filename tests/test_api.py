@@ -126,8 +126,8 @@ def test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8(api) -> N
     }
     assert set(primera["meta"]) == {
         "categoria", "agentes_invocados", "nivel_confianza", "motivo_escalamiento", "caso_id",
-        "fuentes", "contextos", "datos_extraidos", "tiempos_ms", "tokens", "tokens_por_modelo",
-        "modelo_por_nodo", "version",
+        "fuentes", "contextos", "herramientas", "notas", "datos_extraidos", "tiempos_ms", "tokens",
+        "tokens_por_modelo", "modelo_por_nodo", "version",
     }  # fmt: skip
     # Como `contextos`, el desglose por modelo solo va en el modo de evaluación (costo de B12).
     assert isinstance(segunda["meta"]["tokens_por_modelo"], dict)
@@ -278,6 +278,7 @@ def test_sin_modo_de_evaluacion_las_cabeceras_de_prueba_se_ignoran(
     assert r["estado"] == "respondida"  # el reloj de la API (jueves) y sin falla
     assert servicios.almacen.interacciones("conv-normal")[0]["escenario_id"] is None
     assert r["meta"]["contextos"] is None and r["meta"]["tokens_por_modelo"] is None
+    assert r["meta"]["herramientas"] is None and r["meta"]["notas"] is None
     assert cliente.post("/api/v1/ovt-simulada/sesion", json={"usuario": "U01"}).status_code == 404
 
 
@@ -438,6 +439,7 @@ def test_el_nombre_de_la_sesion_no_llega_a_los_modelos(datos_sinteticos) -> None
     assert set(fuente) == {"norma", "articulo", "coleccion", "puntaje"}
     assert fuente["coleccion"] == "normativa_ipu" and isinstance(fuente["puntaje"], float)
     assert r["meta"]["contextos"]  # modo de evaluación: los textos de los fragmentos (RAGAS)
+    assert r["meta"]["herramientas"] == [] and r["meta"]["notas"] == []  # no pidió herramientas
 
 
 @pytest.mark.unit

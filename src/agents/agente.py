@@ -212,12 +212,17 @@ def componer_texto(
     fuentes = _sin_repetir([f for r in exitosos for f in r.fuentes] + [f.cita for f in citados])
     if not con_anexos:
         return texto, fuentes
-    notas = [n for n in _sin_repetir([n for r in exitosos for n in r.notas]) if n not in texto]
+    notas = [n for n in notas_del_sistema(resultados) if n not in texto]
     if notas:
         texto += "\n\n" + "\n\n".join(notas)
     if fuentes:
         texto += "\n\nFuentes: " + "; ".join(fuentes) + "."
     return texto, fuentes
+
+
+def notas_del_sistema(resultados: list[Resultado]) -> list[str]:
+    """Las notas de los servicios que el sistema agrega al final, sin repetir."""
+    return _sin_repetir([n for r in resultados if r.tipo == "ok" for n in r.notas])
 
 
 def para_el_modelo(resultado: Resultado) -> dict[str, Any]:
@@ -296,6 +301,7 @@ def ejecutar_agente(
         return respuesta
 
     resultados: list[Resultado] = []
+    vistos: list[dict[str, Any]] = []  # cada resultado tal como lo vio el modelo (evaluación)
     try:
         respuesta = llamar(con_herramientas=True, con_formato=not especificaciones)
         if especificaciones:
@@ -311,12 +317,9 @@ def ejecutar_agente(
                     except PredioInaccesibleError as error:
                         raise _Rechazo from error
                 resultados.append(resultado)
-                mensajes.append(
-                    ToolMessage(
-                        json.dumps(para_el_modelo(resultado), ensure_ascii=False, default=str),
-                        tool_call_id=llamada["id"],
-                    )
-                )
+                visto = json.dumps(para_el_modelo(resultado), ensure_ascii=False, default=str)
+                vistos.append({"herramienta": llamada["name"], "resultado": json.loads(visto)})
+                mensajes.append(ToolMessage(visto, tool_call_id=llamada["id"]))
             if not respuesta.tool_calls:
                 mensajes.append(HumanMessage(PEDIR_JSON))
             respuesta = llamar(con_herramientas=False, con_formato=True)
@@ -343,9 +346,15 @@ def ejecutar_agente(
     if contexto.matriculas_usadas:
         datos["predio"] = contexto.matriculas_usadas[-1]
     evaluacion: dict[str, Any] = {}
-    if deps.modo_evaluacion:  # para RAGAS en B12: cada fragmento tal como lo vio el modelo
+    if deps.modo_evaluacion:
+        # Para el juez y RAGAS: cada fragmento y cada resultado de herramienta tal como los vio
+        # el modelo, y las notas que agregó el sistema (F1 de la corrida 1, ADR-25).
         evaluacion = {
             "contextos": [f"{f.cita}\n{f.texto[:MAX_CARACTERES_FRAGMENTO]}" for f in fragmentos],
+            "herramientas": vistos,
+            "notas": notas_del_sistema(resultados)
+            if suficiencia in ("completa", "parcial")
+            else [],
             "version_corpus": getattr(deps.recuperador, "version_corpus", None),
         }
     respuesta_parcial = parcial(
