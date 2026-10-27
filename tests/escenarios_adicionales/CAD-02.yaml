@@ -1,0 +1,79 @@
+# R3 (ADR-24): encadena los escenarios aprobados ICA-07, ICA-05, ICA-09, con sus turnos, sus
+# verificaciones y sus referencias tal cual. Se reporta aparte de los 60.
+id: CAD-02
+titulo: Fechas, estimación bimestral y régimen de 2027 del ICA en una conversación
+origen:
+- adr-24-R3
+encadena:
+- ICA-07
+- ICA-05
+- ICA-09
+rf:
+- RF-ICA-03
+- RF-AUT-01
+- RF-ICA-02
+- RF-ICA-01
+hu:
+- HU-03
+- HU-07
+grupo: cadena
+categoria_esperada: ica
+comportamiento_esperado: responder
+sesion: U04
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+turnos:
+- usuario: ¿Cuándo tengo que declarar el ICA este año?
+- usuario: Mis ingresos de un bimestre son $250.000.000 en la actividad 5611, ¿cuánto pago de ICA?
+- usuario: ¿Cómo será el régimen del ICA en 2027?
+verificaciones_codigo:
+- tipo: contiene_texto
+  valor: 9 de octubre
+- tipo: contiene_texto
+  valor: 11 de diciembre
+- tipo: contiene_texto
+  valor: 12 de febrero
+- tipo: contiene_valor
+  valor: 3.450.000
+- tipo: contiene_texto
+  valor: 13,8 por mil
+- tipo: contiene_texto
+  valor: estimación
+- tipo: contiene_texto
+  valor: 391 UVT
+- tipo: no_contiene_valor
+  valor: 19.471.409
+respuesta_referencia: 'Parte 1 (ICA-07): U04 es régimen común con declaración bimestral. Las fechas de
+  2026 son el 10 de abril, el 12 de junio, el 21 de agosto, el 9 de octubre y el 11 de diciembre de 2026,
+  y el 12 de febrero de 2027 (Resolución SDH-000195 de 2025, art. 1). La próxima es el 9 de octubre de
+  2026. Parte 2 (ICA-05): Para la actividad 5611 la tarifa de 2026 es 13,8 por mil (Acuerdo 65 de 2002,
+  art. 3, en su texto vigente en 2026): $250.000.000 × 13,8 / 1.000 = $3.450.000 por bimestre, como los
+  de U04, para los bimestres 1 a 5 de 2026. Desde el bimestre 6 de 2026 rige la tarifa del Acuerdo 1084
+  de 2026, art. 21, de 12 por mil para esa actividad: $250.000.000 × 12 / 1.000 = $3.000.000. Es una estimación
+  no vinculante. La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, Decreto
+  352 de 2002, art. 59) ni la sobretasa bomberil, que se suman cuando aplican. Parte 3 (ICA-09): A partir
+  del 1 de enero de 2027 pertenecen al régimen común los contribuyentes cuyo impuesto a cargo en el año
+  inmediatamente anterior supera 391 UVT, y declaran y pagan cada dos meses; pertenecen al régimen preferencial
+  los de hasta 391 UVT, y declaran una vez al año. Quien realiza por primera vez actividades gravadas
+  queda en el preferencial durante el primer año (Acuerdo 1084 de 2026, art. 26). El umbral no se da en
+  pesos porque el valor de 2027 aún no se ha publicado.'
+fuentes_esperadas:
+- Resolución SDH-000195 de 2025, art. 1
+- datos/calendario/2026.yaml
+- Acuerdo 65 de 2002, art. 3
+- Acuerdo 1084 de 2026, art. 21
+- datos/tarifas/ica_2026.yaml
+- datos/tarifas/ica_2027.yaml
+- Usuario de prueba U04
+- Acuerdo 1084 de 2026, art. 26
+- datos/regimenes_ica.yaml
+no_debe:
+- dar las fechas del régimen anual a un contribuyente bimestral
+- aplicar la tarifa de 2027 a un bimestre de 2026 anterior al sexto
+- dar el umbral de 2027 en pesos
+- aplicar la regla de 2027 a las declaraciones de 2026
+dado_cuando_entonces:
+  dado: U04 con sesión y régimen común bimestral
+  cuando: Hace en una misma conversación las preguntas de ICA-07, ICA-05, ICA-09
+  entonces: Cada respuesta cumple lo de su escenario aprobado, sin perder el contexto de los turnos anteriores
+aprobado_por: ''

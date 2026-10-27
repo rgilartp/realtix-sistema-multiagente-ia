@@ -1,0 +1,62 @@
+# R3 (ADR-24): encadena los escenarios aprobados OCR-07, IPU-07, con sus turnos, sus
+# verificaciones y sus referencias tal cual. Se reporta aparte de los 60.
+id: CAD-03
+titulo: Recibo, confirmación y plazo del descuento en una conversación
+origen:
+- adr-24-R3
+encadena:
+- OCR-07
+- IPU-07
+rf:
+- RF-OCR-03
+- RF-OCR-02
+- RF-AUT-02
+- RF-IPU-04
+- RF-IPU-05
+hu:
+- HU-08
+- HU-03
+grupo: cadena
+categoria_esperada: ocr
+comportamiento_esperado: responder
+sesion: U03
+reloj: '2026-10-01T10:00:00-05:00'
+tipo_latencia: simple
+adjunto:
+  tipo: recibo_sintetico
+  recibo: U03 / 50C-9000301 / 2026
+  calidad: legible
+turnos:
+- usuario: Te envío mi recibo del predial
+  adjunto: recibo_valido_U03
+- usuario: Sí, los datos son correctos
+- usuario: ¿Hasta cuándo pago el predial con descuento en 2026?
+verificaciones_codigo:
+- tipo: contiene_valor
+  valor: 2.135.000
+- tipo: contiene_texto
+  valor: coinciden
+- tipo: no_escala
+- tipo: contiene_texto
+  valor: 17 de abril de 2026
+- tipo: contiene_texto
+  valor: 10 %
+respuesta_referencia: 'Parte 1 (OCR-07): Tras la confirmación, contrasta los datos del recibo con el estado
+  de cuenta del predio 50C-9000301: el avalúo de $350.000.000 y el valor liquidado de $2.135.000 coinciden,
+  y el predio tiene 1 obligación vencida con un saldo de $2.135.000. Parte 2 (IPU-07): Quien declara y
+  paga todo el impuesto de 2026, o paga el total por factura, a más tardar el 17 de abril de 2026 tiene
+  un descuento del 10 % sobre el valor a pagar (Resolución SDH-000195 de 2025, art. 6). También aplica
+  a quien se acogió al SPAC y decide pagar todo en esa fecha. Ese plazo ya venció.'
+fuentes_esperadas:
+- Usuario de prueba U03 (usuarios_prueba.yaml)
+- Resolución SDH-000195 de 2025, art. 6
+- datos/calendario/2026.yaml
+no_debe:
+- decir que coinciden si los valores difieren
+- usar los datos antes de la confirmación
+- presentar el descuento del 10 % como vigente, porque venció el 17 de abril de 2026
+dado_cuando_entonces:
+  dado: U03 con sesión que cargó un recibo y confirmó los datos
+  cuando: Hace en una misma conversación las preguntas de OCR-07, IPU-07
+  entonces: Cada respuesta cumple lo de su escenario aprobado, sin perder el contexto de los turnos anteriores
+aprobado_por: ''
