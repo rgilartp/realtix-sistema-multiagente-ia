@@ -1,0 +1,36 @@
+# Lo que nunca entra en una imagen (RNF-12 y sección 3.11). El .env y las llaves, sobre todo.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+.git
+.github
+
+# Entornos, cachés y bases generadas (la de RealSit se genera en el servidor, en su volumen)
+.venv
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+**/*.db
+**/*.db-journal
+**/*.sqlite
+**/*.sqlite3
+datos/recibos
+
+# Lo que la imagen no usa
+docs
+reports
+tests
+scripts/curaduria/descargas
+web/node_modules
+web/dist
+web/test-results
+.impeccable
+.playwright-cli
+.vscode
+.idea

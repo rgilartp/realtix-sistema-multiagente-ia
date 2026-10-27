@@ -1,0 +1,64 @@
+# Proxy del sistema multiagente de IA (ADR-09; secciones 3.7 y 3.11).
+#
+# - HTTPS automático con Let's Encrypt para {$DOMINIO} (tg2-multiagente.duckdns.org en el servidor;
+#   con DOMINIO=localhost, Caddy usa su propia autoridad local para la prueba en el equipo).
+# - /api y /health van al backend; `dynamic a` descubre las réplicas de `backend` en el DNS de
+#   Docker (RNF-02 · Escalamiento horizontal); si una réplica no acepta la conexión, se intenta
+#   otra durante 5 s. Sin salud pasiva: un cuerpo demasiado grande cortaba la petición y apartaba
+#   la réplica sana 30 s (todo el sistema quedaba en 503).
+# - Tamaño del cuerpo: 6 MB en /api/v1/chat/documento (el archivo puede pesar 5 MB, más el
+#   formulario) y 64 KB en el resto de /api.
+# - Cabeceras de seguridad: HSTS sin preload, nosniff, Referrer-Policy y Permissions-Policy. CSP sin
+#   scripts ni estilos en línea (la web no los usa), con frame-ancestors por página: 'self' en la
+#   OVT simulada, 'none' en la consola y el origen de la OVT simulada en el widget.
+
+(backend) {
+	reverse_proxy {
+		dynamic a {
+			name backend
+			port 8001
+			refresh 10s
+		}
+		lb_policy round_robin
+		lb_try_duration 5s
+	}
+}
+
+{$DOMINIO} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+		-Server
+	}
+
+	handle /api/* {
+		request_body /api/v1/chat/documento {
+			max_size 6MB
+		}
+		@resto_api not path /api/v1/chat/documento
+		request_body @resto_api {
+			max_size 64KB
+		}
+		import backend
+	}
+
+	handle /health {
+		import backend
+	}
+
+	handle {
+		root * /srv
+		@widget path /widget /widget/*
+		header @widget Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors https://{$DOMINIO}"
+		@consola path /consola /consola/*
+		header @consola Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+		@ovt not path /widget /widget/* /consola /consola/*
+		header @ovt Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'"
+		try_files {path} {path}/index.html
+		file_server
+	}
+}

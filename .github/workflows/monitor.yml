@@ -1,0 +1,29 @@
+name: Monitor de /health
+
+# RNF-06 · Horario de atención: revisa /health del despliegue cada 15 minutos, desde el despliegue
+# (B13) hasta el cierre de las pruebas. La disponibilidad dentro del horario hábil se calcula en B15
+# y B16 con el historial de ejecuciones (`gh run list --workflow monitor.yml`). El dominio es la
+# variable del repositorio DOMINIO (gh variable set DOMINIO).
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  salud:
+    name: /health por HTTPS
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Consultar /health
+        env:
+          DOMINIO: ${{ vars.DOMINIO }}
+        run: |
+          test -n "$DOMINIO" || { echo "Falta la variable DOMINIO del repositorio"; exit 1; }
+          respuesta=$(curl -fsS --retry 2 --retry-delay 10 --max-time 20 "https://${DOMINIO}/health")
+          echo "$respuesta"
+          echo "$respuesta" | grep -q '"estado":"ok"'
