@@ -62,6 +62,9 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
    - El criterio de A4 (alucinación o un veredicto distinto de «correcta») se cumple en las dos, pero la variación muestra que el juez detecta esa frase de procedimiento con menos firmeza que una cifra alterada. Es una limitación que se reporta.
    - Costo de las dos ejecuciones: US$0,1412 en Anthropic y US$0,0520 en OpenAI.
 6. **La corrida 1 queda reportada tal como se midió** (48,3 %). No se vuelve a calificar con el juez nuevo: sus `meta` no traen los datos de las herramientas.
+   - Los archivos de `reports/corrida-1/` no se regeneran.
+   - Con `scripts/evaluar.py --corrida corrida-1 --solo-reporte`, que conserva las calificaciones del juez v1 y su huella, los evaluadores de código corregidos (F3) darían 32 de 60 (53,3 %): se suman ICA-01, IPU-05 y MULTI-03.
+   - Esa cifra es informativa y no reemplaza la de la corrida 1.
 
 ## Juez v3 (después de la revisión externa del PR de las correcciones del instrumento)
 
@@ -102,8 +105,8 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
   | Avalúo alterado (dato solo de la herramienta) | parcialmente correcta, con alucinación (las 3) | el avalúo alterado (las 3) |
   | Saldo fiel | correcta, sin alucinación (las 3) | ninguna |
 
-  - RAGAS, sin cambios: fidelidad de 0,90 frente a 1,00 (GEN-02) y de 0,67 frente a 1,00 (saldo).
-  - El juez escribió en promedio 215 tokens de salida por llamada en A4 y 556 en la recalificación.
+  - RAGAS cumple sus criterios: fidelidad de 0,50 frente a 1,00 en GEN-02 (0,90 en la ejecución anterior: RAGAS varía entre ejecuciones) y de 0,67 frente a 1,00 en el saldo.
+  - El juez escribió en promedio 215 tokens de salida por llamada en A4 y 404 en la recalificación (556 en `verif-fix-instrumento`).
   - Costo: US$0,3144 en Anthropic y US$0,0260 en OpenAI.
 - **Prueba contra el exceso de rigor** (`scripts/recalificar_con_juez.py`, `reports/juez-v3-recalificacion/comparacion.md`): sin llamar al sistema, se recalificaron con v3 las respuestas guardadas de tres verificaciones:
   - `verif-fix-instrumento`, salvo CAD-03, cuyo turno del recibo no trae las notas;
@@ -115,6 +118,9 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
   - Ese intento es justo el que no reportaba las notas del contraste en `meta`, así que la afirmación no estaba en las fuentes que recibió el juez. Con la corrección (`verif-fix-instrumento-2`), la lista sale vacía.
   - Ninguna afirmación listada estaba en las fuentes del juez.
   - Costo: US$0,5713 en Anthropic.
+- **Para una próxima versión del juez** (no se cambia ahora: cambiaría la huella y habría que repetir A4):
+  - la descripción del esquema, que viene del docstring de `Veredicto`, menciona un detalle del código;
+  - el validador no baja el veredicto cuando la lista no está vacía. Hasta ahora, en todos los casos con lista el juez marcó también la alucinación y ninguno salió «correcta».
 
 ## Alternativas
 

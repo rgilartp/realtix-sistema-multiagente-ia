@@ -54,7 +54,7 @@ def main() -> int:
             if e["escenario"] not in fuera
         ]
         antes = {
-            c["escenario"]: c
+            (c["escenario"], c["ensayo"]): c
             for c in leer_resultados(RAIZ / "reports" / nombre / "calificados.jsonl")
         }
         carpeta = destino / nombre
@@ -69,7 +69,7 @@ def main() -> int:
             escenarios, ensayos, juez, carpeta / "juez.jsonl", huella=huella, al_juzgar=contar
         )
         for c in ahora:
-            previo = antes.get(c["escenario"], {})
+            previo = antes.get((c["escenario"], c["ensayo"]), {})
             filas.append(
                 (
                     nombre,

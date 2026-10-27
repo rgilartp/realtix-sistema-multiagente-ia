@@ -172,3 +172,21 @@ def test_una_afirmacion_sin_fuente_es_alucinacion_aunque_el_juez_no_la_marque(
         caso_del_ensayo(ESCENARIO, ensayo())
     )
     assert calificacion.veredicto.alucinacion and not calificacion.alucinacion_marcada
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16)
+def test_a4_reconoce_la_frase_listada_y_no_otra() -> None:
+    import importlib.util
+
+    from src.evaluacion.escenarios import RAIZ
+
+    ruta = RAIZ / "scripts" / "validar_evaluadores.py"
+    especificacion = importlib.util.spec_from_file_location("validar_evaluadores", ruta)
+    assert especificacion and especificacion.loader
+    modulo = importlib.util.module_from_spec(especificacion)
+    especificacion.loader.exec_module(modulo)
+    frase = "Para registrarte, debes ir primero a la oficina inventada del centro."
+    assert modulo.lista_la_frase(["«debes ir primero a la oficina inventada del centro»"], frase)
+    assert not modulo.lista_la_frase(["Solo puede orientarte con respuestas generales."], frase)
+    assert not modulo.lista_la_frase([], frase)
