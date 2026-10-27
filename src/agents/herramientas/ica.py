@@ -28,14 +28,14 @@ from src.services.calendario_tributario import (
     regimen_ica,
     regimenes_posibles,
 )
-from src.services.errores import ActividadNoReconocidaError, AnioSinDatosError, DatoNoPublicadoError
+from src.services.errores import DatoNoPublicadoError
 from src.services.ica import (
     EstimacionICA,
     PeriodoICA,
-    buscar_tarifa_ica,
     estimar_ica,
     periodicidad_registrada,
     tabla_aplicable,
+    tarifas_ica_del_anio,
 )
 
 PERIODICIDAD = {"type": "string", "enum": ["anual", "bimestral"]}
@@ -277,39 +277,41 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
 
 
 def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
-    """Tarifa de una actividad en un año, sin sesión ni ingresos (F7 de la corrida 1): la de la
-    tabla del año gravable anual; si cambia en el año, la del último bimestre, y si cambia el año
-    siguiente y su tabla ya está publicada, la de ese año."""
+    """Tarifas de una actividad en un año, sin sesión ni ingresos (F7 de la corrida 1); la regla
+    de los periodos está en el servicio."""
     ciiu = str(argumentos.get("ciiu") or "").strip()
     if not ciiu:
         raise FaltaDatoError("Falta el código CIIU de la actividad.")
     anio = entero(argumentos, "anio") or contexto.hoy.year
-    periodos = {"declaración anual": PeriodoICA(anio)}
-    if tabla_aplicable(PeriodoICA(anio, "bimestral", 6)) != tabla_aplicable(PeriodoICA(anio)):
-        periodos["bimestre 6 (declarantes bimestrales)"] = PeriodoICA(anio, "bimestral", 6)
-    tarifas = [(etiqueta, buscar_tarifa_ica(ciiu, p)) for etiqueta, p in periodos.items()]
-    try:  # si la tabla del año siguiente ya está publicada y la tarifa cambia, también va
-        siguiente = buscar_tarifa_ica(ciiu, PeriodoICA(anio + 1))
-        if siguiente.tarifa_por_mil != tarifas[0][1].tarifa_por_mil:
-            tarifas.append((f"declaración anual de {anio + 1} (cambia la tarifa)", siguiente))
-    except (AnioSinDatosError, ActividadNoReconocidaError):
-        pass
-    datos = {
+    tarifas, faltan = tarifas_ica_del_anio(ciiu, anio)
+    con_bimestre_6 = any(t.aplica_a == "bimestre_6" for t in tarifas) or faltan
+    etiquetas = {
+        "anual": f"año gravable {anio}"
+        + (" (declaración anual y bimestres 1 a 5)" if con_bimestre_6 else ""),
+        "bimestre_6": f"bimestre 6 de {anio} (declarantes bimestrales)",
+        "anio_siguiente": f"año gravable {anio + 1} (cambia la tarifa)",
+    }
+    datos: dict[str, Any] = {
         "ciiu": ciiu,
-        "actividad": tarifas[0][1].actividad,
-        "anio_gravable": anio,
+        "actividad": tarifas[0].tarifa.actividad,
         "tarifas": [
             {
-                "aplica_a": etiqueta,
-                "tarifa": por_mil(t.tarifa_por_mil),
-                "tarifa_si_cumple_condicion": por_mil(t.tarifa_condicionada),
-                "condicion": t.condicion,
-                "fuente_de_la_tarifa": t.fuente,
+                "aplica_a": etiquetas[t.aplica_a],
+                "tarifa": por_mil(t.tarifa.tarifa_por_mil),
+                "tarifa_si_cumple_condicion": por_mil(t.tarifa.tarifa_condicionada),
+                "condicion": t.tarifa.condicion,
+                "fuente_de_la_tarifa": t.tarifa.fuente,
             }
-            for etiqueta, t in tarifas
+            for t in tarifas
         ],
     }
-    return Resultado(datos, fuentes=tuple(dict.fromkeys(t.fuente for _, t in tarifas)))
+    if faltan:
+        datos["aviso"] = (
+            f"El código {ciiu} no está en la tabla de tarifas de {', '.join(map(str, faltan))} "
+            "(el Acuerdo 1084 de 2026 cambió algunos códigos): para ese periodo hay que confirmar "
+            "el código."
+        )
+    return Resultado(datos, fuentes=tuple(dict.fromkeys(t.tarifa.fuente for t in tarifas)))
 
 
 HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
