@@ -631,3 +631,67 @@ def test_checkpointer_en_postgresql_conserva_la_conversacion(deps) -> None:
         assert (
             grafo.get_state(configuracion_de_hilo(conv)).values["datos_extraidos"]["predio"] == P03
         )
+
+
+# -- Categoría de la clasificación (F2 de la corrida 1) ------------------------------------------
+
+
+class _AlmacenSinCasos:
+    def caso_de_conversacion(self, _id: str) -> None:
+        return None
+
+
+def categoria_reportada(estado: AgentState) -> str | None:
+    """La categoría de `meta` que arma la API con el estado final del grafo."""
+    from types import SimpleNamespace
+
+    from src.api.turno import interpretar_estado
+
+    servicios = SimpleNamespace(
+        settings=SimpleNamespace(modo_evaluacion=False), almacen=_AlmacenSinCasos()
+    )
+    return interpretar_estado(servicios, dict(estado))[2]["categoria"]  # type: ignore[arg-type]
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-ORQ-01 · Clasificación de la consulta", "RF-OBS-02 · Matriz de confusión de enrutamiento"
+)
+def test_lo_no_tributario_se_reporta_fuera_de_alcance_aunque_lo_responda_general(deps) -> None:
+    deps.clasificador = lambda texto, state: Clasificacion(
+        [{"categoria": "fuera_de_alcance", "texto": texto}], {"no_tributario": True}
+    )
+    r = turno(construir_grafo(deps), "¿Qué película me recomiendas?", "f2-no-trib")
+    assert r["respuestas_parciales"][0]["categoria"] == "general"  # ADR-14 no cambia
+    assert r["marcas"]["categoria_clasificada"] == "fuera_de_alcance"
+    assert categoria_reportada(r) == "fuera_de_alcance"
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-ORQ-01 · Clasificación de la consulta", "RF-OBS-02 · Matriz de confusión de enrutamiento"
+)
+def test_un_escalamiento_antes_del_agente_reporta_su_categoria(deps) -> None:
+    deps.clasificador = lambda texto, state: Clasificacion(
+        [{"categoria": "ica", "texto": texto}], {"tributario_fuera_mvp": True}
+    )
+    r = turno(construir_grafo(deps), "¿Cómo funciona un tributo inventado?", "f2-fuera-mvp")
+    assert r["requiere_escalamiento"] and not r["respuestas_parciales"]
+    assert categoria_reportada(r) == "fuera_de_alcance"
+    deps.clasificador = lambda texto, state: Clasificacion(
+        [{"categoria": "general", "texto": texto}], {"solicitud_explicita": True}
+    )
+    r = turno(construir_grafo(deps), "Necesito a alguien de carne y hueso", "f2-explicita")
+    assert r["requiere_escalamiento"] and categoria_reportada(r) == "general"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-03 · Consultas multiagente")
+def test_la_reclasificacion_de_otra_parte_no_cambia_la_categoria_reportada(deps) -> None:
+    def ica_no_corresponde(state: AgentState) -> dict[str, Any]:
+        sin = parcial("ica", "", suficiencia="no_corresponde", cobertura=0.0)
+        return {"respuestas_parciales": agregar_parcial(state, sin)}
+
+    grafo = construir_grafo(deps, nodos={"nodo_ica": ica_no_corresponde})
+    r = turno(grafo, "Explícame el predial y el ICA", "f2-multi")
+    assert categoria_reportada(r) == "ipu"

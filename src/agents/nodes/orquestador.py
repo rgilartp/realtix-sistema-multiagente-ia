@@ -111,6 +111,14 @@ def clasificar_por_palabras(texto: str, state: AgentState) -> Clasificacion:
     return Clasificacion(partes or [{"categoria": "general", "texto": texto}], marcas)
 
 
+def categoria_clasificada(clasificacion: Clasificacion, marcas: dict[str, Any]) -> str:
+    """Una de las 5 clases de RF-ORQ-01: fuera de alcance si es no tributario o tributario fuera
+    del MVP; si no, la de la primera parte."""
+    if marcas.get("no_tributario") or marcas.get("tributario_fuera_mvp"):
+        return "fuera_de_alcance"
+    return clasificacion.partes[0]["categoria"] if clasificacion.partes else "general"
+
+
 def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[str, Any]]:
     clasificar = deps.clasificador or clasificar_por_palabras
     maximo = deps.config.max_reclasificaciones
@@ -181,6 +189,11 @@ def crear_nodo_orquestador(deps: Dependencias) -> Callable[[AgentState], dict[st
             marcas["fallo_servicio"] = True
             return escalar("fallo de servicio", marcas, intentos)
         marcas.update(clasificacion.marcas)
+        if not any(p.get("aprobada") for p in state.get("respuestas_parciales", [])):
+            # La categoría de la clasificación, la que reporta la API (F2 de la corrida 1): lo no
+            # tributario va a nodo_general (ADR-14), pero se clasificó fuera de alcance. Se guarda
+            # antes de escalar y se actualiza si se reclasifica la primera parte.
+            marcas["categoria_clasificada"] = categoria_clasificada(clasificacion, marcas)
         datos.pop("oferta_transferencia", None)
 
         if marcas.get("solicitud_explicita"):
