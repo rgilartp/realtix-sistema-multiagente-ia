@@ -4,6 +4,8 @@ La restricción a predios propios vive una sola vez, en `verificar_predio_propio
 solo se decide qué hacer según la sesión. El token de la OVT simulada (HMAC) lo valida la API (B9).
 """
 
+import re
+from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Literal
 
@@ -11,6 +13,8 @@ from src.data.adapter import PredioInaccesibleError, verificar_predio_propio
 from src.data.models import Predio
 
 Razon = Literal["permitido", "sesion_requerida", "predio_inaccesible"]
+# Una matrícula catastral dentro de un mensaje (formato de la base sintética: 50C-0000000).
+MATRICULA_EN_TEXTO = re.compile(r"\b50C-\d{7}\b", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -43,3 +47,12 @@ def decidir_acceso(
         except PredioInaccesibleError:
             return DecisionAcceso(False, "predio_inaccesible")
     return DecisionAcceso(True, "permitido")
+
+
+def matriculas_ajenas(texto: str, predios_autorizados: Iterable[str]) -> list[str]:
+    """Las matrículas con formato válido que nombra el mensaje y no son de la sesión, sin modelo
+    (F9 de la corrida 1): con una sola, el agente rechaza con el mensaje único antes de llamar al
+    modelo (RF-AUT-02), sin depender de que el modelo pida la herramienta con ese predio."""
+    propias = {p.upper() for p in predios_autorizados}
+    nombradas = (m.upper() for m in MATRICULA_EN_TEXTO.findall(texto))
+    return list(dict.fromkeys(m for m in nombradas if m not in propias))

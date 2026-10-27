@@ -21,7 +21,9 @@ COLECCIONES = ("normativa_ipu",)  # colecciones donde recupera el agente
 
 
 def crear_nodo_ipu(deps: Dependencias) -> Callable[..., dict[str, Any]]:
-    agente = ConfigAgente("ipu", prompt_de_agente("ipu"), COLECCIONES, HERRAMIENTAS_IPU)
+    agente = ConfigAgente(
+        "ipu", prompt_de_agente("ipu"), COLECCIONES, HERRAMIENTAS_IPU, controla_matriculas=True
+    )
 
     def nodo_ipu(state: AgentState, config: RunnableConfig) -> dict[str, Any]:
         if deps.modelos is None:
