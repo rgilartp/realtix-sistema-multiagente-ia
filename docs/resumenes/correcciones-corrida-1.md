@@ -74,7 +74,7 @@ se volvió a correr: se verificó en el PR #45.
 - **MULTI-01:** el juez v3 listó una afirmación que de verdad no tiene fuente: «Si pagas después del 9
   de octubre, se generarán intereses de mora».
   - La respuesta de la corrida 1 ya traía una afirmación parecida («Si pagas después del plazo, se
-    generan intereses de mora, que el sistema no calcula»), y el juez v2 no la marcó.
+    generan intereses de mora, que el sistema no calcula»), y el juez v1 no la marcó.
   - La diferencia viene del juez más estricto, no de las correcciones; por eso parte del 26 de 29
     refleja el cambio de juez.
   - Según la instrucción de Rodolfo, se anota y no se corrige en esta ronda.
