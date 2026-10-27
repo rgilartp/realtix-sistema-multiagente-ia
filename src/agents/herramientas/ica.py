@@ -35,6 +35,7 @@ from src.services.ica import (
     estimar_ica,
     periodicidad_registrada,
     tabla_aplicable,
+    tarifas_ica_del_anio,
 )
 
 PERIODICIDAD = {"type": "string", "enum": ["anual", "bimestral"]}
@@ -275,6 +276,44 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
 
 
+def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
+    """Tarifas de una actividad en un año, sin sesión ni ingresos (F7 de la corrida 1); la regla
+    de los periodos está en el servicio."""
+    ciiu = str(argumentos.get("ciiu") or "").strip()
+    if not ciiu:
+        raise FaltaDatoError("Falta el código CIIU de la actividad.")
+    anio = entero(argumentos, "anio") or contexto.hoy.year
+    tarifas, faltan = tarifas_ica_del_anio(ciiu, anio)
+    con_bimestre_6 = any(t.aplica_a == "bimestre_6" for t in tarifas) or faltan
+    etiquetas = {
+        "anual": f"año gravable {anio}"
+        + (" (declaración anual y bimestres 1 a 5)" if con_bimestre_6 else ""),
+        "bimestre_6": f"bimestre 6 de {anio} (declarantes bimestrales)",
+        "anio_siguiente": f"año gravable {anio + 1} (cambia la tarifa)",
+    }
+    datos: dict[str, Any] = {
+        "ciiu": ciiu,
+        "actividad": tarifas[0].tarifa.actividad,
+        "tarifas": [
+            {
+                "aplica_a": etiquetas[t.aplica_a],
+                "tarifa": por_mil(t.tarifa.tarifa_por_mil),
+                "tarifa_si_cumple_condicion": por_mil(t.tarifa.tarifa_condicionada),
+                "condicion": t.tarifa.condicion,
+                "fuente_de_la_tarifa": t.tarifa.fuente,
+            }
+            for t in tarifas
+        ],
+    }
+    if faltan:
+        datos["aviso"] = (
+            f"El código {ciiu} no está en la tabla de tarifas de {', '.join(map(str, faltan))} "
+            "(el Acuerdo 1084 de 2026 cambió algunos códigos): para ese periodo hay que confirmar "
+            "el código."
+        )
+    return Resultado(datos, fuentes=tuple(dict.fromkeys(t.tarifa.fuente for t in tarifas)))
+
+
 HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
     Herramienta(
         "mi_situacion_ica",
@@ -299,6 +338,16 @@ HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
         },
         ("ciiu", "ingresos", "anio"),
         _estimar,
+    ),
+    Herramienta(
+        "tarifa_ica",
+        "Tarifa del ICA de una actividad (código CIIU) en un año gravable, sin sesión ni "
+        "ingresos, con su fuente; si la tabla cambia dentro del año, también la del último "
+        "bimestre, y si cambia el año siguiente, la de ese año. Para una tarifa por actividad, "
+        "sin estimar el impuesto.",
+        {"ciiu": {"type": "string", "description": "Código CIIU de la actividad."}, **ANIO},
+        ("ciiu", "anio"),
+        _tarifa,
     ),
     Herramienta(
         "regimen_ica",

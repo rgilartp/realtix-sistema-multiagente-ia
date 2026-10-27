@@ -5,6 +5,8 @@ referencias aprobadas de B6 (IPU-10, IPU-11, ICA-05) y con `usuarios_prueba.yaml
 """
 
 import json
+from datetime import date
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +30,7 @@ from src.agents.clasificador import (
 )
 from src.agents.dependencias import Clasificacion, Dependencias
 from src.agents.graph import configuracion_de_hilo, construir_grafo
+from src.agents.herramientas import Resultado
 from src.agents.herramientas.ica import HERRAMIENTAS_ICA
 from src.agents.herramientas.ipu import HERRAMIENTAS_IPU
 from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA
@@ -770,6 +773,126 @@ def test_la_parte_general_respondida_con_la_pregunta_del_predio_es_completa(
     assert "sigue las reglas de «Cuándo pedir una aclaración»" in prompt
 
 
+# -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
+
+
+def _tabla_ica(anio: int) -> dict[str, Any]:
+    return yaml.safe_load((RAIZ / f"datos/tarifas/ica_{anio}.yaml").read_text(encoding="utf-8"))
+
+
+def _tarifa_de(tabla: dict[str, Any], ciiu: str) -> Decimal | None:
+    fila = next((f for f in tabla["por_actividad"] if f["ciiu"] == ciiu), None)
+    return Decimal(str(fila["tarifa_por_mil"])) if fila else None
+
+
+def _por_mil(texto: str) -> Decimal:
+    return Decimal(texto.removesuffix(" por mil").replace(",", "."))
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad", "RF-IPU-03 · Liquidación estimada")
+def test_sin_sesion_la_tarifa_de_una_actividad_sale_de_datos_con_su_anio(adaptador) -> None:
+    """Una pregunta inventada por la tarifa de un código CIIU llama la herramienta con el año
+    pedido; las cifras salen de `datos/tarifas/` con su fuente, sin sesión: la del año (que cubre
+    los bimestres 1 a 5), la del bimestre 6 y la del año siguiente si cambian."""
+    guion = [pide(("tarifa_ica", {"ciiu": "9602", "anio": 2026})), final("La tarifa es…")]
+    respuesta, _, modelo = correr(
+        AGENTE_ICA, adaptador, guion, "Tarifa de una actividad", None, None
+    )
+    (resultado,) = resultados_de_herramientas(modelo)
+    tabla_2026, tabla_2027 = _tabla_ica(2026), _tabla_ica(2027)
+    por_periodo = {t["aplica_a"]: t for t in resultado["tarifas"]}
+    anual = por_periodo["año gravable 2026 (declaración anual y bimestres 1 a 5)"]
+    assert _por_mil(anual["tarifa"]) == _tarifa_de(tabla_2026, "9602")
+    assert anual["fuente_de_la_tarifa"] == tabla_2026["fuente"]
+    assert anual["fuente_de_la_tarifa"] in respuesta["texto"]
+    bimestre = por_periodo["bimestre 6 de 2026 (declarantes bimestrales)"]
+    assert _por_mil(bimestre["tarifa"]) == _tarifa_de(tabla_2027, "9602")
+    assert bimestre["fuente_de_la_tarifa"] == tabla_2027["fuente"]
+    if _tarifa_de(tabla_2027, "9602") != _tarifa_de(tabla_2026, "9602"):
+        siguiente = por_periodo["año gravable 2027 (cambia la tarifa)"]
+        assert _por_mil(siguiente["tarifa"]) == _tarifa_de(tabla_2027, "9602")
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad")
+def test_un_codigo_que_no_esta_en_la_tabla_siguiente_no_pierde_su_tarifa_del_anio() -> None:
+    """Revisión independiente: el Acuerdo 1084 cambió algunos códigos. Un código que solo está
+    en la tabla de 2026 da su tarifa de 2026 y un aviso, no «actividad no reconocida»."""
+    from src.agents.herramientas import Contexto
+
+    tabla_2026, tabla_2027 = _tabla_ica(2026), _tabla_ica(2027)
+    nuevos = {f["ciiu"] for f in tabla_2027["por_actividad"]} | {
+        f["ciiu"] for f in tabla_2027.get("progresiva_financiera", [])
+    }
+    solo_2026 = sorted({f["ciiu"] for f in tabla_2026["por_actividad"]} - nuevos)
+    assert solo_2026
+    herramienta = next(h for h in HERRAMIENTAS_ICA if h.nombre == "tarifa_ica")
+    contexto = Contexto(None, None, [], date(2026, 10, 1))  # type: ignore[arg-type]
+    resultado = herramienta.ejecutar(contexto, {"ciiu": solo_2026[0], "anio": 2026})
+    assert resultado.tipo == "ok"
+    (anual,) = resultado.datos["tarifas"]
+    assert _por_mil(anual["tarifa"]) == _tarifa_de(tabla_2026, solo_2026[0])
+    assert "2027" in resultado.datos["aviso"]
+
+
+def _tabla_predial(anio: int, destino: str) -> Resultado:
+    from src.agents.herramientas import Contexto
+
+    herramienta = next(h for h in HERRAMIENTAS_IPU if h.nombre == "tarifas_predial")
+    contexto = Contexto(None, None, [], date(2026, 10, 1))  # type: ignore[arg-type]
+    return herramienta.ejecutar(contexto, {"anio": anio, "destino": destino})
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-03 · Liquidación estimada")
+def test_sin_sesion_la_tabla_del_predial_trae_los_limites_en_pesos_del_anio(adaptador) -> None:
+    guion = [pide(("tarifas_predial", {"anio": 2026, "destino": "residencial"})), final("…")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Tarifas del predial", None, None)
+    (resultado,) = resultados_de_herramientas(modelo)
+    datos = yaml.safe_load((RAIZ / "datos/tarifas/ipu_2026.yaml").read_text(encoding="utf-8"))
+    limites = datos["preferenciales"]["limites_en_pesos"]
+    en_pesos = {k: "$" + f"{v:,}".replace(",", ".") for k, v in limites.items()}
+    preferenciales = resultado["tarifas_preferenciales_estratos_1_a_3"]
+    primera, segunda = preferenciales["rangos"][:2]
+    # 2026: los estratos 1 y 2 pagan desde «más de» 16 SMMLV, y la segunda fila desde «más de» 107.
+    assert primera["avaluo_desde"] == f"más de {en_pesos['16_smmlv']}"
+    assert segunda["avaluo_desde"] == f"más de {en_pesos['107_smmlv']}"
+    assert preferenciales["aplica_a"] and preferenciales["reemplazan_la_tabla_general"]
+    assert f"hasta {en_pesos['16_smmlv']}" in resultado["exclusion"]["regla"]
+    rangos = resultado["tarifas_por_rango_de_avaluo"]["rangos"]
+    assert len(rangos) == len(datos["residencial_urbano"])
+    assert all(b["fuente"] for b in (preferenciales, resultado["exclusion"]))
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-03 · Liquidación estimada")
+def test_la_tabla_de_2027_queda_en_smmlv_con_su_nota_y_los_demas_destinos() -> None:
+    from src.services import notas
+
+    residencial = _tabla_predial(2027, "residencial")
+    assert residencial.tipo == "ok" and notas.NOTA_IVIUR_2027 in residencial.notas
+    primera = residencial.datos["tarifas_preferenciales_estratos_1_a_3"]["rangos"][0]
+    assert "SMMLV (aún no se publica en pesos)" in primera["avaluo_desde"]
+    assert "inferior a 16 SMMLV" in residencial.datos["exclusion"]["regla"]
+    for anio in (2026, 2027):
+        for destino in ("comercial", "lote"):
+            tabla = _tabla_predial(anio, destino)
+            assert tabla.tipo == "ok" and tabla.datos["tarifas_por_rango_de_avaluo"]["rangos"]
+            assert "tarifas_preferenciales_estratos_1_a_3" not in tabla.datos
+    assert _tabla_predial(2025, "residencial").tipo == "no_publicado"
+    assert _tabla_predial(2026, "industrial").tipo == "falta_dato"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-03 · Liquidación estimada")
+def test_el_prompt_pide_las_cifras_por_anio_a_las_herramientas() -> None:
+    for nombre, herramienta in (("ipu", "tarifas_predial"), ("ica", "tarifa_ica")):
+        texto = " ".join(prompt_de_agente(nombre).texto.split())
+        assert "pídesela con el año que corresponde" in texto
+        assert f"`{herramienta}`" in texto
+
+
 # -- Periodicidad del ICA y estimación en la primera ronda (F4 y F8 de la corrida 1) ------------
 
 
@@ -855,7 +978,7 @@ def test_el_prompt_del_ica_pide_estimar_en_la_primera_ronda_y_una_sola_periodici
     assert "la bimestral si aún no la sabes" not in texto
     assert "da solo las fechas\n  de esa periodicidad" in texto
     assert "llama\n  `estimar_ica` en esta primera ronda" in texto
-    assert "Para estimar, la tarifa de\n  una actividad nunca se toma de los fragmentos" in texto
+    assert "La tarifa de una\n  actividad nunca se toma de los fragmentos" in texto
     assert "di cuál es la periodicidad que\n  corresponde" in texto
     assert "Conserva el periodo que nombra la norma que citas" in texto
     assert "aviso_periodicidad" in texto

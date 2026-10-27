@@ -29,7 +29,7 @@ from src.services.datos_anuales import porcentaje_pronto_pago
 from src.services.errores import AnioSinDatosError
 from src.services.minimizacion import minimizar
 from src.services.obligaciones import SituacionObligacion
-from src.services.predial import liquidar_predial
+from src.services.predial import RangoIPU, liquidar_predial, tabla_tarifas_ipu
 
 
 def _obligacion(s: SituacionObligacion) -> dict[str, Any]:
@@ -203,6 +203,57 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
 
 
+def _limite(valor: int, unidad: str) -> str:
+    return (
+        pesos(valor) or "" if unidad == "pesos" else f"{valor} SMMLV (aún no se publica en pesos)"
+    )
+
+
+def _filas(rangos: tuple[RangoIPU, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            **({"estratos": list(r.estratos)} if r.estratos else {}),
+            "avaluo_desde": ("más de " if r.desde_exclusivo else "") + _limite(r.desde, r.unidad),
+            "avaluo_hasta": _limite(r.hasta, r.unidad) if r.hasta is not None else "en adelante",
+            "tarifa": por_mil(r.tarifa_por_mil),
+        }
+        for r in rangos
+    ]
+
+
+def _tarifas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
+    """Tabla de tarifas del año, sin sesión ni avalúo (F7 de la corrida 1)."""
+    anio = entero(argumentos, "anio") or contexto.hoy.year
+    destino = argumentos.get("destino") or "residencial"
+    if destino not in ("residencial", "comercial", "lote"):
+        raise FaltaDatoError(f"El destino «{destino}» no está entre residencial, comercial y lote.")
+    tabla = tabla_tarifas_ipu(anio, destino)
+    datos: dict[str, Any] = {"anio_gravable": anio, "destino": destino}
+    fuentes = [tabla.fuente_generales]
+    if tabla.preferenciales:
+        datos["tarifas_preferenciales_estratos_1_a_3"] = {
+            "aplica_a": tabla.aplica_preferenciales,
+            "reemplazan_la_tabla_general": True,
+            "rangos": _filas(tabla.preferenciales),
+            "fuente": tabla.fuente_preferenciales,
+        }
+        fuentes.append(str(tabla.fuente_preferenciales))
+    if tabla.exclusion:
+        limite = _limite(tabla.exclusion.desde, tabla.exclusion.unidad)
+        hasta = "hasta" if tabla.exclusion.desde_exclusivo else "inferior a"
+        datos["exclusion"] = {
+            "regla": f"Los predios residenciales de estratos 1 y 2 con avalúo {hasta} {limite} "
+            "quedan excluidos del predial.",
+            "fuente": tabla.fuente_exclusion,
+        }
+        fuentes.append(str(tabla.fuente_exclusion))
+    datos["tarifas_por_rango_de_avaluo"] = {
+        "rangos": _filas(tabla.generales),
+        "fuente": tabla.fuente_generales,
+    }
+    return Resultado(datos, fuentes=tuple(dict.fromkeys(fuentes)), notas=tabla.notas)
+
+
 HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
     Herramienta(
         "mis_predios",
@@ -236,6 +287,16 @@ HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
         },
         ("anio",),
         _estimar,
+    ),
+    Herramienta(
+        "tarifas_predial",
+        "Tabla de tarifas del impuesto predial de un año gravable por destino, sin sesión ni "
+        "avalúo: los rangos de avalúo en pesos con su tarifa por mil y, en el residencial, las "
+        "tarifas preferenciales de los estratos 1 a 3 con sus límites en pesos (SMMLV del año) y "
+        "la exclusión de los estratos 1 y 2. Para una tarifa, un rango o un umbral de un año.",
+        {**ANIO, "destino": {"type": "string", "enum": ["residencial", "comercial", "lote"]}},
+        ("anio",),
+        _tarifas,
     ),
     Herramienta(
         "fechas_predial",

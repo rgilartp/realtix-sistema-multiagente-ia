@@ -103,6 +103,45 @@ def buscar_tarifa_ica(ciiu: str, periodo: PeriodoICA) -> TarifaICA:
 
 
 @dataclass(frozen=True)
+class TarifaDelPeriodo:
+    """Una tarifa de la consulta por año: la del año (`anual`, que en un año con dos tablas cubre
+    también los bimestres 1 a 5), la del bimestre 6 si cambia en el año, o la del año siguiente."""
+
+    aplica_a: Literal["anual", "bimestre_6", "anio_siguiente"]
+    anio: int
+    tarifa: TarifaICA
+
+
+def tarifas_ica_del_anio(ciiu: str, anio: int) -> tuple[list[TarifaDelPeriodo], list[int]]:
+    """Tarifas de una actividad para un año, sin ingresos (F7 de la corrida 1).
+
+    La del año es obligatoria (`ActividadNoReconocidaError` si la tabla no tiene el código). Si la
+    tabla cambia en el bimestre 6, también la de ese bimestre; si cambia el año siguiente y su
+    tabla ya está publicada, la de ese año. Devuelve además las tablas (años) en las que el código
+    no aparece, porque el Acuerdo 1084 de 2026 renumeró actividades: no se adivina la nueva."""
+    anual = buscar_tarifa_ica(ciiu, PeriodoICA(anio))
+    tarifas = [TarifaDelPeriodo("anual", anio, anual)]
+    faltan: list[int] = []
+    bimestre_6 = PeriodoICA(anio, "bimestral", 6)
+    if tabla_aplicable(bimestre_6) != anual.tabla:
+        try:
+            tarifas.append(
+                TarifaDelPeriodo("bimestre_6", anio, buscar_tarifa_ica(ciiu, bimestre_6))
+            )
+        except ActividadNoReconocidaError:
+            faltan.append(tabla_aplicable(bimestre_6))
+    try:
+        siguiente = buscar_tarifa_ica(ciiu, PeriodoICA(anio + 1))
+        if siguiente.tarifa_por_mil != anual.tarifa_por_mil:
+            tarifas.append(TarifaDelPeriodo("anio_siguiente", anio + 1, siguiente))
+    except ActividadNoReconocidaError:
+        faltan.append(tabla_aplicable(PeriodoICA(anio + 1)))
+    except AnioSinDatosError:
+        pass
+    return tarifas, sorted(set(faltan))
+
+
+@dataclass(frozen=True)
 class FilaTablaICA:
     ciiu: str
     actividad: str

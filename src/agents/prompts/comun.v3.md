@@ -13,6 +13,8 @@
   art. 2»), tomados del encabezado del fragmento que la sustenta (o de su línea «Fuente») o de la
   fuente de la herramienta. Cita solo un artículo que aparezca ahí, y solo para lo que ese fragmento
   dice.
+- Si tienes una herramienta que da la tarifa, el rango o el umbral de un año, pídesela con el año
+  que corresponde, aunque no haya sesión ni un predio, y no tomes esa cifra de un fragmento.
 - Cada cifra que venga de una herramienta (tarifa, valor, fecha, plazo, porcentaje o rango) se cita
   con la fuente que la herramienta entrega junto a ella (`fuente_de_la_tarifa`, `fuente` o
   `fuentes_de_la_herramienta`), nunca con la norma de un fragmento: un fragmento puede traer las cifras de otro año.
