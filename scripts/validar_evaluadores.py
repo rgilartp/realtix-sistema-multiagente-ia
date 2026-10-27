@@ -8,18 +8,18 @@ Caso fiel: la misma respuesta sin esa frase y con cada afirmación tal como la s
 Casos con datos de herramientas (ADR-25, después de F1): una consulta inventada de saldo, con un
 resultado inventado de `estado_cuenta_predial` y la nota de mora del sistema, armada con el mismo
 `caso_del_ensayo` de las corridas. La respuesta fiel usa un dato que solo da la herramienta (el
-avalúo); una alterada cambia el saldo (que también está en la referencia) y otra cambia el avalúo
-(que solo da la herramienta).
+avalúo); una alterada cambia el saldo (que también está en la referencia), otra cambia el avalúo
+(que solo da la herramienta) y otra agrega un requisito que no está en ninguna fuente.
 
-Criterios:
-- juez: el caso con falla tiene alucinación o no es «correcta»; el fiel es correcta o parcialmente
-  correcta, sin alucinación;
-- juez con herramientas: las respuestas con el saldo o el avalúo alterados tienen alucinación (si
-  no, es una parada); la fiel es correcta o parcialmente correcta, sin alucinación;
-- RAGAS (ajuste 2 de Rodolfo): la fidelidad del caso con falla es menor que la del fiel, y la del
-  fiel es 0,9 o más.
-Los dos casos son también la prueba inicial de RAGAS en español (A9): se miden las cuatro métricas y
-el costo. Si algún criterio no se cumple, termina con código 1: es una parada.
+Criterios (juez v3, ADR-25): el juez califica cada caso 3 veces, con el criterio de la tasa de la
+meta (A3), y debe cumplir en las 3:
+- GEN-02 con la frase inventada: no se supera y la frase está entre las afirmaciones sin fuente;
+- GEN-02 fiel y el saldo fiel: se superan, con la lista vacía;
+- el requisito inventado y el saldo o el avalúo alterados: con alucinación;
+- RAGAS, una vez (ajuste 2 de Rodolfo): la fidelidad del caso con falla es menor que la del fiel,
+  y la del fiel es 0,9 o más.
+Los dos casos de GEN-02 son también la prueba inicial de RAGAS en español (A9): se miden las cuatro
+métricas y el costo. Si algún criterio no se cumple, termina con código 1: es una parada.
 
 Uso: uv run python scripts/validar_evaluadores.py
 """
@@ -32,8 +32,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.config import cargar_configuracion  # noqa: E402
-from src.evaluacion.escenarios import RAIZ, cargar_escenarios  # noqa: E402
-from src.evaluacion.juez import CasoJuez, Juez, caso_del_ensayo, huella_del_juez  # noqa: E402
+from src.evaluacion.escenarios import RAIZ, cargar_escenarios, normalizar_texto  # noqa: E402
+from src.evaluacion.juez import (  # noqa: E402
+    CasoJuez,
+    Juez,
+    Veredicto,
+    caso_del_ensayo,
+    huella_del_juez,
+    superado,
+)
 from src.evaluacion.ragas_eval import CasoRagas, EvaluadorRagas  # noqa: E402
 from src.integrations.costos import costo_usd  # noqa: E402
 from src.services.notas import NOTA_INTERESES_MORA  # noqa: E402
@@ -83,6 +90,15 @@ SALDO_FIEL = (
 SALDO_ALTERADO = SALDO_FIEL.replace("$4.817.000", "$4.871.000")
 # El avalúo solo lo da la herramienta (no está en la referencia): aísla lo que aporta F1.
 AVALUO_ALTERADO = SALDO_FIEL.replace("$612.300.000", "$621.300.000")
+# Un requisito que no está en ninguna fuente (juez v3).
+CON_REQUISITO = (
+    f"{SALDO_FIEL} Para pagar, debes presentar también el certificado de tradición y libertad del "
+    "predio."
+)
+FRASE_INVENTADA = (
+    "Para pagar o presentar, debes hacerlo directamente en la Oficina Virtual Tributaria"
+)
+REPETICIONES = 3
 
 
 def caso_con_herramienta(respuesta: str) -> CasoJuez:
@@ -120,6 +136,17 @@ def secciones_del_manual() -> list[str]:
     return salida
 
 
+def lista_la_frase(afirmaciones: list[str], frase: str, minimo: float = 0.5) -> bool:
+    """Alguna afirmación listada recoge la frase: comparte al menos la mitad de sus palabras de
+    contenido (cuatro letras o más), sin importar tildes ni puntuación."""
+
+    def palabras(texto: str) -> set[str]:
+        return {p for p in re.findall(r"\w+", normalizar_texto(texto)) if len(p) >= 4}
+
+    buscadas = palabras(frase)
+    return any(len(buscadas & palabras(a)) >= minimo * len(buscadas) for a in afirmaciones)
+
+
 def main() -> int:
     settings = cargar_configuracion()
     gen02 = next(e for e in cargar_escenarios() if e["id"] == "GEN-02")
@@ -128,7 +155,7 @@ def main() -> int:
     pregunta = gen02["turnos"][0]["usuario"]
     citadas = [f"{NORMA_MANUAL}, {s}" for s in SECCIONES]
     juez = Juez(settings)
-    resultado: dict = {"juez": {}, "ragas": {}}
+    resultado: dict = {"repeticiones_del_juez": REPETICIONES, "juez": {}, "ragas": {}}
     tokens_juez = {"entrada": 0, "salida": 0}
     casos_juez = {
         nombre: CasoJuez(
@@ -141,16 +168,24 @@ def main() -> int:
         )
         for nombre, respuesta in (("con_falla", CON_FALLA), ("fiel", FIEL))
     }
+    casos_juez["herramienta_con_requisito"] = caso_con_herramienta(CON_REQUISITO)
     casos_juez["herramienta_alterada"] = caso_con_herramienta(SALDO_ALTERADO)
     casos_juez["herramienta_solo_alterada"] = caso_con_herramienta(AVALUO_ALTERADO)
     casos_juez["herramienta_fiel"] = caso_con_herramienta(SALDO_FIEL)
     for nombre, caso in casos_juez.items():
-        calificacion = juez.calificar(caso)
-        tokens_juez["entrada"] += calificacion.entrada
-        tokens_juez["salida"] += calificacion.salida
-        resultado["juez"][nombre] = calificacion.veredicto.model_dump()
-        v = calificacion.veredicto
-        print(f"Juez, {nombre}: {v.veredicto}, alucinación {v.alucinacion}: {v.justificacion}")
+        resultado["juez"][nombre] = []
+        for repeticion in range(1, REPETICIONES + 1):
+            calificacion = juez.calificar(caso)
+            tokens_juez["entrada"] += calificacion.entrada
+            tokens_juez["salida"] += calificacion.salida
+            v = calificacion.veredicto
+            resultado["juez"][nombre].append(
+                {**v.model_dump(), "alucinacion_marcada": calificacion.alucinacion_marcada}
+            )
+            print(
+                f"Juez, {nombre} ({repeticion}): {v.veredicto}, alucinación {v.alucinacion}, "
+                f"sin fuente {v.afirmaciones_sin_fuente}"
+            )
     ragas = EvaluadorRagas(settings)
     casos = [
         CasoRagas(pregunta, r, contextos, str(gen02["respuesta_referencia"]).strip())
@@ -169,11 +204,35 @@ def main() -> int:
         resultado["ragas"][nombre] = puntajes
         print(f"RAGAS, {nombre}: {puntajes}")
     j, r = resultado["juez"], resultado["ragas"]
+
+    def meta(v: dict) -> bool:  # la tasa de la meta (A3): sin alucinación y no «incorrecta»
+        return superado(True, Veredicto.model_validate({k: v[k] for k in Veredicto.model_fields}))[
+            0
+        ]
+
+    def en_todas(nombre: str, condicion) -> bool:  # noqa: ANN001
+        return all(condicion(v) for v in j[nombre])
+
     criterios = {
-        "juez_detecta_la_falla": j["con_falla"]["alucinacion"]
-        or j["con_falla"]["veredicto"] != "correcta",
-        "juez_aprueba_la_fiel": j["fiel"]["veredicto"] != "incorrecta"
-        and not j["fiel"]["alucinacion"],
+        "juez_no_supera_la_falla_y_lista_la_frase": en_todas(
+            "con_falla",
+            lambda v: not meta(v) and lista_la_frase(v["afirmaciones_sin_fuente"], FRASE_INVENTADA),
+        ),
+        "juez_supera_la_fiel_sin_lista": en_todas(
+            "fiel", lambda v: meta(v) and not v["afirmaciones_sin_fuente"]
+        ),
+        "juez_detecta_el_requisito_inventado": en_todas(
+            "herramienta_con_requisito", lambda v: v["alucinacion"]
+        ),
+        "juez_detecta_el_dato_de_herramienta_alterado": en_todas(
+            "herramienta_alterada", lambda v: v["alucinacion"]
+        ),
+        "juez_detecta_el_dato_solo_de_herramienta_alterado": en_todas(
+            "herramienta_solo_alterada", lambda v: v["alucinacion"]
+        ),
+        "juez_supera_los_datos_de_herramienta_sin_lista": en_todas(
+            "herramienta_fiel", lambda v: meta(v) and not v["afirmaciones_sin_fuente"]
+        ),
         "ragas_fidelidad_menor_con_falla": (
             r["con_falla"]["faithfulness"] is not None
             and r["fiel"]["faithfulness"] is not None
@@ -183,12 +242,6 @@ def main() -> int:
         "ragas_cuatro_metricas": all(
             v is not None for n in ("con_falla", "fiel") for v in r[n].values()
         ),
-        "juez_detecta_el_dato_de_herramienta_alterado": j["herramienta_alterada"]["alucinacion"],
-        "juez_detecta_el_dato_solo_de_herramienta_alterado": j["herramienta_solo_alterada"][
-            "alucinacion"
-        ],
-        "juez_acepta_los_datos_de_herramienta": j["herramienta_fiel"]["veredicto"] != "incorrecta"
-        and not j["herramienta_fiel"]["alucinacion"],
     }
     costo_juez = costo_usd(settings.modelo_juez, tokens_juez["entrada"], tokens_juez["salida"])
     resultado["criterios"] = criterios

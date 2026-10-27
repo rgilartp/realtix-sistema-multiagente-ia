@@ -85,6 +85,7 @@ def calificar(
                 "ensayo": clave[1],
                 "id_conversacion": clave[2],
                 "veredicto": calificacion.veredicto.model_dump(),
+                "alucinacion_marcada": calificacion.alucinacion_marcada,
                 "tokens_por_modelo": {
                     juez.modelo_id: {"entrada": calificacion.entrada, "salida": calificacion.salida}
                 },

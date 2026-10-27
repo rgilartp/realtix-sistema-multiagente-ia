@@ -21,6 +21,7 @@ Ajustes al plan:
   - Con la frase «Para pagar o presentar, debes hacerlo directamente en la Oficina Virtual Tributaria», debe salir mal: en el juez, con alucinación o un veredicto distinto de «correcta»; en RAGAS, con menor fidelidad que la versión fiel.
   - La versión fiel debe salir «correcta» o «parcialmente correcta» sin alucinación, y con fidelidad de 0,9 o más.
   - Si no, es una parada.
+  - Después de la corrida 1, el juez pasó a v3 y A4 se endureció (criterio de la tasa de la meta, 3 repeticiones y casos con datos de herramientas): ver ADR-25.
 - **A5 · Juez congelado.** El modelo, las instrucciones (`src/evaluacion/juez.v1.md`), la rúbrica, el esquema y los parámetros tienen una huella SHA-256. La calibración la guarda, y la corrida 3 (`--exigir-huella`) exige la misma; si cambia, se repite la calibración.
 - **A6 · Kappa completo.** Se calcula entre el juez y el consenso humano, binario y ponderado lineal de 3 niveles, y entre los dos evaluadores antes del consenso, con intervalos por bootstrap.
 - **A7 · Verificador de referencias** (`scripts/verificar_referencias.py`), que corre antes de la corrida 1.

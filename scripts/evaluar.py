@@ -358,6 +358,11 @@ def main() -> None:
     destino.mkdir(parents=True, exist_ok=True)
     settings = cargar_configuracion()
     huella = huella_del_juez(settings)
+    guardadas = destino / "metricas.json"
+    if args.solo_reporte and guardadas.exists():
+        # Sin modelos, el reporte usa las calificaciones guardadas con su propio juez: se conserva
+        # su huella (la corrida 1 se calificó con el juez v1, ADR-25).
+        huella = json.loads(guardadas.read_text(encoding="utf-8")).get("huella_juez") or huella
     if args.exigir_huella:
         from src.evaluacion.calibracion import huella_guardada
 
