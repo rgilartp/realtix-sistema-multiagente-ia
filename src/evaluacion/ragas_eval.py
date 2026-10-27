@@ -1,7 +1,9 @@
 """RAGAS sobre el pipeline RAG (sección 6.5; integración de componentes).
 
-`ragas` 0.4.3 con un modelo evaluador de OpenAI de bajo costo (`gpt-4o-mini`, que acepta la
-`temperature` que fija RAGAS) y `text-embedding-3-large` para la relevancia. Mide la precisión y la
+`ragas` 0.4.3 con un modelo evaluador de OpenAI de bajo costo y `text-embedding-3-large` para la
+relevancia. El evaluador es `gpt-4.1-mini` (acepta la `temperature` que fija RAGAS): en la
+validación con casos conocidos (A4), `gpt-4o-mini` calificó como sustentada una frase de GEN-02 que
+el manual no dice, y `gpt-4.1-mini` la detectó. Mide la precisión y la
 exhaustividad del contexto, la fidelidad y la relevancia de la respuesta. Los ejemplos de los
 prompts se traducen al español una vez por corrida (A9). Lo que recibe RAGAS pasa antes por el
 mismo anonimizador del juez y no incluye qué modelo respondió.
@@ -26,7 +28,7 @@ from src.integrations.costos import costo_usd
 
 registro = logging.getLogger(__name__)
 
-MODELO_EVALUADOR = "gpt-4o-mini"
+MODELO_EVALUADOR = "gpt-4.1-mini"
 IDIOMA = "spanish"
 METRICAS = ("context_precision", "context_recall", "faithfulness", "answer_relevancy")
 

@@ -445,6 +445,9 @@ def test_en_modo_de_evaluacion_la_parte_guarda_contextos_y_version(
     agente = ConfigAgente("ipu", prompt_de_agente("ipu"), ("normativa_ipu",), HERRAMIENTAS_IPU)
     respuesta, _ = ejecutar_agente(agente, deps, estado, configuracion_de_hilo("eval"))
     assert len(respuesta["contextos"]) == 5
+    assert all(
+        "\n" in c for c in respuesta["contextos"]
+    )  # la cita va delante, como la ve el modelo
     assert respuesta["version_corpus"] == version_del_corpus()
     assert respuesta["similitud"] == pytest.approx(
         recuperador_de(base_falsa)

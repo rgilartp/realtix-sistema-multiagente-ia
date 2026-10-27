@@ -343,9 +343,9 @@ def ejecutar_agente(
     if contexto.matriculas_usadas:
         datos["predio"] = contexto.matriculas_usadas[-1]
     evaluacion: dict[str, Any] = {}
-    if deps.modo_evaluacion:  # para RAGAS en B12
+    if deps.modo_evaluacion:  # para RAGAS en B12: cada fragmento tal como lo vio el modelo
         evaluacion = {
-            "contextos": [f.texto for f in fragmentos],
+            "contextos": [f"{f.cita}\n{f.texto[:MAX_CARACTERES_FRAGMENTO]}" for f in fragmentos],
             "version_corpus": getattr(deps.recuperador, "version_corpus", None),
         }
     respuesta_parcial = parcial(
