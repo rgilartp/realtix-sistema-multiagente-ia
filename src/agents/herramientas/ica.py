@@ -29,7 +29,13 @@ from src.services.calendario_tributario import (
     regimenes_posibles,
 )
 from src.services.errores import DatoNoPublicadoError
-from src.services.ica import EstimacionICA, PeriodoICA, estimar_ica, tabla_aplicable
+from src.services.ica import (
+    EstimacionICA,
+    PeriodoICA,
+    estimar_ica,
+    periodicidad_registrada,
+    tabla_aplicable,
+)
 
 PERIODICIDAD = {"type": "string", "enum": ["anual", "bimestral"]}
 
@@ -95,6 +101,67 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     return Resultado(datos, fuentes=(FUENTE_REALSIT,), notas=tuple(avisos))
 
 
+def _registrada(contexto: Contexto, anio: int) -> tuple[str, int] | None:
+    """Con sesión, la periodicidad registrada y su vigencia (regla del servicio). Se lee una vez
+    por ronda; si el adaptador no responde, no hay, y la consulta sigue como sin sesión (es una
+    ayuda, no un dato que se le dé al contribuyente)."""
+    cid = contexto.contribuyente_id
+    if not cid:
+        return None
+    clave = ("periodicidad_ica", anio)
+    if clave not in contexto.memoria:
+        try:
+            predios = contexto.llamar(lambda: contexto.adaptador.get_predios_contribuyente(cid))
+            registradas = [
+                (o.vigencia_fiscal, o.periodicidad)
+                for p in predios
+                for o in contexto.llamar(
+                    lambda m=p.matricula_catastral: contexto.adaptador.get_estado_cuenta(m, cid)
+                ).obligaciones
+                if o.tipo_tributo == "ICA"
+            ]
+            contexto.memoria[clave] = periodicidad_registrada(registradas, anio)
+        except Exception:  # noqa: BLE001 — sin la ayuda, la herramienta sigue sin sesión
+            contexto.memoria[clave] = None
+    return contexto.memoria[clave]
+
+
+def _periodicidad(contexto: Contexto, argumentos: dict[str, Any], anio: int) -> dict[str, Any]:
+    """La periodicidad y de dónde sale (F4 y F8 de la corrida 1).
+
+    - La que se pasa a la herramienta (o bimestral, si se pasa el bimestre); si no es la
+      registrada, se avisa.
+    - Si no se pasa y hay sesión, la registrada; si es de otra vigencia, se avisa que se supone.
+    - Sin sesión ni obligaciones del ICA, `None`.
+    """
+    registrada = _registrada(contexto, anio)
+    pedida = argumentos.get("periodicidad") or (
+        "bimestral" if entero(argumentos, "bimestre") else None
+    )
+    if pedida:
+        info: dict[str, Any] = {
+            "periodicidad": str(pedida),
+            "periodicidad_tomada_de": "la que se pasó a la herramienta",
+        }
+        if registrada and registrada[0] != pedida:
+            info["periodicidad_registrada"] = registrada[0]
+            info["aviso_periodicidad"] = "No es la periodicidad registrada del contribuyente."
+        return info
+    if registrada is None:
+        return {"periodicidad": None}
+    periodicidad, vigencia = registrada
+    info = {
+        "periodicidad": periodicidad,
+        "periodicidad_tomada_de": f"la registrada del contribuyente (obligación de {vigencia})",
+    }
+    if vigencia != anio:
+        info["aviso_periodicidad"] = (
+            f"No hay una obligación del ICA registrada de {anio}: se supone la periodicidad de "
+            f"{vigencia}. El régimen de {anio} puede ser otro (regimen_ica)."
+        )
+    return info
+
+
 def _datos_estimacion(e: EstimacionICA, etiqueta: str) -> dict[str, Any]:
     return {
         "periodo": etiqueta,
@@ -117,7 +184,10 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     if ingresos is None:
         raise FaltaDatoError("Faltan los ingresos gravables del periodo.")
     anio = entero(argumentos, "anio") or contexto.hoy.year
-    periodicidad = argumentos.get("periodicidad") or "anual"
+    info = _periodicidad(contexto, argumentos, anio)
+    periodicidad = info.pop("periodicidad")
+    if periodicidad is None:
+        raise FaltaDatoError("Falta saber si declara el ICA de forma anual o bimestral.")
     bimestre = entero(argumentos, "bimestre")
     if periodicidad == "bimestral" and bimestre is None:
         # Sin bimestre: un periodo por cada tabla de tarifas que rige en el año.
@@ -141,6 +211,7 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "ciiu": ciiu,
         "actividad": primera.actividad,
         "periodicidad": periodicidad,
+        **info,
         "estimaciones": [_datos_estimacion(e, etiqueta) for e, etiqueta in estimaciones],
     }
     fuentes = tuple(dict.fromkeys(e.fuente for e, _ in estimaciones))
@@ -176,17 +247,31 @@ def _regimen(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
 
 
 def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
+    """Con la periodicidad conocida (la dicha o la registrada), solo sus fechas; si no se conoce
+    (sin sesión), las de las dos, cada una con su periodicidad."""
     anio = entero(argumentos, "anio") or contexto.hoy.year
-    periodicidad = argumentos.get("periodicidad") or "anual"
-    fechas = fechas_ica(anio, periodicidad)
-    datos = {
-        "anio_gravable": anio,
-        "periodicidad": periodicidad,
-        "fecha_de_hoy": fecha(contexto.hoy),
-        "fechas_limite_declaracion": [
-            {"fecha": fecha(f), "ya_paso": f < contexto.hoy.isoformat()} for f in fechas
-        ],
-    }
+    info = _periodicidad(contexto, argumentos, anio)
+    periodicidad = info.pop("periodicidad")
+
+    def fechas_de(cual: str) -> list[dict[str, Any]]:
+        return [
+            {"fecha": fecha(f), "ya_paso": f < contexto.hoy.isoformat()}
+            for f in fechas_ica(anio, cual)  # type: ignore[arg-type]
+        ]
+
+    datos: dict[str, Any] = {"anio_gravable": anio, "fecha_de_hoy": fecha(contexto.hoy)}
+    if periodicidad:
+        datos |= {
+            "periodicidad": periodicidad,
+            **info,
+            "fechas_limite_declaracion": fechas_de(periodicidad),
+        }
+    else:
+        datos["periodicidad"] = "no se conoce: van las fechas de las dos, cada una con la suya"
+        datos["por_periodicidad"] = [
+            {"periodicidad": cual, "fechas_limite_declaracion": fechas_de(cual)}
+            for cual in ("anual", "bimestral")
+        ]
     return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
 
 
@@ -202,8 +287,9 @@ HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
     Herramienta(
         "estimar_ica",
         "Estimación del ICA de un periodo con el código CIIU y los ingresos gravables del "
-        "periodo. Si es bimestral y no se sabe el bimestre, se omite y la herramienta estima "
-        "cada tramo del año con su tabla de tarifas.",
+        "periodo; da la tarifa de la actividad. La periodicidad se omite si el contribuyente no "
+        "la dice: con sesión se usa la registrada. Si es bimestral y no se sabe el bimestre, se "
+        "omite y la herramienta estima cada tramo del año con su tabla de tarifas.",
         {
             "ciiu": {"type": "string", "description": "Código CIIU de la actividad."},
             "ingresos": {"type": "integer", "description": "Ingresos gravables en pesos."},
@@ -211,7 +297,7 @@ HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
             "periodicidad": PERIODICIDAD,
             "bimestre": {"type": "integer", "description": "Bimestre, de 1 a 6."},
         },
-        ("ciiu", "ingresos", "anio", "periodicidad"),
+        ("ciiu", "ingresos", "anio"),
         _estimar,
     ),
     Herramienta(
@@ -232,9 +318,11 @@ HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
     ),
     Herramienta(
         "fechas_ica",
-        "Fechas límite de la declaración del ICA de un año gravable, por periodicidad.",
+        "Fechas límite de la declaración del ICA de un año gravable. La periodicidad se omite si "
+        "el contribuyente no la dice: con sesión se usa la registrada y solo van sus fechas; sin "
+        "sesión van las de las dos periodicidades.",
         {**ANIO, "periodicidad": PERIODICIDAD},
-        ("anio", "periodicidad"),
+        ("anio",),
         _fechas,
     ),
 )

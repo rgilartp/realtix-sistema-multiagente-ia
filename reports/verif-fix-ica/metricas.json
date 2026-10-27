@@ -1,0 +1,339 @@
+{
+  "commit_evaluado": null,
+  "huella_juez": "afecd5c1b4f62d52fc605ac6b350363cddee4604ae704f30247703146aa39805",
+  "conjuntos": {
+    "principal": {
+      "ensayos": 6,
+      "escenarios": 6,
+      "tasa_meta": {
+        "escenarios": 6,
+        "ensayos": 6,
+        "tasa": 0.8333333333333334,
+        "wilson95": [
+          0.43649717781352987,
+          0.9699466302516935
+        ],
+        "bootstrap95": [
+          0.5,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 6,
+        "ensayos": 6,
+        "tasa": 0.8333333333333334,
+        "wilson95": [
+          0.43649717781352987,
+          0.9699466302516935
+        ],
+        "bootstrap95": [
+          0.5,
+          1
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 0.8333333333333334,
+        "pass^1": 0.8333333333333334
+      },
+      "codigo_pasa": 0.8333333333333334,
+      "juez": {
+        "calificados": 6,
+        "correcta": 6,
+        "parcialmente correcta": 0,
+        "incorrecta": 0,
+        "alucinacion": 0,
+        "cito_norma": 1,
+        "cita_sustenta": 1,
+        "cobertura_completa": 1,
+        "claridad_media": 4.166666666666667
+      },
+      "enrutamiento": {
+        "pares": 6,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ica": {
+            "soporte": 5,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ocr": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 1,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 5,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 0,
+          "meta_ms": 8000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        },
+        "rag": {
+          "turnos": 6,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 7633.0,
+          "servidor_p95_ms": 11682.0,
+          "cliente_p50_ms": 7650.9,
+          "cliente_p95_ms": 11743.2,
+          "cumplen_meta": 6
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.0569336",
+        "juez": "0.288540"
+      },
+      "errores_de_ejecucion": 0
+    },
+    "R3": {
+      "ensayos": 1,
+      "escenarios": 1,
+      "tasa_meta": {
+        "escenarios": 1,
+        "ensayos": 1,
+        "tasa": 1,
+        "wilson95": [
+          0.20654931437723745,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 1,
+        "ensayos": 1,
+        "tasa": 1,
+        "wilson95": [
+          0.20654931437723745,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 1.0,
+        "pass^1": 1.0
+      },
+      "codigo_pasa": 1,
+      "juez": {
+        "calificados": 1,
+        "correcta": 1,
+        "parcialmente correcta": 0,
+        "incorrecta": 0,
+        "alucinacion": 0,
+        "cito_norma": 1,
+        "cita_sustenta": 1,
+        "cobertura_completa": 1,
+        "claridad_media": 5
+      },
+      "enrutamiento": {
+        "pares": 1,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ica": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ocr": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 1,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 0,
+          "meta_ms": 8000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        },
+        "rag": {
+          "turnos": 3,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 6734.0,
+          "servidor_p95_ms": 8581.0,
+          "cliente_p50_ms": 6749.1,
+          "cliente_p95_ms": 8594.8,
+          "cumplen_meta": 3
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.0311291",
+        "juez": "0.097544"
+      },
+      "errores_de_ejecucion": 0
+    }
+  },
+  "costos": {
+    "Sistema (principal)": "0.0569336",
+    "Juez (principal)": "0.288540",
+    "Sistema (R3)": "0.0311291",
+    "Juez (R3)": "0.097544",
+    "Total": "0.4741467"
+  }
+}

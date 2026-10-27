@@ -6,9 +6,10 @@ de 2026: los declarantes bimestrales usan `ica_2027.yaml` desde el bimestre 6 de
 desde el año gravable 2027. `estimar_ica` (B5) calcula el impuesto de un periodo con esa tarifa.
 """
 
+from collections.abc import Iterable
 from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from src.services import notas
 from src.services.datos_anuales import cargar_datos
@@ -41,6 +42,20 @@ class TarifaICA:
     fuente: str
     tarifa_condicionada: Decimal | None = None  # p. ej. 58112 en 2026: 4,14 si cumple Acuerdo 98
     condicion: str | None = None
+
+
+def periodicidad_registrada(
+    obligaciones: Iterable[tuple[int, str]], anio: int
+) -> tuple[Periodicidad, int] | None:
+    """La periodicidad de las obligaciones del ICA registradas, como (periodicidad, vigencia): la
+    del año pedido o, si no hay una de ese año, la de la vigencia más reciente; `None` sin
+    obligaciones. Regla sin modelo (F4 y F8 de la corrida 1): con sesión, las fechas y la
+    estimación usan la periodicidad del contribuyente, no las dos."""
+    validas = sorted(((v, p) for v, p in obligaciones if p in ("anual", "bimestral")), reverse=True)
+    if not validas:
+        return None
+    vigencia, periodicidad = next(((v, p) for v, p in validas if v == anio), validas[0])
+    return cast(Periodicidad, periodicidad), vigencia
 
 
 def tabla_aplicable(periodo: PeriodoICA) -> int:
