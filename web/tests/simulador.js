@@ -50,7 +50,7 @@ function meta(extra = {}) {
   return {
     categoria: null, agentes_invocados: [], nivel_confianza: null, motivo_escalamiento: null,
     caso_id: null, fuentes: [], contextos: null, datos_extraidos: null, tiempos_ms: { total: 5 },
-    tokens: {}, modelo_por_nodo: {}, version: "0.5.0", ...extra,
+    tokens: {}, modelo_por_nodo: {}, version: "0.9.0", ...extra,
   };
 }
 
@@ -154,7 +154,7 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
     return json({ detalle: "No encontré lo que buscas." }, 404);
   });
   await page.route("**/health", (route) =>
-    route.fulfill({ json: { estado: "ok", version: "0.5.0", dependencias: { postgres: "ok", chroma: "ok", realsit: "ok" } } }),
+    route.fulfill({ json: { estado: "ok", version: "0.9.0", dependencias: { postgres: "ok", chroma: "ok", realsit: "ok" } } }),
   );
   return solicitudes;
 }
