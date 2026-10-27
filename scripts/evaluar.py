@@ -63,7 +63,7 @@ def correr_ensayos(
 
     def avance(ensayo: dict[str, Any]) -> None:
         turnos = ensayo["turnos"]
-        con_grafo = [t for t in turnos if (t.get("meta") or {}).get("tokens")]
+        con_grafo = [t for t in turnos if sum(((t.get("meta") or {}).get("tokens") or {}).values())]
         if con_grafo and not any(t["meta"].get("tokens_por_modelo") for t in con_grafo):
             raise ModoEvaluacionApagado(
                 "La API no está en el modo de evaluación (MODO_EVALUACION=true); corrida detenida."
@@ -175,10 +175,20 @@ def correr_ragas(
     destino: Path, escenarios: dict[str, dict[str, Any]], limite: int | None, evaluar: bool
 ) -> dict[str, Any]:
     from src.evaluacion.corrida import vigentes
-    from src.evaluacion.ragas_eval import MODELO_EVALUADOR, EvaluadorRagas, caso_del_ensayo
+    from src.evaluacion.ragas_eval import (
+        METRICAS,
+        MODELO_EVALUADOR,
+        EvaluadorRagas,
+        caso_del_ensayo,
+    )
 
     ruta = destino / "ragas.jsonl"
-    hechos = {(r["escenario"], r["ensayo"]): r for r in leer_resultados(ruta)}
+    # Un caso con alguna métrica vacía (falló al calcularse) se vuelve a evaluar.
+    hechos = {
+        (r["escenario"], r["ensayo"]): r
+        for r in leer_resultados(ruta)
+        if all(r.get(m) is not None for m in METRICAS)
+    }
     ensayos = [
         e
         for e in vigentes(leer_resultados(destino / "resultados.jsonl"))
@@ -209,7 +219,7 @@ def correr_ragas(
         print(f"RAGAS: {len(pendientes)} casos, US${consumo.costo_usd():.4f}")
     filas = list(hechos.values())
     promedios = {}
-    for m in ("context_precision", "context_recall", "faithfulness", "answer_relevancy"):
+    for m in METRICAS:
         valores = [f[m] for f in filas if f.get(m) is not None]
         promedios[m] = sum(valores) / len(valores) if valores else None
     costo = (

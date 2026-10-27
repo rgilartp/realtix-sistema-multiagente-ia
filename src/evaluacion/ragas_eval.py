@@ -30,6 +30,7 @@ registro = logging.getLogger(__name__)
 
 MODELO_EVALUADOR = "gpt-4.1-mini"
 IDIOMA = "spanish"
+MAX_TOKENS_EVALUADOR = 4096
 METRICAS = ("context_precision", "context_recall", "faithfulness", "answer_relevancy")
 
 
@@ -120,7 +121,8 @@ class EvaluadorRagas:
             api_key=settings.openai_api_key.get_secret_value(),
             http_client=httpx2.AsyncClient(event_hooks={"response": [contar]}, timeout=60),
         )
-        llm = llm_factory(modelo, client=cliente)
+        # El tope de salida de RAGAS (1.024) no alcanza para los veredictos de una respuesta larga.
+        llm = llm_factory(modelo, client=cliente, max_tokens=MAX_TOKENS_EVALUADOR)
         embeddings = OpenAIEmbeddings(client=cliente, model=settings.modelo_embeddings)
         self._llm = llm
         self.metricas = {

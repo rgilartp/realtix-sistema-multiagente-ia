@@ -160,7 +160,7 @@ def test_reportes_sin_fechas_y_con_conjuntos_aparte(tmp_path: Path) -> None:
     }
     guardar_reportes(tmp_path, "corrida de prueba", datos, calificados)
     reporte = (tmp_path / "reporte.md").read_text(encoding="utf-8")
-    assert "## Los 60 escenarios" in reporte and "## R4 · Seguridad" in reporte
+    assert "## Escenarios del nivel de sistema" in reporte and "## R4 · Seguridad" in reporte
     assert "Wilson" in reporte and "Estricta" in reporte
     assert (tmp_path / "matriz_confusion.png").exists() and (tmp_path / "latencias.png").exists()
     assert "IPU-03" in (tmp_path / "fallas.md").read_text(encoding="utf-8")

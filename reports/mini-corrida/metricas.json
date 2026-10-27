@@ -1,0 +1,185 @@
+{
+  "huella_juez": "1accca8f20de28933ff8958f40a922f665b5badbcc8a237e2844562bbcdd6108",
+  "conjuntos": {
+    "principal": {
+      "ensayos": 5,
+      "escenarios": 5,
+      "tasa_meta": {
+        "escenarios": 5,
+        "ensayos": 5,
+        "tasa": 0.6,
+        "wilson95": [
+          0.2307242812760128,
+          0.882379225767352
+        ],
+        "bootstrap95": [
+          0.2,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 5,
+        "ensayos": 5,
+        "tasa": 0.4,
+        "wilson95": [
+          0.11762077423264783,
+          0.769275718723987
+        ],
+        "bootstrap95": [
+          0,
+          0.8
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 0.6,
+        "pass^1": 0.6
+      },
+      "codigo_pasa": 0.8,
+      "juez": {
+        "calificados": 5,
+        "correcta": 2,
+        "parcialmente correcta": 2,
+        "incorrecta": 1,
+        "alucinacion": 0.2,
+        "cito_norma": 0.4,
+        "cita_sustenta": 0.4,
+        "cobertura_completa": 0.4,
+        "claridad_media": 4.4
+      },
+      "enrutamiento": {
+        "pares": 4,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 2,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ica": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "general": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ocr": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 2,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 1,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 1,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 6,
+          "meta_ms": 8000,
+          "servidor_p50_ms": 3955.0,
+          "servidor_p95_ms": 16178.0,
+          "cliente_p50_ms": 7586.1,
+          "cliente_p95_ms": 16186.1,
+          "cumplen_meta": 3
+        },
+        "rag": {
+          "turnos": 0,
+          "meta_ms": 15000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.0319642",
+        "juez": "0.102584"
+      },
+      "errores_de_ejecucion": 0
+    }
+  },
+  "ragas": {
+    "casos": 2,
+    "modelo": "gpt-4.1-mini",
+    "promedios": {
+      "context_precision": 0.9333333333088889,
+      "context_recall": 0.6666666666666666,
+      "faithfulness": 0.7279411764705883,
+      "answer_relevancy": 0.8119184290294544
+    },
+    "costo_usd": "0.04006954"
+  },
+  "costos": {
+    "Sistema (principal)": "0.0319642",
+    "Juez (principal)": "0.102584",
+    "RAGAS (OpenAI)": "0.04006954",
+    "Total": "0.17461774"
+  }
+}

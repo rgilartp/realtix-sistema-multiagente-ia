@@ -24,7 +24,7 @@ NOMBRES_RAGAS = {
     "answer_relevancy": "Relevancia de la respuesta",
 }
 TITULOS = {
-    "principal": "Los 60 escenarios",
+    "principal": "Escenarios del nivel de sistema",
     "R1": "R1 · Generalización (variantes parafraseadas)",
     "R3": "R3 · Escenarios encadenados",
     "R4": "R4 · Seguridad",
@@ -141,9 +141,10 @@ def _seccion(nombre: str, m: dict[str, Any]) -> list[str]:
             "",
         ]
     lineas += [
-        f"Verificaciones de código superadas: {_pct(m['codigo_pasa'])}. Juez: {j['correcta']} "
-        f"correctas, {j['parcialmente correcta']} parciales y {j['incorrecta']} incorrectas; "
-        f"alucinación en {_pct(j['alucinacion'])}, cita en {_pct(j['cito_norma'])}, cita que "
+        f"Verificaciones de código superadas: {_pct(m['codigo_pasa'])}. Veredictos del juez: "
+        f"correcta, {j['correcta']}; parcialmente correcta, {j['parcialmente correcta']}; "
+        f"incorrecta, {j['incorrecta']}. Con "
+        f"alucinación: {_pct(j['alucinacion'])}; cita en {_pct(j['cito_norma'])}, cita que "
         f"sustenta en {_pct(j['cita_sustenta'])}, cobertura completa en "
         f"{_pct(j['cobertura_completa'])} y claridad media de {_num(j['claridad_media'])}.",
         "",
