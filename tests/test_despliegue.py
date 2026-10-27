@@ -15,7 +15,8 @@ SERVICIOS = COMPOSE["services"]
 @pytest.mark.req("RNF-12 · Imágenes de contenedor", "RNF-03 · Protección de datos personales")
 def test_la_imagen_no_trae_el_env_ni_bases_y_corre_sin_privilegios() -> None:
     ignorados = (RAIZ / ".dockerignore").read_text(encoding="utf-8").split()
-    assert {".env", ".env.*", "!.env.example", "**/*.db", "*.pem"} <= set(ignorados)
+    assert {".env", ".env.*", "**/.env", "**/.env.*", "!.env.example", "**/*.db"} <= set(ignorados)
+    assert {"**/*.pem", "**/*.key", "**/*.p12"} <= set(ignorados)  # también en subcarpetas
     dockerfile = (RAIZ / "Dockerfile").read_text(encoding="utf-8")
     assert dockerfile.count("FROM ") >= 3  # uv, construcción y ejecución
     assert "USER realtix" in dockerfile and "HEALTHCHECK" in dockerfile
@@ -60,7 +61,7 @@ def test_secretos_solo_en_el_env_y_modo_de_evaluacion_apagado_por_defecto() -> N
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-UI-01 · Widget embebible", "RNF-03 · Protección de datos personales")
+@pytest.mark.req("RF-UI-01 · Widget embebible", "RNF-12 · Imágenes de contenedor")
 def test_caddy_https_limites_y_cabeceras() -> None:
     caddy = (RAIZ / "deploy" / "Caddyfile").read_text(encoding="utf-8")
     assert "{$DOMINIO} {" in caddy and "dynamic a" in caddy
@@ -77,10 +78,22 @@ def test_caddy_https_limites_y_cabeceras() -> None:
 
 @pytest.mark.unit
 @pytest.mark.req("RNF-06 · Horario de atención")
-def test_monitor_de_health_cada_15_minutos() -> None:
+def test_monitor_de_health_cada_15_minutos_en_horario_habil() -> None:
     flujo = yaml.safe_load(
         (RAIZ / ".github" / "workflows" / "monitor.yml").read_text(encoding="utf-8")
     )
     disparadores = flujo[True]  # PyYAML lee la clave «on» como True
-    assert disparadores["schedule"] == [{"cron": "*/15 * * * *"}]
+    # Lunes a viernes, de 13:00 a 21:45 UTC (8:00 a 16:45 en Bogotá): cabe en el plan gratuito.
+    assert disparadores["schedule"] == [{"cron": "*/15 13-21 * * 1-5"}]
     assert "workflow_dispatch" in disparadores
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-13 · Orquestación con Compose")
+def test_los_scripts_de_despliegue_tienen_sintaxis_valida() -> None:
+    import subprocess
+
+    for script in sorted((RAIZ / "deploy").glob("*.sh")):
+        resultado = subprocess.run(["bash", "-n", str(script)], capture_output=True, text=True)
+        assert resultado.returncode == 0, (script.name, resultado.stderr)
+    assert 'user: "0"' not in (RAIZ / "docker-compose.yml").read_text(encoding="utf-8")

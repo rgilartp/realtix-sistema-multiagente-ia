@@ -10,7 +10,7 @@ del proyecto.
 | Servicio | Imagen | Qué hace |
 |---|---|---|
 | `proxy` | `deploy/Dockerfile.proxy` (Node 24 → `caddy:2.11`) | HTTPS automático, la web (OVT simulada, widget y consola), `/api` y `/health` al backend, límites de cuerpo y cabeceras de seguridad (`deploy/Caddyfile`) |
-| `backend` | `Dockerfile` (`python:3.12-slim`, dos etapas) | La API; una o más réplicas |
+| `backend` | `Dockerfile` (`python:3.12-slim`; etapas de uv, construcción y ejecución) | La API; una o más réplicas |
 | `chromadb` | `chromadb/chroma:1.5.9` | La base de conocimiento |
 | `postgres` | `postgres:16` | Conversaciones, casos, interacciones y checkpoints |
 | `generar-realsit` | la del backend | Genera una vez la base sintética de RealSit en su volumen |
@@ -29,7 +29,9 @@ Volúmenes con nombre: `postgres-data`, `chroma-data`, `caddy-data`, `caddy-conf
   `POSTGRES_PASSWORD` y `POSTGRES_DB` del `.env`) y a Chroma, la ruta de RealSit y el origen
   permitido (`https://<dominio>`).
   - La contraseña de PostgreSQL debe usar solo letras, números, `-` o `_`, porque va dentro de
-    una URL.
+    una URL. Si el `.env` copiado trae la de desarrollo (`realtix_dev`), PostgreSQL solo escucha
+    en `127.0.0.1` del servidor; aun así, conviene cambiarla en el `.env` antes del primer
+    despliegue (después habría que cambiarla también dentro de la base).
 - **Modo de evaluación y fallas inyectables:** apagados por defecto, aunque el `.env` diga otra
   cosa. Solo los enciende `./deploy/desplegar.sh --evaluacion`, durante una corrida (A9).
 
@@ -56,17 +58,28 @@ Lo hace Rodolfo, porque lleva `sudo`:
    ```
 
 Luego, sin `sudo`: el código llega con una llave de despliegue de solo lectura, creada en el
-servidor y agregada al repositorio con `gh`. Nunca se usan tus credenciales:
+servidor y agregada al repositorio con `gh` por Rodolfo. Nunca se usan sus credenciales.
 
-```bash
-ssh -i ~/.ssh/tg2-ec2.pem ubuntu@tg2-multiagente.duckdns.org \
-  'ssh-keygen -t ed25519 -N "" -C tg2-servidor -f ~/.ssh/despliegue && cat ~/.ssh/despliegue.pub' > despliegue.pub
-gh repo deploy-key add despliegue.pub --title tg2-servidor   # de solo lectura, por defecto
-rm despliegue.pub
-```
-
-En el servidor, `~/.ssh/config` usa esa llave para `github.com`. El repositorio se trae dentro de
-`/home/ubuntu/realtix`, donde ya está el `.env`, con `git init`, `git remote add` y `git fetch`.
+1. **Crear la llave en el servidor y agregarla** (desde tu equipo):
+   ```bash
+   ssh -i ~/.ssh/tg2-ec2.pem ubuntu@tg2-multiagente.duckdns.org \
+     'test -f ~/.ssh/despliegue || ssh-keygen -q -t ed25519 -N "" -C tg2-servidor -f ~/.ssh/despliegue; cat ~/.ssh/despliegue.pub' > despliegue.pub
+   gh repo deploy-key add despliegue.pub --title tg2-servidor   # de solo lectura, por defecto
+   rm despliegue.pub
+   ```
+2. **Configurar GitHub y el repositorio en el servidor** (`ssh -i ~/.ssh/tg2-ec2.pem
+   ubuntu@tg2-multiagente.duckdns.org`). La huella de GitHub debe ser
+   `SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU`, la publicada en su documentación:
+   ```bash
+   ssh-keyscan -t ed25519 github.com > /tmp/github && ssh-keygen -lf /tmp/github
+   cat /tmp/github >> ~/.ssh/known_hosts
+   printf 'Host github.com\n  IdentityFile ~/.ssh/despliegue\n  IdentitiesOnly yes\n' > ~/.ssh/config
+   chmod 600 ~/.ssh/config
+   cd ~/realtix                     # ya tiene el .env: por eso se usa git init y no git clone
+   git init -q -b main
+   git remote add origin git@github.com:rgilartp/realtix-sistema-multiagente-ia.git
+   git fetch -q origin && git checkout -q -B main origin/main
+   ```
 
 ## Desplegar o actualizar
 
@@ -87,6 +100,18 @@ El script hace todo esto:
 5. ejecuta la ingesta (idempotente: sin cambios no gasta);
 6. verifica `https://tg2-multiagente.duckdns.org/health`.
 
+## Prueba en el equipo
+
+Con `DOMINIO=localhost` delante, la variable de la terminal gana sobre `deploy/servidor.env`, y
+Caddy usa su autoridad local en lugar de pedir a Let's Encrypt el dominio real:
+
+```bash
+export DOMINIO=localhost
+docker compose --env-file .env --env-file deploy/servidor.env --profile herramientas run --rm generar-realsit
+docker compose --env-file .env --env-file deploy/servidor.env up -d --build --wait
+curl -k https://localhost/health
+```
+
 ## Una corrida de evaluación
 
 ```bash
@@ -94,6 +119,10 @@ El script hace todo esto:
 # ... desde tu equipo: uv run python scripts/evaluar.py --corrida corrida-1 --api https://tg2-multiagente.duckdns.org ...
 ./deploy/desplegar.sh                     # al terminar: el modo de evaluación queda apagado
 ```
+
+Si la instancia se reinicia en medio de una corrida, los contenedores vuelven con el modo de
+evaluación encendido (`restart: unless-stopped` conserva su configuración). Por eso se corre
+siempre `./deploy/desplegar.sh` sin la opción al terminar.
 
 ## Operación
 
@@ -106,9 +135,11 @@ El script hace todo esto:
   ```bash
   docker compose --env-file .env --env-file deploy/servidor.env up -d --wait --scale backend=2
   ```
-- **Monitor:** `.github/workflows/monitor.yml` revisa `/health` cada 15 minutos con la variable
-  `DOMINIO` del repositorio. La disponibilidad sale de `gh run list --workflow monitor.yml`.
-  Mientras la instancia esté apagada, el monitor falla: esas horas cuentan como no disponibles.
+- **Monitor:** `.github/workflows/monitor.yml` revisa `/health` cada 15 minutos en el horario
+  hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá), con la variable `DOMINIO` del repositorio.
+  Fuera del horario no corre, para no agotar los 2.000 minutos mensuales de GitHub Actions del
+  plan gratuito. La disponibilidad sale de `gh run list --workflow monitor.yml`. Si la instancia
+  se apaga en horario hábil, el monitor falla y esas horas cuentan como no disponibles.
 - **Apagar para ahorrar créditos:** EC2 → Detener instancia. Al encenderla, actualiza DuckDNS
   (paso 2); Compose arranca solo (`restart: unless-stopped`).
 - **Si el SSH falla:** casi siempre es la IP de tu casa. Actualiza la regla de SSH de `tg2-web`.

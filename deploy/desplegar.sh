@@ -16,7 +16,9 @@ VERSION=main
 EVALUACION=false
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --version) VERSION="$2"; shift 2 ;;
+    --version)
+      [[ $# -ge 2 ]] || { echo "--version necesita una rama o una etiqueta." >&2; exit 2; }
+      VERSION="$2"; shift 2 ;;
     --evaluacion) EVALUACION=true; shift ;;
     -h | --help) sed -n '2,11p' "$0"; exit 0 ;;
     *) echo "Opción desconocida: $1" >&2; exit 2 ;;
@@ -45,13 +47,16 @@ echo "2/6 Imágenes"
 "${compose[@]}" build --pull --quiet
 
 echo "3/6 Base sintética de RealSit"
-if ! "${compose[@]}" run --rm --no-deps --entrypoint test backend -f /realsit/realsit_sintetico.db; then
+if ! "${compose[@]}" run --rm -T --no-deps --entrypoint test backend -f /realsit/realsit_sintetico.db; then
   "${compose[@]}" --profile herramientas run --rm generar-realsit
 fi
-huella=$("${compose[@]}" run --rm --no-deps --entrypoint python backend -c \
-  "from src.data.huella import calcular_huella; print(calcular_huella('/realsit/realsit_sintetico.db'))")
+huella=$("${compose[@]}" run --rm -T --no-deps --entrypoint python backend -c \
+  "from src.data.huella import calcular_huella; print(calcular_huella('/realsit/realsit_sintetico.db'))" \
+  | tr -d '\r')
 if [[ "${huella}" != "$(cat src/data/huella_realsit.sha256)" ]]; then
   echo "La huella de la base sintética no coincide con src/data/huella_realsit.sha256." >&2
+  echo "Para regenerarla: docker volume rm realtix_datos-sinteticos (con el backend detenido) y" >&2
+  echo "vuelve a correr este script." >&2
   exit 1
 fi
 echo "Huella de RealSit: ${huella}"

@@ -2,7 +2,9 @@
 #
 # En desarrollo:  docker compose up -d postgres chromadb
 # Todo el sistema: docker compose --env-file .env --env-file deploy/servidor.env up -d --build
-#                  (deploy/desplegar.sh lo hace en el servidor, con la ingesta y la verificación)
+#                  (deploy/desplegar.sh lo hace en el servidor, con la ingesta y la verificación).
+#                  En el equipo, con DOMINIO=localhost delante (la variable de la terminal gana):
+#                  así Caddy usa su autoridad local y no pide a Let's Encrypt el dominio real.
 # Dos réplicas:    ... up -d --scale backend=2   (RNF-02; el backend no tiene nombre ni puerto fijo)
 #
 # Secretos solo en el .env de Rodolfo, que se copia sin cambios (sección 3.10): la conexión a
@@ -74,7 +76,6 @@ services:
       - datos-sinteticos:/realsit
     command:
       ["python", "-m", "src.data.generar.generate_synthetic_data", "--salida", "/realsit/realsit_sintetico.db"]
-    user: "0"
     profiles: ["herramientas"]
 
   postgres:
