@@ -205,3 +205,24 @@ def test_verificador_de_trazas_encuentra_documentos_y_nombres() -> None:
     assert r["ejecuciones_revisadas"] == 4 and r["con_identificadores"] == 3 and not r["pasa"]
     assert "1000000003" not in json.dumps(r)  # el reporte no copia el identificador
     assert revisar_ejecuciones([limpia])["pasa"] and not revisar_ejecuciones([])["pasa"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
+def test_el_commit_evaluado_es_obligatorio_contra_el_despliegue_y_no_cambia(tmp_path: Path) -> None:
+    from argparse import Namespace
+
+    from scripts.evaluar import _commit_de_la_corrida
+
+    def args(**kw: object) -> Namespace:
+        return Namespace(**({"api": None, "commit": None, "solo_reporte": False} | kw))
+
+    assert _commit_de_la_corrida(args(), tmp_path) is None  # local, sin commit
+    with pytest.raises(SystemExit, match="Falta --commit"):
+        _commit_de_la_corrida(args(api="https://x"), tmp_path)
+    metricas = json.dumps({"commit_evaluado": "aaa"})
+    (tmp_path / "metricas.json").write_text(metricas, encoding="utf-8")
+    assert _commit_de_la_corrida(args(api="https://x", commit="aaa"), tmp_path) == "aaa"
+    with pytest.raises(SystemExit, match="no de bbb"):
+        _commit_de_la_corrida(args(api="https://x", commit="bbb"), tmp_path)
+    assert _commit_de_la_corrida(args(solo_reporte=True), tmp_path) == "aaa"

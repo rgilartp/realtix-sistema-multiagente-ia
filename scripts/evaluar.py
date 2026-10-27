@@ -84,6 +84,19 @@ def _commit_guardado(destino: Path) -> str | None:
     return json.loads(ruta.read_text(encoding="utf-8")).get("commit_evaluado")
 
 
+def _commit_de_la_corrida(args: argparse.Namespace, destino: Path) -> str | None:
+    """El commit evaluado. Contra el despliegue es obligatorio; al reanudar debe ser el mismo; con
+    `--solo-reporte` sin `--commit`, se conserva el guardado."""
+    guardado = _commit_guardado(destino)
+    if args.solo_reporte:
+        return args.commit or guardado
+    if args.api and not args.commit:
+        raise SystemExit("Falta --commit: el commit desplegado (git rev-parse HEAD).")
+    if args.commit and guardado and args.commit != guardado:
+        raise SystemExit(f"La corrida guardada es del commit {guardado}, no de {args.commit}.")
+    return args.commit
+
+
 def _jsonl(ruta: Path, filas: list[dict[str, Any]]) -> None:
     ruta.write_text(
         "".join(json.dumps(f, ensure_ascii=False) + "\n" for f in filas), encoding="utf-8"
@@ -366,6 +379,7 @@ def main() -> None:
             "corrida (criterio de entrada); --sin-aprobar solo para pruebas."
         )
 
+    commit = _commit_de_la_corrida(args, destino)
     gasto = Gasto(destino, args.tope_usd)
     print(f"Gasto ya registrado en esta corrida: US${gasto.usd:.4f}")
     if not args.solo_reporte:
@@ -385,7 +399,7 @@ def main() -> None:
     _jsonl(destino / "calificados.jsonl", calificados)
 
     datos: dict[str, Any] = {
-        "commit_evaluado": args.commit or _commit_guardado(destino),
+        "commit_evaluado": commit,
         "huella_juez": huella,
         "conjuntos": metricas_por_conjunto(calificados),
     }
@@ -400,7 +414,9 @@ def main() -> None:
     ruta_trazas = destino / "trazas.json"
     if args.trazas and not args.solo_reporte:
         datos["trazas"] = revisar_trazas(args.corrida, args.trazas_horas)
-        ruta_trazas.write_text(json.dumps(datos["trazas"], ensure_ascii=False, indent=2) + "\n")
+        ruta_trazas.write_text(
+            json.dumps(datos["trazas"], ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
     elif ruta_trazas.exists():  # guardada antes (o revisada donde está la llave de LangSmith)
         datos["trazas"] = json.loads(ruta_trazas.read_text(encoding="utf-8"))
     if (ruta_constancias := destino / "constancias.md").exists():
