@@ -127,8 +127,9 @@ conversaciones y 1.279 ejecuciones, ninguna con identificadores de los usuarios 
 de las 65 conversaciones: las de horario, que la API responde antes del grafo. Los componentes
 corren en este equipo, sin trazas. El resultado está en `trazas.json`.
 
-**Latencia del cliente.** En 45 de 68 turnos, la del cliente salió menor que la del servidor (mediana
-de −69 ms; mínimo de −714 ms), lo que no es posible físicamente. El cronómetro del cliente corre en
-WSL 2, y lo más probable es una deriva de su reloj. La meta de RNF-01 usa la del servidor
+**Latencia del cliente.** En 45 de 68 turnos, la del cliente salió menor que la del servidor, lo que
+no es posible físicamente: la mediana de la diferencia fue de −71 ms (−117 ms entre esos 45), con un
+mínimo de −714 ms, y la diferencia relativa mediana fue de −1,2 %. Uno de los dos cronómetros (el
+del cliente corre en WSL 2) avanza a un ritmo distinto; con estos datos no se puede saber cuál. La meta de RNF-01 usa la del servidor
 (`meta.tiempos_ms.total`; A9). La del cliente se reporta con esa limitación, y para la corrida 3
 conviene medirla fuera de WSL 2. El desglose está en `latencia.md`.

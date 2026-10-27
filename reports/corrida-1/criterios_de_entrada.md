@@ -19,6 +19,6 @@ lanzar la corrida, con la salida real resumida.
   etiqueta `v0.9.0`. Queda en `metricas.json` (`commit_evaluado`) y en `reporte.md`.
 - **Huella de RealSit antes de la corrida (RF-SYS-02):**
   `4479d0369ba967a2d8ed40fb6e7d12bff1ed497ad86ce230093f0c857312d0a2`, igual a
-  `src/data/huella_realsit.sha256`. La de después está en `modo_evaluacion.md`.
+  `src/data/huella_realsit.sha256`. La de después está en `constancias.md`.
 - **Monitor de `/health` (RNF-06):** aprobado por Rodolfo tal como quedó en B13 (cada 15 minutos,
   de lunes a viernes, de 8:00 a. m. a 4:45 p. m. en Bogotá).
