@@ -567,7 +567,8 @@ def test_health_con_dependencias(datos_sinteticos) -> None:
 def test_el_cliente_de_chroma_se_crea_una_sola_vez(
     entorno_valido: pytest.MonkeyPatch,
 ) -> None:
-    """Regresión del 502: `/health` pide el cliente en cada chequeo y no debe abrir uno nuevo."""
+    """Regresión del 502: el contenedor entrega siempre el mismo cliente de Chroma (el chequeo de
+    Chroma de `/health` lo pide en cada llamada), en lugar de abrir uno nuevo."""
     import chromadb
 
     creados: list[object] = []
