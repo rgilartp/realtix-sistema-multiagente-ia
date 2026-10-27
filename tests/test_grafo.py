@@ -695,3 +695,42 @@ def test_la_reclasificacion_de_otra_parte_no_cambia_la_categoria_reportada(deps)
     grafo = construir_grafo(deps, nodos={"nodo_ica": ica_no_corresponde})
     r = turno(grafo, "Explícame el predial y el ICA", "f2-multi")
     assert categoria_reportada(r) == "ipu"
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-OBS-02 · Matriz de confusión de enrutamiento", "RF-ORQ-06 · Prevención de bucles"
+)
+def test_reclasificar_la_primera_parte_no_cambia_la_categoria_reportada(deps, almacen) -> None:
+    """Como la matriz de componentes, se reporta la primera decisión de enrutamiento, aunque el
+    agente la rechace y se corrija al reclasificar."""
+    ordenes = [
+        Clasificacion([{"categoria": "ipu", "texto": "t"}]),
+        Clasificacion([{"categoria": "general", "texto": "t"}]),
+    ]
+    deps.clasificador = lambda texto, state: ordenes.pop(0)
+
+    def ipu_no_corresponde(state: AgentState) -> dict[str, Any]:
+        sin = parcial("ipu", "", suficiencia="no_corresponde", cobertura=0.0)
+        return {"respuestas_parciales": agregar_parcial(state, sin)}
+
+    r = turno(construir_grafo(deps, nodos={"nodo_ipu": ipu_no_corresponde}), "t", "f2-reclas")
+    assert [p["categoria"] for p in r["respuestas_parciales"]] == ["ipu", "general"]
+    assert categoria_reportada(r) == "ipu"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ORQ-01 · Clasificación de la consulta", "RF-ESC-03 · Resumen del caso")
+def test_la_pregunta_por_la_ia_es_general_y_el_caso_escalado_lleva_la_categoria(
+    deps, almacen
+) -> None:
+    deps.clasificador = lambda texto, state: Clasificacion(
+        [{"categoria": "general", "texto": texto}], {"pregunta_ia": True, "no_tributario": True}
+    )
+    r = turno(construir_grafo(deps), "¿Me atiende un programa?", "f2-ia")
+    assert categoria_reportada(r) == "general"
+    deps.clasificador = lambda texto, state: Clasificacion(
+        [{"categoria": "ipu", "texto": texto}], {"tributario_fuera_mvp": True}
+    )
+    turno(construir_grafo(deps), "Una pregunta de un tributo inventado", "f2-caso")
+    assert almacen.obtener_caso("CASO-f2-caso")["categoria"] == "fuera_de_alcance"
