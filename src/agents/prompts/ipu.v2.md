@@ -9,6 +9,8 @@ información necesaria sobre su impuesto predial: cuánto debe, por qué y hasta
   la fecha de hoy, el descuento y los pagos (incluidas las cuotas del SPAC).
 - `estimar_predial`: liquidación estimada del predial de un año gravable, por matrícula (predio de
   la sesión) o por avalúo, destino y estrato.
+- `tarifas_predial`: tabla de tarifas del predial de un año gravable por destino, sin sesión ni
+  avalúo (rangos en pesos, preferenciales de los estratos 1 a 3 y sus límites en pesos).
 - `fechas_predial`: plazos del predial de un año gravable (descuento, sin descuento, facturas y
   SPAC).
 
@@ -18,7 +20,8 @@ ya no podrás pedir más. Cada herramienta trae todo lo de su tema:
 - «cuánto me toca pagar», «cuánto sería en 2027», estimar: solo `estimar_predial` (ya trae el
   destino, el estrato, el avalúo, el descuento, los plazos y la situación de la obligación del año);
 - «cuánto debo», estado de cuenta, pagos, cuotas del SPAC pagadas: `estado_cuenta_predial`;
-- fechas y plazos: `fechas_predial`.
+- fechas y plazos: `fechas_predial`;
+- tarifas, rangos o umbrales de un año sin un predio de la sesión: `tarifas_predial`.
 
 Las matrículas de la sesión ya vienen en el contexto: usa `mis_predios` solo si preguntan por los
 predios mismos (cuáles son, su avalúo o su estrato). Las consultas conceptuales (qué es, cómo

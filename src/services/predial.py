@@ -123,6 +123,82 @@ def buscar_tarifa_ipu(anio: int, destino: Destino, estrato: int | None, avaluo: 
     return TarifaIPU(anio, destino, Decimal(fila["tarifa_por_mil"]), True, regla, fuente(seccion))
 
 
+@dataclass(frozen=True)
+class RangoIPU:
+    """Una fila de la tabla: el rango del avalúo en pesos (o en SMMLV si el SMMLV del año aún no se
+    publica), la tarifa por mil y, en las preferenciales, los estratos."""
+
+    desde: str
+    hasta: str | None
+    tarifa_por_mil: Decimal
+    estratos: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True)
+class TablaIPU:
+    anio: int
+    destino: str
+    preferenciales: tuple[RangoIPU, ...]
+    generales: tuple[RangoIPU, ...]
+    fuentes: tuple[str, ...]
+    notas: tuple[str, ...]
+
+
+def _limite(valor: int | None, unidad: str | None, anio: int) -> str | None:
+    """El límite en pesos; si el SMMLV del año aún no se publica, en SMMLV, como la norma."""
+    if valor is None:
+        return None
+    try:
+        return f"${_a_pesos(valor, unidad, anio):,}".replace(",", ".")
+    except DatoNoPublicadoError:
+        return f"{valor} SMMLV (el SMMLV de {anio} aún no se publica)"
+
+
+def tabla_tarifas_ipu(anio: int, destino: Destino) -> TablaIPU:
+    """Tabla de tarifas del predial de un año y un destino, sin un avalúo (F7 de la corrida 1).
+
+    Las mismas filas de `datos/tarifas/ipu_AAAA.yaml` que usa `buscar_tarifa_ipu`, con sus límites
+    en pesos; en el residencial, también las preferenciales de los estratos 1 a 3. Año sin
+    archivo: `AnioSinDatosError`."""
+    datos = cargar_datos(f"tarifas/ipu_{anio}.yaml", anio, "predial")
+    por_seccion = datos.get("fuentes_por_seccion") or {}
+
+    def generales(filas: list[dict[str, Any]]) -> tuple[RangoIPU, ...]:
+        return tuple(
+            RangoIPU(
+                _limite(f["desde"], None, anio) or "",
+                _limite(f["hasta"], None, anio),
+                Decimal(f["tarifa_por_mil"]),
+            )  # fmt: skip
+            for f in filas
+        )
+
+    if destino == "residencial":
+        preferenciales = tuple(
+            RangoIPU(
+                _limite(f["desde_valor"], f["unidad_desde"], anio) or "",
+                _limite(f["hasta_valor"], f["unidad_hasta"], anio),
+                Decimal(f["tarifa_por_mil"]),
+                tuple(f.get("estratos") or ()),
+            )
+            for f in _preferenciales(datos, anio)
+        )
+        filas = generales(_generales_residencial(datos, anio))
+        secciones = ("preferenciales", "residencial_urbano", "exclusion")
+        primera = _preferenciales(datos, anio)[0]
+        hasta = "hasta" if primera["desde_exclusivo"] else "inferior a"
+        notas_tabla = (
+            f"Los predios residenciales de estratos 1 y 2 con avalúo {hasta} "
+            f"{preferenciales[0].desde} quedan excluidos del predial.",
+        )
+    else:
+        preferenciales, notas_tabla = (), ()
+        filas = generales(_filas_por_destino(datos, anio, destino))
+        secciones = ("no_residencial",)
+    fuentes = tuple(dict.fromkeys(str(por_seccion.get(c) or datos["fuente"]) for c in secciones))
+    return TablaIPU(anio, destino, preferenciales, filas, fuentes, notas_tabla)
+
+
 def valor_impuesto(base: int, tarifa_por_mil: Decimal) -> int:
     """Impuesto en pesos enteros: base × tarifa / 1000, con redondeo explícito al peso."""
     return int((Decimal(base) * tarifa_por_mil / 1000).quantize(_UN_PESO, rounding=ROUND_HALF_UP))

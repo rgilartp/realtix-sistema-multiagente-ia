@@ -770,6 +770,63 @@ def test_la_parte_general_respondida_con_la_pregunta_del_predio_es_completa(
     assert "sigue las reglas de «Cuándo pedir una aclaración»" in prompt
 
 
+# -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad", "RF-IPU-03 · Liquidación estimada")
+def test_sin_sesion_la_tarifa_de_una_actividad_sale_de_datos_con_su_anio(adaptador) -> None:
+    """Una pregunta inventada por la tarifa de un código CIIU llama la herramienta con el año
+    pedido; la cifra sale de `datos/tarifas/` con su fuente, sin sesión."""
+    import yaml
+
+    from src.services.ica import PeriodoICA, tabla_aplicable
+
+    guion = [pide(("tarifa_ica", {"ciiu": "9602", "anio": 2026})), final("La tarifa es…")]
+    respuesta, _, modelo = correr(
+        AGENTE_ICA, adaptador, guion, "Tarifa de una actividad", None, None
+    )
+    (resultado,) = resultados_de_herramientas(modelo)
+    tabla = yaml.safe_load((RAIZ / "datos/tarifas/ica_2026.yaml").read_text(encoding="utf-8"))
+    fila = next(f for f in tabla["por_actividad"] if f["ciiu"] == "9602")
+    anual = resultado["tarifas"][0]
+    assert resultado["anio_gravable"] == 2026 and anual["aplica_a"] == "declaración anual"
+    assert anual["tarifa"] == f"{fila['tarifa_por_mil']} por mil".replace(".", ",")
+    assert anual["fuente_de_la_tarifa"] in respuesta["texto"]
+    if tabla_aplicable(PeriodoICA(2026, "bimestral", 6)) != 2026:
+        assert resultado["tarifas"][1]["aplica_a"].startswith("bimestre 6")
+    siguiente = yaml.safe_load((RAIZ / "datos/tarifas/ica_2027.yaml").read_text(encoding="utf-8"))
+    fila_2027 = next(f for f in siguiente["por_actividad"] if f["ciiu"] == "9602")
+    if str(fila_2027["tarifa_por_mil"]) != str(fila["tarifa_por_mil"]):
+        assert resultado["tarifas"][-1]["aplica_a"].startswith("declaración anual de 2027")
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-03 · Liquidación estimada")
+def test_sin_sesion_la_tabla_del_predial_trae_los_limites_en_pesos_del_anio(adaptador) -> None:
+    import yaml
+
+    guion = [pide(("tarifas_predial", {"anio": 2026, "destino": "residencial"})), final("…")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Tarifas del predial", None, None)
+    (resultado,) = resultados_de_herramientas(modelo)
+    datos = yaml.safe_load((RAIZ / "datos/tarifas/ipu_2026.yaml").read_text(encoding="utf-8"))
+    primer_limite = datos["preferenciales"]["limites_en_pesos"]["16_smmlv"]
+    pesos_limite = "$" + f"{primer_limite:,}".replace(",", ".")
+    assert resultado["tarifas_preferenciales_estratos_1_a_3"][0]["avaluo_desde"] == pesos_limite
+    assert pesos_limite in resultado["reglas"][0]
+    assert len(resultado["tarifas_por_rango_de_avaluo"]) == len(datos["residencial_urbano"])
+    assert resultado["fuente_de_la_tarifa"]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-03 · Liquidación estimada")
+def test_el_prompt_pide_las_cifras_por_anio_a_las_herramientas() -> None:
+    for nombre, herramienta in (("ipu", "tarifas_predial"), ("ica", "tarifa_ica")):
+        texto = " ".join(prompt_de_agente(nombre).texto.split())
+        assert "se pide a una herramienta, con el año que corresponde" in texto
+        assert f"`{herramienta}`" in texto
+
+
 # -- Periodicidad del ICA y estimación en la primera ronda (F4 y F8 de la corrida 1) ------------
 
 
@@ -855,7 +912,7 @@ def test_el_prompt_del_ica_pide_estimar_en_la_primera_ronda_y_una_sola_periodici
     assert "la bimestral si aún no la sabes" not in texto
     assert "da solo las fechas\n  de esa periodicidad" in texto
     assert "llama\n  `estimar_ica` en esta primera ronda" in texto
-    assert "Para estimar, la tarifa de\n  una actividad nunca se toma de los fragmentos" in texto
+    assert "La tarifa de una\n  actividad nunca se toma de los fragmentos" in texto
     assert "di cuál es la periodicidad que\n  corresponde" in texto
     assert "Conserva el periodo que nombra la norma que citas" in texto
     assert "aviso_periodicidad" in texto

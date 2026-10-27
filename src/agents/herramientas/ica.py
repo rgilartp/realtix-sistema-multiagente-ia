@@ -28,10 +28,11 @@ from src.services.calendario_tributario import (
     regimen_ica,
     regimenes_posibles,
 )
-from src.services.errores import DatoNoPublicadoError
+from src.services.errores import ActividadNoReconocidaError, AnioSinDatosError, DatoNoPublicadoError
 from src.services.ica import (
     EstimacionICA,
     PeriodoICA,
+    buscar_tarifa_ica,
     estimar_ica,
     periodicidad_registrada,
     tabla_aplicable,
@@ -275,6 +276,42 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
 
 
+def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
+    """Tarifa de una actividad en un año, sin sesión ni ingresos (F7 de la corrida 1): la de la
+    tabla del año gravable anual; si cambia en el año, la del último bimestre, y si cambia el año
+    siguiente y su tabla ya está publicada, la de ese año."""
+    ciiu = str(argumentos.get("ciiu") or "").strip()
+    if not ciiu:
+        raise FaltaDatoError("Falta el código CIIU de la actividad.")
+    anio = entero(argumentos, "anio") or contexto.hoy.year
+    periodos = {"declaración anual": PeriodoICA(anio)}
+    if tabla_aplicable(PeriodoICA(anio, "bimestral", 6)) != tabla_aplicable(PeriodoICA(anio)):
+        periodos["bimestre 6 (declarantes bimestrales)"] = PeriodoICA(anio, "bimestral", 6)
+    tarifas = [(etiqueta, buscar_tarifa_ica(ciiu, p)) for etiqueta, p in periodos.items()]
+    try:  # si la tabla del año siguiente ya está publicada y la tarifa cambia, también va
+        siguiente = buscar_tarifa_ica(ciiu, PeriodoICA(anio + 1))
+        if siguiente.tarifa_por_mil != tarifas[0][1].tarifa_por_mil:
+            tarifas.append((f"declaración anual de {anio + 1} (cambia la tarifa)", siguiente))
+    except (AnioSinDatosError, ActividadNoReconocidaError):
+        pass
+    datos = {
+        "ciiu": ciiu,
+        "actividad": tarifas[0][1].actividad,
+        "anio_gravable": anio,
+        "tarifas": [
+            {
+                "aplica_a": etiqueta,
+                "tarifa": por_mil(t.tarifa_por_mil),
+                "tarifa_si_cumple_condicion": por_mil(t.tarifa_condicionada),
+                "condicion": t.condicion,
+                "fuente_de_la_tarifa": t.fuente,
+            }
+            for etiqueta, t in tarifas
+        ],
+    }
+    return Resultado(datos, fuentes=tuple(dict.fromkeys(t.fuente for _, t in tarifas)))
+
+
 HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
     Herramienta(
         "mi_situacion_ica",
@@ -299,6 +336,16 @@ HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
         },
         ("ciiu", "ingresos", "anio"),
         _estimar,
+    ),
+    Herramienta(
+        "tarifa_ica",
+        "Tarifa del ICA de una actividad (código CIIU) en un año gravable, sin sesión ni "
+        "ingresos, con su fuente; si la tabla cambia dentro del año, también la del último "
+        "bimestre, y si cambia el año siguiente, la de ese año. Para una tarifa por actividad, "
+        "sin estimar el impuesto.",
+        {"ciiu": {"type": "string", "description": "Código CIIU de la actividad."}, **ANIO},
+        ("ciiu", "anio"),
+        _tarifa,
     ),
     Herramienta(
         "regimen_ica",

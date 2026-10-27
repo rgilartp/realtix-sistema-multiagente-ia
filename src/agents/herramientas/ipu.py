@@ -29,7 +29,7 @@ from src.services.datos_anuales import porcentaje_pronto_pago
 from src.services.errores import AnioSinDatosError
 from src.services.minimizacion import minimizar
 from src.services.obligaciones import SituacionObligacion
-from src.services.predial import liquidar_predial
+from src.services.predial import RangoIPU, liquidar_predial, tabla_tarifas_ipu
 
 
 def _obligacion(s: SituacionObligacion) -> dict[str, Any]:
@@ -203,6 +203,33 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
     return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
 
 
+def _tarifas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
+    """Tabla de tarifas del año, sin sesión ni avalúo (F7 de la corrida 1)."""
+    anio = entero(argumentos, "anio") or contexto.hoy.year
+    destino = argumentos.get("destino") or "residencial"
+    tabla = tabla_tarifas_ipu(anio, destino)
+
+    def filas(rangos: tuple[RangoIPU, ...]) -> list[dict[str, Any]]:
+        return [
+            {
+                **({"estratos": list(r.estratos)} if r.estratos else {}),
+                "avaluo_desde": r.desde,
+                "avaluo_hasta": r.hasta or "en adelante",
+                "tarifa": por_mil(r.tarifa_por_mil),
+            }
+            for r in rangos
+        ]
+
+    datos: dict[str, Any] = {"anio_gravable": anio, "destino": destino}
+    if tabla.preferenciales:
+        datos["tarifas_preferenciales_estratos_1_a_3"] = filas(tabla.preferenciales)
+    datos["tarifas_por_rango_de_avaluo"] = filas(tabla.generales)
+    datos["fuente_de_la_tarifa"] = "; ".join(tabla.fuentes)
+    if tabla.notas:
+        datos["reglas"] = list(tabla.notas)
+    return Resultado(datos, fuentes=tabla.fuentes)
+
+
 HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
     Herramienta(
         "mis_predios",
@@ -236,6 +263,16 @@ HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
         },
         ("anio",),
         _estimar,
+    ),
+    Herramienta(
+        "tarifas_predial",
+        "Tabla de tarifas del impuesto predial de un año gravable por destino, sin sesión ni "
+        "avalúo: los rangos de avalúo en pesos con su tarifa por mil y, en el residencial, las "
+        "tarifas preferenciales de los estratos 1 a 3 con sus límites en pesos (SMMLV del año) y "
+        "la exclusión de los estratos 1 y 2. Para una tarifa, un rango o un umbral de un año.",
+        {**ANIO, "destino": {"type": "string", "enum": ["residencial", "comercial", "lote"]}},
+        ("anio",),
+        _tarifas,
     ),
     Herramienta(
         "fechas_predial",
