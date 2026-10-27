@@ -10,6 +10,6 @@
 | 6 | Pensé que había demasiada inconsistencia en el sistema. |  |  |
 | 7 | Imagino que la mayoría de las personas aprenderían a usar este sistema muy rápido. |  |  |
 | 8 | Encontré el sistema muy engorroso de usar. |  |  |
-| 9 | Me sentí muy seguro usando el sistema. |  |  |
+| 9 | Me sentí muy seguro(a) usando el sistema. |  |  |
 | 10 | Necesité aprender muchas cosas antes de poder empezar a usar este sistema. |  |  |
 | | **Puntaje SUS (0 a 100)** |  |  |

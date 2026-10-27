@@ -4,7 +4,7 @@
     "corrida-2"
   ],
   "umbral_actual": 0.7,
-  "turnos_con_formula": 40,
+  "turnos_con_nivel_menor_de_1": 40,
   "escalaron_por_confianza": 2,
   "niveles": [
     0.635,

@@ -180,7 +180,8 @@ Cada escenario recuperado se atribuye a la corrección de la corrida 1 que lo cu
   - Desglose en `reporte.md`.
 - **RAGAS:**
   - Sin sesión (21 casos): precisión de 82,7 %, exhaustividad de 82,5 % y fidelidad de 87,8 %.
-  - Con sesión (16 casos), con los datos de las herramientas como contexto (F1), pasan de 45,4 %,
+  - Con sesión (16 casos; la exhaustividad se promedia sobre 13 y la fidelidad sobre 15, porque RAGAS
+    no dio valor en los demás), con los datos de las herramientas como contexto (F1), pasan de 45,4 %,
     33,1 % y 39,6 % en la corrida 1 a 47,5 %, 79,5 % y 80,3 %.
 - **Trazas (RNF-05):** 1.277 ejecuciones de 63 conversaciones, ninguna con identificadores
   (`trazas.json`).

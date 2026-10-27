@@ -9,7 +9,8 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 1. **Horario.** El asistente atiende en días hábiles de 8:00 a. m. a 5:00 p. m., hora de Bogotá.
    Fuera de ese horario solo muestra el aviso de fuera de horario. Haz las tareas en ese horario.
 2. **Dirección.** Abre https://tg2-multiagente.duckdns.org/ovt/ en Chrome, Edge o Firefox. Es la OVT simulada: una página de pruebas
-   que dice «Entorno simulado de pruebas». No necesitas el repositorio ni ninguna clave.
+   que dice «Entorno simulado de pruebas». No necesitas el repositorio ni ninguna clave: los
+   archivos que usas (este formulario y el recibo de la tarea 3) te los entrega Rodolfo.
 3. **Usuario de prueba.** En el selector «Usuario de prueba», elige el usuario que indica cada
    tarea y pulsa el botón para iniciar la sesión. Todos los usuarios son sintéticos.
 4. **Conversación nueva.** Antes de cada tarea, recarga la página (F5) y vuelve a elegir el usuario,
@@ -46,8 +47,9 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 ## Tarea 3 · Cargar un recibo y confirmar los datos
 
 - **Usuario:** U03.
-- **Archivo:** `recibo_de_prueba_U03.png`, en la carpeta `docs/usabilidad/` (es un recibo sintético
-  con la leyenda «Documento sintético sin validez tributaria»).
+- **Archivo:** `recibo_de_prueba_U03.png`, que viene con este formulario (en el repositorio está en
+  `docs/usabilidad/`). Es un recibo sintético con la leyenda «Documento sintético sin validez
+  tributaria».
 - **Qué haces:** adjunta el recibo con el control de carga de la ventana del asistente, revisa los
   datos que leyó y confírmalos.
 - **Se logra si:** el asistente muestra los datos leídos, te pide confirmarlos y, al confirmar, los

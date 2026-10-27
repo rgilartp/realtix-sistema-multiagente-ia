@@ -1,0 +1,55 @@
+{
+  "que_es": "Salida del conteo (filas de las tablas del almacén y fragmentos de cada colección de Chroma) dentro del backend desplegado, antes de reiniciar, después de `docker compose restart` y después de `docker compose up -d --force-recreate`; copiada de la consola del operador",
+  "comandos": [
+    "docker compose --env-file .env --env-file deploy/servidor.env exec -T backend python - < conteos.py",
+    "docker compose ... restart",
+    "docker compose ... up -d --wait --force-recreate"
+  ],
+  "antes": {
+    "caso_escalado": 24,
+    "checkpoints": 906,
+    "conversacion": 142,
+    "corpus": {
+      "normativa_datos": 73,
+      "normativa_ica": 562,
+      "normativa_ipu": 491,
+      "plataforma_general": 22
+    },
+    "interaccion": 159,
+    "mensaje_funcionario": 0
+  },
+  "despues_de_reiniciar": {
+    "caso_escalado": 24,
+    "checkpoints": 906,
+    "conversacion": 142,
+    "corpus": {
+      "normativa_datos": 73,
+      "normativa_ica": 562,
+      "normativa_ipu": 491,
+      "plataforma_general": 22
+    },
+    "interaccion": 159,
+    "mensaje_funcionario": 0
+  },
+  "despues_de_recrear": {
+    "caso_escalado": 24,
+    "checkpoints": 906,
+    "conversacion": 142,
+    "corpus": {
+      "normativa_datos": 73,
+      "normativa_ica": 562,
+      "normativa_ipu": 491,
+      "plataforma_general": 22
+    },
+    "interaccion": 159,
+    "mensaje_funcionario": 0
+  },
+  "health_al_final": {
+    "estado": "ok",
+    "dependencias": {
+      "postgres": "ok",
+      "chroma": "ok",
+      "realsit": "ok"
+    }
+  }
+}

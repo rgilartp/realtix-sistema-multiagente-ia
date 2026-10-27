@@ -1,6 +1,6 @@
 # Umbral de confianza: datos de corrida-1, corrida-2
 
-Turnos que pasaron por la fórmula: 40; escalaron por confianza con el umbral actual: 2.
+Turnos con un nivel menor de 1: 40; escalaron por confianza con el umbral actual: 2. Los resultados de la corrida 1 son del juez v1 (ADR-25).
 
 | Umbral | Escalarían | De escenarios superados | De escenarios no superados |
 |---|---|---|---|
