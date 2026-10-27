@@ -5,9 +5,16 @@ conocidas»), con las tres secciones del manual que cita como contexto. Dice «P
 presentar, debes hacerlo directamente en la Oficina Virtual Tributaria», que no está en el manual.
 Caso fiel: la misma respuesta sin esa frase y con cada afirmación tal como la sustenta el manual.
 
+Casos con datos de herramientas (ADR-25, después de F1): una consulta inventada de saldo, con un
+resultado inventado de `estado_cuenta_predial` y la nota de mora del sistema, armada con el mismo
+`caso_del_ensayo` de las corridas. La respuesta fiel usa un dato que solo da la herramienta (el
+avalúo); la alterada cambia el saldo.
+
 Criterios:
 - juez: el caso con falla tiene alucinación o no es «correcta»; el fiel es correcta o parcialmente
   correcta, sin alucinación;
+- juez con herramientas: la respuesta con el saldo alterado tiene alucinación (si no, es una
+  parada); la fiel es correcta o parcialmente correcta, sin alucinación;
 - RAGAS (ajuste 2 de Rodolfo): la fidelidad del caso con falla es menor que la del fiel, y la del
   fiel es 0,9 o más.
 Los dos casos son también la prueba inicial de RAGAS en español (A9): se miden las cuatro métricas y
@@ -25,9 +32,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.config import cargar_configuracion  # noqa: E402
 from src.evaluacion.escenarios import RAIZ, cargar_escenarios  # noqa: E402
-from src.evaluacion.juez import CasoJuez, Juez  # noqa: E402
+from src.evaluacion.juez import CasoJuez, Juez, caso_del_ensayo  # noqa: E402
 from src.evaluacion.ragas_eval import CasoRagas, EvaluadorRagas  # noqa: E402
 from src.integrations.costos import costo_usd  # noqa: E402
+from src.services.notas import NOTA_INTERESES_MORA  # noqa: E402
 
 MANUAL = RAIZ / "knowledge_base" / "plataforma_general" / "manual_ovt_simulada.md"
 SECCIONES = (
@@ -49,6 +57,52 @@ FIEL = (
     "pedir que te atienda un funcionario."
 )
 UMBRAL_FIDELIDAD = 0.9
+
+# Caso inventado con datos de una herramienta (no es de ningún escenario: A8).
+FUENTE = "Datos de tu cuenta en RealSit"
+PREGUNTA_SALDO = "¿Me queda algo por pagar del predial de mi casa?"
+RESULTADO_INVENTADO = {
+    "matricula": "50C-9999901",
+    "anio_gravable": 2026,
+    "avaluo_catastral": "$612.300.000",
+    "valor_liquidado": "$4.817.000",
+    "pagado": "$0",
+    "saldo": "$4.817.000",
+    "vencida": True,
+    "fuentes_de_la_herramienta": ["Datos de tu cuenta en RealSit"],
+}
+REFERENCIA_SALDO = (
+    "Sí. Según tus datos en RealSit, el predial de 2026 de tu predio tiene un saldo pendiente de "
+    "$4.817.000 y la obligación está vencida. Los intereses de mora no se calculan aquí."
+)
+SALDO_FIEL = (
+    "Sí. Tu predio, con un avalúo catastral de $612.300.000, tiene un saldo pendiente de "
+    "$4.817.000 del predial de 2026, y la obligación ya está vencida."
+)
+SALDO_ALTERADO = SALDO_FIEL.replace("$4.817.000", "$4.871.000")
+
+
+def caso_con_herramienta(respuesta: str) -> CasoJuez:
+    """El caso como lo arma una corrida: la respuesta con la nota que agrega el sistema."""
+    escenario = {
+        "respuesta_referencia": REFERENCIA_SALDO,
+        "fuentes_esperadas": ["Datos de tu cuenta en RealSit"],
+        "no_debe": [],
+    }
+    turno = {
+        "usuario": PREGUNTA_SALDO,
+        "respuesta": f"{respuesta}\n\n{NOTA_INTERESES_MORA}\n\nFuentes: {FUENTE}.",
+        "meta": {
+            "fuentes": [{"norma": "Datos de tu cuenta en RealSit"}],
+            "herramientas": [
+                {"herramienta": "estado_cuenta_predial", "resultado": RESULTADO_INVENTADO}
+            ],
+            "notas": [NOTA_INTERESES_MORA],
+        },
+    }
+    return caso_del_ensayo(escenario, {"turnos": [turno]})
+
+
 NORMA_MANUAL = "Manual de uso de la OVT simulada (sintético)"
 
 
@@ -73,8 +127,8 @@ def main() -> int:
     juez = Juez(settings)
     resultado: dict = {"juez": {}, "ragas": {}}
     tokens_juez = {"entrada": 0, "salida": 0}
-    for nombre, respuesta in (("con_falla", CON_FALLA), ("fiel", FIEL)):
-        caso = CasoJuez(
+    casos_juez = {
+        nombre: CasoJuez(
             [{"contribuyente": pregunta, "asistente": respuesta}],
             str(gen02["respuesta_referencia"]).strip(),
             gen02["fuentes_esperadas"],
@@ -82,6 +136,11 @@ def main() -> int:
             contextos,
             citadas,
         )
+        for nombre, respuesta in (("con_falla", CON_FALLA), ("fiel", FIEL))
+    }
+    casos_juez["herramienta_alterada"] = caso_con_herramienta(SALDO_ALTERADO)
+    casos_juez["herramienta_fiel"] = caso_con_herramienta(SALDO_FIEL)
+    for nombre, caso in casos_juez.items():
         calificacion = juez.calificar(caso)
         tokens_juez["entrada"] += calificacion.entrada
         tokens_juez["salida"] += calificacion.salida
@@ -93,7 +152,16 @@ def main() -> int:
         CasoRagas(pregunta, r, contextos, str(gen02["respuesta_referencia"]).strip())
         for r in (CON_FALLA, FIEL)
     ]
-    for nombre, puntajes in zip(("con_falla", "fiel"), ragas.evaluar_varios(casos), strict=True):
+    # Con herramientas, solo como información: el contexto es el de una corrida (F1).
+    datos = [
+        f"Dato de una herramienta del sistema: {d}"
+        for d in casos_juez["herramienta_fiel"].datos_herramientas
+    ] + [f"Nota del sistema: {NOTA_INTERESES_MORA}"]
+    casos += [
+        CasoRagas(PREGUNTA_SALDO, r, datos, REFERENCIA_SALDO) for r in (SALDO_ALTERADO, SALDO_FIEL)
+    ]
+    nombres = ("con_falla", "fiel", "herramienta_alterada", "herramienta_fiel")
+    for nombre, puntajes in zip(nombres, ragas.evaluar_varios(casos), strict=True):
         resultado["ragas"][nombre] = puntajes
         print(f"RAGAS, {nombre}: {puntajes}")
     j, r = resultado["juez"], resultado["ragas"]
@@ -108,7 +176,12 @@ def main() -> int:
             and r["con_falla"]["faithfulness"] < r["fiel"]["faithfulness"]
         ),
         "ragas_fidelidad_fiel_0_9": (r["fiel"]["faithfulness"] or 0) >= UMBRAL_FIDELIDAD,
-        "ragas_cuatro_metricas": all(v is not None for p in r.values() for v in p.values()),
+        "ragas_cuatro_metricas": all(
+            v is not None for n in ("con_falla", "fiel") for v in r[n].values()
+        ),
+        "juez_detecta_el_dato_de_herramienta_alterado": j["herramienta_alterada"]["alucinacion"],
+        "juez_acepta_los_datos_de_herramienta": j["herramienta_fiel"]["veredicto"] != "incorrecta"
+        and not j["herramienta_fiel"]["alucinacion"],
     }
     costo_juez = costo_usd(settings.modelo_juez, tokens_juez["entrada"], tokens_juez["salida"])
     resultado["criterios"] = criterios
