@@ -50,6 +50,7 @@ class Meta(BaseModel):
     contextos: list[str] | None = None  # solo en el modo de evaluación (RAGAS)
     herramientas: list[dict[str, Any]] | None = None  # solo en el modo de evaluación (juez)
     notas: list[str] | None = None  # solo en el modo de evaluación (juez)
+    reescrituras: int | None = None  # solo en el modo de evaluación (citas sin fuente, F5)
     datos_extraidos: dict[str, Any] | None = None
     tiempos_ms: dict[str, int] = {}
     tokens: dict[str, int] = {}
