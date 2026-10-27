@@ -1,17 +1,17 @@
 {
-  "que_es": "sin_repetir_notas aplicada sin API a las respuestas guardadas de esta verificación (antes de la regla)",
+  "que_es": "sin_repetir_notas (con la protección de cifras de la revisión) aplicada sin API a las respuestas guardadas de esta verificación, que se hicieron antes de la regla; el cuerpo es el texto antes de la nota del sistema, sin espacios en los extremos",
   "resultados": [
     {
       "escenario": "IPU-02",
       "menciones_de_mora_antes": 2,
       "menciones_de_mora_despues": 1,
-      "caracteres_quitados": 194
+      "caracteres_quitados_del_cuerpo": 192
     },
     {
       "escenario": "IPU-10",
       "menciones_de_mora_antes": 2,
       "menciones_de_mora_despues": 1,
-      "caracteres_quitados": 170
+      "caracteres_quitados_del_cuerpo": 168
     }
   ]
 }

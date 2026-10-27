@@ -226,14 +226,15 @@ def _sin_repetir(valores: list[str]) -> list[str]:
 def componer_texto(
     respuesta: str, resultados: list[Resultado], citados: list[Fragmento], con_anexos: bool
 ) -> tuple[str, list[str]]:
-    """Texto final: la respuesta del modelo, las notas tal cual y la lista de fuentes."""
+    """Texto final: la respuesta del modelo (sin las copias de las notas, F11), las notas tal
+    cual y la lista de fuentes."""
     texto = respuesta.strip()
     exitosos = [r for r in resultados if r.tipo == "ok"]
     fuentes = _sin_repetir([f for r in exitosos for f in r.fuentes] + [f.cita for f in citados])
     if not con_anexos:
         return texto, fuentes
     notas = [n for n in notas_del_sistema(resultados) if n not in texto]
-    texto = sin_repetir_notas(texto, notas)  # F11: sin la advertencia que el modelo repitió
+    texto = sin_repetir_notas(texto, notas).strip()  # F11: sin la nota que el modelo copió
     if notas:
         texto += "\n\n" + "\n\n".join(notas)
     if fuentes:
