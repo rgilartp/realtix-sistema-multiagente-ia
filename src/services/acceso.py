@@ -1,7 +1,9 @@
 """Reglas de acceso (RF-AUT-01 a RF-AUT-04), sin LangGraph.
 
 La restricción a predios propios vive una sola vez, en `verificar_predio_propio` del adaptador; aquí
-solo se decide qué hacer según la sesión. El token de la OVT simulada (HMAC) lo valida la API (B9).
+solo se decide qué hacer según la sesión. `rechazo_previo` es un filtro anterior al modelo (F9 de
+la corrida 1) que compara el mensaje con los predios de la sesión; la regla de verdad sigue siendo
+la del adaptador. El token de la OVT simulada (HMAC) lo valida la API (B9).
 """
 
 import re
@@ -56,3 +58,9 @@ def matriculas_ajenas(texto: str, predios_autorizados: Iterable[str]) -> list[st
     propias = {p.upper() for p in predios_autorizados}
     nombradas = (m.upper() for m in MATRICULA_EN_TEXTO.findall(texto))
     return list(dict.fromkeys(m for m in nombradas if m not in propias))
+
+
+def rechazo_previo(texto: str, contribuyente_id: str | None, predios: Iterable[str]) -> bool:
+    """Con sesión, el mensaje nombra un predio que no es de la sesión: se rechaza con el mensaje
+    único antes de llamar al modelo. Sin sesión sigue el flujo del aviso de sesión."""
+    return bool(contribuyente_id) and bool(matriculas_ajenas(texto, predios))

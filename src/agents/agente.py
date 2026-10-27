@@ -47,7 +47,7 @@ from src.integrations.modelos import texto_de_respuesta
 from src.integrations.recuperador import Fragmento
 from src.integrations.robustez import con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador
-from src.services.acceso import matriculas_ajenas
+from src.services.acceso import rechazo_previo
 from src.services.citas import citas_sin_fuente, fuentes_de_fragmento
 from src.services.horario import RelojSistema
 
@@ -89,7 +89,12 @@ class ConfigAgente:
     prompt: Prompt
     colecciones: tuple[str, ...]
     herramientas: tuple[Herramienta, ...] = ()
-    controla_matriculas: bool = False  # rechazo previo de una matrícula ajena (F9, RF-AUT-02)
+
+    @property
+    def controla_matriculas(self) -> bool:
+        """Rechazo previo de una matrícula ajena (F9, RF-AUT-02): en los agentes con alguna
+        herramienta que recibe una matrícula (IPU e ICA)."""
+        return any("matricula" in h.propiedades for h in self.herramientas)
 
 
 def hoy_del_turno(config: RunnableConfig | None, deps: Dependencias) -> date:
@@ -279,10 +284,8 @@ def ejecutar_agente(
         caida = parcial(categoria, "", suficiencia="no_pudo", cobertura=0.0, fallo_servicio=True)
         return caida, datos
 
-    if (
-        config.controla_matriculas
-        and state.get("contribuyente_id")
-        and matriculas_ajenas(ultimo_texto(state), state.get("predios_autorizados", []))
+    if config.controla_matriculas and rechazo_previo(
+        ultimo_texto(state), state.get("contribuyente_id"), state.get("predios_autorizados", [])
     ):
         # Control previo sin modelo (F9): el mensaje nombra un predio que no es de la sesión. Se
         # rechaza con el mensaje único y no se expone ningún dato (RF-AUT-02).
