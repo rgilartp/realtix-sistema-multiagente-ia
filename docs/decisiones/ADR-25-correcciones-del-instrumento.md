@@ -63,6 +63,59 @@ Corregir el instrumento después de ver los resultados exige transparencia: las 
    - Costo de las dos ejecuciones: US$0,1412 en Anthropic y US$0,0520 en OpenAI.
 6. **La corrida 1 queda reportada tal como se midió** (48,3 %). No se vuelve a calificar con el juez nuevo: sus `meta` no traen los datos de las herramientas.
 
+## Juez v3 (después de la revisión externa del PR de las correcciones del instrumento)
+
+**Hallazgo.** La bandera de alucinación del juez v2 era inestable.
+
+- En la validación A4, la misma frase inventada de GEN-02 salió con alucinación en una ejecución y sin ella en otra, aunque la justificación decía que los fragmentos no la respaldaban.
+- En la verificación de F1, la misma nota de mora sin fuente fue alucinación en OCR-07 y no en el segundo turno de CAD-03.
+- **Causa probable:** el esquema pedía el veredicto y la bandera antes de la justificación, y el juez respondía sin revisar antes las afirmaciones (unos 285 tokens de salida por llamada).
+- Además, el criterio de A4 de ADR-24 («alucinación o un veredicto distinto de correcta») no coincidía con la tasa de la meta, en la que «parcialmente correcta sin alucinación» cuenta como superada.
+
+**Decisión** (aprobada por Rodolfo con la revisión externa):
+
+1. **El esquema del juez sigue este orden:**
+   - `afirmaciones_sin_fuente`: hasta 5 citas breves de afirmaciones del tipo de la rúbrica 1 (cifra, fecha, porcentaje, norma, artículo, requisito o procedimiento) que no salen de ninguna fuente válida o que la contradicen; vacía si no hay;
+   - `justificacion`;
+   - el veredicto, la alucinación y los demás campos.
+2. **`src/evaluacion/juez.v3.md`** es el texto de v2 más la instrucción de llenar primero la lista y la justificación, y al final el veredicto.
+3. **En el código, la alucinación es la bandera del juez o la lista no vacía.** `juez.jsonl` guarda la lista y la bandera tal como la dio el juez (`alucinacion_marcada`). Las calificaciones anteriores a v3 se leen con la lista vacía.
+4. **Criterio nuevo de A4** (`scripts/validar_evaluadores.py`): el de la tasa de la meta, con 3 repeticiones del juez (RAGAS, una vez). En las 3:
+   - GEN-02 con la frase inventada no se supera, y la frase está entre las afirmaciones listadas;
+   - una respuesta fiel del saldo con un requisito que no está en ninguna fuente sale con alucinación;
+   - el saldo y el avalúo alterados salen con alucinación;
+   - GEN-02 fiel y el saldo fiel se superan, con la lista vacía.
+
+   Si falla en una repetición, es una parada.
+5. **Huella del juez v3:** `afecd5c1b4f62d52fc605ac6b350363cddee4604ae704f30247703146aa39805`. Ahora cubre también el esquema que se envía y la validación de `Veredicto`. Desde aquí, todas las verificaciones (incluida la regresión) y la corrida 2 usan v3.
+
+**Resultados.**
+
+- **A4: 9 de 9 criterios, estables en las 3 repeticiones.**
+
+  | Caso (3 repeticiones) | Juez v3 | Afirmaciones sin fuente |
+  |---|---|---|
+  | GEN-02 con la frase inventada | parcialmente correcta, con alucinación (las 3) | la frase inventada (las 3) |
+  | GEN-02 fiel | correcta, sin alucinación (las 3) | ninguna |
+  | Saldo fiel con un requisito inventado | incorrecta, con alucinación (las 3) | el requisito (las 3) |
+  | Saldo alterado | incorrecta, con alucinación (las 3) | el saldo alterado (las 3) |
+  | Avalúo alterado (dato solo de la herramienta) | parcialmente correcta, con alucinación (las 3) | el avalúo alterado (las 3) |
+  | Saldo fiel | correcta, sin alucinación (las 3) | ninguna |
+
+  - RAGAS, sin cambios: fidelidad de 0,90 frente a 1,00 (GEN-02) y de 0,67 frente a 1,00 (saldo).
+  - El juez escribió en promedio 215 tokens de salida por llamada en A4 y 556 en la recalificación.
+  - Costo: US$0,3144 en Anthropic y US$0,0260 en OpenAI.
+- **Prueba contra el exceso de rigor** (`scripts/recalificar_con_juez.py`, `reports/juez-v3-recalificacion/comparacion.md`): sin llamar al sistema, se recalificaron con v3 las respuestas guardadas de tres verificaciones:
+  - `verif-fix-instrumento`, salvo CAD-03, cuyo turno del recibo no trae las notas;
+  - `verif-fix-instrumento-2`;
+  - `verif-fix-categoria-clasificada`.
+
+  **Ninguno de los 17 ensayos cambió de resultado.**
+  - v3 listó una sola afirmación: la nota de mora de OCR-07 en su primer intento («el pago incluye intereses de mora (Decreto 807 de 1993, art. 66)»).
+  - Ese intento es justo el que no reportaba las notas del contraste en `meta`, así que la afirmación no estaba en las fuentes que recibió el juez. Con la corrección (`verif-fix-instrumento-2`), la lista sale vacía.
+  - Ninguna afirmación listada estaba en las fuentes del juez.
+  - Costo: US$0,5713 en Anthropic.
+
 ## Alternativas
 
 - **Volver a calificar la corrida 1 con el juez nuevo:** se descartó, porque las respuestas guardadas no traen los datos de las herramientas y la cifra medida debe quedar como se midió.
