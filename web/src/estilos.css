@@ -140,7 +140,10 @@
   :root[data-tema-pendiente] body {
     visibility: hidden;
   }
+  /* El rótulo fijo no tapa lo que recibe el foco ni lo que se desplaza a la vista (hasta dos
+     líneas en el celular). */
   html {
+    scroll-padding-top: 4.5rem;
     font-family: var(--font-texto);
     color: var(--color-tinta);
     background: var(--color-papel);
@@ -175,7 +178,8 @@
     outline: 3px solid var(--color-sello-texto);
     outline-offset: 2px;
   }
-  /* …y resaltador sobre el azul de sello (cabecera del widget, bandas y pestañas). */
+  /* …y resaltador sobre el azul de sello (encabezado de portal, cabecera del widget, bandas y
+     pestañas). */
   .sobre-oscuro :focus-visible {
     outline-color: var(--color-resaltador);
   }
@@ -232,10 +236,11 @@
     height: 1.75rem;
     border: 2px solid var(--color-blanco);
     border-radius: var(--radius-control);
-    transition: background-color 150ms var(--ease-salida);
   }
-  .interruptor:hover .interruptor-riel {
-    background: var(--color-sello-fuerte);
+  /* Al pasar el puntero se subraya el nombre, encendido o apagado, como un enlace. */
+  .interruptor:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
   .interruptor[aria-checked="true"] .interruptor-riel {
     background: var(--color-tinta-oscura);
@@ -251,7 +256,6 @@
     border-radius: var(--radius-casilla);
     background: var(--color-blanco);
     color: var(--color-sello);
-    transition: translate 150ms var(--ease-salida);
   }
   .interruptor[aria-checked="true"] .interruptor-perilla {
     translate: 1.25rem 0;
@@ -366,9 +370,6 @@
   }
   button:not(:disabled):active {
     scale: none;
-  }
-  .interruptor-perilla {
-    transition: none;
   }
 }
 @keyframes aparecer {

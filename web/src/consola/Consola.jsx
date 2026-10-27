@@ -253,7 +253,7 @@ function Bandeja({ token }) {
               data-prueba="detalle"
               aria-labelledby="titulo-detalle"
             >
-              <h3 id="titulo-detalle" ref={tituloDetalle} tabIndex={-1} className="banda scroll-mt-4 px-4 py-2 text-lg">
+              <h3 id="titulo-detalle" ref={tituloDetalle} tabIndex={-1} className="banda px-4 py-2 text-lg">
                 {detalleVisible.id_caso}
               </h3>
               <div className="space-y-5 p-4 md:p-5">
@@ -506,7 +506,7 @@ export default function Consola() {
           Servicio: {salud?.estado ?? "…"}
           {salud?.version ? ` (v${salud.version})` : ""}
         </span>
-        <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-block py-1 text-sm font-semibold text-blanco underline">
+        <a href={LANGSMITH} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center text-sm font-semibold text-blanco underline">
           Trazas en LangSmith
           <span className="sr-only"> (se abre en otra pestaña)</span>
         </a>

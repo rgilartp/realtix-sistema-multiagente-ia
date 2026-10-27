@@ -80,7 +80,7 @@ const PARES = [
   ["foco azul sobre papel", "sello-texto", "papel", 3],
   ["foco azul sobre hoja", "sello-texto", "hoja", 3],
   ["anillo azul del caso elegido sobre azul suave", "sello-texto", "sello-suave", 3],
-  ["foco resaltador sobre azul (cabecera, bandas, pestañas)", "resaltador", "sello", 3],
+  ["foco resaltador sobre azul (encabezado, cabecera, bandas, pestañas)", "resaltador", "sello", 3],
   ["foco tinta sobre el caso elegido", "tinta", "sello-suave", 3],
   ["puntos de «escribiendo» y barras del F1 sobre hoja", "sello-texto", "hoja", 3],
   ["marca de la pestaña activa de la consola frente a la inactiva", "sello-texto", "papel-2", 3],

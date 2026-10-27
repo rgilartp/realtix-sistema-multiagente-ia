@@ -108,8 +108,8 @@ el lenguaje claro. Hay modo claro y modo oscuro, con los mismos colores.
 
 - El fondo de las páginas es `papel`; lo que se lee o se llena va en `hoja`. Los neutros salen
   del azul.
-- `sello` es el relleno de las bandas, los botones principales, la cabecera del widget y la
-  pestaña del asistente de IA, siempre con texto `blanco`. Es tinta plana.
+- `sello` es el relleno del encabezado de portal, las bandas, los botones principales, la cabecera
+  del widget y la pestaña del asistente de IA, siempre con texto `blanco`. Es tinta plana.
 - `sello-texto` es el azul para texto, enlaces, el anillo de foco sobre `papel` y `hoja`, y el
   anillo del caso elegido. En el modo claro coincide con `sello`; en el oscuro es más claro.
 - El verde es del funcionario y de los estados correctos: `funcionario` como relleno con texto
@@ -164,8 +164,8 @@ El modo claro son los valores del frontmatter. El modo oscuro reemplaza estos to
 
 - `titulo` (Archivo, semicondensada) se usa en los títulos, las bandas, los identificadores de
   caso y las cifras grandes.
-- `texto` (Atkinson Hyperlegible Next) se usa en todo lo demás, incluido el rótulo. Los mensajes del widget van en
-  `base`, para lectores mayores o con baja visión.
+- `texto` (Atkinson Hyperlegible Next) se usa en todo lo demás, incluido el rótulo. Los mensajes
+  del widget van en `base`, para lectores mayores o con baja visión.
 - Los títulos se escriben en oración, nunca en mayúsculas espaciadas.
 - Las tablas y los identificadores llevan cifras tabulares.
 - Las fuentes son autoalojadas, con fontsource y sin CDN.
@@ -208,8 +208,8 @@ secciones se separan con bordes, bandas y renglones.
   En la consola lleva también el estado del servicio (punto blanco lleno si está bien y vacío si no)
   y el enlace a las trazas.
 - **Banda:** el título de un bloque (sesión simulada, caso, matriz, tabla por categoría) en un
-  rectángulo de `sello` con texto `blanco`. Las bandas y el rótulo concentran la audacia de la
-  página; lo demás queda en tinta sobre papel.
+  rectángulo de `sello` con texto `blanco`. Las bandas y el encabezado de portal concentran la
+  audacia de la página; lo demás queda en tinta sobre papel.
 - **Casilla:** el campo con su rótulo pequeño arriba, dentro del borde. El foco rodea la casilla
   entera.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
