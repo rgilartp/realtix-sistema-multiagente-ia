@@ -8,6 +8,11 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 
+def _decimal_con_coma(valor: float) -> str:
+    """Dos decimales con la coma decimal del español, como el resto del sistema (F12)."""
+    return f"{valor:.2f}".replace(".", ",")
+
+
 def construir_resumen(
     *,
     motivo: str,
@@ -21,7 +26,7 @@ def construir_resumen(
     """Devuelve el resumen en texto y en JSON (la bandeja de B9 muestra ambos)."""
     texto = (
         f"Motivo: {motivo}. Categoría: {categoria or 'sin clasificar'}. "
-        f"Nivel de confianza: {nivel_confianza:.2f}. "
+        f"Nivel de confianza: {_decimal_con_coma(nivel_confianza)}. "
         f"Reclasificaciones: {intentos}. "
         f"Partes ya resueltas: {len(resueltas)}. Partes rechazadas: {len(rechazadas)}."
     )
