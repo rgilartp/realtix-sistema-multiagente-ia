@@ -2,10 +2,11 @@
 
 Turno con adjunto:
 
-1. legibilidad por código (resolución, recorte y desenfoque): si falla, rechazo con el motivo, sin
-   llamar al modelo (RF-OCR-04);
-2. lectura con el modelo de visión (Haiku 5.5): si no es un recibo predial o faltan campos,
-   rechazo con el motivo;
+1. lectura con el modelo de visión (Haiku 5.5), que decide primero si es un recibo predial: si no lo
+   es, rechazo con ese motivo;
+2. problemas del documento: baja resolución y desenfoque por código, y «recortado» si la proporción
+   no es la de un A4 y además faltan campos; si los hay, o faltan campos, rechazo con el motivo
+   (RF-OCR-04);
 3. los seis campos de RF-OCR-02, normalizados, se presentan y se pide la confirmación (RF-OCR-03).
    Quedan en `datos_extraidos["ocr"]`, sin el nombre del propietario ni la imagen.
 
@@ -46,7 +47,7 @@ from src.services.documentos import (
     CamposRecibo,
     contrastar,
     interpretar_confirmacion,
-    problemas_de_legibilidad,
+    problemas_del_documento,
     validar_campos,
 )
 
@@ -78,15 +79,16 @@ DESCARTADOS = (
 def leer_recibo(
     modelo: BaseChatModel, imagen: Image.Image, timeout_s: float
 ) -> tuple[CamposRecibo | None, list[str]]:
-    """Legibilidad por código, lectura con el modelo y validación de los campos: los campos, o
-    `None` con los problemas que explican el rechazo. Una falla del modelo se propaga."""
-    problemas = problemas_de_legibilidad(imagen)
+    """Lectura con el modelo, que decide primero si es un recibo; después, los problemas del
+    documento y la validación de los campos: los campos, o `None` con los problemas que explican el
+    rechazo. Una falla del modelo se propaga."""
+    salida = leer_documento(modelo, imagen, timeout_s)
+    crudos = salida.campos.model_dump()
+    faltan = any(valor is None for valor in crudos.values())
+    problemas = problemas_del_documento(imagen, salida.es_recibo_predial, faltan)
     if problemas:
         return None, list(problemas)
-    salida = leer_documento(modelo, imagen, timeout_s)
-    if not salida.es_recibo_predial:
-        return None, ["no_es_recibo"]
-    campos, invalidos = validar_campos(salida.campos.model_dump())
+    campos, invalidos = validar_campos(crudos)
     if not salida.legible or campos is None:
         vistos: list[str] = list(salida.problemas)
         if not vistos:
