@@ -1,0 +1,339 @@
+{
+  "commit_evaluado": null,
+  "huella_juez": "afecd5c1b4f62d52fc605ac6b350363cddee4604ae704f30247703146aa39805",
+  "conjuntos": {
+    "principal": {
+      "ensayos": 3,
+      "escenarios": 3,
+      "tasa_meta": {
+        "escenarios": 3,
+        "ensayos": 3,
+        "tasa": 1,
+        "wilson95": [
+          0.4385029682449546,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 3,
+        "ensayos": 3,
+        "tasa": 1,
+        "wilson95": [
+          0.4385029682449546,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 1.0,
+        "pass^1": 1.0
+      },
+      "codigo_pasa": 1,
+      "juez": {
+        "calificados": 3,
+        "correcta": 3,
+        "parcialmente correcta": 0,
+        "incorrecta": 0,
+        "alucinacion": 0,
+        "cito_norma": 1,
+        "cita_sustenta": 1,
+        "cobertura_completa": 1,
+        "claridad_media": 4
+      },
+      "enrutamiento": {
+        "pares": 3,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ica": {
+            "soporte": 3,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ocr": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 3,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 0,
+          "meta_ms": 8000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        },
+        "rag": {
+          "turnos": 3,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 8877.0,
+          "servidor_p95_ms": 9910.0,
+          "cliente_p50_ms": 8885.9,
+          "cliente_p95_ms": 9919.1,
+          "cumplen_meta": 3
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.0287453",
+        "juez": "0.143140"
+      },
+      "errores_de_ejecucion": 0
+    },
+    "R3": {
+      "ensayos": 1,
+      "escenarios": 1,
+      "tasa_meta": {
+        "escenarios": 1,
+        "ensayos": 1,
+        "tasa": 0,
+        "wilson95": [
+          0.0,
+          0.7934506856227626
+        ],
+        "bootstrap95": [
+          0,
+          0
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 1,
+        "ensayos": 1,
+        "tasa": 0,
+        "wilson95": [
+          0.0,
+          0.7934506856227626
+        ],
+        "bootstrap95": [
+          0,
+          0
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 0.0,
+        "pass^1": 0.0
+      },
+      "codigo_pasa": 1,
+      "juez": {
+        "calificados": 1,
+        "correcta": 0,
+        "parcialmente correcta": 0,
+        "incorrecta": 1,
+        "alucinacion": 1,
+        "cito_norma": 1,
+        "cita_sustenta": 0,
+        "cobertura_completa": 1,
+        "claridad_media": 4
+      },
+      "enrutamiento": {
+        "pares": 1,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ica": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ocr": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 1,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 0,
+          "meta_ms": 8000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        },
+        "rag": {
+          "turnos": 3,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 7885.0,
+          "servidor_p95_ms": 8041.0,
+          "cliente_p50_ms": 7893.3,
+          "cliente_p95_ms": 8050.2,
+          "cumplen_meta": 3
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.0328664",
+        "juez": "0.104536"
+      },
+      "errores_de_ejecucion": 0
+    }
+  },
+  "costos": {
+    "Sistema (principal)": "0.0287453",
+    "Juez (principal)": "0.143140",
+    "Sistema (R3)": "0.0328664",
+    "Juez (R3)": "0.104536",
+    "Total": "0.3092877"
+  }
+}

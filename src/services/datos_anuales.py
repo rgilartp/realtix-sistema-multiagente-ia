@@ -70,6 +70,23 @@ def umbral_ica_pesos(anio: int) -> int:
     raise AnioSinDatosError(anio, "régimen del ICA")
 
 
+def fuente_de_la_uvt(anio: int) -> str:
+    """La resolución de la DIAN que fija la UVT del año."""
+    for fila in _leer(RAIZ_DATOS / "uvt_smmlv.yaml")["uvt"]:
+        if fila["anio"] == anio:
+            return str(fila["fuente"])
+    raise AnioSinDatosError(anio, "UVT")
+
+
+def regla_bomberil_mas_reciente() -> tuple[int, dict[str, Any]] | None:
+    """El año gravable más reciente con la regla de la sobretasa bomberil, y la regla."""
+    filas = _leer(RAIZ_DATOS / "regimenes_ica.yaml")["anios"]
+    con_regla = [
+        (f["anio_gravable"], f["sobretasa_bomberil"]) for f in filas if f.get("sobretasa_bomberil")
+    ]
+    return max(con_regla, key=lambda x: x[0]) if con_regla else None
+
+
 def regimen_ica_del_anio(anio: int) -> dict[str, Any]:
     """Fila de `regimenes_ica.yaml` del año gravable."""
     datos = _leer(RAIZ_DATOS / "regimenes_ica.yaml")

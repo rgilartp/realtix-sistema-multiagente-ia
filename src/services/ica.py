@@ -12,8 +12,14 @@ from decimal import ROUND_HALF_UP, Decimal
 from typing import Any, Literal, cast
 
 from src.services import notas
-from src.services.datos_anuales import cargar_datos
-from src.services.errores import ActividadNoReconocidaError, AnioSinDatosError
+from src.services.datos_anuales import (
+    cargar_datos,
+    fuente_de_la_uvt,
+    regimen_ica_del_anio,
+    regla_bomberil_mas_reciente,
+    uvt,
+)
+from src.services.errores import ActividadNoReconocidaError, AnioSinDatosError, DatoNoPublicadoError
 
 Periodicidad = Literal["anual", "bimestral"]
 
@@ -193,6 +199,35 @@ def _impuesto(ingresos: int, tarifa_por_mil: Decimal) -> int:
     return int((Decimal(ingresos) * tarifa_por_mil / 1000).quantize(_UN_PESO, ROUND_HALF_UP))
 
 
+def nota_sobretasa_bomberil(ingresos: int, periodo: PeriodoICA) -> str:
+    """Si la sobretasa bomberil aplica, por código: los ingresos del periodo (bimestre o año) frente
+    al umbral en UVT del año gravable (`regimenes_ica.yaml`, Res. SDH-000195 de 2025, art. 2)."""
+    try:
+        regla = regimen_ica_del_anio(periodo.anio).get("sobretasa_bomberil")
+        valor_uvt = uvt(periodo.anio)
+    except (AnioSinDatosError, DatoNoPublicadoError):
+        regla = None
+    if not regla:
+        conocida = regla_bomberil_mas_reciente()
+        return notas.nota_bomberil_sin_datos(
+            periodo.anio,
+            (conocida[0], int(conocida[1]["umbral_uvt"]), str(conocida[1]["fuente"]))
+            if conocida
+            else None,
+        )
+    umbral = int(regla["umbral_uvt"])
+    datos = (
+        umbral,
+        umbral * valor_uvt,
+        periodo.anio,
+        regla["fuente"],
+        fuente_de_la_uvt(periodo.anio),
+    )
+    if ingresos > umbral * valor_uvt:
+        return notas.nota_bomberil_aplica(*datos)
+    return notas.nota_bomberil_no_aplica(*datos)
+
+
 def estimar_ica(ciiu: str, ingresos: int, periodo: PeriodoICA) -> EstimacionICA:
     """Estima el ICA de los `ingresos` gravables del periodo (RF-ICA-02).
 
@@ -205,7 +240,12 @@ def estimar_ica(ciiu: str, ingresos: int, periodo: PeriodoICA) -> EstimacionICA:
         raise ValueError("Los ingresos no pueden ser negativos.")
     tarifa = buscar_tarifa_ica(ciiu, periodo)
     proyeccion = periodo.periodicidad == "anual" and periodo.anio == 2026
-    avisos = [notas.NOTA_ESTIMACION, notas.NOTA_APROXIMACION_ICA, notas.NOTA_COMPLEMENTARIOS_ICA]
+    avisos = [
+        notas.NOTA_ESTIMACION,
+        notas.NOTA_APROXIMACION_ICA,
+        notas.NOTA_AVISOS_Y_TABLEROS,
+        nota_sobretasa_bomberil(ingresos, periodo),
+    ]
     if proyeccion:
         avisos.append(notas.NOTA_PROYECCION_ICA_ANUAL)
     condicionada = tarifa.tarifa_condicionada
