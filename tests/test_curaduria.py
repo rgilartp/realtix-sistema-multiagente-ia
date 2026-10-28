@@ -390,7 +390,6 @@ def test_el_glosario_dice_donde_encontrar_el_codigo_ciiu_con_su_fuente_oficial()
     # marcó como afirmación sin fuente la casilla 46, que el agente del ICA no recupera (no ve el
     # glosario). Queda la entrada del glosario, que el agente general sí recupera.
 
-    # Las mismas palabras que el glosario: el detector de fuga las cuenta como texto público.
     def plano(t: str) -> str:
         return " ".join(t.lower().split())
 
