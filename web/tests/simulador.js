@@ -25,12 +25,14 @@ export const TEXTOS = {
     "funcionario: escríbeme de nuevo entonces.",
   // PREFACIOS["solicitud explícita"] + AVISO_TRANSFERENCIA
   transferencia:
-    "Con gusto. Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le " +
-    "compartí un resumen para que no tengas que repetirlo.",
+    "Con gusto. Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número 9A4C21, con " +
+    "un resumen de lo conversado, así no tienes que repetirlo. Si quieres agregar algo, escríbelo aquí " +
+    "y quedará en el caso.",
   // AVISO_TRANSFERENCIA, sin prefacio (motivo «confianza insuficiente»)
   avisoTransferencia:
-    "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un " +
-    "resumen para que no tengas que repetirlo.",
+    "Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número 7F31B0, con un resumen " +
+    "de lo conversado, así no tienes que repetirlo. Si quieres agregar algo, escríbelo aquí y quedará " +
+    "en el caso.",
   confirmacion:
     "Estos son los datos que leí del recibo:\n- Matrícula catastral: 50C-9000301\n- Vigencia fiscal: " +
     "2026\n- Avalúo catastral: $350.000.000\n- Valor liquidado: $2.135.000\n- Descuento por pronto " +
@@ -55,7 +57,7 @@ function meta(extra = {}) {
 }
 
 // Las consultas que llegan quedan en `solicitudes`, para revisar el token y los cuerpos.
-export async function simularApi(page, { fueraDeHorario = false, limitado = null } = {}) {
+export async function simularApi(page, { fueraDeHorario = false, limitado = null, sinRegistro = false } = {}) {
   const solicitudes = [];
   const conversaciones = new Set();
   let consultasDeMensajes = 0;
@@ -109,7 +111,7 @@ export async function simularApi(page, { fueraDeHorario = false, limitado = null
     }
     if (ruta === "/api/v1/escalamiento" && metodo === "POST") {
       return json(chat(cuerpo.id_conversacion, TEXTOS.transferencia, "agente", "escalada", {
-        motivo_escalamiento: "solicitud explícita", caso_id: `CASO-${cuerpo.id_conversacion}`,
+        motivo_escalamiento: "solicitud explícita", caso_id: sinRegistro ? null : `CASO-${cuerpo.id_conversacion}`,
         nivel_confianza: 0,
       }));
     }
