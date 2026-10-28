@@ -493,7 +493,7 @@ def test_la_retencion_del_ica_la_marca_el_agente_y_escala(adaptador) -> None:
         configuracion_de_hilo("ret", RELOJ_ESCENARIOS),
     )
     assert r["motivo_escalamiento"] == "fuera de alcance"
-    assert r["respuesta_final"].endswith(AVISO_TRANSFERENCIA)
+    assert r["respuesta_final"].endswith(AVISO_TRANSFERENCIA.format(codigo="RET"))
     assert "retención del ICA" in r["respuesta_final"]
 
 

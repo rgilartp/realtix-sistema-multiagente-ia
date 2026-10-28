@@ -16,13 +16,21 @@ from langchain_core.messages import AIMessage
 from src.agents.dependencias import Dependencias
 from src.agents.state import MOTIVOS_ESCALAMIENTO, AgentState
 from src.data.models import CasoEscalado
-from src.services.resumen import construir_resumen
+from src.services.resumen import codigo_de_caso, construir_resumen
 
 registro = logging.getLogger(__name__)
 
+# Dice lo que el sistema hace: registra el caso con su resumen y el funcionario puede responder en
+# la conversación desde la consola (RF-ESC-05). No promete un contacto ni un plazo.
 AVISO_TRANSFERENCIA = (
-    "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. "
-    "Ya le compartí un resumen para que no tengas que repetirlo."
+    "Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número {codigo}, con un "
+    "resumen de la conversación para que no tengas que repetirla. Si te responde, verás su mensaje "
+    "en esta conversación."
+)
+# Si el registro falla (RNF-08), no se dice que quedó registrado.
+AVISO_SIN_REGISTRO = (
+    "Quise pasar tu consulta a un funcionario, pero no pude registrar el caso por una falla "
+    "técnica. Intenta de nuevo en unos minutos con el botón «Hablar con un funcionario»."
 )
 # Explicación previa al aviso según el motivo; los demás motivos solo llevan el aviso.
 PREFACIOS = {
@@ -82,8 +90,14 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
         except Exception:  # RNF-08: el aviso se entrega aunque el registro falle
             marcas["registro_fallido"] = True
         marcas["duracion_escalamiento_ms"] = round((time.perf_counter() - inicio) * 1000, 3)
+        if marcas.get("registro_fallido"):
+            transferencia = AVISO_SIN_REGISTRO
+        else:
+            transferencia = AVISO_TRANSFERENCIA.format(
+                codigo=codigo_de_caso(state["id_conversacion"])
+            )
         prefacio = PREFACIOS.get(motivo)
-        aviso = f"{prefacio} {AVISO_TRANSFERENCIA}" if prefacio else AVISO_TRANSFERENCIA
+        aviso = f"{prefacio} {transferencia}" if prefacio else transferencia
         partes = "\n\n".join(p["texto"] for p in resueltas)
         respuesta = f"{partes}\n\n{aviso}" if partes else aviso
         return {

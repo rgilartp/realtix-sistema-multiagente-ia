@@ -15,7 +15,7 @@ from src.agents.graph import (
     ruta_orquestador,
 )
 from src.agents.nodes._comun import agregar_parcial, parcial
-from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA
+from src.agents.nodes.escalamiento import AVISO_SIN_REGISTRO, AVISO_TRANSFERENCIA
 from src.agents.nodes.orquestador import clasificar_por_palabras
 from src.agents.state import (
     CAMPOS_DE_ACCESO,
@@ -27,6 +27,7 @@ from src.agents.state import (
 )
 from src.data.memoria import RealSitEnMemoria
 from src.services.confianza import calcular_nivel, normalizar_similitud
+from src.services.resumen import codigo_de_caso
 from src.store.almacen import Almacen, crear_motor
 from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 
@@ -211,7 +212,7 @@ def test_una_parte_bajo_el_umbral_escala_con_las_partes_resueltas(deps, almacen)
     assert r["requiere_escalamiento"] and r["motivo_escalamiento"] == "confianza insuficiente"
     assert "Explicación del impuesto predial" in r["respuesta_final"]  # parte ya resuelta
     assert "Respuesta dudosa" not in r["respuesta_final"]  # la rechazada no se le muestra
-    assert "transferir" in r["respuesta_final"]
+    assert f"registrado con el número {codigo_de_caso('multi-2')}," in r["respuesta_final"]
     caso = almacen.obtener_caso("CASO-multi-2")
     similitud = normalizar_similitud(0.2, deps.config.escala_similitud)  # escala de B8
     assert caso["nivel_confianza"] == pytest.approx(0.4 * similitud + 0.4 * 0.5 + 0.2 * 1.0)
@@ -240,7 +241,8 @@ def test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso(deps, respuesta, mo
         construir_grafo(deps, nodos={"nodo_ipu": ipu_malo}), "El predial", f"aviso-{motivo[:4]}"
     )
     assert r["motivo_escalamiento"] == motivo
-    assert r["respuesta_final"] == AVISO_TRANSFERENCIA
+    codigo = codigo_de_caso(f"aviso-{motivo[:4]}")
+    assert r["respuesta_final"] == AVISO_TRANSFERENCIA.format(codigo=codigo)
 
 
 @pytest.mark.unit
@@ -415,7 +417,9 @@ def test_si_el_registro_del_caso_falla_el_aviso_se_entrega(adaptador) -> None:
 
     adaptador._registro_casos.registrar_caso = roto  # type: ignore[union-attr,method-assign]
     r = turno(construir_grafo(Dependencias(adaptador)), "Quiero hablar con una persona", "falla-3")
-    assert r["marcas"]["registro_fallido"] and "transferir" in r["respuesta_final"]
+    # Sin registro no se dice que quedó registrado ni se da un número (RNF-08).
+    assert r["marcas"]["registro_fallido"] and r["respuesta_final"].endswith(AVISO_SIN_REGISTRO)
+    assert "quedó registrado" not in r["respuesta_final"]
 
 
 # -- Los cuatro casos de la sección 3.4 (ADR-14) --------------------------------------------------
@@ -525,7 +529,8 @@ def test_un_motivo_fuera_de_la_lista_no_impide_el_aviso(deps, almacen, caplog) -
     grafo = construir_grafo(deps, nodos={"nodo_orquestador": motivo_raro})
     with caplog.at_level("WARNING"):
         r = turno(grafo, "hola", "raro-1")
-    assert r["motivo_escalamiento"] == "fallo de servicio" and "transferir" in r["respuesta_final"]
+    assert r["motivo_escalamiento"] == "fallo de servicio"
+    assert "quedó registrado con el número 1" in r["respuesta_final"]  # el tramo final de «raro-1»
     caso = almacen.obtener_caso("CASO-raro-1")
     assert caso["motivo"] == "fallo de servicio"
     assert caso["resumen_json"]["motivo_original"] == "motivo inventado"
@@ -734,3 +739,12 @@ def test_la_pregunta_por_la_ia_es_general_y_el_caso_escalado_lleva_la_categoria(
     )
     turno(construir_grafo(deps), "Una pregunta de un tributo inventado", "f2-caso")
     assert almacen.obtener_caso("CASO-f2-caso")["categoria"] == "fuera_de_alcance"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-05 · Notificación al contribuyente")
+def test_el_numero_corto_del_caso_es_un_pedazo_del_identificador() -> None:
+    conversacion = "conv-1f0e2d3c-4b5a-6978-8a9b-0c1d2e3f4a5b"
+    assert codigo_de_caso(conversacion) == "3F4A5B"
+    assert codigo_de_caso(conversacion).lower() in f"CASO-{conversacion}".lower()
+    assert codigo_de_caso("conv-boton") == "BOTON"

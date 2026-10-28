@@ -25,12 +25,14 @@ export const TEXTOS = {
     "funcionario: escríbeme de nuevo entonces.",
   // PREFACIOS["solicitud explícita"] + AVISO_TRANSFERENCIA
   transferencia:
-    "Con gusto. Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le " +
-    "compartí un resumen para que no tengas que repetirlo.",
+    "Con gusto. Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número 9A4C21, con " +
+    "un resumen de la conversación para que no tengas que repetirla. Si te responde, verás su mensaje " +
+    "en esta conversación.",
   // AVISO_TRANSFERENCIA, sin prefacio (motivo «confianza insuficiente»)
   avisoTransferencia:
-    "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un " +
-    "resumen para que no tengas que repetirlo.",
+    "Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número 7F31B0, con un resumen " +
+    "de la conversación para que no tengas que repetirla. Si te responde, verás su mensaje en esta " +
+    "conversación.",
   confirmacion:
     "Estos son los datos que leí del recibo:\n- Matrícula catastral: 50C-9000301\n- Vigencia fiscal: " +
     "2026\n- Avalúo catastral: $350.000.000\n- Valor liquidado: $2.135.000\n- Descuento por pronto " +
