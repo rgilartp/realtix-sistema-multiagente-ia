@@ -26,9 +26,10 @@ import { TEMAS, aplicarTema } from "../tema.jsx";
 
 const CONSULTA_MS = 5000;
 // Aviso de datos personales, solo en la interfaz: AVISO_IA de la API no cambia, porque lo usan los
-// escenarios, el juez y la medición. La autorización se da con una conducta inequívoca, enviar la
-// consulta; el silencio no cuenta (Decreto 1074 de 2015, art. 2.2.2.25.2.4). Con datos sintéticos
-// es informativo: esos procedimientos solo rigen con datos reales (adenda, sección 2).
+// escenarios, el juez y la medición. Se entiende que la autorización se otorga con una conducta
+// inequívoca: enviar la consulta. El silencio no cuenta (Decreto 1074 de 2015, art. 2.2.2.25.2.4).
+// Con datos sintéticos es informativo: esos procedimientos solo rigen con datos reales (adenda,
+// sección 2).
 const AVISO_DATOS =
   "Tus datos personales se tratan según la Ley 1581 de 2012. Si continúas y envías tu consulta, " +
   "autorizas ese tratamiento para atenderte. Si no estás de acuerdo, puedes no usar el asistente.";
@@ -385,7 +386,7 @@ export default function Widget() {
             Antes de empezar
           </p>
           <p className="px-4 py-3">{AVISO_IA}.</p>
-          <p className="border-t border-renglon px-4 py-2 text-sm text-tinta-suave" data-prueba="aviso-datos">
+          <p className="border-t border-renglon px-4 py-2 text-sm leading-snug text-tinta-suave" data-prueba="aviso-datos">
             {AVISO_DATOS}
           </p>
         </section>

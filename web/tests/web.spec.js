@@ -136,6 +136,9 @@ async function flujoRespuesta(page, tamano) {
   // Debajo, el aviso de datos personales (solo en la interfaz; el de la API no cambia).
   await expect(widget.getByTestId("aviso-datos")).toContainText("según la Ley 1581 de 2012");
   await expect(widget.getByTestId("aviso-datos")).toContainText("puedes no usar el asistente");
+  const [ia, datos] = await Promise.all(["aviso-ia", "aviso-datos"].map((id) => widget.getByTestId(id).boundingBox()));
+  expect(datos.y + datos.height).toBeLessThanOrEqual(ia.y + ia.height); // dentro del recuadro…
+  expect(datos.y).toBeGreaterThan(ia.y + 40); // …y debajo de la franja y del aviso de IA
   await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un asistente de IA");
   await expect(widget.getByText("¿En qué te ayudo?")).toBeVisible(); // estado vacío

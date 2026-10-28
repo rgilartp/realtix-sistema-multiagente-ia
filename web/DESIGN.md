@@ -212,9 +212,10 @@ secciones se separan con bordes, bandas y renglones.
   audacia de la página; lo demás queda en tinta sobre papel.
 - **Casilla:** el campo con su rótulo pequeño arriba, dentro del borde. El foco rodea la casilla
   entera.
-- **Antes de empezar:** el recuadro del widget al abrir. Lleva una banda de `sello-suave` y el aviso
-  de IA en `tinta`. Debajo, separado por un renglón, va el aviso de datos personales en `sm` y
-  `tinta-suave`. Al abrir el widget, el recuadro se ve completo, también en el celular.
+- **Antes de empezar:** el recuadro del widget al abrir. Lleva una franja de `sello-suave` con el
+  título en `sello-texto`, y el aviso de IA en `tinta`. Debajo, separado por un renglón, va el
+  aviso de datos personales en `sm`, interlineado corto y `tinta-suave`. Al abrir el widget, el
+  recuadro se ve completo, también en el celular.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
   mensaje.
 - **Pestañas de la consola:** la activa es un relleno de `sello` con una marca superior de
