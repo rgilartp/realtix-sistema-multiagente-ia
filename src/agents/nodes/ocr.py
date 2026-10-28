@@ -84,7 +84,8 @@ def leer_recibo(
     rechazo. Una falla del modelo se propaga."""
     salida = leer_documento(modelo, imagen, timeout_s)
     crudos = salida.campos.model_dump()
-    faltan = any(valor is None for valor in crudos.values())
+    # Faltan campos si el modelo dejó alguno vacío o vio que el documento está cortado.
+    faltan = any(valor is None for valor in crudos.values()) or "recortado" in salida.problemas
     problemas = problemas_del_documento(imagen, salida.es_recibo_predial, faltan)
     if problemas:
         return None, list(problemas)

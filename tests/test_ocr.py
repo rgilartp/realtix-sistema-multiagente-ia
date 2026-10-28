@@ -102,6 +102,26 @@ def test_sin_logos_ni_marcas_reales(recibos) -> None:
         texto = _normalizado(" ".join(textos_del_documento(recibo)))
         for marca in MARCAS_PROHIBIDAS:
             assert marca not in texto, (recibo.nombre, marca)
+    # Tampoco los textos fijos del recibo apaisado: sus literales, sin las docstrings.
+    import ast
+
+    import src.data.generar.recibos_apaisados as apaisado
+
+    arbol = ast.parse(Path(apaisado.__file__).read_text(encoding="utf-8"))
+    docstrings = {
+        id(n.body[0].value)
+        for n in ast.walk(arbol)
+        if isinstance(n, (ast.Module, ast.FunctionDef))
+        and n.body
+        and isinstance(n.body[0], ast.Expr)
+    }
+    literales = [
+        n.value
+        for n in ast.walk(arbol)
+        if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in docstrings
+    ]
+    fijos = _normalizado(" ".join(literales))
+    assert "recibo sintetico" in fijos and not [m for m in MARCAS_PROHIBIDAS if m in fijos]
     # La imagen solo tiene los colores de la plantilla (texto, líneas y bandas): sin logos.
     colores = imagen_de(recibos["recibo_valido_U03"]).convert("RGB").getcolors(maxcolors=4096)
     assert colores is not None and len(colores) < 4096
@@ -294,6 +314,10 @@ def test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo(api_ocr, apa
     foto = subir(cliente, apaisados["foto"], "conv-foto").json()
     assert "no es un recibo" in foto["respuesta"]
     assert "recortado" not in foto["respuesta"] and "desenfocad" not in foto["respuesta"]
+    # Si el modelo lee valores a medias pero ve el recorte, también cuenta como recortado.
+    modelo.respuestas = [lectura({**CAMPOS_U03, "fecha_limite": "10/0"}, problemas=["recortado"])]
+    a_medias = subir(cliente, apaisados["recortado"], "conv-a-medias").json()
+    assert "recortado" in a_medias["respuesta"]
 
 
 @pytest.mark.unit
