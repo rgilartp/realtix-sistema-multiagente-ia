@@ -46,8 +46,9 @@ NOTA_PROYECCION_ICA_ANUAL = (
 )
 NOTA_AVISOS_Y_TABLEROS = (
     "La estimación no incluye el complementario de avisos y tableros: solo se paga si hay vallas, "
-    "avisos o tableros visibles desde el espacio público, o avisos en vehículos (Decreto 352 de "
-    "2002, arts. 57 y 58), y en ese caso es el 15 % del impuesto (art. 59)."
+    "avisos, tableros o emblemas visibles desde el espacio público, o avisos en cualquier clase de "
+    "vehículos (Decreto 352 de 2002, arts. 57 y 58), y en ese caso es el 15 % del impuesto "
+    "(Decreto 352 de 2002, art. 59)."
 )
 
 
@@ -59,27 +60,44 @@ def _uvt(valor: int) -> str:
     return f"{valor:,}".replace(",", ".")
 
 
-def nota_bomberil_no_aplica(umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str) -> str:
+def nota_bomberil_no_aplica(
+    umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str, fuente_uvt: str
+) -> str:
+    """Con ingresos del periodo hasta el umbral: la sobretasa bomberil no se declara."""
     return (
-        "La sobretasa bomberil no aplica con estos ingresos: solo la declaran quienes tienen "
-        f"ingresos netos superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} en {anio}) "
-        f"en el periodo que se declara ({fuente})."
+        "La sobretasa bomberil no se declara con estos ingresos: solo la declaran quienes tienen "
+        f"ingresos netos superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} con la UVT "
+        f"de {anio}, {fuente_uvt}) en el periodo que se declara ({fuente})."
     )
 
 
-def nota_bomberil_aplica(umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str) -> str:
+def nota_bomberil_aplica(
+    umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str, fuente_uvt: str
+) -> str:
+    """Con ingresos del periodo sobre el umbral: también se declara la sobretasa bomberil."""
     return (
-        f"Con estos ingresos, superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} en "
-        f"{anio}) en el periodo, también se declara la sobretasa bomberil ({fuente}), que esta "
-        "estimación no incluye."
+        f"Con estos ingresos, superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} con la "
+        f"UVT de {anio}, {fuente_uvt}) en el periodo, también se declara la sobretasa bomberil "
+        f"({fuente}), que esta estimación no incluye."
     )
 
 
-def nota_bomberil_sin_datos(anio: int) -> str:
+def nota_bomberil_sin_datos(anio: int, conocida: tuple[int, int, str] | None) -> str:
+    """Sin el umbral o la UVT del año: la estimación no puede decir si la sobretasa se declara.
+    `conocida` es la regla del año más reciente que la tiene: (año, umbral en UVT, fuente)."""
+    antes = ""
+    if conocida:
+        anio_regla, umbral_uvt, fuente = conocida
+        antes = (
+            f"En {anio_regla}, la sobretasa bomberil la declaran quienes tienen ingresos netos "
+            f"superiores a {_uvt(umbral_uvt)} UVT en el periodo que se declara ({fuente}); para "
+            f"{anio}, "
+        )
+    else:
+        antes = f"Para {anio}, "
     return (
-        "La sobretasa bomberil solo la declaran quienes superan un umbral de ingresos netos en "
-        f"UVT; el de {anio} o su UVT aún no se publican, así que la estimación no puede decir si "
-        "aplica y no la incluye."
+        f"{antes}el umbral o la UVT aún no se publican, así que la estimación no puede decir si la "
+        "sobretasa bomberil se declara y no la incluye."
     )
 
 

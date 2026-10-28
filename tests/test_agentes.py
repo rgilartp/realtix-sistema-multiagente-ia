@@ -468,7 +468,9 @@ def test_ica_05_bimestral_de_2026_con_las_dos_tablas(adaptador) -> None:
         "bimestre 6 de 2026": ("12 por mil", "$3.000.000"),
     }
     assert notas.NOTA_AVISOS_Y_TABLEROS in respuesta["texto"]
-    assert "La sobretasa bomberil no aplica con estos ingresos" in respuesta["texto"]
+    assert "La sobretasa bomberil no se declara con estos ingresos" in respuesta["texto"]
+    assert respuesta["texto"].count("sobretasa bomberil") == 1  # dos tablas, una sola nota
+    assert "no puede decir" not in respuesta["texto"]
     assert "Acuerdo 1084 de 2026, art. 21" in respuesta["texto"]
 
 

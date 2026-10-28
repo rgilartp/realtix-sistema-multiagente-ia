@@ -12,7 +12,13 @@ from decimal import ROUND_HALF_UP, Decimal
 from typing import Any, Literal, cast
 
 from src.services import notas
-from src.services.datos_anuales import cargar_datos, regimen_ica_del_anio, uvt
+from src.services.datos_anuales import (
+    cargar_datos,
+    fuente_de_la_uvt,
+    regimen_ica_del_anio,
+    regla_bomberil_mas_reciente,
+    uvt,
+)
 from src.services.errores import ActividadNoReconocidaError, AnioSinDatosError, DatoNoPublicadoError
 
 Periodicidad = Literal["anual", "bimestral"]
@@ -202,9 +208,21 @@ def nota_sobretasa_bomberil(ingresos: int, periodo: PeriodoICA) -> str:
     except (AnioSinDatosError, DatoNoPublicadoError):
         regla = None
     if not regla:
-        return notas.nota_bomberil_sin_datos(periodo.anio)
+        conocida = regla_bomberil_mas_reciente()
+        return notas.nota_bomberil_sin_datos(
+            periodo.anio,
+            (conocida[0], int(conocida[1]["umbral_uvt"]), str(conocida[1]["fuente"]))
+            if conocida
+            else None,
+        )
     umbral = int(regla["umbral_uvt"])
-    datos = (umbral, umbral * valor_uvt, periodo.anio, regla["fuente"])
+    datos = (
+        umbral,
+        umbral * valor_uvt,
+        periodo.anio,
+        regla["fuente"],
+        fuente_de_la_uvt(periodo.anio),
+    )
     if ingresos > umbral * valor_uvt:
         return notas.nota_bomberil_aplica(*datos)
     return notas.nota_bomberil_no_aplica(*datos)
