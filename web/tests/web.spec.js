@@ -525,6 +525,21 @@ test(
   },
 );
 
+// Límite de peticiones (seguridad y gasto): el widget muestra el mensaje del 429 tal cual.
+test(
+  "widget: muestra el mensaje del límite de peticiones",
+  { annotation: [{ type: "req", description: "RNF-08 · Tiempos de espera y degradación" }] },
+  async ({ page }) => {
+    const limite = "Recibí muchas consultas seguidas desde tu conexión. Espera un minuto y vuelve a intentarlo.";
+    await simularApi(page, { limitado: limite });
+    await page.setViewportSize(ESCRITORIO);
+    await page.goto("/ovt/");
+    const widget = page.frameLocator("iframe[data-realtix-widget]");
+    await preguntar(widget, "¿Qué es el impuesto predial?");
+    await expect(widget.getByText(limite)).toBeVisible();
+  },
+);
+
 // La CSP del despliegue (B13) bloquea los scripts en línea: ninguna página compilada los tiene.
 test("las páginas compiladas no tienen scripts en línea", async () => {
   for (const pagina of ["index.html", "ovt/index.html", "widget/index.html", "consola/index.html"]) {
