@@ -214,6 +214,10 @@ secciones se separan con bordes, bandas y renglones.
   entera.
   Un `select` y sus opciones llevan fondo `hoja` y texto `tinta` explícitos de cada modo, nunca
   transparente: la lista nativa toma el fondo del select y, sin él, el blanco del navegador.
+- **Antes de empezar:** el recuadro del widget al abrir. Lleva una franja de `sello-suave` con el
+  título en `sello-texto`, y el aviso de IA en `tinta`. Debajo, separado por un renglón, va el
+  aviso de datos personales en `sm`, interlineado corto y `tinta-suave`. Al abrir el widget, el
+  recuadro se ve completo, también en el celular.
 - **Pestaña de quien habla:** el nombre del interlocutor, como pestaña de carpeta pegada a su
   mensaje.
 - **Pestañas de la consola:** la activa es un relleno de `sello` con una marca superior de
