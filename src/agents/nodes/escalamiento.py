@@ -20,17 +20,19 @@ from src.services.resumen import codigo_de_caso, construir_resumen
 
 registro = logging.getLogger(__name__)
 
-# Dice lo que el sistema hace: registra el caso con su resumen y el funcionario puede responder en
-# la conversación desde la consola (RF-ESC-05). No promete un contacto ni un plazo.
+# Dice solo lo que el sistema hace (RF-ESC-05): registra el caso con su resumen, que el funcionario
+# ve en la bandeja, y guarda en el caso lo que el contribuyente escriba después (ADR-12). No promete
+# un contacto ni un plazo: la respuesta del funcionario por el widget no está construida (sección
+# 3.6, opcional).
 AVISO_TRANSFERENCIA = (
     "Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número {codigo}, con un "
-    "resumen de la conversación para que no tengas que repetirla. Si te responde, verás su mensaje "
-    "en esta conversación."
+    "resumen de lo conversado, así no tienes que repetirlo. Si quieres agregar algo, escríbelo "
+    "aquí y quedará en el caso."
 )
 # Si el registro falla (RNF-08), no se dice que quedó registrado.
 AVISO_SIN_REGISTRO = (
-    "Quise pasar tu consulta a un funcionario, pero no pude registrar el caso por una falla "
-    "técnica. Intenta de nuevo en unos minutos con el botón «Hablar con un funcionario»."
+    "Quise pasar tu consulta a un funcionario, pero no pude registrar el caso. Intenta de nuevo en "
+    "unos minutos con el botón «Hablar con un funcionario»."
 )
 # Explicación previa al aviso según el motivo; los demás motivos solo llevan el aviso.
 PREFACIOS = {
@@ -96,7 +98,12 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
             transferencia = AVISO_TRANSFERENCIA.format(
                 codigo=codigo_de_caso(state["id_conversacion"])
             )
-        prefacio = PREFACIOS.get(motivo)
+        # Sin registro, «Con gusto.» no corresponde; los demás prefacios explican el motivo.
+        prefacio = (
+            None
+            if marcas.get("registro_fallido") and motivo == "solicitud explícita"
+            else (PREFACIOS.get(motivo))
+        )
         aviso = f"{prefacio} {transferencia}" if prefacio else transferencia
         partes = "\n\n".join(p["texto"] for p in resueltas)
         respuesta = f"{partes}\n\n{aviso}" if partes else aviso

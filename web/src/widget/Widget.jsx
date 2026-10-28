@@ -254,7 +254,8 @@ export default function Widget() {
   const recibir = (respuesta) => {
     agregar({ autor: respuesta.interlocutor, texto: respuesta.respuesta, estado: respuesta.estado });
     setInterlocutor(respuesta.interlocutor);
-    if (respuesta.estado === "escalada") setEscalada(true);
+    // Solo con un caso registrado: si el registro falló, el botón sigue disponible para reintentar.
+    if (respuesta.estado === "escalada" && respuesta.meta?.caso_id) setEscalada(true);
   };
 
   const conEspera = async (accion) => {

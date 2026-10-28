@@ -418,7 +418,9 @@ def test_si_el_registro_del_caso_falla_el_aviso_se_entrega(adaptador) -> None:
     adaptador._registro_casos.registrar_caso = roto  # type: ignore[union-attr,method-assign]
     r = turno(construir_grafo(Dependencias(adaptador)), "Quiero hablar con una persona", "falla-3")
     # Sin registro no se dice que quedó registrado ni se da un número (RNF-08).
-    assert r["marcas"]["registro_fallido"] and r["respuesta_final"].endswith(AVISO_SIN_REGISTRO)
+    assert (
+        r["marcas"]["registro_fallido"] and r["respuesta_final"] == AVISO_SIN_REGISTRO
+    )  # sin «Con gusto.»
     assert "quedó registrado" not in r["respuesta_final"]
 
 
@@ -748,3 +750,23 @@ def test_el_numero_corto_del_caso_es_un_pedazo_del_identificador() -> None:
     assert codigo_de_caso(conversacion) == "3F4A5B"
     assert codigo_de_caso(conversacion).lower() in f"CASO-{conversacion}".lower()
     assert codigo_de_caso("conv-boton") == "BOTON"
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-ESC-05 · Notificación al contribuyente", "RNF-16 · Tasa de respuestas correctas"
+)
+def test_los_avisos_del_escalamiento_no_prometen_ni_copian_referencias() -> None:
+    from src.api.turno import AVISO_MODO_HUMANO
+    from src.evaluacion.escenarios import cargar_conjunto, normalizar_texto
+
+    avisos = [AVISO_TRANSFERENCIA, AVISO_SIN_REGISTRO, AVISO_MODO_HUMANO]
+    for aviso in avisos:  # no promete un contacto que el sistema no hace
+        assert not any(p in aviso for p in ("brevedad", "responderá", "te responde"))
+    # A8 (regla 14): ninguna secuencia de 8 palabras de una referencia en los avisos.
+    textos = [normalizar_texto(a).split() for a in avisos]
+    for escenario in cargar_conjunto(["principal", "R1", "R3", "R4"]):
+        palabras = normalizar_texto(str(escenario.get("respuesta_referencia", ""))).split()
+        for i in range(len(palabras) - 7):
+            secuencia = " ".join(palabras[i : i + 8])
+            assert not any(secuencia in " ".join(a) for a in textos), (escenario["id"], secuencia)
