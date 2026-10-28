@@ -42,6 +42,16 @@ class TarifaICA:
     fuente: str
     tarifa_condicionada: Decimal | None = None  # p. ej. 58112 en 2026: 4,14 si cumple Acuerdo 98
     condicion: str | None = None
+    fuente_clasificacion: str | None = None  # la del grupo de su fila (Res. SDH-000265 de 2021)
+
+    @property
+    def fuentes(self) -> tuple[str, ...]:
+        """La fuente de la tarifa y, si la fila tiene grupo, la de su clasificación."""
+        return (
+            (self.fuente, self.fuente_clasificacion)
+            if self.fuente_clasificacion
+            else (self.fuente,)
+        )
 
 
 def periodicidad_registrada(
@@ -93,6 +103,9 @@ def buscar_tarifa_ica(ciiu: str, periodo: PeriodoICA) -> TarifaICA:
             fuente,
             tarifa_condicionada=Decimal(condicionada["tarifa_por_mil"]) if condicionada else None,
             condicion=str(condicionada["condicion"]) if condicionada else None,
+            fuente_clasificacion=str(datos["fuente_de_la_clasificacion"])
+            if fila.get("grupo_resolucion_265") and datos.get("fuente_de_la_clasificacion")
+            else None,
         )
     if tabla == 2027:
         fila = _buscar(datos.get("progresiva_financiera", []), ciiu)
@@ -187,6 +200,7 @@ class EstimacionICA:
     proyeccion_anual: bool
     fuente: str
     notas: tuple[str, ...]
+    fuente_clasificacion: str | None = None
 
 
 def _impuesto(ingresos: int, tarifa_por_mil: Decimal) -> int:
@@ -222,4 +236,5 @@ def estimar_ica(ciiu: str, ingresos: int, periodo: PeriodoICA) -> EstimacionICA:
         proyeccion_anual=proyeccion,
         fuente=tarifa.fuente,
         notas=tuple(avisos),
+        fuente_clasificacion=tarifa.fuente_clasificacion,
     )

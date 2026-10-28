@@ -215,7 +215,9 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         **info,
         "estimaciones": [_datos_estimacion(e, etiqueta) for e, etiqueta in estimaciones],
     }
-    fuentes = tuple(dict.fromkeys(e.fuente for e, _ in estimaciones))
+    fuentes = tuple(
+        dict.fromkeys(f for e, _ in estimaciones for f in (e.fuente, e.fuente_clasificacion) if f)
+    )
     notas = tuple(dict.fromkeys(n for e, _ in estimaciones for n in e.notas))
     return Resultado(datos, fuentes=fuentes, notas=notas)
 
@@ -311,7 +313,9 @@ def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             "(el Acuerdo 1084 de 2026 cambió algunos códigos): para ese periodo hay que confirmar "
             "el código."
         )
-    return Resultado(datos, fuentes=tuple(dict.fromkeys(t.tarifa.fuente for t in tarifas)))
+    return Resultado(
+        datos, fuentes=tuple(dict.fromkeys(f for t in tarifas for f in t.tarifa.fuentes))
+    )
 
 
 HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (
