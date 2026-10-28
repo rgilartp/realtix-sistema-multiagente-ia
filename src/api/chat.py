@@ -9,7 +9,7 @@ import os
 import tempfile
 from typing import Annotated
 
-from fastapi import APIRouter, File, Form, HTTPException, Path, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Path, Query, UploadFile
 from fastapi.responses import JSONResponse
 from langchain_core.messages import AIMessage, HumanMessage
 
@@ -25,6 +25,7 @@ from src.api.esquemas import (
     RespuestaChat,
     SolicitudMensaje,
 )
+from src.api.limite import limitar_peticiones
 from src.api.turno import ConversacionAjenaError, SolicitudTurno, abrir_conversacion
 
 router = APIRouter(prefix="/api/v1/chat", tags=["chat"])
@@ -46,7 +47,7 @@ def tipo_de_archivo(contenido: bytes) -> tuple[str, str] | None:
     return next((v for firma, v in FIRMAS.items() if contenido.startswith(firma)), None)
 
 
-@router.post("/mensaje", response_model=RespuestaChat)
+@router.post("/mensaje", response_model=RespuestaChat, dependencies=[Depends(limitar_peticiones)])
 def mensaje(
     solicitud: SolicitudMensaje,
     servicios: Servicios,
@@ -59,7 +60,7 @@ def mensaje(
     )
 
 
-@router.post("/documento", response_model=RespuestaChat)
+@router.post("/documento", response_model=RespuestaChat, dependencies=[Depends(limitar_peticiones)])
 def documento(
     servicios: Servicios,
     sesion: SesionOpcional,
