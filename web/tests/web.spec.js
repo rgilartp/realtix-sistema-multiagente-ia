@@ -510,6 +510,21 @@ test(
   },
 );
 
+// Si el caso no se pudo registrar, el widget no queda en modo escalado: el botón sigue disponible.
+test(
+  "widget: sin caso registrado, el botón del funcionario sigue disponible",
+  { annotation: [{ type: "req", description: "RF-ESC-05 · Notificación al contribuyente" }] },
+  async ({ page }) => {
+    await simularApi(page, { sinRegistro: true });
+    await page.setViewportSize(ESCRITORIO);
+    await page.goto("/ovt/");
+    const widget = page.frameLocator("iframe[data-realtix-widget]");
+    await widget.getByRole("button", { name: "Hablar con un funcionario" }).click();
+    await expect(widget.getByText(TEXTOS.transferencia)).toBeVisible();
+    await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeEnabled();
+  },
+);
+
 // Límite de peticiones (seguridad y gasto): el widget muestra el mensaje del 429 tal cual.
 test(
   "widget: muestra el mensaje del límite de peticiones",

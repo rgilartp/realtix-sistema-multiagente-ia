@@ -7,8 +7,8 @@ Orden: conversación (y su dueño) → horario → modo humano → grafo → res
   aviso de IA si es la primera.
 - Una conversación escalada ya no la atienden los agentes (ADR-12): el mensaje se guarda en el caso.
 - El contribuyente nunca ve un error técnico (RNF-08): si algo falla fuera de lo previsto, se
-  intenta registrar el caso con «fallo de servicio» y se entrega el aviso de transferencia aunque
-  el registro falle.
+  intenta registrar el caso con «fallo de servicio» y se entrega el aviso de transferencia; si el
+  registro falla, el aviso lo dice y no da un número de caso.
 """
 
 import logging
@@ -34,8 +34,7 @@ from src.services.horario import Horario, RelojFijo
 registro = logging.getLogger(__name__)
 
 AVISO_MODO_HUMANO = (
-    "Tu caso ya está en manos de un funcionario, que te responderá por este medio. Guardé tu "
-    "mensaje en el caso para que lo vea."
+    "Tu caso ya está registrado para un funcionario. Guardé tu mensaje en el caso para que lo vea."
 )
 AVISO_SESION_NO_VERIFICADA = (
     "En este momento no pude verificar tu sesión de la Oficina Virtual Tributaria. Intenta de "
