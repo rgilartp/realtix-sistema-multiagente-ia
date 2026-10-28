@@ -45,7 +45,7 @@ const PARES = [
   ["texto en papel", "tinta", "papel", 4.5],
   ["texto en hoja", "tinta", "hoja", 4.5],
   ["texto suave en papel", "tinta-suave", "papel", 4.5],
-  ["texto suave en hoja", "tinta-suave", "hoja", 4.5],
+  ["texto suave en hoja (rótulos de casillas, aviso de datos del widget)", "tinta-suave", "hoja", 4.5],
   ["texto suave en zona secundaria", "tinta-suave", "papel-2", 4.5],
   ["texto en zona secundaria (pestaña «Sistema», pestañas inactivas)", "tinta", "papel-2", 4.5],
   ["texto en azul suave (caso elegido)", "tinta", "sello-suave", 4.5],

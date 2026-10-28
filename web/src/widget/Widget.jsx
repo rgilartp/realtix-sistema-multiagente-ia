@@ -1,6 +1,6 @@
 // Widget del sistema multiagente de IA (RF-UI-01 a RF-UI-04 y RF-SYS-06).
 //
-// - Aviso de IA visible al abrir, antes de cualquier respuesta (RF-SYS-06).
+// - Aviso de IA visible al abrir, antes de cualquier respuesta (RF-SYS-06), y debajo el de datos.
 // - Quién habla, con etiqueta y color: asistente de IA, funcionario o sistema (RF-UI-03).
 // - «Hablar con un funcionario» siempre a la vista (RF-ESC-02).
 // - Fuentes de cada respuesta como referencias discretas.
@@ -25,6 +25,13 @@ import { IconoCalendario, IconoLibro } from "../iconos.jsx";
 import { TEMAS, aplicarTema } from "../tema.jsx";
 
 const CONSULTA_MS = 5000;
+// Aviso de datos personales, solo en la interfaz: AVISO_IA de la API no cambia, porque lo usan los
+// escenarios, el juez y la medición. La autorización se da con una conducta inequívoca, enviar la
+// consulta; el silencio no cuenta (Decreto 1074 de 2015, art. 2.2.2.25.2.4). Con datos sintéticos
+// es informativo: esos procedimientos solo rigen con datos reales (adenda, sección 2).
+const AVISO_DATOS =
+  "Tus datos personales se tratan según la Ley 1581 de 2012. Si continúas y envías tu consulta, " +
+  "autorizas ese tratamiento para atenderte. Si no estás de acuerdo, puedes no usar el asistente.";
 const ORIGENES_PERMITIDOS = [
   window.location.origin,
   ...(import.meta.env.VITE_ORIGENES_OVT ?? "").split(",").map((o) => o.trim()).filter(Boolean),
@@ -372,12 +379,15 @@ export default function Widget() {
         <section
           className="overflow-hidden rounded-casilla border border-sello bg-hoja text-base text-tinta"
           data-prueba="aviso-ia"
-          aria-label="Aviso de inteligencia artificial"
+          aria-label="Aviso de inteligencia artificial y de datos personales"
         >
           <p className="bg-sello-suave px-4 py-1.5 font-titulo text-base font-bold text-sello-texto [font-stretch:87.5%]">
             Antes de empezar
           </p>
           <p className="px-4 py-3">{AVISO_IA}.</p>
+          <p className="border-t border-renglon px-4 py-2 text-sm text-tinta-suave" data-prueba="aviso-datos">
+            {AVISO_DATOS}
+          </p>
         </section>
 
         {mensajes.length === 0 && !ocupado && (

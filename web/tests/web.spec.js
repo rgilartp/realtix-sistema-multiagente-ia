@@ -19,7 +19,13 @@ const ESCRITORIO = { width: 1280, height: 800 };
 const CELULAR = { width: 390, height: 844 };
 const MINIMO = { width: 360, height: 740 };
 // Capturas que también se toman en modo oscuro (con el sufijo _oscuro).
-const CAPTURAS_OSCURAS = ["ovt_simulada", "widget_respuesta", "widget_fuera_de_horario", "consola_metricas"];
+const CAPTURAS_OSCURAS = [
+  "ovt_simulada",
+  "widget_inicio",
+  "widget_respuesta",
+  "widget_fuera_de_horario",
+  "consola_metricas",
+];
 
 test.use({ testIdAttribute: "data-prueba" });
 
@@ -127,6 +133,9 @@ async function flujoRespuesta(page, tamano) {
   const { solicitudes, widget } = await abrirOvt(page, tamano);
   // RF-SYS-06: el aviso está antes de cualquier respuesta; el botón del funcionario, siempre a la vista.
   await expect(widget.getByTestId("aviso-ia")).toContainText(TEXTOS.avisoIa);
+  // Debajo, el aviso de datos personales (solo en la interfaz; el de la API no cambia).
+  await expect(widget.getByTestId("aviso-datos")).toContainText("según la Ley 1581 de 2012");
+  await expect(widget.getByTestId("aviso-datos")).toContainText("puedes no usar el asistente");
   await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un asistente de IA");
   await expect(widget.getByText("¿En qué te ayudo?")).toBeVisible(); // estado vacío
