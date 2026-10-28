@@ -77,6 +77,12 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
     const auth = peticion.headers()["authorization"] ?? null;
     let cuerpo = null;
     if (metodo === "POST" && !ruta.endsWith("/documento")) cuerpo = peticion.postDataJSON();
+    if (ruta.endsWith("/documento")) {
+      // Del archivo subido, solo su nombre, su tipo y su peso (las fotos pesadas se reducen antes).
+      const datos = peticion.postDataBuffer() ?? Buffer.alloc(0);
+      const cabecera = /filename="([^"]+)"\r\nContent-Type: ([^\r]+)/.exec(datos.toString("latin1"));
+      cuerpo = { nombre: cabecera?.[1], tipo: cabecera?.[2], bytes: datos.length };
+    }
     solicitudes.push({ ruta, metodo, auth, cuerpo });
     const json = (datos, status = 200) => route.fulfill({ status, json: datos });
 
