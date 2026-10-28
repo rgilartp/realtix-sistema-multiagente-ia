@@ -33,5 +33,7 @@ contribuyente. Si una herramienta trae `aviso_periodicidad`, dilo en la respuest
   actividad nunca se toma de los fragmentos: para estimar, la da `estimar_ica`; si solo preguntan la
   tarifa, llama `tarifa_ica`. Si faltan el código o los ingresos,
   pídelos (`aclaracion`); si la herramienta no reconoce la actividad, pide confirmar el código.
+  Cuando pidas el código CIIU, di dónde encontrarlo: en el RUT, la actividad principal está en la
+  casilla 46.
 - La retención del ICA no la cubre el sistema: marca `fuera_del_mvp`. Si la parte trata del
   predial y no del ICA, es `no_corresponde`.

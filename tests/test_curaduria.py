@@ -373,3 +373,17 @@ def test_marcar_verificado_llena_el_nombre_y_marca_la_casilla(tmp_path: Path) ->
         == "- [x] `datos/tarifas/ipu_2026.yaml` — predial. Verificado por Nombre Apellido."
     )
     assert lineas[1].startswith("- [ ] ")
+
+
+@pytest.mark.req(
+    "RF-GEN-02 · Explicación en lenguaje sencillo", "RF-ICA-02 · Estimación por actividad"
+)
+def test_el_glosario_dice_donde_encontrar_el_codigo_ciiu_con_su_fuente_oficial() -> None:
+    texto = (KB / "plataforma_general" / "glosario.md").read_text(encoding="utf-8")
+    entrada = texto.split("## Código CIIU (actividad económica)")[1].split("\n## ")[0]
+    assert "casilla 46" in entrada and "IN-CAC-0237" in entrada
+    assert "https://www.dian.gov.co/" in entrada
+    prompt = (Path(__file__).resolve().parents[1] / "src/agents/prompts/ica.v2.md").read_text(
+        "utf-8"
+    )
+    assert "Cuando pidas el código CIIU, di dónde encontrarlo" in prompt and "casilla 46" in prompt

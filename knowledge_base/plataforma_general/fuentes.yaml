@@ -7,5 +7,6 @@ fuentes:
 - archivo: glosario.md
   norma: Glosario con fuentes (sintético)
   url: null
-  origen: redactado por los autores con términos de las normas cargadas (ADR-19)
+  origen: redactado por los autores con términos de las normas cargadas (ADR-19); el código CIIU,
+    con el instructivo IN-CAC-0237 de la DIAN (versión 3), consultado en su página oficial
   mes_consulta: octubre de 2026
