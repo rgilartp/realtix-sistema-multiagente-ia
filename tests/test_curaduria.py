@@ -241,6 +241,9 @@ def test_regimenes_ica_y_umbral_en_pesos() -> None:
     assert anios[2027]["sin_declaracion"]["ingresos_netos_menores_a_uvt"] == 1933
     uvt_2025 = next(u["valor"] for u in _yaml("uvt_smmlv.yaml")["uvt"] if u["anio"] == 2025)
     assert anios[2026]["umbral_pesos"] == 391 * uvt_2025 == 19_471_409
+    # Sobretasa bomberil: ingresos netos superiores a 43.498 UVT (Res. SDH-000195 de 2025, art. 2).
+    assert anios[2026]["sobretasa_bomberil"]["umbral_uvt"] == 43_498
+    assert "art. 2" in anios[2026]["sobretasa_bomberil"]["fuente"]
 
 
 @pytest.mark.req("RF-ICA-03 · Fechas de declaración")
