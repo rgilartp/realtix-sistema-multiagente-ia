@@ -30,7 +30,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| si | 53s | 0 | el asistente fue claro y brindo la informacion donde encontrar los datos |
 
 ## Tarea 2 · Estimar el impuesto de industria y comercio (ICA)
 
@@ -42,7 +42,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| si | 1m 44s | no | me demore en este caso de prueba porque debia ir a buscar mi codigo CIIU y mis ingresos que aunque tenia a la mano igual me demore un poco, tambien hice la prueba con un codigo inexistente y me dijo que verificara el codigo correcto por lo que me respondió excelente|
 
 ## Tarea 3 · Cargar un recibo y confirmar los datos
 
@@ -57,7 +57,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| si | 14s | no | respuesta clara y me comenta que el valor de mora me lo dice la factura por lo que está muy bien la respuesta |
 
 ## Tarea 4 · Hacer una pregunta fuera de alcance
 
@@ -69,7 +69,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| si | 15s | no | pregunte sobre el impuesto de los carros y elevo el caso a un funcionario correctamente porque no esta dentro del dominio del sistema |
 
 ## Tarea 5 · Pedir un funcionario
 
@@ -81,7 +81,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| si | 9s | no | respuesta rápida y clara |
 
 ## Comentarios generales
 

@@ -30,7 +30,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| Si | 34 s | 0 | Todo perfecto como se indica |
 
 ## Tarea 2 · Estimar el impuesto de industria y comercio (ICA)
 
@@ -42,7 +42,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| Si | 64 s | 0 | Todo perfecto como se indica, responde bien a los codigos que no existen. |
 
 ## Tarea 3 · Cargar un recibo y confirmar los datos
 
@@ -57,7 +57,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| Si |  28 s| 0 | Reconoce bien el .png, y lo lee bien, seria ideal que deje subir pdfs o imagenes mas grandes para no tener errores de Formato y que se pueda leer todo correctamente, seria lo ideal, ya que asi pues es util solo en algo muy especifico. |
 
 ## Tarea 4 · Hacer una pregunta fuera de alcance
 
@@ -69,7 +69,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+| Si | 20 s | 0 | Perfecto, responde rapido y es conciso para decir para lo que sirve. |
 
 ## Tarea 5 · Pedir un funcionario
 
@@ -81,7 +81,7 @@ evaluador hasta que los dos terminen, y **sin ayuda de ninguna IA** para respond
 
 | Terminada (sí / con ayuda / no) | Minutos | Errores o desvíos | Comentarios |
 |---|---|---|---|
-|  |  |  |  |
+|  Si|2 s  | 0 |  Funciona bien|
 
 ## Comentarios generales
 

@@ -27,8 +27,8 @@ prioridad) · 3 = mayor (alta prioridad) · 4 = catastrófico (hay que arreglarl
 
 | N.º | Tarea (1 a 5) o «explorar» | Dónde (pantalla o mensaje) | Qué pasa | Heurística (1 a 10) | Gravedad (0 a 4) |
 |---|---|---|---|---|---|
-| 1 |  |  |  |  |  |
-| 2 |  |  |  |  |  |
+| 1 | 1 |pantalla  | Cuando se va a iniciar sesión en modo oscuro no se ve el texto de los usuarios porque se combina con el fondo | 8 | 4 |
+| 2 | 3 | mensaje | Hay un peso muy small para las fotos, no deja poner casi nada, debe tener mas margen, ya que no todas las fotos pesan 5mb | 5 | 4 |
 | 3 |  |  |  |  |  |
 | 4 |  |  |  |  |  |
 | 5 |  |  |  |  |  |
