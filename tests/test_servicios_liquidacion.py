@@ -6,7 +6,7 @@ import pytest
 import yaml
 
 from src.services import notas
-from src.services.datos_anuales import RAIZ_DATOS
+from src.services.datos_anuales import RAIZ_DATOS, uvt
 from src.services.errores import ActividadNoReconocidaError, DatoNoPublicadoError
 from src.services.ica import PeriodoICA, estimar_ica
 from src.services.predial import liquidar_predial
@@ -172,9 +172,39 @@ def test_estimacion_ica_2026_anual_es_una_proyeccion_del_ano_completo() -> None:
     for nota in (
         notas.NOTA_ESTIMACION,
         notas.NOTA_APROXIMACION_ICA,
-        notas.NOTA_COMPLEMENTARIOS_ICA,
+        notas.NOTA_AVISOS_Y_TABLEROS,
     ):
         assert nota in est.notas
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad")
+def test_la_nota_dice_cuando_aplican_avisos_y_tableros_y_la_sobretasa_bomberil() -> None:
+    # Avisos y tableros: solo con vallas, avisos o tableros visibles (Decreto 352 de 2002, art. 57).
+    assert "visibles desde el espacio público" in notas.NOTA_AVISOS_Y_TABLEROS
+    assert "15 %" in notas.NOTA_AVISOS_Y_TABLEROS
+    # Sobretasa bomberil: el código compara los ingresos del periodo con 43.498 UVT del año.
+    umbral = 43_498 * uvt(2026)
+    debajo = estimar_ica("6201", 900_000_000, PeriodoICA(2026))
+    assert any(n.startswith("La sobretasa bomberil no se declara") for n in debajo.notas)
+    assert any(f"{umbral:,}".replace(",", ".") in n for n in debajo.notas)
+    encima = estimar_ica("6201", umbral + 1, PeriodoICA(2026, "bimestral", 3))
+    assert any("también se declara la sobretasa bomberil" in n for n in encima.notas)
+    justo = estimar_ica("6201", umbral, PeriodoICA(2026, "bimestral", 3))  # «superiores»: no
+    assert any(n.startswith("La sobretasa bomberil no se declara") for n in justo.notas)
+    # El bimestre 6 de 2026 usa la tabla de 2027, pero la regla y la UVT de 2026.
+    sexto = estimar_ica("6201", umbral + 1, PeriodoICA(2026, "bimestral", 6))
+    assert any("también se declara la sobretasa bomberil" in n for n in sexto.notas)
+    # La nota cita las normas completas, para que el verificador de citas las acepte.
+    from src.services.citas import citas_sin_fuente
+
+    assert (
+        citas_sin_fuente("Decreto 352 de 2002, arts. 57 a 59", [notas.NOTA_AVISOS_Y_TABLEROS]) == []
+    )
+    # 2027: el umbral y la UVT aún no se publican; no se dice si aplica.
+    sin_datos = estimar_ica("6201", 900_000_000, PeriodoICA(2027))
+    assert any("no puede decir si la sobretasa bomberil se declara" in n for n in sin_datos.notas)
+    assert any("43.498 UVT" in n and "art. 2" in n for n in sin_datos.notas)  # la regla de 2026
 
 
 @pytest.mark.unit
