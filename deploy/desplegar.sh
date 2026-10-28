@@ -11,6 +11,7 @@
 # ejecuta la ingesta (idempotente: sin cambios no gasta) y verifica /health por HTTPS.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+ARGUMENTOS=("$@")
 
 VERSION=main
 EVALUACION=false
@@ -38,10 +39,17 @@ else
   git checkout --quiet --detach "${VERSION}"
 fi
 git log --oneline -1
+# El checkout pudo traer otra versión de este script, pero bash sigue leyendo la que abrió: se
+# vuelve a ejecutar una vez, ya actualizado (el fetch y el checkout repetidos no cambian nada).
+if [[ -z "${DESPLEGAR_ACTUALIZADO:-}" ]]; then
+  DESPLEGAR_ACTUALIZADO=1 exec bash deploy/desplegar.sh "${ARGUMENTOS[@]}"
+fi
 
 DOMINIO=$(grep -E '^DOMINIO=' deploy/servidor.env | cut -d= -f2-)
 export REALTIX_MODO_EVALUACION="${EVALUACION}"
-compose=(docker compose --env-file .env --env-file deploy/servidor.env)
+# deploy/compose.servidor.yml quita el puerto de Chroma en el anfitrión (ADR-26).
+compose=(docker compose -f docker-compose.yml -f deploy/compose.servidor.yml
+  --env-file .env --env-file deploy/servidor.env)
 
 echo "2/6 Imágenes"
 "${compose[@]}" build --pull --quiet

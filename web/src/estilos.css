@@ -189,6 +189,15 @@
   summary {
     cursor: pointer;
   }
+  /* La lista nativa de un select toma el fondo del select y, si es transparente, el blanco del
+     navegador: en el modo oscuro quedaba texto claro sobre blanco. Fondo y texto explícitos de
+     cada modo, en el select y en sus opciones. */
+  select,
+  option,
+  optgroup {
+    background-color: var(--color-hoja);
+    color: var(--color-tinta);
+  }
   button:disabled {
     cursor: not-allowed;
   }
@@ -297,7 +306,7 @@
   .casilla > select {
     width: 100%;
     min-height: 2.5rem;
-    background: transparent;
+    background: var(--color-hoja);
     font-size: var(--text-base);
     font-weight: 400;
     color: var(--color-tinta);
@@ -334,7 +343,7 @@
   .casilla-unida > select {
     width: 100%;
     min-height: 2.5rem;
-    background: transparent;
+    background: var(--color-hoja);
     font-size: var(--text-base);
     font-weight: 400;
     color: var(--color-tinta);

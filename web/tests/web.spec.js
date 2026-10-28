@@ -432,6 +432,44 @@ test("tema: el widget ignora el tema de una página de otro origen y no queda oc
   await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
 });
 
+// La lista nativa de un select toma el fondo del select: en el modo oscuro, con fondo transparente,
+// quedaba texto claro sobre el blanco del navegador (hallazgo de la usabilidad). El select y cada
+// opción llevan fondo opaco y texto con 4,5:1 en los dos modos, en la OVT y en la consola (el
+// widget no tiene listas).
+const luminanciaCss = (css) => {
+  const [r, g, b] = css.match(/[\d.]+/g).slice(0, 3).map((v) => {
+    const c = Number(v) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+async function listaLegible(select) {
+  const colores = await select.evaluate((el) =>
+    [el, ...el.options].map((n) => [getComputedStyle(n).backgroundColor, getComputedStyle(n).color]),
+  );
+  for (const [fondo, texto] of colores) {
+    expect(fondo).toMatch(/^rgb\(/); // opaco: no «transparent» ni rgba con alfa
+    const [a, b] = [luminanciaCss(texto), luminanciaCss(fondo)].sort((x, y) => y - x);
+    expect((a + 0.05) / (b + 0.05)).toBeGreaterThanOrEqual(4.5);
+  }
+}
+
+for (const esquema of ["light", "dark"]) {
+  const modo = esquema === "dark" ? "oscuro" : "claro";
+  test(`listas desplegables legibles en la OVT y la consola (modo ${modo})`, TEMA_REQ, async ({ page }) => {
+    await simularApi(page);
+    await page.emulateMedia({ colorScheme: esquema });
+    await page.goto("/ovt/");
+    await expect(temaDe(page)).toHaveAttribute("data-tema", modo);
+    await expect(page.getByTestId("usuario").locator("option").nth(1)).toBeAttached(); // ya cargó
+    await listaLegible(page.getByTestId("usuario"));
+    await page.goto("/consola/");
+    await page.getByLabel("Token de funcionario (bandeja)").fill("token-funcionario");
+    await page.getByRole("button", { name: "Cargar casos" }).click();
+    for (const filtro of ["Motivo", "Estado"]) await listaLegible(page.getByLabel(filtro));
+  });
+}
+
 // La CSP del despliegue (B13) bloquea los scripts en línea: ninguna página compilada los tiene.
 test("las páginas compiladas no tienen scripts en línea", async () => {
   for (const pagina of ["index.html", "ovt/index.html", "widget/index.html", "consola/index.html"]) {
