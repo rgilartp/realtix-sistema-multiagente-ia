@@ -470,6 +470,46 @@ for (const esquema of ["light", "dark"]) {
   });
 }
 
+// Fotos pesadas (hallazgo de la usabilidad): el widget reduce la foto antes de subirla (lado largo
+// de 2.000 px, en JPEG). Un PDF de más de 5 MB no se reduce: se rechaza con el mensaje de siempre.
+test(
+  "widget: reduce las fotos pesadas antes de subirlas y rechaza un PDF pesado",
+  { annotation: [{ type: "req", description: "RF-UI-04 · Carga desde la conversación" }] },
+  async ({ page }) => {
+    const { solicitudes, widget } = await abrirOvt(page, ESCRITORIO);
+    await iniciarSesion(page, ESCRITORIO);
+    // Una «foto» de 2.600 × 1.950 px con grano, que en PNG pesa más de 5 MB.
+    const foto = Buffer.from(
+      await page.evaluate(() => {
+        const [ancho, alto] = [2600, 1950];
+        const lienzo = document.createElement("canvas");
+        Object.assign(lienzo, { width: ancho, height: alto });
+        const contexto = lienzo.getContext("2d");
+        const datos = contexto.createImageData(ancho, alto);
+        for (let i = 0; i < datos.data.length; i += 4) {
+          const x = (i / 4) % ancho;
+          const grano = Math.random() * 40;
+          datos.data.set([60 + (x % 180) + grano, 120 + grano, 200 - grano, 255], i);
+        }
+        contexto.putImageData(datos, 0, 0);
+        return lienzo.toDataURL("image/png").split(",")[1];
+      }),
+      "base64",
+    );
+    expect(foto.length).toBeGreaterThan(5 * 1024 * 1024);
+    await widget.getByTestId("archivo").setInputFiles({ name: "foto.png", mimeType: "image/png", buffer: foto });
+    await expect(widget.getByText("¿Es correcto?")).toBeVisible();
+    const subida = solicitudes.find((s) => s.ruta === "/api/v1/chat/documento");
+    expect(subida.cuerpo).toMatchObject({ nombre: "foto.jpg", tipo: "image/jpeg" });
+    expect(subida.cuerpo.bytes).toBeLessThan(5 * 1024 * 1024);
+    const antes = solicitudes.length;
+    const pdf = { name: "recibo.pdf", mimeType: "application/pdf", buffer: Buffer.alloc(6 * 1024 * 1024) };
+    await widget.getByTestId("archivo").setInputFiles(pdf);
+    await expect(widget.getByText("El archivo pesa más de 5 MB. Envía una foto o un PDF más liviano.")).toBeVisible();
+    expect(solicitudes.slice(antes).some((s) => s.ruta === "/api/v1/chat/documento")).toBe(false);
+  },
+);
+
 // La CSP del despliegue (B13) bloquea los scripts en línea: ninguna página compilada los tiene.
 test("las páginas compiladas no tienen scripts en línea", async () => {
   for (const pagina of ["index.html", "ovt/index.html", "widget/index.html", "consola/index.html"]) {

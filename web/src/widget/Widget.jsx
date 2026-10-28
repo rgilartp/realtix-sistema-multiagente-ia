@@ -5,7 +5,8 @@
 // - «Hablar con un funcionario» siempre a la vista (RF-ESC-02).
 // - Fuentes de cada respuesta como referencias discretas.
 // - Fuera de horario destacado, con la hora en que vuelve a atender (RNF-07).
-// - Carga de recibos (JPG, PNG o PDF de hasta 5 MB) validada en el navegador (RF-UI-04).
+// - Carga de recibos (JPG, PNG o PDF de hasta 5 MB) validada en el navegador (RF-UI-04); las fotos
+//   pesadas se reducen antes de subirlas (fotos.js).
 // - Con la conversación escalada, consulta cada 5 s los mensajes nuevos del funcionario.
 // - Tema claro u oscuro: el de la página que lo inserta (embed.js); sin ella, el del sistema.
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -22,6 +23,7 @@ import {
   pedirFuncionario,
 } from "../api.js";
 import { IconoCalendario, IconoLibro } from "../iconos.jsx";
+import { reducirFoto } from "./fotos.js";
 import { TEMAS, aplicarTema } from "../tema.jsx";
 
 const CONSULTA_MS = 5000;
@@ -292,7 +294,9 @@ export default function Widget() {
       agregar({ autor: "sistema", texto: "Solo puedo recibir el recibo en JPG, PNG o PDF.", estado: "error" });
       return;
     }
-    if (elegido.size > TAMANO_MAXIMO_MB * 1024 * 1024) {
+    const limite = TAMANO_MAXIMO_MB * 1024 * 1024;
+    const archivo = await reducirFoto(elegido, limite);
+    if (archivo.size > limite) {
       agregar({
         autor: "sistema",
         texto: `El archivo pesa más de ${TAMANO_MAXIMO_MB} MB. Envía una foto o un PDF más liviano.`,
@@ -303,7 +307,7 @@ export default function Widget() {
     agregar({ autor: "contribuyente", texto: elegido.name, archivo: elegido.name });
     const nota = texto.trim();
     setTexto("");
-    await conEspera(() => enviarDocumento(conversacion, elegido, nota, token));
+    await conEspera(() => enviarDocumento(conversacion, archivo, nota, token));
   };
 
   const funcionario = async () => {
