@@ -79,8 +79,8 @@ class Settings(BaseSettings):
     fallas_inyectables: bool = False
 
     # Límite de peticiones por IP en chat y documento (seguridad y gasto; src/api/limite.py)
-    limite_peticiones_por_minuto: int = 10
-    limite_peticiones_por_dia: int = 200
+    limite_peticiones_por_minuto: int = Field(default=10, gt=0)
+    limite_peticiones_por_dia: int = Field(default=200, gt=0)
 
     # Archivos (RF-OCR-01)
     tamano_maximo_archivo_mb: int = Field(default=5, gt=0)

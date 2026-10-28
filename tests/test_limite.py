@@ -30,6 +30,15 @@ def test_ventanas_de_un_minuto_y_de_un_dia_por_ip() -> None:
     assert mensaje == MENSAJE_POR_DIA and espera > 60
     ahora[0] = 86_401.0
     assert limitador.registrar("203.0.113.7") is None  # pasó el día
+    # Las IP sin peticiones en el último día se olvidan (la limpieza corre a lo más cada minuto).
+    assert set(limitador._marcas) == {"203.0.113.7"}
+
+
+@pytest.mark.unit
+@pytest.mark.req(*REQ)
+def test_los_limites_deben_ser_positivos() -> None:
+    with pytest.raises(ValueError):
+        configuracion(limite_peticiones_por_minuto=0)
 
 
 @pytest.mark.unit

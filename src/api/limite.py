@@ -4,7 +4,10 @@ Por seguridad y gasto: 10 por minuto y 200 por día por IP (`LIMITE_PETICIONES_P
 `LIMITE_PETICIONES_POR_DIA`), en ventanas móviles y en la memoria del proceso; con dos réplicas,
 cada una lleva su cuenta. La IP es la última de `X-Forwarded-For`, la que pone Caddy (el backend
 solo se alcanza por el proxy); sin esa cabecera, la de la conexión. No cuentan las peticiones del
-modo de evaluación con `X-Escenario-Id`. Al pasarse, 429 con un mensaje claro y `Retry-After`.
+modo de evaluación con `X-Escenario-Id`: mientras el servidor corre con `--evaluacion` (solo durante
+una corrida, A9), cualquiera podría saltarse el límite con esa cabecera, igual que ya puede usar
+`X-Reloj-Simulado` o `X-Falla-Inyectada`; es un riesgo aceptado de esa ventana. Al pasarse, 429 con
+un mensaje claro y `Retry-After`.
 """
 
 import time
@@ -21,8 +24,7 @@ MENSAJE_POR_MINUTO = (
     "Recibí muchas consultas seguidas desde tu conexión. Espera un minuto y vuelve a intentarlo."
 )
 MENSAJE_POR_DIA = (
-    "Llegaste al límite de consultas de hoy desde tu conexión. Vuelve a intentarlo mañana o pide "
-    "que te atienda un funcionario."
+    "Llegaste al límite de consultas de hoy desde tu conexión. Vuelve a intentarlo mañana."
 )
 
 
@@ -35,6 +37,7 @@ class LimitadorPorIP:
         self.por_minuto, self.por_dia, self._reloj = por_minuto, por_dia, reloj
         self._marcas: dict[str, deque[float]] = {}
         self._candado = Lock()
+        self._proxima_limpieza = 0.0
 
     def registrar(self, ip: str) -> tuple[str, int] | None:
         """Cuenta la petición si cabe; si no, el mensaje y los segundos para reintentar."""
@@ -49,8 +52,9 @@ class LimitadorPorIP:
             if len(en_el_minuto) >= self.por_minuto:
                 return MENSAJE_POR_MINUTO, max(1, int(MINUTO - (ahora - en_el_minuto[0])) + 1)
             marcas.append(ahora)
-            if len(self._marcas) > 10_000:  # se olvidan las IP sin peticiones en el último día
-                self._marcas = {k: v for k, v in self._marcas.items() if v and ahora - v[-1] < DIA}
+            if ahora >= self._proxima_limpieza:  # a lo más una vez por minuto
+                self._proxima_limpieza = ahora + MINUTO
+                self._marcas = {k: v for k, v in self._marcas.items() if ahora - v[-1] < DIA}
             return None
 
 
