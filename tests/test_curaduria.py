@@ -386,7 +386,14 @@ def test_el_glosario_dice_donde_encontrar_el_codigo_ciiu_con_su_fuente_oficial()
     entrada = texto.split("## Código CIIU (actividad económica)")[1].split("\n## ")[0]
     assert "casilla 46" in entrada and "IN-CAC-0237" in entrada
     assert "https://www.dian.gov.co/" in entrada
-    prompt = (Path(__file__).resolve().parents[1] / "src/agents/prompts/ica.v2.md").read_text(
-        "utf-8"
-    )
-    assert "Cuando pidas el código CIIU, di dónde encontrarlo" in prompt and "casilla 46" in prompt
+    from src.agents.prompts import cargar_prompt
+
+    prompt = cargar_prompt("ica").texto  # la versión vigente del prompt del ICA
+    assert "Cuando pidas el código CIIU, di dónde encontrarlo" in prompt
+
+    # Las mismas palabras que el glosario: el detector de fuga las cuenta como texto público.
+    def plano(t: str) -> str:
+        return " ".join(t.lower().split())
+
+    assert "en el rut, la actividad principal va en la casilla 46." in plano(entrada)
+    assert "en el rut, la actividad principal va en la casilla 46." in plano(prompt)
