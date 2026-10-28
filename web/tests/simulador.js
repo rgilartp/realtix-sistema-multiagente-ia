@@ -55,7 +55,7 @@ function meta(extra = {}) {
 }
 
 // Las consultas que llegan quedan en `solicitudes`, para revisar el token y los cuerpos.
-export async function simularApi(page, { fueraDeHorario = false } = {}) {
+export async function simularApi(page, { fueraDeHorario = false, limitado = null } = {}) {
   const solicitudes = [];
   const conversaciones = new Set();
   let consultasDeMensajes = 0;
@@ -91,6 +91,7 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
       return json({ token: `token-de-prueba-${cuerpo.usuario}`, usuario: cuerpo.usuario, expira_en_s: 7200 });
     }
     if (ruta === "/api/v1/chat/mensaje") {
+      if (limitado) return route.fulfill({ status: 429, json: { detalle: limitado }, headers: { "Retry-After": "60" } });
       if (fueraDeHorario) {
         return json(chat(cuerpo.id_conversacion, TEXTOS.fueraDeHorario, "sistema", "fuera_de_horario"));
       }

@@ -69,6 +69,9 @@ def test_caddy_https_limites_y_cabeceras() -> None:
     [hsts] = re.findall(r'Strict-Transport-Security "([^"]+)"', caddy)
     assert hsts == "max-age=31536000"  # sin preload
     assert "fail_duration" not in caddy  # un cuerpo grande no debe apartar la réplica sana
+    # Sin trusted_proxies, Caddy reemplaza el X-Forwarded-For del cliente por la IP de la conexión:
+    # el límite de peticiones (src/api/limite.py) usa esa IP.
+    assert "trusted_proxies" not in caddy
     politicas = re.findall(r"Content-Security-Policy \"([^\"]+)\"", caddy)
     assert len(politicas) == 3 and all("script-src 'self'" in p for p in politicas)
     ancestros = {re.search(r"frame-ancestors ([^\"]+)$", p).group(1) for p in politicas}
