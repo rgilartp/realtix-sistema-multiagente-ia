@@ -20,14 +20,20 @@ export async function reducirFoto(archivo, limiteBytes) {
   const ancho = Math.round(mapa.width * escala);
   const alto = Math.round(mapa.height * escala);
   const lienzo = document.createElement("canvas");
-  lienzo.width = ancho;
-  lienzo.height = alto;
-  const contexto = lienzo.getContext("2d");
-  contexto.fillStyle = "#ffffff"; // un PNG con transparencia no queda con fondo negro en JPEG
-  contexto.fillRect(0, 0, ancho, alto);
-  contexto.drawImage(mapa, 0, 0, ancho, alto);
-  mapa.close();
-  const jpeg = await new Promise((listo) => lienzo.toBlob(listo, "image/jpeg", CALIDAD_JPEG));
-  if (!jpeg) return archivo;
-  return new File([jpeg], `${archivo.name.replace(/\.[^.]+$/, "")}.jpg`, { type: "image/jpeg" });
+  try {
+    lienzo.width = ancho;
+    lienzo.height = alto;
+    const contexto = lienzo.getContext("2d"); // puede ser null si el navegador no tiene memoria
+    contexto.fillStyle = "#ffffff"; // un PNG con transparencia no queda con fondo negro en JPEG
+    contexto.fillRect(0, 0, ancho, alto);
+    contexto.drawImage(mapa, 0, 0, ancho, alto);
+    const jpeg = await new Promise((listo) => lienzo.toBlob(listo, "image/jpeg", CALIDAD_JPEG));
+    if (!jpeg) return archivo;
+    return new File([jpeg], `${archivo.name.replace(/\.[^.]+$/, "")}.jpg`, { type: "image/jpeg" });
+  } catch {
+    return archivo; // si no se pudo reducir, se envía como está y responde el límite de siempre
+  } finally {
+    mapa.close();
+    lienzo.width = lienzo.height = 0; // libera la memoria del lienzo (iOS)
+  }
 }

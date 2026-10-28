@@ -295,7 +295,17 @@ export default function Widget() {
       return;
     }
     const limite = TAMANO_MAXIMO_MB * 1024 * 1024;
-    const archivo = await reducirFoto(elegido, limite);
+    // Mientras se reduce la foto, el widget queda ocupado; si entretanto cambió la conversación
+    // (otra sesión o una conversación nueva), la foto ya no se envía.
+    const enCurso = conversacionActual.current;
+    setOcupado(true);
+    let archivo;
+    try {
+      archivo = await reducirFoto(elegido, limite);
+    } finally {
+      setOcupado(false);
+    }
+    if (enCurso !== conversacionActual.current) return;
     if (archivo.size > limite) {
       agregar({
         autor: "sistema",
