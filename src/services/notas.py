@@ -44,11 +44,45 @@ NOTA_PROYECCION_ICA_ANUAL = (
     "El ICA anual de 2026 se estima como una proyección del año completo a partir de los ingresos "
     "que se indican; el impuesto definitivo depende de los ingresos reales del año."
 )
-NOTA_COMPLEMENTARIOS_ICA = (
-    "La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, "
-    "Decreto 352 de 2002, art. 59) ni la sobretasa bomberil (Resolución SDH-000195 de 2025, "
-    "art. 2), que se suman cuando aplican."
+NOTA_AVISOS_Y_TABLEROS = (
+    "La estimación no incluye el complementario de avisos y tableros: solo se paga si hay vallas, "
+    "avisos o tableros visibles desde el espacio público, o avisos en vehículos (Decreto 352 de "
+    "2002, arts. 57 y 58), y en ese caso es el 15 % del impuesto (art. 59)."
 )
+
+
+def _pesos(valor: int) -> str:
+    return "$" + f"{valor:,}".replace(",", ".")
+
+
+def _uvt(valor: int) -> str:
+    return f"{valor:,}".replace(",", ".")
+
+
+def nota_bomberil_no_aplica(umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str) -> str:
+    return (
+        "La sobretasa bomberil no aplica con estos ingresos: solo la declaran quienes tienen "
+        f"ingresos netos superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} en {anio}) "
+        f"en el periodo que se declara ({fuente})."
+    )
+
+
+def nota_bomberil_aplica(umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str) -> str:
+    return (
+        f"Con estos ingresos, superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} en "
+        f"{anio}) en el periodo, también se declara la sobretasa bomberil ({fuente}), que esta "
+        "estimación no incluye."
+    )
+
+
+def nota_bomberil_sin_datos(anio: int) -> str:
+    return (
+        "La sobretasa bomberil solo la declaran quienes superan un umbral de ingresos netos en "
+        f"UVT; el de {anio} o su UVT aún no se publican, así que la estimación no puede decir si "
+        "aplica y no la incluye."
+    )
+
+
 NOTA_INTERESES_MORA = (
     "Como hay obligaciones vencidas, el pago incluye intereses de mora (Decreto 807 de 1993, "
     "art. 66), que esta información no calcula; el valor exacto lo da la factura o la Secretaría "

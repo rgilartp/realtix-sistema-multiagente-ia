@@ -467,7 +467,8 @@ def test_ica_05_bimestral_de_2026_con_las_dos_tablas(adaptador) -> None:
         "bimestres 1 a 5 de 2026": ("13,8 por mil", "$3.450.000"),
         "bimestre 6 de 2026": ("12 por mil", "$3.000.000"),
     }
-    assert notas.NOTA_COMPLEMENTARIOS_ICA in respuesta["texto"]
+    assert notas.NOTA_AVISOS_Y_TABLEROS in respuesta["texto"]
+    assert "La sobretasa bomberil no aplica con estos ingresos" in respuesta["texto"]
     assert "Acuerdo 1084 de 2026, art. 21" in respuesta["texto"]
 
 

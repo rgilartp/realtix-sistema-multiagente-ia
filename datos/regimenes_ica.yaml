@@ -13,6 +13,10 @@ anios:
     comun_bimestral: impuesto a cargo de 2025 mayor a 391 UVT
     comun_anual: impuesto a cargo de 2025 de hasta 391 UVT
     preferencial: declaración anual única
+    sobretasa_bomberil:
+      umbral_uvt: 43498
+      base: ingresos netos del periodo que se declara (bimestre o año); la declaran quienes lo superan
+      fuente: Resolución SDH-000195 de 2025, art. 2
   - anio_gravable: 2027
     fuente: Acuerdo 1084 de 2026, art. 26 (reemplaza el art. 27 del Decreto 807 de 1993)
     umbral_uvt: 391
