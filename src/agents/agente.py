@@ -239,12 +239,7 @@ def componer_texto(
         texto += "\n\n" + "\n\n".join(notas)
     # La lista visible suma las normas que citan las notas y que no están ya en ella (observación
     # de la usabilidad); las fuentes del contrato no cambian.
-    de_las_notas = [
-        n
-        for nota in notas_del_sistema(resultados)
-        for n in normas_citadas(nota)
-        if citas_sin_fuente(n, fuentes)
-    ]
+    de_las_notas = normas_citadas("\n".join(notas_del_sistema(resultados)), ya_citadas=fuentes)
     if lista := _sin_repetir(fuentes + de_las_notas):
         texto += "\n\nFuentes: " + "; ".join(lista) + "."
     return texto, fuentes

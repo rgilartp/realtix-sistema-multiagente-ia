@@ -215,9 +215,7 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         **info,
         "estimaciones": [_datos_estimacion(e, etiqueta) for e, etiqueta in estimaciones],
     }
-    fuentes = tuple(
-        dict.fromkeys(f for e, _ in estimaciones for f in (e.fuente, e.fuente_clasificacion) if f)
-    )
+    fuentes = tuple(dict.fromkeys(f for e, _ in estimaciones for f in e.fuentes))
     notas = tuple(dict.fromkeys(n for e, _ in estimaciones for n in e.notas))
     return Resultado(datos, fuentes=fuentes, notas=notas)
 

@@ -12,6 +12,7 @@ from decimal import ROUND_HALF_UP, Decimal
 from typing import Any, Literal, cast
 
 from src.services import notas
+from src.services.citas import citas_sin_fuente
 from src.services.datos_anuales import (
     cargar_datos,
     fuente_de_la_uvt,
@@ -48,16 +49,14 @@ class TarifaICA:
     fuente: str
     tarifa_condicionada: Decimal | None = None  # p. ej. 58112 en 2026: 4,14 si cumple Acuerdo 98
     condicion: str | None = None
-    fuente_clasificacion: str | None = None  # la del grupo de su fila (Res. SDH-000265 de 2021)
+    # Las de la fila que la fuente general no cubre (su tarifa o la condicionada) y, si la fila
+    # tiene grupo, la de su clasificación (Resolución SDH-000265 de 2021).
+    otras_fuentes: tuple[str, ...] = ()
 
     @property
     def fuentes(self) -> tuple[str, ...]:
-        """La fuente de la tarifa y, si la fila tiene grupo, la de su clasificación."""
-        return (
-            (self.fuente, self.fuente_clasificacion)
-            if self.fuente_clasificacion
-            else (self.fuente,)
-        )
+        """La fuente general de la tabla y las de la fila."""
+        return (self.fuente, *self.otras_fuentes)
 
 
 def periodicidad_registrada(
@@ -93,6 +92,18 @@ def _buscar(filas: list[dict[str, Any]], ciiu: str) -> dict[str, Any] | None:
     return next((f for f in filas if f["ciiu"] == ciiu), None)
 
 
+def _fuentes_de_la_fila(
+    fila: dict[str, Any], datos: dict[str, Any], general: str
+) -> tuple[str, ...]:
+    """La fuente de la tarifa de la fila y la de su tarifa condicionada, si la general no las cubre
+    (por ejemplo, el Acuerdo 780 de 2020), y la de su clasificación, si la fila tiene grupo."""
+    propias = [fila.get("fuente_tarifa"), (fila.get("tarifa_condicionada") or {}).get("fuente")]
+    salida = [str(f) for f in propias if f and citas_sin_fuente(str(f), [general])]
+    if fila.get("grupo_resolucion_265") and datos.get("fuente_de_la_clasificacion"):
+        salida.append(str(datos["fuente_de_la_clasificacion"]))
+    return tuple(dict.fromkeys(salida))
+
+
 def buscar_tarifa_ica(ciiu: str, periodo: PeriodoICA) -> TarifaICA:
     """Tarifa por mil de la actividad (CIIU) para el periodo; no adivina actividades ausentes."""
     tabla = tabla_aplicable(periodo)
@@ -109,9 +120,7 @@ def buscar_tarifa_ica(ciiu: str, periodo: PeriodoICA) -> TarifaICA:
             fuente,
             tarifa_condicionada=Decimal(condicionada["tarifa_por_mil"]) if condicionada else None,
             condicion=str(condicionada["condicion"]) if condicionada else None,
-            fuente_clasificacion=str(datos["fuente_de_la_clasificacion"])
-            if fila.get("grupo_resolucion_265") and datos.get("fuente_de_la_clasificacion")
-            else None,
+            otras_fuentes=_fuentes_de_la_fila(fila, datos, fuente),
         )
     if tabla == 2027:
         fila = _buscar(datos.get("progresiva_financiera", []), ciiu)
@@ -206,11 +215,24 @@ class EstimacionICA:
     proyeccion_anual: bool
     fuente: str
     notas: tuple[str, ...]
-    fuente_clasificacion: str | None = None
+    otras_fuentes: tuple[str, ...] = ()  # las de la fila y las de la regla de la sobretasa
+
+    @property
+    def fuentes(self) -> tuple[str, ...]:
+        return (self.fuente, *self.otras_fuentes)
 
 
 def _impuesto(ingresos: int, tarifa_por_mil: Decimal) -> int:
     return int((Decimal(ingresos) * tarifa_por_mil / 1000).quantize(_UN_PESO, ROUND_HALF_UP))
+
+
+def fuentes_de_la_sobretasa(periodo: PeriodoICA) -> tuple[str, ...]:
+    """Las fuentes que usa la nota de la sobretasa bomberil: la de su regla y la de la UVT."""
+    try:
+        regla = regimen_ica_del_anio(periodo.anio).get("sobretasa_bomberil")
+        return (str(regla["fuente"]), fuente_de_la_uvt(periodo.anio)) if regla else ()
+    except (AnioSinDatosError, DatoNoPublicadoError):
+        return ()
 
 
 def nota_sobretasa_bomberil(ingresos: int, periodo: PeriodoICA) -> str:
@@ -276,5 +298,7 @@ def estimar_ica(ciiu: str, ingresos: int, periodo: PeriodoICA) -> EstimacionICA:
         proyeccion_anual=proyeccion,
         fuente=tarifa.fuente,
         notas=tuple(avisos),
-        fuente_clasificacion=tarifa.fuente_clasificacion,
+        otras_fuentes=tuple(
+            dict.fromkeys((*tarifa.otras_fuentes, *fuentes_de_la_sobretasa(periodo)))
+        ),
     )

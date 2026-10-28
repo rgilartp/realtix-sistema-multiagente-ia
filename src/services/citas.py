@@ -107,11 +107,15 @@ def fuentes_de_fragmento(norma: str, seccion: str, texto: str) -> list[str]:
 _NOMBRES = {"decreto": "Decreto", "ley": "Ley", "acuerdo": "Acuerdo", "resolucion": "Resolución"}
 
 
-def normas_citadas(texto: str) -> list[str]:
+def normas_citadas(texto: str, ya_citadas: Iterable[str] = ()) -> list[str]:
     """Las normas que cita un texto con sus artículos, para la lista de fuentes: «Decreto 807 de
-    1993, arts. 15 y 132». Una por norma, en el orden en que aparecen."""
+    1993, arts. 15 y 132». Una por norma, en el orden en que aparecen, sin los artículos que ya
+    cubren `ya_citadas`."""
+    validas = [c for f in ya_citadas for c in extraer_citas(f)]
     grupos: dict[tuple[str, str, str | None], list[str]] = {}
     for cita in extraer_citas(texto):
+        if any(cita.coincide(v) for v in validas):
+            continue
         articulos = grupos.setdefault((cita.tipo, cita.numero, cita.anio), [])
         if cita.articulo not in articulos:
             articulos.append(cita.articulo)
