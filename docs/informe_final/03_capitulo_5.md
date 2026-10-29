@@ -361,6 +361,14 @@ la especificación técnica). En las consultas sin sesión, la medida limpia de 
 | Casos sin sesión | — | 22 | 21 | 66 |
 
 Fuentes: `reports/corrida-1/fallas.md`, `reports/corrida-2/fallas.md` y `reports/corrida-3/ragas.jsonl`.
+**Análisis de sensibilidad de la relevancia** (aparte; no reemplaza la cifra oficial): en los 66
+casos sin sesión se volvió a medir la relevancia quitando de la respuesta la lista final «Fuentes:»
+y las notas fijas del sistema (cambiaron 60 de las 66 respuestas, que conservaron en promedio el 85
+% del texto). La media no cambió: 71,3 % en los dos casos (15 casos subieron, 8 bajaron y 43
+quedaron iguales; diferencia media absoluta de 1,5 puntos), por unos US$0,09 de OpenAI. La
+relevancia más baja que la de Bahçeci no se explica por esos anexos
+(`reports/corrida-3/sensibilidad_relevancia.jsonl` y `.py`).
+
 La latencia de la corrida 3 con recuperación tuvo una mediana de 6.379 ms en el servidor, por encima de
 los 4.000 ms de Bahçeci; el sistema hace dos o tres llamadas a modelos por turno.
 
