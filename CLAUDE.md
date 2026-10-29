@@ -180,3 +180,6 @@ uv run python scripts/trazabilidad.py
   repeticiones; «Distrital»; fuga sin textos públicos).
 - ADR-26: avisos de seguridad de las dependencias (certifi 2026.10.19; Chroma sin puerto en el
   servidor; chromadb, ragas y diskcache como riesgos aceptados con su mitigación).
+- ADR-27: correcciones del instrumento después de v1.0.0 (el juez de los agentes contra su nodo
+  recibe toda la evidencia; la matriz toma Playwright, modelos reales y la disponibilidad; la
+  sensibilidad de RAGAS va aparte; el código del sistema no cambió y se conservan las cifras).
