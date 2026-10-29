@@ -29,11 +29,13 @@ verificaciones_codigo:
   valor: coinciden
 - tipo: no_escala
 respuesta_referencia: >-
-  Tras la confirmación, contrasta los datos del recibo con el estado de cuenta del predio 50C-9000301:
-  el avalúo de $350.000.000 y el valor liquidado de $2.135.000 coinciden, y el predio tiene 1 obligación
-  vencida con un saldo de $2.135.000.
+  Tras la confirmación, contrasta los datos del recibo con el estado de cuenta del predio 50C-9000301: el
+  avalúo de $350.000.000 y el valor liquidado de $2.135.000 coinciden, y el predio tiene 1 obligación
+  vencida con un saldo de $2.135.000. Como hay una obligación vencida, avisa que el pago incluye intereses
+  de mora, que no calcula (Decreto 807 de 1993, art. 66).
 fuentes_esperadas:
 - Usuario de prueba U03 (usuarios_prueba.yaml)
+- Decreto 807 de 1993, art. 66
 no_debe:
 - decir que coinciden si los valores difieren
 - usar los datos antes de la confirmación

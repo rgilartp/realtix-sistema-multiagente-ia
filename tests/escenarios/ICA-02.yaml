@@ -20,12 +20,15 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: bimestre
 respuesta_referencia: >-
-  El impuesto de cada bimestre se liquida con base en los ingresos netos del contribuyente obtenidos durante
-  el período: a la totalidad de los ingresos ordinarios y extraordinarios se les restan los de actividades
+  El impuesto de cada periodo (el bimestre para quien declara cada dos meses y el año para quien declara
+  una vez al año) se liquida con base en los ingresos netos del contribuyente obtenidos durante ese
+  periodo: a la totalidad de los ingresos ordinarios y extraordinarios se les restan los de actividades
   exentas y no sujetas, las devoluciones, rebajas y descuentos, las exportaciones y la venta de activos
-  fijos (Decreto 352 de 2002, art. 42).
+  fijos (Decreto 352 de 2002, art. 42; la periodicidad de 2026 está en la Resolución SDH-000195 de 2025,
+  art. 1).
 fuentes_esperadas:
 - Decreto 352 de 2002, art. 42
+- Resolución SDH-000195 de 2025, art. 1
 no_debe:
 - decir que se calcula sobre los ingresos brutos sin exclusiones
 dado_cuando_entonces:

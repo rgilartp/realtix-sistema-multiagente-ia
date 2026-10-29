@@ -22,9 +22,9 @@ verificaciones_codigo:
   valor: funcionario
 - tipo: sin_error_tecnico
 respuesta_referencia: >-
-  Explica, antes de transferir, que la retención de ICA está fuera de lo que atiende este canal, que solo
-  cubre el impuesto predial unificado y el de industria y comercio de Bogotá, sin retenciones; luego transfiere
-  la consulta a un funcionario y avisa que el caso queda registrado con un resumen de la conversación.
+  Explica, antes de transferir, que la retención de ICA está fuera de lo que atiende este canal (RF-ICA-04
+  · Retenciones fuera de alcance); luego transfiere la consulta a un funcionario y avisa que el caso queda
+  registrado con un resumen de la conversación.
 fuentes_esperadas:
 - RF-ICA-04 · Retenciones fuera de alcance
 - Manual de uso de la OVT simulada (plataforma_general)
