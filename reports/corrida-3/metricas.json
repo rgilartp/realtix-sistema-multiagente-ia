@@ -757,13 +757,13 @@
     },
     "agentes": {
       "escenarios": 34,
-      "superados": 11,
-      "tasa": 0.3235294117647059
+      "superados": 30,
+      "tasa": 0.8823529411764706
     },
     "costo_usd": {
       "enrutamiento": "0.678428",
-      "agentes": "0.0717960",
-      "juez": "0.860248"
+      "agentes": "0.0693488",
+      "juez": "1.216852"
     }
   },
   "ragas": {
@@ -793,9 +793,9 @@
     "Sistema (R4)": "0.043166",
     "Juez (R4)": "0.090164",
     "Componentes: enrutamiento": "0.678428",
-    "Componentes: agentes": "0.0717960",
-    "Componentes: juez": "0.860248",
+    "Componentes: agentes": "0.0693488",
+    "Componentes: juez": "1.216852",
     "RAGAS (OpenAI)": "1.64772676",
-    "Total": "12.47145736"
+    "Total": "12.82561416"
   }
 }

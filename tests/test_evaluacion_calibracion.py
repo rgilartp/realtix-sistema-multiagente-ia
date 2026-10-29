@@ -322,3 +322,40 @@ def test_la_propuesta_del_umbral_separa_los_escalamientos_de_superados_y_no_supe
         "de_escenarios_no_superados": 1,
     }
     assert por_umbral[0.75]["de_escenarios_superados"] == 1
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
+def test_el_juez_de_los_agentes_ve_herramientas_y_notas(monkeypatch: pytest.MonkeyPatch) -> None:
+    """F1 en los componentes (como ADR-25 en el nivel de sistema): el agente corre con el modo de
+    evaluación y el juez recibe los fragmentos, los datos de las herramientas y las notas."""
+    from src.config import Settings
+    from src.evaluacion import componentes
+    from src.evaluacion.juez import caso_del_ensayo
+
+    parcial = {
+        "texto": "El saldo es de $1.000.",
+        "suficiencia": "completa",
+        "contextos": ["Acuerdo 1 de 2000, art. 1\nTexto de la norma."],
+        "herramientas": [{"herramienta": "estado_de_cuenta", "resultado": {"saldo": "1000"}}],
+        "notas": ["Nota que agrega el sistema."],
+    }
+    monkeypatch.setitem(
+        componentes.NODOS_DE_AGENTE,
+        "ipu",
+        lambda deps: lambda estado, config: {"respuestas_parciales": [parcial]},
+    )
+    esc = {
+        "id": "X-01",
+        "categoria_esperada": "ipu",
+        "turnos": [{"usuario": "¿Cuánto es el saldo?"}],
+        "reloj": "2026-10-01T10:00:00-05:00",
+        "respuesta_referencia": "El saldo es de $1.000.",
+    }
+    resultado = componentes.correr_agente(None, esc)  # type: ignore[arg-type]
+    caso = caso_del_ensayo(esc, componentes.como_ensayo(resultado, esc))
+    assert caso.contextos == parcial["contextos"]
+    assert caso.datos_herramientas == ['estado_de_cuenta: {"saldo": "1000"}']
+    assert caso.notas_sistema == ["Nota que agrega el sistema."]
+    # Sin validar: la prueba no necesita las claves ni la base de datos.
+    assert componentes.settings_de_componentes(Settings.model_construct()).modo_evaluacion

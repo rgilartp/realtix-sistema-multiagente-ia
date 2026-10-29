@@ -1,0 +1,236 @@
+<testsuites id="" name="" tests="31" failures="0" skipped="4" errors="0">
+<testsuite name="capturas_reales.spec.js" tests="4" failures="0" skipped="4" errors="0">
+<testcase name="métricas reales de la consola (1280 px)" classname="capturas_reales.spec.js">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="Solo con CAPTURAS_REALES=1 y URL_REAL (B16).">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="métricas reales de la consola (390 px)" classname="capturas_reales.spec.js">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="Solo con CAPTURAS_REALES=1 y URL_REAL (B16).">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="respuesta sobre normas con sus fuentes (1280 px)" classname="capturas_reales.spec.js">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="Solo con CAPTURAS_REALES=1 y URL_REAL (B16).">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="respuesta sobre normas con sus fuentes (390 px)" classname="capturas_reales.spec.js">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="Solo con CAPTURAS_REALES=1 y URL_REAL (B16).">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="web.spec.js" tests="27" failures="0" skipped="0" errors="0">
+<testcase name="OVT simulada: rótulo, sin marcas reales y widget en un iframe" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+<property name="req" value="RNF-04 · Uso exclusivo de datos sintéticos">
+</property>
+</properties>
+</testcase>
+<testcase name="OVT simulada: rótulo, sin marcas reales y widget en un iframe (390 px)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+<property name="req" value="RNF-04 · Uso exclusivo de datos sintéticos">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-SYS-06 · Aviso de interacción con IA (provisional)">
+</property>
+<property name="req" value="RF-AUT-04 · Aviso de sesión requerida">
+</property>
+<property name="req" value="RF-UI-02 · Contexto de la sesión">
+</property>
+<property name="req" value="RF-UI-03 · Identificación del interlocutor">
+</property>
+<property name="req" value="RF-GEN-03 · Respuesta sustentada en fuentes">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes (390 px)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-SYS-06 · Aviso de interacción con IA (provisional)">
+</property>
+<property name="req" value="RF-AUT-04 · Aviso de sesión requerida">
+</property>
+<property name="req" value="RF-UI-02 · Contexto de la sesión">
+</property>
+<property name="req" value="RF-UI-03 · Identificación del interlocutor">
+</property>
+<property name="req" value="RF-GEN-03 · Respuesta sustentada en fuentes">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: fuera de horario destacado con la hora de regreso (RNF-07)" classname="web.spec.js">
+<properties>
+<property name="req" value="RNF-07 · Aviso fuera de horario">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: fuera de horario destacado con la hora de regreso (RNF-07) (390 px)" classname="web.spec.js">
+<properties>
+<property name="req" value="RNF-07 · Aviso fuera de horario">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: carga del recibo desde la conversación (RF-UI-04)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-04 · Carga desde la conversación">
+</property>
+<property name="req" value="RF-OCR-01 · Carga de archivos">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: carga del recibo desde la conversación (RF-UI-04) (390 px)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-04 · Carga desde la conversación">
+</property>
+<property name="req" value="RF-OCR-01 · Carga de archivos">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: botón del funcionario y mensajes nuevos de la conversación escalada" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-ESC-05 · Notificación al contribuyente">
+</property>
+<property name="req" value="RF-UI-03 · Identificación del interlocutor">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: botón del funcionario y mensajes nuevos de la conversación escalada (390 px)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-ESC-05 · Notificación al contribuyente">
+</property>
+<property name="req" value="RF-UI-03 · Identificación del interlocutor">
+</property>
+</properties>
+</testcase>
+<testcase name="consola: bandeja con filtros y métricas con sus tokens" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-OBS-02 · Matriz de confusión de enrutamiento">
+</property>
+<property name="req" value="RF-OBS-03 · Métricas de precisión y tiempo">
+</property>
+</properties>
+</testcase>
+<testcase name="consola: bandeja con filtros y métricas con sus tokens (390 px)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-OBS-02 · Matriz de confusión de enrutamiento">
+</property>
+<property name="req" value="RF-OBS-03 · Métricas de precisión y tiempo">
+</property>
+</properties>
+</testcase>
+<testcase name="tema en /ovt/: el interruptor «Modo oscuro» cambia el tema y lo recuerda al recargar" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="tema en /ovt/: arranca oscuro con el sistema y funciona sin localStorage" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="tema en /consola/: el interruptor «Modo oscuro» cambia el tema y lo recuerda al recargar" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="tema en /consola/: arranca oscuro con el sistema y funciona sin localStorage" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="tema: el widget recibe el de la página y solo acepta «claro» u «oscuro» de quien lo inserta" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="tema: sin página que lo inserte, el widget sigue el del sistema" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="tema: el widget ignora el tema de una página de otro origen y no queda oculto" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="listas desplegables legibles en la OVT y la consola (modo claro)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="listas desplegables legibles en la OVT y la consola (modo oscuro)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: reduce las fotos pesadas antes de subirlas y rechaza un PDF pesado" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-04 · Carga desde la conversación">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: sin caso registrado, el botón del funcionario sigue disponible" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-ESC-05 · Notificación al contribuyente">
+</property>
+</properties>
+</testcase>
+<testcase name="widget: muestra el mensaje del límite de peticiones" classname="web.spec.js">
+<properties>
+<property name="req" value="RNF-08 · Tiempos de espera y degradación">
+</property>
+</properties>
+</testcase>
+<testcase name="las páginas compiladas no tienen scripts en línea" classname="web.spec.js">
+</testcase>
+<testcase name="ancho mínimo: sin desplazamiento horizontal desde 360 px (modo claro)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+<testcase name="ancho mínimo: sin desplazamiento horizontal desde 360 px (modo oscuro)" classname="web.spec.js">
+<properties>
+<property name="req" value="RF-UI-01 · Widget embebible">
+</property>
+</properties>
+</testcase>
+</testsuite>
+</testsuites>

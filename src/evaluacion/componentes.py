@@ -22,6 +22,7 @@ from src.agents.nodes.general import crear_nodo_general
 from src.agents.nodes.ica import crear_nodo_ica
 from src.agents.nodes.ipu import crear_nodo_ipu
 from src.agents.state import CATEGORIAS, entrada_de_turno
+from src.config import Settings
 from src.evaluacion.humo import sesiones
 from src.evaluacion.metricas_eval import kappa
 from src.integrations.costos import usos_desde_metadatos
@@ -114,6 +115,13 @@ def escenarios_de_agente(escenarios: list[dict[str, Any]]) -> list[dict[str, Any
     ]
 
 
+def settings_de_componentes(settings: Settings) -> Settings:
+    """La configuración de los componentes, con el modo de evaluación encendido: así el agente
+    guarda los fragmentos, los datos de las herramientas y las notas que el juez necesita, como
+    en el nivel de sistema (F1, ADR-25)."""
+    return settings.model_copy(update={"modo_evaluacion": True})
+
+
 def correr_agente(deps: Dependencias, esc: dict[str, Any]) -> dict[str, Any]:
     """El turno del escenario directo contra el nodo de su categoría."""
     categoria = esc["categoria_esperada"]
@@ -138,6 +146,8 @@ def correr_agente(deps: Dependencias, esc: dict[str, Any]) -> dict[str, Any]:
         "respuesta": parcial.get("texto", ""),
         "suficiencia": parcial.get("suficiencia"),
         "contextos": parcial.get("contextos", []),
+        "herramientas": parcial.get("herramientas", []),
+        "notas": parcial.get("notas", []),
         "error": error,
         "tokens_por_modelo": tokens,
         "costo_usd": str(costo),
@@ -145,7 +155,8 @@ def correr_agente(deps: Dependencias, esc: dict[str, Any]) -> dict[str, Any]:
 
 
 def como_ensayo(resultado: dict[str, Any], esc: dict[str, Any]) -> dict[str, Any]:
-    """El resultado del nodo con la forma de un ensayo, para el juez."""
+    """El resultado del nodo con la forma de un ensayo, para el juez: con los fragmentos, los datos
+    de las herramientas y las notas del sistema, igual que un turno del nivel de sistema."""
     return {
         "escenario": esc["id"],
         "ensayo": 1,
@@ -154,7 +165,11 @@ def como_ensayo(resultado: dict[str, Any], esc: dict[str, Any]) -> dict[str, Any
             {
                 "usuario": esc["turnos"][0]["usuario"],
                 "respuesta": resultado["respuesta"],
-                "meta": {"contextos": resultado["contextos"]},
+                "meta": {
+                    "contextos": resultado["contextos"],
+                    "herramientas": resultado.get("herramientas", []),
+                    "notas": resultado.get("notas", []),
+                },
             }
         ],
     }

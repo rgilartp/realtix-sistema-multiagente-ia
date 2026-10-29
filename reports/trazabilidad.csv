@@ -83,18 +83,18 @@ RF-AUT-02 · Restricción a predios propios,escenario,OCR-07,100
 RF-AUT-03 · Consultas sin autenticación,prueba,tests/test_api.py::test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8,100
 RF-AUT-03 · Consultas sin autenticación,prueba,tests/test_servicios_acceso_resumen.py::test_la_consulta_general_se_atiende_sin_sesion,100
 RF-AUT-03 · Consultas sin autenticación,escenario,ACC-04,100
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_agentes.py::test_la_sesion_requerida_la_decide_el_codigo_y_no_el_modelo,
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[alterado],
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[basura],
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[otro-esquema],
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[sin-token],
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[vencido],
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_grafo.py::test_caso_1_sesion_requerida_pasa_por_general_y_confianza,
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_ocr.py::test_sin_sesion_el_recibo_pendiente_da_el_aviso_de_sesion,
-RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_servicios_acceso_resumen.py::test_la_consulta_personal_sin_sesion_pide_iniciar_sesion,
-RF-AUT-04 · Aviso de sesión requerida,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
-RF-AUT-04 · Aviso de sesión requerida,escenario,ACC-02,
-RF-AUT-04 · Aviso de sesión requerida,escenario,ACC-03,
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_agentes.py::test_la_sesion_requerida_la_decide_el_codigo_y_no_el_modelo,100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[alterado],100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[basura],100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[otro-esquema],100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[sin-token],100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[vencido],100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_grafo.py::test_caso_1_sesion_requerida_pasa_por_general_y_confianza,100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_ocr.py::test_sin_sesion_el_recibo_pendiente_da_el_aviso_de_sesion,100
+RF-AUT-04 · Aviso de sesión requerida,prueba,tests/test_servicios_acceso_resumen.py::test_la_consulta_personal_sin_sesion_pide_iniciar_sesion,100
+RF-AUT-04 · Aviso de sesión requerida,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",100
+RF-AUT-04 · Aviso de sesión requerida,escenario,ACC-02,100
+RF-AUT-04 · Aviso de sesión requerida,escenario,ACC-03,100
 RF-ORQ-01 · Clasificación de la consulta,prueba,tests/test_agentes.py::test_el_clasificador_simulado_usa_el_texto_como_busqueda,100
 RF-ORQ-01 · Clasificación de la consulta,prueba,tests/test_agentes.py::test_el_prompt_del_orquestador_lleva_la_regla_de_categorias_del_conjunto,100
 RF-ORQ-01 · Clasificación de la consulta,prueba,tests/test_agentes.py::test_un_adjunto_va_a_ocr_y_las_categorias_descartadas_no_vuelven,100
@@ -137,9 +137,9 @@ RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_agentes.py::test_el_
 RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_almacen.py::test_almacen_en_postgresql,100
 RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_grafo.py::test_checkpointer_en_postgresql_conserva_la_conversacion,100
 RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_grafo.py::test_config_del_grafo_desde_la_configuracion,100
-RF-ORQ-05 · Modelo de razonamiento,prueba,tests/test_agentes.py::test_el_clasificador_llm_anonimiza_y_trata_la_negativa_como_falla,
-RF-ORQ-05 · Modelo de razonamiento,prueba,tests/test_agentes.py::test_los_esquemas_de_salida_no_piden_razonamiento,
-RF-ORQ-05 · Modelo de razonamiento,prueba,tests/test_humo_modelos.py::test_humo_con_modelos_reales,
+RF-ORQ-05 · Modelo de razonamiento,prueba,tests/test_agentes.py::test_el_clasificador_llm_anonimiza_y_trata_la_negativa_como_falla,100
+RF-ORQ-05 · Modelo de razonamiento,prueba,tests/test_agentes.py::test_los_esquemas_de_salida_no_piden_razonamiento,100
+RF-ORQ-05 · Modelo de razonamiento,prueba,tests/test_humo_modelos.py::test_humo_con_modelos_reales,100
 RF-ORQ-06 · Prevención de bucles,prueba,tests/test_grafo.py::test_caso_3_no_corresponde_con_el_tope_alcanzado_escala,100
 RF-ORQ-06 · Prevención de bucles,prueba,tests/test_grafo.py::test_los_intentos_de_clasificacion_se_acumulan_por_conversacion,100
 RF-ORQ-06 · Prevención de bucles,prueba,tests/test_grafo.py::test_reclasificacion_hasta_el_tope_y_luego_escala,100
@@ -572,19 +572,19 @@ RF-GEN-04 · Detección de fuera de alcance,prueba,tests/test_agentes.py::test_e
 RF-GEN-04 · Detección de fuera de alcance,prueba,tests/test_grafo.py::test_no_tributario_se_informa_y_no_se_escala,100
 RF-GEN-04 · Detección de fuera de alcance,escenario,FA-01,100
 RF-GEN-04 · Detección de fuera de alcance,escenario,FA-02,100
-RF-OCR-01 · Carga de archivos,prueba,tests/test_api.py::test_documento_validado_procesado_y_borrado,
-RF-OCR-01 · Carga de archivos,prueba,tests/test_api.py::test_el_rechazo_del_recibo_abre_la_conversacion_con_el_aviso_de_ia,
-RF-OCR-01 · Carga de archivos,prueba,tests/test_evaluacion_ejecutor.py::test_ejecutor_sube_el_recibo_y_mantiene_la_conversacion,
-RF-OCR-01 · Carga de archivos,prueba,web/tests/web.spec.js::widget: carga del recibo desde la conversación (RF-UI-04),
-RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_campos_normalizados_y_validados,
-RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_el_esquema_no_pide_el_nombre_del_propietario_ni_razonamiento,
-RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,
-RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,
-RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo,
-RF-OCR-02 · Extracción de campos,escenario,OCR-01,
-RF-OCR-02 · Extracción de campos,escenario,OCR-02,
-RF-OCR-02 · Extracción de campos,escenario,OCR-03,
-RF-OCR-02 · Extracción de campos,escenario,OCR-07,
+RF-OCR-01 · Carga de archivos,prueba,tests/test_api.py::test_documento_validado_procesado_y_borrado,100
+RF-OCR-01 · Carga de archivos,prueba,tests/test_api.py::test_el_rechazo_del_recibo_abre_la_conversacion_con_el_aviso_de_ia,100
+RF-OCR-01 · Carga de archivos,prueba,tests/test_evaluacion_ejecutor.py::test_ejecutor_sube_el_recibo_y_mantiene_la_conversacion,100
+RF-OCR-01 · Carga de archivos,prueba,web/tests/web.spec.js::widget: carga del recibo desde la conversación (RF-UI-04),100
+RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_campos_normalizados_y_validados,100
+RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_el_esquema_no_pide_el_nombre_del_propietario_ni_razonamiento,100
+RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,100
+RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,100
+RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo,100
+RF-OCR-02 · Extracción de campos,escenario,OCR-01,100
+RF-OCR-02 · Extracción de campos,escenario,OCR-02,100
+RF-OCR-02 · Extracción de campos,escenario,OCR-03,100
+RF-OCR-02 · Extracción de campos,escenario,OCR-07,100
 RF-OCR-03 · Confirmación de datos extraídos,prueba,tests/test_evaluacion_ejecutor.py::test_comportamiento_del_ocr_mira_si_quedan_datos_por_confirmar,100
 RF-OCR-03 · Confirmación de datos extraídos,prueba,tests/test_ocr.py::test_interpretar_la_confirmacion[Est\xe1n incorrectos-no],100
 RF-OCR-03 · Confirmación de datos extraídos,prueba,"tests/test_ocr.py::test_interpretar_la_confirmacion[Hola, buenas tardes-None]",100
@@ -610,33 +610,33 @@ RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-01,100
 RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-02,100
 RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-03,100
 RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-07,100
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_evaluacion_ejecutor.py::test_contiene_texto_acepta_raices_y_los_valores_no,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[documento_otro_tipo-calidad1-False],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_baja_resolucion_U03-calidad3-False],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_desenfocado_U03-calidad2-False],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_recortado_U03-calidad5-True],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_solo_recortado_U03-calidad4-True],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_valido_U03-calidad0-False],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_baja_resolucion_U03-baja resoluci\xf3n],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_desenfocado_U03-desenfocada],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_recortado_U03-recortado],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_06_documento_de_otro_tipo_y_campos_faltantes,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_primero_el_tipo_y_la_proporcion_solo_con_campos_faltantes,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_una_imagen_enorme_se_rechaza_como_ilegible_sin_modelo,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_vision.py::test_una_imagen_con_demasiados_pixeles_se_rechaza_sin_decodificarla,
-RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-04,
-RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-05,
-RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-06,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_falla_del_modelo_de_vision_escala_sin_error_tecnico,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_la_plantilla_sigue_igual_en_png_de_1000_px,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_una_foto_pesada_va_en_jpeg_por_debajo_del_limite_de_la_api,
-RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_una_imagen_muy_alta_queda_en_2000_px_de_alto,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_evaluacion_ejecutor.py::test_contiene_texto_acepta_raices_y_los_valores_no,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[documento_otro_tipo-calidad1-False],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_baja_resolucion_U03-calidad3-False],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_desenfocado_U03-calidad2-False],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_recortado_U03-calidad5-True],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_solo_recortado_U03-calidad4-True],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_valido_U03-calidad0-False],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_baja_resolucion_U03-baja resoluci\xf3n],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_desenfocado_U03-desenfocada],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_recortado_U03-recortado],100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_06_documento_de_otro_tipo_y_campos_faltantes,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_primero_el_tipo_y_la_proporcion_solo_con_campos_faltantes,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_una_imagen_enorme_se_rechaza_como_ilegible_sin_modelo,100
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_vision.py::test_una_imagen_con_demasiados_pixeles_se_rechaza_sin_decodificarla,100
+RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-04,100
+RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-05,100
+RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-06,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_falla_del_modelo_de_vision_escala_sin_error_tecnico,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_la_plantilla_sigue_igual_en_png_de_1000_px,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_una_foto_pesada_va_en_jpeg_por_debajo_del_limite_de_la_api,100
+RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_una_imagen_muy_alta_queda_en_2000_px_de_alto,100
 RF-OCR-06 · Plantilla sintética de recibo,prueba,tests/test_ocr.py::test_diez_recibos_con_ocho_campos_leyenda_y_json_de_referencia,100
 RF-OCR-06 · Plantilla sintética de recibo,prueba,tests/test_ocr.py::test_sin_logos_ni_marcas_reales,100
 RF-OCR-06 · Plantilla sintética de recibo,escenario,OCR-01,100
@@ -681,50 +681,50 @@ RF-ESC-03 · Resumen del caso,prueba,tests/test_servicios_acceso_resumen.py::tes
 RF-ESC-03 · Resumen del caso,prueba,tests/test_servicios_acceso_resumen.py::test_resumen_en_texto_y_en_json_con_las_mismas_cifras,100
 RF-ESC-03 · Resumen del caso,escenario,ESC-01,100
 RF-ESC-04 · Tiempo de entrega del resumen,prueba,tests/test_servicios_acceso_resumen.py::test_cada_escalamiento_mide_el_tiempo_del_resumen,100
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_api.py::test_boton_modo_humano_y_bandeja,
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_api.py::test_en_una_conversacion_escalada_el_mensaje_fuera_de_horario_queda_en_el_caso,
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso[respuesta0-confianza insuficiente],
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso[respuesta1-sin cobertura],
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_caso_4_multiagente_escalada_entrega_lo_resuelto,
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_el_numero_corto_del_caso_es_un_pedazo_del_identificador,
-RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_los_avisos_del_escalamiento_no_prometen_ni_copian_referencias,
-RF-ESC-05 · Notificación al contribuyente,prueba,web/tests/web.spec.js::widget: botón del funcionario y mensajes nuevos de la conversación escalada,
-RF-ESC-05 · Notificación al contribuyente,escenario,ESC-01,
-RF-UI-01 · Widget embebible,prueba,tests/test_despliegue.py::test_caddy_https_limites_y_cabeceras,
-RF-UI-01 · Widget embebible,prueba,"web/tests/web.spec.js::OVT simulada: rótulo, sin marcas reales y widget en un iframe",
-RF-UI-02 · Contexto de la sesión,prueba,tests/test_agentes.py::test_con_varios_predios_el_agente_recibe_los_predios_y_las_reglas_de_aclaracion,
-RF-UI-02 · Contexto de la sesión,prueba,tests/test_agentes.py::test_la_parte_general_respondida_con_la_pregunta_del_predio_es_completa,
-RF-UI-02 · Contexto de la sesión,prueba,tests/test_api.py::test_predio_propio_ajeno_e_inexistente_por_el_chat,
-RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_ciclo_de_vida_de_los_campos,
-RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_continuidad_entre_turnos_y_reinicio_de_los_campos_del_turno,
-RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_una_bandera_de_escalamiento_no_pasa_al_turno_siguiente,
-RF-UI-02 · Contexto de la sesión,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
-RF-UI-02 · Contexto de la sesión,escenario,AMB-02,
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_api.py::test_boton_modo_humano_y_bandeja,100
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_api.py::test_en_una_conversacion_escalada_el_mensaje_fuera_de_horario_queda_en_el_caso,100
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso[respuesta0-confianza insuficiente],100
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso[respuesta1-sin cobertura],100
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_caso_4_multiagente_escalada_entrega_lo_resuelto,100
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_el_numero_corto_del_caso_es_un_pedazo_del_identificador,100
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_los_avisos_del_escalamiento_no_prometen_ni_copian_referencias,100
+RF-ESC-05 · Notificación al contribuyente,prueba,web/tests/web.spec.js::widget: botón del funcionario y mensajes nuevos de la conversación escalada,100
+RF-ESC-05 · Notificación al contribuyente,escenario,ESC-01,100
+RF-UI-01 · Widget embebible,prueba,tests/test_despliegue.py::test_caddy_https_limites_y_cabeceras,100
+RF-UI-01 · Widget embebible,prueba,"web/tests/web.spec.js::OVT simulada: rótulo, sin marcas reales y widget en un iframe",100
+RF-UI-02 · Contexto de la sesión,prueba,tests/test_agentes.py::test_con_varios_predios_el_agente_recibe_los_predios_y_las_reglas_de_aclaracion,100
+RF-UI-02 · Contexto de la sesión,prueba,tests/test_agentes.py::test_la_parte_general_respondida_con_la_pregunta_del_predio_es_completa,100
+RF-UI-02 · Contexto de la sesión,prueba,tests/test_api.py::test_predio_propio_ajeno_e_inexistente_por_el_chat,100
+RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_ciclo_de_vida_de_los_campos,100
+RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_continuidad_entre_turnos_y_reinicio_de_los_campos_del_turno,100
+RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_una_bandera_de_escalamiento_no_pasa_al_turno_siguiente,100
+RF-UI-02 · Contexto de la sesión,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",100
+RF-UI-02 · Contexto de la sesión,escenario,AMB-02,100
 RF-UI-03 · Identificación del interlocutor,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",0
 RF-UI-03 · Identificación del interlocutor,prueba,web/tests/web.spec.js::widget: botón del funcionario y mensajes nuevos de la conversación escalada,0
 RF-UI-03 · Identificación del interlocutor,escenario,AIA-01,0
-RF-UI-04 · Carga desde la conversación,prueba,tests/test_api.py::test_documento_validado_procesado_y_borrado,
-RF-UI-04 · Carga desde la conversación,prueba,web/tests/web.spec.js::widget: carga del recibo desde la conversación (RF-UI-04),
-RF-UI-04 · Carga desde la conversación,escenario,OCR-01,
+RF-UI-04 · Carga desde la conversación,prueba,tests/test_api.py::test_documento_validado_procesado_y_borrado,100
+RF-UI-04 · Carga desde la conversación,prueba,web/tests/web.spec.js::widget: carga del recibo desde la conversación (RF-UI-04),100
+RF-UI-04 · Carga desde la conversación,escenario,OCR-01,100
 RF-OBS-01 · Traza del flujo entre agentes,prueba,tests/test_api.py::test_langsmith_con_anonimizador_y_metadatos_sin_contribuyente,100
 RF-OBS-01 · Traza del flujo entre agentes,prueba,tests/test_integraciones.py::test_langsmith_apagado_no_crea_cliente_y_encendido_usa_el_anonimizador,100
 RF-OBS-01 · Traza del flujo entre agentes,prueba,tests/test_integraciones.py::test_los_metadatos_de_la_traza_nunca_llevan_al_contribuyente,100
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_api.py::test_metricas_con_token_de_administrador,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_evaluacion_calibracion.py::test_metricas_de_enrutamiento_de_componentes,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_evaluacion_calibracion.py::test_reportes_sin_fechas_y_con_conjuntos_aparte,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_evaluacion_ejecutor.py::test_la_matriz_cuenta_una_categoria_aceptada_como_acierto,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_grafo.py::test_lo_no_tributario_se_reporta_fuera_de_alcance_aunque_lo_responda_general,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_grafo.py::test_reclasificar_la_primera_parte_no_cambia_la_categoria_reportada,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_grafo.py::test_un_escalamiento_antes_del_agente_reporta_su_categoria,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_metricas.py::test_las_metricas_de_ejemplo_de_la_web_salen_de_calcular_metricas,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_metricas.py::test_matriz_precision_exhaustividad_f1_y_tiempos,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_metricas.py::test_una_categoria_nunca_predicha_cuenta_cero_en_el_promedio_macro,
-RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,web/tests/web.spec.js::consola: bandeja con filtros y métricas con sus tokens,
-RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_api.py::test_metricas_con_token_de_administrador,
-RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_evaluacion_calibracion.py::test_metricas_de_enrutamiento_de_componentes,
-RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_metricas.py::test_matriz_precision_exhaustividad_f1_y_tiempos,
-RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_metricas.py::test_tokens_y_modelo_por_nodo,
-RF-OBS-03 · Métricas de precisión y tiempo,prueba,web/tests/web.spec.js::consola: bandeja con filtros y métricas con sus tokens,
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_api.py::test_metricas_con_token_de_administrador,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_evaluacion_calibracion.py::test_metricas_de_enrutamiento_de_componentes,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_evaluacion_calibracion.py::test_reportes_sin_fechas_y_con_conjuntos_aparte,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_evaluacion_ejecutor.py::test_la_matriz_cuenta_una_categoria_aceptada_como_acierto,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_grafo.py::test_lo_no_tributario_se_reporta_fuera_de_alcance_aunque_lo_responda_general,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_grafo.py::test_reclasificar_la_primera_parte_no_cambia_la_categoria_reportada,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_grafo.py::test_un_escalamiento_antes_del_agente_reporta_su_categoria,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_metricas.py::test_las_metricas_de_ejemplo_de_la_web_salen_de_calcular_metricas,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_metricas.py::test_matriz_precision_exhaustividad_f1_y_tiempos,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,tests/test_metricas.py::test_una_categoria_nunca_predicha_cuenta_cero_en_el_promedio_macro,100
+RF-OBS-02 · Matriz de confusión de enrutamiento,prueba,web/tests/web.spec.js::consola: bandeja con filtros y métricas con sus tokens,100
+RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_api.py::test_metricas_con_token_de_administrador,100
+RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_evaluacion_calibracion.py::test_metricas_de_enrutamiento_de_componentes,100
+RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_metricas.py::test_matriz_precision_exhaustividad_f1_y_tiempos,100
+RF-OBS-03 · Métricas de precisión y tiempo,prueba,tests/test_metricas.py::test_tokens_y_modelo_por_nodo,100
+RF-OBS-03 · Métricas de precisión y tiempo,prueba,web/tests/web.spec.js::consola: bandeja con filtros y métricas con sus tokens,100
 RF-OBS-04 · Actualización de la base vectorial,prueba,tests/test_curaduria.py::test_cada_coleccion_lista_sus_fuentes_con_mes_de_consulta[normativa_datos],100
 RF-OBS-04 · Actualización de la base vectorial,prueba,tests/test_curaduria.py::test_cada_coleccion_lista_sus_fuentes_con_mes_de_consulta[normativa_ica],100
 RF-OBS-04 · Actualización de la base vectorial,prueba,tests/test_curaduria.py::test_cada_coleccion_lista_sus_fuentes_con_mes_de_consulta[normativa_ipu],100
@@ -788,6 +788,7 @@ RF-OBS-04 · Actualización de la base vectorial,prueba,tests/test_recuperacion.
 RF-OBS-04 · Actualización de la base vectorial,prueba,tests/test_recuperacion.py::test_la_reingesta_sin_cambios_no_calcula_embeddings,100
 RF-OBS-04 · Actualización de la base vectorial,prueba,tests/test_recuperacion.py::test_un_documento_nuevo_se_ingiere_sin_cambiar_el_codigo_y_bm25_se_reconstruye,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_calibracion.py::test_el_commit_evaluado_es_obligatorio_contra_el_despliegue_y_no_cambia,100
+RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_calibracion.py::test_el_juez_de_los_agentes_ve_herramientas_y_notas,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_calibracion.py::test_escenarios_de_agente_son_de_un_turno_y_responden,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_ejecutor.py::test_calificar_guarda_el_juez_y_lo_reutiliza,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_ejecutor.py::test_ejecutor_manda_reloj_escenario_falla_y_sesion,100
@@ -828,11 +829,13 @@ RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_preparacion_b16.p
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_realsit_datos.py::test_la_huella_registrada_es_la_de_la_semilla_42,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_realsit_datos.py::test_misma_semilla_misma_huella,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_recuperacion.py::test_en_modo_de_evaluacion_la_parte_guarda_contextos_y_version,100
+RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_trazabilidad.py::test_cada_flujo_de_la_web_pasa_si_pasan_todas_sus_variantes,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_trazabilidad.py::test_califica_con_100_80_y_0,100
+RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_trazabilidad.py::test_la_disponibilidad_es_evidencia_de_rnf_06,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_trazabilidad.py::test_matriz_completa_cruza_pruebas_escenarios_y_resultados,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_trazabilidad.py::test_recolecta_los_requerimientos_de_las_pruebas_de_la_web,100
-RNF-01 · Tiempo de respuesta,prueba,tests/test_evaluacion_metricas.py::test_latencias_por_turno_y_solo_con_agentes,
-RNF-01 · Tiempo de respuesta,prueba,tests/test_humo_modelos.py::test_humo_con_modelos_reales,
+RNF-01 · Tiempo de respuesta,prueba,tests/test_evaluacion_metricas.py::test_latencias_por_turno_y_solo_con_agentes,100
+RNF-01 · Tiempo de respuesta,prueba,tests/test_humo_modelos.py::test_humo_con_modelos_reales,100
 RNF-02 · Escalamiento horizontal,prueba,tests/test_almacen.py::test_registro_concurrente_de_casos,100
 RNF-02 · Escalamiento horizontal,prueba,tests/test_despliegue.py::test_compose_levanta_todo_y_permite_replicas,100
 RNF-03 · Protección de datos personales,prueba,tests/test_agentes.py::test_el_agente_recupera_con_la_busqueda_y_responde_el_texto_del_contribuyente,100
@@ -860,9 +863,9 @@ RNF-03 · Protección de datos personales,prueba,tests/test_servicios_acceso_res
 RNF-03 · Protección de datos personales,prueba,tests/test_trazas_langsmith.py::test_con_el_trazador_del_sistema_langchain_no_agrega_otro,100
 RNF-03 · Protección de datos personales,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador0-False],100
 RNF-03 · Protección de datos personales,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador1-True],100
-RNF-04 · Uso exclusivo de datos sintéticos,prueba,tests/test_ocr.py::test_diez_recibos_con_ocho_campos_leyenda_y_json_de_referencia,
-RNF-04 · Uso exclusivo de datos sintéticos,prueba,tests/test_realsit_datos.py::test_identificadores_unicos_y_derivados_de_la_semilla,
-RNF-04 · Uso exclusivo de datos sintéticos,prueba,"web/tests/web.spec.js::OVT simulada: rótulo, sin marcas reales y widget en un iframe",
+RNF-04 · Uso exclusivo de datos sintéticos,prueba,tests/test_ocr.py::test_diez_recibos_con_ocho_campos_leyenda_y_json_de_referencia,100
+RNF-04 · Uso exclusivo de datos sintéticos,prueba,tests/test_realsit_datos.py::test_identificadores_unicos_y_derivados_de_la_semilla,100
+RNF-04 · Uso exclusivo de datos sintéticos,prueba,"web/tests/web.spec.js::OVT simulada: rótulo, sin marcas reales y widget en un iframe",100
 RNF-05 · Registro auditable,prueba,tests/test_api.py::test_el_nombre_de_la_sesion_no_llega_a_los_modelos,100
 RNF-05 · Registro auditable,prueba,tests/test_api.py::test_langsmith_con_anonimizador_y_metadatos_sin_contribuyente,100
 RNF-05 · Registro auditable,prueba,tests/test_escenarios.py::test_los_mensajes_del_contribuyente_no_llevan_numeros_de_documento,100
@@ -873,32 +876,33 @@ RNF-05 · Registro auditable,prueba,tests/test_integraciones.py::test_las_trazas
 RNF-05 · Registro auditable,prueba,tests/test_trazas_langsmith.py::test_con_el_trazador_del_sistema_langchain_no_agrega_otro,100
 RNF-05 · Registro auditable,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador0-False],100
 RNF-05 · Registro auditable,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador1-True],100
-RNF-06 · Horario de atención,prueba,tests/test_api.py::test_el_cliente_de_chroma_se_crea_una_sola_vez,100
-RNF-06 · Horario de atención,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-01-domingo],100
-RNF-06 · Horario de atención,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-02-festivo],100
-RNF-06 · Horario de atención,prueba,tests/test_api.py::test_sin_modo_de_evaluacion_las_cabeceras_de_prueba_se_ignoran,100
-RNF-06 · Horario de atención,prueba,tests/test_despliegue.py::test_monitor_de_health_cada_15_minutos_en_horario_habil,100
-RNF-06 · Horario de atención,prueba,tests/test_despliegue.py::test_secretos_solo_en_el_env_y_modo_de_evaluacion_apagado_por_defecto,100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_el_13_de_julio_de_2026_es_festivo_ley_2578,100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_fines_de_semana_y_festivos_estan_fuera_de_horario,100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_horario_con_zona_distinta_y_configuracion,100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[16-59-True],100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[17-0-False],100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[7-59-False],100
-RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[8-0-True],100
-RNF-06 · Horario de atención,escenario,HOR-01,100
-RNF-06 · Horario de atención,escenario,HOR-02,100
-RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_en_una_conversacion_escalada_el_mensaje_fuera_de_horario_queda_en_el_caso,
-RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-01-domingo],
-RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-02-festivo],
-RNF-07 · Aviso fuera de horario,prueba,tests/test_escenarios.py::test_los_de_horario_van_sin_categoria_y_dicen_cuando_se_vuelve_a_atender,
-RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_antes_de_abrir_el_mismo_dia_y_el_reloj_inyectado,
-RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha[1-martes 3 de noviembre],
-RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha[8-lunes 9 de noviembre],
-RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_viernes_13_de_noviembre_tras_las_5_pm_abre_el_martes_17_a_las_8,
-RNF-07 · Aviso fuera de horario,prueba,web/tests/web.spec.js::widget: fuera de horario destacado con la hora de regreso (RNF-07),
-RNF-07 · Aviso fuera de horario,escenario,HOR-01,
-RNF-07 · Aviso fuera de horario,escenario,HOR-02,
+RNF-06 · Horario de atención,prueba,reports/no_funcionales/disponibilidad.json,0
+RNF-06 · Horario de atención,prueba,tests/test_api.py::test_el_cliente_de_chroma_se_crea_una_sola_vez,0
+RNF-06 · Horario de atención,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-01-domingo],0
+RNF-06 · Horario de atención,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-02-festivo],0
+RNF-06 · Horario de atención,prueba,tests/test_api.py::test_sin_modo_de_evaluacion_las_cabeceras_de_prueba_se_ignoran,0
+RNF-06 · Horario de atención,prueba,tests/test_despliegue.py::test_monitor_de_health_cada_15_minutos_en_horario_habil,0
+RNF-06 · Horario de atención,prueba,tests/test_despliegue.py::test_secretos_solo_en_el_env_y_modo_de_evaluacion_apagado_por_defecto,0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_el_13_de_julio_de_2026_es_festivo_ley_2578,0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_fines_de_semana_y_festivos_estan_fuera_de_horario,0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_horario_con_zona_distinta_y_configuracion,0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[16-59-True],0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[17-0-False],0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[7-59-False],0
+RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[8-0-True],0
+RNF-06 · Horario de atención,escenario,HOR-01,0
+RNF-06 · Horario de atención,escenario,HOR-02,0
+RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_en_una_conversacion_escalada_el_mensaje_fuera_de_horario_queda_en_el_caso,100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-01-domingo],100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-02-festivo],100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_escenarios.py::test_los_de_horario_van_sin_categoria_y_dicen_cuando_se_vuelve_a_atender,100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_antes_de_abrir_el_mismo_dia_y_el_reloj_inyectado,100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha[1-martes 3 de noviembre],100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha[8-lunes 9 de noviembre],100
+RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_viernes_13_de_noviembre_tras_las_5_pm_abre_el_martes_17_a_las_8,100
+RNF-07 · Aviso fuera de horario,prueba,web/tests/web.spec.js::widget: fuera de horario destacado con la hora de regreso (RNF-07),100
+RNF-07 · Aviso fuera de horario,escenario,HOR-01,100
+RNF-07 · Aviso fuera de horario,escenario,HOR-02,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_agentes.py::test_si_el_adaptador_falla_las_fechas_siguen_como_sin_sesion,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_agentes.py::test_un_dato_que_no_se_encuentra_vuelve_al_modelo_y_no_es_falla,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_agentes.py::test_una_falla_del_adaptador_es_fallo_de_servicio,100
@@ -953,8 +957,10 @@ RNF-09 · Lenguaje accesible,escenario,IPU-10,100
 RNF-09 · Lenguaje accesible,escenario,IPU-11,100
 RNF-10 · Portabilidad del modelo,prueba,tests/test_integraciones.py::test_cambiar_de_modelo_es_cambiar_una_variable_de_entorno,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_agrupa_por_requerimiento_sin_duplicados,100
+RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_cada_flujo_de_la_web_pasa_si_pasan_todas_sus_variantes,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_califica_con_100_80_y_0,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_escribe_markdown_y_csv,100
+RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_la_disponibilidad_es_evidencia_de_rnf_06,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_matriz_completa_cruza_pruebas_escenarios_y_resultados,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_recolecta_las_marcas_del_repositorio,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_recolecta_los_requerimientos_de_las_pruebas_de_la_web,100
