@@ -674,8 +674,8 @@ def test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual(adap
     assert situacion["periodicidad_registrada"] == "anual"
     assert {r["regimen"] for r in regimen["reglas"]} == {"comun_anual", "preferencial"}
     assert {r["periodicidad"] for r in regimen["reglas"]} == {"anual"}
-    assert fechas["fechas_limite_declaracion"] == [
-        {"fecha": "26 de febrero de 2027", "ya_paso": False}
+    assert [(f["fecha"], f["ya_paso"]) for f in fechas["fechas_limite_declaracion"]] == [
+        ("26 de febrero de 2027", False)
     ]
     guion = [pide(("regimen_ica", {"anio": 2026, "periodicidad": "bimestral"})), final("Común.")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Régimen bimestral", U04, [P04])
@@ -858,6 +858,48 @@ def test_el_prompt_general_no_inventa_donde_se_hace_un_tramite() -> None:
     # Como el manual: el botón o sus palabras (una oferta suelta no lleva la marca que escala).
     assert "con el botón «Hablar con un funcionario» o con sus palabras" in texto
     assert "di lo que hacen y lo que no hacen" not in texto  # zona gris de A8, quitada
+
+
+# -- Fechas relativas calculadas por código (G4 de la corrida 2) -------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-03 · Fechas de declaración", "RF-IPU-04 · Plazos y descuentos")
+def test_las_herramientas_de_fechas_dan_la_frase_respecto_a_hoy(adaptador) -> None:
+    """El modelo no calcula «mañana»: cada fecha trae, calculada por código, la frase que la
+    relaciona con hoy («hoy», «mañana», «en N días» o «hace N días»), y los prompts del IPU y del
+    ICA piden copiarla tal cual y solo cuando la respuesta relaciona la fecha con hoy."""
+    from src.services.calendario_tributario import dias_hasta, respecto_a_hoy
+
+    hoy = date(2091, 3, 10)  # fechas inventadas
+    assert dias_hasta("2091-03-11", hoy) == 1 and dias_hasta("2091-03-01", hoy) == -9
+    assert [
+        respecto_a_hoy(f, hoy)
+        for f in ("2091-03-10", "2091-03-11", "2091-03-18", "2091-03-09", "2091-03-01")
+    ] == ["hoy", "mañana", "en 8 días", "hace 1 día", "hace 9 días"]
+    guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", U04, [P04])
+    (fechas,) = resultados_de_herramientas(modelo)
+    for f in fechas["fechas_limite_declaracion"]:
+        assert f["ya_paso"] == f["respecto_a_hoy"].startswith("hace")
+    guion = [pide(("fechas_predial", {"anio": 2026})), final("Plazos.")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos", U03, [P03])
+    (plazos,) = resultados_de_herramientas(modelo)
+    assert plazos["respecto_a_hoy"]["pago_sin_descuento"].startswith("hace")  # ya pasó
+    assert all(set(c) == {"fecha", "respecto_a_hoy"} for c in plazos["spac_cuotas"])
+    assert "dias_que_faltan" not in json.dumps(plazos)  # sin cuentas sueltas para el modelo
+    guion = [pide(("estado_cuenta_predial", {})), final("Cuenta.")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Cuenta", U04, [P04])
+    (predial,) = resultados_de_herramientas(modelo)
+    assert all("fecha_limite_pago_respecto_a_hoy" in o for o in predial["obligaciones"])
+    guion = [pide(("mi_situacion_ica", {})), final("ICA.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "ICA", U04, [P04])
+    (ica,) = resultados_de_herramientas(modelo)
+    assert all(isinstance(o["fecha_limite_pago_respecto_a_hoy"], str) for o in ica["obligaciones"])
+    for nombre in ("ipu", "ica"):
+        texto = " ".join(prompt_de_agente(nombre).texto.split())
+        assert "cópiala tal cual, sin cambiarla ni hacer tú la cuenta" in texto
+        assert "No digas cuántos días faltan si nadie lo preguntó" in texto
 
 
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
