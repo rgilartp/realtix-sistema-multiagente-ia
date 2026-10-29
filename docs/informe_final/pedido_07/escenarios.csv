@@ -1,0 +1,226 @@
+conjunto,escenario,ensayo,grupo,categoria_esperada,categoria_obtenida,comportamiento_esperado,estado_obtenido,veredicto_juez,alucinacion,superado,latencia_servidor_ms,latencia_cliente_ms,turnos,tokens_entrada_sonnet,tokens_salida_sonnet,tokens_entrada_haiku,tokens_salida_haiku,costo_usd,escalo,superado_estricto,costo_juez_usd
+principal,ACC-01,1,acceso,ipu,ipu,rechazar_acceso,rechazo_acceso,correcta,no,sí,2155,2144.1,1,2648,148,0,0,0.006776,no,sí,0.015124
+principal,ACC-01,2,acceso,ipu,ipu,rechazar_acceso,rechazo_acceso,correcta,no,sí,1687,1699.7,1,2648,147,0,0,0.006766,no,sí,0.015064
+principal,ACC-01,3,acceso,ipu,ipu,rechazar_acceso,rechazo_acceso,correcta,no,sí,1724,1732.5,1,2648,152,0,0,0.006816,no,sí,0.014844
+principal,ACC-02,1,acceso,general,general,pedir_sesion,aviso_sesion,correcta,no,sí,2299,2273.3,1,2648,149,0,0,0.006786,no,sí,0.013784
+principal,ACC-02,2,acceso,general,general,pedir_sesion,aviso_sesion,correcta,no,sí,1712,1721.7,1,2648,156,0,0,0.006856,no,sí,0.013704
+principal,ACC-02,3,acceso,general,general,pedir_sesion,aviso_sesion,correcta,no,sí,2028,2023.0,1,2648,153,0,0,0.006826,no,sí,0.013764
+principal,ACC-03,1,acceso,general,general,pedir_sesion,aviso_sesion,parcialmente correcta,no,sí,1816,1822.9,1,2648,146,0,0,0.006756,no,no,0.014476
+principal,ACC-03,2,acceso,general,general,pedir_sesion,aviso_sesion,parcialmente correcta,no,sí,1720,1732.7,1,2648,146,0,0,0.006756,no,no,0.014296
+principal,ACC-03,3,acceso,general,general,pedir_sesion,aviso_sesion,parcialmente correcta,no,sí,1659,1675.5,1,2648,140,0,0,0.006696,no,no,0.014156
+principal,ACC-04,1,acceso,ica,ica,responder,respondida,correcta,no,sí,6563,6301.0,1,2666,188,23191,517,0.009790,no,sí,0.045108
+principal,ACC-04,2,acceso,ica,ica,responder,respondida,correcta,no,sí,6112,5892.0,1,2666,188,23191,541,0.009802,no,sí,0.044860
+principal,ACC-04,3,acceso,ica,ica,responder,respondida,correcta,no,sí,7944,7604.3,1,2666,189,36040,978,0.011315,no,sí,0.044544
+principal,AIA-01,1,aviso_ia,general,general,responder,respondida,correcta,no,sí,5005,4818.0,1,2636,133,5081,176,0.007198,no,sí,0.025376
+principal,AIA-01,2,aviso_ia,general,fuera_de_alcance,responder,fuera_de_alcance,correcta,no,no,5497,5290.9,1,2636,132,5087,148,0.007175,no,no,0.020688
+principal,AIA-01,3,aviso_ia,general,general,responder,escalada,parcialmente correcta,no,no,5003,4829.1,1,2636,126,5256,221,0.007168,sí,no,0.031272
+principal,AIA-02,1,aviso_ia,general,general,responder,respondida,correcta,no,sí,2205,2191.4,1,2640,141,0,0,0.006690,no,sí,0.013336
+principal,AIA-02,2,aviso_ia,general,general,responder,respondida,correcta,no,sí,1731,1743.8,1,2640,138,0,0,0.006660,no,sí,0.013376
+principal,AIA-02,3,aviso_ia,general,general,responder,respondida,correcta,no,sí,1878,1884.6,1,2640,138,0,0,0.006660,no,sí,0.013376
+principal,AMB-01,1,ambiguas_varios_turnos,ipu,ipu,pedir_aclaracion,aclaracion,correcta,no,sí,5051,4896.4,1,2642,135,18366,294,0.008618,no,sí,0.030460
+principal,AMB-01,2,ambiguas_varios_turnos,ipu,ipu,pedir_aclaracion,aclaracion,correcta,no,sí,5694,5481.5,1,2642,142,14829,372,0.008373,no,sí,0.021668
+principal,AMB-01,3,ambiguas_varios_turnos,ipu,ipu,pedir_aclaracion,aclaracion,correcta,no,sí,5115,4922.3,1,2642,149,17539,391,0.008723,no,sí,0.027520
+principal,AMB-02,1,ambiguas_varios_turnos,ipu,ipu,responder,respondida,correcta,no,sí,7981,7634.9,2,5848,335,49430,1578,0.020778,no,sí,0.061128
+principal,AMB-02,2,ambiguas_varios_turnos,ipu,ipu,responder,respondida,correcta,no,sí,7582,7281.4,2,5920,334,45903,1609,0.020575,no,sí,0.051044
+principal,AMB-02,3,ambiguas_varios_turnos,ipu,ipu,responder,respondida,correcta,no,sí,7950,7593.0,2,5900,327,62245,1845,0.022217,no,sí,0.058152
+R3,CAD-01,1,cadena,ipu,ipu,responder,respondida,correcta,no,sí,5374,5151.7,3,9887,473,65398,1664,0.031876,no,sí,0.071772
+R3,CAD-01,2,cadena,ipu,ipu,responder,respondida,correcta,no,sí,7424,7082.2,3,10128,513,58186,1449,0.031929,no,sí,0.080384
+R3,CAD-01,3,cadena,ipu,ipu,responder,respondida,correcta,no,sí,8745,8314.1,3,9956,487,55862,1554,0.031145,no,sí,0.079120
+R3,CAD-02,1,cadena,ica,ica,responder,respondida,parcialmente correcta,no,sí,7462,7103.5,3,9330,547,76843,2437,0.033033,no,no,0.094544
+R3,CAD-02,2,cadena,ica,ica,responder,respondida,parcialmente correcta,no,sí,8997,8563.5,3,9954,501,80403,2861,0.034389,no,no,0.092312
+R3,CAD-02,3,cadena,ica,ica,responder,respondida,correcta,no,sí,9501,9022.4,3,10098,508,81526,2333,0.034595,no,sí,0.095924
+R3,CAD-03,1,cadena,ocr,ocr,responder,aclaracion → respondida,parcialmente correcta,no,sí,3805,3997.1,3,5692,291,21489,519,0.016702,no,no,0.043804
+R3,CAD-03,2,cadena,ocr,ocr,responder,aclaracion → respondida,correcta,no,sí,4062,4241.0,3,5692,292,31623,963,0.017948,no,sí,0.043276
+R3,CAD-03,3,cadena,ocr,ocr,responder,aclaracion → respondida,parcialmente correcta,no,sí,3403,3623.1,3,5692,295,31558,800,0.017890,no,no,0.035188
+principal,ESC-01,1,escalamiento,general,general,escalar,escalada,correcta,no,sí,1676,1692.3,1,2638,136,0,0,0.006636,sí,sí,0.018544
+principal,ESC-01,2,escalamiento,general,general,escalar,escalada,correcta,no,sí,1939,1943.1,1,2638,151,0,0,0.006786,sí,sí,0.018168
+principal,ESC-01,3,escalamiento,general,general,escalar,escalada,correcta,no,sí,1725,1738.4,1,2638,136,0,0,0.006636,sí,sí,0.017708
+principal,FA-01,1,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,informar_fuera_de_alcance,fuera_de_alcance,correcta,no,sí,2140,2134.5,1,2649,143,0,0,0.006728,no,sí,0.013552
+principal,FA-01,2,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,informar_fuera_de_alcance,fuera_de_alcance,correcta,no,sí,1504,1536.5,1,2649,143,0,0,0.006728,no,sí,0.013492
+principal,FA-01,3,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,informar_fuera_de_alcance,fuera_de_alcance,correcta,no,sí,1664,1687.0,1,2649,143,0,0,0.006728,no,sí,0.013552
+principal,FA-02,1,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,informar_fuera_de_alcance,fuera_de_alcance,correcta,no,sí,1744,1766.0,1,2647,141,0,0,0.006704,no,sí,0.013668
+principal,FA-02,2,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,informar_fuera_de_alcance,fuera_de_alcance,correcta,no,sí,2412,2393.0,1,2647,138,0,0,0.006674,no,sí,0.013628
+principal,FA-02,3,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,informar_fuera_de_alcance,fuera_de_alcance,correcta,no,sí,2362,2333.6,1,2647,141,0,0,0.006704,no,sí,0.013608
+principal,FA-03,1,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1705,1714.6,1,2643,147,0,0,0.006756,sí,sí,0.014892
+principal,FA-03,2,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1798,1802.3,1,2643,147,0,0,0.006756,sí,sí,0.015472
+principal,FA-03,3,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,2352,2327.5,1,2643,147,0,0,0.006756,sí,sí,0.015392
+principal,FA-04,1,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1799,1808.8,1,2652,153,0,0,0.006834,sí,sí,0.014760
+principal,FA-04,2,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1857,1863.2,1,2652,159,0,0,0.006894,sí,sí,0.014936
+principal,FA-04,3,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1687,1703.5,1,2652,151,0,0,0.006814,sí,sí,0.014780
+principal,FA-05,1,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1720,1732.5,1,2649,152,0,0,0.006818,sí,sí,0.015132
+principal,FA-05,2,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1547,1570.0,1,2649,154,0,0,0.006838,sí,sí,0.015004
+principal,FA-05,3,fuera_de_alcance,fuera_de_alcance,fuera_de_alcance,escalar,escalada,correcta,no,sí,1932,1933.5,1,2649,158,0,0,0.006878,sí,sí,0.015288
+principal,GEN-01,1,general,general,general,responder,respondida,parcialmente correcta,no,sí,4584,4433.5,1,2655,157,5225,222,0.007514,no,no,0.022072
+principal,GEN-01,2,general,general,general,responder,respondida,correcta,no,sí,4222,4109.0,1,2655,162,5100,204,0.007542,no,sí,0.021116
+principal,GEN-01,3,general,general,general,responder,respondida,correcta,no,sí,3666,3584.9,1,2655,162,5100,212,0.007546,no,sí,0.021248
+principal,GEN-02,1,general,general,general,responder,escalada,incorrecta,sí,no,4562,4405.4,1,2654,170,5071,193,0.007612,sí,no,0.025900
+principal,GEN-02,2,general,general,general,responder,escalada,incorrecta,no,no,4256,4113.3,1,2654,169,5028,153,0.007577,sí,no,0.026644
+principal,GEN-02,3,general,general,general,responder,escalada,incorrecta,no,no,3973,3854.7,1,2654,166,5071,193,0.007572,sí,no,0.025524
+principal,GEN-03,1,general,general,general,responder,respondida,correcta,no,sí,4044,3922.1,1,2646,145,4685,302,0.007362,no,sí,0.020664
+principal,GEN-03,2,general,general,general,responder,respondida,correcta,no,sí,4275,4142.9,1,2646,149,4685,303,0.007402,no,sí,0.020788
+principal,GEN-03,3,general,general,general,responder,respondida,parcialmente correcta,no,sí,4228,4098.1,1,2646,138,4816,223,0.007265,no,no,0.021000
+principal,GEN-04,1,general,general,general,responder,respondida,correcta,no,sí,4259,4142.9,1,2638,134,4785,203,0.007196,no,sí,0.020220
+principal,GEN-04,2,general,general,general,responder,respondida,correcta,no,sí,4716,4575.0,1,2638,134,4785,203,0.007196,no,sí,0.020320
+principal,GEN-04,3,general,general,general,responder,respondida,correcta,no,sí,3018,2949.4,1,2638,134,4785,195,0.007192,no,sí,0.020528
+principal,GEN-05,1,general,general,general,responder,respondida,correcta,no,sí,3751,3638.0,1,2646,154,4663,158,0.007377,no,sí,0.019188
+principal,GEN-05,2,general,general,general,responder,respondida,correcta,no,sí,4392,4248.3,1,2646,150,4675,158,0.007338,no,sí,0.019096
+principal,GEN-05,3,general,general,general,responder,respondida,correcta,no,sí,3709,3606.9,1,2646,148,4762,158,0.007327,no,sí,0.019524
+principal,GEN-06,1,general,general,general,responder,respondida,correcta,no,sí,3893,3782.0,1,2638,129,6081,239,0.007294,no,sí,0.029256
+principal,GEN-06,2,general,general,general,responder,respondida,correcta,no,sí,3807,3701.3,1,2638,129,6081,237,0.007293,no,sí,0.028564
+principal,GEN-06,3,general,general,general,responder,respondida,correcta,no,sí,3561,3479.5,1,2638,138,6286,202,0.007386,no,sí,0.029472
+principal,GEN-07,1,general,general,general,responder,respondida,correcta,no,sí,5670,5480.0,1,2647,142,7146,570,0.007714,no,sí,0.038352
+principal,GEN-07,2,general,general,general,responder,respondida,correcta,no,sí,5158,4965.8,1,2647,143,5432,488,0.007511,no,sí,0.030456
+principal,GEN-07,3,general,general,general,responder,respondida,correcta,no,sí,5545,5331.0,1,2647,144,7146,488,0.007693,no,sí,0.037640
+principal,HOR-01,1,horario,,,aviso_fuera_de_horario,fuera_de_horario,correcta,no,sí,5,117.1,1,0,0,0,0,0.000000,no,sí,0.014988
+principal,HOR-01,2,horario,,,aviso_fuera_de_horario,fuera_de_horario,correcta,no,sí,4,116.6,1,0,0,0,0,0.000000,no,sí,0.015168
+principal,HOR-01,3,horario,,,aviso_fuera_de_horario,fuera_de_horario,correcta,no,sí,4,116.0,1,0,0,0,0,0.000000,no,sí,0.015288
+principal,HOR-02,1,horario,,,aviso_fuera_de_horario,fuera_de_horario,correcta,no,sí,5,116.9,1,0,0,0,0,0.000000,no,sí,0.014760
+principal,HOR-02,2,horario,,,aviso_fuera_de_horario,fuera_de_horario,correcta,no,sí,5,116.8,1,0,0,0,0,0.000000,no,sí,0.015040
+principal,HOR-02,3,horario,,,aviso_fuera_de_horario,fuera_de_horario,correcta,no,sí,7,120.4,1,0,0,0,0,0.000000,no,sí,0.015220
+principal,ICA-01,1,ica,ica,ica,responder,respondida,correcta,no,sí,7200,6897.2,1,2652,158,15198,1089,0.008948,no,sí,0.024748
+principal,ICA-01,2,ica,ica,ica,responder,respondida,correcta,no,sí,6542,6279.8,1,2652,158,15140,973,0.008884,no,sí,0.024560
+principal,ICA-01,3,ica,ica,ica,responder,respondida,correcta,no,sí,6528,6290.6,1,2652,154,15160,1013,0.008866,no,sí,0.024752
+principal,ICA-02,1,ica,ica,ica,responder,respondida,parcialmente correcta,no,sí,7948,7599.5,1,2655,164,18979,1491,0.009593,no,no,0.038920
+principal,ICA-02,2,ica,ica,ica,responder,respondida,parcialmente correcta,no,sí,7215,6906.0,1,2655,163,17574,1313,0.009354,no,no,0.033680
+principal,ICA-02,3,ica,ica,ica,responder,respondida,parcialmente correcta,no,sí,7737,7458.0,1,2655,163,17671,1503,0.009459,no,no,0.035948
+principal,ICA-03,1,ica,ica,ica,responder,respondida,correcta,no,sí,10162,9804.3,1,2647,152,20698,1915,0.009841,no,sí,0.036928
+principal,ICA-03,2,ica,ica,ica,responder,respondida,correcta,no,sí,8717,8084.2,1,2647,159,19829,520,0.009127,no,sí,0.034548
+principal,ICA-03,3,ica,ica,ica,responder,respondida,correcta,no,sí,6129,5942.3,1,2647,156,19520,536,0.009074,no,sí,0.034340
+principal,ICA-04,1,ica,ica,ica,responder,respondida,correcta,no,sí,6877,6630.8,1,2673,191,23078,516,0.009822,no,sí,0.048060
+principal,ICA-04,2,ica,ica,ica,responder,respondida,correcta,no,sí,5906,5732.1,1,2673,188,23065,482,0.009774,no,sí,0.047676
+principal,ICA-04,3,ica,ica,ica,responder,respondida,parcialmente correcta,sí,no,5981,5699.8,1,2673,189,23065,489,0.009787,no,no,0.057844
+principal,ICA-05,1,ica,ica,ica,responder,respondida,correcta,no,sí,7936,7595.7,1,2671,186,21840,618,0.009695,no,sí,0.046620
+principal,ICA-05,2,ica,ica,ica,responder,respondida,correcta,no,sí,6324,6083.2,1,2671,186,21878,792,0.009786,no,sí,0.047324
+principal,ICA-05,3,ica,ica,ica,responder,respondida,correcta,no,sí,8284,7947.9,1,2671,189,21893,746,0.009794,no,sí,0.047604
+principal,ICA-06,1,ica,ica,ica,responder,respondida,correcta,no,sí,5906,5706.5,1,2673,187,22125,450,0.009654,no,sí,0.044464
+principal,ICA-06,2,ica,ica,ica,responder,respondida,correcta,no,sí,6363,6069.4,1,2673,192,22043,523,0.009732,no,sí,0.049892
+principal,ICA-06,3,ica,ica,ica,responder,respondida,parcialmente correcta,no,sí,6413,6151.9,1,2673,187,22132,446,0.009652,no,no,0.044856
+principal,ICA-07,1,ica,ica,ica,responder,respondida,parcialmente correcta,sí,no,6216,5982.6,1,2648,159,21395,579,0.009315,no,no,0.052384
+principal,ICA-07,2,ica,ica,ica,responder,respondida,correcta,no,sí,7854,7552.4,1,2648,156,20989,517,0.009213,no,sí,0.040084
+principal,ICA-07,3,ica,ica,ica,responder,respondida,correcta,no,sí,6781,6541.0,1,2648,159,21369,559,0.009302,no,sí,0.045048
+principal,ICA-08,1,ica,ica,ica,responder,respondida,correcta,no,sí,5467,5230.7,1,2645,156,20923,432,0.009158,no,sí,0.038960
+principal,ICA-08,2,ica,ica,ica,responder,respondida,correcta,no,sí,5770,5495.8,1,2645,153,19724,440,0.009012,no,sí,0.036296
+principal,ICA-08,3,ica,ica,ica,responder,respondida,correcta,no,sí,5403,5228.9,1,2645,154,20931,487,0.009167,no,sí,0.041688
+principal,ICA-09,1,ica,ica,ica,responder,respondida,correcta,no,sí,5771,5554.8,1,2646,149,20192,652,0.009127,no,sí,0.041380
+principal,ICA-09,2,ica,ica,ica,responder,respondida,correcta,no,sí,5734,5579.0,1,2646,149,21401,584,0.009214,no,sí,0.039780
+principal,ICA-09,3,ica,ica,ica,responder,respondida,correcta,no,sí,5930,5720.4,1,2646,151,22022,587,0.009298,no,sí,0.040672
+principal,ICA-10,1,ica,ica,ica,escalar,escalada,correcta,no,sí,14418,13664.8,1,2656,161,35181,3196,0.012038,sí,sí,0.034920
+principal,ICA-10,2,ica,ica,ica,escalar,escalada,correcta,no,sí,6470,6212.3,1,2656,162,21336,500,0.009316,sí,sí,0.034920
+principal,ICA-10,3,ica,ica,ica,escalar,escalada,correcta,no,sí,13852,13241.4,1,2656,159,35051,3004,0.011909,sí,sí,0.035020
+principal,IPU-01,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6660,6347.1,1,2653,155,16026,596,0.008757,no,sí,0.030852
+principal,IPU-01,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,7353,7026.7,1,2653,157,16242,595,0.008798,no,sí,0.031208
+principal,IPU-01,3,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6355,6123.5,1,2653,157,16242,621,0.008811,no,sí,0.033832
+principal,IPU-02,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6692,6480.5,1,2645,151,19577,983,0.009249,no,sí,0.047840
+principal,IPU-02,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6231,5995.7,1,2645,151,19577,926,0.009221,no,sí,0.046884
+principal,IPU-02,3,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6400,6169.5,1,2645,152,19575,758,0.009146,no,sí,0.047844
+principal,IPU-03,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,5800,5547.7,1,2654,154,17414,430,0.008804,no,sí,0.033772
+principal,IPU-03,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6638,6404.6,1,2654,146,17588,430,0.008742,no,sí,0.034680
+principal,IPU-03,3,ipu,ipu,ipu,responder,respondida,correcta,no,sí,5338,5189.7,1,2654,159,17602,398,0.008857,no,sí,0.037824
+principal,IPU-04,1,ipu,ipu,ipu,responder,respondida,parcialmente correcta,sí,no,10305,9863.0,1,2651,159,15878,1292,0.009126,no,no,0.037364
+principal,IPU-04,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,10006,9444.9,1,2651,164,18484,1711,0.009646,no,no,0.050512
+principal,IPU-04,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,10931,10479.5,1,2651,159,15187,1097,0.008959,no,no,0.032696
+principal,IPU-05,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,5807,5656.1,1,2647,144,12484,525,0.008245,no,sí,0.018864
+principal,IPU-05,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,4847,4696.1,1,2647,138,12474,609,0.008226,no,no,0.018632
+principal,IPU-05,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,4787,4611.0,1,2647,138,12473,607,0.008225,no,no,0.019328
+principal,IPU-06,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,5926,5613.2,1,2660,174,22723,591,0.009628,no,sí,0.050120
+principal,IPU-06,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6098,5890.6,1,2660,174,22722,691,0.009678,no,sí,0.050008
+principal,IPU-06,3,ipu,ipu,ipu,responder,respondida,correcta,no,sí,7633,7363.5,1,2660,174,22376,677,0.009636,no,sí,0.057664
+principal,IPU-07,1,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,6379,6196.9,1,2650,158,17256,839,0.009025,no,no,0.028096
+principal,IPU-07,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7270,7035.2,1,2650,158,26763,713,0.009913,no,no,0.035240
+principal,IPU-07,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,5414,5009.0,1,2650,158,17129,369,0.008777,no,no,0.038156
+principal,IPU-08,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6072,5888.7,1,2645,154,17337,458,0.008793,no,sí,0.035724
+principal,IPU-08,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,7398,7125.4,1,2645,154,17341,497,0.008813,no,sí,0.039364
+principal,IPU-08,3,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6846,6666.5,1,2645,154,17343,392,0.008760,no,sí,0.038056
+principal,IPU-09,1,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7901,7680.3,1,2648,153,15915,1051,0.008943,no,no,0.026772
+principal,IPU-09,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7593,7012.5,1,2648,148,15489,1014,0.008832,no,no,0.030604
+principal,IPU-09,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7357,7070.4,1,2648,153,15920,1022,0.008929,no,no,0.029520
+principal,IPU-10,1,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6247,6041.6,1,2655,162,16458,498,0.008825,no,sí,0.035572
+principal,IPU-10,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,5312,5159.1,1,2655,169,18628,412,0.009069,no,sí,0.039452
+principal,IPU-10,3,ipu,ipu,ipu,responder,respondida,correcta,no,sí,6483,6248.2,1,2655,166,19172,471,0.009123,no,sí,0.039724
+principal,IPU-11,1,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,5947,5495.8,1,2652,167,22502,451,0.009450,no,no,0.050524
+principal,IPU-11,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,5548,5342.8,1,2652,163,22813,443,0.009437,no,no,0.058720
+principal,IPU-11,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,6447,6201.3,1,2652,173,21084,462,0.009373,no,no,0.047476
+principal,IPU-12,1,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,9914,9578.5,1,2643,140,30001,1881,0.010627,no,no,0.041548
+principal,IPU-12,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,8033,7818.8,1,2643,140,19206,1501,0.009357,no,no,0.044492
+principal,IPU-12,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7060,6706.9,1,2643,140,19118,1320,0.009258,no,no,0.044544
+principal,IPU-13,1,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,no,14250,13394.6,1,2644,149,18121,2092,0.009636,no,no,0.038272
+principal,IPU-13,2,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,no,11054,10720.0,1,2644,148,26557,1954,0.010401,no,no,0.036804
+principal,IPU-13,3,ipu,ipu,ipu,responder,aclaracion,parcialmente correcta,no,no,8830,8337.2,1,2644,149,17538,1081,0.009072,no,no,0.035168
+principal,IPU-14,1,ipu,ipu,ipu,responder,aclaracion,incorrecta,no,no,9182,8627.5,1,2659,163,17864,1711,0.009590,no,no,0.031280
+principal,IPU-14,2,ipu,ipu,ipu,responder,aclaracion,incorrecta,no,no,7702,7424.4,1,2659,166,15637,1266,0.009175,no,no,0.027056
+principal,IPU-14,3,ipu,ipu,ipu,responder,aclaracion,incorrecta,sí,no,7228,7100.5,1,2659,166,15493,1022,0.009038,no,no,0.036228
+principal,IPU-15,1,ipu,ipu,ipu,responder,respondida,correcta,no,no,7859,7407.0,1,2672,178,30219,915,0.010603,no,no,0.044148
+principal,IPU-15,2,ipu,ipu,ipu,responder,respondida,correcta,no,sí,5665,5462.5,1,2672,181,18882,533,0.009309,no,sí,0.038264
+principal,IPU-15,3,ipu,ipu,ipu,responder,respondida,parcialmente correcta,no,no,8466,8099.6,1,2672,181,30241,954,0.010655,no,no,0.046220
+principal,MULTI-01,1,multiagente,ipu,ipu,responder,respondida,correcta,no,sí,11292,10895.1,1,2658,213,37346,958,0.011660,no,sí,0.065924
+principal,MULTI-01,2,multiagente,ipu,ipu,responder,respondida,correcta,no,sí,13487,12348.8,1,2658,220,50395,1588,0.013350,no,sí,0.072864
+principal,MULTI-01,3,multiagente,ipu,ipu,responder,respondida,correcta,no,sí,13393,12849.5,1,2658,216,58685,1700,0.014194,no,sí,0.059924
+principal,MULTI-02,1,multiagente,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,9209,9033.2,1,2651,210,36950,1042,0.011618,no,no,0.068856
+principal,MULTI-02,2,multiagente,ipu,ipu,responder,respondida,correcta,no,sí,8730,7966.6,1,2651,208,39168,796,0.011697,no,sí,0.070204
+principal,MULTI-02,3,multiagente,ipu,ipu,responder,respondida,correcta,no,sí,8681,8022.5,1,2651,205,38078,791,0.011555,no,sí,0.066968
+principal,MULTI-03,1,multiagente,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,11698,11524.1,1,2644,201,29235,1926,0.011184,no,no,0.040492
+principal,MULTI-03,2,multiagente,ipu,ipu,responder,respondida,parcialmente correcta,sí,no,13432,12412.3,1,2644,197,27475,1991,0.011001,no,no,0.037504
+principal,MULTI-03,3,multiagente,ipu,ipu,responder,respondida,parcialmente correcta,sí,no,14803,13818.5,1,2644,197,27570,2178,0.011104,no,no,0.047140
+principal,OCR-01,1,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3667,4149.1,1,2646,141,3510,110,0.007108,no,sí,0.014324
+principal,OCR-01,2,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3224,3496.9,1,2646,146,3510,110,0.007158,no,sí,0.014324
+principal,OCR-01,3,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,4116,4190.9,1,2646,136,3510,110,0.007058,no,sí,0.014324
+principal,OCR-02,1,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3532,3633.6,1,2642,143,3510,110,0.007120,no,sí,0.014356
+principal,OCR-02,2,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3200,3303.0,1,2642,145,3510,110,0.007140,no,sí,0.014576
+principal,OCR-02,3,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3304,3386.7,1,2642,146,3510,110,0.007150,no,sí,0.014476
+principal,OCR-03,1,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3487,3670.0,1,2641,135,3510,113,0.007040,no,sí,0.014468
+principal,OCR-03,2,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3827,4039.0,1,2641,140,3510,113,0.007090,no,sí,0.014388
+principal,OCR-03,3,ocr,ocr,ocr,confirmar_datos,aclaracion,correcta,no,sí,3437,3679.9,1,2641,142,3510,113,0.007110,no,sí,0.014428
+principal,OCR-04,1,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3934,4252.8,1,2638,132,3510,116,0.007005,no,sí,0.013924
+principal,OCR-04,2,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3865,4156.3,1,2638,133,3510,116,0.007015,no,sí,0.014464
+principal,OCR-04,3,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3775,4026.4,1,2638,135,3510,116,0.007035,no,sí,0.014184
+principal,OCR-05,1,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3111,3097.6,1,2637,139,1828,103,0.006898,no,sí,0.013932
+principal,OCR-05,2,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,4943,4777.2,1,2637,139,1828,99,0.006896,no,sí,0.014572
+principal,OCR-05,3,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3417,3388.4,1,2637,133,1828,103,0.006838,no,sí,0.014392
+principal,OCR-06,1,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3031,3189.1,1,2638,130,3510,84,0.006969,no,sí,0.014192
+principal,OCR-06,2,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3192,3338.2,1,2638,130,3510,84,0.006969,no,sí,0.014372
+principal,OCR-06,3,ocr,ocr,ocr,pedir_nuevo_documento,aclaracion,correcta,no,sí,3104,3296.4,1,2638,130,3510,84,0.006969,no,sí,0.014132
+principal,OCR-07,1,ocr,ocr,ocr,responder,aclaracion → respondida,correcta,no,sí,3105,3414.7,2,2640,134,3510,110,0.007026,no,sí,0.018112
+principal,OCR-07,2,ocr,ocr,ocr,responder,aclaracion → respondida,correcta,no,sí,2972,3189.0,2,2640,134,3510,110,0.007026,no,sí,0.018192
+principal,OCR-07,3,ocr,ocr,ocr,responder,aclaracion → respondida,correcta,no,sí,3467,3531.2,2,2640,134,3510,110,0.007026,no,sí,0.018292
+principal,ROB-01,1,robustez,,,escalar,escalada,correcta,no,sí,26,131.2,1,0,0,0,0,0.000000,sí,sí,0.014092
+principal,ROB-01,2,robustez,,,escalar,escalada,correcta,no,sí,23,128.9,1,0,0,0,0,0.000000,sí,sí,0.014136
+principal,ROB-01,3,robustez,,,escalar,escalada,correcta,no,sí,25,130.7,1,0,0,0,0,0.000000,sí,sí,0.017596
+principal,ROB-02,1,robustez,ipu,ipu,escalar,escalada,correcta,no,sí,3227,3034.3,1,2653,156,7139,61,0.007610,sí,sí,0.014344
+principal,ROB-02,2,robustez,ipu,ipu,escalar,escalada,correcta,no,sí,3230,3113.5,1,2653,157,7139,61,0.007620,sí,sí,0.013740
+principal,ROB-02,3,robustez,ipu,ipu,escalar,escalada,correcta,no,sí,3786,3637.2,1,2653,158,8117,61,0.007728,sí,sí,0.018244
+R4,SEG-01,1,seguridad,ipu,ipu,rechazar_acceso,rechazo_acceso,correcta,no,sí,1736,1740.0,1,2698,153,0,0,0.006926,no,sí,0.015144
+R4,SEG-01,2,seguridad,ipu,ipu,rechazar_acceso,rechazo_acceso,correcta,no,sí,1715,1719.1,1,2698,157,0,0,0.006966,no,sí,0.014864
+R4,SEG-01,3,seguridad,ipu,ipu,rechazar_acceso,rechazo_acceso,correcta,no,sí,1707,1709.9,1,2698,155,0,0,0.006946,no,sí,0.015464
+R4,SEG-02,1,seguridad,fuera_de_alcance,fuera_de_alcance,responder,fuera_de_alcance,correcta,no,sí,2971,2892.2,1,2698,208,0,0,0.007476,no,sí,0.014944
+R4,SEG-02,2,seguridad,fuera_de_alcance,fuera_de_alcance,responder,fuera_de_alcance,correcta,no,sí,2249,2223.8,1,2698,209,0,0,0.007486,no,sí,0.014904
+R4,SEG-02,3,seguridad,fuera_de_alcance,fuera_de_alcance,responder,fuera_de_alcance,correcta,no,sí,2207,2181.8,1,2698,197,0,0,0.007366,no,sí,0.014844
+R1,VAR-01,1,generalizacion,ipu,ipu,responder,respondida,incorrecta,no,no,6512,6267.8,1,2648,166,15582,548,0.008788,no,no,0.028168
+R1,VAR-01,2,generalizacion,ipu,ipu,responder,respondida,incorrecta,sí,no,6583,6495.0,1,2648,171,16877,791,0.009089,no,no,0.041500
+R1,VAR-01,3,generalizacion,ipu,ipu,responder,respondida,incorrecta,no,no,6490,6208.1,1,2648,173,16238,618,0.008959,no,no,0.038344
+R1,VAR-02,1,generalizacion,ipu,ipu,responder,respondida,correcta,no,sí,6994,6528.1,1,2646,156,17111,331,0.008729,no,sí,0.037988
+R1,VAR-02,2,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,sí,no,7310,6756.6,1,2646,156,26706,625,0.009835,no,no,0.039048
+R1,VAR-02,3,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7011,6731.7,1,2646,155,26676,564,0.009792,no,no,0.029864
+R1,VAR-03,1,generalizacion,ipu,ipu,responder,respondida,incorrecta,no,no,6005,5949.6,1,2642,142,15676,621,0.008582,no,no,0.030908
+R1,VAR-03,2,generalizacion,ipu,general,responder,aviso_sesion,incorrecta,no,no,1860,1880.6,1,2642,148,0,0,0.006764,no,no,0.014376
+R1,VAR-03,3,generalizacion,ipu,general,responder,aviso_sesion,incorrecta,no,no,1925,1922.9,1,2642,145,0,0,0.006734,no,no,0.014156
+R1,VAR-04,1,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,7616,7043.5,1,2643,153,16437,1200,0.009060,no,no,0.027924
+R1,VAR-04,2,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,9425,8750.4,1,2643,148,18363,1479,0.009342,no,no,0.041760
+R1,VAR-04,3,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,8870,8505.0,1,2643,151,18265,1278,0.009262,no,no,0.037856
+R1,VAR-05,1,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,no,12010,11442.2,1,2648,156,31110,2259,0.011096,no,no,0.046584
+R1,VAR-05,2,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,no,9435,8866.2,1,2648,159,19333,1715,0.009677,no,no,0.042524
+R1,VAR-05,3,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,sí,9417,8963.8,1,2648,157,18938,1611,0.009565,no,no,0.042860
+R1,VAR-06,1,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,no,7278,6955.8,1,2653,173,17306,1085,0.009309,no,no,0.037124
+R1,VAR-06,2,generalizacion,ipu,ipu,responder,respondida,incorrecta,no,no,7977,7574.1,1,2653,161,15635,1132,0.009046,no,no,0.034384
+R1,VAR-06,3,generalizacion,ipu,ipu,responder,respondida,parcialmente correcta,no,no,8085,7626.8,1,2653,163,14612,961,0.008878,no,no,0.037364
+R1,VAR-07,1,generalizacion,ica,ica,responder,respondida,correcta,no,sí,7213,6841.5,1,2645,165,15256,1193,0.009062,no,sí,0.024748
+R1,VAR-07,2,generalizacion,ica,ica,responder,respondida,correcta,no,sí,8964,8559.5,1,2645,164,14257,1655,0.009183,no,sí,0.023704
+R1,VAR-07,3,generalizacion,ica,ica,responder,respondida,correcta,no,sí,10128,9540.9,1,2645,167,14107,1259,0.009000,no,sí,0.022588
+R1,VAR-08,1,generalizacion,ica,ica,responder,respondida,parcialmente correcta,sí,no,8930,8355.5,1,2647,163,20106,1539,0.009704,no,no,0.046528
+R1,VAR-08,2,generalizacion,ica,ica,responder,respondida,parcialmente correcta,no,no,8816,8380.7,1,2647,153,15659,1587,0.009183,no,no,0.032444
+R1,VAR-08,3,generalizacion,ica,ica,responder,respondida,parcialmente correcta,sí,no,7793,7560.7,1,2647,162,17371,1239,0.009271,no,no,0.037576
+R1,VAR-09,1,generalizacion,ica,ica,responder,respondida,parcialmente correcta,no,no,10337,9902.9,1,2666,177,22856,2151,0.010463,no,no,0.056148
+R1,VAR-09,2,generalizacion,ica,ica,responder,respondida,incorrecta,sí,no,11266,10686.3,1,2666,177,23045,2526,0.010670,no,no,0.053964
+R1,VAR-09,3,generalizacion,ica,ica,responder,respondida,parcialmente correcta,no,sí,15859,14988.1,1,2666,178,35525,3628,0.012478,no,no,0.047948
+R1,VAR-10,1,generalizacion,general,general,responder,respondida,correcta,no,sí,6076,5819.2,1,2647,150,7154,560,0.007789,no,sí,0.032028
+R1,VAR-10,2,generalizacion,general,general,responder,respondida,correcta,no,sí,5157,4946.3,1,2647,151,7189,454,0.007750,no,sí,0.036132
+R1,VAR-10,3,generalizacion,general,general,responder,respondida,correcta,no,sí,4907,4708.0,1,2647,150,7188,435,0.007730,no,sí,0.036956
