@@ -1,4 +1,5 @@
-"""Límite de peticiones por IP en los puntos de acceso que llaman modelos (chat y documento).
+"""Límite de peticiones por IP en los puntos de acceso que llaman modelos (chat y documento) y en el
+botón de escalamiento, que registra un caso en la bandeja (auditoría de seguridad).
 
 Por seguridad y gasto: 10 por minuto y 200 por día por IP (`LIMITE_PETICIONES_POR_MINUTO` y
 `LIMITE_PETICIONES_POR_DIA`), en ventanas móviles y en la memoria del proceso; con dos réplicas,
@@ -66,7 +67,7 @@ def ip_del_cliente(request: Request) -> str:
 
 
 def limitar_peticiones(request: Request, evaluacion: Evaluacion) -> None:
-    """Dependencia de los puntos de acceso que llaman modelos."""
+    """Dependencia de los puntos de acceso que llaman modelos y del botón de escalamiento."""
     if evaluacion.escenario_id is not None:  # modo de evaluación (ADR-16): no cuenta
         return
     if (rechazo := request.app.state.limitador.registrar(ip_del_cliente(request))) is not None:

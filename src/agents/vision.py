@@ -4,7 +4,9 @@ Una sola llamada a Haiku 5.5 (`MODELO_OCR`) con la imagen y la salida en `json_s
 recibo predial, si se puede leer y los seis campos de RF-OCR-02 tal como aparecen (nunca el nombre
 del propietario). Un PDF se convierte en imagen (primera página) con pypdfium2. La imagen se envía
 con un ancho máximo de 1.000 px, que basta para leer la plantilla y gasta menos tokens, y un alto
-máximo de 2.000 px; en PNG o, si así pesa demasiado (una foto), en JPEG.
+máximo de 2.000 px; en PNG o, si así pesa demasiado (una foto), en JPEG. Una imagen de más de
+`PIXELES_MAXIMOS` se rechaza antes de decodificarla (auditoría de seguridad: una imagen pequeña en
+bytes puede ocupar cientos de MB al abrirse).
 """
 
 import base64
@@ -27,6 +29,12 @@ ALTO_MAXIMO = 2000
 BYTES_MAXIMOS_PNG = 3_500_000  # en base64 queda por debajo de los 5 MB por imagen de la API
 ESCALA_PDF = 150 / 72  # unos 150 ppp, como la plantilla
 LADO_MAXIMO_PDF = 2500
+PIXELES_MAXIMOS = 25_000_000  # unos 5.000 × 5.000 px: muy por encima de un recibo escaneado
+Image.MAX_IMAGE_PIXELS = PIXELES_MAXIMOS  # Pillow avisa por encima y falla desde el doble
+
+
+class ImagenDemasiadoGrandeError(ValueError):
+    """La imagen declara más píxeles de los que se aceptan; el nodo OCR la rechaza como ilegible."""
 
 
 class CamposOCR(BaseModel):
@@ -53,7 +61,8 @@ FORMATO_OCR = {"format": {"type": "json_schema", "schema": transform_schema(Sali
 
 
 def abrir_documento(ruta: str | Path, tipo: str) -> Image.Image:
-    """La imagen del documento; de un PDF, la primera página. Falla si el archivo está dañado."""
+    """La imagen del documento; de un PDF, la primera página. Falla si el archivo está dañado o si
+    la imagen tiene más de `PIXELES_MAXIMOS`."""
     if tipo == "application/pdf":
         import pypdfium2
 
@@ -67,6 +76,9 @@ def abrir_documento(ruta: str | Path, tipo: str) -> Image.Image:
         finally:
             pdf.close()
     with Image.open(ruta) as imagen:
+        ancho, alto = imagen.size  # sale del encabezado, sin decodificar la imagen
+        if ancho * alto > PIXELES_MAXIMOS:
+            raise ImagenDemasiadoGrandeError(f"{ancho} × {alto} píxeles")
         return imagen.convert("RGB")
 
 

@@ -1,17 +1,19 @@
 """Botón «Hablar con un funcionario» (ADR-18) y bandeja de solo lectura (sección 3.6).
 
 El botón entra al grafo con la marca de solicitud explícita: el orquestador escala sin llamar al
-modelo y solo `nodo_escalamiento` registra el caso. La bandeja exige el token de funcionario.
+modelo y solo `nodo_escalamiento` registra el caso; como registra un caso, lleva el mismo límite por
+IP que el chat (auditoría de seguridad). La bandeja exige el token de funcionario.
 """
 
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 
 from src.api.acceso import exigir_rol
 from src.api.chat import historial
 from src.api.comun import Evaluacion, Servicios, SesionOpcional, turno
 from src.api.esquemas import RespuestaChat, SolicitudEscalamiento
+from src.api.limite import limitar_peticiones
 from src.api.turno import SolicitudTurno
 
 router = APIRouter(prefix="/api/v1/escalamiento", tags=["escalamiento"])
@@ -20,7 +22,7 @@ CAMPOS_DE_LA_LISTA = ("id_caso", "id_conversacion", "motivo", "categoria", "nive
                       "estado", "fecha_escalamiento")  # fmt: skip
 
 
-@router.post("", response_model=RespuestaChat)
+@router.post("", response_model=RespuestaChat, dependencies=[Depends(limitar_peticiones)])
 def escalar(
     solicitud: SolicitudEscalamiento,
     servicios: Servicios,
