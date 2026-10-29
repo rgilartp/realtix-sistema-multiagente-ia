@@ -1,46 +1,47 @@
 # R1 (ADR-24): conjunto de generalización. 10 variantes parafraseadas de escenarios aprobados de un
 # turno con recuperación, con la misma referencia, las mismas verificaciones y la misma sesión de su
-# escenario de origen. Dayanna escribe cada variante en `variante`, con otras palabras y sin copiar
-# la pregunta original; una variante vacía no se corre. Solo corren en la corrida 3 y se reportan
+# escenario de origen. Dayanna escribió cada variante en `variante`, con otras palabras y sin copiar
+# la pregunta original, y Rodolfo las aprobó; van tal cual, con su ortografía, porque son parte de
+# la prueba. Una variante vacía no se corre. Solo corren en la corrida 3 y se reportan
 # aparte de los 60. Regla A8: ningún texto de estas variantes puede aparecer en prompts ni en código.
 variantes:
   - id: VAR-01
     id_origen: IPU-05  # ¿Cuándo se causa el predial y qué período cubre?
-    variante: ""
-    aprobado_por: ""
+    variante: "Cuando sale el impuesto cada año y cuándo termina?"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-02
     id_origen: IPU-07  # ¿Hasta cuándo pago el predial con descuento en 2026?
-    variante: ""
-    aprobado_por: ""
+    variante: "azta cuando puedo pagar el predial con descuento este año"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-03
     id_origen: IPU-08  # ¿Cuál es el plazo del predial de 2026?
-    variante: ""
-    aprobado_por: ""
+    variante: "hazta cuando tengo para saldar el predial"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-04
     id_origen: IPU-09  # ¿Cuánto puede subir mi predial de un año a otro?
-    variante: ""
-    aprobado_por: ""
+    variante: "Cuanto sube el precio del predial cada año?"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-05
     id_origen: IPU-12  # ¿Cómo me notifican la factura del predial?
-    variante: ""
-    aprobado_por: ""
+    variante: "Como me va a llegar lo que tengo que pagar pal predial"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-06
     id_origen: IPU-13  # ¿Puedo pagar el predial sin declarar?
-    variante: ""
-    aprobado_por: ""
+    variante: "si yo no hice mi declaración puedo ir y pagar allá mi predial?"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-07
     id_origen: ICA-01  # ¿Qué es el impuesto de industria y comercio y quién lo paga?
-    variante: ""
-    aprobado_por: ""
+    variante: "Que es un ica eso se paga, quien o como es eso"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-08
     id_origen: ICA-02  # ¿Sobre qué ingresos se calcula el impuesto de industria y comercio?
-    variante: ""
-    aprobado_por: ""
+    variante: "Qué tienen en cuenta para cobrar el ICA?"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-09
     id_origen: ICA-09  # ¿Cómo será el régimen del ICA en 2027?
-    variante: ""
-    aprobado_por: ""
+    variante: "¿Cómo es la vuelta con el impuesto del ICA para el 2027 o que cambios va a tener o que?"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"
   - id: VAR-10
     id_origen: GEN-07  # ¿Qué derechos tengo sobre mis datos personales?
-    variante: ""
-    aprobado_por: ""
+    variante: "que derechos tengo con los datos que yo le doy a uste?"
+    aprobado_por: "Rodolfo Angel Gilart Pulido"

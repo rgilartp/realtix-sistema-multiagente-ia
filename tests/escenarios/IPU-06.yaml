@@ -24,11 +24,11 @@ verificaciones_codigo:
 - tipo: contiene_valor
   valor: '28.014.480'
 respuesta_referencia: >-
-  En 2026, los predios residenciales de estratos 1 y 2 con avalúo de más de 16 y hasta 107 SMMLV pagan
-  1 por mil; los de más de 107 y hasta 135 SMMLV, 3 por mil; el estrato 3 con avalúo de hasta 135 SMMLV
-  paga 3 por mil (Acuerdo 648 de 2016, art. 1, y Acuerdo 780 de 2020, art. 3, par. 2). Los estratos 1
-  y 2 con avalúo de hasta 16 SMMLV ($28.014.480, con el SMMLV de 2026 de $1.750.905) no declaran ni pagan
-  (Decreto 639 de 2025, art. 207).
+  En 2026, los predios residenciales de estratos 1 y 2 con avalúo de más de 16 y hasta 107 SMMLV pagan 1
+  por mil; los de más de 107 y hasta 135 SMMLV, 3 por mil; el estrato 3 con avalúo de hasta 135 SMMLV paga
+  3 por mil (Acuerdo 648 de 2016, art. 1, y Acuerdo 780 de 2020, art. 3, par. 2). Los estratos 1 y 2 con
+  avalúo de hasta 16 SMMLV ($28.014.480, con el SMMLV de 2026 de $1.750.905) no declaran ni pagan (Decreto
+  639 de 2025, art. 207). En pesos de 2026, 107 SMMLV son $187.346.835 y 135 SMMLV son $236.372.175.
 fuentes_esperadas:
 - Acuerdo 648 de 2016, art. 1
 - Acuerdo 780 de 2020, art. 3, par. 2

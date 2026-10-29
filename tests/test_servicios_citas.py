@@ -98,3 +98,73 @@ def test_un_fragmento_sustenta_su_norma_su_articulo_y_su_linea_de_fuente() -> No
         "Glosario inventado", "Término", "Definición.\n\n**Fuente:** Ley 900 de 2091, art. 1."
     )
     assert citas_sin_fuente("Así lo define la Ley 900 de 2091, art. 1.", glosario) == []
+
+
+@pytest.mark.unit
+@pytest.mark.req(F5)
+def test_normas_citadas_por_las_notas_para_la_lista_de_fuentes() -> None:
+    from src.services.citas import normas_citadas
+
+    texto = (
+        "Se aproximan al múltiplo de mil (Decreto 807 de 1993, arts. 15 y 132). Avisos y tableros "
+        "(Decreto 352 de 2002, arts. 57 a 59) y sobretasa (Resolución SDH-000195 de 2025, art. 2)."
+    )
+    assert normas_citadas(texto) == [
+        "Decreto 807 de 1993, arts. 15 y 132",
+        "Decreto 352 de 2002, arts. 57, 58 y 59",
+        "Resolución SDH-000195 de 2025, art. 2",
+    ]
+
+
+@pytest.mark.unit
+@pytest.mark.req(F5, "RF-ICA-02 · Estimación por actividad")
+def test_la_lista_de_fuentes_suma_las_normas_de_las_notas_sin_repetir() -> None:
+    from src.agents.agente import componer_texto
+    from src.agents.herramientas import Resultado
+
+    nota = "Se aproximan (Decreto 807 de 1993, art. 15) y hay mora (Ley 1 de 2020, art. 3)."
+    resultado = Resultado({}, fuentes=("Ley 1 de 2020, arts. 3 y 4",), notas=(nota,))
+    texto, fuentes = componer_texto("Respuesta.", [resultado], [], con_anexos=True)
+    assert texto.endswith("Fuentes: Ley 1 de 2020, arts. 3 y 4; Decreto 807 de 1993, art. 15.")
+    assert fuentes == ["Ley 1 de 2020, arts. 3 y 4"]  # las del contrato no cambian
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-02 · Estimación por actividad")
+def test_la_tarifa_de_un_ciiu_trae_la_fuente_de_su_clasificacion() -> None:
+    from src.services.ica import PeriodoICA, buscar_tarifa_ica
+
+    de_2026 = buscar_tarifa_ica("6201", PeriodoICA(2026))
+    assert any(f.startswith("Resolución SDH-000265 de 2021, art. 1") for f in de_2026.fuentes)
+    assert de_2026.fuentes[0] == de_2026.fuente  # la de la tarifa, primero
+    assert buscar_tarifa_ica("6201", PeriodoICA(2027)).fuentes == (
+        buscar_tarifa_ica("6201", PeriodoICA(2027)).fuente,
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.req(F5, "RF-ICA-02 · Estimación por actividad")
+def test_la_estimacion_del_ica_lista_cada_norma_de_sus_notas_y_de_su_tarifa() -> None:
+    from datetime import date
+
+    from src.agents.agente import componer_texto
+    from src.agents.herramientas import Contexto
+    from src.agents.herramientas.ica import _estimar, _tarifa
+    from src.services.citas import extraer_citas
+
+    contexto = Contexto(None, None, [], date(2026, 10, 1))  # type: ignore[arg-type]
+    for periodicidad in ("anual", "bimestral"):
+        args = {"ciiu": "6201", "ingresos": 900_000_000, "anio": 2026, "periodicidad": periodicidad}
+        resultado = _estimar(contexto, args)
+        fuentes = "; ".join(resultado.fuentes)
+        assert "Resolución SDH-000265 de 2021, art. 1" in fuentes  # clasificación del CIIU
+        assert "Resolución DIAN 000238 de 2025" in fuentes  # la UVT de la nota de la sobretasa
+        texto, contrato = componer_texto("Estimación.", [resultado], [], con_anexos=True)
+        lista = texto.rsplit("Fuentes: ", 1)[1]
+        # Cada norma con artículo que nombran las notas está en la lista, una sola vez por norma.
+        for cita in extraer_citas("\n".join(resultado.notas)):
+            assert not citas_sin_fuente(cita.texto, [lista]), cita.texto
+        assert lista.count("Decreto 807 de 1993") <= 1 and contrato == list(resultado.fuentes)
+    # La fuente propia de la fila, cuando la general no la cubre: el Acuerdo 98 de 2003 del 58112.
+    tarifa = _tarifa(contexto, {"ciiu": "58112", "anio": 2026})
+    assert any(f.startswith("Acuerdo 98 de 2003") for f in tarifa.fuentes)

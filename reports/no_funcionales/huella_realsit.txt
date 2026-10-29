@@ -1,0 +1,4 @@
+Huella de RealSit (RF-SYS-02), copiada de la salida de ./deploy/desplegar.sh en el servidor:
+- antes de la corrida 2 (despliegue con --evaluacion): Huella de RealSit: 4479d0369ba967a2d8ed40fb6e7d12bff1ed497ad86ce230093f0c857312d0a2
+- después de la corrida 2 (despliegue sin --evaluacion): Huella de RealSit: 4479d0369ba967a2d8ed40fb6e7d12bff1ed497ad86ce230093f0c857312d0a2
+- referencia versionada: src/data/huella_realsit.sha256

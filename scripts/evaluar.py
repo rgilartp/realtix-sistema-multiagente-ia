@@ -345,7 +345,11 @@ def main() -> None:
     parser.add_argument("--ragas-limite", type=int, help="solo los primeros N casos (prueba)")
     parser.add_argument("--trazas", action="store_true", help="revisar LangSmith (RNF-05)")
     parser.add_argument("--trazas-horas", type=int, default=24)
-    parser.add_argument("--exigir-huella", action="store_true", help="juez igual al calibrado (A5)")
+    parser.add_argument(
+        "--exigir-huella",
+        action="store_true",
+        help="juez igual al calibrado (A5); con --k > 1, siempre",
+    )
     parser.add_argument("--solo-reporte", action="store_true", help="no llama a ningún modelo")
     parser.add_argument("--tope-usd", type=float)
     parser.add_argument("--commit", help="commit evaluado en el servidor (queda en el reporte)")
@@ -363,10 +367,13 @@ def main() -> None:
         # Sin modelos, el reporte usa las calificaciones guardadas con su propio juez: se conserva
         # su huella (la corrida 1 se calificó con el juez v1, ADR-25).
         huella = json.loads(guardadas.read_text(encoding="utf-8")).get("huella_juez") or huella
-    if args.exigir_huella:
+    if args.exigir_huella or args.k > 1:
+        # Con varios ensayos por escenario (la corrida 3) la huella se exige siempre (A5).
         from src.evaluacion.calibracion import huella_guardada
 
         calibrada = huella_guardada(RAIZ / "reports" / "calibracion")
+        if calibrada is None:
+            raise SystemExit("No hay huella de la calibración (A5): primero se calibra el juez.")
         if calibrada != huella:
             raise SystemExit("El juez cambió desde la calibración (A5): hay que repetirla.")
     conjuntos = [c.strip() for c in args.conjuntos.split(",") if c.strip()]

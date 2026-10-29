@@ -1,7 +1,7 @@
 """Notas que acompañan toda liquidación o estimación (sin modelo; el texto de la nota no cambia).
 
 La aproximación al múltiplo de mil es una decisión de Rodolfo (B5): la estimación calcula y muestra
-los valores exactos y solo advierte que la factura o la declaración los aproximan.
+los valores exactos y solo advierte que la declaración y los recibos de pago los aproximan.
 """
 
 import re
@@ -12,9 +12,9 @@ NOTA_ESTIMACION = (
     "ni un pronunciamiento de la Secretaría Distrital de Hacienda."
 )
 NOTA_APROXIMACION_PREDIAL = (
-    "En la factura y en la declaración los valores se aproximan al múltiplo de mil más cercano "
-    "(Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar levemente; "
-    "el que cuenta es el de la factura o la declaración."
+    "En la declaración y en los recibos de pago los valores se aproximan al múltiplo de mil más "
+    "cercano (Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar "
+    "levemente; el que cuenta es el de la factura o la declaración."
 )
 NOTA_APROXIMACION_ICA = (
     "En la declaración los valores se aproximan al múltiplo de mil más cercano (Decreto 807 de "
@@ -44,11 +44,63 @@ NOTA_PROYECCION_ICA_ANUAL = (
     "El ICA anual de 2026 se estima como una proyección del año completo a partir de los ingresos "
     "que se indican; el impuesto definitivo depende de los ingresos reales del año."
 )
-NOTA_COMPLEMENTARIOS_ICA = (
-    "La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, "
-    "Decreto 352 de 2002, art. 59) ni la sobretasa bomberil (Resolución SDH-000195 de 2025, "
-    "art. 2), que se suman cuando aplican."
+NOTA_AVISOS_Y_TABLEROS = (
+    "La estimación no incluye el complementario de avisos y tableros: solo se paga si hay vallas, "
+    "avisos, tableros o emblemas visibles desde el espacio público, o avisos en cualquier clase de "
+    "vehículos (Decreto 352 de 2002, arts. 57 y 58), y en ese caso es el 15 % del impuesto "
+    "(Decreto 352 de 2002, art. 59)."
 )
+
+
+def _pesos(valor: int) -> str:
+    return "$" + f"{valor:,}".replace(",", ".")
+
+
+def _uvt(valor: int) -> str:
+    return f"{valor:,}".replace(",", ".")
+
+
+def nota_bomberil_no_aplica(
+    umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str, fuente_uvt: str
+) -> str:
+    """Con ingresos del periodo hasta el umbral: la sobretasa bomberil no se declara."""
+    return (
+        "La sobretasa bomberil no se declara con estos ingresos: solo la declaran quienes tienen "
+        f"ingresos netos superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} con la UVT "
+        f"de {anio}, {fuente_uvt}) en el periodo que se declara ({fuente})."
+    )
+
+
+def nota_bomberil_aplica(
+    umbral_uvt: int, umbral_pesos: int, anio: int, fuente: str, fuente_uvt: str
+) -> str:
+    """Con ingresos del periodo sobre el umbral: también se declara la sobretasa bomberil."""
+    return (
+        f"Con estos ingresos, superiores a {_uvt(umbral_uvt)} UVT ({_pesos(umbral_pesos)} con la "
+        f"UVT de {anio}, {fuente_uvt}) en el periodo, también se declara la sobretasa bomberil "
+        f"({fuente}), que esta estimación no incluye."
+    )
+
+
+def nota_bomberil_sin_datos(anio: int, conocida: tuple[int, int, str] | None) -> str:
+    """Sin el umbral o la UVT del año: la estimación no puede decir si la sobretasa se declara. No
+    afirma que el umbral no se ha publicado: puede cambiarlo una norma que no está en la base.
+    `conocida` es la regla del año más reciente que la tiene: (año, umbral en UVT, fuente)."""
+    antes = ""
+    if conocida:
+        anio_regla, umbral_uvt, fuente = conocida
+        antes = (
+            f"En {anio_regla}, la sobretasa bomberil la declaran quienes tienen ingresos netos "
+            f"superiores a {_uvt(umbral_uvt)} UVT en el periodo que se declara ({fuente}); para "
+            f"{anio}, "
+        )
+    else:
+        antes = f"Para {anio}, "
+    return (
+        f"{antes}la estimación no puede decir si la sobretasa bomberil se declara y no la incluye."
+    )
+
+
 NOTA_INTERESES_MORA = (
     "Como hay obligaciones vencidas, el pago incluye intereses de mora (Decreto 807 de 1993, "
     "art. 66), que esta información no calcula; el valor exacto lo da la factura o la Secretaría "

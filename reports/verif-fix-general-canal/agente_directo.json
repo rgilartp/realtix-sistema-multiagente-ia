@@ -1,0 +1,23 @@
+{
+  "que_es": "Agente general corrido directo (sin juez) en GEN-02, 3 veces, con general.v2",
+  "filas": [
+    {
+      "suficiencia": "completa",
+      "nombra_un_canal": false,
+      "respuesta": "No. Según el manual, el asistente no presenta declaraciones, no hace pagos y no modifica datos. Es un sistema de inteligencia artificial que da orientación, no asesoría personalizada. Si necesitas pagar o presentar tu declaración, puedo pasarte con un funcionario. (Manual de uso de la OVT simulada, Lo que el asistente no hace.)",
+      "costo_usd": "0.0005603"
+    },
+    {
+      "suficiencia": "completa",
+      "nombra_un_canal": false,
+      "respuesta": "No. El asistente no presenta declaraciones, no hace pagos y no modifica datos. Solo orienta sobre dudas generales. Si quieres pagar o presentar tu declaración, puedo pasar tu consulta con un funcionario. Recuerda que mis respuestas son orientativas.",
+      "costo_usd": "0.0005483"
+    },
+    {
+      "suficiencia": "completa",
+      "nombra_un_canal": false,
+      "respuesta": "No, el asistente no puede pagar tu predial ni presentar tu declaración: no presenta declaraciones, no hace pagos y no modifica datos. Sus respuestas son orientativas y no da asesoría tributaria personalizada. Si necesitas hacer un pago o una declaración, puedo pasarte con un funcionario que te oriente. Fuente: Manual de uso de la OVT simulada (sintético), Lo que el asistente no hace.",
+      "costo_usd": "0.0005733"
+    }
+  ]
+}

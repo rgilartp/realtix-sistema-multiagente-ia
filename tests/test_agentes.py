@@ -467,7 +467,10 @@ def test_ica_05_bimestral_de_2026_con_las_dos_tablas(adaptador) -> None:
         "bimestres 1 a 5 de 2026": ("13,8 por mil", "$3.450.000"),
         "bimestre 6 de 2026": ("12 por mil", "$3.000.000"),
     }
-    assert notas.NOTA_COMPLEMENTARIOS_ICA in respuesta["texto"]
+    assert notas.NOTA_AVISOS_Y_TABLEROS in respuesta["texto"]
+    assert "La sobretasa bomberil no se declara con estos ingresos" in respuesta["texto"]
+    assert respuesta["texto"].count("sobretasa bomberil") == 1  # dos tablas, una sola nota
+    assert "no puede decir" not in respuesta["texto"]
     assert "Acuerdo 1084 de 2026, art. 21" in respuesta["texto"]
 
 
@@ -493,7 +496,7 @@ def test_la_retencion_del_ica_la_marca_el_agente_y_escala(adaptador) -> None:
         configuracion_de_hilo("ret", RELOJ_ESCENARIOS),
     )
     assert r["motivo_escalamiento"] == "fuera de alcance"
-    assert r["respuesta_final"].endswith(AVISO_TRANSFERENCIA)
+    assert r["respuesta_final"].endswith(AVISO_TRANSFERENCIA.format(codigo="RET"))
     assert "retención del ICA" in r["respuesta_final"]
 
 
@@ -840,6 +843,23 @@ def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptad
     assert respuesta["texto"].startswith("Tienes una obligación vencida.")
 
 
+# -- El agente general no inventa el canal de un trámite (G1 de la corrida 2) ------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-GEN-01 · Consultas transversales", "RF-GEN-03 · Respuesta sustentada en fuentes"
+)
+def test_el_prompt_general_no_inventa_donde_se_hace_un_tramite() -> None:
+    prompt = prompt_de_agente("general")
+    assert prompt.version == "v2+comun.v3"
+    texto = " ".join(prompt.texto.split())
+    assert "No digas dónde, cómo ni por qué canal se hace un trámite" in texto
+    # Como el manual: el botón o sus palabras (una oferta suelta no lleva la marca que escala).
+    assert "con el botón «Hablar con un funcionario» o con sus palabras" in texto
+    assert "di lo que hacen y lo que no hacen" not in texto  # zona gris de A8, quitada
+
+
 # -- Fechas relativas calculadas por código (G4 de la corrida 2) -------------------------------
 
 
@@ -1122,3 +1142,4 @@ def test_el_texto_de_fuera_de_alcance_depende_de_la_marca(adaptador) -> None:
             entrada_de_turno("Algo", "fa"), configuracion_de_hilo("fa", RELOJ_ESCENARIOS)
         )
         assert r["respuesta_final"] == esperado
+        assert "datos personales" in esperado  # el canal también los atiende (manual de la OVT)

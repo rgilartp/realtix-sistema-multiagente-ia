@@ -26,17 +26,18 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: IVIUR
 respuesta_referencia: >-
-  La estimación usa el avalúo de 2026 ($350.000.000), porque el de 2027 aún no se conoce. Con la tabla
-  del Acuerdo 1084 de 2026, art. 20, tal como está, ese avalúo cae en el rango de 6,1 por mil: $2.135.000;
-  los rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica. Desde
-  el 1 de enero de 2027 se suma la sobretasa de alumbrado público sobre la misma base: 0,4 por mil para
-  los residenciales de estratos 4, 5 y 6 (Acuerdo 1084, arts. 13 y 14), es decir $350.000.000 × 0,4 /
-  1.000 = $140.000; el total estimado es $2.275.000. Hay dos cosas que todavía no se pueden estimar, por
-  razones distintas: el descuento por pronto pago de 2027 depende de la resolución de plazos de 2027,
-  que no se ha publicado; y el tope de la sobretasa (600 UVT, art. 15) necesita la UVT de 2027. Es una
-  estimación no vinculante.
+  La estimación usa el avalúo de 2026 ($350.000.000), porque el de 2027 aún no se conoce. Con la tabla del
+  Acuerdo 1084 de 2026, art. 20, tal como está, ese avalúo cae en el rango de 6,1 por mil: $2.135.000; los
+  rangos en pesos se actualizan cada año con el IVIUR y esa actualización aún no se publica. Desde el 1 de
+  enero de 2027 (Acuerdo 1084, art. 10) se suma la sobretasa de alumbrado público sobre la misma base
+  (art. 13): 0,4 por mil para los residenciales de estratos 4, 5 y 6 (art. 14), es decir $350.000.000 ×
+  0,4 / 1.000 = $140.000; el total estimado es $2.275.000. No pagan la sobretasa los predios de estratos
+  4, 5 y 6 con algún propietario en los grupos A, B o C del SISBÉN (art. 14, parágrafo), un dato que la
+  base sintética no tiene. El descuento por pronto pago de 2027 no se puede estimar: depende de la
+  resolución de plazos de 2027, que no se ha publicado. El tope de la sobretasa (600 UVT, art. 15) está en
+  UVT, y la UVT de 2027 aún no se publica. Es una estimación no vinculante.
 fuentes_esperadas:
-- Acuerdo 1084 de 2026, arts. 13, 14, 15 y 20
+- Acuerdo 1084 de 2026, arts. 10, 13, 14, 15 y 20
 - datos/tarifas/ipu_2027.yaml
 - datos/tarifas/sobretasa_alumbrado_2027.yaml
 no_debe:

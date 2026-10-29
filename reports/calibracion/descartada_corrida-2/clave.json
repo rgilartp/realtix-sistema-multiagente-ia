@@ -1,0 +1,156 @@
+{
+  "M01": {
+    "escenario": "ICA-05",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-ICA-05-1-570918a7"
+  },
+  "M02": {
+    "escenario": "MULTI-01",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-MULTI-01-1-b5ca25bf"
+  },
+  "M03": {
+    "escenario": "ESC-01",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-ESC-01-1-c1832f51"
+  },
+  "M04": {
+    "escenario": "OCR-03",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-OCR-03-1-9ec5b978"
+  },
+  "M05": {
+    "escenario": "FA-04",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-FA-04-1-82b65365"
+  },
+  "M06": {
+    "escenario": "IPU-12",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-12-1-bca17b6a"
+  },
+  "M07": {
+    "escenario": "IPU-14",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-14-1-9f5ce458"
+  },
+  "M08": {
+    "escenario": "IPU-11",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-11-1-59307f23"
+  },
+  "M09": {
+    "escenario": "GEN-03",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-GEN-03-1-069c587a"
+  },
+  "M10": {
+    "escenario": "GEN-02",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-GEN-02-1-a96b0fb7"
+  },
+  "M11": {
+    "escenario": "OCR-07",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-OCR-07-1-422317e2"
+  },
+  "M12": {
+    "escenario": "ICA-06",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-ICA-06-1-251ff027"
+  },
+  "M13": {
+    "escenario": "IPU-04",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-04-1-16633942"
+  },
+  "M14": {
+    "escenario": "MULTI-03",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-MULTI-03-1-ff2cdfd7"
+  },
+  "M15": {
+    "escenario": "FA-05",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-FA-05-1-62be3108"
+  },
+  "M16": {
+    "escenario": "ACC-03",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-ACC-03-1-ea55fca7"
+  },
+  "M17": {
+    "escenario": "AMB-02",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-AMB-02-1-be2507e3"
+  },
+  "M18": {
+    "escenario": "IPU-09",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-09-1-a8575568"
+  },
+  "M19": {
+    "escenario": "IPU-02",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-02-1-3014b03c"
+  },
+  "M20": {
+    "escenario": "AIA-02",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-AIA-02-1-a38e43a1"
+  },
+  "M21": {
+    "escenario": "IPU-07",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-07-1-66c89136"
+  },
+  "M22": {
+    "escenario": "IPU-08",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-08-1-0f700d6a"
+  },
+  "M23": {
+    "escenario": "ACC-02",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-ACC-02-1-4b4e2f1b"
+  },
+  "M24": {
+    "escenario": "OCR-02",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-OCR-02-1-3deb3cb6"
+  },
+  "M25": {
+    "escenario": "ICA-07",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-ICA-07-1-61aac5c6"
+  },
+  "M26": {
+    "escenario": "IPU-01",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-01-1-547ab715"
+  },
+  "M27": {
+    "escenario": "GEN-01",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-GEN-01-1-2120eee9"
+  },
+  "M28": {
+    "escenario": "GEN-05",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-GEN-05-1-4bc03e26"
+  },
+  "M29": {
+    "escenario": "AMB-01",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-AMB-01-1-ac6be4b0"
+  },
+  "M30": {
+    "escenario": "IPU-05",
+    "ensayo": 1,
+    "id_conversacion": "corrida-2-IPU-05-1-0acbf60c"
+  },
+  "_reparto": {
+    "aprobadas_por_el_juez": 25,
+    "no_aprobadas_por_el_juez": 5
+  }
+}

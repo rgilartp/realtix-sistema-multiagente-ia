@@ -1,0 +1,7 @@
+# Solo en el servidor: deploy/desplegar.sh lo agrega con -f después de docker-compose.yml.
+# Chroma no publica su puerto ni en el 127.0.0.1 del anfitrión: queda solo en la red de Compose,
+# donde lo usa el backend (ADR-26: sus avisos de seguridad no tienen versión corregida). En el
+# equipo, el puerto de docker-compose.yml se conserva para las pruebas y la ingesta locales.
+services:
+  chromadb:
+    ports: !reset []

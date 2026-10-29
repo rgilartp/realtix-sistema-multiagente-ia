@@ -27,9 +27,9 @@ verificaciones_codigo:
   valor: Decreto 352
 respuesta_referencia: >-
   Predial: fusiona en un solo impuesto el predial, el de parques y arborización, el de estratificación
-  socioeconómica y la sobretasa de levantamiento catastral; su base es el avalúo catastral (Ley 44 de
-  1990, arts. 1 y 3). ICA: se genera por ejercer, de forma directa o indirecta, una actividad industrial,
-  comercial o de servicios en Bogotá (Decreto 352 de 2002, art. 32).
+  socioeconómica y la sobretasa de levantamiento catastral (Ley 44 de 1990, art. 1); su base gravable es
+  el avalúo catastral o el autoavalúo (art. 3). ICA: se genera por ejercer, de forma directa o indirecta,
+  una actividad industrial, comercial o de servicios en Bogotá (Decreto 352 de 2002, art. 32).
 fuentes_esperadas:
 - Ley 44 de 1990, arts. 1 y 3
 - Decreto 352 de 2002, art. 32
