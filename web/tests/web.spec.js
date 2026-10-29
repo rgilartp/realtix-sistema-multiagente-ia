@@ -20,7 +20,13 @@ const ESCRITORIO = { width: 1280, height: 800 };
 const CELULAR = { width: 390, height: 844 };
 const MINIMO = { width: 360, height: 740 };
 // Capturas que también se toman en modo oscuro (con el sufijo _oscuro).
-const CAPTURAS_OSCURAS = ["ovt_simulada", "widget_respuesta", "widget_fuera_de_horario", "consola_metricas"];
+const CAPTURAS_OSCURAS = [
+  "ovt_simulada",
+  "widget_inicio",
+  "widget_respuesta",
+  "widget_fuera_de_horario",
+  "consola_metricas",
+];
 
 test.use({ testIdAttribute: "data-prueba" });
 
@@ -83,7 +89,13 @@ async function flujoOvt(page, tamano) {
   await expect(page.getByTestId("rotulo")).toHaveText(
     "Entorno simulado de pruebas — no es la Oficina Virtual Tributaria real",
   );
-  await expect(page.locator("img, svg")).toHaveCount(0); // sin logos
+  // Sin logos ni imágenes: solo íconos de trazo decorativos, junto al texto que dicen.
+  await expect(page.locator("img")).toHaveCount(0);
+  await expect(page.locator('svg:not([aria-hidden="true"])')).toHaveCount(0);
+  // El rótulo es una franja delgada de aviso: una línea de unos 38 px en escritorio.
+  const { height } = await page.getByTestId("rotulo").boundingBox();
+  expect(height).toBeLessThanOrEqual(tamano.width >= 1024 ? 40 : 64);
+  await expect(page.getByTestId("que-probar").getByRole("listitem")).toHaveCount(4);
   expect(await page.locator("body").innerText()).not.toMatch(MARCAS_PROHIBIDAS);
   await expect(page.locator("iframe[data-realtix-widget]")).toHaveAttribute("src", /\/widget\/$/);
   // La captura de la OVT muestra la página con el asistente cerrado (en el celular ya lo está).
@@ -97,6 +109,12 @@ async function flujoRespuesta(page, tamano) {
   const { solicitudes, widget } = await abrirOvt(page, tamano);
   // RF-SYS-06: el aviso está antes de cualquier respuesta; el botón del funcionario, siempre a la vista.
   await expect(widget.getByTestId("aviso-ia")).toContainText(TEXTOS.avisoIa);
+  // Debajo, el aviso de datos personales (solo en la interfaz; el de la API no cambia).
+  await expect(widget.getByTestId("aviso-datos")).toContainText("según la Ley 1581 de 2012");
+  await expect(widget.getByTestId("aviso-datos")).toContainText("puedes no usar el asistente");
+  const [ia, datos] = await Promise.all(["aviso-ia", "aviso-datos"].map((id) => widget.getByTestId(id).boundingBox()));
+  expect(datos.y + datos.height).toBeLessThanOrEqual(ia.y + ia.height); // dentro del recuadro…
+  expect(datos.y).toBeGreaterThan(ia.y + 40); // …y debajo de la franja y del aviso de IA
   await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeVisible();
   await expect(widget.getByTestId("interlocutor")).toHaveText("Te atiende un asistente de IA");
   await expect(widget.getByText("¿En qué te ayudo?")).toBeVisible(); // estado vacío
@@ -254,29 +272,29 @@ for (const { nombre, flujo, req } of FLUJOS) {
 
 // -- Tema claro u oscuro --------------------------------------------------------------------------
 
-// El botón del tema cambia también el del widget insertado: RF-UI-01.
+// El interruptor del tema cambia también el del widget insertado: RF-UI-01.
 const TEMA_REQ = { annotation: [{ type: "req", description: "RF-UI-01 · Widget embebible" }] };
 const temaDe = (pagina) => pagina.locator("html");
 const widgetHtml = (page) => page.frameLocator("iframe[data-realtix-widget]").locator("html");
 
 for (const ruta of ["/ovt/", "/consola/"]) {
-  test(`tema en ${ruta}: el botón «Modo oscuro» cambia el tema y lo recuerda al recargar`, TEMA_REQ, async ({ page }) => {
+  test(`tema en ${ruta}: el interruptor «Modo oscuro» cambia el tema y lo recuerda al recargar`, TEMA_REQ, async ({ page }) => {
     await simularApi(page);
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto(ruta);
-    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    const boton = page.getByRole("switch", { name: "Modo oscuro" });
     await expect(temaDe(page)).toHaveAttribute("data-tema", "claro"); // arranca con el del sistema
-    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(boton).toHaveAttribute("aria-checked", "false");
     await boton.click();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
-    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await expect(boton).toHaveAttribute("aria-checked", "true");
     await page.reload();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro"); // la elección se recuerda
-    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await expect(boton).toHaveAttribute("aria-checked", "true");
     await boton.click();
     await page.reload();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
-    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(boton).toHaveAttribute("aria-checked", "false");
   });
 
   test(`tema en ${ruta}: arranca oscuro con el sistema y funciona sin localStorage`, TEMA_REQ, async ({ page }) => {
@@ -292,12 +310,12 @@ for (const ruta of ["/ovt/", "/consola/"]) {
     });
     await page.emulateMedia({ colorScheme: "dark" });
     await page.goto(ruta);
-    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    const boton = page.getByRole("switch", { name: "Modo oscuro" });
     await expect(temaDe(page)).toHaveAttribute("data-tema", "oscuro");
-    await expect(boton).toHaveAttribute("aria-pressed", "true");
+    await expect(boton).toHaveAttribute("aria-checked", "true");
     await boton.click();
     await expect(temaDe(page)).toHaveAttribute("data-tema", "claro");
-    await expect(boton).toHaveAttribute("aria-pressed", "false");
+    await expect(boton).toHaveAttribute("aria-checked", "false");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     expect(errores).toEqual([]);
   });
@@ -314,7 +332,7 @@ test(
     const widget = page.frameLocator("iframe[data-realtix-widget]");
     await expect(widget.getByTestId("aviso-ia")).toBeVisible();
     await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
-    const boton = page.getByRole("button", { name: "Modo oscuro" });
+    const boton = page.getByRole("switch", { name: "Modo oscuro" });
     await boton.click();
     await expect(widgetHtml(page)).toHaveAttribute("data-tema", "oscuro");
     await boton.click();
@@ -389,6 +407,114 @@ test("tema: el widget ignora el tema de una página de otro origen y no queda oc
   await marco.evaluate(() => new Promise((listo) => setTimeout(listo, 200)));
   await expect(widgetHtml(page)).toHaveAttribute("data-tema", "claro");
 });
+
+// La lista nativa de un select toma el fondo del select: en el modo oscuro, con fondo transparente,
+// quedaba texto claro sobre el blanco del navegador (hallazgo de la usabilidad). El select y cada
+// opción llevan fondo opaco y texto con 4,5:1 en los dos modos, en la OVT y en la consola (el
+// widget no tiene listas).
+const luminanciaCss = (css) => {
+  const [r, g, b] = css.match(/[\d.]+/g).slice(0, 3).map((v) => {
+    const c = Number(v) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+async function listaLegible(select) {
+  const colores = await select.evaluate((el) =>
+    [el, ...el.options].map((n) => [getComputedStyle(n).backgroundColor, getComputedStyle(n).color]),
+  );
+  for (const [fondo, texto] of colores) {
+    expect(fondo).toMatch(/^rgb\(/); // opaco: no «transparent» ni rgba con alfa
+    const [a, b] = [luminanciaCss(texto), luminanciaCss(fondo)].sort((x, y) => y - x);
+    expect((a + 0.05) / (b + 0.05)).toBeGreaterThanOrEqual(4.5);
+  }
+}
+
+for (const esquema of ["light", "dark"]) {
+  const modo = esquema === "dark" ? "oscuro" : "claro";
+  test(`listas desplegables legibles en la OVT y la consola (modo ${modo})`, TEMA_REQ, async ({ page }) => {
+    await simularApi(page);
+    await page.emulateMedia({ colorScheme: esquema });
+    await page.goto("/ovt/");
+    await expect(temaDe(page)).toHaveAttribute("data-tema", modo);
+    await expect(page.getByTestId("usuario").locator("option").nth(1)).toBeAttached(); // ya cargó
+    await listaLegible(page.getByTestId("usuario"));
+    await page.goto("/consola/");
+    await page.getByLabel("Token de funcionario (bandeja)").fill("token-funcionario");
+    await page.getByRole("button", { name: "Cargar casos" }).click();
+    for (const filtro of ["Motivo", "Estado"]) await listaLegible(page.getByLabel(filtro));
+  });
+}
+
+// Fotos pesadas (hallazgo de la usabilidad): el widget reduce la foto antes de subirla (lado largo
+// de 2.000 px, en JPEG). Un PDF de más de 5 MB no se reduce: se rechaza con el mensaje de siempre.
+test(
+  "widget: reduce las fotos pesadas antes de subirlas y rechaza un PDF pesado",
+  { annotation: [{ type: "req", description: "RF-UI-04 · Carga desde la conversación" }] },
+  async ({ page }) => {
+    const { solicitudes, widget } = await abrirOvt(page, ESCRITORIO);
+    await iniciarSesion(page, ESCRITORIO);
+    // Una «foto» de 2.600 × 1.950 px con grano, que en PNG pesa más de 5 MB.
+    const foto = Buffer.from(
+      await page.evaluate(() => {
+        const [ancho, alto] = [2600, 1950];
+        const lienzo = document.createElement("canvas");
+        Object.assign(lienzo, { width: ancho, height: alto });
+        const contexto = lienzo.getContext("2d");
+        const datos = contexto.createImageData(ancho, alto);
+        for (let i = 0; i < datos.data.length; i += 4) {
+          const x = (i / 4) % ancho;
+          const grano = Math.random() * 40;
+          datos.data.set([60 + (x % 180) + grano, 120 + grano, 200 - grano, 255], i);
+        }
+        contexto.putImageData(datos, 0, 0);
+        return lienzo.toDataURL("image/png").split(",")[1];
+      }),
+      "base64",
+    );
+    expect(foto.length).toBeGreaterThan(5 * 1024 * 1024);
+    await widget.getByTestId("archivo").setInputFiles({ name: "foto.png", mimeType: "image/png", buffer: foto });
+    await expect(widget.getByText("¿Es correcto?")).toBeVisible();
+    const subida = solicitudes.find((s) => s.ruta === "/api/v1/chat/documento");
+    expect(subida.cuerpo).toMatchObject({ nombre: "foto.jpg", tipo: "image/jpeg" });
+    expect(subida.cuerpo.bytes).toBeLessThan(5 * 1024 * 1024);
+    const antes = solicitudes.length;
+    const pdf = { name: "recibo.pdf", mimeType: "application/pdf", buffer: Buffer.alloc(6 * 1024 * 1024) };
+    await widget.getByTestId("archivo").setInputFiles(pdf);
+    await expect(widget.getByText("El archivo pesa más de 5 MB. Envía una foto o un PDF más liviano.")).toBeVisible();
+    expect(solicitudes.slice(antes).some((s) => s.ruta === "/api/v1/chat/documento")).toBe(false);
+  },
+);
+
+// Si el caso no se pudo registrar, el widget no queda en modo escalado: el botón sigue disponible.
+test(
+  "widget: sin caso registrado, el botón del funcionario sigue disponible",
+  { annotation: [{ type: "req", description: "RF-ESC-05 · Notificación al contribuyente" }] },
+  async ({ page }) => {
+    await simularApi(page, { sinRegistro: true });
+    await page.setViewportSize(ESCRITORIO);
+    await page.goto("/ovt/");
+    const widget = page.frameLocator("iframe[data-realtix-widget]");
+    await widget.getByRole("button", { name: "Hablar con un funcionario" }).click();
+    await expect(widget.getByText(TEXTOS.transferencia)).toBeVisible();
+    await expect(widget.getByRole("button", { name: "Hablar con un funcionario" })).toBeEnabled();
+  },
+);
+
+// Límite de peticiones (seguridad y gasto): el widget muestra el mensaje del 429 tal cual.
+test(
+  "widget: muestra el mensaje del límite de peticiones",
+  { annotation: [{ type: "req", description: "RNF-08 · Tiempos de espera y degradación" }] },
+  async ({ page }) => {
+    const limite = "Recibí muchas consultas seguidas desde tu conexión. Espera un minuto y vuelve a intentarlo.";
+    await simularApi(page, { limitado: limite });
+    await page.setViewportSize(ESCRITORIO);
+    await page.goto("/ovt/");
+    const widget = page.frameLocator("iframe[data-realtix-widget]");
+    await preguntar(widget, "¿Qué es el impuesto predial?");
+    await expect(widget.getByText(limite)).toBeVisible();
+  },
+);
 
 // La CSP del despliegue (B13) bloquea los scripts en línea: ninguna página compilada los tiene.
 test("las páginas compiladas no tienen scripts en línea", async () => {

@@ -6,7 +6,14 @@ from pathlib import Path
 
 import pytest
 
-from src.evaluacion.calibracion import COLUMNAS_EVALUADORES, calcular_kappa, elegir, exportar
+from src.evaluacion.calibracion import (
+    COLUMNAS_EVALUADORES,
+    calcular_kappa,
+    elegir,
+    exportar,
+    exportar_para_evaluadores,
+    importar_calificaciones,
+)
 from src.evaluacion.componentes import escenarios_de_agente, metricas_de_enrutamiento
 from src.evaluacion.corrida import metricas_por_conjunto
 from src.evaluacion.escenarios import cargar_escenarios
@@ -226,3 +233,92 @@ def test_el_commit_evaluado_es_obligatorio_contra_el_despliegue_y_no_cambia(tmp_
     with pytest.raises(SystemExit, match="no de bbb"):
         _commit_de_la_corrida(args(api="https://x", commit="bbb"), tmp_path)
     assert _commit_de_la_corrida(args(solo_reporte=True), tmp_path) == "aaa"
+
+
+@pytest.mark.unit
+@pytest.mark.req(RNF16, "RNF-03 · Protección de datos personales")
+def test_material_de_cada_evaluador_sin_veredicto_y_con_las_fuentes_del_juez(
+    tmp_path: Path,
+) -> None:
+    """B15: un HTML de lectura por evaluador con las mismas fuentes que ve el juez v3,
+    anonimizadas y sin su veredicto; una hoja con listas; y la importación a `muestra.csv`."""
+    from openpyxl import load_workbook
+
+    escenarios = {e["id"]: e for e in cargar_escenarios()}
+    muestra = [calificado(i, i % 2 == 0) for i in range(1, 5)]
+    turno = {
+        "usuario": "¿Pregunta inventada?",
+        "respuesta": "Respuesta de Usuario de Prueba 03.",
+        "aviso_ia": "Aviso inventado.",
+        "meta": {
+            "contextos": ["Norma inventada, art. 1\nTexto inventado del fragmento."],
+            "herramientas": [{"herramienta": "h", "resultado": {"saldo": "$1.234.000"}}],
+            "notas": ["Nota inventada del sistema."],
+        },
+    }
+    ensayos = {c["id_conversacion"]: {"turnos": [turno]} for c in muestra}
+    exportar(muestra, ensayos, escenarios, tmp_path, "h")
+    rutas = exportar_para_evaluadores(muestra, ensayos, escenarios, tmp_path)
+    lectura = (tmp_path / "rodolfo" / "calibracion_rodolfo.html").read_text(encoding="utf-8")
+    for esperado in ("M04", "Texto inventado del fragmento", "$1.234.000", "Nota inventada",
+                     "Aviso inventado", "Respuesta de referencia", "Veredictos"):  # fmt: skip
+        assert esperado in lectura
+    for prohibido in ("Usuario de Prueba 03", "justificacion", "superado", "IPU-0"):
+        assert prohibido not in lectura
+    assert len(rutas) == 5
+    clave = json.loads((tmp_path / "clave.json").read_text(encoding="utf-8"))
+    assert clave["_reparto"] == {"aprobadas_por_el_juez": 2, "no_aprobadas_por_el_juez": 2}
+    for persona in ("rodolfo", "dayanna", "consenso"):
+        ruta = tmp_path / persona / f"calificaciones_{persona}.xlsx"
+        libro = load_workbook(ruta)
+        hoja = libro["Calificaciones"]
+        assert len(hoja.data_validations.dataValidation) == 2
+        for fila in range(2, 6):
+            hoja.cell(fila, 2, "parcialmente correcta" if persona == "dayanna" else "correcta")
+            hoja.cell(fila, 3, "no")
+        libro.save(ruta)
+    from src.evaluacion.calibracion import hojas_con_calificaciones
+
+    assert len(hojas_con_calificaciones(tmp_path)) == 3  # exportar ya no las reemplaza sin --forzar
+    assert importar_calificaciones(tmp_path) == 4
+    ruta = tmp_path / "rodolfo" / "calificaciones_rodolfo.xlsx"
+    libro = load_workbook(ruta)
+    libro["Calificaciones"].cell(2, 3, "quizás")
+    libro.save(ruta)
+    with pytest.raises(ValueError, match="alucinación desconocido"):
+        importar_calificaciones(tmp_path)
+    for validacion in load_workbook(ruta)["Calificaciones"].data_validations.dataValidation:
+        assert validacion.showErrorMessage  # la hoja rechaza un valor fuera de la lista
+    with (tmp_path / "muestra.csv").open(encoding="utf-8") as f:
+        fila = next(csv.DictReader(f))
+    assert (
+        fila["dayanna_veredicto"] == "parcialmente correcta" and fila["rodolfo_alucinacion"] == "no"
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ESC-01 · Cálculo del nivel de confianza")
+def test_la_propuesta_del_umbral_separa_los_escalamientos_de_superados_y_no_superados() -> None:
+    """B15: con cada umbral candidato, cuántos turnos escalarían y de qué escenarios (toy data)."""
+    import importlib.util
+
+    from src.evaluacion.escenarios import RAIZ
+
+    ruta = RAIZ / "scripts" / "proponer_umbral.py"
+    especificacion = importlib.util.spec_from_file_location("proponer_umbral", ruta)
+    assert especificacion and especificacion.loader
+    modulo = importlib.util.module_from_spec(especificacion)
+    especificacion.loader.exec_module(modulo)
+    filas = [
+        {"nivel": 0.62, "superado": False},
+        {"nivel": 0.71, "superado": True},
+        {"nivel": 0.90, "superado": True},
+    ]
+    por_umbral = {t["umbral"]: t for t in modulo.tabla(filas)}
+    assert por_umbral[0.7] == {
+        "umbral": 0.7,
+        "escalarian": 1,
+        "de_escenarios_superados": 0,
+        "de_escenarios_no_superados": 1,
+    }
+    assert por_umbral[0.75]["de_escenarios_superados"] == 1

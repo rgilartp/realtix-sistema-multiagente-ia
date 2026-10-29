@@ -1,11 +1,12 @@
 // Widget del sistema multiagente de IA (RF-UI-01 a RF-UI-04 y RF-SYS-06).
 //
-// - Aviso de IA visible al abrir, antes de cualquier respuesta (RF-SYS-06).
+// - Aviso de IA visible al abrir, antes de cualquier respuesta (RF-SYS-06), y debajo el de datos.
 // - Quién habla, con etiqueta y color: asistente de IA, funcionario o sistema (RF-UI-03).
 // - «Hablar con un funcionario» siempre a la vista (RF-ESC-02).
 // - Fuentes de cada respuesta como referencias discretas.
 // - Fuera de horario destacado, con la hora en que vuelve a atender (RNF-07).
-// - Carga de recibos (JPG, PNG o PDF de hasta 5 MB) validada en el navegador (RF-UI-04).
+// - Carga de recibos (JPG, PNG o PDF de hasta 5 MB) validada en el navegador (RF-UI-04); las fotos
+//   pesadas se reducen antes de subirlas (fotos.js).
 // - Con la conversación escalada, consulta cada 5 s los mensajes nuevos del funcionario.
 // - Tema claro u oscuro: el de la página que lo inserta (embed.js); sin ella, el del sistema.
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -21,17 +22,27 @@ import {
   nuevaConversacion,
   pedirFuncionario,
 } from "../api.js";
+import { IconoCalendario, IconoLibro } from "../iconos.jsx";
+import { reducirFoto } from "./fotos.js";
 import { TEMAS, aplicarTema } from "../tema.jsx";
 
 const CONSULTA_MS = 5000;
+// Aviso de datos personales, solo en la interfaz: AVISO_IA de la API no cambia, porque lo usan los
+// escenarios, el juez y la medición. Se entiende que la autorización se otorga con una conducta
+// inequívoca: enviar la consulta. El silencio no cuenta (Decreto 1074 de 2015, art. 2.2.2.25.2.4).
+// Con datos sintéticos es informativo: esos procedimientos solo rigen con datos reales (adenda,
+// sección 2).
+const AVISO_DATOS =
+  "Tus datos personales se tratan según la Ley 1581 de 2012. Si continúas y envías tu consulta, " +
+  "autorizas ese tratamiento para atenderte. Si no estás de acuerdo, puedes no usar el asistente.";
 const ORIGENES_PERMITIDOS = [
   window.location.origin,
   ...(import.meta.env.VITE_ORIGENES_OVT ?? "").split(",").map((o) => o.trim()).filter(Boolean),
 ];
 const SUGERENCIAS = [
-  "¿Qué es el impuesto predial?",
-  "¿Hasta cuándo pago el predial con descuento?",
-  "¿Cuándo declaro el ICA este año?",
+  [IconoLibro, "¿Qué es el impuesto predial?"],
+  [IconoCalendario, "¿Hasta cuándo pago el predial con descuento?"],
+  [IconoCalendario, "¿Cuándo declaro el ICA este año?"],
 ];
 // Pestaña y borde de cada interlocutor: el color acompaña, la etiqueta informa.
 const QUIEN = {
@@ -243,7 +254,8 @@ export default function Widget() {
   const recibir = (respuesta) => {
     agregar({ autor: respuesta.interlocutor, texto: respuesta.respuesta, estado: respuesta.estado });
     setInterlocutor(respuesta.interlocutor);
-    if (respuesta.estado === "escalada") setEscalada(true);
+    // Solo con un caso registrado: si el registro falló, el botón sigue disponible para reintentar.
+    if (respuesta.estado === "escalada" && respuesta.meta?.caso_id) setEscalada(true);
   };
 
   const conEspera = async (accion) => {
@@ -283,7 +295,19 @@ export default function Widget() {
       agregar({ autor: "sistema", texto: "Solo puedo recibir el recibo en JPG, PNG o PDF.", estado: "error" });
       return;
     }
-    if (elegido.size > TAMANO_MAXIMO_MB * 1024 * 1024) {
+    const limite = TAMANO_MAXIMO_MB * 1024 * 1024;
+    // Mientras se reduce la foto, el widget queda ocupado; si entretanto cambió la conversación
+    // (otra sesión o una conversación nueva), la foto ya no se envía.
+    const enCurso = conversacionActual.current;
+    setOcupado(true);
+    let archivo;
+    try {
+      archivo = await reducirFoto(elegido, limite);
+    } finally {
+      setOcupado(false);
+    }
+    if (enCurso !== conversacionActual.current) return;
+    if (archivo.size > limite) {
       agregar({
         autor: "sistema",
         texto: `El archivo pesa más de ${TAMANO_MAXIMO_MB} MB. Envía una foto o un PDF más liviano.`,
@@ -294,7 +318,7 @@ export default function Widget() {
     agregar({ autor: "contribuyente", texto: elegido.name, archivo: elegido.name });
     const nota = texto.trim();
     setTexto("");
-    await conEspera(() => enviarDocumento(conversacion, elegido, nota, token));
+    await conEspera(() => enviarDocumento(conversacion, archivo, nota, token));
   };
 
   const funcionario = async () => {
@@ -371,12 +395,15 @@ export default function Widget() {
         <section
           className="overflow-hidden rounded-casilla border border-sello bg-hoja text-base text-tinta"
           data-prueba="aviso-ia"
-          aria-label="Aviso de inteligencia artificial"
+          aria-label="Aviso de inteligencia artificial y de datos personales"
         >
           <p className="bg-sello-suave px-4 py-1.5 font-titulo text-base font-bold text-sello-texto [font-stretch:87.5%]">
             Antes de empezar
           </p>
           <p className="px-4 py-3">{AVISO_IA}.</p>
+          <p className="border-t border-renglon px-4 py-2 text-sm leading-snug text-tinta-suave" data-prueba="aviso-datos">
+            {AVISO_DATOS}
+          </p>
         </section>
 
         {mensajes.length === 0 && !ocupado && (
@@ -385,14 +412,17 @@ export default function Widget() {
             <p className="text-sm text-tinta-suave">
               Pregunta por el predial o el ICA, o adjunta tu recibo para revisarlo.
             </p>
-            <div className="flex flex-col items-start gap-2 pt-1">
-              {SUGERENCIAS.map((s) => (
+            <div className="grid gap-2 pt-1">
+              {SUGERENCIAS.map(([Icono, s]) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => preguntar(s)}
-                  className="min-h-11 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello-texto hover:bg-sello-suave hover:text-sello-texto"
+                  className="flex min-h-11 items-center gap-3 rounded-control border border-borde-control bg-hoja px-3 py-2 text-left text-sm text-tinta hover:border-sello-texto hover:bg-sello-suave hover:text-sello-texto"
                 >
+                  <span className="text-sello-texto">
+                    <Icono tamano={18} />
+                  </span>
                   {s}
                 </button>
               ))}

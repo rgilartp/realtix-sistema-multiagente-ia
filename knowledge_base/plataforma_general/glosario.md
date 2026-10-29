@@ -1,8 +1,9 @@
 # Glosario
 
 > **Documento sintético.** Lo redactaron los autores a partir de las normas cargadas en la base de
-> conocimiento. Cada término cita la norma y el artículo de donde sale su definición; no define nada
-> que no esté en ellas.
+> conocimiento y, cuando se indica, de una fuente oficial con su dirección. Cada término cita la
+> norma y el artículo, o la fuente oficial, de donde sale su definición; no define nada que no esté
+> en ellas.
 
 ## Impuesto Predial Unificado
 
@@ -97,3 +98,11 @@ base de datos o el tratamiento de los datos.
 Persona natural o jurídica, pública o privada, que por sí misma o en asocio con otros realiza el
 tratamiento de datos personales por cuenta del responsable.
 **Fuente:** Ley 1581 de 2012, art. 3, literal d.
+
+## Código CIIU (actividad económica)
+
+En el RUT, la actividad económica se registra con los códigos de clasificación de actividades
+económicas que adoptó la DIAN. En el RUT, la actividad principal va en la casilla 46. Es la que
+genera la mayor parte de los ingresos. La actividad secundaria va en la casilla 48 y otras
+actividades, en la casilla 50.
+**Fuente:** DIAN, Instructivo de calidad del Registro Único Tributario RUT IN-CAC-0237, versión 3, sección «Actividad económica» y num. 27 (casillas 46, 48 y 50), https://www.dian.gov.co/atencionciudadano/LMDP/Cercania-al-Ciudadano/Asistencia-al-Usuario/Instructivos/IN-CAC-0237.pdf
