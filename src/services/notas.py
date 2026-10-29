@@ -1,7 +1,7 @@
 """Notas que acompañan toda liquidación o estimación (sin modelo; el texto de la nota no cambia).
 
 La aproximación al múltiplo de mil es una decisión de Rodolfo (B5): la estimación calcula y muestra
-los valores exactos y solo advierte que la factura o la declaración los aproximan.
+los valores exactos y solo advierte que la declaración y los recibos de pago los aproximan.
 """
 
 import re
@@ -12,9 +12,9 @@ NOTA_ESTIMACION = (
     "ni un pronunciamiento de la Secretaría Distrital de Hacienda."
 )
 NOTA_APROXIMACION_PREDIAL = (
-    "En la factura y en la declaración los valores se aproximan al múltiplo de mil más cercano "
-    "(Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar levemente; "
-    "el que cuenta es el de la factura o la declaración."
+    "En la declaración y en los recibos de pago los valores se aproximan al múltiplo de mil más "
+    "cercano (Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar "
+    "levemente; el que cuenta es el de la factura o la declaración."
 )
 NOTA_APROXIMACION_ICA = (
     "En la declaración los valores se aproximan al múltiplo de mil más cercano (Decreto 807 de "
@@ -83,7 +83,8 @@ def nota_bomberil_aplica(
 
 
 def nota_bomberil_sin_datos(anio: int, conocida: tuple[int, int, str] | None) -> str:
-    """Sin el umbral o la UVT del año: la estimación no puede decir si la sobretasa se declara.
+    """Sin el umbral o la UVT del año: la estimación no puede decir si la sobretasa se declara. No
+    afirma que el umbral no se ha publicado: puede cambiarlo una norma que no está en la base.
     `conocida` es la regla del año más reciente que la tiene: (año, umbral en UVT, fuente)."""
     antes = ""
     if conocida:
@@ -96,8 +97,7 @@ def nota_bomberil_sin_datos(anio: int, conocida: tuple[int, int, str] | None) ->
     else:
         antes = f"Para {anio}, "
     return (
-        f"{antes}el umbral o la UVT aún no se publican, así que la estimación no puede decir si la "
-        "sobretasa bomberil se declara y no la incluye."
+        f"{antes}la estimación no puede decir si la sobretasa bomberil se declara y no la incluye."
     )
 
 

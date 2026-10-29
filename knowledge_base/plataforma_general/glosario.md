@@ -47,8 +47,8 @@ La misma del impuesto predial unificado de la vigencia correspondiente.
 
 ## IVIUR
 
-Índice de Valoración Inmobiliaria Urbana y Rural. Su variación anual sirve para actualizar cada año los
-rangos que determinan la tarifa del impuesto predial unificado.
+Índice de Valoración Inmobiliaria Urbana y Rural. Desde el predial de 2027, su variación anual sirve para
+actualizar cada año los rangos que determinan la tarifa del impuesto predial unificado.
 **Fuente:** Acuerdo 1084 de 2026, art. 20.
 
 ## Régimen común del impuesto de industria y comercio
@@ -61,8 +61,9 @@ inmediatamente anterior supera 391 UVT. Declaran y pagan cada dos meses.
 
 A partir del 1 de enero de 2027, pertenecen a él los contribuyentes cuyo impuesto a cargo en el año
 inmediatamente anterior es de hasta 391 UVT. Declaran y pagan una vez al año. Quien empieza actividades
-queda en este régimen el primer año.
-**Fuente:** Acuerdo 1084 de 2026, art. 26, y sus parágrafos 1 y 2.
+queda en este régimen el primer año. Los del régimen preferencial con ingresos netos del año inferiores a
+1.933 UVT no presentan declaración y su impuesto es igual a lo retenido.
+**Fuente:** Acuerdo 1084 de 2026, art. 26, y sus parágrafos 1, 2 y 3.
 
 ## Dato personal
 

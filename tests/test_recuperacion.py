@@ -340,6 +340,9 @@ def test_el_filtro_por_vigencia_de_2026_y_2027(base_falsa) -> None:
     assert acuerdo_98 in ids("normativa_ica", 2026) and acuerdo_98 not in ids("normativa_ica", 2027)
     tarifas_2002 = "normativa_ica/decreto_352_2002_cap2.md#Artículo 53#vigente-1"
     assert all(tarifas_2002 not in ids("normativa_ica", a) for a in (2026, 2027))
+    # El sistema preferencial de 2002 (art. 55, «hasta el 31 de diciembre de 2002») tampoco rige.
+    preferencial_2002 = "normativa_ica/decreto_352_2002_cap2.md#Artículo 55#vigente-1"
+    assert all(preferencial_2002 not in ids("normativa_ica", a) for a in (2026, 2027))
     # Sin año tampoco salen los textos que no rigen.
     sin_anio = ids("normativa_ipu", None)
     assert not [i for i in sin_anio if "decreto_807_1993_ipu.md#Artículo 12#anterior" in i]

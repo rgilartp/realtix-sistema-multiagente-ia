@@ -1100,3 +1100,4 @@ def test_el_texto_de_fuera_de_alcance_depende_de_la_marca(adaptador) -> None:
             entrada_de_turno("Algo", "fa"), configuracion_de_hilo("fa", RELOJ_ESCENARIOS)
         )
         assert r["respuesta_final"] == esperado
+        assert "datos personales" in esperado  # el canal también los atiende (manual de la OVT)
