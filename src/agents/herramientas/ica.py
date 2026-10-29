@@ -67,6 +67,7 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
                     "tarifa": por_mil(o.tarifa_por_mil),
                     "valor_liquidado": pesos(o.valor_liquidado),
                     "fecha_limite_pago": fecha(o.fecha_limite_pago),
+                    "fecha_limite_pago_ya_paso": ya_paso(o.fecha_limite_pago, contexto.hoy),
                     "estado_pago": o.estado_pago,
                     "vencida_a_hoy": s.vencida,
                     "pagado": pesos(s.pagado),

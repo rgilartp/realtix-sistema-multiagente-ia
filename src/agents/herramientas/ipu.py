@@ -5,6 +5,7 @@ Solo el impuesto predial: el estado de cuenta de un predio también trae el ICA,
 """
 
 from contextlib import suppress
+from datetime import date
 from typing import Any
 
 from src.agents.herramientas import (
@@ -32,7 +33,7 @@ from src.services.obligaciones import SituacionObligacion
 from src.services.predial import RangoIPU, liquidar_predial, tabla_tarifas_ipu
 
 
-def _obligacion(s: SituacionObligacion) -> dict[str, Any]:
+def _obligacion(s: SituacionObligacion, hoy: date) -> dict[str, Any]:
     o = minimizar(s.obligacion)
     return {
         "vigencia_fiscal": o["vigencia_fiscal"],
@@ -43,6 +44,7 @@ def _obligacion(s: SituacionObligacion) -> dict[str, Any]:
         "fecha_limite_descuento": fecha(s.obligacion.fecha_limite_descuento),
         "descuento_aun_vigente": s.descuento_vigente,
         "fecha_limite_pago": fecha(s.obligacion.fecha_limite_pago),
+        "fecha_limite_pago_ya_paso": ya_paso(s.obligacion.fecha_limite_pago, hoy),
         "estado_pago": o["estado_pago"],
         "vencida_a_hoy": s.vencida,
         "pagado": pesos(s.pagado),
@@ -79,7 +81,7 @@ def _estado_cuenta(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "obligaciones_pendientes_o_vencidas": cuenta.pendientes,
         "obligaciones_vencidas_a_hoy": cuenta.vencidas,
         "saldo_pendiente_predial": pesos(cuenta.saldo),
-        "obligaciones": [_obligacion(s) for s in cuenta.obligaciones],
+        "obligaciones": [_obligacion(s, contexto.hoy) for s in cuenta.obligaciones],
         "pagos": [
             {
                 "vigencia_fiscal": vigencias[p.id_obligacion],
@@ -129,6 +131,7 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
                 "estado_pago": s.obligacion.estado_pago,
                 "vencida_a_hoy": s.vencida,
                 "fecha_limite_pago": fecha(s.obligacion.fecha_limite_pago),
+                "fecha_limite_pago_ya_paso": ya_paso(s.obligacion.fecha_limite_pago, contexto.hoy),
                 "saldo": pesos(s.saldo),
             }
             if s.vencida:

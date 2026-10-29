@@ -84,11 +84,13 @@ CITAS_SIN_FUENTE = (
     "completo."
 )
 EXPRESIONES_RELATIVAS = (
-    "Revisa la respuesta: dice {expresiones}, una relación con la fecha de hoy que calculaste tú. "
-    "Corrígela: da la fecha exacta y, para decir si ya pasó, usa solo lo que calcula el sistema "
-    "(ya_paso, vencida_a_hoy, descuento_aun_vigente, plazo_sin_descuento_ya_paso): si ya pasó, "
-    "«ya venció»; si no, que aún no vence. No digas «mañana», «ayer», «en N días», «hace N días» "
-    "ni «la próxima semana». No cambies lo demás. Devuelve el JSON completo."
+    "Revisa la respuesta: dice {expresiones}. No relaciones ninguna fecha con el día de la "
+    "consulta ni digas cuál es la fecha de hoy: da la fecha exacta (día, mes y año) y, para "
+    "decir si un plazo ya pasó, usa solo lo que calcula el sistema (ya_paso, vencida_a_hoy, "
+    "descuento_aun_vigente, plazo_sin_descuento_ya_paso y los demás campos «…ya_paso»): «ya "
+    "venció» o «aún no vence». No uses «hoy», «mañana», «ayer», «hace N días» ni «faltan N "
+    "días», y no digas qué herramientas o fragmentos usaste. No cambies lo demás. Devuelve el "
+    "JSON completo."
 )
 
 
@@ -382,7 +384,8 @@ def ejecutar_agente(
 
     # Verificadores sin modelo: una cita «norma, art. N» que no está en los encabezados de los
     # fragmentos, en las fuentes de las herramientas ni en las notas (F5), o una expresión que
-    # relaciona una fecha con hoy («mañana», «hace N días»: esa relación la decide el código),
+    # relaciona una fecha con el día de la consulta («hoy», «mañana», «hace N días»: si un plazo ya
+    # pasó lo dice el código) o que nombra los fragmentos o las herramientas,
     # piden una sola reescritura con los mensajes que correspondan; si persiste, la parte queda
     # «parcial» y lo decide la confianza.
     validas = [
@@ -397,7 +400,9 @@ def ejecutar_agente(
         else []
     )
     relativas = (
-        expresiones_relativas(salida.respuesta) if salida.suficiencia != "no_corresponde" else []
+        expresiones_relativas(salida.respuesta)
+        if salida.suficiencia != "no_corresponde" and not solo_actividad_no_reconocida
+        else []
     )
     reescrituras = 0
     if sin_fuente or relativas:

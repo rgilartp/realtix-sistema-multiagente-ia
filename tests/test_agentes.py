@@ -1153,12 +1153,14 @@ def test_cada_fecha_del_ica_trae_si_ya_paso_el_dia_antes_el_mismo_dia_y_el_despu
 ) -> None:
     from src.services.calendario_tributario import fechas_ica
 
-    for i, limite in enumerate(fechas_ica(2026, "bimestral")):
-        for ahora, paso in _alrededor(limite):
-            guion = [pide(("fechas_ica", {"anio": 2026, "periodicidad": "bimestral"})), final(".")]
-            _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", ahora=ahora)
-            (datos,) = resultados_de_herramientas(modelo)
-            assert datos["fechas_limite_declaracion"][i]["ya_paso"] is paso
+    for periodicidad in ("bimestral", "anual"):
+        for i, limite in enumerate(fechas_ica(2026, periodicidad)):
+            for ahora, paso in _alrededor(limite):
+                pedido = {"anio": 2026, "periodicidad": periodicidad}
+                guion = [pide(("fechas_ica", pedido)), final(".")]
+                _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", ahora=ahora)
+                (datos,) = resultados_de_herramientas(modelo)
+                assert datos["fechas_limite_declaracion"][i]["ya_paso"] is paso
 
 
 @pytest.mark.unit
@@ -1168,9 +1170,11 @@ def test_los_prompts_tienen_la_regla_de_fechas_y_no_las_frases_respecto_a_hoy() 
         prompt = prompt_de_agente(nombre)
         texto = " ".join(prompt.texto.split())
         assert prompt.version.endswith("+comun.v4")
-        assert "Fechas y plazos: da siempre la fecha exacta." in texto
-        assert "Nunca hagas tú la cuenta" in texto and "«ya venció»" in texto
+        assert "Fechas y plazos: da siempre la fecha exacta (día, mes y año)." in texto
+        assert "No relaciones ninguna fecha con el día de la consulta" in texto
+        assert "no digas cuál es la fecha de hoy" in texto and "«aún no vence»" in texto
         assert "llama la herramienta de fechas de tu tema" in texto
+        assert "No digas en la respuesta qué herramientas o fragmentos usaste." in texto
         # Siguen las reglas de la obligación vencida y del descuento vencido.
         assert "Si una obligación está vencida a la fecha de hoy, dilo claramente." in texto
         assert "no lo presentes como disponible" in texto
@@ -1231,3 +1235,54 @@ def test_un_plazo_legal_o_la_hora_no_provocan_reescritura(adaptador) -> None:
     ]
     respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos")
     assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "completa"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
+def test_la_fecha_limite_de_pago_de_cada_obligacion_trae_si_ya_paso(adaptador) -> None:
+    from src.services.calendario_tributario import ya_paso
+
+    guion = [pide(("estado_cuenta_predial", {})), final("Cuenta.")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Cuenta", U03, [P03])
+    (cuenta,) = resultados_de_herramientas(modelo)
+    hoy = date.fromisoformat(RELOJ_ESCENARIOS[:10])
+    for o in cuenta["obligaciones"]:
+        assert isinstance(o["fecha_limite_pago_ya_paso"], bool)
+    assert any(o["fecha_limite_pago_ya_paso"] for o in cuenta["obligaciones"])
+    assert not ya_paso(hoy, hoy)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_hoy_y_las_referencias_internas_provocan_la_reescritura(adaptador) -> None:
+    guion = [
+        pide(("fechas_predial", {"anio": 2026})),
+        final("No necesito consultar herramientas: según el fragmento [1], hoy vence."),
+        final("El plazo vence el 10 de julio de 2091; aún no vence."),
+    ]
+    modelo = ModeloFalso(guion)
+    deps = dependencias(adaptador, modelo, modo_evaluacion=True)
+    respuesta, _ = ejecutar_agente(
+        AGENTE_IPU, deps, estado("¿Cuándo vence?"), configuracion_de_hilo("c", RELOJ_ESCENARIOS)
+    )
+    assert len(modelo.llamadas) == 3 and respuesta["reescrituras"] == 1
+    observacion = modelo.llamadas[-1][0][-1].content
+    assert observacion == EXPRESIONES_RELATIVAS.format(
+        expresiones="consultar herramientas; fragmento [1]; hoy"
+    )
+    assert respuesta["suficiencia"] == "completa"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
+def test_sin_reescritura_si_no_corresponde_o_si_es_la_aclaracion_de_la_actividad(adaptador) -> None:
+    no_corresponde = final("Mañana te digo.", suficiencia="no_corresponde", cobertura=0.0)
+    guion = [AIMessage(content="No es de mi tema."), no_corresponde]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Otra cosa")
+    assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "no_corresponde"
+    args = {"ciiu": "0000", "ingresos": 1_000_000, "anio": 2026, "periodicidad": "anual"}
+    guion = [pide(("estimar_ica", args)), final("Mañana me confirmas el código CIIU.")]
+    respuesta, _, modelo = correr(
+        AGENTE_ICA, adaptador, guion, "ICA de la actividad 0000", U04, [P04]
+    )
+    assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "aclaracion"

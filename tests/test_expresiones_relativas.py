@@ -2,7 +2,6 @@
 
 import pytest
 
-from src.services.calendario_tributario import ya_paso
 from src.services.expresiones_relativas import expresiones_relativas
 
 REQ = ("RF-IPU-04 · Plazos y descuentos", "RF-ICA-03 · Fechas de declaración")
@@ -22,6 +21,19 @@ REQ = ("RF-IPU-04 · Plazos y descuentos", "RF-ICA-03 · Fechas de declaración"
         ("Faltan 8 días para el plazo.", ["faltan 8 días"]),
         ("Solo falta un día.", ["falta un día"]),
         ("Te quedan 3 días.", ["quedan 3 días"]),
+        ("Hoy vence; a la fecha de hoy y hoy en día.", ["hoy"]),
+        ("Venció hace unos días; hace más de 10 días.", ["hace unos días", "hace más de 10 días"]),
+        (
+            "Faltan menos de 5 días; quedan dieciseis días.",
+            ["faltan menos de 5 días", "quedan dieciseis días"],
+        ),
+        ("Hace veinticinco días.", ["hace veinticinco días"]),
+        (
+            "No necesito consultar herramientas: el fragmento [1] lo dice.",
+            ["consultar herramientas", "fragmento [1]"],
+        ),
+        ("Según los fragmentos [1, 3].", ["fragmentos [1, 3]"]),
+        ("Esta mañana venció. HACE UN MES.", ["mañana", "hace un mes"]),
     ],
 )
 def test_encuentra_las_expresiones_relativas_a_hoy(texto: str, esperadas: list[str]) -> None:
@@ -40,17 +52,10 @@ def test_encuentra_las_expresiones_relativas_a_hoy(texto: str, esperadas: list[s
         "Tiene que corregirse en 15 días hábiles.",
         "Los rendimientos financieros hacen parte de la base; falta el código CIIU.",
         "Quedan exentos los predios de la lista.",
+        "Se hace 3 días después del cierre; se hace un mes antes.",
+        "Abre cada mañana, en jornada mañana y tarde, desde las 8 de la  mañana.",
+        "El fragmento de la norma lo dice; consulta la herramienta del simulador.",
     ],
 )
 def test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras(texto: str) -> None:
     assert expresiones_relativas(texto) == []
-
-
-@pytest.mark.unit
-@pytest.mark.req(*REQ)
-def test_una_fecha_igual_a_hoy_no_ha_pasado() -> None:
-    from datetime import date
-
-    hoy = date(2091, 3, 10)  # fechas inventadas
-    assert not ya_paso("2091-03-11", hoy) and not ya_paso("2091-03-10", hoy)
-    assert ya_paso("2091-03-09", hoy) and ya_paso(date(2091, 3, 9), hoy)
