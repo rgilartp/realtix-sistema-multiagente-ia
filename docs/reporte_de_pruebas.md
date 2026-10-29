@@ -1,27 +1,40 @@
-# Reporte de pruebas del OE4 (esqueleto para B16)
+# Reporte de pruebas del OE4
 
 Reporte de la ejecución del plan de pruebas (`docs/plan_de_pruebas.md`), con la estructura del
-reporte de avance y de cierre del programa CTFL v4.0.1 del ISTQB. Se llena en B16 con la corrida 3
-(la que se reporta, sección 6.10). Cada cifra lleva su archivo de origen en `reports/`. Lo que falta
-dice **PENDIENTE (corrida 3)**, **PENDIENTE (calibración)** o **PENDIENTE (usabilidad)**.
+reporte de avance y de cierre del programa CTFL v4.0.1 del ISTQB, con la corrida 3 (la que se
+reporta, sección 6.10). Cada cifra lleva su archivo de origen en `reports/`.
 
 ## 1. Resumen
 
 - Objeto: el sistema multiagente de IA desplegado, con datos sintéticos.
-- Versión evaluada: **PENDIENTE (corrida 3)** (commit; sin cambios de código desde la última
-  fusión).
+- Versión evaluada: `d3dab00`, desplegada en `https://tg2-multiagente.duckdns.org`. Hasta el cierre,
+  `main` solo sumó documentos y reportes (`git diff d3dab00` sin cambios en `src/`, `web/`, `datos/`,
+  `knowledge_base/`, `deploy/` ni en las dependencias).
 - Huella del juez: la de `reports/calibracion/huella_juez.txt` (juez v3, ADR-25); `evaluar.py` la
   exige con `--exigir-huella` y, siempre, con más de un ensayo por escenario.
-- Resultado frente a la meta de RNF-16 · Tasa de respuestas correctas (85 %): **PENDIENTE (corrida
-  3)**.
+- Resultado frente a la meta de RNF-16 · Tasa de respuestas correctas (85 %): **90,0 %** de los 60
+  escenarios (3 ensayos cada uno; Wilson de 79,9 % a 95,3 % con n = 60, bootstrap de 83,3 % a
+  96,1 %) y pass^3 de 0,85. La estimación puntual supera la meta; el límite inferior del intervalo
+  no (`reports/corrida-3/metricas.json`).
 
 ## 2. Contexto y desviaciones del plan
 
 - Corridas 1 y 2 y sus correcciones: `reports/corrida-1/`, `docs/resumenes/correcciones-corrida-1.md`,
   `reports/corrida-2/` y `docs/resumenes/b15.md`.
 - Correcciones del instrumento después de la corrida 1 y juez v3: ADR-25.
-- Desviaciones frente al plan: **PENDIENTE (corrida 3)** (por ejemplo, la segunda ronda de
-  correcciones y lo que quedó propuesto).
+- Desviaciones frente al plan:
+  - Una segunda ronda de correcciones después de la corrida 2 (PR #49 cerrado, #50 reemplazado por el
+    #72, #51 fusionado) y las correcciones de la usabilidad y de la revisión externa con un asistente de
+    IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los
+    autores contrastaron con las fuentes oficiales y aprobaron (PR #59 a #68).
+  - Tres ensayos generales de un ensayo antes de la corrida 3 (2b, 2c y 2d), cada uno con una regla
+    fijada antes de ver el resultado; la 2c no la cumplió y llevó a las fechas y las reglas por código
+    (PR #72 y #73), verificadas con sondas y con la 2d (`docs/resumenes/b16.md`).
+  - La muestra de calibración salió de la corrida 2b, no de la 2, porque la primera se descartó
+    (sección 7).
+  - Una auditoría de seguridad y sus correcciones (PR #69 y #70; `docs/resumenes/auditoria_seguridad.md`).
+  - La revisión de trazas se corrió dentro del backend desplegado (este equipo no tiene la llave de
+    LangSmith), y el reporte se armó con `--solo-reporte`.
 
 ## 3. Criterios de entrada de la corrida 3
 
@@ -29,35 +42,65 @@ Se registran también en `reports/corrida-3/criterios_de_entrada.md`, como en la
 
 | Criterio | Cómo se verifica | Resultado |
 |---|---|---|
-| El sistema desplegado responde `/health` | `curl https://<subdominio>.duckdns.org/health` | PENDIENTE (corrida 3) |
-| CI en verde | `gh run list --branch main --workflow CI` | PENDIENTE (corrida 3) |
-| Corpus cargado | Salida de la ingesta de `deploy/desplegar.sh` | PENDIENTE (corrida 3) |
-| Juez calibrado | `tests/test_preparacion_b16.py` y `--exigir-huella` | PENDIENTE (corrida 3) |
-| Sin cambios de código desde la última fusión | `git log` frente al commit desplegado | PENDIENTE (corrida 3) |
-| Referencias aprobadas, incluidas las de R1 (nuevas en la corrida 3) | Campo de aprobación de cada escenario; la corrida se detiene sin `--sin-aprobar` | PENDIENTE (corrida 3) |
-| Verificador de referencias (A7) sin nada sin resolver | `uv run python scripts/verificar_referencias.py` | PENDIENTE (corrida 3) |
-| LangSmith encendido (la corrida usa `--trazas`, RNF-05 · Registro auditable) | Trazas de una prueba de humo | PENDIENTE (corrida 3) |
-| Modo de evaluación encendido solo durante la corrida (A9) | `desplegar.sh --evaluacion` al empezar y sin él al terminar, verificado desde afuera | PENDIENTE (corrida 3) |
+| El sistema desplegado responde `/health` | `curl https://<subdominio>.duckdns.org/health` | Cumple: `ok`, con PostgreSQL, Chroma y RealSit en `ok`, antes y después de la corrida |
+| CI en verde | `gh run list --branch main --workflow CI` | Cumple: CI en verde en el commit desplegado y en `main` |
+| Corpus cargado | Salida de la ingesta de `deploy/desplegar.sh` | Cumple: 1.149 fragmentos (73, 562, 491 y 23 por colección), sin embeddings nuevos |
+| Juez calibrado | `tests/test_preparacion_b16.py` y `--exigir-huella` | Cumple: la huella del juez es la de la calibración (`afecd5c1…`) |
+| Sin cambios de código desde la última fusión | `git log` frente al commit desplegado | Cumple: `d3dab00`; lo posterior son documentos y reportes |
+| Referencias aprobadas, incluidas las de R1 (nuevas en la corrida 3) | Campo de aprobación de cada escenario; la corrida se detiene sin `--sin-aprobar` | Cumple: los 60 aprobados por Rodolfo (PR #67), R1 aprobadas en B15, R3 y R4 desde la corrida 1 |
+| Verificador de referencias (A7) sin nada sin resolver | `uv run python scripts/verificar_referencias.py` | Cumple: 65 escenarios y 171 cifras, 0 sin resolver |
+| LangSmith encendido (la corrida usa `--trazas`, RNF-05 · Registro auditable) | Trazas de una prueba de humo | Cumple: 4.422 ejecuciones de la corrida revisadas en el servidor |
+| Modo de evaluación encendido solo durante la corrida (A9) | `desplegar.sh --evaluacion` al empezar y sin él al terminar, verificado desde afuera | Cumple: se encendió para la 2d, siguió en la corrida 3 y en las no funcionales, y se apagó al terminar; desde afuera, el reloj simulado se ignora y la meta no trae campos de evaluación |
 
 ## 4. Resultados del nivel de sistema (corrida 3)
 
-- Tasa de la meta y estricta, con Wilson (n = escenarios) y bootstrap: **PENDIENTE (corrida 3)**.
-- pass@1 promedio, pass@3 y pass^3: **PENDIENTE (corrida 3)**.
-- R1 (generalización), R3 y R4, aparte: **PENDIENTE (corrida 3)**.
-- Veredictos del juez, alucinación, citas y claridad: **PENDIENTE (corrida 3)**.
+Contra `d3dab00`, 3 ensayos por escenario, juez v3 congelado (`reports/corrida-3/`).
+
+| Conjunto | Tasa de la meta (Wilson; bootstrap) | Estricta | pass@1 / pass@3 / pass^3 |
+|---|---|---|---|
+| Principal (60) | **90,0 %** (79,9 % a 95,3 %; 83,3 % a 96,1 %) | 75,0 % | 0,90 / 0,95 / 0,85 |
+| R1 · Generalización (10 variantes) | 43,3 % (19,0 % a 71,4 %) | 23,3 % | 0,43 / 0,60 / 0,30 |
+| R3 · Encadenados (3) | 100 % | 55,6 % | 1,00 / 1,00 / 1,00 |
+| R4 · Seguridad (2) | 100 % | 100 % | 1,00 / 1,00 / 1,00 |
+
+- Veredictos del juez en el principal (180 ensayos): 137 correctas, 37 parcialmente correctas y 6
+  incorrectas; alucinación en 7 (3,9 %); cita una norma en el 60,6 % y la cita sustenta en el
+  60,0 %; cobertura completa en el 78,3 %; claridad media de 4,67 de 5.
+- Sin errores técnicos en los 249 turnos.
+- R1 (las variantes parafraseadas de Dayanna, que solo corren en la corrida 3) quedó muy por debajo
+  del principal: la generalización a otras formas de preguntar es la debilidad más clara del sistema
+  (sección 9).
 
 ## 5. Componentes e integración
 
-- Enrutamiento: precisión, exhaustividad y F1 por clase, matriz de confusión, kappa y exactitud de la
-  clase mayoritaria: **PENDIENTE (corrida 3)**.
-- Agentes contra su nodo: **PENDIENTE (corrida 3)**.
-- RAGAS, con y sin sesión, frente a Bahçeci y colaboradores: **PENDIENTE (corrida 3)**.
+- Enrutamiento (100 consultas etiquetadas, 20 por clase): exactitud de 99,0 %, kappa de 0,99 y F1
+  macro de 0,99, frente a 20,0 % de la clase mayoritaria. Por clase, F1 de 0,976 (IPU), 1,000 (ICA),
+  0,974 (general), 1,000 (OCR) y 1,000 (fuera de alcance); el único error, una consulta general
+  clasificada como IPU (`reports/corrida-3/matriz_confusion_componentes.png`).
+- Agentes contra su nodo: 11 de 34 escenarios de un turno (32,4 %). Corridos sin el orquestador, los
+  agentes no reciben la consulta de búsqueda que este escribe ni su clasificación, así que el nivel
+  de sistema (90,0 %) es el que mide al sistema completo.
+- RAGAS (110 casos, `gpt-4.1-mini`), frente a Bahçeci y colaboradores: precisión del contexto de
+  66,1 % (75,2 %), exhaustividad del contexto de 82,4 % (86,6 %), fidelidad de 84,8 % (92,6 %) y
+  relevancia de la respuesta de 68,1 % (91,3 %). El reporte de la corrida 3 da el promedio de todos
+  los casos, sin separar los que tienen sesión.
 
 ## 6. Pruebas no funcionales
 
-Las de B15 están en `reports/no_funcionales/README.md`; en B16 se repiten las que dependen del
-despliegue: **PENDIENTE (corrida 3)**. RNF-06 · Horario de atención (disponibilidad con el
-historial del monitor): **PENDIENTE (corrida 3)**.
+Se repitieron en B16, contra `d3dab00`, las que dependen del despliegue (`reports/no_funcionales/`;
+las de B15 quedan en `reports/no_funcionales/corrida-2/`):
+
+| Requerimiento | Resultado |
+|---|---|
+| RNF-01 · Tiempo de respuesta | Sin fragmentos: p50 de 2.299 ms y p95 de 3.934 ms, 54 de 54 bajo 8 s. Con RAG: p50 de 6.379 ms y p95 de 13.393 ms, 120 de 120 bajo 15 s (servidor) |
+| RNF-02 · Escalamiento horizontal | Con dos réplicas, el turno 1 lo atendió `backend-1`; con esa réplica detenida, el turno 2 de la misma conversación lo atendió `backend-2`, y los dos quedaron registrados (`replicas.json`) |
+| RNF-08 · Tiempos de espera y degradación | 8 de 8 fallas inyectadas escalan por «fallo de servicio», con HTTP 200 y sin error técnico visible (`fallas_inyectadas.json`) |
+| RNF-15 · Volúmenes persistentes | Conteos iguales antes, después de reiniciar y después de recrear: 594 conversaciones, 669 interacciones, 88 casos, 3.854 puntos de control y 1.149 fragmentos (`volumenes.json`) |
+| RF-SYS-02 · Alcance de solo lectura | Huella de RealSit idéntica antes y después (`4479d036…`, `huella_realsit.txt`) |
+| RNF-03 · Protección de datos personales y RNF-05 · Registro auditable | 4.422 ejecuciones de la corrida 3 sin identificadores (`reports/corrida-3/trazas.json`) |
+
+RNF-06 · Horario de atención (disponibilidad con el historial del monitor): **PENDIENTE (cierre de
+B16)**.
 
 ## 7. Calibración del juez
 
@@ -107,36 +150,111 @@ lado, contra el sistema desplegado (ADR-21; `docs/usabilidad/rodolfo/` y `docs/u
 
 ## 9. Análisis de fallas
 
-Causa técnica y familia de MAST de cada falla de la corrida 3 (`reports/corrida-3/fallas.md`), con
-la evolución desde las corridas 1 y 2: **PENDIENTE (corrida 3)**.
+Escenarios con algún ensayo no superado en la corrida 3 (`reports/corrida-3/fallas.md` trae cada
+ensayo con la justificación del juez), con su causa técnica, su familia de MAST y su historia en las
+corridas anteriores (sí: superado; no: no superado).
+
+| Escenario | Superados de 3 | Causa (familia de MAST) | 1 / 2 / 2b / 2c / 2d |
+|---|---|---|---|
+| GEN-02 | 0 | Enrutamiento y escalamiento: transfiere a un funcionario en vez de responder que el asistente no presenta declaraciones ni hace pagos (diseño del sistema) | no / no / no / no / no |
+| IPU-14 | 0 | Recuperación y generación: niega el alivio de intereses del Acuerdo 1084 de 2026 y no da el saldo (verificación de la tarea) | no / no / no / no / no |
+| IPU-13 | 0 | Recuperación: no llega el art. 4 de la Resolución SDH-000195 y la respuesta no dice «30 de abril» (verificación de código); el juez la da como parcialmente correcta (diseño del sistema) | sí / no / sí / no / sí |
+| AIA-01 | 1 | Enrutamiento: ante un saludo, una vez lo clasificó como fuera de alcance y otra escaló sin necesidad (diseño del sistema) | no / sí / sí / no / sí |
+| IPU-15 | 1 | Generación: no da el valor de la cuota («845.000», verificación de código); el juez la da como correcta o parcial (verificación de la tarea) | sí / sí / sí / sí / sí |
+| MULTI-03 | 1 | Generación: afirma sin fuente quién paga el predial; omite la fusión de tributos y la base (verificación de la tarea) | no / sí / no / no / no |
+| ICA-04 | 2 | Generación: un ensayo con una afirmación sin fuente (verificación de la tarea) | no / sí / sí / sí / sí |
+| ICA-07 | 2 | Generación: un ensayo atribuye sin fuente un valor al 4.º bimestre (verificación de la tarea) | no / no / sí / sí / sí |
+| IPU-04 | 2 | Generación: un ensayo con una afirmación sin fuente; omite la fusión y los rangos (verificación de la tarea) | no / no / no / no / sí |
+
+En R1 (generalización) no pasaron, de 3: VAR-01 (0; responde con las fechas de pago y omite la
+causación el 1 de enero), VAR-03 (0; no dice que el plazo venció y en 2 de 3 pide iniciar sesión para
+una duda general), VAR-06 (0; no dice «30 de abril» y se desvía hacia la declaración privada),
+VAR-08 (0; no dice «bimestre» y en 2 de 3 trae afirmaciones sin fuente), VAR-05 (1; omite
+«divulgación adicional»), VAR-09 (1; omite el cambio de régimen de 2027) y VAR-02 (2; una advertencia
+sin fuente). Las paráfrasis cambian la clasificación o la búsqueda (por ejemplo, una pregunta general
+tomada como personal) y la respuesta deja de cubrir lo esencial de la referencia.
+
+Ninguna falla es de acceso a datos ni de identificadores en las trazas. Las fallas que persisten
+desde la corrida 1 (GEN-02 e IPU-14) y las de recuperación (IPU-13) quedan como trabajo futuro;
+las correcciones se cerraron para congelar el código antes de esta corrida.
 
 ## 10. Latencia y costo
 
-- p50 y p95 del servidor y del cliente, con y sin recuperación: **PENDIENTE (corrida 3)**.
-- Costo de la corrida (`reports/corrida-3/costos.md`), costo por consulta y costo total del
-  proyecto frente al presupuesto de la sección 7 del plan: **PENDIENTE (corrida 3)**.
+- Latencia (principal, `reports/corrida-3/latencias.png`): sin fragmentos, servidor p50 de 2.299 ms y
+  p95 de 3.934 ms, cliente p50 de 2.273 ms y p95 de 4.191 ms; con RAG, servidor p50 de 6.379 ms y p95
+  de 13.393 ms, cliente p50 de 6.152 ms y p95 de 12.349 ms. Todos los turnos dentro de las metas de
+  RNF-01 · Tiempo de respuesta (8 s y 15 s).
+- Costo de la corrida 3 (`reports/corrida-3/costos.md`): US$12,47, de los que US$10,82 son de
+  Anthropic (sistema 2,05, juez 7,17 y componentes 1,61) y US$1,65 de OpenAI (RAGAS). El sistema costó
+  US$0,0082 por turno (249 turnos); el juez es lo que más pesa en una corrida.
+- Costo total del proyecto: los `costos.md` de todas las corridas y verificaciones suman US$35,85
+  (US$33,14 en Anthropic y US$2,72 en OpenAI); con las sondas, las verificaciones sin `costos.md`, las
+  pruebas de humo y las ingestas, unos US$34,8 en Anthropic y US$2,8 en OpenAI. Frente al presupuesto
+  de la sección 7 del plan (US$25 en Anthropic y US$10 en OpenAI), Anthropic lo superó en unos US$9,8:
+  las rondas de correcciones posteriores a la corrida 2, cada una verificada con el juez, y los
+  ensayos generales 2b a 2d no estaban en el presupuesto.
 
 ## 11. Trazabilidad y criterios de salida
 
 | Criterio de salida (sección 6.9) | Resultado |
 |---|---|
-| Tasa de escenarios superados de 85 % o más | PENDIENTE (corrida 3) |
-| Ningún escenario de acceso ni de trazas fallido | PENDIENTE (corrida 3) |
-| Latencias medidas | PENDIENTE (corrida 3) |
-| Matriz de trazabilidad completa (`reports/trazabilidad.md` y `.csv`) | PENDIENTE (corrida 3) |
-| Reporte generado | PENDIENTE (corrida 3) |
+| Tasa de escenarios superados de 85 % o más | Cumple en la estimación puntual (90,0 %); el límite inferior de Wilson es 79,9 % |
+| Ningún escenario de acceso ni de trazas fallido | Cumple: los de acceso y R4 superados en los 3 ensayos; 0 identificadores en las trazas |
+| Latencias medidas | Cumple: servidor y cliente, con y sin recuperación |
+| Matriz de trazabilidad completa (`reports/trazabilidad.md` y `.csv`) | Cumple: los 65 requerimientos con su evidencia |
+| Reporte generado | Cumple: `reports/corrida-3/reporte.md` y este documento |
 
 Calificación de cada uno de los 65 requerimientos (cumple, cumple en parte o no cumple) y el
 porcentaje global de cumplimiento (secciones 6.11 y 8.17 de la especificación; sección 11 del plan),
-desde `reports/trazabilidad.md`: **PENDIENTE (corrida 3)**.
+desde `reports/trazabilidad.md`: **74,0 %** de cumplimiento global, con 50 de los 65 requerimientos
+calificados (37 con 100 %, 13 con 0 % y ninguno con 80 %); los otros 15 no tienen evidencia
+calificable en una corrida o en la suite (por ejemplo, los de despliegue y de la interfaz que se
+verifican aparte). La calificación es mecánica: un requerimiento vale 0 si falla algún ensayo de
+alguno de sus escenarios. Con 3 ensayos por escenario es más estricta que en la corrida 2 (83,3 %
+de 48 calificados con 1 ensayo).
 
 ## 12. Impedimentos, riesgos y lecciones (cierre CTFL v4.0.1)
 
-- Impedimentos y cómo se resolvieron: **PENDIENTE (corrida 3)**.
-- Riesgos de la sección 4 del plan que no se mitigaron y fallas que no se corrigieron:
-  **PENDIENTE (corrida 3)**.
-- Lecciones aprendidas: **PENDIENTE (corrida 3)**.
+- **Impedimentos y cómo se resolvieron:**
+  - El monitor programado de GitHub Actions nunca corrió: el monitor pasó al crontab del servidor
+    (B15).
+  - Un 502 por una fuga de conexiones en `/health` (PR #54).
+  - Avisos de seguridad de las dependencias (PR #56, ADR-26).
+  - Un recibo real cargado en una prueba manual: se borró y se corrigió su causa en las trazas
+    (`docs/resumenes/b15.md`, punto 9; PR #69). El borrado en LangSmith quedó aceptado y su
+    confirmación, pendiente.
+  - La primera muestra de calibración se llenó con ayuda de una IA externa: se descartó y se repitió.
+  - La corrida 2c no cumplió su regla: se analizó cada falla y se pasó a las fechas y las reglas por
+    código, verificadas antes de congelar.
+  - Este equipo no tiene la llave de LangSmith: la revisión de trazas se corrió en el backend
+    desplegado.
+- **Riesgos que no se mitigaron y fallas que no se corrigieron:**
+  - La generalización (R1, 43,3 %) y los agentes contra su nodo (32,4 %) quedaron bajos.
+  - GEN-02 e IPU-14 fallan desde la corrida 1.
+  - El kappa del juez frente a las personas es bajo, por la poca variación de la muestra, y el juez es
+    más estricto que ellas.
+  - La indicación de dónde encontrar el CIIU quedó solo en el glosario.
+  - Un texto de 2002 del Decreto 352 (art. 26) sigue vigente en la base y apareció en una respuesta
+    sobre tarifas.
+  - El costo en Anthropic superó el presupuesto.
+- **Lecciones aprendidas:**
+  - Fijar la regla de un ensayo antes de ver su resultado evitó corregir hacia adelante; con esa
+    regla se revirtió una corrección que dañaba otro escenario (CIIU, PR #66).
+  - Lo que debe ser exacto (si una fecha ya pasó, la regla de un régimen) lo decide mejor el código
+    que el modelo; un verificador sin modelo hace cumplir la regla.
+  - La calibración con personas exige que califiquen sin IA y con una muestra con suficientes
+    casos negativos.
+  - Las verificaciones automáticas de texto tienen límites: una persona revisó cada señal antes de
+    decidir.
+  - Una revisión de seguridad, aunque sea rápida y estática, encontró un problema real (las
+    imágenes en las trazas).
 
 ## 13. Conclusiones
 
-**PENDIENTE (corrida 3).**
+El sistema multiagente de IA desplegado superó el 90,0 % de los 60 escenarios en la corrida final,
+con 3 ensayos por escenario (pass^3 de 0,85), por encima de la meta del 85 % de RNF-16 en la
+estimación puntual. Superó todos los escenarios de acceso, seguridad y conversaciones encadenadas,
+sin errores técnicos, con las latencias dentro de las metas, trazas sin identificadores, el
+enrutamiento en el 99 % y la usabilidad con un SUS de 80,0 y 97,5. La generalización a otras formas
+de preguntar quedó en 43,3 %: es el límite principal del prototipo. El instrumento se validó y se
+congeló antes de la corrida, y su calibración con personas mostró un juez más estricto que ellas.
