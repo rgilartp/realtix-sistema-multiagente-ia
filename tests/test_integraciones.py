@@ -15,7 +15,12 @@ from src.integrations.modelos import crear_modelo, nombre_del_modelo, texto_de_r
 from src.integrations.recuperacion_hibrida import RecuperadorHibrido
 from src.integrations.recuperador import RecuperadorEnMemoria
 from src.integrations.robustez import ServicioNoDisponibleError, con_tiempo_y_reintento
-from src.integrations.trazas import Anonimizador, crear_cliente_langsmith, metadatos_de_traza
+from src.integrations.trazas import (
+    Anonimizador,
+    AnonimizadorDeTrazas,
+    crear_cliente_langsmith,
+    metadatos_de_traza,
+)
 from src.store.almacen import crear_motor
 from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 
@@ -213,6 +218,37 @@ def test_langsmith_apagado_no_crea_cliente_y_encendido_usa_el_anonimizador(entor
     cliente = crear_cliente_langsmith(cargar_configuracion(env_file=None), anonimizador)
     assert cliente is not None and cliente._hide_inputs is anonimizador
     assert cliente._hide_outputs is anonimizador
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-03 · Protección de datos personales", "RNF-05 · Registro auditable")
+def test_las_trazas_quitan_imagenes_y_nombres_y_lo_de_los_modelos_no_cambia(
+    entorno_valido,
+) -> None:
+    """Auditoría de seguridad: la imagen del recibo y «me llamo…» no llegan a LangSmith. Lo que ven
+    el juez, el clasificador y los agentes (`para_modelos=True`) sigue igual, y la huella del juez
+    también (A5)."""
+    from src.evaluacion.escenarios import RAIZ
+    from src.evaluacion.juez import huella_del_juez
+
+    datos = "iVBORw0KGgo" + "A" * 1200  # una imagen en base64 (inventada)
+    entrada = {"messages": [[{"content": [
+        {"type": "text", "text": "Hola, me llamo Ana Pérez"},
+        {"type": "image", "source": {"type": "base64", "data": datos}},
+        {"type": "image_url", "image_url": {"url": "data:image/png;base64,iVBOR"}},
+    ]}]]}  # fmt: skip
+    trazas = AnonimizadorDeTrazas()(entrada)["messages"][0][0]["content"]
+    assert trazas[0]["text"] == "Hola, me llamo [NOMBRE]"
+    assert trazas[1]["source"]["data"] == "[IMAGEN]" == trazas[2]["image_url"]["url"]
+    assert AnonimizadorDeTrazas().texto("CC-1000000003") == "[DOCUMENTO]"  # lo de antes sigue
+    largo = "El avalúo catastral es la base gravable del impuesto predial. " * 30
+    assert AnonimizadorDeTrazas().texto(largo) == largo  # un texto largo no es una imagen
+    modelos = Anonimizador(para_modelos=True)(entrada)["messages"][0][0]["content"]
+    assert modelos[0]["text"] == "Hola, me llamo [NOMBRE]"  # como antes
+    assert modelos[1]["source"]["data"] == datos  # el modelo de visión recibe la imagen
+    assert modelos[2]["image_url"]["url"] == "data:image/png;base64,iVBOR"
+    huella = (RAIZ / "reports" / "calibracion" / "huella_juez.txt").read_text(encoding="utf-8")
+    assert huella_del_juez(cargar_configuracion(env_file=None)) == huella.strip()
 
 
 # -- Contenedor y almacén conectado ---------------------------------------------------------------
