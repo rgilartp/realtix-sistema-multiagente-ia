@@ -120,5 +120,3 @@ Agentes directo contra su nodo: 11 de 34 correctos o parciales sin alucinación 
 4422 ejecuciones revisadas; 0 con identificadores de los usuarios de prueba.
 
 ![Latencias](latencias.png)
-
-`resultados.jsonl` va comprimido (`resultados.jsonl.gz`, 2,2 MB sin comprimir, más que el límite de 1 MB del gancho de archivos grandes). Para regenerar los reportes: `gunzip -k reports/corrida-3/resultados.jsonl.gz`.

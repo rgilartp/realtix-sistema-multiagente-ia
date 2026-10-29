@@ -1,24 +1,24 @@
 {
-  "periodo_horas": 42.6,
-  "chequeos": 512,
+  "periodo_horas": 43.0,
+  "chequeos": 517,
   "oficial_horario_habil": {
-    "chequeos": 152,
-    "con_200": 130,
-    "disponibilidad": 85.53
+    "chequeos": 157,
+    "con_200": 135,
+    "disponibilidad": 85.99
   },
   "total_todas_las_horas": {
-    "chequeos": 512,
-    "con_200": 485,
-    "disponibilidad": 94.73
+    "chequeos": 517,
+    "con_200": 490,
+    "disponibilidad": 94.78
   },
   "habil_sin_ventanas_de_despliegue": {
-    "chequeos": 137,
-    "con_200": 115,
-    "disponibilidad": 83.94
+    "chequeos": 142,
+    "con_200": 120,
+    "disponibilidad": 84.51
   },
   "habil_desde_la_correccion_del_pr_54": {
-    "chequeos": 130,
-    "con_200": 130,
+    "chequeos": 135,
+    "con_200": 135,
     "disponibilidad": 100.0
   },
   "horas_antes_de_la_correccion_del_pr_54": 2.2,

@@ -84,6 +84,11 @@ Contra `d3dab00`, 3 ensayos por escenario, juez v3 congelado (`reports/corrida-3
   66,1 % (75,2 %), exhaustividad del contexto de 82,4 % (86,6 %), fidelidad de 84,8 % (92,6 %) y
   relevancia de la respuesta de 68,1 % (91,3 %). El reporte de la corrida 3 da el promedio de todos
   los casos, sin separar los que tienen sesión.
+- RAGAS sin sesión (66 de los 110 casos con los cuatro valores, de escenarios con `sesion: null`;
+  calculado de `reports/corrida-3/ragas.jsonl`), la medida limpia de la recuperación que se usó en
+  las corridas 1 y 2: precisión del contexto de 81,4 %, exhaustividad de 81,2 %, fidelidad de 84,6 % y
+  relevancia de 71,3 %. Con sesión, el contexto que recibe RAGAS mezcla los datos de las herramientas
+  con los fragmentos (ADR-25).
 
 ## 6. Pruebas no funcionales
 
@@ -102,22 +107,22 @@ las de B15 quedan en `reports/no_funcionales/corrida-2/`):
 RNF-06 · Horario de atención: la disponibilidad se midió con el registro completo del monitor del
 servidor (`/health` cada 5 minutos desde el crontab, `reports/no_funcionales/disponibilidad.md`;
 `salud.log` con días relativos). El monitor existe desde B15, porque el de GitHub Actions nunca
-corrió, así que el registro cubre 42,6 horas (512 chequeos).
+corrió, así que el registro cubre 43,0 horas (517 chequeos).
 
 | Medida | Chequeos con 200 | Disponibilidad |
 |---|---|---|
-| **Oficial: horario hábil, todo el registro** | 130 de 152 | **85,53 %** |
-| Todas las horas | 485 de 512 | 94,73 % |
-| Horario hábil sin las ventanas de despliegue | 115 de 137 | 83,94 % |
-| Horario hábil desde la corrección del PR #54 | 130 de 130 | 100,00 % |
+| **Oficial: horario hábil, todo el registro** | 135 de 157 | **85,99 %** |
+| Todas las horas | 490 de 517 | 94,78 % |
+| Horario hábil sin las ventanas de despliegue | 120 de 142 | 84,51 % |
+| Horario hábil desde la corrección del PR #54 | 135 de 135 | 100,00 % |
 
 **No alcanza la meta del 99 %.** Las 27 fallas fueron 502 del commit `4e94e7a`, en las primeras 2,2
 horas del registro (22 en horario hábil): una fuga de conexiones en `/health` que agotaba el backend,
 corregida en el PR #54. Desde que se desplegó esa corrección no hubo ninguna falla. El periodo es
 corto y el chequeo sale del mismo servidor (mide el proxy y el backend, no la red externa); por eso
 la cifra se reporta como una medición del periodo de evaluación y no como una garantía de servicio.
-La matriz de trazabilidad califica RNF-06 por el comportamiento fuera de horario (2 de 2 escenarios),
-no por esta cifra.
+La matriz de trazabilidad califica RNF-06 · Horario de atención por el comportamiento fuera de horario
+(2 de 2 escenarios) y sus pruebas, no por esta cifra, que no es una evidencia del script (sección 11).
 
 ## 7. Calibración del juez
 
@@ -175,7 +180,7 @@ corridas anteriores (sí: superado; no: no superado).
 |---|---|---|---|
 | GEN-02 | 0 | Enrutamiento y escalamiento: transfiere a un funcionario en vez de responder que el asistente no presenta declaraciones ni hace pagos (diseño del sistema) | no / no / no / no / no |
 | IPU-14 | 0 | Recuperación y generación: niega el alivio de intereses del Acuerdo 1084 de 2026 y no da el saldo (verificación de la tarea) | no / no / no / no / no |
-| IPU-13 | 0 | Recuperación: no llega el art. 4 de la Resolución SDH-000195 y la respuesta no dice «30 de abril» (verificación de código); el juez la da como parcialmente correcta (diseño del sistema) | sí / no / sí / no / sí |
+| IPU-13 | 0 | Recuperación en los ensayos 1 y 3: no llega el art. 4 de la Resolución SDH-000195 y la respuesta no dice «30 de abril» (verificación de código; diseño del sistema). En el ensayo 2 el artículo llegó y se citó, pero la respuesta omitió la fecha (generación; verificación de la tarea). El juez la da como parcialmente correcta en los tres | sí / no / sí / no / sí |
 | AIA-01 | 1 | Enrutamiento: ante un saludo, una vez lo clasificó como fuera de alcance y otra escaló sin necesidad (diseño del sistema) | no / sí / sí / no / sí |
 | IPU-15 | 1 | Generación: no da el valor de la cuota («845.000», verificación de código); el juez la da como correcta o parcial (verificación de la tarea) | sí / sí / sí / sí / sí |
 | MULTI-03 | 1 | Generación: afirma sin fuente quién paga el predial; omite la fusión de tributos y la base (verificación de la tarea) | no / sí / no / no / no |
@@ -214,14 +219,17 @@ las correcciones se cerraron para congelar el código antes de esta corrida.
 
 - Latencia (principal, `reports/corrida-3/latencias.png`): sin fragmentos, servidor p50 de 2.299 ms y
   p95 de 3.934 ms, cliente p50 de 2.273 ms y p95 de 4.191 ms; con RAG, servidor p50 de 6.379 ms y p95
-  de 13.393 ms, cliente p50 de 6.152 ms y p95 de 12.349 ms. Todos los turnos dentro de las metas de
-  RNF-01 · Tiempo de respuesta (8 s y 15 s).
+  de 13.393 ms, cliente p50 de 6.152 ms y p95 de 12.349 ms. Todos los turnos del principal dentro de
+  las metas de RNF-01 · Tiempo de respuesta (8 s y 15 s); también los de R3 y R4. En R1, 27 de 28
+  turnos con RAG quedaron bajo 15 s (el más lento, 15.859 ms).
 - Costo de la corrida 3 (`reports/corrida-3/costos.md`): US$12,47, de los que US$10,82 son de
   Anthropic (sistema 2,05, juez 7,17 y componentes 1,61) y US$1,65 de OpenAI (RAGAS). El sistema costó
   US$0,0082 por turno (249 turnos); el juez es lo que más pesa en una corrida.
 - Costo total del proyecto: los `costos.md` de todas las corridas y verificaciones suman US$35,85
   (US$33,14 en Anthropic y US$2,72 en OpenAI); con las sondas, las verificaciones sin `costos.md`, las
-  pruebas de humo y las ingestas, unos US$34,8 en Anthropic y US$2,8 en OpenAI. Frente al presupuesto
+  pruebas de humo y las ingestas, unos US$34,8 en Anthropic y US$2,8 en OpenAI (estimación: a la suma
+verificable de los `costos.md` se agregan los gastos que los resúmenes de cada bloque anotan sin
+`costos.md`). Frente al presupuesto
   de la sección 7 del plan (US$25 en Anthropic y US$10 en OpenAI), Anthropic lo superó en unos US$9,8:
   las rondas de correcciones posteriores a la corrida 2, cada una verificada con el juez, y los
   ensayos generales 2b a 2d no estaban en el presupuesto.
@@ -233,7 +241,7 @@ las correcciones se cerraron para congelar el código antes de esta corrida.
 | Tasa de escenarios superados de 85 % o más | Cumple en la estimación puntual (90,0 %); el límite inferior de Wilson es 79,9 % |
 | Ningún escenario de acceso ni de trazas fallido | Cumple: los de acceso y R4 superados en los 3 ensayos; 0 identificadores en las trazas |
 | Latencias medidas | Cumple: servidor y cliente, con y sin recuperación |
-| Matriz de trazabilidad completa (`reports/trazabilidad.md` y `.csv`) | Cumple: los 65 requerimientos con su evidencia |
+| Matriz de trazabilidad completa (`reports/trazabilidad.md` y `.csv`) | Cumple en parte: los 65 requerimientos con su evidencia, pero 15 quedan sin calificar porque alguna evidencia no tiene resultado en la suite (desviación de las secciones 6.11 y 8.17, anotada en `docs/cambios_para_documento.md`) |
 | Reporte generado | Cumple: `reports/corrida-3/reporte.md` y este documento |
 
 Calificación de cada uno de los 65 requerimientos (cumple, cumple en parte o no cumple) y el
@@ -244,24 +252,29 @@ porque alguna de sus evidencias no tiene resultado en la suite (segunda tabla). 
 alguno de sus escenarios. Con 3 ensayos por escenario es más estricta que en la corrida 2 (83,3 %
 de 48 calificados con 1 ensayo).
 
-La regla y el script no cambian. Los 13 requerimientos con 0, con los escenarios que los bajaron
+La regla y el script no cambian. La disponibilidad (sección 6) no es una evidencia del script: RNF-06 ·
+Horario de atención queda con 100 % por sus pruebas y los escenarios de horario. Si la disponibilidad
+contara como evidencia, RNF-06 valdría 0 y el cumplimiento global sería de **72,0 %** (36 de 50); los
+autores deciden cuál de las dos cifras se reporta en el documento.
+
+Los 13 requerimientos con 0, con los escenarios que los bajaron
 (ensayos superados de 3) y la causa (sección 9):
 
 | Requerimiento | Escenarios superados | Escenarios que lo bajaron | Causa |
 |---|---|---|---|
 | RF-SYS-06 · Aviso de interacción con IA (provisional) | 1 de 2 | AIA-01 (1 de 3) | Clasificación de un saludo como fuera de alcance y un escalamiento innecesario; el aviso de IA salió en los tres ensayos |
-| RF-UI-03 · Identificación del interlocutor | 0 de 1 | AIA-01 (1 de 3) | La misma de RF-SYS-06; la respuesta se identificó como del asistente en los tres ensayos |
+| RF-UI-03 · Identificación del interlocutor | 0 de 1 | AIA-01 (1 de 3) | La misma de RF-SYS-06 · Aviso de interacción con IA (provisional); la respuesta se identificó como del asistente en los tres ensayos |
 | RF-AUT-01 · Verificación de identidad | 11 de 14 | ICA-04 (2), ICA-07 (2) e IPU-15 (1) | Generación (una afirmación sin fuente o un dato omitido), no la verificación: ACC-01 a ACC-03 pasaron 3 de 3 |
 | RF-ORQ-03 · Consultas multiagente | 2 de 3 | MULTI-03 (1 de 3) | Generación: una afirmación sin fuente y la omisión de la fusión de tributos y de la base del predial |
 | RF-IPU-01 · Consultas conceptuales de IPU | 2 de 4 | IPU-04 (2) y MULTI-03 (1) | Generación: afirmaciones sin fuente y omisión de la fusión y de los rangos de tarifa |
 | RF-IPU-02 · Estado de cuenta e historial | 7 de 8 | IPU-15 (1) | Generación: no da el valor de cada cuota (el saldo y las fechas, correctos) |
-| RF-IPU-04 · Plazos y descuentos | 4 de 7 | IPU-13 (0), IPU-14 (0) e IPU-15 (1) | Recuperación (IPU-13: no llega el artículo con el plazo de la factura), recuperación y generación (IPU-14: niega el alivio de intereses) y generación (IPU-15) |
+| RF-IPU-04 · Plazos y descuentos | 4 de 7 | IPU-13 (0), IPU-14 (0) e IPU-15 (1) | Recuperación en 2 de 3 ensayos y generación en el otro (IPU-13: no da el plazo de la factura), recuperación y generación (IPU-14: niega el alivio de intereses) y generación (IPU-15) |
 | RF-IPU-05 · Citación de la norma | 6 de 9 | IPU-04 (2), IPU-13 (0) e IPU-14 (0) | Las de IPU-04, IPU-13 e IPU-14 arriba; en IPU-04, además, una cita atribuida a un numeral que no lo dice |
 | RF-ICA-01 · Consultas conceptuales de ICA | 4 de 5 | MULTI-03 (1 de 3) | Generación, en la parte del predial; la parte del ICA coincidió con la referencia |
 | RF-ICA-02 · Estimación por actividad | 3 de 4 | ICA-04 (2 de 3) | Generación: deduce la periodicidad sin fuente; la tarifa y el valor estimado, correctos |
 | RF-ICA-03 · Fechas de declaración | 5 de 6 | ICA-07 (2 de 3) | Generación: atribuye a un bimestre el valor de toda la vigencia; las fechas, correctas |
 | RF-GEN-01 · Consultas transversales | 2 de 3 | GEN-02 (0 de 3) | Enrutamiento y escalamiento: transfiere a un funcionario en vez de responder que el asistente no presenta declaraciones ni hace pagos |
-| RF-GEN-03 · Respuesta sustentada en fuentes | 6 de 7 | GEN-02 (0 de 3) | La misma de RF-GEN-01 |
+| RF-GEN-03 · Respuesta sustentada en fuentes | 6 de 7 | GEN-02 (0 de 3) | La misma de RF-GEN-01 · Consultas transversales |
 
 Los 15 sin calificar tienen todas sus demás evidencias en verde; a cada uno le falta el resultado de
 una o dos pruebas que no entran al JUnit de pytest con el que se arma la matriz (`uv run pytest
@@ -302,8 +315,8 @@ de la corrida (OCR-01 a OCR-07, con el modelo de visión real) también se super
   - Un texto de 2002 del Decreto 352 (art. 26) sigue vigente en la base y apareció en una respuesta
     sobre tarifas.
   - El costo en Anthropic superó el presupuesto.
-  - La disponibilidad medida (85,53 % en horario hábil) no alcanzó el 99 %, por la fuga de `/health`
-    antes del PR #54; el registro cubre solo 42,6 horas (sección 6).
+  - La disponibilidad medida (85,99 % en horario hábil) no alcanzó el 99 %, por la fuga de `/health`
+    antes del PR #54; el registro cubre solo 43,0 horas (sección 6).
 - **Observación menor (mecanismo interno en la respuesta):** en 8 de las 225 conversaciones de la
   corrida 3, la respuesta nombra el mecanismo interno («según la herramienta», «la herramienta de
   fechas», «los fragmentos», «las normas que me entregaron»): ACC-04, ensayo 1; IPU-08, ensayo 3;
@@ -325,9 +338,9 @@ de la corrida (OCR-01 a OCR-07, con el modelo de visión real) también se super
 ## 13. Conclusiones
 
 El sistema multiagente de IA desplegado superó el 90,0 % de los 60 escenarios en la corrida final,
-con 3 ensayos por escenario (pass^3 de 0,85), por encima de la meta del 85 % de RNF-16 en la
+con 3 ensayos por escenario (pass^3 de 0,85), por encima de la meta del 85 % de RNF-16 · Tasa de respuestas correctas en la
 estimación puntual. Superó todos los escenarios de acceso, seguridad y conversaciones encadenadas,
-sin errores técnicos, con las latencias dentro de las metas, trazas sin identificadores, el
+sin errores técnicos, con las latencias del conjunto principal dentro de las metas, trazas sin identificadores, el
 enrutamiento en el 99 % y la usabilidad con un SUS de 80,0 y 97,5. La generalización a otras formas
 de preguntar quedó en 43,3 %: es el límite principal del prototipo. El instrumento se validó y se
 congeló antes de la corrida, y su calibración con personas mostró un juez más estricto que ellas.
