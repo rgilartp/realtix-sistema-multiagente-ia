@@ -202,8 +202,8 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
 | Orquestador (componentes) | exactitud de 99,0 %, kappa de 0,99, F1 macro de 0,99 (clase mayoritaria: 20,0 %) | `reports/corrida-3/reporte.md` |
 | Agentes (componentes) | 11 de 34 escenarios superados | ídem |
 | RAGAS (110 casos) | precisión del contexto de 66,1 %, exhaustividad de 82,4 %, fidelidad de 84,8 % y relevancia de 68,1 % | ídem |
-| RAGAS sin sesión (66 casos) | precisión de 81,4 %, exhaustividad de 81,2 %, fidelidad de 84,6 % y relevancia de 71,3 % | `reports/corrida-3/ragas.jsonl` |
-| Latencia del servidor | sin fragmentos, p50 de 2.299 ms y p95 de 3.934 ms (54 de 54 bajo 8 s); con RAG, p50 de 6.379 ms y p95 de 13.393 ms (120 de 120 bajo 15 s) | `reports/corrida-3/reporte.md` |
+| RAGAS sin sesión (66 casos) | precisión de 81,4 %, exhaustividad de 81,2 %, fidelidad de 84,6 % y relevancia de 71,3 % | `reports/corrida-3/ragas.jsonl`; `docs/reporte_de_pruebas.md`, sección 5 |
+| Latencia del servidor (principal) | sin fragmentos, p50 de 2.299 ms y p95 de 3.934 ms (54 de 54 bajo 8 s); con RAG, p50 de 6.379 ms y p95 de 13.393 ms (120 de 120 bajo 15 s). En R1, 27 de 28 turnos con RAG bajo 15 s (el más lento, 15.859 ms) | `reports/corrida-3/reporte.md`; `docs/reporte_de_pruebas.md`, sección 10 |
 | Trazas | 4.422 ejecuciones, ninguna con identificadores | `reports/corrida-3/trazas.json` |
 | Errores técnicos | 0 en 249 turnos | `reports/corrida-3/metricas.json` |
 
@@ -212,8 +212,8 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
 - **No superados** (con algún ensayo fallido; la causa y la familia de MAST de cada ensayo, en
   `reports/corrida-3/fallas.md`, y el análisis, en `docs/reporte_de_pruebas.md`, sección 9):
   - 0 de 3: GEN-02 (transfiere a un funcionario en vez de responder) e IPU-14 (niega un alivio de
-    intereses), que fallan desde la corrida 1, e IPU-13 (la recuperación no trae el artículo con el
-    plazo);
+    intereses), que fallan desde la corrida 1, e IPU-13 (no da el plazo de la factura: en 2 de 3
+    ensayos la recuperación no trae el artículo y, en el otro, llega y la respuesta lo omite);
   - 1 de 3: AIA-01 (enrutamiento de un saludo), IPU-15 (omite el valor de la cuota) y MULTI-03 (una
     afirmación sin fuente);
   - 2 de 3: ICA-04, ICA-07 e IPU-04 (una afirmación sin fuente en un ensayo).
@@ -243,11 +243,12 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
   sin errores técnicos (RNF-08 · Tiempos de espera y degradación); con dos réplicas, una conversación
   continuó en la otra (RNF-02 · Escalamiento horizontal); los volúmenes persistieron al reiniciar y al
   recrear (RNF-15 · Volúmenes persistentes); la huella de RealSit fue idéntica (RF-SYS-02 · Alcance de
-  solo lectura). Disponibilidad (RNF-06 · Horario de atención): **85,53 %** en horario hábil con el registro completo
-  del monitor (130 de 152 chequeos en 42,6 horas), **por debajo de la meta del 99 %**. Los 27 fallos
-  fueron 502 de una fuga de conexiones en `/health`, en las primeras 2,2 horas, antes de su corrección
-  (PR #54); desde entonces, 100 % (130 de 130). En todas las horas, 94,73 %; sin las ventanas de
-  despliegue, 83,94 %. El registro empieza en B15 y el chequeo sale del mismo servidor, así que es una
+  solo lectura).
+- **Disponibilidad** (RNF-06 · Horario de atención): **85,99 %** en horario hábil con el registro
+  completo del monitor hasta el cierre de B16 (135 de 157 chequeos en 43,0 horas), **por debajo de la
+  meta del 99 %**. Los 27 fallos fueron 502 de una fuga de conexiones en `/health`, en las primeras
+  2,2 horas, antes de su corrección (PR #54); desde entonces, 100 % (135 de 135). En todas las horas,
+  94,78 %; sin las ventanas de despliegue, 84,51 %. El registro empieza en B15 y el chequeo sale del mismo servidor, así que es una
   medición del periodo de evaluación (`reports/no_funcionales/disponibilidad.md`).
 
 ## 5.9 Calibración del juez
@@ -284,7 +285,11 @@ Con la corrida 3 y la suite (761 pruebas superadas), el cumplimiento global fue 
 65 requerimientos calificados: 37 con 100 % y 13 con 0 %) (`reports/trazabilidad.md` y `.csv`). La
 calificación es mecánica: un requerimiento vale 0 si falla algún ensayo de alguno de sus escenarios,
 más estricta con 3 ensayos que con 1 (83,3 % de 48 en la corrida 2). La regla y el script no se
-cambiaron; el análisis está en `docs/reporte_de_pruebas.md`, sección 11.
+cambiaron; el análisis está en `docs/reporte_de_pruebas.md`, sección 11. La disponibilidad no es una
+evidencia del script: RNF-06 · Horario de atención queda con 100 % por sus pruebas y los escenarios
+de horario; si la disponibilidad contara, valdría 0 y el global sería de 72,0 % (36 de 50).
+Que 15 requerimientos queden sin calificar es una desviación de las secciones 6.11 y 8.17, anotada
+en el registro de cambios.
 
 - **Los 13 con 0** los bajaron nueve escenarios del principal, casi siempre por la generación y no
   por la función que nombra el requerimiento. RF-AUT-01 · Verificación de identidad bajó por ICA-04,
@@ -328,9 +333,11 @@ los 4.000 ms de Bahçeci; el sistema hace dos o tres llamadas a modelos por turn
 | Corrida 2 y pruebas no funcionales | ~2,61 | 0,54 | `docs/resumenes/b15.md` |
 | Corrida 3 | 10,82 | 1,65 | `reports/corrida-3/costos.md` |
 | Correcciones posteriores a la corrida 2, ensayos 2b a 2d, sondas, verificaciones, humo e ingestas | ~13,2 | < 0,1 | `reports/*/costos.md` y los resúmenes |
-| Total del proyecto | ~34,8 | ~2,8 | `docs/reporte_de_pruebas.md`, sección 10 |
+| Total del proyecto (estimación) | ~34,8 | ~2,8 | `docs/reporte_de_pruebas.md`, sección 10 |
 
-El sistema costó US$0,0082 por turno en la corrida 3; el juez es lo que más pesa en una corrida.
+Los `costos.md` de todas las corridas y verificaciones suman US$33,14 en Anthropic y US$2,72 en
+OpenAI; el total agrega los gastos que los resúmenes anotan sin `costos.md` (sondas, humo e
+ingestas), por eso es una estimación. El sistema costó US$0,0082 por turno en la corrida 3; el juez es lo que más pesa en una corrida.
 Frente al presupuesto de la sección 7 del plan (US$25 en Anthropic y US$10 en OpenAI), Anthropic lo
 superó en unos US$9,8, por las rondas de correcciones posteriores a la corrida 2, cada una verificada
 con el juez, y los ensayos generales 2b a 2d.
