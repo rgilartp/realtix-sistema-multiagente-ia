@@ -44,6 +44,7 @@ from src.integrations.recuperador import Fragmento, RecuperadorEnMemoria
 from src.integrations.robustez import ServicioNoDisponibleError
 from src.integrations.trazas import Anonimizador
 from src.services import notas
+from src.services.citas import citas_sin_fuente
 from src.store.almacen import Almacen, crear_motor
 from tests.ayudas_postgres import exigir_postgres, url_postgres_pruebas
 from tests.modelo_falso import ModeloFalso, final, negativa, pide, salida
@@ -1311,8 +1312,8 @@ def test_la_regla_de_la_periodicidad_sale_de_datos_y_va_en_las_herramientas(adap
     for datos in (situacion, fechas):
         assert datos["regla_de_la_periodicidad"] == bimestral
         assert datos["fuente_de_la_regla"] == fuente
-        norma = fuente.split(", art")[0]  # en fechas_ica va dentro de «arts. 1 y 3 a 6»
-        assert any(f.startswith(norma) for f in datos["fuentes_de_la_herramienta"])
+        # En fechas_ica la cita va cubierta por «arts. 1 y 3 a 6» del calendario.
+        assert not citas_sin_fuente(fuente, datos["fuentes_de_la_herramienta"])
     guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas")  # sin sesión ni periodicidad
     (sin_periodicidad,) = resultados_de_herramientas(modelo)
@@ -1356,8 +1357,15 @@ def test_con_otra_periodicidad_pedida_van_las_dos_reglas_y_la_fuente_una_vez(ada
     assert (
         fechas["regla_de_la_periodicidad_registrada"] == regla_de_la_periodicidad(2026, "anual")[0]
     )
+    assert fechas["fuente_de_la_regla_registrada"] == regla_de_la_periodicidad(2026, "anual")[1]
     normas = [f.split(", art")[0] for f in fechas["fuentes_de_la_herramienta"]]
     assert len(normas) == len(set(normas))  # la Resolución SDH-000195 no se repite
+    # Con la periodicidad pedida igual a la registrada, va una sola regla.
+    guion = [pide(("fechas_ica", {"anio": 2026, "periodicidad": "anual"})), final(".")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", U12, [predio])
+    (igual,) = resultados_de_herramientas(modelo)
+    assert "regla_de_la_periodicidad" in igual
+    assert "regla_de_la_periodicidad_registrada" not in igual
 
 
 @pytest.mark.unit
@@ -1378,7 +1386,7 @@ def test_la_regla_de_2027_y_la_de_la_vigencia_mas_reciente(adaptador) -> None:
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-IPU-01 · Consultas conceptuales de IPU", "RF-IPU-03 · Liquidación estimada")
+@pytest.mark.req("RF-IPU-01 · Consultas conceptuales de IPU")
 def test_tarifas_predial_con_todos_trae_los_tres_destinos_en_una_llamada(adaptador) -> None:
     guion = [pide(("tarifas_predial", {"anio": 2026, "destino": "todos"})), final("Depende.")]
     _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "¿De qué depende la tarifa?")
@@ -1391,3 +1399,8 @@ def test_tarifas_predial_con_todos_trae_los_tres_destinos_en_una_llamada(adaptad
     _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Tarifa residencial")
     (una,) = resultados_de_herramientas(modelo)
     assert una["destino"] == "residencial" and "por_destino" not in una  # como antes
+    from src.agents.herramientas import Contexto, FaltaDatoError
+    from src.agents.herramientas.ipu import _tarifas
+
+    with pytest.raises(FaltaDatoError, match="residencial, comercial, lote y todos"):
+        _tarifas(Contexto(adaptador, None, [], date(2026, 10, 1)), {"anio": 2026, "destino": "x"})
