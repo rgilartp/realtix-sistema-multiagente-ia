@@ -11,7 +11,8 @@ reporta, sección 6.10). Cada cifra lleva su archivo de origen en `reports/`.
   sistema (`src/agents`, `src/services`, `src/api`, `src/data`, `src/store`, `src/integrations`,
   `web`, `datos`, `knowledge_base` y `deploy`) sigue igual a `d3dab00`, y también las dependencias.
   Después de `v1.0.0` solo cambió el instrumento de evaluación (`src/evaluacion` y `scripts`, en el
-  cierre de B16): el juez de «agentes contra su nodo» y la matriz de trazabilidad.
+  cierre de B16): lo que el arnés de «agentes contra su nodo» le entrega al juez (el juez y su huella no
+  cambiaron) y la matriz de trazabilidad.
 - Huella del juez: la de `reports/calibracion/huella_juez.txt` (juez v3, ADR-25); `evaluar.py` la
   exige con `--exigir-huella` y, siempre, con más de un ensayo por escenario.
 - Resultado frente a la meta de RNF-16 · Tasa de respuestas correctas (85 %): **90,0 %** de los 60
@@ -296,7 +297,9 @@ calificados con 1 ensayo).
 
 La regla no cambió (0 si falla alguna evidencia y 100 si pasan todas). En el cierre de B16 se
 completó la evidencia que antes no tenía resultado (antes: 74,0 %, con 50 calificados y 15 sin
-calificar):
+calificar). Solo siguen sin resultado las 6 pruebas
+`test_consultas_semanticas_con_los_embeddings_reales` (gastan embeddings reales), evidencia de RF-IPU-01,
+RF-ICA-01 y RF-GEN-01; no cambian su nota, porque esos tres ya valen 0 por sus escenarios:
 - el script lee el JUnit de las pruebas de Playwright (`web/tests/web.spec.js`), sin cambiar cómo se
   nombran las evidencias: un flujo pasa si pasan todas sus variantes (escritorio y 390 px);
 - las tres pruebas con modelos reales (la de humo y las dos de OCR) se corrieron una vez con
@@ -398,5 +401,6 @@ enrutamiento en el 99 %, los agentes contra su nodo en 88,2 % (con el instrument
 usabilidad con un SUS de 80,0 y 97,5. La generalización a otras formas de preguntar quedó en 43,3 %:
 es el límite principal del prototipo. La disponibilidad medida (85,99 % en horario hábil) no alcanzó
 el 99 %, por una fuga corregida al comienzo del registro, y con ella la matriz de trazabilidad queda
-en 78,5 % con los 65 requerimientos calificados. El instrumento se validó y se congeló antes de la
-corrida, y su calibración con personas mostró un juez más estricto que ellas.
+en 78,5 % con los 65 requerimientos calificados. El juez se validó y se congeló antes de la
+corrida, y su calibración con personas mostró un juez más estricto que ellas; en el cierre de B16
+se corrigió lo que el arnés de componentes le entrega al juez.

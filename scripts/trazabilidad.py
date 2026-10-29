@@ -160,6 +160,10 @@ def resultados_junit(ruta: Path) -> dict[str, bool]:
     return salida
 
 
+# Sufijo de las variantes de un flujo de la web: « (390 px)» o « (modo oscuro, 1280 px)».
+VARIANTE_WEB = re.compile(r" \((?:modo oscuro, )?\d+ px\)")
+
+
 def resultados_junit_web(ruta: Path, carpeta: str = "web/tests") -> dict[str, bool]:
     """Prueba de Playwright (`web/tests/<archivo>::<título>`) -> pasó, de su reporte JUnit."""
     salida: dict[str, bool] = {}
@@ -174,14 +178,16 @@ def resultados_junit_web(ruta: Path, carpeta: str = "web/tests") -> dict[str, bo
 def resultados_de_flujos(
     resultados_web: dict[str, bool], evidencias: list[Evidencia]
 ) -> dict[str, bool]:
-    """Un flujo de la web corre en varios tamaños («nombre», «nombre (390 px)», …): su evidencia
-    pasa si pasan todas sus variantes ejecutadas; sin ninguna ejecutada, no tiene resultado."""
+    """Un flujo de la web corre en varios tamaños («nombre», «nombre (390 px)», «nombre (modo
+    oscuro, 1280 px)»): su evidencia pasa si pasan todas sus variantes ejecutadas; sin ninguna
+    ejecutada, no tiene resultado."""
     salida: dict[str, bool] = {}
     for prueba in {e.prueba for e in evidencias if e.prueba.startswith("web/")}:
         variantes = [
             ok
             for nodo, ok in resultados_web.items()
-            if nodo == prueba or nodo.startswith(f"{prueba} (")
+            if nodo == prueba
+            or (nodo.startswith(prueba) and VARIANTE_WEB.fullmatch(nodo[len(prueba) :]))
         ]
         if variantes:
             salida[prueba] = all(variantes)

@@ -890,7 +890,6 @@ RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_l
 RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[17-0-False],0
 RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[7-59-False],0
 RNF-06 · Horario de atención,prueba,tests/test_servicios_calendario.py::test_limites_del_horario_las_17_00_ya_son_fuera_de_horario[8-0-True],0
-RNF-06 · Horario de atención,prueba,tests/test_trazabilidad.py::test_la_disponibilidad_es_evidencia_de_rnf_06,0
 RNF-06 · Horario de atención,escenario,HOR-01,0
 RNF-06 · Horario de atención,escenario,HOR-02,0
 RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_en_una_conversacion_escalada_el_mensaje_fuera_de_horario_queda_en_el_caso,100

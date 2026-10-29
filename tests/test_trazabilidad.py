@@ -147,6 +147,8 @@ def test_cada_flujo_de_la_web_pasa_si_pasan_todas_sus_variantes(tmp_path: Path) 
         '<testcase name="flujo B (390 px)" classname="a.spec.js"><failure/></testcase>'
         '<testcase name="flujo C" classname="a.spec.js"><skipped/></testcase>'
         '<testcase name="flujo AB" classname="a.spec.js"><failure/></testcase>'
+        '<testcase name="flujo A (modo oscuro, 1280 px)" classname="a.spec.js"/>'
+        '<testcase name="flujo C (RNF-07)" classname="a.spec.js"><failure/></testcase>'
         "</testsuite></testsuites>",
         encoding="utf-8",
     )
@@ -160,11 +162,11 @@ def test_cada_flujo_de_la_web_pasa_si_pasan_todas_sus_variantes(tmp_path: Path) 
     assert resultados_de_flujos(web, evidencias) == {
         "web/tests/a.spec.js::flujo A": True,  # «flujo AB» no es una variante de «flujo A»
         "web/tests/a.spec.js::flujo B": False,
-    }
+    }  # «flujo C (RNF-07)» es otro flujo, no una variante de «flujo C»
 
 
 @pytest.mark.unit
-@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas", "RNF-06 · Horario de atención")
+@pytest.mark.req("RF-OBS-05 · Ejecución repetible de pruebas")
 def test_la_disponibilidad_es_evidencia_de_rnf_06(tmp_path: Path) -> None:
     from scripts.trazabilidad import (
         DISPONIBILIDAD,
