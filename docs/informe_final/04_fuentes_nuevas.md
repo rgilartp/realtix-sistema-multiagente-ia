@@ -66,3 +66,6 @@ los inventa.
 - Intervalo de Wilson y kappa de Cohen (métricas).
 - System Usability Scale (SUS) y heurísticas de Nielsen (usabilidad, ADR-21).
 - Fusión por rango recíproco (RRF) y BM25 (recuperación híbrida, ADR-04).
+- PABAK (kappa ajustado por prevalencia y sesgo; calibración del juez, sección 5.9).
+- Intervalo por bootstrap (tasa de la meta, sección 5.8).
+- pass@k y pass^k (consistencia entre ensayos, sección 5.8).

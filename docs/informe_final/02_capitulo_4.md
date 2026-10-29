@@ -21,8 +21,9 @@ sintéticos; RF-OCR-06 · Plantilla sintética de recibo.
 
 **Cómo se verificó.** Pruebas de contrato del adaptador y de los 12 usuarios de prueba frente a sus
 valores esperados (`docs/resumenes/b03.md`). La huella de la base fue idéntica antes y después de la
-corrida 1 (`reports/corrida-1/constancias.md`) y de la corrida 2
-(`reports/no_funcionales/huella_realsit.txt`, PR de B15):
+corrida 1 (`reports/corrida-1/constancias.md`), de la corrida 2
+(`reports/no_funcionales/corrida-2/huella_realsit.txt`) y de la corrida 3
+(`reports/no_funcionales/huella_realsit.txt`):
 `4479d0369ba967a2d8ed40fb6e7d12bff1ed497ad86ce230093f0c857312d0a2`.
 
 ## 4.2 Base de conocimiento e ingesta
@@ -49,8 +50,8 @@ en fuentes; RF-IPU-05 · Citación de la norma.
 - La revisión de la recuperación, una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron, llevó la base de 1.117 a 1.148 fragmentos
   (`docs/resumenes/fix-recuperacion.md`); ese corpus (`408d90bdb6af2d40`) fue el de las corridas 1 y
   2 (`reports/corrida-1/criterios_de_entrada.md` y, para la corrida 2, la sección «Despliegue» de
-  `docs/resumenes/correcciones-corrida-1.md` y `reports/no_funcionales/volumenes.json`, con 1.148
-  fragmentos).
+  `docs/resumenes/correcciones-corrida-1.md` y `reports/no_funcionales/corrida-2/volumenes.json`, con
+  1.148 fragmentos).
 - Un verificador automático confirmó las 167 cifras de las respuestas de referencia: 48 con los datos
   por año gravable, 106 con el usuario de prueba y el adaptador, 4 con las normas citadas, 2 con los
   mensajes del contribuyente y 7 derivadas (sumas, base por tarifa y el siguiente día hábil)
@@ -64,7 +65,8 @@ en fuentes; RF-IPU-05 · Citación de la norma.
   y las notas fijas contra la base, los datos y las fuentes oficiales. No encontró cifras erradas; se
   precisaron citas, vigencias y redacciones de 19 escenarios y de los 3 encadenados (por ejemplo, el
   Decreto 474 de 2016, derogado, por el Decreto 639 de 2025, art. 226, que lo compiló), y el
-  verificador de referencias confirmó 171 cifras sin discrepancias (PR #67). En la base, el art. 55
+  verificador de referencias confirmó 171 cifras sin discrepancias (PR #67;
+  `reports/verificacion_referencias.md`). En la base, el art. 55
   del Decreto 352 de 2002 (el sistema preferencial de 2002) dejó de salir en las búsquedas, y el
   glosario sumó el parágrafo 3 del art. 26 del Acuerdo 1084 de 2026 y la entrada del código CIIU con
   su fuente oficial de la DIAN (PR #64 y #68).
@@ -118,8 +120,7 @@ modelo la frase relativa a hoy calculada por código (PR #50); en la corrida 2c 
 concluir sin fuente que «no se puede pagar» (MULTI-02), y se revirtió. Por decisión de los autores, el
 sistema no relaciona fechas con el día de la consulta: da la fecha exacta y, cuando importa, «ya
 venció» o «aún no vence» según lo que calcula el código, porque cada fecha de las herramientas trae
-si ya pasó con el reloj del turno; un verificador sin modelo pide una reescritura si la respuesta
-dice «hoy», «mañana», «hace N días» o nombra los fragmentos o las herramientas (PR #72). Con la misma
+si ya pasó con el reloj del turno; un verificador sin modelo pide una reescritura si la respuesta dice «hoy», «mañana», «hace N días» o frases parecidas, trae una referencia con número («el fragmento [1]») o dice «consultar las herramientas» (PR #72). Con la misma
 idea, las herramientas del ICA entregan la regla que define la periodicidad, tal como está en los
 datos y con su fuente, para que el modelo la copie (el modelo había invertido la regla de los 391
 UVT en ICA-08 y MULTI-02), y la descripción de las tarifas del predial se hace con la herramienta de
@@ -140,7 +141,11 @@ fuentes; RF-ESC-01 · Cálculo del nivel de confianza; RNF-03 · Protección de 
 - La prueba de humo con modelos reales recorrió 12 escenarios, con una mediana de 5,7 s en las
   consultas simples y de 7,0 s con recuperación, por unos US$0,09 (`docs/resumenes/b07.md`).
 - En el nivel de componentes de la corrida 1, los agentes, corridos directo contra su nodo, superaron
-  19 de 34 escenarios (`reports/corrida-1/metricas.json`).
+  19 de 34 escenarios (`reports/corrida-1/metricas.json`). Esa cifra tuvo un defecto del instrumento,
+  hallado después de la corrida 3: los componentes corrían sin el modo de evaluación y el juez no veía
+  los datos de las herramientas ni las notas (el mismo F1 que ADR-25 corrigió en el nivel de
+  sistema). Con el instrumento corregido, en la corrida 3 los agentes superaron 30 de 34 (88,2 %;
+  `reports/corrida-3/metricas.json`); con el defecto habían sido 11 de 34.
 - Sondas de fechas, sin juez, con el reloj simulado el día antes, el mismo día y el día después de
   cada plazo (34 respuestas por ronda, `reports/verif-fechas-por-codigo/`): en la repetición final
   ninguna respuesta relacionó una fecha con el día de la consulta, trajo una referencia interna o dio
@@ -186,9 +191,10 @@ la conversación escalada pasó a modo humano (ADR-12). La API recibió un botó
 escalamiento; RF-ESC-03 · Resumen del caso; RF-ESC-04 · Tiempo de entrega del resumen; RF-ESC-05 ·
 Notificación al contribuyente; RNF-08 · Tiempos de espera y degradación.
 
-**Cómo se verificó y cifras.** En la corrida 2, ocho fallas inyectadas (orquestador, modelo,
+**Cómo se verificó y cifras.** En las corridas 2 y 3, ocho fallas inyectadas (orquestador, modelo,
 recuperación y adaptador, por tiempo y por error) escalaron por «fallo de servicio» sin mostrar un
-error técnico (`reports/no_funcionales/fallas_inyectadas.json`, PR de B15). El umbral se revisó con
+error técnico: 8 de 8 en cada una (`reports/no_funcionales/corrida-2/fallas_inyectadas.json` y
+`reports/no_funcionales/fallas_inyectadas.json`). El umbral se revisó con
 las corridas 1 y 2 (`reports/umbral/propuesta.md`) y los autores aprobaron 0,70, sin cambio
 (`docs/resumenes/b15.md`). Por la usabilidad, el aviso al escalar dice que el caso quedó registrado,
 con un número corto que el funcionario busca en la bandeja, sin prometer un contacto que el sistema
@@ -215,14 +221,18 @@ encabezado de portal con interruptor de tema y tarjetas de «Qué puedes probar�
 la lista de usuarios de prueba se ajustó al modo oscuro (PR #57) y el widget sumó un aviso de datos
 personales debajo del aviso de IA (PR #58). Los dos autores aplicaron las tareas, el SUS y la
 evaluación heurística, cada uno por su lado (`docs/usabilidad/rodolfo/` y `docs/usabilidad/dayanna/`):
-SUS de 80,0 (Rodolfo) y 97,5 (Dayanna), con un promedio de 88,75, y 6 problemas de gravedad 2 a 4,
-todos atendidos antes de la corrida 3 (PR #57, #59, #60 y, en parte, #64; sección 5.10). Las capturas
+SUS de 80,0 y 97,5, con un promedio de 88,75 (`docs/reporte_de_pruebas.md`, sección 8). La
+evaluación heurística dejó 6 anotaciones de 4 problemas distintos (dos los anotaron los dos
+autores): la lista de usuarios en modo oscuro, las fotos de más de 5 MB, el recibo de formato
+realista tomado como recortado y dónde encontrar el CIIU. Tres se corrigieron antes de la corrida 3
+(PR #57, #60 y #59) y el del CIIU, en parte (glosario, PR #64; sección 5.10). Las capturas
 definitivas (`docs/capturas/definitivas/`) se tomaron después de la corrida 3, contra el sistema sin
 modo de evaluación: la respuesta del widget a una consulta sobre normas, con su lista de fuentes, y
 la consola con las métricas acumuladas del despliegue. La matriz de la consola aparece vacía porque la
 imagen de producción no trae los escenarios que la etiquetan; la de la corrida 3 está en
-`reports/corrida-3/`. Las 24 capturas de B11 (`docs/capturas/`) siguen vigentes, porque la interfaz
-no cambió desde que se tomaron.
+`reports/corrida-3/`. Las capturas de B11 (`docs/capturas/`, 26 PNG, actualizadas después del
+rediseño y del aviso de datos personales, PR #55 y #58) siguen vigentes, porque la interfaz no
+cambió desde entonces.
 
 ## 4.8 Observabilidad
 
@@ -237,7 +247,8 @@ vectorial; RF-OBS-05 · Ejecución repetible de pruebas; RNF-05 · Registro audi
 
 **Cómo se verificó y cifras.** Ninguna traza tuvo identificadores: 1.279 ejecuciones de 63
 conversaciones en la corrida 1 (`reports/corrida-1/constancias.md`), 1.277 en la corrida 2
-(`reports/corrida-2/trazas.json`), 1.284 en la 2c y 1.285 en la 2d (`trazas.json` de cada una). La
+(`reports/corrida-2/trazas.json`), 1.284 en la 2c, 1.285 en la 2d y 4.422 en la corrida 3
+(`trazas.json` de cada una). La
 auditoría de seguridad encontró que el anonimizador de las trazas no enmascaraba la imagen del
 recibo ni los nombres declarados («me llamo…»), la causa de que las trazas de un incidente de datos
 reales de la usabilidad guardaran la imagen (`docs/resumenes/b15.md`, punto 9). Desde el PR #69, las
@@ -260,7 +271,8 @@ atendieron con certifi actualizado y Chroma sin puerto publicado en el servidor 
 los puntos de acceso que llaman modelos y el botón de escalamiento tienen un límite por dirección IP
 (10 por minuto y 200 por día; PR #61 y #69).
 
-Una auditoría de seguridad rápida y estática (12 agentes, sin ejecutar ataques) no confirmó
+Una auditoría de seguridad rápida y estática, hecha por un asistente de IA (Claude Code, con 12
+subagentes de revisión; no son agentes del sistema) y sin ejecutar ataques, no confirmó
 hallazgos y dejó cuatro pistas: tres se corrigieron (imágenes enormes, límite del botón y trazas) y
 la cuarta quedó como riesgo aceptado de la ventana del modo de evaluación. De sus 23 notas de
 refuerzo, 3 se aplicaron (acciones de la integración continua fijadas por su commit, suma de
