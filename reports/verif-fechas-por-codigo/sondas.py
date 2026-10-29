@@ -1,9 +1,13 @@
 """Sondas de fechas por código (plan de Rodolfo), contra la API local en modo de evaluación.
 
 Corre cada combinación de `sondas.yaml` 2 veces con el reloj simulado a las 10:00 a. m. del día,
-y verifica por código, sin juez, cada respuesta: la fecha exacta, ninguna expresión relativa a hoy,
-«ya venció» en la oración de la fecha solo si el reloj está después, ninguna fecha igual o posterior
-a hoy dada como vencida y, si se pregunta si ya venció, que la respuesta lo diga. Escribe
+y verifica por código, sin juez, cada respuesta: la fecha exacta; ninguna expresión que relacione
+una fecha con el día de la consulta («hoy», «mañana», «hace N días»…) ni referencias internas
+(«fragmento [n]», «consultar herramientas»); «ya venció» en la oración de la fecha solo si el
+reloj está después; ninguna fecha igual o posterior al día de la consulta dada como vencida ni una
+anterior dada como pendiente; y, si se pregunta si ya venció, que la respuesta lo diga. Ronda 2: la
+verificación corregida (no parte en «art.», «Como…» retoma la oración anterior, «Ya…» no une) y
+la sonda 12 reemplazada; la ronda 1 está en `ronda1/`. Escribe
 `resultados.jsonl` y `resumen.md` en esta carpeta. Se corre desde la raíz del repositorio (lee
 `.env` por la configuración), con PostgreSQL y Chroma de Compose arriba:
 
@@ -56,6 +60,13 @@ NO_VENCIO = re.compile(
     r"|esta\s+disponible)\b|\b(?:sigue|esta)\s+(?:vigente|disponible)\b|\bvence\s+hoy\b"
     r"|\bno\s+esta\s+vencid[oa]\b|\bno\s+(?:esta|estas)\s+en\s+mora\b|\bal\s+dia\b|\ba\s+tiempo\b"
 )
+PENDIENTE = re.compile(
+    r"\b(?:aun|todavia)\s+no\s+(?:vence|ha\s+vencido|ha\s+pasado|se\s+vence)\b"
+    r"|\bsigue\s+vigente\b|\b(?:aun|todavia)\s+(?:esta\s+vigente|esta\s+disponible|puedes"
+    r"|alcanzas|estas\s+a\s+tiempo|tienes\s+tiempo)\b"
+)
+# Abreviaturas tras las que un punto no cierra la oración («art. 3», «8:00 a. m.»).
+ABREVIATURAS = {"art", "arts", "num", "par", "lit", "inc", "cap", "caps", "no", "a", "m", "p", "dr"}
 NEGACION = re.compile(r"\b(?:no|aun\s+no|todavia\s+no)\s+(?:\w+\s+)?$")
 
 
@@ -64,14 +75,26 @@ def normal(texto: str) -> str:
     return "".join(c for c in sin_tildes if not unicodedata.combining(c))
 
 
-# Una oración que retoma la anterior («Ese plazo ya venció.») cuenta como parte de ella.
-RETOMA = re.compile(r"^(?:ese|esa|esos|esas|este|esta|dicho|dicha|ya|el cual|la cual|pero)\b")
+# Una oración que retoma la anterior («Ese plazo ya venció.», «Como …») cuenta como parte de ella.
+RETOMA = re.compile(r"^(?:ese|esa|esos|esas|este|esta|dicho|dicha|como|el cual|la cual|pero)\b")
+
+
+def _partir(texto: str) -> list[str]:
+    """Parte en oraciones por «.», «;», «!», «?» y saltos de línea, salvo tras una abreviatura."""
+    partes, inicio = [], 0
+    for m in re.finditer(r"[.;!?]\s+|\n+", texto):
+        palabra = re.search(r"(\w+)\.\s+$", texto[inicio : m.end()])
+        if palabra and palabra.group(1) in ABREVIATURAS:
+            continue
+        partes.append(texto[inicio : m.end()])
+        inicio = m.end()
+    return [*partes, texto[inicio:]]
 
 
 def oraciones(texto: str) -> list[str]:
     """Las oraciones del texto; la que retoma la anterior se une a ella."""
     salida: list[str] = []
-    for o in (o.strip() for o in re.split(r"(?<=[.;!?])\s+|\n+", normal(texto))):
+    for o in (o.strip() for o in _partir(normal(texto))):
         if not o:
             continue
         if salida and RETOMA.match(o):
@@ -116,6 +139,11 @@ def verificar(texto: str, caso: dict[str, Any]) -> dict[str, bool]:
     futuras_ok = not any(
         vencio_afirmativo(o) for o in partes if any(f >= hoy for f, _ in fechas_de(o, hoy.year))
     )
+    pasadas_ok = not any(
+        PENDIENTE.search(o) for o in partes if any(f < hoy for f, _ in fechas_de(o, hoy.year))
+    )
+    encontradas = expresiones_relativas(texto)
+    internas = [e for e in encontradas if e.startswith(("fragmento", "consultar"))]
     todo = normal(texto)
     if caso.get("vencida") is True:
         dice_si_vencio = vencio_afirmativo(todo)
@@ -125,9 +153,11 @@ def verificar(texto: str, caso: dict[str, Any]) -> dict[str, bool]:
         dice_si_vencio = True
     return {
         "fecha_exacta": bool(con_la_fecha),
-        "sin_relativas": not expresiones_relativas(texto) and not OTRAS_RELATIVAS.search(todo),
+        "sin_relativas": len(encontradas) == len(internas) and not OTRAS_RELATIVAS.search(todo),
+        "sin_referencias_internas": not internas,
         "vencio_en_la_oracion": oracion_ok,
         "ninguna_futura_vencida": futuras_ok,
+        "ninguna_pasada_pendiente": pasadas_ok,
         "dice_si_vencio": dice_si_vencio,
     }
 

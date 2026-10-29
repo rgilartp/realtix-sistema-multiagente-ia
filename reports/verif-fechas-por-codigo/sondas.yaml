@@ -6,8 +6,13 @@
 # - `vencida`: si la respuesta debe decir que ya venció (true), que no (false) o ninguna de las dos
 #   cosas, porque no se pregunta (null). Si la fecha esperada es anterior al reloj y `vencida` no es
 #   false, la oración de esa fecha dice «ya venció» o equivalente; si es igual o posterior, no.
-# - Ninguna fecha igual o posterior a hoy aparece como vencida, y no hay expresiones relativas a hoy.
-# - «La oración de la fecha» incluye la siguiente si la retoma («Ese plazo ya venció.»).
+# - Ninguna fecha igual o posterior al día de la consulta aparece como vencida, ninguna anterior como
+#   pendiente, y no hay «hoy» ni otras expresiones relativas al día de la consulta ni referencias
+#   internas («fragmento [n]», «consultar herramientas»).
+# - «La oración de la fecha» incluye la siguiente si la retoma («Ese plazo ya venció.», «Como …»).
+# Ronda 2 (decisión de Rodolfo): la sonda 12 de la ronda 1 («¿Ya se me venció la declaración anual
+# del ICA de 2026?», sin sesión) estaba mal redactada: una pregunta personal sin sesión recibe, por
+# diseño, el aviso de iniciar sesión (2 de 2 en la ronda 1). Se reemplaza por la de abajo.
 sondas:
   - pregunta: "¿Todavía alcanzo a pagar el predial con el descuento por pronto pago?"
     sesion: null
@@ -32,10 +37,10 @@ sondas:
     casos:
       - {dia: "2026-04-29", fecha: "2026-04-30", vencida: null}
       - {dia: "2026-05-04", fecha: "2026-04-30", vencida: null}
-  - pregunta: "¿Ya se me venció la declaración anual del ICA de 2026?"
+  - pregunta: "¿Cuándo vence la declaración anual del ICA de 2026?"
     sesion: null
     casos:
-      - {dia: "2026-10-01", fecha: "2027-02-26", vencida: false, exigir_anio: true}
+      - {dia: "2026-10-01", fecha: "2027-02-26", vencida: null, exigir_anio: true}
   - pregunta: "¿Cuándo vence mi próxima declaración del ICA?"
     sesion: U04  # ICA bimestral
     casos:
