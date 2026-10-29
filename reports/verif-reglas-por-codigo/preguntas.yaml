@@ -1,0 +1,15 @@
+# Preguntas nuevas (plan de Rodolfo), que no copian ningún escenario, con el reloj simulado del
+# 1 de octubre de 2026 a las 10:00 a. m. (día hábil). Verificaciones por código, sin juez:
+# - periodicidad del ICA: la herramienta entregó la regla y la respuesta la copia (sus palabras
+#   clave: «mayor a 391 UVT» si es bimestral; «hasta 391 UVT» o «declaración anual única» si es
+#   anual), sin invertirla (ni «hasta 391» en la bimestral ni «mayor a / supera 391» en la anual);
+# - tarifas del predial: llamó `tarifas_predial` y no describe la tarifa residencial «por estrato»
+#   fuera de las tarifas preferenciales.
+dia: "2026-10-01"
+preguntas:
+  - {id: 1, tema: periodicidad, sesion: U04, periodicidad: bimestral, pregunta: "¿Por qué tengo que declarar el ICA cada dos meses?"}
+  - {id: 2, tema: periodicidad, sesion: U12, periodicidad: anual, pregunta: "¿Por qué mi declaración del ICA es anual?"}
+  - {id: 3, tema: periodicidad, sesion: U05, periodicidad: anual, pregunta: "¿Por qué declaro el ICA una sola vez al año?"}
+  - {id: 4, tema: tarifa, sesion: null, pregunta: "¿De qué depende la tarifa del impuesto predial en Bogotá?"}
+  - {id: 5, tema: tarifa, sesion: null, pregunta: "¿Cómo se determina la tarifa de predial de una vivienda?"}
+  - {id: 6, tema: tarifa, sesion: null, pregunta: "¿Influye el estrato en la tarifa del predial?"}
