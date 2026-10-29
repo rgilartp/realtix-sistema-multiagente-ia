@@ -260,7 +260,7 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
   - **Alcance del registro.** Con unos 160 chequeos en horario hábil, cada uno pesa más de medio
     punto. Antes de B15 no hay datos, porque el monitor de GitHub Actions nunca corrió. El chequeo
     sale del mismo servidor.
-  - En la matriz, la disponibilidad es la evidencia de RNF-06, que vale 0
+  - En la matriz, la disponibilidad es la evidencia de RNF-06 · Horario de atención, que vale 0
     (`reports/no_funcionales/disponibilidad.md`; `docs/reporte_de_pruebas.md`, sección 6).
 - **Agentes contra su nodo.** Los componentes corrían sin el modo de evaluación, así que el juez solo
   recibía los contextos, que llegaban vacíos, y no veía los datos de las herramientas ni las notas.
@@ -324,8 +324,8 @@ y 15 sin calificar):
 - la disponibilidad entró como la evidencia de RNF-06 · Horario de atención (sección 6.7 de la
   especificación).
 
-Solo siguen sin resultado 6 pruebas con embeddings reales (evidencia de RF-IPU-01, RF-ICA-01 y
-RF-GEN-01). No cambian la nota, porque esos tres ya valen 0 por sus escenarios.
+Solo siguen sin resultado 6 pruebas con embeddings reales (evidencia de RF-IPU-01 · Consultas
+conceptuales de IPU, RF-ICA-01 · Consultas conceptuales de ICA y RF-GEN-01 · Consultas transversales). No cambian la nota, porque esos tres ya valen 0 por sus escenarios.
 
 El análisis está en `docs/reporte_de_pruebas.md`, sección 11.
 
@@ -361,13 +361,14 @@ la especificación técnica). En las consultas sin sesión, la medida limpia de 
 | Casos sin sesión | — | 22 | 21 | 66 |
 
 Fuentes: `reports/corrida-1/fallas.md`, `reports/corrida-2/fallas.md` y `reports/corrida-3/ragas.jsonl`.
-**Análisis de sensibilidad de la relevancia** (aparte; no reemplaza la cifra oficial): en los 66
+
+**Análisis de sensibilidad de la relevancia** (aparte; no reemplaza la cifra oficial). En los 66
 casos sin sesión se volvió a medir la relevancia quitando de la respuesta la lista final «Fuentes:»
-y las notas fijas del sistema (cambiaron 60 de las 66 respuestas, que conservaron en promedio el 85
-% del texto). La media no cambió: 71,3 % en los dos casos (15 casos subieron, 8 bajaron y 43
-quedaron iguales; diferencia media absoluta de 1,5 puntos), por unos US$0,09 de OpenAI. La
-relevancia más baja que la de Bahçeci no se explica por esos anexos
-(`reports/corrida-3/sensibilidad_relevancia.jsonl` y `.py`).
+y las notas fijas del sistema. Cambiaron 60 de las 66 respuestas, que conservaron en promedio el
+85 % del texto. La media no cambió: 71,3 % en los dos casos. Con una tolerancia de 1 punto, 15 casos
+subieron, 8 bajaron y 43 quedaron iguales, con una diferencia media absoluta de 1,5 puntos. Costó
+unos US$0,09 de OpenAI. La relevancia más baja que la de Bahçeci no se explica por esos anexos
+(`reports/corrida-3/sensibilidad_relevancia.md`, `.jsonl` y `.py`).
 
 La latencia de la corrida 3 con recuperación tuvo una mediana de 6.379 ms en el servidor, por encima de
 los 4.000 ms de Bahçeci; el sistema hace dos o tres llamadas a modelos por turno.
@@ -392,7 +393,8 @@ componentes de la repetición. El total agrega:
 
 Por eso es una estimación.
 
-El sistema costó US$0,0082 por turno en la corrida 3 (249 turnos; `reports/corrida-3/costos.md`),
+El sistema costó US$0,0082 por turno en la corrida 3 (sistema: US$2,0473 en
+`reports/corrida-3/costos.md`; 249 turnos en `calificados.jsonl`),
 con dos o tres llamadas a modelos por turno; el juez es lo que más pesa en una corrida. Frente al
 presupuesto de la sección 7 del plan (US$25 en Anthropic y US$10 en OpenAI), Anthropic lo superó en
 unos US$11,5. No estaban en el presupuesto:
@@ -405,7 +407,7 @@ unos US$11,5. No estaban en el presupuesto:
 | Limitación | Causa | Efecto | Por qué no compromete el resultado o cómo se mitigó | Trabajo futuro | Origen |
 |---|---|---|---|---|---|
 | Generalización (R1): 43,3 % | Las paráfrasis cambian la clasificación o la búsqueda. De los 17 ensayos no superados: 3 admiten otra lectura (VAR-01), 2 son preguntas en primera persona tomadas como personales (diseño de RF-AUT-04 · Aviso de sesión requerida), 6 solo fallan la verificación de texto heredada y 6 son errores del sistema | R1 queda lejos de la meta | Se reporta aparte de la tasa principal. El juez aceptó 19 de 30 ensayos y solo 6 de los 17 no superados son errores del sistema | Más variantes por escenario, verificaciones propias de cada variante y una regla para las preguntas generales en primera persona | `docs/reporte_de_pruebas.md`, sección 9; `reports/corrida-3/fallas.md` |
-| IPU-14, GEN-02 y MULTI-03 (fuente esperada fuera de los 5 fragmentos) | La búsqueda que escribe el orquestador no trae la fuente esperada | IPU-14 y GEN-02, 0 de 3; MULTI-03, 1 de 3 | Medida sin modelos, la fusión de la búsqueda del orquestador con el texto del contribuyente trae la fuente esperada de los tres (el art. 7 del Acuerdo 1084 de 2026, el manual de la OVT simulada y la Ley 44 de 1990, arts. 1 y 3), pero pierde la del manual en ACC-02 y ACC-03 (de 40 a 42 de 69 fuentes esperadas). Se cerró sin fusionar para no cambiar la similitud que alimenta la confianza antes de congelar | Buscar también con el texto del contribuyente y fusionar las dos listas, recalibrando la confianza | `reports/recuperacion_fusion.json` en la rama del PR #49 (`fix/busqueda`); `docs/reporte_de_pruebas.md`, sección 9 |
+| Fuentes esperadas fuera de los 5 fragmentos con la búsqueda del orquestador (IPU-14, GEN-02, MULTI-03 e IPU-12) | La búsqueda que escribe el orquestador no trae la fuente esperada; en la corrida 3, esta causa solo está confirmada en IPU-14 (GEN-02 falla por el escalamiento y MULTI-03 por la generación; sección 5.8) | IPU-14, 0 de 3 | Medida sin modelos, la fusión de la búsqueda del orquestador con el texto del contribuyente trae la fuente esperada de los cuatro (el art. 7 del Acuerdo 1084 de 2026, el manual de la OVT simulada, la Ley 44 de 1990, arts. 1 y 3, y el art. 27, num. 3, del Acuerdo 1084), pero pierde la del manual en ACC-02 y ACC-03: de 40 a 42 de 69 fuentes esperadas. Se cerró sin fusionar para no cambiar la similitud que alimenta la confianza antes de congelar | Buscar también con el texto del contribuyente y fusionar las dos listas, recalibrando la confianza | `reports/recuperacion_fusion.json` en la rama del PR #49 (`fix/busqueda`); `docs/reporte_de_pruebas.md`, sección 9 |
 | Disponibilidad de 85,99 %, bajo la meta del 99 % | Una fuga de conexiones en `/health`, presente desde el despliegue; el registro empezó durante una de sus caídas | RNF-06 · Horario de atención vale 0 en la matriz | Se corrigió la causa con una prueba de regresión (PR #54): desde entonces, 490 de 490 chequeos (135 de 135 en horario hábil), incluida toda la corrida 3. El registro es corto (cada chequeo hábil pesa más de medio punto) | Un monitoreo más largo y desde fuera del servidor | `reports/no_funcionales/disponibilidad.md`; `docs/reporte_de_pruebas.md`, sección 6 |
 | Instrumento de componentes | Los agentes contra su nodo corrían sin el modo de evaluación; el juez no veía las herramientas ni las notas (F1) | 11 de 34 en la corrida 3 y 19 de 34 en la corrida 1, subestimados | Corregido con una prueba de regresión y repetido: 30 de 34. Los originales se conservan | Pasar al juez los predios de la sesión también en los componentes (IPU-11 e IPU-14) | `reports/corrida-3/metricas.json` y `componentes_*_sin_evidencia.jsonl`; `docs/reporte_de_pruebas.md`, sección 5 |
 | 8 respuestas nombran el mecanismo interno | El verificador sin modelo solo detecta «fragmento [n]» y «consultar herramientas» | 8 de 225 conversaciones dicen «según la herramienta», «los fragmentos» o parecido | No cambia ningún dato de la respuesta | Ampliar el verificador a esas formas | `reports/corrida-3/resultados.jsonl.gz`; `docs/reporte_de_pruebas.md`, sección 12 |
@@ -413,7 +415,7 @@ unos US$11,5. No estaban en el presupuesto:
 | El juez es más estricto que las personas; la muestra es de 30 | Las personas aprobaron casi todo (29 de 30): paradoja del kappa | Kappa binario de −0,062 (PABAK de 0,47) | En 7 de las 8 diferencias, el juez fue más estricto: la tasa medida tiende a quedar por debajo de la que darían las personas | Una muestra más grande, con más respuestas negativas y evaluadores externos | `reports/calibracion/kappa.json`; `docs/reporte_de_pruebas.md`, sección 7 |
 | Usabilidad interna de los autores | ADR-21: sin usuarios externos | SUS de 80,0 y 97,5, no generalizable | Se presenta como preliminar; la evaluación heurística halló 4 problemas, 3 corregidos y 1 en parte | Pruebas con contribuyentes y funcionarios reales | `docs/usabilidad/`; `docs/reporte_de_pruebas.md`, sección 8 |
 | Datos sintéticos y reloj simulado | RNF-04 · Uso exclusivo de datos sintéticos; reloj inyectable (ADR-16) | No se mide la distribución de los datos reales. El reloj de IPU-14 (1 de octubre de 2026) es anterior a la publicación del Acuerdo 1084 (9 de octubre de 2026), que la referencia da por publicado | La base sintética cumple el contrato de RealSit (adaptador) y la observación de IPU-14 no cambia su resultado | Un piloto con datos reales anonimizados bajo un acuerdo con Realtix; un reloj posterior en IPU-14 | `docs/reporte_de_pruebas.md`, sección 9 |
-| Matriz mecánica | 0 si falla alguna evidencia, con 3 ensayos | 78,5 %, con 14 requerimientos en 0 aunque su función se cumpla (por ejemplo, RF-AUT-01) | La tabla de la sección 11 del reporte explica cada 0 con su escenario y su causa | Calificar con 80 % los que pasan con una limitación documentada | `reports/trazabilidad.md`; `docs/reporte_de_pruebas.md`, sección 11 |
+| Matriz mecánica | 0 si falla alguna evidencia, con 3 ensayos | 78,5 %, con 14 requerimientos en 0 aunque su función se cumpla (por ejemplo, RF-AUT-01 · Verificación de identidad) | La tabla de la sección 11 del reporte explica cada 0 con su escenario y su causa | Calificar con 80 % los que pasan con una limitación documentada | `reports/trazabilidad.md`; `docs/reporte_de_pruebas.md`, sección 11 |
 | Auditoría de seguridad rápida y estática | La hizo un asistente de IA (Claude Code, con 12 subagentes de revisión), sin ejecutar ataques | No confirmó hallazgos; dejó 4 pistas | Tres se corrigieron y una quedó como riesgo aceptado; de 23 notas de refuerzo, 3 se aplicaron y 4 se verificaron | Una prueba de penetración dinámica y las 16 notas restantes | `docs/resumenes/auditoria_seguridad.md` |
 | Costo sobre el presupuesto | Rondas de correcciones verificadas con el juez, ensayos generales y el cierre de B16 | Unos US$11,5 más en Anthropic | El sistema cuesta US$0,0082 por turno; el exceso es del juez y de las verificaciones | Muestras más chicas para las verificaciones intermedias | `docs/reporte_de_pruebas.md`, sección 10 |
 | Límite inferior de Wilson bajo el 85 % | Con 60 escenarios, el intervalo es ancho (ADR-24: n = escenarios) | 90,0 % de estimación puntual, pero un límite inferior de 79,9 % | Se reportan juntos el bootstrap (83,3 % a 96,1 %) y el pass^3 (0,85) | Más escenarios para estrechar el intervalo | `reports/corrida-3/metricas.json` |

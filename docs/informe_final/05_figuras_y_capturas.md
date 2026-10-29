@@ -29,7 +29,7 @@ Límites de estas capturas (`docs/capturas/README.md`), que el documento debe re
 - `widget_respuesta` muestra el aviso de sesión ante una consulta personal sin sesión, no una
   respuesta sobre normas.
 
-Por eso no se presentan como resultados: las de métricas y la de una respuesta con fuentes se toman
+Por eso no se presentan como resultados: las de métricas y la de una respuesta con fuentes se tomaron
 en B16.
 
 ## Capturas definitivas (B16)

@@ -110,13 +110,13 @@ Contra `d3dab00`, 3 ensayos por escenario, juez v3 congelado (`reports/corrida-3
   las corridas 1 y 2: precisión del contexto de 81,4 %, exhaustividad de 81,2 %, fidelidad de 84,6 % y
   relevancia de 71,3 %. Con sesión, el contexto que recibe RAGAS mezcla los datos de las herramientas
   con los fragmentos (ADR-25).
-- Análisis de sensibilidad de la relevancia (aparte; no reemplaza la cifra oficial): en los 66 casos
-  sin sesión se volvió a medir la relevancia quitando de la respuesta la lista final «Fuentes:» y las
-  notas fijas del sistema (cambiaron 60 de las 66 respuestas, que conservaron en promedio el 85 % del
-  texto). La media no cambió: 71,3 % en los dos casos (15 casos subieron, 8 bajaron y 43 quedaron
-  iguales; diferencia media absoluta de 1,5 puntos), por unos US$0,09 de OpenAI. La relevancia más
-  baja que la de Bahçeci no se explica por esos anexos
-  (`reports/corrida-3/sensibilidad_relevancia.jsonl` y `.py`).
+- Análisis de sensibilidad de la relevancia (aparte; no reemplaza la cifra oficial). En los 66
+  casos sin sesión se volvió a medir la relevancia quitando de la respuesta la lista final «Fuentes:»
+  y las notas fijas del sistema. Cambiaron 60 de las 66 respuestas, que conservaron en promedio el
+  85 % del texto. La media no cambió: 71,3 % en los dos casos. Con una tolerancia de 1 punto, 15 casos
+  subieron, 8 bajaron y 43 quedaron iguales, con una diferencia media absoluta de 1,5 puntos. Costó
+  unos US$0,09 de OpenAI. La relevancia más baja que la de Bahçeci no se explica por esos anexos
+  (`reports/corrida-3/sensibilidad_relevancia.md`, `.jsonl` y `.py`).
 
 ## 6. Pruebas no funcionales
 
@@ -194,8 +194,8 @@ lado, contra el sistema desplegado (ADR-21; `docs/usabilidad/rodolfo/` y `docs/u
 
 - **SUS:** Rodolfo, 80,0; Dayanna, 97,5; promedio, 88,75. En el SUS de Rodolfo, el ítem 6 decía 0
   por error; él confirmó que es 1 (anotado en el archivo).
-- **Evaluación heurística:** 6 problemas (2 de Rodolfo y 4 de Dayanna), todos atendidos antes de la
-  corrida 3:
+- **Evaluación heurística:** 6 anotaciones (2 de Rodolfo y 4 de Dayanna) de 4 problemas distintos
+  (dos los anotaron los dos). Tres se corrigieron antes de la corrida 3 y el del CIIU, en parte:
 
 | Problema | Heurística | Gravedad | Cómo se atendió |
 |---|---|---|---|
