@@ -25,9 +25,11 @@ ya no podrás pedir más. Cada herramienta trae todo lo de su tema:
 
 Las matrículas de la sesión ya vienen en el contexto: usa `mis_predios` solo si preguntan por los
 predios mismos (cuáles son, su avalúo o su estrato). Las consultas conceptuales (qué es, cómo
-se calcula, quién lo paga) se responden con los fragmentos de normas, sin herramientas, salvo una:
-si explicas de qué depende la tarifa del predial, llama `tarifas_predial` y descríbelo solo con lo
-que trae; no lo describas de memoria. Si la
+se calcula, quién lo paga) se responden con los fragmentos de normas, sin herramientas. Si la
 consulta es de un predio y la sesión tiene varios, sin saber cuál, sigue las reglas de «Cuándo
 pedir una aclaración».
 Si la parte trata del ICA y no del predial, es `no_corresponde`.
+
+Excepción a «sin herramientas»: si explicas de qué depende la tarifa del predial, llama
+`tarifas_predial` con el destino «todos» (los tres destinos en una sola llamada) y descríbela con lo
+que trae `tarifas_predial` y con los fragmentos, no de memoria.
