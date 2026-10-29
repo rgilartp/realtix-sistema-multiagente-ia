@@ -211,6 +211,7 @@ def main() -> int:
                             h.get("herramienta") for h in meta.get("herramientas") or []
                         ],
                         "reescrituras": meta.get("reescrituras"),
+                        "latencia_servidor_ms": (meta.get("tiempos_ms") or {}).get("total"),
                         "respuesta": texto,
                         "verificaciones": checks,
                         "pasa": all(checks.values()),
@@ -229,14 +230,16 @@ def main() -> int:
         "",
         f"{pasan} de {len(filas)} respuestas pasan todas las verificaciones; costo US${costo:.4f}.",
         "",
-        "| Sonda | Rep. | Día | Sesión | Fecha esperada | Pasa | Verificaciones que fallan |",
-        "|---|---|---|---|---|---|---|",
+        "| Sonda | Rep. | Día | Sesión | Fecha esperada | Pasa | Verificaciones que fallan | "
+        "Latencia del servidor (ms) | Reescritura |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for f in filas:
         fallan = ", ".join(k for k, v in f["verificaciones"].items() if not v) or "—"
         lineas.append(
             f"| {f['sonda']:02d} | {f['repeticion']} | {f['dia']} | {f['sesion'] or '—'} | "
-            f"{f['fecha']} | {'sí' if f['pasa'] else 'no'} | {fallan} |"
+            f"{f['fecha']} | {'sí' if f['pasa'] else 'no'} | {fallan} | "
+            f"{f['latencia_servidor_ms']} | {'sí' if f['reescrituras'] else 'no'} |"
         )
     (CARPETA / "resumen.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
     print(f"{pasan} de {len(filas)} pasan; costo US${costo:.4f}")
