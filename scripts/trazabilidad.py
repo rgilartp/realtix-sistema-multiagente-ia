@@ -2,13 +2,17 @@
 
 Recolecta las marcas `@pytest.mark.req(...)` sin ejecutar las pruebas, las anotaciones de la web y
 la lista `rf` de cada escenario, y escribe `reports/trazabilidad.md` y `.csv` (sección 6.11). Con
-`--junit` (salida de `pytest --junitxml`) y `--resultados` (`calificados.jsonl` de una corrida),
-califica cada requerimiento: 100 si pasan todas sus evidencias, 80 si pasan con una limitación
-documentada en `--observaciones` (YAML: ID -> limitación) y 0 si falla alguna. Sin resultados, queda
-«sin calificar». El cumplimiento global es el promedio de los calificados.
+`--junit` (salida de `pytest --junitxml`; se puede repetir, por ejemplo para sumar las pruebas con
+modelos reales), `--junit-web` (reporte JUnit de Playwright), `--disponibilidad` (el
+`disponibilidad.json` del monitor, la prueba de RNF-06 según la sección 6.7) y `--resultados`
+(`calificados.jsonl` de una corrida), califica cada requerimiento: 100 si pasan todas sus
+evidencias, 80 si pasan con una limitación documentada en `--observaciones` (YAML: ID ->
+limitación) y 0 si falla alguna. Sin resultados, queda «sin calificar». El cumplimiento global es el
+promedio de los calificados.
 
 Uso: uv run python scripts/trazabilidad.py [rutas de pruebas] [--salida reports]
-     [--junit junit.xml] [--resultados reports/corrida-3/calificados.jsonl] [--observaciones f.yaml]
+     [--junit junit.xml ...] [--junit-web web.xml] [--disponibilidad disponibilidad.json]
+     [--resultados reports/corrida-3/calificados.jsonl] [--observaciones f.yaml]
 """
 
 import argparse
@@ -76,6 +80,12 @@ def recolectar_web(raiz: Path = RAIZ / "web" / "tests") -> list[Evidencia]:
         for nombre, lista in FLUJO_WEB.findall(archivo.read_text(encoding="utf-8")):
             evidencias += [Evidencia(r, f"{ruta}::{nombre}") for r in TEXTO.findall(lista)]
     return evidencias
+
+
+# Sección 6.7: la disponibilidad que mide el monitor del servidor es la prueba de RNF-06.
+DISPONIBILIDAD = Evidencia(
+    "RNF-06 · Horario de atención", "reports/no_funcionales/disponibilidad.json"
+)
 
 
 def agrupar(evidencias: list[Evidencia]) -> dict[str, list[str]]:
@@ -147,6 +157,49 @@ def resultados_junit(ruta: Path) -> dict[str, bool]:
         fallo = any(caso.find(t) is not None for t in ("failure", "error"))
         if caso.find("skipped") is None:
             salida[nodo] = not fallo
+    return salida
+
+
+def resultados_junit_web(ruta: Path, carpeta: str = "web/tests") -> dict[str, bool]:
+    """Prueba de Playwright (`web/tests/<archivo>::<título>`) -> pasó, de su reporte JUnit."""
+    salida: dict[str, bool] = {}
+    for caso in ET.parse(ruta).getroot().iter("testcase"):
+        if caso.find("skipped") is not None:
+            continue
+        nodo = f"{carpeta}/{caso.get('classname', '')}::{caso.get('name', '')}"
+        salida[nodo] = not any(caso.find(t) is not None for t in ("failure", "error"))
+    return salida
+
+
+def resultados_de_flujos(
+    resultados_web: dict[str, bool], evidencias: list[Evidencia]
+) -> dict[str, bool]:
+    """Un flujo de la web corre en varios tamaños («nombre», «nombre (390 px)», …): su evidencia
+    pasa si pasan todas sus variantes ejecutadas; sin ninguna ejecutada, no tiene resultado."""
+    salida: dict[str, bool] = {}
+    for prueba in {e.prueba for e in evidencias if e.prueba.startswith("web/")}:
+        variantes = [
+            ok
+            for nodo, ok in resultados_web.items()
+            if nodo == prueba or nodo.startswith(f"{prueba} (")
+        ]
+        if variantes:
+            salida[prueba] = all(variantes)
+    return salida
+
+
+def resultado_de_disponibilidad(ruta: Path) -> dict[str, bool]:
+    """La evidencia de disponibilidad pasa si el monitor cumple la meta (`cumple_meta`)."""
+    datos = json.loads(ruta.read_text(encoding="utf-8"))
+    return {DISPONIBILIDAD.prueba: bool(datos["cumple_meta"])}
+
+
+def combinar(*resultados: dict[str, bool]) -> dict[str, bool]:
+    """Une varios reportes: una prueba que aparece en más de uno pasa solo si pasa en todos."""
+    salida: dict[str, bool] = {}
+    for reporte in resultados:
+        for prueba, ok in reporte.items():
+            salida[prueba] = salida.get(prueba, True) and ok
     return salida
 
 
@@ -279,7 +332,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("rutas", nargs="*", default=["tests"])
     parser.add_argument("--salida", type=Path, default=Path("reports"))
-    parser.add_argument("--junit", type=Path, help="reporte JUnit de pytest")
+    parser.add_argument(
+        "--junit", type=Path, action="append", default=[], help="reporte JUnit de pytest"
+    )
+    parser.add_argument("--junit-web", type=Path, help="reporte JUnit de Playwright")
+    parser.add_argument("--disponibilidad", type=Path, help="disponibilidad.json (RNF-06)")
     parser.add_argument("--resultados", type=Path, help="calificados.jsonl de una corrida")
     parser.add_argument("--observaciones", type=Path, help="YAML: ID -> limitación documentada")
     args = parser.parse_args(argv)
@@ -287,12 +344,19 @@ def main(argv: list[str] | None = None) -> int:
     from src.evaluacion.escenarios import cargar_escenarios
 
     evidencias = recolectar(args.rutas)
-    if args.rutas == ["tests"]:  # la matriz completa suma las pruebas de la web
-        evidencias += recolectar_web()
+    if args.rutas == ["tests"]:  # la matriz completa suma la web y la disponibilidad
+        evidencias += [*recolectar_web(), DISPONIBILIDAD]
+    pruebas_ok = combinar(
+        *(resultados_junit(ruta) for ruta in args.junit),
+        resultados_de_flujos(resultados_junit_web(args.junit_web), evidencias)
+        if args.junit_web
+        else {},
+        resultado_de_disponibilidad(args.disponibilidad) if args.disponibilidad else {},
+    )
     filas = matriz_completa(
         evidencias,
         cargar_escenarios(),
-        resultados_junit(args.junit) if args.junit else None,
+        pruebas_ok or None,
         resultados_de_escenarios(args.resultados) if args.resultados else None,
         yaml.safe_load(args.observaciones.read_text(encoding="utf-8"))
         if args.observaciones
