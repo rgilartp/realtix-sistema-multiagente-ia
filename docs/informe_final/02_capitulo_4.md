@@ -52,6 +52,10 @@ en fuentes; RF-IPU-05 · Citación de la norma.
   2 (`reports/corrida-1/criterios_de_entrada.md` y, para la corrida 2, la sección «Despliegue» de
   `docs/resumenes/correcciones-corrida-1.md` y `reports/no_funcionales/corrida-2/volumenes.json`, con
   1.148 fragmentos).
+- La corrida 3 usó 1.149 fragmentos: 73, 562, 491 y 23 por colección (`docs/reporte_de_pruebas.md`,
+  sección 3; `reports/no_funcionales/volumenes.json`). El fragmento de diferencia es la entrada
+  «Código CIIU (actividad económica)» que el PR #64 agregó al glosario de `plataforma_general` (de
+  22 a 23 fragmentos), por el hallazgo de la usabilidad sobre dónde encontrar el CIIU.
 - Un verificador automático confirmó las 167 cifras de las respuestas de referencia: 48 con los datos
   por año gravable, 106 con el usuario de prueba y el adaptador, 4 con las normas citadas, 2 con los
   mensajes del contribuyente y 7 derivadas (sumas, base por tarifa y el siguiente día hábil)
