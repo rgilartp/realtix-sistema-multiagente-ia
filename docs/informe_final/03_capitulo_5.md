@@ -46,7 +46,7 @@ documento con el lugar donde se miden (`docs/plan_de_pruebas.md`; ADR-24, A1).
   - El detector de fuga marcaba textos públicos (F10, en R4).
   - Se corrigieron de forma general (ADR-25). La corrección de F1 produjo el juez v2, que ya veía
     esas fuentes.
-- **Juez v3.** Una revisión externa encontró que la bandera de alucinación del juez v2 cambiaba entre
+- **Juez v3.** Una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron encontró que la bandera de alucinación del juez v2 cambiaba entre
   ejecuciones, así que el juez pasó a v3: lista primero las afirmaciones sin fuente y la
   justificación, y al final da el veredicto (ADR-25).
 - **Validación A4 repetida:** se hizo con el criterio de la tasa de la meta y tres repeticiones, y

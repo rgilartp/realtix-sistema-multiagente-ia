@@ -46,7 +46,7 @@ en fuentes; RF-IPU-05 · Citación de la norma.
 
 - La ingesta inicial costó US$0,05; repetida no gastó nada y, al cambiar la segmentación, solo pagó
   los textos nuevos (US$0,02). La mediana de una consulta fue de 423 ms (`docs/resumenes/b08.md`).
-- Una revisión externa de la recuperación llevó la base de 1.117 a 1.148 fragmentos
+- La revisión de la recuperación, una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron, llevó la base de 1.117 a 1.148 fragmentos
   (`docs/resumenes/fix-recuperacion.md`); ese corpus (`408d90bdb6af2d40`) fue el de las corridas 1 y
   2 (`reports/corrida-1/criterios_de_entrada.md` y, para la corrida 2, la sección «Despliegue» de
   `docs/resumenes/correcciones-corrida-1.md` y `reports/no_funcionales/volumenes.json`, con 1.148
@@ -60,7 +60,7 @@ en fuentes; RF-IPU-05 · Citación de la norma.
   (`reports/recuperacion_fusion.json`, PR #49). Se cerró sin fusionar, como trabajo futuro: la
   ganancia era pequeña, duplicaba la latencia del agente general y cambiaba la similitud que alimenta
   la confianza (`docs/resumenes/b15.md`).
-- Una verificación tributaria externa revisó, afirmación por afirmación, las respuestas de referencia
+- Una verificación tributaria, una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron, revisó, afirmación por afirmación, las respuestas de referencia
   y las notas fijas contra la base, los datos y las fuentes oficiales. No encontró cifras erradas; se
   precisaron citas, vigencias y redacciones de 19 escenarios y de los 3 encadenados (por ejemplo, el
   Decreto 474 de 2016, derogado, por el Decreto 639 de 2025, art. 226, que lo compiló), y el
@@ -285,7 +285,7 @@ pruebas; RNF-01 · Tiempo de respuesta; RNF-05 · Registro auditable.
 | Corrida | Qué verificó | Superados de 60 (Wilson del 95 %) | Estricta | R3 y R4 |
 |---|---|---|---|---|
 | 2 (`reports/corrida-2/`) | Correcciones de la corrida 1, con RAGAS | 53 (88,3 %; 77,8 % a 94,2 %) | 75,0 % | 3 de 3 y 2 de 2 |
-| 2b (`reports/corrida-2b/`) | Correcciones de la usabilidad y de la revisión externa | 52 (86,7 %; 75,8 % a 93,1 %) | 75,0 % | 3 de 3 y 2 de 2 |
+| 2b (`reports/corrida-2b/`) | Correcciones de la usabilidad y de la revisión externa con un asistente de IA | 52 (86,7 %; 75,8 % a 93,1 %) | 75,0 % | 3 de 3 y 2 de 2 |
 | 2c (`reports/corrida-2c/`) | Verificación tributaria, fechas relativas (#50) y auditoría | 50 (83,3 %; 72,0 % a 90,7 %) | 75,0 % | 2 de 3 y 2 de 2 |
 | 2d (`reports/corrida-2d/`) | Código congelado, con las fechas y las reglas por código | 55 (91,7 %; 81,9 % a 96,4 %) | 75,0 % | 3 de 3 y 2 de 2 |
 
