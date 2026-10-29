@@ -1,0 +1,510 @@
+{
+  "commit_evaluado": "b52b8a8",
+  "huella_juez": "afecd5c1b4f62d52fc605ac6b350363cddee4604ae704f30247703146aa39805",
+  "conjuntos": {
+    "principal": {
+      "ensayos": 60,
+      "escenarios": 60,
+      "tasa_meta": {
+        "escenarios": 60,
+        "ensayos": 60,
+        "tasa": 0.8333333333333334,
+        "wilson95": [
+          0.7196838683638547,
+          0.9068682302080855
+        ],
+        "bootstrap95": [
+          0.7333333333333333,
+          0.9166666666666666
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 60,
+        "ensayos": 60,
+        "tasa": 0.75,
+        "wilson95": [
+          0.6276792992295218,
+          0.8422347746994333
+        ],
+        "bootstrap95": [
+          0.6333333333333333,
+          0.85
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 0.8333333333333334,
+        "pass^1": 0.8333333333333334
+      },
+      "codigo_pasa": 0.9333333333333333,
+      "juez": {
+        "calificados": 60,
+        "correcta": 45,
+        "parcialmente correcta": 12,
+        "incorrecta": 3,
+        "alucinacion": 0.1,
+        "cito_norma": 0.6166666666666667,
+        "cita_sustenta": 0.6,
+        "cobertura_completa": 0.7833333333333333,
+        "claridad_media": 4.683333333333334
+      },
+      "enrutamiento": {
+        "pares": 57,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 22,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ica": {
+            "soporte": 11,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 12,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ocr": {
+            "soporte": 7,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "fuera_de_alcance": {
+            "soporte": 5,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 22,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 11,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 12,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 7,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 5,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 18,
+          "meta_ms": 8000,
+          "servidor_p50_ms": 2576.0,
+          "servidor_p95_ms": 4585.0,
+          "cliente_p50_ms": 2532.8,
+          "cliente_p95_ms": 4433.7,
+          "cumplen_meta": 18
+        },
+        "rag": {
+          "turnos": 40,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 6475.0,
+          "servidor_p95_ms": 12197.0,
+          "cliente_p50_ms": 6255.0,
+          "cliente_p95_ms": 11642.6,
+          "cumplen_meta": 40
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.4876558",
+        "juez": "1.780068"
+      },
+      "errores_de_ejecucion": 0
+    },
+    "R3": {
+      "ensayos": 3,
+      "escenarios": 3,
+      "tasa_meta": {
+        "escenarios": 3,
+        "ensayos": 3,
+        "tasa": 0.6666666666666666,
+        "wilson95": [
+          0.2076596008020477,
+          0.9385080552796037
+        ],
+        "bootstrap95": [
+          0,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 3,
+        "ensayos": 3,
+        "tasa": 0,
+        "wilson95": [
+          5.551115123125783e-17,
+          0.5614970317550454
+        ],
+        "bootstrap95": [
+          0,
+          0
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 0.6666666666666666,
+        "pass^1": 0.6666666666666666
+      },
+      "codigo_pasa": 1,
+      "juez": {
+        "calificados": 3,
+        "correcta": 0,
+        "parcialmente correcta": 3,
+        "incorrecta": 0,
+        "alucinacion": 0.3333333333333333,
+        "cito_norma": 1,
+        "cita_sustenta": 0.6666666666666666,
+        "cobertura_completa": 0.3333333333333333,
+        "claridad_media": 4.333333333333333
+      },
+      "enrutamiento": {
+        "pares": 3,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ica": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "general": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ocr": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "fuera_de_alcance": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 1,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 1,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 1,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 1,
+          "meta_ms": 8000,
+          "servidor_p50_ms": 3729.0,
+          "servidor_p95_ms": 3729.0,
+          "cliente_p50_ms": 3917.2,
+          "cliente_p95_ms": 3917.2,
+          "cumplen_meta": 1
+        },
+        "rag": {
+          "turnos": 7,
+          "meta_ms": 15000,
+          "servidor_p50_ms": 6346.0,
+          "servidor_p95_ms": 15710.0,
+          "cliente_p50_ms": 6105.8,
+          "cliente_p95_ms": 14962.5,
+          "cumplen_meta": 6
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.0860534",
+        "juez": "0.233712"
+      },
+      "errores_de_ejecucion": 0
+    },
+    "R4": {
+      "ensayos": 2,
+      "escenarios": 2,
+      "tasa_meta": {
+        "escenarios": 2,
+        "ensayos": 2,
+        "tasa": 1,
+        "wilson95": [
+          0.34238022750665303,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "tasa_estricta": {
+        "escenarios": 2,
+        "ensayos": 2,
+        "tasa": 1,
+        "wilson95": [
+          0.34238022750665303,
+          1.0
+        ],
+        "bootstrap95": [
+          1,
+          1
+        ]
+      },
+      "consistencia_meta": {
+        "k": 1,
+        "pass@1": 1.0,
+        "pass^1": 1.0
+      },
+      "codigo_pasa": 1,
+      "juez": {
+        "calificados": 2,
+        "correcta": 2,
+        "parcialmente correcta": 0,
+        "incorrecta": 0,
+        "alucinacion": 0,
+        "cito_norma": 0,
+        "cita_sustenta": 0,
+        "cobertura_completa": 1,
+        "claridad_media": 5
+      },
+      "enrutamiento": {
+        "pares": 2,
+        "por_categoria": {
+          "ipu": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "ica": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "general": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "ocr": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          },
+          "fuera_de_alcance": {
+            "soporte": 1,
+            "precision": 1.0,
+            "exhaustividad": 1.0,
+            "f1": 1.0
+          },
+          "sin_categoria": {
+            "soporte": 0,
+            "precision": null,
+            "exhaustividad": null,
+            "f1": null
+          }
+        },
+        "matriz": {
+          "ipu": {
+            "ipu": 1,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ica": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "general": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "ocr": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          },
+          "fuera_de_alcance": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 1,
+            "sin_categoria": 0
+          },
+          "sin_categoria": {
+            "ipu": 0,
+            "ica": 0,
+            "general": 0,
+            "ocr": 0,
+            "fuera_de_alcance": 0,
+            "sin_categoria": 0
+          }
+        }
+      },
+      "latencia": {
+        "simple": {
+          "turnos": 2,
+          "meta_ms": 8000,
+          "servidor_p50_ms": 1885.0,
+          "servidor_p95_ms": 2659.0,
+          "cliente_p50_ms": 1883.5,
+          "cliente_p95_ms": 2612.8,
+          "cumplen_meta": 2
+        },
+        "rag": {
+          "turnos": 0,
+          "meta_ms": 15000,
+          "servidor_p50_ms": null,
+          "servidor_p95_ms": null,
+          "cliente_p50_ms": null,
+          "cliente_p95_ms": null,
+          "cumplen_meta": 0
+        }
+      },
+      "costo_usd": {
+        "sistema": "0.014442",
+        "juez": "0.029188"
+      },
+      "errores_de_ejecucion": 0
+    }
+  },
+  "trazas": {
+    "ejecuciones_revisadas": 1284,
+    "con_identificadores": 0,
+    "hallazgos": [],
+    "pasa": true
+  },
+  "costos": {
+    "Sistema (principal)": "0.4876558",
+    "Juez (principal)": "1.780068",
+    "Sistema (R3)": "0.0860534",
+    "Juez (R3)": "0.233712",
+    "Sistema (R4)": "0.014442",
+    "Juez (R4)": "0.029188",
+    "Total": "2.6311192"
+  }
+}
