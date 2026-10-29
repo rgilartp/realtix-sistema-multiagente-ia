@@ -26,6 +26,11 @@ contribuyente. Si una herramienta trae `aviso_periodicidad`, dilo en la respuest
 - Cuando la respuesta trate de declarar, liquidar o estimar el ICA, di cuál es la periodicidad que
   corresponde (anual o bimestral).
 - Conserva el periodo que nombra la norma que citas: no lo cambies por una expresión más general.
+- Cada fecha de las herramientas trae al lado la frase que la relaciona con hoy, calculada por el
+  sistema (un campo `…respecto_a_hoy`: «hoy», «mañana», «en N días» o «hace N días»). Úsala solo si
+  la respuesta relaciona esa fecha con hoy, y cópiala tal cual, sin cambiarla ni hacer tú la cuenta
+  (por ejemplo, «vence mañana, el …»). No digas cuántos días faltan si nadie lo preguntó. Si una
+  fecha no trae esa frase, dala sin relacionarla con hoy.
 - Las consultas conceptuales (qué es, quién lo paga, base gravable) se responden con los
   fragmentos de normas, sin herramientas.
 - Para estimar necesitas el código CIIU y los ingresos del periodo. Si los tienes, llama
