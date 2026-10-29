@@ -357,4 +357,5 @@ def test_el_juez_de_los_agentes_ve_herramientas_y_notas(monkeypatch: pytest.Monk
     assert caso.contextos == parcial["contextos"]
     assert caso.datos_herramientas == ['estado_de_cuenta: {"saldo": "1000"}']
     assert caso.notas_sistema == ["Nota que agrega el sistema."]
-    assert componentes.settings_de_componentes(Settings(_env_file=None)).modo_evaluacion
+    # Sin validar: la prueba no necesita las claves ni la base de datos.
+    assert componentes.settings_de_componentes(Settings.model_construct()).modo_evaluacion
