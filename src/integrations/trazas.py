@@ -3,6 +3,11 @@
 Las trazas llevan el `id_conversacion`, nunca el `contribuyente_id`, y un anonimizador enmascara
 cédulas, NIT y nombres en las entradas y las salidas. La prueba de trazas de B12 lo verifica.
 
+El de las trazas (`AnonimizadorDeTrazas`) cambia además las imágenes por «[IMAGEN]» y enmascara los
+nombres que el contribuyente declara (auditoría de seguridad: antes, la imagen del recibo llegaba
+entera a LangSmith). Va en una subclase para no tocar `Anonimizador`, cuyo código entra en la huella
+del juez (A5): lo que ven el juez, el clasificador y los agentes no cambia.
+
 El nombre de la sesión de la OVT simulada lo fija la capa de acceso (B9) en `NOMBRES_DE_SESION`
 durante el turno: todo `Anonimizador` lo enmascara, también escrito de otra forma («usuario de
 prueba 01» en minúsculas). No va en la configuración del grafo, que LangGraph copia a los
@@ -22,6 +27,10 @@ from src.config import Settings
 
 MASCARA_DOCUMENTO = "[DOCUMENTO]"
 MASCARA_NOMBRE = "[NOMBRE]"
+MASCARA_IMAGEN = "[IMAGEN]"
+# Una imagen en una traza: una URL de datos o una cadena en base64 larga (el bloque del recibo).
+IMAGEN_EN_DATOS = re.compile(r"\s*data:image/", re.IGNORECASE)
+BASE64_LARGO = re.compile(r"\s*[A-Za-z0-9+/\r\n]{1000,}={0,2}\s*")
 PROHIBIDOS_EN_METADATOS = frozenset({"contribuyente_id", "id_contribuyente", "nombre"})
 # Documentos con tipo: CC-1000000003, NIT-9000000012, NIT 900.123.456-7, cédula 1.020.304.050.
 CON_TIPO = re.compile(r"\b(?:CC|CE|TI|PA|NIT)[-\s:]*\d[\d.]{5,}(?:-\d)?", re.IGNORECASE)
@@ -107,6 +116,21 @@ class Anonimizador:
         if isinstance(valor, list | tuple):
             return [self(v) for v in valor]
         return valor
+
+
+class AnonimizadorDeTrazas(Anonimizador):
+    """El de las trazas de LangSmith (`para_modelos=False`): además de documentos y nombres
+    conocidos, cambia las imágenes por «[IMAGEN]» y enmascara los nombres declarados."""
+
+    def __init__(self, nombres: Iterable[str] = ()) -> None:
+        super().__init__(nombres, para_modelos=False)
+
+    def texto(self, valor: str) -> str:
+        if IMAGEN_EN_DATOS.match(valor) or BASE64_LARGO.fullmatch(valor):
+            return MASCARA_IMAGEN
+        # Primero los documentos, como con `para_modelos=True`: «soy CC-…» no deja la cifra.
+        valor = super().texto(valor)
+        return NOMBRE_DECLARADO.sub(lambda m: m.group(1) + MASCARA_NOMBRE, valor)
 
 
 def metadatos_de_traza(
