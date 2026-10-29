@@ -27,9 +27,10 @@ from src.services.calendario_tributario import (
     fuente_del_calendario,
     regimen_ica,
     regimenes_posibles,
+    regla_de_la_periodicidad,
     ya_paso,
 )
-from src.services.errores import DatoNoPublicadoError
+from src.services.errores import AnioSinDatosError, DatoNoPublicadoError
 from src.services.ica import (
     EstimacionICA,
     PeriodoICA,
@@ -40,6 +41,20 @@ from src.services.ica import (
 )
 
 PERIODICIDAD = {"type": "string", "enum": ["anual", "bimestral"]}
+
+
+def _regla(datos: dict[str, Any], anio: int, periodicidad: str | None) -> tuple[str, ...]:
+    """Agrega la regla que define la periodicidad (la de `datos/`), para que el modelo la copie y
+    no la explique con sus palabras; devuelve su fuente."""
+    if periodicidad not in ("anual", "bimestral"):
+        return ()
+    try:
+        regla, fuente = regla_de_la_periodicidad(anio, periodicidad)  # type: ignore[arg-type]
+    except AnioSinDatosError:
+        return ()
+    datos["regla_de_la_periodicidad"] = regla
+    datos["fuente_de_la_regla"] = fuente
+    return (fuente,)
 
 
 def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
@@ -101,7 +116,8 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "obligaciones": filas,
         "pagos": pagos,
     }
-    return Resultado(datos, fuentes=(FUENTE_REALSIT,), notas=tuple(avisos))
+    regla = _regla(datos, filas[0]["vigencia_fiscal"], filas[0]["periodicidad"])
+    return Resultado(datos, fuentes=(FUENTE_REALSIT, *regla), notas=tuple(avisos))
 
 
 def _registrada(contexto: Contexto, anio: int) -> tuple[str, int] | None:
@@ -269,13 +285,15 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             **info,
             "fechas_limite_declaracion": fechas_de(periodicidad),
         }
+        regla = _regla(datos, anio, periodicidad)
     else:
+        regla = ()
         datos["periodicidad"] = "no se conoce: van las fechas de las dos, cada una con la suya"
         datos["por_periodicidad"] = [
             {"periodicidad": cual, "fechas_limite_declaracion": fechas_de(cual)}
             for cual in ("anual", "bimestral")
         ]
-    return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
+    return Resultado(datos, fuentes=(fuente_del_calendario(anio), *regla))
 
 
 def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:

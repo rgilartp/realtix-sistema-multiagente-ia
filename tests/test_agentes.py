@@ -1286,3 +1286,50 @@ def test_sin_reescritura_si_no_corresponde_o_si_es_la_aclaracion_de_la_actividad
         AGENTE_ICA, adaptador, guion, "ICA de la actividad 0000", U04, [P04]
     )
     assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "aclaracion"
+
+
+# -- Reglas por código: la herramienta entrega la regla y el modelo la copia -------------------
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-03 · Fechas de declaración", "RF-ICA-01 · Consultas conceptuales de ICA")
+def test_la_regla_de_la_periodicidad_sale_de_datos_y_va_en_las_herramientas(adaptador) -> None:
+    """La regla que define la periodicidad es la de `datos/regimenes_ica.yaml` (la misma de
+    regimen_ica), con su fuente; el modelo la copia en lugar de explicarla (391 UVT invertidos en
+    la corrida 2b y la 2c)."""
+    from src.services.calendario_tributario import regimen_ica, regla_de_la_periodicidad
+
+    bimestral, fuente = regla_de_la_periodicidad(2026, "bimestral")
+    assert regimen_ica(2026, "comun_bimestral").regla in bimestral
+    assert fuente == regimen_ica(2026, "comun_bimestral").fuente
+    anual, _ = regla_de_la_periodicidad(2026, "anual")
+    for regimen in ("comun_anual", "preferencial"):
+        assert regimen_ica(2026, regimen).regla in anual
+    guion = [pide(("mi_situacion_ica", {}), ("fechas_ica", {"anio": 2026})), final("Bimestral.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "¿Por qué?", U04, [P04])
+    situacion, fechas = resultados_de_herramientas(modelo)
+    for datos in (situacion, fechas):
+        assert datos["regla_de_la_periodicidad"] == bimestral
+        assert datos["fuente_de_la_regla"] == fuente
+        assert fuente in datos["fuentes_de_la_herramienta"]
+    guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
+    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas")  # sin sesión ni periodicidad
+    (sin_periodicidad,) = resultados_de_herramientas(modelo)
+    assert "regla_de_la_periodicidad" not in sin_periodicidad
+
+
+@pytest.mark.unit
+@pytest.mark.req(
+    "RF-ICA-01 · Consultas conceptuales de ICA", "RF-IPU-01 · Consultas conceptuales de IPU"
+)
+def test_los_prompts_piden_copiar_la_regla_y_describir_la_tarifa_con_la_herramienta() -> None:
+    ica = " ".join(prompt_de_agente("ica").texto.split())
+    assert (
+        "Si dices por qué la periodicidad es anual o bimestral, copia la regla que trae la "
+        "herramienta; no la expliques con tus palabras." in ica
+    )
+    ipu = " ".join(prompt_de_agente("ipu").texto.split())
+    assert (
+        "si explicas de qué depende la tarifa del predial, llama `tarifas_predial` y descríbelo "
+        "solo con lo que trae; no lo describas de memoria." in ipu
+    )
