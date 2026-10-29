@@ -215,7 +215,8 @@ encabezado de portal con interruptor de tema y tarjetas de «Qué puedes probar�
 la lista de usuarios de prueba se ajustó al modo oscuro (PR #57) y el widget sumó un aviso de datos
 personales debajo del aviso de IA (PR #58). Los dos autores aplicaron las tareas, el SUS y la
 evaluación heurística, cada uno por su lado (`docs/usabilidad/rodolfo/` y `docs/usabilidad/dayanna/`):
-el puntaje del SUS y el resumen de las heurísticas: **PENDIENTE (B16)**.
+SUS de 80,0 (Rodolfo) y 97,5 (Dayanna), con un promedio de 88,75, y 6 problemas de gravedad 2 a 4,
+todos atendidos antes de la corrida 3 (PR #57, #59, #60 y, en parte, #64; sección 5.10).
 
 ## 4.8 Observabilidad
 
@@ -268,8 +269,10 @@ RNF-15 · Volúmenes persistentes.
 **Cómo se verificó y cifras.** La carga de la base de conocimiento en el servidor costó US$0,05
 (`docs/resumenes/b13.md`). En B15, una conversación continuó en la otra réplica, y el corpus, las
 conversaciones y los casos persistieron después de reiniciar y de recrear los contenedores
-(`reports/no_funcionales/README.md`, `replicas.json` y `volumenes.json`). La disponibilidad
-medida por el monitor: **PENDIENTE (corrida 3)**.
+(`reports/no_funcionales/corrida-2/`); en la corrida 3 se repitieron con el mismo resultado
+(`reports/no_funcionales/`). El monitor de `/health`
+pasó al crontab del servidor, cada 5 minutos, porque el de GitHub Actions nunca corrió; la
+disponibilidad que mide está en la sección 5.8.
 
 ## 4.10 Evaluación antes de la corrida final
 

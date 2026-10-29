@@ -1,14 +1,14 @@
 # Capítulo 5 · Pruebas y resultados (borrador)
 
-Cada cifra lleva su archivo de origen. Los archivos de la corrida 2, del umbral, de la calibración y
-de las pruebas no funcionales están en la rama de B15 (PR #48), hasta que se fusione.
+Cada cifra lleva su archivo de origen en el repositorio.
 
 ## 5.1 Plan de pruebas
 
 El plan siguió la estructura del programa CTFL v4.0.1 del ISTQB, con contexto y alcance, supuestos,
 interesados, riesgos de producto y de proyecto, niveles, tipos y técnicas de prueba, evaluadores,
 métricas, criterios de entrada y de salida, presupuesto, cronograma y la tabla de compromisos del
-documento con el lugar donde se miden (`docs/plan_de_pruebas.md`; ADR-24, A1).
+documento con el lugar donde se miden (`docs/plan_de_pruebas.md`; ADR-24, A1). Los ajustes al plan
+(ADR-24: A1 a A9 y las mejoras R1 a R4) salieron de una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron.
 
 - **Niveles.**
   - Componentes: 100 consultas etiquetadas para el orquestador, y los escenarios de un turno contra
@@ -114,7 +114,7 @@ herramientas, las notas y los del recibo. Por eso los promedios generales de las
 comparan directo: en los casos con sesión, la corrida 2 también mide las herramientas. La comparación
 limpia de la recuperación es la de los casos sin sesión (las filas «RAGAS sin sesión»).
 
-Pruebas no funcionales (`reports/no_funcionales/README.md`):
+Pruebas no funcionales (`reports/no_funcionales/corrida-2/README.md`):
 
 - **RNF-02 · Escalamiento horizontal:** la conversación continuó en otra réplica.
 - **RNF-08 · Tiempos de espera y degradación:** 8 de 8 fallas inyectadas escalaron sin errores técnicos.
@@ -138,71 +138,167 @@ del sistema, desalineación entre agentes o verificación de la tarea.
     generación); tres de generación (G4, G5 y G7), y una de enrutamiento (G6).
   - Por la familia de MAST: diseño del sistema (G1, G2, G4 y G6), verificación de la tarea (G3 y
     G5) y desalineación entre agentes (G7).
-- **Segunda ronda de correcciones** (PR #49 a #51), con un tope de US$1,0 que se agotó: US$1,004, la
-  suma de `reports/verif-fix-busqueda/costos.md`, `reports/verif-fix-fechas-relativas/costos.md`,
-  `reports/verif-fix-fechas-relativas-2/costos.md` y `reports/verif-fix-general-canal/costos.md`
-  (US$1,002), en las ramas de esos PR, más US$0,002 del agente general corrido directo (PR #51). Ninguna se fusionó ni se desplegó:
-  - la fusión de la búsqueda y el texto en la recuperación (G2 y G3): de 40 a 42 de 69 fuentes
-    esperadas sin modelos (`reports/recuperacion_fusion.json`, PR #49), y uno de los dos escenarios
-    se superó en la verificación local. Esa verificación se hizo antes de las correcciones de la
-    revisión y no se repitió. Quedó **pendiente de una decisión** sobre la técnica y sobre la
-    similitud que alimenta la confianza;
-  - los días que faltan calculados por código (G4): superó el escenario afectado, pero en una
-    muestra otro escenario que se superaba nombró «hoy» una fecha de mañana
-    (`reports/verif-fix-fechas-relativas-2/`, PR #50). Quedó **pendiente**;
-  - una regla del agente general que no inventa el canal de un trámite (G1, la parte de
-    generación): 0 de 3 respuestas directas lo nombraron
-    (`reports/verif-fix-general-canal/agente_directo.json`, PR #51). Quedó **pendiente** de
-    verificar dos escenarios generales y uno de aviso de IA.
-  - El umbral (G1) y el orquestador (G6) quedaron propuestos, sin aplicar.
+- **Segunda ronda de correcciones** (PR #49 a #51, `docs/resumenes/b15.md`):
+  - la fusión de la búsqueda y el texto en la recuperación (G2 y G3; de 40 a 42 de 69 fuentes
+    esperadas sin modelos) se **cerró sin fusionar**, como trabajo futuro: la ganancia era pequeña,
+    duplicaba la latencia del agente general y cambiaba la similitud que alimenta la confianza
+    (PR #49);
+  - la regla del agente general que no inventa el canal de un trámite (G1, la parte de generación)
+    superó 8 de 8 escenarios generales y del aviso de IA y **se fusionó** (PR #51);
+  - los días que faltan calculados por código (G4) se cerraron, se fusionaron después como excepción
+    y se **reemplazaron** por las fechas por código (PR #50 y #72, sección 5.7);
+  - el umbral (G1) se mantuvo en 0,70, aprobado por los autores, y el orquestador (G6) quedó sin
+    cambios.
 
-## 5.7 Corrida 3 (final)
+## 5.7 Correcciones posteriores, ensayos generales y sondas de fechas
 
-**PENDIENTE (corrida 3):** 3 ensayos por escenario, R1, componentes, RAGAS, pass@1 promedio, pass@3
-y pass^3, la tasa de la meta frente al 85 % de RNF-16 · Tasa de respuestas correctas con su intervalo
-de Wilson, la latencia, el costo por consulta y las pruebas no funcionales que dependen del
-despliegue.
+Después de la corrida 2 se corrigieron los hallazgos de la usabilidad y de una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron (PR #59 a #68), se
+hizo una auditoría de seguridad (PR #69 y #70) y se pasó a decidir por código lo que debe ser exacto
+(PR #72 y #73). Cada ronda se verificó con un ensayo general de un ensayo por escenario, más R3 y R4,
+contra el despliegue y con el juez calibrado, y con una regla fijada antes de ver el resultado.
 
-## 5.8 Calibración del juez
+| Corrida | Qué verificó | Superados de 60 (Wilson del 95 %) | Estricta | R3 y R4 | Origen |
+|---|---|---|---|---|---|
+| 2b | Correcciones de la usabilidad y de la revisión externa con un asistente de IA | 52 (86,7 %; 75,8 % a 93,1 %) | 75,0 % | 3 de 3 y 2 de 2 | `reports/corrida-2b/` |
+| 2c | Verificación tributaria, fechas relativas (#50) y auditoría | 50 (83,3 %; 72,0 % a 90,7 %) | 75,0 % | 2 de 3 y 2 de 2 | `reports/corrida-2c/analisis.md` |
+| 2d | Código congelado, con las fechas y las reglas por código | 55 (91,7 %; 81,9 % a 96,4 %) | 75,0 % | 3 de 3 y 2 de 2 | `reports/corrida-2d/analisis.md` |
 
-**PENDIENTE (calibración):** el kappa entre el juez v3 y el consenso de los autores (binario y
-ponderado de 3 niveles) y entre los dos evaluadores, con intervalos por bootstrap, sobre la muestra
-de 30 respuestas de la corrida 2 (`reports/calibracion/`).
+- En la 2b, una sola regresión se debió a un cambio del día (la regla del CIIU en el agente del
+  ICA, que el juez marcó sin fuente) y se revirtió (PR #66).
+- La 2c no cumplió su regla (52 o más): se analizó cada falla sin corregir nada por cuenta propia.
+  Una fue probablemente del PR #50: el modelo usó «hace 83 días» y concluyó sin fuente que «no se
+  puede pagar» (MULTI-02).
+- **Fechas por código.** Por decisión de los autores, el sistema no relaciona fechas con el día de
+  la consulta: da la fecha exacta y, cuando importa, «ya venció» o «aún no vence» según lo que
+  calcula el código; un verificador sin modelo pide reescribir toda respuesta que diga «hoy»,
+  «mañana», «hace N días» o nombre los fragmentos o las herramientas (PR #72). Se verificó con 34
+  sondas sin juez (17 combinaciones de pregunta y día, casi todas el día antes, el mismo día y después
+  de un plazo, dos veces cada una). En la repetición final, ninguna respuesta relacionó una fecha con
+  el día de la consulta, trajo una referencia interna o dio un estado de fecha equivocado; 2 de 34 no
+  llamaron la herramienta de fechas, sin error, y las reescrituras bajaron de 23 a 9 de 34
+  (`reports/verif-fechas-por-codigo/`).
+- **Reglas por código.** Las herramientas del ICA entregan la regla de la periodicidad tal como está
+  en los datos (el modelo había invertido la de los 391 UVT), y la tarifa del predial se describe con
+  la herramienta de tarifas (PR #73): 6 de 6 escenarios superados con el juez y ninguna inversión ni
+  tarifa sin fuente en 6 preguntas nuevas (`reports/verif-reglas-por-codigo/`).
+- La 2d cumplió su regla: 55 de 60, sin errores técnicos, latencias dentro de las metas, trazas sin
+  identificadores y ninguna respuesta que relacionara una fecha con el día de la consulta. Sus 5
+  fallas fueron de tipos ya vistos.
 
-## 5.9 Usabilidad
+## 5.8 Corrida 3 (final)
 
-**PENDIENTE (usabilidad):** el SUS de cada evaluador y los problemas de la evaluación heurística
-(`docs/usabilidad/`), reportados como evaluación interna preliminar de dos evaluadores que además
-desarrollaron el sistema multiagente de IA (ADR-21).
+Corrió contra el despliegue (commit `d3dab00`, código congelado) con 3 ensayos por escenario, R1,
+R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la calibración
+(`reports/corrida-3/reporte.md`; `docs/reporte_de_pruebas.md`).
 
-## 5.10 Matriz de trazabilidad
+| Medida | Valor | Origen |
+|---|---|---|
+| Tasa de la meta | **90,0 %** (60 escenarios, 3 ensayos; Wilson de 79,9 % a 95,3 %; bootstrap de 83,3 % a 96,1 %) | `reports/corrida-3/metricas.json` |
+| Tasa estricta | 75,0 % (Wilson de 62,8 % a 84,2 %) | ídem |
+| pass@1, pass@3 y pass^3 | 0,90, 0,95 y 0,85 | ídem |
+| R1 · Generalización (10 variantes) | 43,3 % (Wilson de 19,0 % a 71,4 %); pass^3 de 0,30 | ídem |
+| R3 y R4 | 9 de 9 y 6 de 6 ensayos | ídem |
+| Veredictos del juez | correcta, 137; parcialmente correcta, 37; incorrecta, 6; con alucinación, 7 de 180 (3,9 %) | ídem |
+| Orquestador (componentes) | exactitud de 99,0 %, kappa de 0,99, F1 macro de 0,99 (clase mayoritaria: 20,0 %) | `reports/corrida-3/reporte.md` |
+| Agentes (componentes) | 11 de 34 escenarios superados | ídem |
+| RAGAS (110 casos) | precisión del contexto de 66,1 %, exhaustividad de 82,4 %, fidelidad de 84,8 % y relevancia de 68,1 % | ídem |
+| RAGAS sin sesión (66 casos) | precisión de 81,4 %, exhaustividad de 81,2 %, fidelidad de 84,6 % y relevancia de 71,3 % | `reports/corrida-3/ragas.jsonl` |
+| Latencia del servidor | sin fragmentos, p50 de 2.299 ms y p95 de 3.934 ms (54 de 54 bajo 8 s); con RAG, p50 de 6.379 ms y p95 de 13.393 ms (120 de 120 bajo 15 s) | `reports/corrida-3/reporte.md` |
+| Trazas | 4.422 ejecuciones, ninguna con identificadores | `reports/corrida-3/trazas.json` |
+| Errores técnicos | 0 en 249 turnos | `reports/corrida-3/metricas.json` |
 
-**PENDIENTE (corrida 3):** la calificación final de los 65 requerimientos (`reports/trazabilidad.md`
-y `.csv`). La matriz al cierre de la corrida 1 está en `reports/trazabilidad.md`.
+- **Frente a la meta de RNF-16 · Tasa de respuestas correctas (85 %):** la estimación puntual (90,0 %)
+  la supera; el límite inferior de Wilson (79,9 %), no.
+- **No superados** (con algún ensayo fallido; la causa de cada uno, en `docs/reporte_de_pruebas.md`,
+  sección 9):
+  - 0 de 3: GEN-02 (transfiere a un funcionario en vez de responder) e IPU-14 (niega un alivio de
+    intereses), que fallan desde la corrida 1, e IPU-13 (la recuperación no trae el artículo con el
+    plazo);
+  - 1 de 3: AIA-01 (enrutamiento de un saludo), IPU-15 (omite el valor de la cuota) y MULTI-03 (una
+    afirmación sin fuente);
+  - 2 de 3: ICA-04, ICA-07 e IPU-04 (una afirmación sin fuente en un ensayo).
+  - Por la familia de MAST, predominan la verificación de la tarea (generación sin fuente o
+    incompleta) y el diseño del sistema (enrutamiento y recuperación). Ninguna falla es de acceso a
+    datos. En R1, siete de
+  las diez variantes tuvieron algún ensayo fallido: las paráfrasis cambian la clasificación o la
+  búsqueda y la respuesta deja de cubrir lo esencial (`docs/reporte_de_pruebas.md`, sección 9).
+- **Pruebas no funcionales** (`reports/no_funcionales/README.md`): 8 de 8 fallas inyectadas escalaron
+  sin errores técnicos (RNF-08 · Tiempos de espera y degradación); con dos réplicas, una conversación
+  continuó en la otra (RNF-02 · Escalamiento horizontal); los volúmenes persistieron al reiniciar y al
+  recrear (RNF-15 · Volúmenes persistentes); la huella de RealSit fue idéntica (RF-SYS-02 · Alcance de
+  solo lectura). Disponibilidad (RNF-06 · Horario de atención): **85,53 %** en horario hábil con el registro completo
+  del monitor (130 de 152 chequeos en 42,6 horas), **por debajo de la meta del 99 %**. Los 27 fallos
+  fueron 502 de una fuga de conexiones en `/health`, en las primeras 2,2 horas, antes de su corrección
+  (PR #54); desde entonces, 100 % (130 de 130). En todas las horas, 94,73 %; sin las ventanas de
+  despliegue, 83,94 %. El registro empieza en B15 y el chequeo sale del mismo servidor, así que es una
+  medición del periodo de evaluación (`reports/no_funcionales/disponibilidad.md`).
 
-## 5.11 Comparación con Bahçeci y colaboradores
+## 5.9 Calibración del juez
+
+Dos evaluadores calificaron a ciegas y sin ayuda de IA 30 respuestas de la corrida 2b, estratificadas
+por el veredicto del juez (las 7 no aprobadas y 23 aprobadas), y su consenso. Una primera muestra, de
+la corrida 2, se descartó porque sus hojas se llenaron con ayuda de un chat externo de IA
+(`reports/calibracion/descartada_corrida-2/`).
+
+| Comparación | Kappa binario (IC 95 %) | Kappa ponderado de 3 niveles (IC 95 %) | Acuerdo observado |
+|---|---|---|---|
+| Juez frente al consenso | −0,062 (−0,170 a 0,000) | 0,062 (−0,231 a 0,366) | 22 de 30 (binario); 19 de 30 |
+| Entre los evaluadores | 0,000 (0,000 a 1,000) | −0,111 (−0,200 a 0,000) | 29 de 30 (binario); 24 de 30 |
+
+El valor bajo se debe a que las personas aprobaron casi todas las respuestas (paradoja del kappa;
+PABAK binario de 0,47 y 0,93): en 7 de las 8 diferencias binarias, el juez fue más estricto que el
+consenso, así que la tasa que mide tiende a quedar por debajo de la que darían las personas
+(`reports/calibracion/kappa.json`).
+
+## 5.10 Usabilidad
+
+Evaluación interna preliminar de los dos autores, que además desarrollaron el sistema multiagente de
+IA (ADR-21; `docs/usabilidad/rodolfo/` y `docs/usabilidad/dayanna/`):
+
+- **SUS:** 80,0 (Rodolfo) y 97,5 (Dayanna); promedio de 88,75.
+- **Evaluación heurística:** 6 problemas, de gravedad 2 a 4: la lista de usuarios en modo oscuro, las
+  fotos de más de 5 MB, un recibo apaisado tomado como recortado y la falta de una indicación de
+  dónde encontrar el código CIIU. Los tres primeros se corrigieron antes de la corrida 3 (PR #57,
+  #60 y #59) y el último en parte (glosario, PR #64).
+
+## 5.11 Matriz de trazabilidad
+
+Con la corrida 3 y la suite (761 pruebas superadas), el cumplimiento global fue de 74,0 % (50 de los
+65 requerimientos calificados: 37 con 100 % y 13 con 0 %; los otros 15 sin evidencia calificable en
+una corrida o en la suite) (`reports/trazabilidad.md` y `.csv`). La calificación es mecánica: un
+requerimiento vale 0 si falla algún ensayo de alguno de sus escenarios, más estricta con 3 ensayos
+que con 1 (83,3 % de 48 en la corrida 2).
+
+## 5.12 Comparación con Bahçeci y colaboradores
 
 Bahçeci y colaboradores reportaron 92,63 % de fidelidad, 91,31 % de relevancia, 75,20 % de precisión
 del contexto, 86,60 % de exhaustividad del contexto y una latencia cercana a 4.000 ms (sección 6.5 de
 la especificación técnica). En las consultas sin sesión, la medida limpia de la recuperación:
 
-| Métrica | Bahçeci | Corrida 1 | Corrida 2 |
-|---|---|---|---|
-| Precisión del contexto | 75,20 % | 87,1 % | 82,7 % |
-| Exhaustividad del contexto | 86,60 % | 82,2 % | 82,5 % |
-| Fidelidad | 92,63 % | 84,4 % | 87,8 % |
+| Métrica | Bahçeci | Corrida 1 | Corrida 2 | Corrida 3 |
+|---|---|---|---|---|
+| Precisión del contexto | 75,20 % | 87,1 % | 82,7 % | 81,4 % |
+| Exhaustividad del contexto | 86,60 % | 82,2 % | 82,5 % | 81,2 % |
+| Fidelidad | 92,63 % | 84,4 % | 87,8 % | 84,6 % |
+| Relevancia de la respuesta | 91,31 % | — | — | 71,3 % |
+| Casos sin sesión | — | 22 | 21 | 66 |
 
-Fuentes: `reports/corrida-1/fallas.md` y `reports/corrida-2/fallas.md`.
+Fuentes: `reports/corrida-1/fallas.md`, `reports/corrida-2/fallas.md` y `reports/corrida-3/ragas.jsonl`.
+La latencia de la corrida 3 con recuperación tuvo una mediana de 6.379 ms en el servidor, por encima de
+los 4.000 ms de Bahçeci; el sistema hace dos o tres llamadas a modelos por turno.
 
-**PENDIENTE (corrida 3):** la comparación final, con la relevancia y la latencia.
-
-## 5.12 Costo
+## 5.13 Costo
 
 | Concepto | Anthropic (US$) | OpenAI (US$) | Origen |
 |---|---|---|---|
 | Corrida 1 | 3,80 | 0,49 | `docs/resumenes/b14.md` |
 | Correcciones de la corrida 1 | 4,34 | 0,08 | `docs/resumenes/correcciones-corrida-1.md` |
 | Corrida 2 y pruebas no funcionales | ~2,61 | 0,54 | `docs/resumenes/b15.md` |
+| Corrida 3 | 10,82 | 1,65 | `reports/corrida-3/costos.md` |
+| Correcciones posteriores a la corrida 2, ensayos 2b a 2d, sondas, verificaciones, humo e ingestas | ~13,2 | < 0,1 | `reports/*/costos.md` y los resúmenes |
+| Total del proyecto | ~34,8 | ~2,8 | `docs/reporte_de_pruebas.md`, sección 10 |
 
-**PENDIENTE (corrida 3):** el costo real de la corrida 3, el costo por consulta y el total del
-proyecto.
+El sistema costó US$0,0082 por turno en la corrida 3; el juez es lo que más pesa en una corrida.
+Frente al presupuesto de la sección 7 del plan (US$25 en Anthropic y US$10 en OpenAI), Anthropic lo
+superó en unos US$9,8, por las rondas de correcciones posteriores a la corrida 2, cada una verificada
+con el juez, y los ensayos generales 2b a 2d.
