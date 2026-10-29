@@ -57,7 +57,7 @@ en fuentes; RF-IPU-05 · Citación de la norma.
   (`docs/resumenes/b12.md`).
 - Después de la corrida 2 se propuso fusionar la búsqueda del orquestador y el texto del
   contribuyente: sin modelos, las fuentes esperadas recuperadas subieron de 40 a 42 de 69
-  (`reports/recuperacion_fusion.json`, PR #49). Se cerró sin fusionar, como trabajo futuro: la
+  (`reports/recuperacion_fusion.json` en la rama del PR #49, que no se fusionó). Se cerró sin fusionar, como trabajo futuro: la
   ganancia era pequeña, duplicaba la latencia del agente general y cambiaba la similitud que alimenta
   la confianza (`docs/resumenes/b15.md`).
 - Una verificación tributaria, una revisión externa con un asistente de IA (Claude, en una conversación distinta de la que desarrolló el código), cuyos hallazgos los autores contrastaron con las fuentes oficiales y aprobaron, revisó, afirmación por afirmación, las respuestas de referencia
