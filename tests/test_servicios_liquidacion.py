@@ -70,8 +70,8 @@ def test_toda_liquidacion_lleva_las_notas_obligatorias() -> None:
     assert "no vinculante" in notas.NOTA_ESTIMACION
     assert "Ley 1995 de 2019" in notas.NOTA_LEY_1995 and "Ley 2294 de 2023" in notas.NOTA_LEY_1995
     assert notas.NOTA_APROXIMACION_PREDIAL == (
-        "En la factura y en la declaración los valores se aproximan al múltiplo de mil más "
-        "cercano (Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar "
+        "En la declaración y en los recibos de pago los valores se aproximan al múltiplo de mil "
+        "más cercano (Decreto 807 de 1993, arts. 15 y 132), así que el valor a pagar puede variar "
         "levemente; el que cuenta es el de la factura o la declaración."
     )
     assert "arts. 15 y 132" not in notas.NOTA_APROXIMACION_ICA and "art. 15" in (
@@ -201,9 +201,11 @@ def test_la_nota_dice_cuando_aplican_avisos_y_tableros_y_la_sobretasa_bomberil()
     assert (
         citas_sin_fuente("Decreto 352 de 2002, arts. 57 a 59", [notas.NOTA_AVISOS_Y_TABLEROS]) == []
     )
-    # 2027: el umbral y la UVT aún no se publican; no se dice si aplica.
+    # 2027: sin el umbral o la UVT en la base no se dice si aplica, ni que el umbral no se ha
+    # publicado (una norma que no está en la base puede haber cambiado la regla).
     sin_datos = estimar_ica("6201", 900_000_000, PeriodoICA(2027))
     assert any("no puede decir si la sobretasa bomberil se declara" in n for n in sin_datos.notas)
+    assert not any("se publica" in n for n in sin_datos.notas)
     assert any("43.498 UVT" in n and "art. 2" in n for n in sin_datos.notas)  # la regla de 2026
 
 
