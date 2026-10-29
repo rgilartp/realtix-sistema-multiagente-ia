@@ -61,13 +61,49 @@ historial del monitor): **PENDIENTE (corrida 3)**.
 
 ## 7. Calibración del juez
 
-Kappa entre el juez y el consenso (binario y ponderado de 3 niveles) y entre los evaluadores, con
-intervalos por bootstrap (`scripts/calibracion.py kappa`): **PENDIENTE (calibración)**.
+Muestra de 30 respuestas de la corrida 2b, estratificadas por el veredicto del juez (R2: las 7 no
+aprobadas y 23 aprobadas), calificadas a ciegas y sin ayuda de IA por Rodolfo y Dayanna, cada uno por
+su lado, y su consenso (las 24 filas en que coincidieron se copiaron de forma mecánica; las 6
+diferencias las decidieron en una llamada). La primera muestra, de la corrida 2, se descartó porque
+sus hojas se llenaron con ayuda de un chat externo de IA (`reports/calibracion/descartada_corrida-2/`).
+Juez v3, huella `afecd5c1…`, la misma de las corridas 2b a 3 (A5).
+
+| Comparación | Kappa binario (IC 95 %) | Kappa ponderado de 3 niveles (IC 95 %) | Acuerdo observado |
+|---|---|---|---|
+| Juez frente al consenso | −0,062 (−0,170 a 0,000) | 0,062 (−0,231 a 0,366) | 22 de 30 (binario); 19 de 30 |
+| Entre los evaluadores | 0,000 (0,000 a 1,000) | −0,111 (−0,200 a 0,000) | 29 de 30 (binario); 24 de 30 |
+
+El kappa es bajo aunque el acuerdo observado sea alto: las personas aprobaron casi todas las
+respuestas (el consenso, 29 de 30) y ninguna calificó «incorrecta», así que el acuerdo esperado por
+azar es casi igual al observado (paradoja del kappa). Con 23 aprobadas por el juez y 29 por el
+consenso, el kappa binario no podía pasar de unos 0,20. El PABAK binario es de 0,47 (juez y
+consenso) y de 0,93 (evaluadores). En 7 de las 8 diferencias binarias, el juez no aprobó lo que el
+consenso aprobó: el juez fue más estricto que las personas, así que la tasa que mide tiende a quedar
+por debajo de la que darían ellas (`reports/calibracion/kappa.json`, `docs/resumenes/b15.md`).
 
 ## 8. Usabilidad
 
-SUS de cada evaluador y problemas de la evaluación heurística (`docs/usabilidad/`): **PENDIENTE
-(usabilidad)**.
+Los dos autores aplicaron las tareas, el SUS y la evaluación heurística de Nielsen, cada uno por su
+lado, contra el sistema desplegado (ADR-21; `docs/usabilidad/rodolfo/` y `docs/usabilidad/dayanna/`).
+
+- **SUS:** Rodolfo, 80,0; Dayanna, 97,5; promedio, 88,75. En el SUS de Rodolfo, el ítem 6 decía 0
+  por error; él confirmó que es 1 (anotado en el archivo).
+- **Evaluación heurística:** 6 problemas (2 de Rodolfo y 4 de Dayanna), todos atendidos antes de la
+  corrida 3:
+
+| Problema | Heurística | Gravedad | Cómo se atendió |
+|---|---|---|---|
+| La lista de usuarios de prueba no se leía en modo oscuro (los dos) | 8 | 4 y 2 | PR #57 |
+| Las fotos del celular pasaban de 5 MB (los dos) | 5 | 4 y 4 | El widget y el backend las reducen (PR #60) |
+| Un recibo apaisado real salió como «recortado» (Dayanna) | 9 | 4 | El modelo decide primero si es un recibo; la proporción solo cuenta con campos faltantes (PR #59), probado con recibos sintéticos apaisados |
+| Al pedir el código CIIU no dice dónde encontrarlo (Dayanna) | 10 | 3 | En parte: entrada en el glosario con su fuente de la DIAN (PR #64); la indicación en el agente se revirtió (PR #66) y queda como trabajo futuro |
+
+- **Observaciones de contenido** de Dayanna (C1 y C2), aparte de la evaluación heurística porque se
+  escribieron con ayuda del chat del documento: la lista de fuentes completa y cuándo aplican los
+  complementarios del ICA (PR #63 y #65).
+- En una prueba se cargó un recibo real con datos de personas reales, contra RNF-04 · Uso exclusivo
+  de datos sintéticos: se borró del servidor y de LangSmith, no se usó en ninguna prueba, y su causa
+  en las trazas se corrigió (`docs/resumenes/b15.md`, punto 9; PR #69).
 
 ## 9. Análisis de fallas
 
