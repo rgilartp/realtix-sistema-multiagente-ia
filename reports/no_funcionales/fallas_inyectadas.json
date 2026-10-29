@@ -11,7 +11,7 @@
         "nodo_orquestador",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 120,
+      "latencia_cliente_ms": 131,
       "falla": "orquestador:tiempo",
       "pasa": true
     },
@@ -24,7 +24,7 @@
         "nodo_orquestador",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 120,
+      "latencia_cliente_ms": 134,
       "falla": "orquestador:error",
       "pasa": true
     },
@@ -39,7 +39,7 @@
         "nodo_confianza",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 1875,
+      "latencia_cliente_ms": 3152,
       "falla": "modelo:tiempo",
       "pasa": true
     },
@@ -54,7 +54,7 @@
         "nodo_confianza",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 1704,
+      "latencia_cliente_ms": 2111,
       "falla": "modelo:error",
       "pasa": true
     },
@@ -69,7 +69,7 @@
         "nodo_confianza",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 1397,
+      "latencia_cliente_ms": 1737,
       "falla": "recuperacion:tiempo",
       "pasa": true
     },
@@ -84,7 +84,7 @@
         "nodo_confianza",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 1446,
+      "latencia_cliente_ms": 2001,
       "falla": "recuperacion:error",
       "pasa": true
     },
@@ -99,7 +99,7 @@
         "nodo_confianza",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 2981,
+      "latencia_cliente_ms": 3860,
       "falla": "adaptador:tiempo",
       "pasa": true
     },
@@ -114,7 +114,7 @@
         "nodo_confianza",
         "nodo_escalamiento"
       ],
-      "latencia_cliente_ms": 2740,
+      "latencia_cliente_ms": 2880,
       "falla": "adaptador:error",
       "pasa": true
     }

@@ -1,5 +1,5 @@
 {
-  "conversacion": "nf-replicas (identificador con un sufijo numérico, omitido)",
+  "conversacion": "NF-replicas-c3",
   "turnos": [
     {
       "codigo_http": 200,
@@ -12,7 +12,7 @@
         "nodo_confianza",
         "nodo_respuesta"
       ],
-      "latencia_cliente_ms": 8175,
+      "latencia_cliente_ms": 5983,
       "paso": 1
     },
     {
@@ -26,15 +26,15 @@
         "nodo_confianza",
         "nodo_respuesta"
       ],
-      "latencia_cliente_ms": 8423,
+      "latencia_cliente_ms": 11715,
       "paso": 2
     }
   ],
   "servidor": {
     "replicas": 2,
-    "turno_1_atendido_por": "realtix-backend-2 (la réplica nueva: la única petición desde que arrancó)",
-    "antes_del_turno_2": "docker stop realtix-backend-2",
-    "turno_2_atendido_por": "realtix-backend-1",
+    "turno_1_atendido_por": "realtix-backend-1 (registros de acceso: 9 POST en esos minutos, las 8 fallas inyectadas y el turno 1; realtix-backend-2, ninguno)",
+    "antes_del_turno_2": "docker stop realtix-backend-1",
+    "turno_2_atendido_por": "realtix-backend-2 (1 POST en sus registros de acceso)",
     "turnos_registrados_en_el_almacen": 2
   }
 }
