@@ -1,0 +1,40 @@
+{
+  "periodo_horas": 42.6,
+  "chequeos": 512,
+  "oficial_horario_habil": {
+    "chequeos": 152,
+    "con_200": 130,
+    "disponibilidad": 85.53
+  },
+  "total_todas_las_horas": {
+    "chequeos": 512,
+    "con_200": 485,
+    "disponibilidad": 94.73
+  },
+  "habil_sin_ventanas_de_despliegue": {
+    "chequeos": 137,
+    "con_200": 115,
+    "disponibilidad": 83.94
+  },
+  "habil_desde_la_correccion_del_pr_54": {
+    "chequeos": 130,
+    "con_200": 130,
+    "disponibilidad": 100.0
+  },
+  "horas_antes_de_la_correccion_del_pr_54": 2.2,
+  "fallas": {
+    "total": 27,
+    "codigos": [
+      502
+    ],
+    "commits": [
+      "4e94e7a"
+    ],
+    "en_horario_habil": 22,
+    "antes_de_la_correccion_del_pr_54": 27,
+    "en_ventana_de_despliegue": 2
+  },
+  "despliegues_marcados": 9,
+  "meta": 99.0,
+  "cumple_meta": false
+}

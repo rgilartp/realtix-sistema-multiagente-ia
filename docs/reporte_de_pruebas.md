@@ -99,8 +99,25 @@ las de B15 quedan en `reports/no_funcionales/corrida-2/`):
 | RF-SYS-02 · Alcance de solo lectura | Huella de RealSit idéntica antes y después (`4479d036…`, `huella_realsit.txt`) |
 | RNF-03 · Protección de datos personales y RNF-05 · Registro auditable | 4.422 ejecuciones de la corrida 3 sin identificadores (`reports/corrida-3/trazas.json`) |
 
-RNF-06 · Horario de atención (disponibilidad con el historial del monitor): **PENDIENTE (cierre de
-B16)**.
+RNF-06 · Horario de atención: la disponibilidad se midió con el registro completo del monitor del
+servidor (`/health` cada 5 minutos desde el crontab, `reports/no_funcionales/disponibilidad.md`;
+`salud.log` con días relativos). El monitor existe desde B15, porque el de GitHub Actions nunca
+corrió, así que el registro cubre 42,6 horas (512 chequeos).
+
+| Medida | Chequeos con 200 | Disponibilidad |
+|---|---|---|
+| **Oficial: horario hábil, todo el registro** | 130 de 152 | **85,53 %** |
+| Todas las horas | 485 de 512 | 94,73 % |
+| Horario hábil sin las ventanas de despliegue | 115 de 137 | 83,94 % |
+| Horario hábil desde la corrección del PR #54 | 130 de 130 | 100,00 % |
+
+**No alcanza la meta del 99 %.** Las 27 fallas fueron 502 del commit `4e94e7a`, en las primeras 2,2
+horas del registro (22 en horario hábil): una fuga de conexiones en `/health` que agotaba el backend,
+corregida en el PR #54. Desde que se desplegó esa corrección no hubo ninguna falla. El periodo es
+corto y el chequeo sale del mismo servidor (mide el proxy y el backend, no la red externa); por eso
+la cifra se reporta como una medición del periodo de evaluación y no como una garantía de servicio.
+La matriz de trazabilidad califica RNF-06 por el comportamiento fuera de horario (2 de 2 escenarios),
+no por esta cifra.
 
 ## 7. Calibración del juez
 
