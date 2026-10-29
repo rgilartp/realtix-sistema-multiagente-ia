@@ -35,8 +35,9 @@ en B16.
 ## Capturas definitivas (B16)
 
 En `docs/capturas/definitivas/`, a 1280 y 390 px, tomadas después de la corrida 3 contra el sistema
-desplegado sin modo de evaluación, con el sistema real (no la API simulada). Las 24 de B11 no se
-repitieron, porque la interfaz no cambió desde que se tomaron. Pies de figura sugeridos
+desplegado sin modo de evaluación, con el sistema real (no la API simulada). Las de B11 (26 PNG,
+actualizadas después del rediseño y del aviso de datos personales, PR #55 y #58) no se
+repitieron, porque la interfaz no cambió desde entonces. Pies de figura sugeridos
 (`docs/capturas/definitivas/README.md`):
 
 | Captura | Pie de figura |
