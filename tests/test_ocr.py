@@ -321,6 +321,23 @@ def test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo(api_ocr, apa
 
 
 @pytest.mark.unit
+@pytest.mark.req(
+    "RF-OCR-04 · Rechazo de documentos ilegibles", "RNF-08 · Tiempos de espera y degradación"
+)
+def test_una_imagen_enorme_se_rechaza_como_ilegible_sin_modelo(
+    api_ocr, archivos, monkeypatch
+) -> None:
+    import src.agents.vision as vision
+
+    cliente, _, modelo = api_ocr
+    monkeypatch.setattr(vision, "PIXELES_MAXIMOS", 1_000_000)  # el recibo tiene unos 2,2 millones
+    r = subir(cliente, archivos["recibo_valido_U03"]["png"], "conv-enorme")
+    assert r.status_code == 200 and r.json()["estado"] != "error"
+    assert "no se pueden leer los datos del recibo" in r.json()["respuesta"]
+    assert modelo.llamadas == []  # se rechaza antes de llamar al modelo de visión
+
+
+@pytest.mark.unit
 @pytest.mark.req("RF-OCR-04 · Rechazo de documentos ilegibles")
 def test_ocr_06_documento_de_otro_tipo_y_campos_faltantes(api_ocr, archivos) -> None:
     cliente, _, modelo = api_ocr
