@@ -232,13 +232,13 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
     conclusión omitida y un fragmento atribuido a otro artículo).
 
   El juez aceptó 19 de los 30 ensayos y las verificaciones de código pasaron en 15. La tasa oficial
-  sigue siendo 43,3 %: el desglose la explica, no la reemplaza (`docs/reporte_de_pruebas.md`,
-  sección 9).
+  sigue siendo 43,3 %: el desglose la explica, no la reemplaza (`reports/corrida-3/calificados.jsonl`
+  y `fallas.md`; análisis en `docs/reporte_de_pruebas.md`, sección 9).
 - **Mecanismo interno en la respuesta.** En 8 de las 225 conversaciones, la respuesta nombra el
   mecanismo interno («según la herramienta», «los fragmentos», «las normas que me entregaron»), algo
   que la regla común prohíbe. El verificador sin modelo solo detecta dos formas de decirlo. No cambia
-  ningún dato; ampliar el verificador queda como trabajo futuro (`docs/reporte_de_pruebas.md`,
-  sección 12).
+  ningún dato; ampliar el verificador queda como trabajo futuro (`reports/corrida-3/resultados.jsonl.gz`;
+  `docs/reporte_de_pruebas.md`, sección 12).
 - **Pruebas no funcionales** (`reports/no_funcionales/README.md`): 8 de 8 fallas inyectadas escalaron
   sin errores técnicos (RNF-08 · Tiempos de espera y degradación); con dos réplicas, una conversación
   continuó en la otra (RNF-02 · Escalamiento horizontal); los volúmenes persistieron al reiniciar y al
@@ -333,7 +333,7 @@ los 4.000 ms de Bahçeci; el sistema hace dos o tres llamadas a modelos por turn
 | Corrida 2 y pruebas no funcionales | ~2,61 | 0,54 | `docs/resumenes/b15.md` |
 | Corrida 3 | 10,82 | 1,65 | `reports/corrida-3/costos.md` |
 | Correcciones posteriores a la corrida 2, ensayos 2b a 2d, sondas, verificaciones, humo e ingestas | ~13,2 | < 0,1 | `reports/*/costos.md` y los resúmenes |
-| Total del proyecto (estimación) | ~34,8 | ~2,8 | `docs/reporte_de_pruebas.md`, sección 10 |
+| Total del proyecto (estimación) | ~34,8 | ~2,8 | `docs/resumenes/b16.md`; `docs/reporte_de_pruebas.md`, sección 10 |
 
 Los `costos.md` de todas las corridas y verificaciones suman US$33,14 en Anthropic y US$2,72 en
 OpenAI; el total agrega los gastos que los resúmenes anotan sin `costos.md` (sondas, humo e
