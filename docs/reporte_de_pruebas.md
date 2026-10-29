@@ -191,6 +191,21 @@ VAR-08 (0; no dice «bimestre» y en 2 de 3 trae afirmaciones sin fuente), VAR-0
 sin fuente). Las paráfrasis cambian la clasificación o la búsqueda (por ejemplo, una pregunta general
 tomada como personal) y la respuesta deja de cubrir lo esencial de la referencia.
 
+Desglose de los 17 ensayos de R1 no superados, revisados uno por uno por Rodolfo (la causa y la
+familia de MAST de cada ensayo están en `reports/corrida-3/fallas.md`):
+
+| Grupo | Ensayos | Qué pasó |
+|---|---|---|
+| a. La variante admite otra lectura | 3 (VAR-01, los tres) | «Cuando sale el impuesto cada año y cuándo termina?» no pregunta por la causación: el sistema la leyó como la expedición de la factura y los plazos de pago, con las fechas correctas (en el ensayo 2 atribuyó las cuotas del SPAC a un artículo que no las trae), y omitió la causación del 1° de enero y el periodo gravable |
+| b. Pregunta en primera persona tomada como personal | 2 (VAR-03, ensayos 2 y 3) | El sistema pidió iniciar sesión sin dar el plazo general: comportamiento de diseño de RF-AUT-04 · Aviso de sesión requerida |
+| c. Solo falló la verificación de texto heredada del escenario de origen | 6 (VAR-05, ensayos 1 y 2; VAR-06, ensayos 1 y 3; VAR-08, ensayo 2; VAR-09, ensayo 1) | Faltó el término que exige la verificación («divulgación adicional», «30 de abril», «bimestre» y «391 UVT»); el juez las calificó como parcialmente correctas y sin alucinación. En VAR-06 es la misma omisión de su origen, IPU-13, que tampoco la supera en el principal |
+| d. Errores del sistema | 6 | Afirmaciones sin fuente (VAR-02, ensayo 2: la advertencia de intereses de mora; VAR-08, ensayo 1: los límites de tarifa de la ley nacional presentados como los de Bogotá; VAR-08, ensayo 3: que la tarifa depende del CIIU); un plazo vencido dicho en presente, sin decir que ya venció (VAR-03, ensayo 1); no concluir que se puede pagar con la factura sin declarar (VAR-06, ensayo 2), y omitir el cambio de régimen de 2027 y atribuir un fragmento a otro artículo (VAR-09, ensayo 2) |
+
+En R1, el juez aceptó 19 de los 30 ensayos (correcta o parcialmente correcta, sin alucinación) y las
+verificaciones de código pasaron en 15 de 30 (`reports/corrida-3/calificados.jsonl`). La tasa
+oficial de R1 sigue siendo **43,3 %** (13 de 30 ensayos superados): el desglose la explica, no la
+reemplaza.
+
 Ninguna falla es de acceso a datos ni de identificadores en las trazas. Las fallas que persisten
 desde la corrida 1 (GEN-02 e IPU-14) y las de recuperación (IPU-13) quedan como trabajo futuro;
 las correcciones se cerraron para congelar el código antes de esta corrida.
@@ -224,11 +239,44 @@ las correcciones se cerraron para congelar el código antes de esta corrida.
 Calificación de cada uno de los 65 requerimientos (cumple, cumple en parte o no cumple) y el
 porcentaje global de cumplimiento (secciones 6.11 y 8.17 de la especificación; sección 11 del plan),
 desde `reports/trazabilidad.md`: **74,0 %** de cumplimiento global, con 50 de los 65 requerimientos
-calificados (37 con 100 %, 13 con 0 % y ninguno con 80 %); los otros 15 no tienen evidencia
-calificable en una corrida o en la suite (por ejemplo, los de despliegue y de la interfaz que se
-verifican aparte). La calificación es mecánica: un requerimiento vale 0 si falla algún ensayo de
+calificados (37 con 100 %, 13 con 0 % y ninguno con 80 %); los otros 15 quedan sin calificar
+porque alguna de sus evidencias no tiene resultado en la suite (segunda tabla). La calificación es mecánica: un requerimiento vale 0 si falla algún ensayo de
 alguno de sus escenarios. Con 3 ensayos por escenario es más estricta que en la corrida 2 (83,3 %
 de 48 calificados con 1 ensayo).
+
+La regla y el script no cambian. Los 13 requerimientos con 0, con los escenarios que los bajaron
+(ensayos superados de 3) y la causa (sección 9):
+
+| Requerimiento | Escenarios superados | Escenarios que lo bajaron | Causa |
+|---|---|---|---|
+| RF-SYS-06 · Aviso de interacción con IA (provisional) | 1 de 2 | AIA-01 (1 de 3) | Clasificación de un saludo como fuera de alcance y un escalamiento innecesario; el aviso de IA salió en los tres ensayos |
+| RF-UI-03 · Identificación del interlocutor | 0 de 1 | AIA-01 (1 de 3) | La misma de RF-SYS-06; la respuesta se identificó como del asistente en los tres ensayos |
+| RF-AUT-01 · Verificación de identidad | 11 de 14 | ICA-04 (2), ICA-07 (2) e IPU-15 (1) | Generación (una afirmación sin fuente o un dato omitido), no la verificación: ACC-01 a ACC-03 pasaron 3 de 3 |
+| RF-ORQ-03 · Consultas multiagente | 2 de 3 | MULTI-03 (1 de 3) | Generación: una afirmación sin fuente y la omisión de la fusión de tributos y de la base del predial |
+| RF-IPU-01 · Consultas conceptuales de IPU | 2 de 4 | IPU-04 (2) y MULTI-03 (1) | Generación: afirmaciones sin fuente y omisión de la fusión y de los rangos de tarifa |
+| RF-IPU-02 · Estado de cuenta e historial | 7 de 8 | IPU-15 (1) | Generación: no da el valor de cada cuota (el saldo y las fechas, correctos) |
+| RF-IPU-04 · Plazos y descuentos | 4 de 7 | IPU-13 (0), IPU-14 (0) e IPU-15 (1) | Recuperación (IPU-13: no llega el artículo con el plazo de la factura), recuperación y generación (IPU-14: niega el alivio de intereses) y generación (IPU-15) |
+| RF-IPU-05 · Citación de la norma | 6 de 9 | IPU-04 (2), IPU-13 (0) e IPU-14 (0) | Las de IPU-04, IPU-13 e IPU-14 arriba; en IPU-04, además, una cita atribuida a un numeral que no lo dice |
+| RF-ICA-01 · Consultas conceptuales de ICA | 4 de 5 | MULTI-03 (1 de 3) | Generación, en la parte del predial; la parte del ICA coincidió con la referencia |
+| RF-ICA-02 · Estimación por actividad | 3 de 4 | ICA-04 (2 de 3) | Generación: deduce la periodicidad sin fuente; la tarifa y el valor estimado, correctos |
+| RF-ICA-03 · Fechas de declaración | 5 de 6 | ICA-07 (2 de 3) | Generación: atribuye a un bimestre el valor de toda la vigencia; las fechas, correctas |
+| RF-GEN-01 · Consultas transversales | 2 de 3 | GEN-02 (0 de 3) | Enrutamiento y escalamiento: transfiere a un funcionario en vez de responder que el asistente no presenta declaraciones ni hace pagos |
+| RF-GEN-03 · Respuesta sustentada en fuentes | 6 de 7 | GEN-02 (0 de 3) | La misma de RF-GEN-01 |
+
+Los 15 sin calificar tienen todas sus demás evidencias en verde; a cada uno le falta el resultado de
+una o dos pruebas que no entran al JUnit de pytest con el que se arma la matriz (`uv run pytest
+--junitxml`: 761 superadas y 9 omitidas):
+
+| Evidencia sin resultado | Por qué no tiene resultado | Requerimientos |
+|---|---|---|
+| Pruebas de Playwright de `web/tests/web.spec.js` | Las corre el trabajo «Web (compilación y Playwright)» de la CI, en verde, pero su resultado no llega al JUnit de pytest | RF-AUT-04 · Aviso de sesión requerida; RF-OCR-01 · Carga de archivos; RF-ESC-05 · Notificación al contribuyente; RF-UI-01 · Widget embebible; RF-UI-02 · Contexto de la sesión; RF-UI-04 · Carga desde la conversación; RF-OBS-02 · Matriz de confusión de enrutamiento; RF-OBS-03 · Métricas de precisión y tiempo; RNF-04 · Uso exclusivo de datos sintéticos; RNF-07 · Aviso fuera de horario |
+| `tests/test_humo_modelos.py::test_humo_con_modelos_reales` | Gasta tokens reales: se omite sin `REALTIX_PRUEBAS_REALES=1` | RF-ORQ-05 · Modelo de razonamiento; RNF-01 · Tiempo de respuesta |
+| `tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real` | Usa el modelo de visión real: se omite sin `REALTIX_PRUEBAS_REALES=1` | RF-OCR-02 · Extracción de campos; RF-OCR-04 · Rechazo de documentos ilegibles; RF-OCR-05 · Modelo de visión |
+| `tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real` | Ídem | RF-OCR-04 · Rechazo de documentos ilegibles; RF-OCR-05 · Modelo de visión |
+
+RNF-01 · Tiempo de respuesta sí se midió en la corrida 3, aunque la matriz no lo califique: 54 de 54
+turnos sin fragmentos bajo 8 s y 120 de 120 con RAG bajo 15 s (sección 10). Los escenarios de OCR
+de la corrida (OCR-01 a OCR-07, con el modelo de visión real) también se superaron.
 
 ## 12. Impedimentos, riesgos y lecciones (cierre CTFL v4.0.1)
 
@@ -254,6 +302,14 @@ de 48 calificados con 1 ensayo).
   - Un texto de 2002 del Decreto 352 (art. 26) sigue vigente en la base y apareció en una respuesta
     sobre tarifas.
   - El costo en Anthropic superó el presupuesto.
+  - La disponibilidad medida (85,53 % en horario hábil) no alcanzó el 99 %, por la fuga de `/health`
+    antes del PR #54; el registro cubre solo 42,6 horas (sección 6).
+- **Observación menor (mecanismo interno en la respuesta):** en 8 de las 225 conversaciones de la
+  corrida 3, la respuesta nombra el mecanismo interno («según la herramienta», «la herramienta de
+  fechas», «los fragmentos», «las normas que me entregaron»): ACC-04, ensayo 1; IPU-08, ensayo 3;
+  IPU-14, los tres; VAR-01, ensayo 3; VAR-06, ensayo 2, y VAR-09, ensayo 2. La regla común lo prohíbe,
+  pero el verificador sin modelo solo detecta «fragmento [n]» y «consultar herramientas». No cambia
+  ningún dato; ampliar el verificador queda como trabajo futuro.
 - **Lecciones aprendidas:**
   - Fijar la regla de un ensayo antes de ver su resultado evitó corregir hacia adelante; con esa
     regla se revirtió una corrección que dañaba otro escenario (CIIU, PR #66).
