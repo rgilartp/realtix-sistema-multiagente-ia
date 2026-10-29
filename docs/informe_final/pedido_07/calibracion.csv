@@ -1,0 +1,31 @@
+muestra,escenario,ensayo,juez_veredicto,juez_alucinacion,evaluador_A_veredicto,evaluador_A_alucinacion,evaluador_B_veredicto,evaluador_B_alucinacion,consenso_veredicto,consenso_alucinacion
+M01,ACC-03,1,parcialmente correcta,no,correcta,no,correcta,no,correcta,no
+M02,IPU-14,1,incorrecta,no,correcta,no,parcialmente correcta,no,parcialmente correcta,no
+M03,OCR-07,1,correcta,no,correcta,no,correcta,no,correcta,no
+M04,AIA-02,1,correcta,no,correcta,no,correcta,no,correcta,no
+M05,IPU-15,1,correcta,no,parcialmente correcta,no,correcta,no,parcialmente correcta,no
+M06,ROB-02,1,correcta,no,correcta,no,correcta,no,correcta,no
+M07,FA-05,1,correcta,no,correcta,no,correcta,no,correcta,no
+M08,ESC-01,1,correcta,no,parcialmente correcta,no,correcta,no,parcialmente correcta,no
+M09,GEN-03,1,parcialmente correcta,sí,correcta,no,correcta,no,correcta,no
+M10,IPU-03,1,correcta,no,correcta,no,correcta,no,correcta,no
+M11,MULTI-02,1,correcta,no,parcialmente correcta,sí,correcta,no,parcialmente correcta,sí
+M12,IPU-10,1,correcta,no,correcta,no,correcta,no,correcta,no
+M13,IPU-04,1,parcialmente correcta,sí,correcta,no,correcta,no,correcta,no
+M14,AMB-02,1,correcta,no,correcta,no,correcta,no,correcta,no
+M15,OCR-03,1,correcta,no,correcta,no,correcta,no,correcta,no
+M16,ACC-02,1,correcta,no,correcta,no,correcta,no,correcta,no
+M17,OCR-04,1,correcta,no,correcta,no,correcta,no,correcta,no
+M18,FA-04,1,correcta,no,correcta,no,correcta,no,correcta,no
+M19,GEN-01,1,correcta,no,correcta,no,correcta,no,correcta,no
+M20,GEN-06,1,correcta,no,correcta,no,correcta,no,correcta,no
+M21,AMB-01,1,correcta,no,correcta,no,correcta,no,correcta,no
+M22,IPU-06,1,correcta,no,correcta,no,correcta,no,correcta,no
+M23,ICA-07,1,correcta,no,correcta,no,correcta,no,correcta,no
+M24,ICA-02,1,correcta,no,correcta,no,correcta,no,correcta,no
+M25,GEN-04,1,correcta,no,correcta,no,parcialmente correcta,no,parcialmente correcta,no
+M26,ICA-08,1,parcialmente correcta,sí,correcta,no,correcta,no,correcta,no
+M27,MULTI-03,1,parcialmente correcta,sí,correcta,no,parcialmente correcta,no,parcialmente correcta,no
+M28,IPU-13,1,correcta,no,correcta,no,correcta,no,correcta,no
+M29,GEN-02,1,incorrecta,no,correcta,no,correcta,no,correcta,no
+M30,IPU-08,1,parcialmente correcta,sí,correcta,no,correcta,no,correcta,no

@@ -17,3 +17,4 @@ IA»; los RF y RNF con su nombre corto.
 | 3 | `03_capitulo_5.md` | Capítulo 5: plan de pruebas, corridas, métricas, fallas, usabilidad, trazabilidad, comparación | Completo, con la corrida 3 |
 | 4 | `04_fuentes_nuevas.md` | Fuentes para la bibliografía: las ya citadas, con su número, y las nuevas | Normas con enlace; los datos bibliográficos de los métodos nuevos, PENDIENTES de verificar |
 | 5 | `05_figuras_y_capturas.md` | Lista de figuras y capturas | Completo, con las de la corrida 3 y las capturas definitivas |
+| 6 | `pedido_07/` | Paquete de datos del pedido 07: CSV de la corrida 3, RAGAS, calibración, usabilidad y base de conocimiento; pruebas; grafo compilado; capturas; datos de la sección 2 | Completo; índice en `pedido_07/README.md` |
