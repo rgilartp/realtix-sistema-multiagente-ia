@@ -49,6 +49,7 @@ from src.integrations.robustez import con_tiempo_y_reintento
 from src.integrations.trazas import Anonimizador
 from src.services.acceso import rechazo_previo
 from src.services.citas import citas_sin_fuente, fuentes_de_fragmento, normas_citadas
+from src.services.expresiones_relativas import expresiones_relativas
 from src.services.horario import RelojSistema
 from src.services.notas import sin_repetir_notas
 
@@ -81,6 +82,13 @@ CITAS_SIN_FUENTE = (
     "fragmentos, en las fuentes de las herramientas ni en las notas del sistema. Corrígela: "
     "cita solo artículos que estén ahí, o quita la cita, sin cambiar lo demás. Devuelve el JSON "
     "completo."
+)
+EXPRESIONES_RELATIVAS = (
+    "Revisa la respuesta: dice {expresiones}, una relación con la fecha de hoy que calculaste tú. "
+    "Corrígela: da la fecha exacta y, para decir si ya pasó, usa solo lo que calcula el sistema "
+    "(ya_paso, vencida_a_hoy, descuento_aun_vigente, plazo_sin_descuento_ya_paso): si ya pasó, "
+    "«ya venció»; si no, que aún no vence. No digas «mañana», «ayer», «en N días», «hace N días» "
+    "ni «la próxima semana». No cambies lo demás. Devuelve el JSON completo."
 )
 
 
@@ -372,9 +380,11 @@ def ejecutar_agente(
     except Exception as error:  # modelo, negativa, salida inválida o adaptador (RNF-08)
         return fallo("modelo o herramientas", error)
 
-    # Verificador de citas sin modelo (F5): una cita «norma, art. N» que no está en los
-    # encabezados de los fragmentos, en las fuentes de las herramientas ni en las notas pide una
-    # sola reescritura; si persiste, la parte queda «parcial» y lo decide la confianza.
+    # Verificadores sin modelo: una cita «norma, art. N» que no está en los encabezados de los
+    # fragmentos, en las fuentes de las herramientas ni en las notas (F5), o una expresión que
+    # relaciona una fecha con hoy («mañana», «hace N días»: esa relación la decide el código),
+    # piden una sola reescritura con los mensajes que correspondan; si persiste, la parte queda
+    # «parcial» y lo decide la confianza.
     validas = [
         c for f in fragmentos for c in fuentes_de_fragmento(f.norma or f.fuente, f.seccion, f.texto)
     ] + [f for r in resultados if r.tipo == "ok" for f in (*r.fuentes, *r.notas)]
@@ -386,20 +396,31 @@ def ejecutar_agente(
         if salida.suficiencia in ("completa", "parcial") and not solo_actividad_no_reconocida
         else []
     )
+    relativas = (
+        expresiones_relativas(salida.respuesta) if salida.suficiencia != "no_corresponde" else []
+    )
     reescrituras = 0
-    if sin_fuente:
+    if sin_fuente or relativas:
         reescrituras = 1
         registro.info(
-            "Reescritura por citas sin fuente",
+            "Reescritura por citas sin fuente o fechas relativas a hoy",
             extra={"id_conversacion": id_conversacion, "agente": categoria},
         )
-        mensajes += [respuesta, HumanMessage(CITAS_SIN_FUENTE.format(citas="; ".join(sin_fuente)))]
+        observaciones = [
+            *([CITAS_SIN_FUENTE.format(citas="; ".join(sin_fuente))] if sin_fuente else []),
+            *(
+                [EXPRESIONES_RELATIVAS.format(expresiones="; ".join(relativas))]
+                if relativas
+                else []
+            ),
+        ]
+        mensajes += [respuesta, HumanMessage("\n\n".join(observaciones))]
         try:
             respuesta = llamar(con_herramientas=False, con_formato=True)
             salida = SalidaAgente.model_validate_json(texto_de_respuesta(respuesta))
         except Exception as error:  # se queda la primera respuesta, que pasa a «parcial»
             registro.warning(
-                "Falló la reescritura por citas sin fuente",
+                "Falló la reescritura por citas sin fuente o fechas relativas a hoy",
                 extra={
                     "id_conversacion": id_conversacion,
                     "agente": categoria,
@@ -407,9 +428,10 @@ def ejecutar_agente(
                 },
             )
         sin_fuente = citas_sin_fuente(salida.respuesta, validas)
+        relativas = expresiones_relativas(salida.respuesta)
 
     suficiencia = salida.suficiencia
-    if sin_fuente and suficiencia == "completa":
+    if (sin_fuente or relativas) and suficiencia == "completa":
         suficiencia = "parcial"
     if not salida.respuesta.strip() and suficiencia != "no_corresponde":
         suficiencia = "no_pudo"  # una respuesta vacía no es una respuesta
