@@ -1,0 +1,122 @@
+{
+  "pasan": 8,
+  "de": 8,
+  "fallas": [
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 120,
+      "falla": "orquestador:tiempo",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 120,
+      "falla": "orquestador:error",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 1875,
+      "falla": "modelo:tiempo",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 1704,
+      "falla": "modelo:error",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 1397,
+      "falla": "recuperacion:tiempo",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 1446,
+      "falla": "recuperacion:error",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 2981,
+      "falla": "adaptador:tiempo",
+      "pasa": true
+    },
+    {
+      "codigo_http": 200,
+      "estado": "escalada",
+      "motivo_escalamiento": "fallo de servicio",
+      "error_tecnico_visible": false,
+      "agentes_invocados": [
+        "nodo_orquestador",
+        "nodo_ipu",
+        "nodo_confianza",
+        "nodo_escalamiento"
+      ],
+      "latencia_cliente_ms": 2740,
+      "falla": "adaptador:error",
+      "pasa": true
+    }
+  ]
+}

@@ -26,13 +26,13 @@ RF-SYS-05 · Adaptador equivalente a RealSit,prueba,tests/test_almacen.py::test_
 RF-SYS-05 · Adaptador equivalente a RealSit,prueba,tests/test_realsit_contrato.py::test_las_dos_implementaciones_responden_lo_mismo,100
 RF-SYS-05 · Adaptador equivalente a RealSit,prueba,tests/test_realsit_contrato.py::test_predios_del_contribuyente[memoria],100
 RF-SYS-05 · Adaptador equivalente a RealSit,prueba,tests/test_realsit_contrato.py::test_predios_del_contribuyente[sintetico],100
-RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_api.py::test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8,
-RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_api.py::test_el_rechazo_del_recibo_abre_la_conversacion_con_el_aviso_de_ia,
-RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_grafo.py::test_pregunta_por_la_ia_se_responde_y_si_acepta_se_escala,
-RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_humo_modelos.py::test_humo_con_modelos_reales,
-RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
-RF-SYS-06 · Aviso de interacción con IA (provisional),escenario,AIA-01,
-RF-SYS-06 · Aviso de interacción con IA (provisional),escenario,AIA-02,
+RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_api.py::test_aviso_de_ia_solo_en_la_primera_respuesta_y_contrato_de_la_3_8,0
+RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_api.py::test_el_rechazo_del_recibo_abre_la_conversacion_con_el_aviso_de_ia,0
+RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_grafo.py::test_pregunta_por_la_ia_se_responde_y_si_acepta_se_escala,0
+RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,tests/test_humo_modelos.py::test_humo_con_modelos_reales,0
+RF-SYS-06 · Aviso de interacción con IA (provisional),prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",0
+RF-SYS-06 · Aviso de interacción con IA (provisional),escenario,AIA-01,0
+RF-SYS-06 · Aviso de interacción con IA (provisional),escenario,AIA-02,0
 RF-AUT-01 · Verificación de identidad,prueba,tests/test_api.py::test_ovt_simulada_emite_la_sesion_de_un_usuario_de_prueba,0
 RF-AUT-01 · Verificación de identidad,prueba,tests/test_api.py::test_si_el_adaptador_no_responde_al_cargar_la_sesion_hay_aviso_y_no_error,0
 RF-AUT-01 · Verificación de identidad,prueba,tests/test_api.py::test_sin_sesion_o_con_token_invalido_una_consulta_personal_pide_sesion[alterado],0
@@ -124,15 +124,15 @@ RF-ORQ-02 · Enrutamiento y consolidación,prueba,tests/test_grafo.py::test_ruta
 RF-ORQ-02 · Enrutamiento y consolidación,prueba,tests/test_grafo.py::test_ruta_del_orquestador[estado6-nodo_general],100
 RF-ORQ-02 · Enrutamiento y consolidación,prueba,tests/test_grafo.py::test_ruta_del_orquestador[estado7-nodo_general],100
 RF-ORQ-02 · Enrutamiento y consolidación,prueba,tests/test_grafo.py::test_ruta_del_orquestador_rechaza_una_categoria_desconocida,100
-RF-ORQ-03 · Consultas multiagente,prueba,tests/test_agentes.py::test_cada_parte_trae_su_consulta_de_busqueda_en_los_terminos_de_la_norma,100
-RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_cada_worker_recibe_su_parte,100
-RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_consulta_multiagente_ipu_e_ica,100
-RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_la_reclasificacion_de_otra_parte_no_cambia_la_categoria_reportada,100
-RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_reclasificar_la_parte_rechazada_no_repite_la_parte_respondida,100
-RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_una_parte_bajo_el_umbral_escala_con_las_partes_resueltas,100
-RF-ORQ-03 · Consultas multiagente,escenario,MULTI-01,100
-RF-ORQ-03 · Consultas multiagente,escenario,MULTI-02,100
-RF-ORQ-03 · Consultas multiagente,escenario,MULTI-03,100
+RF-ORQ-03 · Consultas multiagente,prueba,tests/test_agentes.py::test_cada_parte_trae_su_consulta_de_busqueda_en_los_terminos_de_la_norma,0
+RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_cada_worker_recibe_su_parte,0
+RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_consulta_multiagente_ipu_e_ica,0
+RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_la_reclasificacion_de_otra_parte_no_cambia_la_categoria_reportada,0
+RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_reclasificar_la_parte_rechazada_no_repite_la_parte_respondida,0
+RF-ORQ-03 · Consultas multiagente,prueba,tests/test_grafo.py::test_una_parte_bajo_el_umbral_escala_con_las_partes_resueltas,0
+RF-ORQ-03 · Consultas multiagente,escenario,MULTI-01,0
+RF-ORQ-03 · Consultas multiagente,escenario,MULTI-02,0
+RF-ORQ-03 · Consultas multiagente,escenario,MULTI-03,0
 RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_agentes.py::test_el_reloj_del_turno_viaja_como_texto_con_el_checkpointer_postgres,100
 RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_almacen.py::test_almacen_en_postgresql,100
 RF-ORQ-04 · Implementación en LangGraph,prueba,tests/test_grafo.py::test_checkpointer_en_postgresql_conserva_la_conversacion,100
@@ -149,8 +149,10 @@ RF-ORQ-06 · Prevención de bucles,prueba,tests/test_grafo.py::test_una_reclasif
 RF-ORQ-06 · Prevención de bucles,prueba,tests/test_ocr.py::test_otros_mensajes_no_confirman_ni_escalan,100
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_agentes.py::test_el_agente_recupera_con_la_busqueda_y_responde_el_texto_del_contribuyente,0
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_agentes.py::test_la_parte_general_respondida_con_la_pregunta_del_predio_es_completa,0
+RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_agentes.py::test_los_prompts_piden_copiar_la_regla_y_describir_la_tarifa_con_la_herramienta,0
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_agentes.py::test_similitud_en_una_consulta_de_cuenta_y_en_una_conceptual,0
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_agentes.py::test_sin_herramientas_la_segunda_llamada_pide_el_json,0
+RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_agentes.py::test_tarifas_predial_con_todos_trae_los_tres_destinos_en_una_llamada,0
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_recuperacion.py::test_consultas_semanticas_con_los_embeddings_reales[\xbfC\xf3mo pago por cuotas el predial?-plataforma_general-SPAC],0
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_recuperacion.py::test_consultas_semanticas_con_los_embeddings_reales[\xbfCu\xe1nto puede subir el predial de un a\xf1o a otro?-normativa_ipu-Ley 1995 de 2019],0
 RF-IPU-01 · Consultas conceptuales de IPU,prueba,tests/test_recuperacion.py::test_consultas_semanticas_con_los_embeddings_reales[\xbfHasta cu\xe1ndo se puede pagar el predial con descuento?-normativa_ipu-Resoluci\xf3n SDH-000195 de 2025],0
@@ -164,59 +166,59 @@ RF-IPU-01 · Consultas conceptuales de IPU,escenario,IPU-04,0
 RF-IPU-01 · Consultas conceptuales de IPU,escenario,IPU-05,0
 RF-IPU-01 · Consultas conceptuales de IPU,escenario,IPU-06,0
 RF-IPU-01 · Consultas conceptuales de IPU,escenario,MULTI-03,0
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_agentes.py::test_con_varios_predios_el_agente_recibe_los_predios_y_las_reglas_de_aclaracion,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_agentes.py::test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_agentes.py::test_el_predial_y_el_ica_no_se_mezclan_en_el_saldo,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_escenarios.py::test_las_referencias_con_usuarios_coinciden_con_usuarios_prueba_yaml,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_escenarios.py::test_los_criterios_ca_van_literales_en_su_escenario,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_avaluo_por_vigencia_con_la_vigencia_de_la_configuracion[memoria],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_avaluo_por_vigencia_con_la_vigencia_de_la_configuracion[sintetico],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_estado_cuenta_e_historial[memoria],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_estado_cuenta_e_historial[sintetico],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_vigentes_son_pendientes_o_vencidas_de_cualquier_vigencia[memoria],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_vigentes_son_pendientes_o_vencidas_de_cualquier_vigencia[sintetico],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_datos.py::test_estados_de_las_obligaciones_al_corte,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_datos.py::test_volumen_500_predios_y_2000_obligaciones_de_ipu,100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U01-50C-9000101],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U02-50C-9000201],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U02-50C-9000202],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U03-50C-9000301],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U04-50C-9000401],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U05-50C-9000501],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U06-50C-9000601],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U07-50C-9000701],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U08-50C-9000801],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U09-50C-9000901],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U10-50C-9001001],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U11-50C-9001101],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U12-50C-9001201],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U01-50C-9000101],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U02-50C-9000201],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U02-50C-9000202],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U03-50C-9000301],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U04-50C-9000401],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U05-50C-9000501],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U06-50C-9000601],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U07-50C-9000701],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U08-50C-9000801],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U09-50C-9000901],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U10-50C-9001001],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U11-50C-9001101],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U12-50C-9001201],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[memoria-U02-50C-9000201],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[memoria-U02-50C-9000202],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[memoria-U03-50C-9000301],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[sintetico-U02-50C-9000201],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[sintetico-U02-50C-9000202],100
-RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[sintetico-U03-50C-9000301],100
-RF-IPU-02 · Estado de cuenta e historial,escenario,AMB-01,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,AMB-02,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-01,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-02,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-03,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-15,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,MULTI-01,100
-RF-IPU-02 · Estado de cuenta e historial,escenario,ROB-02,100
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_agentes.py::test_con_varios_predios_el_agente_recibe_los_predios_y_las_reglas_de_aclaracion,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_agentes.py::test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_agentes.py::test_el_predial_y_el_ica_no_se_mezclan_en_el_saldo,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_escenarios.py::test_las_referencias_con_usuarios_coinciden_con_usuarios_prueba_yaml,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_escenarios.py::test_los_criterios_ca_van_literales_en_su_escenario,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_avaluo_por_vigencia_con_la_vigencia_de_la_configuracion[memoria],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_avaluo_por_vigencia_con_la_vigencia_de_la_configuracion[sintetico],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_estado_cuenta_e_historial[memoria],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_estado_cuenta_e_historial[sintetico],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_vigentes_son_pendientes_o_vencidas_de_cualquier_vigencia[memoria],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_contrato.py::test_vigentes_son_pendientes_o_vencidas_de_cualquier_vigencia[sintetico],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_datos.py::test_estados_de_las_obligaciones_al_corte,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_realsit_datos.py::test_volumen_500_predios_y_2000_obligaciones_de_ipu,0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U01-50C-9000101],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U02-50C-9000201],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U02-50C-9000202],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U03-50C-9000301],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U04-50C-9000401],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U05-50C-9000501],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U06-50C-9000601],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U07-50C-9000701],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U08-50C-9000801],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U09-50C-9000901],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U10-50C-9001001],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U11-50C-9001101],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[memoria-U12-50C-9001201],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U01-50C-9000101],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U02-50C-9000201],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U02-50C-9000202],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U03-50C-9000301],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U04-50C-9000401],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U05-50C-9000501],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U06-50C-9000601],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U07-50C-9000701],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U08-50C-9000801],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U09-50C-9000901],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U10-50C-9001001],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U11-50C-9001101],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_estado_de_cuenta_esperado_en_las_dos_implementaciones[sintetico-U12-50C-9001201],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[memoria-U02-50C-9000201],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[memoria-U02-50C-9000202],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[memoria-U03-50C-9000301],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[sintetico-U02-50C-9000201],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[sintetico-U02-50C-9000202],0
+RF-IPU-02 · Estado de cuenta e historial,prueba,tests/test_usuarios_prueba.py::test_obligaciones_y_pagos_copiados_coinciden_con_el_adaptador[sintetico-U03-50C-9000301],0
+RF-IPU-02 · Estado de cuenta e historial,escenario,AMB-01,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,AMB-02,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-01,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-02,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-03,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,IPU-15,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,MULTI-01,0
+RF-IPU-02 · Estado de cuenta e historial,escenario,ROB-02,0
 RF-IPU-03 · Liquidación estimada,prueba,tests/test_agentes.py::test_el_prompt_pide_las_cifras_por_anio_a_las_herramientas,100
 RF-IPU-03 · Liquidación estimada,prueba,tests/test_agentes.py::test_ipu_10_estimacion_con_notas_tal_cual_e_intereses_por_vencimiento,100
 RF-IPU-03 · Liquidación estimada,prueba,tests/test_agentes.py::test_ipu_11_estimacion_de_2027_con_lo_que_aun_no_se_publica,100
@@ -286,7 +288,15 @@ RF-IPU-03 · Liquidación estimada,prueba,tests/test_usuarios_prueba.py::test_pa
 RF-IPU-03 · Liquidación estimada,escenario,IPU-10,100
 RF-IPU-03 · Liquidación estimada,escenario,IPU-11,100
 RF-IPU-03 · Liquidación estimada,escenario,MULTI-02,100
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_cada_fecha_del_predial_trae_si_ya_paso_el_dia_antes_el_mismo_dia_y_el_despues,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_cita_sin_fuente_y_fecha_relativa_van_en_una_sola_reescritura,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_este_anio_y_los_plazos_salen_del_reloj_del_turno,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_hoy_y_las_referencias_internas_provocan_la_reescritura,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_la_fecha_limite_de_pago_de_cada_obligacion_trae_si_ya_paso,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_los_prompts_tienen_la_regla_de_fechas_y_no_las_frases_respecto_a_hoy,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_sin_reescritura_si_no_corresponde_o_si_es_la_aclaracion_de_la_actividad,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_un_plazo_legal_o_la_hora_no_provocan_reescritura,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_agentes.py::test_una_fecha_relativa_a_hoy_provoca_una_sola_reescritura,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria.py::test_calendario_2026_coincide_con_la_tabla_de_la_especificacion,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria.py::test_ejemplo_de_350_millones_cae_en_6_1_por_mil,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria.py::test_ipu_2026_tiene_30_rangos_contiguos_y_6_tarifas_no_residenciales,0
@@ -297,9 +307,36 @@ RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria_revision.py::test_i
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria_revision.py::test_ipu_2026_trae_los_clubes_del_art_3_y_dice_por_que_omite_otras_categorias,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria_revision.py::test_la_sobretasa_trae_sus_reglas_y_el_texto_literal_de_cada_categoria,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_curaduria_revision.py::test_las_tablas_del_acuerdo_1084_coinciden_con_su_texto_digital,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Esta ma\xf1ana venci\xf3. HACE UN MES.-esperadas15],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Faltan 8 d\xedas para el plazo.-esperadas6],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Faltan menos de 5 d\xedas; quedan dieciseis d\xedas.-esperadas11],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Hace veinticinco d\xedas.-esperadas12],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Hoy vence; a la fecha de hoy y hoy en d\xeda.-esperadas9],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Ma\xf1ana vence la cuota.-esperadas1],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[No necesito consultar herramientas: el fragmento [1] lo dice.-esperadas13],0
+RF-IPU-04 · Plazos y descuentos,prueba,"tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Seg\xfan los fragmentos [1, 3].-esperadas14]",0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Solo falta un d\xeda.-esperadas7],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Te quedan 3 d\xedas.-esperadas8],0
+RF-IPU-04 · Plazos y descuentos,prueba,"tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Vence ma\xf1ana, el 9 de marzo.-esperadas0]",0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Vence pasado ma\xf1ana.-esperadas2],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 ayer y la anterior anteayer.-esperadas3],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 hace 83 d\xedas.-esperadas4],0
+RF-IPU-04 · Plazos y descuentos,prueba,"tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 hace dos semanas; la otra, hace 1 mes.-esperadas5]",0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 hace unos d\xedas; hace m\xe1s de 10 d\xedas.-esperadas10],0
+RF-IPU-04 · Plazos y descuentos,prueba,"tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Abre cada ma\xf1ana, en jornada ma\xf1ana y tarde, desde las 8 de la  ma\xf1ana.]",0
+RF-IPU-04 · Plazos y descuentos,prueba,"tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Atiendo de lunes a viernes, de 8:00 a. m. a 5:00 p. m.]",0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[El fragmento de la norma lo dice; consulta la herramienta del simulador.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[La fecha l\xedmite es el 10 de marzo de 2091; ya venci\xf3.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Los rendimientos financieros hacen parte de la base; falta el c\xf3digo CIIU.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Puedes llamar a las 8 de la ma\xf1ana o por la ma\xf1ana.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Quedan exentos los predios de la lista.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Se hace 3 d\xedas despu\xe9s del cierre; se hace un mes antes.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Se responde dentro de los 10 d\xedas h\xe1biles.],0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Tiene que corregirse en 15 d\xedas h\xe1biles.],0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_recuperacion.py::test_el_filtro_por_vigencia_de_2026_y_2027,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_recuperacion.py::test_la_nota_de_vigencia_va_en_cada_fragmento_de_su_archivo,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_recuperacion.py::test_los_textos_derogados_no_rigen,0
+RF-IPU-04 · Plazos y descuentos,prueba,tests/test_servicios_calendario.py::test_una_fecha_igual_a_hoy_no_ha_pasado,0
 RF-IPU-04 · Plazos y descuentos,prueba,tests/test_servicios_tarifas.py::test_descuento_por_pronto_pago_del_calendario,0
 RF-IPU-04 · Plazos y descuentos,escenario,IPU-07,0
 RF-IPU-04 · Plazos y descuentos,escenario,IPU-08,0
@@ -308,6 +345,7 @@ RF-IPU-04 · Plazos y descuentos,escenario,IPU-12,0
 RF-IPU-04 · Plazos y descuentos,escenario,IPU-13,0
 RF-IPU-04 · Plazos y descuentos,escenario,IPU-14,0
 RF-IPU-04 · Plazos y descuentos,escenario,IPU-15,0
+RF-IPU-05 · Citación de la norma,prueba,tests/test_agentes.py::test_cita_sin_fuente_y_fecha_relativa_van_en_una_sola_reescritura,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_agentes.py::test_ipu_10_la_cifra_llega_al_modelo_con_la_fuente_de_la_herramienta,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_agentes.py::test_la_cita_de_una_nota_del_sistema_no_provoca_reescritura,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_agentes.py::test_los_prompts_de_los_agentes_llevan_las_reglas_comunes,0
@@ -347,6 +385,9 @@ RF-IPU-05 · Citación de la norma,prueba,tests/test_recuperacion.py::test_ningu
 RF-IPU-05 · Citación de la norma,prueba,tests/test_recuperacion.py::test_un_fragmento_por_articulo_con_los_metadatos_de_la_seccion_5_2,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_recuperacion.py::test_un_texto_largo_se_parte_con_solape_y_uno_corto_queda_entero,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_formas_reales_de_encabezado_paréntesis_capitulos_puntos_y_rangos,0
+RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_la_estimacion_del_ica_lista_cada_norma_de_sus_notas_y_de_su_tarifa,0
+RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_la_lista_de_fuentes_suma_las_normas_de_las_notas_sin_repetir,0
+RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_normas_citadas_por_las_notas_para_la_lista_de_fuentes,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_reconoce_las_citas_con_articulo_en_sus_formas_usuales,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_sin_distrital_y_con_capitulo_coincide_con_el_encabezado,0
 RF-IPU-05 · Citación de la norma,prueba,tests/test_servicios_citas.py::test_un_fragmento_sustenta_su_norma_su_articulo_y_su_linea_de_fuente,0
@@ -366,7 +407,11 @@ RF-IPU-05 · Citación de la norma,escenario,IPU-09,0
 RF-IPU-05 · Citación de la norma,escenario,IPU-12,0
 RF-IPU-05 · Citación de la norma,escenario,IPU-13,0
 RF-IPU-05 · Citación de la norma,escenario,IPU-14,0
+RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_agentes.py::test_con_otra_periodicidad_pedida_van_las_dos_reglas_y_la_fuente_una_vez,0
 RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_agentes.py::test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual,0
+RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_agentes.py::test_la_regla_de_2027_y_la_de_la_vigencia_mas_reciente,0
+RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_agentes.py::test_la_regla_de_la_periodicidad_sale_de_datos_y_va_en_las_herramientas,0
+RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_agentes.py::test_los_prompts_piden_copiar_la_regla_y_describir_la_tarifa_con_la_herramienta,0
 RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_curaduria.py::test_ica_2026_aplica_la_decision_de_rodolfo_sobre_las_10_filas,0
 RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_curaduria.py::test_ica_2026_arma_el_texto_vigente_con_sus_fuentes,0
 RF-ICA-01 · Consultas conceptuales de ICA,prueba,tests/test_curaduria.py::test_ica_2026_completa_el_grupo_truncado_del_4930,0
@@ -393,41 +438,50 @@ RF-ICA-01 · Consultas conceptuales de ICA,escenario,ICA-02,0
 RF-ICA-01 · Consultas conceptuales de ICA,escenario,ICA-03,0
 RF-ICA-01 · Consultas conceptuales de ICA,escenario,ICA-09,0
 RF-ICA-01 · Consultas conceptuales de ICA,escenario,MULTI-03,0
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_el_prompt_del_ica_pide_estimar_en_la_primera_ronda_y_una_sola_periodicidad,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_ica_05_bimestral_de_2026_con_las_dos_tablas,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_la_estimacion_sin_periodicidad_usa_la_de_la_sesion_en_la_primera_ronda,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_se_avisa_la_periodicidad_supuesta_o_distinta_de_la_registrada,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_sin_sesion_la_tarifa_de_una_actividad_sale_de_datos_con_su_anio,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_un_codigo_ciiu_no_se_toma_por_el_anio,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_un_codigo_que_no_esta_en_la_tabla_siguiente_no_pierde_su_tarifa_del_anio,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_una_actividad_no_reconocida_pide_el_codigo,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_escenarios.py::test_los_servicios_coinciden_con_las_referencias_del_ica,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_contrato.py::test_tarifa_ica_de_la_tabla_oficial_y_actividad_desconocida[memoria],100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_contrato.py::test_tarifa_ica_de_la_tabla_oficial_y_actividad_desconocida[sintetico],100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_datos.py::test_ica_una_obligacion_por_contribuyente_y_vigencia_en_su_predio,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_datos.py::test_tarifas_del_ica_cargadas_de_datos_sin_provisionales,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_ciiu_58112_en_2026_da_8_por_mil_o_4_14_si_cumple_el_acuerdo_98,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_ciiu_58112_en_2027_da_4_por_mil_sin_condicion,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_estimacion_ica_2026_anual_es_una_proyeccion_del_ano_completo,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_estimacion_ica_bimestral_y_de_2027_no_son_proyeccion,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_los_37_codigos_de_2026_sin_fila_en_2027_no_se_reconocen,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_los_ingresos_negativos_se_rechazan,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_nunca_se_asigna_un_codigo_de_2027_por_parecido,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_tarifas.py::test_ica_anual_2026_contra_2027,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_tarifas.py::test_ica_bimestres_de_2026_y_paragrafo_del_articulo_21,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_tarifas.py::test_ica_progresiva_financiera_por_anio,100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_usuarios_prueba.py::test_ica_2026_escrito_a_mano_igual_a_la_funcion_y_a_la_base[U04-50C-9000401],100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_usuarios_prueba.py::test_ica_2026_escrito_a_mano_igual_a_la_funcion_y_a_la_base[U05-50C-9000501],100
-RF-ICA-02 · Estimación por actividad,prueba,tests/test_usuarios_prueba.py::test_ica_2026_escrito_a_mano_igual_a_la_funcion_y_a_la_base[U12-50C-9001201],100
-RF-ICA-02 · Estimación por actividad,escenario,ACC-04,100
-RF-ICA-02 · Estimación por actividad,escenario,ICA-04,100
-RF-ICA-02 · Estimación por actividad,escenario,ICA-05,100
-RF-ICA-02 · Estimación por actividad,escenario,ICA-06,100
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_el_prompt_del_ica_pide_estimar_en_la_primera_ronda_y_una_sola_periodicidad,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_ica_05_bimestral_de_2026_con_las_dos_tablas,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_la_estimacion_sin_periodicidad_usa_la_de_la_sesion_en_la_primera_ronda,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_se_avisa_la_periodicidad_supuesta_o_distinta_de_la_registrada,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_sin_sesion_la_tarifa_de_una_actividad_sale_de_datos_con_su_anio,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_un_codigo_ciiu_no_se_toma_por_el_anio,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_un_codigo_que_no_esta_en_la_tabla_siguiente_no_pierde_su_tarifa_del_anio,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_agentes.py::test_una_actividad_no_reconocida_pide_el_codigo,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_curaduria.py::test_el_glosario_dice_donde_encontrar_el_codigo_ciiu_con_su_fuente_oficial,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_escenarios.py::test_los_servicios_coinciden_con_las_referencias_del_ica,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_contrato.py::test_tarifa_ica_de_la_tabla_oficial_y_actividad_desconocida[memoria],0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_contrato.py::test_tarifa_ica_de_la_tabla_oficial_y_actividad_desconocida[sintetico],0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_datos.py::test_ica_una_obligacion_por_contribuyente_y_vigencia_en_su_predio,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_realsit_datos.py::test_tarifas_del_ica_cargadas_de_datos_sin_provisionales,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_citas.py::test_la_estimacion_del_ica_lista_cada_norma_de_sus_notas_y_de_su_tarifa,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_citas.py::test_la_lista_de_fuentes_suma_las_normas_de_las_notas_sin_repetir,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_citas.py::test_la_tarifa_de_un_ciiu_trae_la_fuente_de_su_clasificacion,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_ciiu_58112_en_2026_da_8_por_mil_o_4_14_si_cumple_el_acuerdo_98,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_ciiu_58112_en_2027_da_4_por_mil_sin_condicion,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_estimacion_ica_2026_anual_es_una_proyeccion_del_ano_completo,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_estimacion_ica_bimestral_y_de_2027_no_son_proyeccion,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_la_nota_dice_cuando_aplican_avisos_y_tableros_y_la_sobretasa_bomberil,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_los_37_codigos_de_2026_sin_fila_en_2027_no_se_reconocen,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_los_ingresos_negativos_se_rechazan,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_liquidacion.py::test_nunca_se_asigna_un_codigo_de_2027_por_parecido,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_tarifas.py::test_ica_anual_2026_contra_2027,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_tarifas.py::test_ica_bimestres_de_2026_y_paragrafo_del_articulo_21,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_servicios_tarifas.py::test_ica_progresiva_financiera_por_anio,0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_usuarios_prueba.py::test_ica_2026_escrito_a_mano_igual_a_la_funcion_y_a_la_base[U04-50C-9000401],0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_usuarios_prueba.py::test_ica_2026_escrito_a_mano_igual_a_la_funcion_y_a_la_base[U05-50C-9000501],0
+RF-ICA-02 · Estimación por actividad,prueba,tests/test_usuarios_prueba.py::test_ica_2026_escrito_a_mano_igual_a_la_funcion_y_a_la_base[U12-50C-9001201],0
+RF-ICA-02 · Estimación por actividad,escenario,ACC-04,0
+RF-ICA-02 · Estimación por actividad,escenario,ICA-04,0
+RF-ICA-02 · Estimación por actividad,escenario,ICA-05,0
+RF-ICA-02 · Estimación por actividad,escenario,ICA-06,0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_cada_fecha_del_ica_trae_si_ya_paso_el_dia_antes_el_mismo_dia_y_el_despues,0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_con_otra_periodicidad_pedida_van_las_dos_reglas_y_la_fuente_una_vez,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_con_sesion_las_fechas_son_solo_las_de_la_periodicidad_registrada,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_el_predial_y_el_ica_no_se_mezclan_en_el_saldo,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_el_prompt_del_ica_pide_estimar_en_la_primera_ronda_y_una_sola_periodicidad,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_la_periodicidad_registrada_es_la_del_anio_o_la_mas_reciente,0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_la_regla_de_la_periodicidad_sale_de_datos_y_va_en_las_herramientas,0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_los_prompts_tienen_la_regla_de_fechas_y_no_las_frases_respecto_a_hoy,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_se_avisa_la_periodicidad_supuesta_o_distinta_de_la_registrada,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_agentes.py::test_si_el_adaptador_falla_las_fechas_siguen_como_sin_sesion,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_curaduria.py::test_ica_2026_y_2027_dicen_que_periodos_cubren,0
@@ -438,6 +492,32 @@ RF-ICA-03 · Fechas de declaración,prueba,tests/test_curaduria_revision.py::tes
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_curaduria_revision.py::test_la_resolucion_195_trae_las_tablas_de_fechas_que_estan_en_imagenes,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_curaduria_revision.py::test_la_vista_de_regimenes_cita_las_dos_fuentes_de_cada_anio,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_escenarios.py::test_los_servicios_coinciden_con_las_referencias_de_fechas,0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Esta ma\xf1ana venci\xf3. HACE UN MES.-esperadas15],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Faltan 8 d\xedas para el plazo.-esperadas6],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Faltan menos de 5 d\xedas; quedan dieciseis d\xedas.-esperadas11],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Hace veinticinco d\xedas.-esperadas12],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Hoy vence; a la fecha de hoy y hoy en d\xeda.-esperadas9],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Ma\xf1ana vence la cuota.-esperadas1],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[No necesito consultar herramientas: el fragmento [1] lo dice.-esperadas13],0
+RF-ICA-03 · Fechas de declaración,prueba,"tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Seg\xfan los fragmentos [1, 3].-esperadas14]",0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Solo falta un d\xeda.-esperadas7],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Te quedan 3 d\xedas.-esperadas8],0
+RF-ICA-03 · Fechas de declaración,prueba,"tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Vence ma\xf1ana, el 9 de marzo.-esperadas0]",0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Vence pasado ma\xf1ana.-esperadas2],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 ayer y la anterior anteayer.-esperadas3],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 hace 83 d\xedas.-esperadas4],0
+RF-ICA-03 · Fechas de declaración,prueba,"tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 hace dos semanas; la otra, hace 1 mes.-esperadas5]",0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_encuentra_las_expresiones_relativas_a_hoy[Venci\xf3 hace unos d\xedas; hace m\xe1s de 10 d\xedas.-esperadas10],0
+RF-ICA-03 · Fechas de declaración,prueba,"tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Abre cada ma\xf1ana, en jornada ma\xf1ana y tarde, desde las 8 de la  ma\xf1ana.]",0
+RF-ICA-03 · Fechas de declaración,prueba,"tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Atiendo de lunes a viernes, de 8:00 a. m. a 5:00 p. m.]",0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[El fragmento de la norma lo dice; consulta la herramienta del simulador.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[La fecha l\xedmite es el 10 de marzo de 2091; ya venci\xf3.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Los rendimientos financieros hacen parte de la base; falta el c\xf3digo CIIU.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Puedes llamar a las 8 de la ma\xf1ana o por la ma\xf1ana.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Quedan exentos los predios de la lista.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Se hace 3 d\xedas despu\xe9s del cierre; se hace un mes antes.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Se responde dentro de los 10 d\xedas h\xe1biles.],0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_expresiones_relativas.py::test_no_marca_plazos_legales_ni_la_hora_ni_otras_palabras[Tiene que corregirse en 15 d\xedas h\xe1biles.],0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_realsit_datos.py::test_regimen_de_ica_segun_el_umbral_de_391_uvt,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_recuperacion.py::test_el_filtro_por_vigencia_de_2026_y_2027,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_recuperacion.py::test_la_nota_de_vigencia_va_en_cada_fragmento_de_su_archivo,0
@@ -446,6 +526,7 @@ RF-ICA-03 · Fechas de declaración,prueba,tests/test_servicios_calendario.py::t
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_servicios_calendario.py::test_fechas_del_predial_de_2026,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_servicios_calendario.py::test_regimen_de_2026_parte_el_comun_por_el_umbral_de_391_uvt,0
 RF-ICA-03 · Fechas de declaración,prueba,tests/test_servicios_calendario.py::test_regimen_de_2027_da_la_regla_en_uvt_y_falla_solo_al_pasar_a_pesos,0
+RF-ICA-03 · Fechas de declaración,prueba,tests/test_servicios_calendario.py::test_una_fecha_igual_a_hoy_no_ha_pasado,0
 RF-ICA-03 · Fechas de declaración,escenario,ICA-03,0
 RF-ICA-03 · Fechas de declaración,escenario,ICA-07,0
 RF-ICA-03 · Fechas de declaración,escenario,ICA-08,0
@@ -454,6 +535,7 @@ RF-ICA-03 · Fechas de declaración,escenario,MULTI-01,0
 RF-ICA-03 · Fechas de declaración,escenario,MULTI-02,0
 RF-ICA-04 · Retenciones fuera de alcance,prueba,tests/test_agentes.py::test_la_retencion_del_ica_la_marca_el_agente_y_escala,100
 RF-ICA-04 · Retenciones fuera de alcance,escenario,ICA-10,100
+RF-GEN-01 · Consultas transversales,prueba,tests/test_agentes.py::test_el_prompt_general_no_inventa_donde_se_hace_un_tramite,0
 RF-GEN-01 · Consultas transversales,prueba,tests/test_curaduria.py::test_el_manual_de_la_ovt_esta_rotulado_como_sintetico,0
 RF-GEN-01 · Consultas transversales,prueba,tests/test_recuperacion.py::test_consultas_semanticas_con_los_embeddings_reales[\xbfC\xf3mo pago por cuotas el predial?-plataforma_general-SPAC],0
 RF-GEN-01 · Consultas transversales,prueba,tests/test_recuperacion.py::test_consultas_semanticas_con_los_embeddings_reales[\xbfCu\xe1nto puede subir el predial de un a\xf1o a otro?-normativa_ipu-Ley 1995 de 2019],0
@@ -465,13 +547,17 @@ RF-GEN-01 · Consultas transversales,escenario,GEN-01,0
 RF-GEN-01 · Consultas transversales,escenario,GEN-02,0
 RF-GEN-01 · Consultas transversales,escenario,GEN-07,0
 RF-GEN-02 · Explicación en lenguaje sencillo,prueba,tests/test_curaduria.py::test_el_glosario_cita_la_norma_de_cada_termino,100
+RF-GEN-02 · Explicación en lenguaje sencillo,prueba,tests/test_curaduria.py::test_el_glosario_dice_donde_encontrar_el_codigo_ciiu_con_su_fuente_oficial,100
 RF-GEN-02 · Explicación en lenguaje sencillo,escenario,GEN-03,100
 RF-GEN-02 · Explicación en lenguaje sencillo,escenario,GEN-04,100
 RF-GEN-02 · Explicación en lenguaje sencillo,escenario,GEN-05,100
 RF-GEN-02 · Explicación en lenguaje sencillo,escenario,GEN-06,100
 RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_agentes.py::test_cada_parte_trae_su_consulta_de_busqueda_en_los_terminos_de_la_norma,0
+RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_agentes.py::test_el_prompt_general_no_inventa_donde_se_hace_un_tramite,0
+RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_agentes.py::test_hoy_y_las_referencias_internas_provocan_la_reescritura,0
 RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_agentes.py::test_ipu_10_la_cifra_llega_al_modelo_con_la_fuente_de_la_herramienta,0
 RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_agentes.py::test_una_cita_sin_fuente_provoca_una_sola_reescritura,0
+RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_agentes.py::test_una_fecha_relativa_a_hoy_provoca_una_sola_reescritura,0
 RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_recuperacion.py::test_ningun_fragmento_vigente_trae_un_texto_anterior_o_derogado,0
 RF-GEN-03 · Respuesta sustentada en fuentes,prueba,tests/test_servicios_citas.py::test_una_cita_que_no_esta_en_las_fuentes_se_reporta,0
 RF-GEN-03 · Respuesta sustentada en fuentes,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",0
@@ -494,6 +580,7 @@ RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_campos_normali
 RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_el_esquema_no_pide_el_nombre_del_propietario_ni_razonamiento,
 RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,
 RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,
+RF-OCR-02 · Extracción de campos,prueba,tests/test_ocr.py::test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo,
 RF-OCR-02 · Extracción de campos,escenario,OCR-01,
 RF-OCR-02 · Extracción de campos,escenario,OCR-02,
 RF-OCR-02 · Extracción de campos,escenario,OCR-03,
@@ -524,23 +611,32 @@ RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-02,100
 RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-03,100
 RF-OCR-03 · Confirmación de datos extraídos,escenario,OCR-07,100
 RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_evaluacion_ejecutor.py::test_contiene_texto_acepta_raices_y_los_valores_no,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[documento_otro_tipo-calidad1-False],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_baja_resolucion_U03-calidad3-False],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_desenfocado_U03-calidad2-False],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_recortado_U03-calidad5-True],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_solo_recortado_U03-calidad4-True],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_calidad_y_proporcion_por_codigo[recibo_valido_U03-calidad0-False],
 RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_legibilidad_por_codigo[documento_otro_tipo-problemas1],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_legibilidad_por_codigo[recibo_baja_resolucion_U03-problemas3],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_legibilidad_por_codigo[recibo_desenfocado_U03-problemas2],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_legibilidad_por_codigo[recibo_recortado_U03-problemas5],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_legibilidad_por_codigo[recibo_solo_recortado_U03-problemas4],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_legibilidad_por_codigo[recibo_valido_U03-problemas0],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_por_codigo_sin_llamar_al_modelo[recibo_baja_resolucion_U03-baja resoluci\xf3n],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_por_codigo_sin_llamar_al_modelo[recibo_desenfocado_U03-desenfocada],
-RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_por_codigo_sin_llamar_al_modelo[recibo_recortado_U03-recortado],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_baja_resolucion_U03-baja resoluci\xf3n],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_desenfocado_U03-desenfocada],
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo[recibo_recortado_U03-recortado],
 RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_ocr_06_documento_de_otro_tipo_y_campos_faltantes,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_primero_el_tipo_y_la_proporcion_solo_con_campos_faltantes,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_ocr.py::test_una_imagen_enorme_se_rechaza_como_ilegible_sin_modelo,
+RF-OCR-04 · Rechazo de documentos ilegibles,prueba,tests/test_vision.py::test_una_imagen_con_demasiados_pixeles_se_rechaza_sin_decodificarla,
 RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-04,
 RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-05,
 RF-OCR-04 · Rechazo de documentos ilegibles,escenario,OCR-06,
 RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_exactitud_por_campo_y_rechazos_con_el_modelo_real,
 RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_falla_del_modelo_de_vision_escala_sin_error_tecnico,
 RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,
+RF-OCR-05 · Modelo de visión,prueba,tests/test_ocr.py::test_recibos_apaisados_y_foto_con_el_modelo_real,
+RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_la_plantilla_sigue_igual_en_png_de_1000_px,
+RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_una_foto_pesada_va_en_jpeg_por_debajo_del_limite_de_la_api,
+RF-OCR-05 · Modelo de visión,prueba,tests/test_vision.py::test_una_imagen_muy_alta_queda_en_2000_px_de_alto,
 RF-OCR-06 · Plantilla sintética de recibo,prueba,tests/test_ocr.py::test_diez_recibos_con_ocho_campos_leyenda_y_json_de_referencia,100
 RF-OCR-06 · Plantilla sintética de recibo,prueba,tests/test_ocr.py::test_sin_logos_ni_marcas_reales,100
 RF-OCR-06 · Plantilla sintética de recibo,escenario,OCR-01,100
@@ -569,6 +665,7 @@ RF-ESC-02 · Activación del escalamiento,prueba,tests/test_grafo.py::test_todo_
 RF-ESC-02 · Activación del escalamiento,prueba,tests/test_grafo.py::test_tributario_fuera_del_mvp_escala[Quiero pagar el predial en Medell\xedn],100
 RF-ESC-02 · Activación del escalamiento,prueba,tests/test_grafo.py::test_tributario_fuera_del_mvp_escala[\xbfC\xf3mo declaro renta?],100
 RF-ESC-02 · Activación del escalamiento,prueba,tests/test_grafo.py::test_tributario_fuera_del_mvp_escala[\xbfCu\xe1nto es el IVA?],100
+RF-ESC-02 · Activación del escalamiento,prueba,tests/test_limite.py::test_el_boton_de_escalamiento_tiene_el_mismo_limite,100
 RF-ESC-02 · Activación del escalamiento,prueba,tests/test_ocr.py::test_peticion_de_funcionario_y_oferta_de_transferencia_no_confirman,100
 RF-ESC-02 · Activación del escalamiento,escenario,AIA-02,100
 RF-ESC-02 · Activación del escalamiento,escenario,ESC-01,100
@@ -589,6 +686,8 @@ RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_api.py::test_en_un
 RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso[respuesta0-confianza insuficiente],
 RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_bajo_el_umbral_o_sin_cobertura_solo_recibe_el_aviso[respuesta1-sin cobertura],
 RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_caso_4_multiagente_escalada_entrega_lo_resuelto,
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_el_numero_corto_del_caso_es_un_pedazo_del_identificador,
+RF-ESC-05 · Notificación al contribuyente,prueba,tests/test_grafo.py::test_los_avisos_del_escalamiento_no_prometen_ni_copian_referencias,
 RF-ESC-05 · Notificación al contribuyente,prueba,web/tests/web.spec.js::widget: botón del funcionario y mensajes nuevos de la conversación escalada,
 RF-ESC-05 · Notificación al contribuyente,escenario,ESC-01,
 RF-UI-01 · Widget embebible,prueba,tests/test_despliegue.py::test_caddy_https_limites_y_cabeceras,
@@ -601,9 +700,9 @@ RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_continuidad_
 RF-UI-02 · Contexto de la sesión,prueba,tests/test_grafo.py::test_una_bandera_de_escalamiento_no_pasa_al_turno_siguiente,
 RF-UI-02 · Contexto de la sesión,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
 RF-UI-02 · Contexto de la sesión,escenario,AMB-02,
-RF-UI-03 · Identificación del interlocutor,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",
-RF-UI-03 · Identificación del interlocutor,prueba,web/tests/web.spec.js::widget: botón del funcionario y mensajes nuevos de la conversación escalada,
-RF-UI-03 · Identificación del interlocutor,escenario,AIA-01,
+RF-UI-03 · Identificación del interlocutor,prueba,"web/tests/web.spec.js::widget: aviso de IA al abrir, sesión por postMessage, interlocutor y fuentes",0
+RF-UI-03 · Identificación del interlocutor,prueba,web/tests/web.spec.js::widget: botón del funcionario y mensajes nuevos de la conversación escalada,0
+RF-UI-03 · Identificación del interlocutor,escenario,AIA-01,0
 RF-UI-04 · Carga desde la conversación,prueba,tests/test_api.py::test_documento_validado_procesado_y_borrado,
 RF-UI-04 · Carga desde la conversación,prueba,web/tests/web.spec.js::widget: carga del recibo desde la conversación (RF-UI-04),
 RF-UI-04 · Carga desde la conversación,escenario,OCR-01,
@@ -723,6 +822,9 @@ RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_sobrea
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_sobreajuste.py::test_ninguna_cifra_de_un_escenario_esta_en_los_agentes,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_sobreajuste.py::test_ninguna_pregunta_de_un_escenario_esta_en_el_codigo,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_evaluacion_sobreajuste.py::test_ninguna_referencia_esta_en_los_prompts,100
+RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_preparacion_b16.py::test_la_corrida_3_se_detiene_sin_la_huella_calibrada[argumentos0],100
+RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_preparacion_b16.py::test_la_corrida_3_se_detiene_sin_la_huella_calibrada[argumentos1],100
+RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_preparacion_b16.py::test_la_huella_calibrada_es_la_del_juez_actual,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_realsit_datos.py::test_la_huella_registrada_es_la_de_la_semilla_42,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_realsit_datos.py::test_misma_semilla_misma_huella,100
 RF-OBS-05 · Ejecución repetible de pruebas,prueba,tests/test_recuperacion.py::test_en_modo_de_evaluacion_la_parte_guarda_contextos_y_version,100
@@ -750,10 +852,14 @@ RNF-03 · Protección de datos personales,prueba,tests/test_evaluacion_ejecutor.
 RNF-03 · Protección de datos personales,prueba,tests/test_evaluacion_instrumento.py::test_el_juez_ve_herramientas_notas_recibo_y_aviso_anonimizados,100
 RNF-03 · Protección de datos personales,prueba,tests/test_evaluacion_instrumento.py::test_las_frases_publicas_no_cuentan_como_fuga,100
 RNF-03 · Protección de datos personales,prueba,tests/test_evaluacion_instrumento.py::test_ragas_recibe_los_datos_del_sistema_como_contexto,100
+RNF-03 · Protección de datos personales,prueba,tests/test_integraciones.py::test_las_trazas_quitan_imagenes_y_nombres_y_lo_de_los_modelos_no_cambia,100
 RNF-03 · Protección de datos personales,prueba,tests/test_ocr.py::test_el_esquema_no_pide_el_nombre_del_propietario_ni_razonamiento,100
 RNF-03 · Protección de datos personales,prueba,tests/test_ocr.py::test_ocr_01_y_ocr_07_lectura_confirmacion_y_contraste,100
 RNF-03 · Protección de datos personales,prueba,tests/test_servicios_acceso_resumen.py::test_lo_que_se_envia_al_modelo_no_lleva_nombre_documento_ni_direccion,100
 RNF-03 · Protección de datos personales,prueba,tests/test_servicios_acceso_resumen.py::test_minimizar_descarta_todo_campo_que_no_este_en_la_lista_blanca,100
+RNF-03 · Protección de datos personales,prueba,tests/test_trazas_langsmith.py::test_con_el_trazador_del_sistema_langchain_no_agrega_otro,100
+RNF-03 · Protección de datos personales,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador0-False],100
+RNF-03 · Protección de datos personales,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador1-True],100
 RNF-04 · Uso exclusivo de datos sintéticos,prueba,tests/test_ocr.py::test_diez_recibos_con_ocho_campos_leyenda_y_json_de_referencia,
 RNF-04 · Uso exclusivo de datos sintéticos,prueba,tests/test_realsit_datos.py::test_identificadores_unicos_y_derivados_de_la_semilla,
 RNF-04 · Uso exclusivo de datos sintéticos,prueba,"web/tests/web.spec.js::OVT simulada: rótulo, sin marcas reales y widget en un iframe",
@@ -763,6 +869,11 @@ RNF-05 · Registro auditable,prueba,tests/test_escenarios.py::test_los_mensajes_
 RNF-05 · Registro auditable,prueba,tests/test_evaluacion_calibracion.py::test_verificador_de_trazas_encuentra_documentos_y_nombres,100
 RNF-05 · Registro auditable,prueba,tests/test_evaluacion_ejecutor.py::test_el_juez_no_ve_el_modelo_ni_datos_personales,100
 RNF-05 · Registro auditable,prueba,tests/test_integraciones.py::test_el_anonimizador_enmascara_documentos_y_nombres_pero_no_valores,100
+RNF-05 · Registro auditable,prueba,tests/test_integraciones.py::test_las_trazas_quitan_imagenes_y_nombres_y_lo_de_los_modelos_no_cambia,100
+RNF-05 · Registro auditable,prueba,tests/test_trazas_langsmith.py::test_con_el_trazador_del_sistema_langchain_no_agrega_otro,100
+RNF-05 · Registro auditable,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador0-False],100
+RNF-05 · Registro auditable,prueba,tests/test_trazas_langsmith.py::test_la_carga_de_langsmith_no_lleva_la_imagen_ni_el_nombre[anonimizador1-True],100
+RNF-06 · Horario de atención,prueba,tests/test_api.py::test_el_cliente_de_chroma_se_crea_una_sola_vez,100
 RNF-06 · Horario de atención,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-01-domingo],100
 RNF-06 · Horario de atención,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-02-festivo],100
 RNF-06 · Horario de atención,prueba,tests/test_api.py::test_sin_modo_de_evaluacion_las_cabeceras_de_prueba_se_ignoran,100
@@ -782,6 +893,8 @@ RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_fuera_de_horario
 RNF-07 · Aviso fuera de horario,prueba,tests/test_api.py::test_fuera_de_horario_no_responde_ni_transfiere[HOR-02-festivo],
 RNF-07 · Aviso fuera de horario,prueba,tests/test_escenarios.py::test_los_de_horario_van_sin_categoria_y_dicen_cuando_se_vuelve_a_atender,
 RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_antes_de_abrir_el_mismo_dia_y_el_reloj_inyectado,
+RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha[1-martes 3 de noviembre],
+RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha[8-lunes 9 de noviembre],
 RNF-07 · Aviso fuera de horario,prueba,tests/test_servicios_calendario.py::test_el_viernes_13_de_noviembre_tras_las_5_pm_abre_el_martes_17_a_las_8,
 RNF-07 · Aviso fuera de horario,prueba,web/tests/web.spec.js::widget: fuera de horario destacado con la hora de regreso (RNF-07),
 RNF-07 · Aviso fuera de horario,escenario,HOR-01,
@@ -819,8 +932,15 @@ RNF-08 · Tiempos de espera y degradación,prueba,tests/test_integraciones.py::t
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_integraciones.py::test_si_el_reintento_tambien_falla_se_reporta_el_servicio_no_disponible,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_integraciones.py::test_un_error_que_no_es_transitorio_no_se_reintenta,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_integraciones.py::test_una_falla_transitoria_se_reintenta_una_vez,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_limite.py::test_chat_y_documento_responden_429_con_un_mensaje_claro,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_limite.py::test_el_boton_de_escalamiento_tiene_el_mismo_limite,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_limite.py::test_el_modo_de_evaluacion_con_escenario_no_cuenta,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_limite.py::test_los_limites_deben_ser_positivos,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_limite.py::test_ventanas_de_un_minuto_y_de_un_dia_por_ip,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_ocr.py::test_falla_del_modelo_de_vision_escala_sin_error_tecnico,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_ocr.py::test_una_imagen_enorme_se_rechaza_como_ilegible_sin_modelo,100
 RNF-08 · Tiempos de espera y degradación,prueba,tests/test_recuperacion.py::test_si_chroma_no_responde_el_agente_reporta_fallo_de_servicio,100
+RNF-08 · Tiempos de espera y degradación,prueba,tests/test_vision.py::test_una_imagen_con_demasiados_pixeles_se_rechaza_sin_decodificarla,100
 RNF-08 · Tiempos de espera y degradación,escenario,ROB-01,100
 RNF-08 · Tiempos de espera y degradación,escenario,ROB-02,100
 RNF-09 · Lenguaje accesible,prueba,tests/test_agentes.py::test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez,100
@@ -839,8 +959,11 @@ RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_matriz_comp
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_recolecta_las_marcas_del_repositorio,100
 RNF-11 · Código versionado,prueba,tests/test_trazabilidad.py::test_recolecta_los_requerimientos_de_las_pruebas_de_la_web,100
 RNF-12 · Imágenes de contenedor,prueba,tests/test_despliegue.py::test_caddy_https_limites_y_cabeceras,100
+RNF-12 · Imágenes de contenedor,prueba,tests/test_despliegue.py::test_chroma_sin_puerto_en_el_servidor_y_la_evaluacion_fuera_de_la_imagen,100
 RNF-12 · Imágenes de contenedor,prueba,tests/test_despliegue.py::test_la_imagen_no_trae_el_env_ni_bases_y_corre_sin_privilegios,100
+RNF-13 · Orquestación con Compose,prueba,tests/test_despliegue.py::test_chroma_sin_puerto_en_el_servidor_y_la_evaluacion_fuera_de_la_imagen,100
 RNF-13 · Orquestación con Compose,prueba,tests/test_despliegue.py::test_compose_levanta_todo_y_permite_replicas,100
+RNF-13 · Orquestación con Compose,prueba,tests/test_despliegue.py::test_los_dos_archivos_de_compose_del_servidor_son_validos,100
 RNF-13 · Orquestación con Compose,prueba,tests/test_despliegue.py::test_los_scripts_de_despliegue_tienen_sintaxis_valida,100
 RNF-14 · Configuración por entorno,prueba,tests/test_config.py::test_carga_con_las_obligatorias,100
 RNF-14 · Configuración por entorno,prueba,tests/test_config.py::test_el_contenedor_usa_la_configuracion_inyectada,100
@@ -854,6 +977,11 @@ RNF-14 · Configuración por entorno,prueba,tests/test_config.py::test_un_valor_
 RNF-14 · Configuración por entorno,prueba,tests/test_config.py::test_valores_iniciales_de_la_confianza,100
 RNF-14 · Configuración por entorno,prueba,tests/test_despliegue.py::test_secretos_solo_en_el_env_y_modo_de_evaluacion_apagado_por_defecto,100
 RNF-14 · Configuración por entorno,prueba,tests/test_integraciones.py::test_el_contenedor_arma_las_dependencias_desde_la_configuracion,100
+RNF-14 · Configuración por entorno,prueba,tests/test_limite.py::test_chat_y_documento_responden_429_con_un_mensaje_claro,100
+RNF-14 · Configuración por entorno,prueba,tests/test_limite.py::test_el_boton_de_escalamiento_tiene_el_mismo_limite,100
+RNF-14 · Configuración por entorno,prueba,tests/test_limite.py::test_el_modo_de_evaluacion_con_escenario_no_cuenta,100
+RNF-14 · Configuración por entorno,prueba,tests/test_limite.py::test_los_limites_deben_ser_positivos,100
+RNF-14 · Configuración por entorno,prueba,tests/test_limite.py::test_ventanas_de_un_minuto_y_de_un_dia_por_ip,100
 RNF-14 · Configuración por entorno,prueba,tests/test_seguridad.py::test_gitignore_ignora_secretos[.env],100
 RNF-14 · Configuración por entorno,prueba,tests/test_seguridad.py::test_gitignore_ignora_secretos[deploy/.env],100
 RNF-14 · Configuración por entorno,prueba,tests/test_seguridad.py::test_gitignore_ignora_secretos[llave.key],100
@@ -936,4 +1064,8 @@ RNF-16 · Tasa de respuestas correctas,prueba,tests/test_evaluacion_referencias.
 RNF-16 · Tasa de respuestas correctas,prueba,tests/test_evaluacion_sobreajuste.py::test_ninguna_cifra_de_un_escenario_esta_en_los_agentes,100
 RNF-16 · Tasa de respuestas correctas,prueba,tests/test_evaluacion_sobreajuste.py::test_ninguna_pregunta_de_un_escenario_esta_en_el_codigo,100
 RNF-16 · Tasa de respuestas correctas,prueba,tests/test_evaluacion_sobreajuste.py::test_ninguna_referencia_esta_en_los_prompts,100
+RNF-16 · Tasa de respuestas correctas,prueba,tests/test_grafo.py::test_los_avisos_del_escalamiento_no_prometen_ni_copian_referencias,100
 RNF-16 · Tasa de respuestas correctas,prueba,tests/test_ocr.py::test_en_el_modo_de_evaluacion_el_contraste_reporta_sus_datos_y_notas,100
+RNF-16 · Tasa de respuestas correctas,prueba,tests/test_preparacion_b16.py::test_la_corrida_3_se_detiene_sin_la_huella_calibrada[argumentos0],100
+RNF-16 · Tasa de respuestas correctas,prueba,tests/test_preparacion_b16.py::test_la_corrida_3_se_detiene_sin_la_huella_calibrada[argumentos1],100
+RNF-16 · Tasa de respuestas correctas,prueba,tests/test_preparacion_b16.py::test_la_huella_calibrada_es_la_del_juez_actual,100
