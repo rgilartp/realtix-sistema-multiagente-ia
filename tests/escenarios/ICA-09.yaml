@@ -21,11 +21,13 @@ verificaciones_codigo:
 - tipo: no_contiene_valor
   valor: '19.471.409'
 respuesta_referencia: >-
-  A partir del 1 de enero de 2027 pertenecen al régimen común los contribuyentes cuyo impuesto a cargo
-  en el año inmediatamente anterior supera 391 UVT, y declaran y pagan cada dos meses; pertenecen al régimen
-  preferencial los de hasta 391 UVT, y declaran una vez al año. Quien realiza por primera vez actividades
-  gravadas queda en el preferencial durante el primer año (Acuerdo 1084 de 2026, art. 26). El umbral no
-  se da en pesos porque el valor de 2027 aún no se ha publicado.
+  A partir del 1 de enero de 2027 pertenecen al régimen común los contribuyentes cuyo impuesto a cargo en
+  el año inmediatamente anterior supera 391 UVT, y declaran y pagan cada dos meses; pertenecen al régimen
+  preferencial los de hasta 391 UVT, y declaran y pagan una vez al año (Acuerdo 1084 de 2026, art. 26, y
+  su parágrafo 2). Los del régimen preferencial con ingresos netos del año inferiores a 1.933 UVT no
+  presentan declaración, y su impuesto es igual a lo que les retuvieron (parágrafo 3). Quien realiza por
+  primera vez actividades gravadas queda en el preferencial durante el primer año (parágrafo 1). El umbral
+  se expresa en UVT; la Secretaría Distrital de Hacienda aún no ha fijado su valor en pesos para 2027.
 fuentes_esperadas:
 - Acuerdo 1084 de 2026, art. 26
 - datos/regimenes_ica.yaml

@@ -30,6 +30,7 @@ respuesta_referencia: >-
   bomberil, que se suman cuando aplican.
 fuentes_esperadas:
 - Acuerdo 65 de 2002, art. 3
+- Resolución SDH-000265 de 2021, art. 1
 - datos/tarifas/ica_2026.yaml
 - Usuario de prueba U05
 no_debe:

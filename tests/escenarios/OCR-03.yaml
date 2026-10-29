@@ -37,11 +37,13 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: ¿Es correcto?
 respuesta_referencia: >-
-  Presenta los datos leídos: matrícula 50C-9000601, vigencia 2026, avalúo catastral $50.000.000, valor
-  liquidado $600.000 (12 por mil, urbanizable no urbanizado) y descuento por pronto pago $60.000, y pide
+  Presenta los seis datos leídos del recibo: matrícula 50C-9000601, vigencia 2026, avalúo catastral
+  $50.000.000, valor liquidado $600.000, descuento por pronto pago $60.000 y fecha límite de pago, y pide
   la confirmación del contribuyente.
 fuentes_esperadas:
 - Usuario de prueba U06 (usuarios_prueba.yaml)
+- Resolución SDH-000194 de 2025, art. 2
+- Resolución SDH-000195 de 2025, art. 6
 no_debe:
 - aplicar la tarifa residencial a un lote
 dado_cuando_entonces:
@@ -52,4 +54,7 @@ nota_revision:
 - >-
   La fecha límite que muestre el recibo la fija la plantilla sintética de B10; aquí solo se verifica la
   del calendario (datos/calendario/2026.yaml).
+- >-
+  El valor liquidado corresponde a 12 por mil, la fila de urbanizables no urbanizados y urbanizados no
+  edificados hasta $63.048.000 (Resolución SDH-000194 de 2025, art. 2).
 aprobado_por: "Rodolfo Angel Gilart Pulido"
