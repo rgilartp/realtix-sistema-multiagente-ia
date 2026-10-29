@@ -31,6 +31,7 @@ respuesta_referencia: >-
   art. 59) ni la sobretasa bomberil, que se suman cuando aplican.
 fuentes_esperadas:
 - Acuerdo 65 de 2002, art. 3
+- Resolución SDH-000265 de 2021, art. 1
 - Acuerdo 1084 de 2026, art. 21
 - datos/tarifas/ica_2026.yaml
 - datos/tarifas/ica_2027.yaml

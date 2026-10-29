@@ -16,13 +16,23 @@ from langchain_core.messages import AIMessage
 from src.agents.dependencias import Dependencias
 from src.agents.state import MOTIVOS_ESCALAMIENTO, AgentState
 from src.data.models import CasoEscalado
-from src.services.resumen import construir_resumen
+from src.services.resumen import codigo_de_caso, construir_resumen
 
 registro = logging.getLogger(__name__)
 
+# Dice solo lo que el sistema hace (RF-ESC-05): registra el caso con su resumen, que el funcionario
+# ve en la bandeja, y guarda en el caso lo que el contribuyente escriba después (ADR-12). No promete
+# un contacto ni un plazo: la respuesta del funcionario por el widget no está construida (sección
+# 3.6, opcional).
 AVISO_TRANSFERENCIA = (
-    "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. "
-    "Ya le compartí un resumen para que no tengas que repetirlo."
+    "Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número {codigo}, con un "
+    "resumen de lo conversado, así no tienes que repetirlo. Si quieres agregar algo, escríbelo "
+    "aquí y quedará en el caso."
+)
+# Si el registro falla (RNF-08), no se dice que quedó registrado.
+AVISO_SIN_REGISTRO = (
+    "Quise pasar tu consulta a un funcionario, pero no pude registrar el caso. Intenta de nuevo en "
+    "unos minutos con el botón «Hablar con un funcionario»."
 )
 # Explicación previa al aviso según el motivo; los demás motivos solo llevan el aviso.
 PREFACIOS = {
@@ -82,8 +92,19 @@ def crear_nodo_escalamiento(deps: Dependencias) -> Callable[[AgentState], dict[s
         except Exception:  # RNF-08: el aviso se entrega aunque el registro falle
             marcas["registro_fallido"] = True
         marcas["duracion_escalamiento_ms"] = round((time.perf_counter() - inicio) * 1000, 3)
-        prefacio = PREFACIOS.get(motivo)
-        aviso = f"{prefacio} {AVISO_TRANSFERENCIA}" if prefacio else AVISO_TRANSFERENCIA
+        if marcas.get("registro_fallido"):
+            transferencia = AVISO_SIN_REGISTRO
+        else:
+            transferencia = AVISO_TRANSFERENCIA.format(
+                codigo=codigo_de_caso(state["id_conversacion"])
+            )
+        # Sin registro, «Con gusto.» no corresponde; los demás prefacios explican el motivo.
+        prefacio = (
+            None
+            if marcas.get("registro_fallido") and motivo == "solicitud explícita"
+            else (PREFACIOS.get(motivo))
+        )
+        aviso = f"{prefacio} {transferencia}" if prefacio else transferencia
         partes = "\n\n".join(p["texto"] for p in resueltas)
         respuesta = f"{partes}\n\n{aviso}" if partes else aviso
         return {

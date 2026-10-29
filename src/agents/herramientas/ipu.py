@@ -5,6 +5,7 @@ Solo el impuesto predial: el estado de cuenta de un predio también trae el ICA,
 """
 
 from contextlib import suppress
+from datetime import date
 from typing import Any
 
 from src.agents.herramientas import (
@@ -24,7 +25,7 @@ from src.agents.herramientas import (
     resolver_matricula,
 )
 from src.services import obligaciones
-from src.services.calendario_tributario import fechas_predial, fuente_del_calendario
+from src.services.calendario_tributario import fechas_predial, fuente_del_calendario, ya_paso
 from src.services.datos_anuales import porcentaje_pronto_pago
 from src.services.errores import AnioSinDatosError
 from src.services.minimizacion import minimizar
@@ -32,7 +33,7 @@ from src.services.obligaciones import SituacionObligacion
 from src.services.predial import RangoIPU, liquidar_predial, tabla_tarifas_ipu
 
 
-def _obligacion(s: SituacionObligacion) -> dict[str, Any]:
+def _obligacion(s: SituacionObligacion, hoy: date) -> dict[str, Any]:
     o = minimizar(s.obligacion)
     return {
         "vigencia_fiscal": o["vigencia_fiscal"],
@@ -43,6 +44,7 @@ def _obligacion(s: SituacionObligacion) -> dict[str, Any]:
         "fecha_limite_descuento": fecha(s.obligacion.fecha_limite_descuento),
         "descuento_aun_vigente": s.descuento_vigente,
         "fecha_limite_pago": fecha(s.obligacion.fecha_limite_pago),
+        "fecha_limite_pago_ya_paso": ya_paso(s.obligacion.fecha_limite_pago, hoy),
         "estado_pago": o["estado_pago"],
         "vencida_a_hoy": s.vencida,
         "pagado": pesos(s.pagado),
@@ -79,7 +81,7 @@ def _estado_cuenta(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "obligaciones_pendientes_o_vencidas": cuenta.pendientes,
         "obligaciones_vencidas_a_hoy": cuenta.vencidas,
         "saldo_pendiente_predial": pesos(cuenta.saldo),
-        "obligaciones": [_obligacion(s) for s in cuenta.obligaciones],
+        "obligaciones": [_obligacion(s, contexto.hoy) for s in cuenta.obligaciones],
         "pagos": [
             {
                 "vigencia_fiscal": vigencias[p.id_obligacion],
@@ -129,6 +131,7 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
                 "estado_pago": s.obligacion.estado_pago,
                 "vencida_a_hoy": s.vencida,
                 "fecha_limite_pago": fecha(s.obligacion.fecha_limite_pago),
+                "fecha_limite_pago_ya_paso": ya_paso(s.obligacion.fecha_limite_pago, contexto.hoy),
                 "saldo": pesos(s.saldo),
             }
             if s.vencida:
@@ -191,8 +194,12 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "limite_pago_con_descuento": fecha(plazos["pronto_pago"]),
         "limite_pago_sin_descuento": fecha(plazos["sin_descuento"]),
         "facturas_expedidas_a_mas_tardar": fecha(plazos["facturas_a_mas_tardar"]),
+        "facturas_plazo_ya_paso": ya_paso(plazos["facturas_a_mas_tardar"], hoy),
         "spac_declaracion_inicial": fecha(plazos["spac_declaracion_inicial"]),
-        "spac_cuotas": [fecha(f) for f in plazos["spac_cuotas"]],
+        "spac_declaracion_inicial_ya_paso": ya_paso(plazos["spac_declaracion_inicial"], hoy),
+        "spac_cuotas": [
+            {"fecha": fecha(f), "ya_paso": ya_paso(f, hoy)} for f in plazos["spac_cuotas"]
+        ],
         "descuento_aun_vigente": obligaciones.descuento_vigente(plazos["pronto_pago"], hoy),
         "plazo_sin_descuento_ya_paso": not obligaciones.descuento_vigente(
             plazos["sin_descuento"], hoy
@@ -221,14 +228,13 @@ def _filas(rangos: tuple[RangoIPU, ...]) -> list[dict[str, Any]]:
     ]
 
 
-def _tarifas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
-    """Tabla de tarifas del año, sin sesión ni avalúo (F7 de la corrida 1)."""
-    anio = entero(argumentos, "anio") or contexto.hoy.year
-    destino = argumentos.get("destino") or "residencial"
-    if destino not in ("residencial", "comercial", "lote"):
-        raise FaltaDatoError(f"El destino «{destino}» no está entre residencial, comercial y lote.")
+DESTINOS = ("residencial", "comercial", "lote")
+
+
+def _tabla(anio: int, destino: str) -> tuple[dict[str, Any], list[str], tuple[str, ...]]:
+    """Las tarifas de un destino del año: los datos, sus fuentes y sus notas."""
     tabla = tabla_tarifas_ipu(anio, destino)
-    datos: dict[str, Any] = {"anio_gravable": anio, "destino": destino}
+    datos: dict[str, Any] = {"destino": destino}
     fuentes = [tabla.fuente_generales]
     if tabla.preferenciales:
         datos["tarifas_preferenciales_estratos_1_a_3"] = {
@@ -251,7 +257,29 @@ def _tarifas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "rangos": _filas(tabla.generales),
         "fuente": tabla.fuente_generales,
     }
-    return Resultado(datos, fuentes=tuple(dict.fromkeys(fuentes)), notas=tabla.notas)
+    return datos, fuentes, tuple(tabla.notas)
+
+
+def _tarifas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
+    """Tabla de tarifas del año, sin sesión ni avalúo (F7 de la corrida 1): de un destino o, con
+    «todos», de los tres en una sola llamada (para explicar de qué depende la tarifa)."""
+    anio = entero(argumentos, "anio") or contexto.hoy.year
+    destino = argumentos.get("destino") or "residencial"
+    if destino not in (*DESTINOS, "todos"):
+        raise FaltaDatoError(
+            f"El destino «{destino}» no está entre residencial, comercial, lote y todos."
+        )
+    if destino != "todos":
+        datos, fuentes, notas = _tabla(anio, destino)
+        return Resultado(
+            {"anio_gravable": anio, **datos}, fuentes=tuple(dict.fromkeys(fuentes)), notas=notas
+        )
+    tablas = [_tabla(anio, d) for d in DESTINOS]
+    return Resultado(
+        {"anio_gravable": anio, "por_destino": [datos for datos, _, _ in tablas]},
+        fuentes=tuple(dict.fromkeys(f for _, fuentes, _ in tablas for f in fuentes)),
+        notas=tuple(dict.fromkeys(n for _, _, notas in tablas for n in notas)),
+    )
 
 
 HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
@@ -293,8 +321,13 @@ HERRAMIENTAS_IPU: tuple[Herramienta, ...] = (
         "Tabla de tarifas del impuesto predial de un año gravable por destino, sin sesión ni "
         "avalúo: los rangos de avalúo en pesos con su tarifa por mil y, en el residencial, las "
         "tarifas preferenciales de los estratos 1 a 3 con sus límites en pesos (SMMLV del año) y "
-        "la exclusión de los estratos 1 y 2. Para una tarifa, un rango o un umbral de un año.",
-        {**ANIO, "destino": {"type": "string", "enum": ["residencial", "comercial", "lote"]}},
+        "la exclusión de los estratos 1 y 2. Para una tarifa, un rango o un umbral de un año. Con "
+        "destino «todos», los tres destinos en una sola llamada (para explicar de qué depende la "
+        "tarifa).",
+        {
+            **ANIO,
+            "destino": {"type": "string", "enum": ["residencial", "comercial", "lote", "todos"]},
+        },
         ("anio",),
         _tarifas,
     ),

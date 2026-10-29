@@ -4,6 +4,7 @@ Lee `datos/`; si falta el año o el valor, falla de forma explícita y no estima
 """
 
 from dataclasses import dataclass
+from datetime import date
 from typing import Any, Literal
 
 from src.data.models import RegimenICA
@@ -90,6 +91,21 @@ def regimen_ica(
     )
 
 
+def regla_de_la_periodicidad(anio: int, periodicidad: Periodicidad) -> tuple[str, str]:
+    """La regla que define la periodicidad del ICA del año, con su fuente, la misma que entrega
+    `regimen_ica` con `datos/regimenes_ica.yaml`: en 2026, el texto de cada régimen tal como está
+    en los datos; desde 2027, la regla general del art. 26 del Acuerdo 1084 que arma
+    `regimen_ica` con el umbral de los datos (es la misma para las dos periodicidades). Para el
+    modelo, que la copia en lugar de explicarla. `AnioSinDatosError` si no hay datos del año."""
+    reglas = [regimen_ica(anio, r) for r in regimenes_posibles(anio, periodicidad)]
+    nombres = {"comun_bimestral": "régimen común bimestral", "comun_anual": "régimen común anual",
+               "preferencial": "régimen preferencial"}  # fmt: skip
+    texto = "; o ".join(
+        f"{nombres[r.regimen]}: {r.regla}" if r.regimen else r.regla for r in reglas
+    )
+    return texto, reglas[0].fuente
+
+
 def regimenes_posibles(anio: int, periodicidad: Periodicidad | None) -> list[RegimenICA | None]:
     """Regímenes del año que corresponden a una periodicidad, según `regimenes_ica.yaml`.
 
@@ -101,6 +117,12 @@ def regimenes_posibles(anio: int, periodicidad: Periodicidad | None) -> list[Reg
     if not all(r in fila for r in regimenes):
         return [None]
     return [r for r in regimenes if periodicidad is None or _periodicidad(r) == periodicidad]
+
+
+def ya_paso(fecha: date | str, hoy: date) -> bool:
+    """Si la fecha ya pasó con el reloj del turno. Una fecha igual a hoy no ha pasado: el plazo
+    vence al final del día. Lo decide el código, nunca el modelo."""
+    return (date.fromisoformat(fecha) if isinstance(fecha, str) else fecha) < hoy
 
 
 def fechas_ica(anio: int, periodicidad: Periodicidad) -> list[str]:

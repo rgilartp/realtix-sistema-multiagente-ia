@@ -21,9 +21,9 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: rangos
 respuesta_referencia: >-
-  El IVIUR es el Índice de Valoración Inmobiliaria Urbana y Rural. Su variación anual sirve para actualizar
-  cada año los rangos que determinan la tarifa del impuesto predial unificado (Acuerdo 1084 de 2026, art.
-  20).
+  El IVIUR es el Índice de Valoración Inmobiliaria Urbana y Rural. Desde el predial de 2027, su variación
+  anual sirve para actualizar cada año los rangos que determinan la tarifa del impuesto predial unificado
+  (Acuerdo 1084 de 2026, art. 20).
 fuentes_esperadas:
 - Glosario (plataforma_general)
 - Acuerdo 1084 de 2026, art. 20

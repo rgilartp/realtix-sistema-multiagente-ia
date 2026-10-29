@@ -13,6 +13,9 @@ verificacion:
     url: https://incp.org.co/?p=136894
     formato: pdf
     manual: true  # el PDF lo guardó Rodolfo desde el navegador; el OCR sale de ocr_1084.py
+# Las URL de www.secretariasenado.gov.co quedan en http: el sitio no responde por https (petición HEAD
+# sin respuesta en el puerto 443, auditoría de seguridad). No se volvió a descargar ni a convertir
+# nada: los textos son los que se verificaron en la curaduría (B2).
 fuentes:
   - id: ley_1581_2012
     norma: Ley 1581 de 2012

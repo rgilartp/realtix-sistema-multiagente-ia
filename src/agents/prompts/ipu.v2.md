@@ -29,3 +29,7 @@ se calcula, quién lo paga) se responden con los fragmentos de normas, sin herra
 consulta es de un predio y la sesión tiene varios, sin saber cuál, sigue las reglas de «Cuándo
 pedir una aclaración».
 Si la parte trata del ICA y no del predial, es `no_corresponde`.
+
+Excepción a «sin herramientas»: si explicas de qué depende la tarifa del predial, llama
+`tarifas_predial` con el destino «todos» (los tres destinos en una sola llamada) y descríbela con lo
+que trae `tarifas_predial` y con los fragmentos, no de memoria.

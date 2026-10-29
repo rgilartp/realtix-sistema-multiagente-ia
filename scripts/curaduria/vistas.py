@@ -700,9 +700,16 @@ def vista_regimenes() -> None:
         ],
         lambda f: "sin" if "pendiente" in str(f[1]) or "pendiente" in str(f[3]) else "",
     )
+    bomberil = [
+        [a["anio_gravable"], a["sobretasa_bomberil"]["umbral_uvt"], a["sobretasa_bomberil"]["base"],
+         a["sobretasa_bomberil"]["fuente"]]
+        for a in r["anios"]
+        if a.get("sobretasa_bomberil")
+    ]  # fmt: skip
     cuerpo = nota(
         "Regímenes del ICA: art. 1 de la Resolución SDH-000195 (2026) y art. 26 del Acuerdo 1084 "
-        "(desde 2027, página 48 del PDF). UVT y SMMLV salen de las resoluciones de la DIAN y de "
+        "(desde 2027, página 48 del PDF). Umbral de la sobretasa bomberil: art. 2 de la misma "
+        "resolución (2026). UVT y SMMLV salen de las resoluciones de la DIAN y de "
         "los decretos del salario mínimo; los de 2027 aún no existen. "
         "El SIMPLE de 2026 (12, 16, 30, 30 y 16 por mil) se verificó con el texto del art. 44 del "
         "Acuerdo 1019 de 2025 en el Régimen Legal."
@@ -711,6 +718,8 @@ def vista_regimenes() -> None:
         [imagen_ocr(48)],
         "<h2>Regímenes</h2>"
         + tabla(["Año gravable", "Fuente", "Umbral (UVT)", "Base del umbral"], filas)
+        + "<h2>Sobretasa bomberil</h2>"
+        + tabla(["Año gravable", "Umbral (UVT)", "Base", "Fuente"], bomberil)
         + "<h2>UVT y SMMLV</h2>"
         + uvt,
     )

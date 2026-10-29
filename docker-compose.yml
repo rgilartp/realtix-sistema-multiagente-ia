@@ -2,7 +2,8 @@
 #
 # En desarrollo:  docker compose up -d postgres chromadb
 # Todo el sistema: docker compose --env-file .env --env-file deploy/servidor.env up -d --build
-#                  (deploy/desplegar.sh lo hace en el servidor, con la ingesta y la verificación).
+#                  (deploy/desplegar.sh lo hace en el servidor, con la ingesta y la verificación,
+#                  y agrega -f deploy/compose.servidor.yml, que quita el puerto de Chroma).
 #                  En el equipo, con DOMINIO=localhost delante (la variable de la terminal gana):
 #                  así Caddy usa su autoridad local y no pide a Let's Encrypt el dominio real.
 # Dos réplicas:    ... up -d --scale backend=2   (RNF-02; el backend no tiene nombre ni puerto fijo)
@@ -12,7 +13,7 @@
 # evaluación y las fallas inyectables salen de REALTIX_MODO_EVALUACION, que solo define
 # `deploy/desplegar.sh --evaluacion`: apagados por defecto, aunque el .env diga otra cosa (A9).
 # Chroma y PostgreSQL publican sus puertos solo en 127.0.0.1: no se exponen fuera del host
-# (sección 3.11).
+# (sección 3.11). En el servidor, Chroma no publica ninguno (ADR-26).
 
 name: realtix
 

@@ -4,7 +4,7 @@
  * Dirección visual «Formulario y sello»: sale de los materiales del trámite, sin imitar ningún
  * formulario, sello ni marca real. Papel de seguridad azul pálido, casillas con su rótulo dentro del
  * borde, bandas de sección en tinta de sello azul (plana: sin degradados ni brillos) y el amarillo
- * de resaltador solo para el rótulo de entorno simulado. Los colores son los del logo de Realtix:
+ * de resaltador para la selección y el foco sobre el azul. Los colores son los del logo de Realtix:
  * azul #074C91, verde #188034 y blanco; los neutros salen del azul. El ámbar y el rojo se conservan
  * porque son avisos.
  *
@@ -14,7 +14,7 @@
  * Contraste: `npm run contraste` mide cada par en los dos modos (texto 4,5:1; controles y foco 3:1;
  * celdas de la matriz con texto en tinta 4,5:1).
  *
- * Tipografía autoalojada (fontsource, sin CDN): Archivo semicondensada para el rótulo, los títulos,
+ * Tipografía autoalojada (fontsource, sin CDN): Archivo semicondensada para los títulos,
  * las bandas y las cifras; Atkinson Hyperlegible Next, hecha para la legibilidad, para el texto.
  */
 @import "@fontsource-variable/archivo/wdth.css";
@@ -43,7 +43,7 @@
   --color-sello-suave: #e3edf8;
   --color-burbuja: #13233a; /* mensaje del contribuyente, con texto blanco */
 
-  /* Resaltador: solo el rótulo de entorno simulado y el foco sobre el azul */
+  /* Resaltador: la selección de texto y el foco sobre el azul */
   --color-resaltador: #ffd54f;
 
   /* Quien habla y estados. El verde nunca va con texto sobre el azul (1,7:1). */
@@ -140,7 +140,10 @@
   :root[data-tema-pendiente] body {
     visibility: hidden;
   }
+  /* El rótulo fijo no tapa lo que recibe el foco ni lo que se desplaza a la vista (hasta dos
+     líneas en el celular). */
   html {
+    scroll-padding-top: 4.5rem;
     font-family: var(--font-texto);
     color: var(--color-tinta);
     background: var(--color-papel);
@@ -175,7 +178,8 @@
     outline: 3px solid var(--color-sello-texto);
     outline-offset: 2px;
   }
-  /* …y resaltador sobre el azul de sello (cabecera del widget, bandas y pestañas). */
+  /* …y resaltador sobre el azul de sello (encabezado de portal, cabecera del widget, bandas y
+     pestañas). */
   .sobre-oscuro :focus-visible {
     outline-color: var(--color-resaltador);
   }
@@ -184,6 +188,15 @@
   select,
   summary {
     cursor: pointer;
+  }
+  /* La lista nativa de un select toma el fondo del select y, si es transparente, el blanco del
+     navegador: en el modo oscuro quedaba texto claro sobre blanco. Fondo y texto explícitos de
+     cada modo, en el select y en sus opciones. */
+  select,
+  option,
+  optgroup {
+    background-color: var(--color-hoja);
+    color: var(--color-tinta);
   }
   button:disabled {
     cursor: not-allowed;
@@ -200,15 +213,61 @@
 }
 
 @layer components {
-  /* Rótulo de entorno simulado: resaltador con filete de tinta, igual en los dos modos. */
+  /* Rótulo de entorno simulado: franja delgada de aviso (unos 38 px en una línea; en el celular
+     ocupa dos), fija arriba y siempre visible, en el ámbar de los avisos y con su ícono. */
   .rotulo {
-    background: var(--color-resaltador);
-    color: var(--color-tinta-oscura);
-    border-bottom: 3px solid var(--color-tinta-oscura);
-    font-family: var(--font-titulo);
-    font-stretch: 87.5%;
-    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.375rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-advertencia-suave);
+    color: var(--color-advertencia);
+    border-bottom: 1px solid var(--color-advertencia-borde);
+    font-size: var(--text-xs);
+    line-height: 1.25rem;
+    font-weight: 600;
     text-wrap: balance;
+  }
+  @media (width >= 40rem) {
+    .rotulo {
+      font-size: var(--text-sm);
+    }
+  }
+
+  /* Interruptor del tema, sobre la barra azul del portal: un riel con esquinas de control (nada
+     usa forma de píldora) y una perilla cuadrada con el sol o la luna. */
+  .interruptor-riel {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 1.75rem;
+    border: 2px solid var(--color-blanco);
+    border-radius: var(--radius-control);
+  }
+  /* Al pasar el puntero se subraya el nombre, encendido o apagado, como un enlace. */
+  .interruptor:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .interruptor[aria-checked="true"] .interruptor-riel {
+    background: var(--color-tinta-oscura);
+  }
+  .interruptor-perilla {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: var(--radius-casilla);
+    background: var(--color-blanco);
+    color: var(--color-sello);
+  }
+  .interruptor[aria-checked="true"] .interruptor-perilla {
+    translate: 1.25rem 0;
   }
 
   /* Banda de sección, como el encabezado de un bloque de formulario. */
@@ -247,7 +306,7 @@
   .casilla > select {
     width: 100%;
     min-height: 2.5rem;
-    background: transparent;
+    background: var(--color-hoja);
     font-size: var(--text-base);
     font-weight: 400;
     color: var(--color-tinta);
@@ -284,7 +343,7 @@
   .casilla-unida > select {
     width: 100%;
     min-height: 2.5rem;
-    background: transparent;
+    background: var(--color-hoja);
     font-size: var(--text-base);
     font-weight: 400;
     color: var(--color-tinta);

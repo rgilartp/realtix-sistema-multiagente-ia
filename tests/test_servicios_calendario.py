@@ -117,6 +117,19 @@ def test_el_viernes_13_de_noviembre_tras_las_5_pm_abre_el_martes_17_a_las_8() ->
 
 @pytest.mark.unit
 @pytest.mark.req("RNF-07 · Aviso fuera de horario")
+@pytest.mark.parametrize(
+    ("dia", "apertura"),
+    [(8, "lunes 9 de noviembre"), (1, "martes 3 de noviembre")],  # domingos; el lunes 2 es festivo
+)
+def test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha(dia: int, apertura: str) -> None:
+    # Las verificaciones de HOR-01 y HOR-02 buscan «día fecha de mes»: el día suelto no basta,
+    # porque el aviso siempre dice «de lunes a viernes».
+    aviso = Horario().aviso_fuera_de_horario(_hora(dia, 10, 0))
+    assert f"Vuelvo a atender el {apertura} de 2026 a las 8:00 a. m." in aviso
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-07 · Aviso fuera de horario")
 def test_antes_de_abrir_el_mismo_dia_y_el_reloj_inyectado() -> None:
     reloj = RelojFijo(_hora(12, 6, 30))
     h = Horario(reloj=reloj)
@@ -137,3 +150,15 @@ def test_horario_con_zona_distinta_y_configuracion(entorno_valido) -> None:
     assert (h.inicio, h.fin) == (time(8, 0), time(17, 0)) and h.en_horario()
     with pytest.raises(ValueError):
         Horario(inicio=time(17, 0), fin=time(8, 0))
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-ICA-03 · Fechas de declaración")
+def test_una_fecha_igual_a_hoy_no_ha_pasado() -> None:
+    from datetime import date
+
+    from src.services.calendario_tributario import ya_paso
+
+    hoy = date(2091, 3, 10)  # fechas inventadas
+    assert not ya_paso("2091-03-11", hoy) and not ya_paso("2091-03-10", hoy)
+    assert ya_paso("2091-03-09", hoy) and ya_paso(date(2091, 3, 9), hoy)

@@ -62,9 +62,9 @@ class ServiciosAPI:
     def _cliente_langsmith(self) -> Any:
         """Cliente de LangSmith con el anonimizador en entradas y salidas (RNF-05); `None` si
         las trazas están apagadas."""
-        from src.integrations.trazas import Anonimizador, crear_cliente_langsmith
+        from src.integrations.trazas import AnonimizadorDeTrazas, crear_cliente_langsmith
 
-        return crear_cliente_langsmith(self.settings, Anonimizador())
+        return crear_cliente_langsmith(self.settings, AnonimizadorDeTrazas())
 
     def trazadores(self) -> list[Any]:
         """El trazador de LangSmith del turno, con el cliente anonimizado, si está encendido."""

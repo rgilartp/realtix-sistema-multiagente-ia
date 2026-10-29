@@ -1,8 +1,11 @@
 """Muestra de calibración del juez y su kappa (sección 6.4; ADR-24: R2, A5 y A6). Sin red.
 
   # B15, después de la corrida 2: exporta 30 respuestas estratificadas, sin el veredicto del juez,
-  # y guarda la huella del juez (desde aquí queda congelado):
+  # con el HTML de lectura y la hoja .xlsx de cada evaluador, y guarda la huella del juez (desde
+  # aquí queda congelado):
   uv run python scripts/calibracion.py exportar --corrida corrida-2
+  # Cuando los dos evaluadores y el consenso llenaron sus hojas, se pasan a muestra.csv:
+  uv run python scripts/calibracion.py importar
   # B16, con la muestra ya calificada por Rodolfo y Dayanna:
   uv run python scripts/calibracion.py kappa --corrida corrida-2
 
@@ -24,6 +27,9 @@ from src.evaluacion.calibracion import (  # noqa: E402
     calcular_kappa,
     elegir,
     exportar,
+    exportar_para_evaluadores,
+    hojas_con_calificaciones,
+    importar_calificaciones,
 )
 from src.evaluacion.corrida import vigentes  # noqa: E402
 from src.evaluacion.ejecutor import leer_resultados  # noqa: E402
@@ -42,7 +48,7 @@ def ya_calificada(ruta: Path) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("accion", choices=("exportar", "kappa"))
+    parser.add_argument("accion", choices=("exportar", "importar", "kappa"))
     parser.add_argument("--corrida", default="corrida-2")
     parser.add_argument("--tamano", type=int, default=TAMANO)
     parser.add_argument("--forzar", action="store_true", help="reemplaza una muestra calificada")
@@ -52,6 +58,8 @@ def main() -> int:
     if args.accion == "exportar":
         if ya_calificada(DESTINO / "muestra.csv") and not args.forzar:
             raise SystemExit("La muestra ya tiene calificaciones; no se reemplaza sin --forzar.")
+        if hojas_con_calificaciones(DESTINO) and not args.forzar:
+            raise SystemExit("Hay hojas con calificaciones; no se reemplazan sin --forzar.")
         calificados = leer_resultados(corrida / "calificados.jsonl")
         ensayos = {
             e["id_conversacion"]: e for e in vigentes(leer_resultados(corrida / "resultados.jsonl"))
@@ -63,7 +71,13 @@ def main() -> int:
         if huellas != {huella_del_juez(cargar_configuracion())}:
             raise SystemExit("La corrida no la calificó, entera, el juez actual (A5).")
         ruta = exportar(muestra, ensayos, escenarios, DESTINO, huellas.pop())
+        material = exportar_para_evaluadores(muestra, ensayos, escenarios, DESTINO)
         print(f"{len(muestra)} respuestas en {ruta} (sin el veredicto del juez).")
+        print("Material de cada evaluador:", ", ".join(str(m.relative_to(RAIZ)) for m in material))
+        return 0
+    if args.accion == "importar":
+        completas = importar_calificaciones(DESTINO)
+        print(f"{completas} filas completas en {DESTINO / 'muestra.csv'}.")
         return 0
 
     resultado = calcular_kappa(DESTINO, corrida / "juez.jsonl")

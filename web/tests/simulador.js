@@ -25,12 +25,14 @@ export const TEXTOS = {
     "funcionario: escríbeme de nuevo entonces.",
   // PREFACIOS["solicitud explícita"] + AVISO_TRANSFERENCIA
   transferencia:
-    "Con gusto. Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le " +
-    "compartí un resumen para que no tengas que repetirlo.",
+    "Con gusto. Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número 9A4C21, con " +
+    "un resumen de lo conversado, así no tienes que repetirlo. Si quieres agregar algo, escríbelo aquí " +
+    "y quedará en el caso.",
   // AVISO_TRANSFERENCIA, sin prefacio (motivo «confianza insuficiente»)
   avisoTransferencia:
-    "Voy a transferir tu consulta a un funcionario, que te atenderá a la brevedad. Ya le compartí un " +
-    "resumen para que no tengas que repetirlo.",
+    "Pasé tu consulta a un funcionario. Tu caso quedó registrado con el número 7F31B0, con un resumen " +
+    "de lo conversado, así no tienes que repetirlo. Si quieres agregar algo, escríbelo aquí y quedará " +
+    "en el caso.",
   confirmacion:
     "Estos son los datos que leí del recibo:\n- Matrícula catastral: 50C-9000301\n- Vigencia fiscal: " +
     "2026\n- Avalúo catastral: $350.000.000\n- Valor liquidado: $2.135.000\n- Descuento por pronto " +
@@ -55,7 +57,7 @@ function meta(extra = {}) {
 }
 
 // Las consultas que llegan quedan en `solicitudes`, para revisar el token y los cuerpos.
-export async function simularApi(page, { fueraDeHorario = false } = {}) {
+export async function simularApi(page, { fueraDeHorario = false, limitado = null, sinRegistro = false } = {}) {
   const solicitudes = [];
   const conversaciones = new Set();
   let consultasDeMensajes = 0;
@@ -77,6 +79,12 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
     const auth = peticion.headers()["authorization"] ?? null;
     let cuerpo = null;
     if (metodo === "POST" && !ruta.endsWith("/documento")) cuerpo = peticion.postDataJSON();
+    if (ruta.endsWith("/documento")) {
+      // Del archivo subido, solo su nombre, su tipo y su peso (las fotos pesadas se reducen antes).
+      const datos = peticion.postDataBuffer() ?? Buffer.alloc(0);
+      const cabecera = /filename="([^"]+)"\r\nContent-Type: ([^\r]+)/.exec(datos.toString("latin1"));
+      cuerpo = { nombre: cabecera?.[1], tipo: cabecera?.[2], bytes: datos.length };
+    }
     solicitudes.push({ ruta, metodo, auth, cuerpo });
     const json = (datos, status = 200) => route.fulfill({ status, json: datos });
 
@@ -85,6 +93,7 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
       return json({ token: `token-de-prueba-${cuerpo.usuario}`, usuario: cuerpo.usuario, expira_en_s: 7200 });
     }
     if (ruta === "/api/v1/chat/mensaje") {
+      if (limitado) return route.fulfill({ status: 429, json: { detalle: limitado }, headers: { "Retry-After": "60" } });
       if (fueraDeHorario) {
         return json(chat(cuerpo.id_conversacion, TEXTOS.fueraDeHorario, "sistema", "fuera_de_horario"));
       }
@@ -102,7 +111,7 @@ export async function simularApi(page, { fueraDeHorario = false } = {}) {
     }
     if (ruta === "/api/v1/escalamiento" && metodo === "POST") {
       return json(chat(cuerpo.id_conversacion, TEXTOS.transferencia, "agente", "escalada", {
-        motivo_escalamiento: "solicitud explícita", caso_id: `CASO-${cuerpo.id_conversacion}`,
+        motivo_escalamiento: "solicitud explícita", caso_id: sinRegistro ? null : `CASO-${cuerpo.id_conversacion}`,
         nivel_confianza: 0,
       }));
     }

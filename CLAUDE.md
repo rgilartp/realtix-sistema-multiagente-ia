@@ -178,3 +178,5 @@ uv run python scripts/trazabilidad.py
 - ADR-25: correcciones del instrumento después de la corrida 1 (el juez y RAGAS ven herramientas,
   notas, recibo y aviso; juez v3 lista las afirmaciones sin fuente antes del veredicto; A4 con 3
   repeticiones; «Distrital»; fuga sin textos públicos).
+- ADR-26: avisos de seguridad de las dependencias (certifi 2026.10.19; Chroma sin puerto en el
+  servidor; chromadb, ragas y diskcache como riesgos aceptados con su mitigación).

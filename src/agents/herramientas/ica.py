@@ -27,8 +27,11 @@ from src.services.calendario_tributario import (
     fuente_del_calendario,
     regimen_ica,
     regimenes_posibles,
+    regla_de_la_periodicidad,
+    ya_paso,
 )
-from src.services.errores import DatoNoPublicadoError
+from src.services.citas import citas_sin_fuente, extraer_citas
+from src.services.errores import AnioSinDatosError, DatoNoPublicadoError
 from src.services.ica import (
     EstimacionICA,
     PeriodoICA,
@@ -39,6 +42,35 @@ from src.services.ica import (
 )
 
 PERIODICIDAD = {"type": "string", "enum": ["anual", "bimestral"]}
+
+
+def _regla(
+    datos: dict[str, Any],
+    anio: int,
+    periodicidad: str | None,
+    clave: str = "regla_de_la_periodicidad",
+) -> tuple[str, ...]:
+    """Agrega la regla que define la periodicidad (la de `datos/`), para que el modelo la copie y
+    no la explique con sus palabras; devuelve su fuente."""
+    if periodicidad not in ("anual", "bimestral"):
+        return ()
+    try:
+        regla, fuente = regla_de_la_periodicidad(anio, periodicidad)  # type: ignore[arg-type]
+    except AnioSinDatosError:
+        return ()
+    datos[clave] = regla
+    datos[clave.replace("regla_de_la_periodicidad", "fuente_de_la_regla")] = fuente
+    return (fuente,)
+
+
+def _sin_repetir_norma(fuentes: tuple[str, ...]) -> tuple[str, ...]:
+    """Las fuentes sin una cita cuyos artículos ya cubre una anterior («Resolución SDH-000195 de
+    2025, art. 1» después de «…, arts. 1 y 3 a 6»), con el mismo verificador de las citas."""
+    salida: list[str] = []
+    for f in fuentes:
+        if not (extraer_citas(f) and not citas_sin_fuente(f, salida)):
+            salida.append(f)
+    return tuple(salida)
 
 
 def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
@@ -66,6 +98,7 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
                     "tarifa": por_mil(o.tarifa_por_mil),
                     "valor_liquidado": pesos(o.valor_liquidado),
                     "fecha_limite_pago": fecha(o.fecha_limite_pago),
+                    "fecha_limite_pago_ya_paso": ya_paso(o.fecha_limite_pago, contexto.hoy),
                     "estado_pago": o.estado_pago,
                     "vencida_a_hoy": s.vencida,
                     "pagado": pesos(s.pagado),
@@ -99,7 +132,8 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "obligaciones": filas,
         "pagos": pagos,
     }
-    return Resultado(datos, fuentes=(FUENTE_REALSIT,), notas=tuple(avisos))
+    regla = _regla(datos, filas[0]["vigencia_fiscal"], filas[0]["periodicidad"])
+    return Resultado(datos, fuentes=(FUENTE_REALSIT, *regla), notas=tuple(avisos))
 
 
 def _registrada(contexto: Contexto, anio: int) -> tuple[str, int] | None:
@@ -215,7 +249,7 @@ def _estimar(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         **info,
         "estimaciones": [_datos_estimacion(e, etiqueta) for e, etiqueta in estimaciones],
     }
-    fuentes = tuple(dict.fromkeys(e.fuente for e, _ in estimaciones))
+    fuentes = tuple(dict.fromkeys(f for e, _ in estimaciones for f in e.fuentes))
     notas = tuple(dict.fromkeys(n for e, _ in estimaciones for n in e.notas))
     return Resultado(datos, fuentes=fuentes, notas=notas)
 
@@ -256,7 +290,7 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
 
     def fechas_de(cual: str) -> list[dict[str, Any]]:
         return [
-            {"fecha": fecha(f), "ya_paso": f < contexto.hoy.isoformat()}
+            {"fecha": fecha(f), "ya_paso": ya_paso(f, contexto.hoy)}
             for f in fechas_ica(anio, cual)  # type: ignore[arg-type]
         ]
 
@@ -267,13 +301,19 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             **info,
             "fechas_limite_declaracion": fechas_de(periodicidad),
         }
+        regla = _regla(datos, anio, periodicidad)
+        if info.get("periodicidad_registrada"):  # la pedida no es la registrada: van las dos
+            regla += _regla(
+                datos, anio, info["periodicidad_registrada"], "regla_de_la_periodicidad_registrada"
+            )
     else:
+        regla = ()
         datos["periodicidad"] = "no se conoce: van las fechas de las dos, cada una con la suya"
         datos["por_periodicidad"] = [
             {"periodicidad": cual, "fechas_limite_declaracion": fechas_de(cual)}
             for cual in ("anual", "bimestral")
         ]
-    return Resultado(datos, fuentes=(fuente_del_calendario(anio),))
+    return Resultado(datos, fuentes=_sin_repetir_norma((fuente_del_calendario(anio), *regla)))
 
 
 def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
@@ -311,7 +351,9 @@ def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             "(el Acuerdo 1084 de 2026 cambió algunos códigos): para ese periodo hay que confirmar "
             "el código."
         )
-    return Resultado(datos, fuentes=tuple(dict.fromkeys(t.tarifa.fuente for t in tarifas)))
+    return Resultado(
+        datos, fuentes=tuple(dict.fromkeys(f for t in tarifas for f in t.tarifa.fuentes))
+    )
 
 
 HERRAMIENTAS_ICA: tuple[Herramienta, ...] = (

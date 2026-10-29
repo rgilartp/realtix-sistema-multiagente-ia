@@ -19,13 +19,14 @@ from langchain_core.runnables import RunnableConfig
 from src.agents.clasificador import ClasificadorLLM
 from src.agents.dependencias import ConfigGrafo, Dependencias
 from src.agents.graph import construir_grafo
-from src.agents.nodes.escalamiento import AVISO_TRANSFERENCIA
+from src.agents.nodes.escalamiento import AVISO_SIN_REGISTRO, AVISO_TRANSFERENCIA
 from src.api.acceso import emitir_token, validar_token
 from src.api.app import crear_app
 from src.api.esquemas import AVISO_IA
 from src.api.servicios import ServiciosAPI, version_del_proyecto
 from src.api.turno import AVISO_MODO_HUMANO
-from src.config import Settings
+from src.config import Settings, cargar_configuracion
+from src.container import Contenedor
 from src.data.adapter import MENSAJE_PREDIO_INACCESIBLE
 from src.data.memoria import RealSitEnMemoria
 from src.integrations.recuperador import RecuperadorEnMemoria
@@ -304,10 +305,14 @@ def test_boton_modo_humano_y_bandeja(datos_sinteticos) -> None:
         and datos["meta"]["motivo_escalamiento"] == "solicitud explícita"
     )
     assert (
-        datos["meta"]["caso_id"] == "CASO-conv-boton" and AVISO_TRANSFERENCIA in datos["respuesta"]
+        datos["meta"]["caso_id"] == "CASO-conv-boton"
+        and "Tu caso quedó registrado con el número BOTON" in datos["respuesta"]
     )
-    # El prefacio no repite «funcionario» (revisión externa de B11).
-    assert datos["respuesta"] == f"Con gusto. {AVISO_TRANSFERENCIA}"
+    # El prefacio no repite «funcionario» (revisión externa de B11). El número es un pedazo del
+    # identificador del caso: el funcionario lo encuentra con el buscador de la bandeja.
+    assert datos["respuesta"] == f"Con gusto. {AVISO_TRANSFERENCIA.format(codigo='BOTON')}"
+    assert "boton" in datos["meta"]["caso_id"].lower()
+    assert "brevedad" not in datos["respuesta"]  # no promete un contacto que el sistema no hace
     assert datos["respuesta"].count("funcionario") == 1
     assert datos["meta"]["nivel_confianza"] == 0.0  # ADR-13
     # Modo humano (ADR-12): los agentes ya no responden y el mensaje queda en el caso.
@@ -396,7 +401,8 @@ def test_el_contribuyente_nunca_ve_un_error_tecnico(datos_sinteticos, registro_f
         servicios.adaptador.registrar_caso_escalado = lambda caso: (_ for _ in ()).throw(OSError())
     r = chat(cliente, "conv-roto", "¿Qué es el predial?")
     assert r["estado"] == "escalada" and r["meta"]["motivo_escalamiento"] == "fallo de servicio"
-    assert "psycopg" not in r["respuesta"] and AVISO_TRANSFERENCIA in r["respuesta"]
+    aviso = AVISO_SIN_REGISTRO if registro_falla else AVISO_TRANSFERENCIA.format(codigo="ROTO")
+    assert "psycopg" not in r["respuesta"] and aviso in r["respuesta"]
     assert r["meta"]["caso_id"] == (None if registro_falla else "CASO-conv-roto")
 
 
@@ -559,6 +565,30 @@ def test_health_con_dependencias(datos_sinteticos) -> None:
                         "dependencias": {"postgres": "ok", "chroma": "falla"}}  # fmt: skip
     sano, _ = armar(datos_sinteticos, salud={"postgres": lambda: None})
     assert sano.get("/health").status_code == 200
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-06 · Horario de atención")
+def test_el_cliente_de_chroma_se_crea_una_sola_vez(
+    entorno_valido: pytest.MonkeyPatch,
+) -> None:
+    """Regresión del 502: el contenedor entrega siempre el mismo cliente de Chroma (el chequeo de
+    Chroma de `/health` lo pide en cada llamada), en lugar de abrir uno nuevo."""
+    import chromadb
+
+    creados: list[object] = []
+
+    def cliente_falso(**_: object) -> object:
+        creados.append(object())
+        return creados[-1]
+
+    entorno_valido.setattr(chromadb, "HttpClient", cliente_falso)
+    contenedor = Contenedor(cargar_configuracion(env_file=None))
+
+    clientes = {id(contenedor.cliente_chroma()) for _ in range(3)}
+
+    assert len(creados) == 1
+    assert clientes == {id(creados[0])}
 
 
 @pytest.mark.unit

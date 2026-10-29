@@ -25,6 +25,7 @@ from starlette.exceptions import HTTPException
 
 from src.agents.graph import checkpointer_postgres, construir_grafo
 from src.api import admin, chat, escalamiento, ovt_simulada, predios
+from src.api.limite import LimitadorPorIP
 from src.api.servicios import ServiciosAPI, version_del_proyecto
 from src.config import Settings
 from src.container import Contenedor, obtener_contenedor
@@ -92,6 +93,9 @@ def crear_app(servicios: ServiciosAPI | None = None) -> FastAPI:
     )
     if servicios is not None:
         app.state.servicios = servicios
+    app.state.limitador = LimitadorPorIP(
+        settings.limite_peticiones_por_minuto, settings.limite_peticiones_por_dia
+    )
     origenes = _origenes(settings)
     app.add_middleware(
         CORSMiddleware,
@@ -118,7 +122,9 @@ def crear_app(servicios: ServiciosAPI | None = None) -> FastAPI:
         detalle = str(error.detail)
         if detalle == HTTPStatus(error.status_code).phrase:  # los de Starlette, en inglés
             detalle = MENSAJES_HTTP.get(error.status_code, MENSAJE_INTERNO)
-        return JSONResponse({"detalle": detalle}, status_code=error.status_code)
+        return JSONResponse(
+            {"detalle": detalle}, status_code=error.status_code, headers=error.headers
+        )
 
     @app.exception_handler(RequestValidationError)
     async def error_de_formato(_: Request, __: RequestValidationError) -> JSONResponse:

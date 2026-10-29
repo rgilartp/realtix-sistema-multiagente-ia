@@ -241,6 +241,9 @@ def test_regimenes_ica_y_umbral_en_pesos() -> None:
     assert anios[2027]["sin_declaracion"]["ingresos_netos_menores_a_uvt"] == 1933
     uvt_2025 = next(u["valor"] for u in _yaml("uvt_smmlv.yaml")["uvt"] if u["anio"] == 2025)
     assert anios[2026]["umbral_pesos"] == 391 * uvt_2025 == 19_471_409
+    # Sobretasa bomberil: ingresos netos superiores a 43.498 UVT (Res. SDH-000195 de 2025, art. 2).
+    assert anios[2026]["sobretasa_bomberil"]["umbral_uvt"] == 43_498
+    assert "art. 2" in anios[2026]["sobretasa_bomberil"]["fuente"]
 
 
 @pytest.mark.req("RF-ICA-03 · Fechas de declaración")
@@ -373,3 +376,21 @@ def test_marcar_verificado_llena_el_nombre_y_marca_la_casilla(tmp_path: Path) ->
         == "- [x] `datos/tarifas/ipu_2026.yaml` — predial. Verificado por Nombre Apellido."
     )
     assert lineas[1].startswith("- [ ] ")
+
+
+@pytest.mark.req(
+    "RF-GEN-02 · Explicación en lenguaje sencillo", "RF-ICA-02 · Estimación por actividad"
+)
+def test_el_glosario_dice_donde_encontrar_el_codigo_ciiu_con_su_fuente_oficial() -> None:
+    texto = (KB / "plataforma_general" / "glosario.md").read_text(encoding="utf-8")
+    entrada = texto.split("## Código CIIU (actividad económica)")[1].split("\n## ")[0]
+    assert "casilla 46" in entrada and "IN-CAC-0237" in entrada
+    assert "https://www.dian.gov.co/" in entrada
+    # La regla de `ica.v2` que lo decía al pedir el código se revirtió: en la corrida 2b, el juez
+    # marcó como afirmación sin fuente la casilla 46, que el agente del ICA no recupera (no ve el
+    # glosario). Queda la entrada del glosario, que el agente general sí recupera.
+
+    def plano(t: str) -> str:
+        return " ".join(t.lower().split())
+
+    assert "en el rut, la actividad principal va en la casilla 46." in plano(entrada)

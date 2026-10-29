@@ -45,6 +45,7 @@ curaduria = [
 ]
 eval = [
     "matplotlib==3.11.2",
+    "openpyxl==3.1.5",
     "ragas==0.4.3",
     "scikit-learn==1.9.1",
 ]

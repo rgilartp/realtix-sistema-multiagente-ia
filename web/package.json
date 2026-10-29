@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "playwright test",
     "capturas": "CAPTURAS=1 playwright test",
-    "contraste": "node scripts/contraste.mjs"
+    "contraste": "node scripts/contraste.mjs",
+    "capturas:reales": "CAPTURAS_REALES=1 playwright test tests/capturas_reales.spec.js"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "5.3.0",

@@ -10,6 +10,11 @@
 # Es idempotente: se puede repetir sin daño.
 set -euo pipefail
 
+# Huella publicada por Docker para la clave de su repositorio de apt (versión anterior de su guía de
+# instalación, «apt-key fingerprint 0EBFCD88»). Antes de dar de alta el archivo se exige que traiga
+# una sola clave principal y que sea esa (auditoría de seguridad).
+HUELLA_DOCKER="9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+
 if [[ ${EUID} -ne 0 ]]; then
   echo "Este script necesita sudo." >&2
   exit 1
@@ -17,11 +22,19 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
-apt-get install -y -q ca-certificates curl git
+apt-get install -y -q ca-certificates curl git gnupg
 
 install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-chmod a+r /etc/apt/keyrings/docker.asc
+clave=$(mktemp)
+trap 'rm -f "${clave}"' EXIT
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o "${clave}"
+# La huella de cada clave principal (la línea fpr que sigue a cada pub), no la de las subclaves.
+huellas=$(gpg --show-keys --with-colons "${clave}" | awk -F: '/^pub:/ {p=1; next} p && /^fpr:/ {print $10; p=0}')
+if [[ "${huellas}" != "${HUELLA_DOCKER}" ]]; then
+  echo "La clave GPG de Docker no es la publicada (o trae otras claves); no se instala." >&2
+  exit 1
+fi
+install -m 0644 "${clave}" /etc/apt/keyrings/docker.asc
 # shellcheck source=/dev/null
 . /etc/os-release
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \

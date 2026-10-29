@@ -146,7 +146,9 @@ def test_las_variantes_vacias_no_se_corren_y_las_llenas_heredan_su_origen(tmp_pa
     from src.evaluacion.escenarios import variantes_de_generalizacion
 
     principales = cargar_escenarios()
-    assert variantes_de_generalizacion(principales) == []  # Dayanna aún no las escribe
+    escritas = variantes_de_generalizacion(principales)  # de Dayanna, aprobadas por Rodolfo
+    assert [v["id"] for v in escritas] == [f"VAR-{i:02d}" for i in range(1, 11)]
+    assert {v["aprobado_por"] for v in escritas} == {"Rodolfo Angel Gilart Pulido"}
     ruta = tmp_path / "generalizacion.yaml"
     ruta.write_text(
         'variantes:\n  - {id: VAR-01, id_origen: IPU-08, variante: "¿Hasta qué día hay plazo '
