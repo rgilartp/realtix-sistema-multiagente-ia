@@ -23,12 +23,10 @@ from src.agents.herramientas import (
     resolver_matricula,
 )
 from src.services.calendario_tributario import (
-    dias_hasta,
     fechas_ica,
     fuente_del_calendario,
     regimen_ica,
     regimenes_posibles,
-    respecto_a_hoy,
 )
 from src.services.errores import DatoNoPublicadoError
 from src.services.ica import (
@@ -68,9 +66,6 @@ def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
                     "tarifa": por_mil(o.tarifa_por_mil),
                     "valor_liquidado": pesos(o.valor_liquidado),
                     "fecha_limite_pago": fecha(o.fecha_limite_pago),
-                    "fecha_limite_pago_respecto_a_hoy": respecto_a_hoy(
-                        o.fecha_limite_pago, contexto.hoy
-                    ),
                     "estado_pago": o.estado_pago,
                     "vencida_a_hoy": s.vencida,
                     "pagado": pesos(s.pagado),
@@ -261,11 +256,7 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
 
     def fechas_de(cual: str) -> list[dict[str, Any]]:
         return [
-            {
-                "fecha": fecha(f),
-                "ya_paso": dias_hasta(f, contexto.hoy) < 0,
-                "respecto_a_hoy": respecto_a_hoy(f, contexto.hoy),
-            }
+            {"fecha": fecha(f), "ya_paso": f < contexto.hoy.isoformat()}
             for f in fechas_ica(anio, cual)  # type: ignore[arg-type]
         ]
 
