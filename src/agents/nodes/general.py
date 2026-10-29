@@ -28,7 +28,8 @@ RESPUESTA_IA = (
 )
 ALCANCE = (
     "Puedo ayudarte con el impuesto predial unificado y el impuesto de industria y comercio de "
-    "Bogotá, y con el uso de la Oficina Virtual Tributaria (entorno simulado de pruebas)."
+    "Bogotá, con tus datos personales y con el uso de la Oficina Virtual Tributaria (entorno "
+    "simulado de pruebas)."
 )
 FUERA_DE_ALCANCE = (
     f"Ese tema no es tributario y queda fuera de lo que puedo atender en este canal. {ALCANCE}"
