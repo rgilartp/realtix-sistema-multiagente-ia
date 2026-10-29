@@ -24,7 +24,7 @@ from src.agents.herramientas import (
     resolver_matricula,
 )
 from src.services import obligaciones
-from src.services.calendario_tributario import fechas_predial, fuente_del_calendario
+from src.services.calendario_tributario import fechas_predial, fuente_del_calendario, ya_paso
 from src.services.datos_anuales import porcentaje_pronto_pago
 from src.services.errores import AnioSinDatosError
 from src.services.minimizacion import minimizar
@@ -191,8 +191,12 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
         "limite_pago_con_descuento": fecha(plazos["pronto_pago"]),
         "limite_pago_sin_descuento": fecha(plazos["sin_descuento"]),
         "facturas_expedidas_a_mas_tardar": fecha(plazos["facturas_a_mas_tardar"]),
+        "facturas_plazo_ya_paso": ya_paso(plazos["facturas_a_mas_tardar"], hoy),
         "spac_declaracion_inicial": fecha(plazos["spac_declaracion_inicial"]),
-        "spac_cuotas": [fecha(f) for f in plazos["spac_cuotas"]],
+        "spac_declaracion_inicial_ya_paso": ya_paso(plazos["spac_declaracion_inicial"], hoy),
+        "spac_cuotas": [
+            {"fecha": fecha(f), "ya_paso": ya_paso(f, hoy)} for f in plazos["spac_cuotas"]
+        ],
         "descuento_aun_vigente": obligaciones.descuento_vigente(plazos["pronto_pago"], hoy),
         "plazo_sin_descuento_ya_paso": not obligaciones.descuento_vigente(
             plazos["sin_descuento"], hoy

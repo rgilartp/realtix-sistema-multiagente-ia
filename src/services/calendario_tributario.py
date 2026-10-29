@@ -4,6 +4,7 @@ Lee `datos/`; si falta el año o el valor, falla de forma explícita y no estima
 """
 
 from dataclasses import dataclass
+from datetime import date
 from typing import Any, Literal
 
 from src.data.models import RegimenICA
@@ -101,6 +102,12 @@ def regimenes_posibles(anio: int, periodicidad: Periodicidad | None) -> list[Reg
     if not all(r in fila for r in regimenes):
         return [None]
     return [r for r in regimenes if periodicidad is None or _periodicidad(r) == periodicidad]
+
+
+def ya_paso(fecha: date | str, hoy: date) -> bool:
+    """Si la fecha ya pasó con el reloj del turno. Una fecha igual a hoy no ha pasado: el plazo
+    vence al final del día. Lo decide el código, nunca el modelo."""
+    return (date.fromisoformat(fecha) if isinstance(fecha, str) else fecha) < hoy
 
 
 def fechas_ica(anio: int, periodicidad: Periodicidad) -> list[str]:

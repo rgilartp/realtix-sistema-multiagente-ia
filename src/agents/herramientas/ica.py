@@ -27,6 +27,7 @@ from src.services.calendario_tributario import (
     fuente_del_calendario,
     regimen_ica,
     regimenes_posibles,
+    ya_paso,
 )
 from src.services.errores import DatoNoPublicadoError
 from src.services.ica import (
@@ -256,7 +257,7 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
 
     def fechas_de(cual: str) -> list[dict[str, Any]]:
         return [
-            {"fecha": fecha(f), "ya_paso": f < contexto.hoy.isoformat()}
+            {"fecha": fecha(f), "ya_paso": ya_paso(f, contexto.hoy)}
             for f in fechas_ica(anio, cual)  # type: ignore[arg-type]
         ]
 
