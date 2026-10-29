@@ -150,3 +150,15 @@ def test_horario_con_zona_distinta_y_configuracion(entorno_valido) -> None:
     assert (h.inicio, h.fin) == (time(8, 0), time(17, 0)) and h.en_horario()
     with pytest.raises(ValueError):
         Horario(inicio=time(17, 0), fin=time(8, 0))
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-ICA-03 · Fechas de declaración")
+def test_una_fecha_igual_a_hoy_no_ha_pasado() -> None:
+    from datetime import date
+
+    from src.services.calendario_tributario import ya_paso
+
+    hoy = date(2091, 3, 10)  # fechas inventadas
+    assert not ya_paso("2091-03-11", hoy) and not ya_paso("2091-03-10", hoy)
+    assert ya_paso("2091-03-09", hoy) and ya_paso(date(2091, 3, 9), hoy)

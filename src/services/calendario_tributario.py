@@ -104,6 +104,12 @@ def regimenes_posibles(anio: int, periodicidad: Periodicidad | None) -> list[Reg
     return [r for r in regimenes if periodicidad is None or _periodicidad(r) == periodicidad]
 
 
+def ya_paso(fecha: date | str, hoy: date) -> bool:
+    """Si la fecha ya pasó con el reloj del turno. Una fecha igual a hoy no ha pasado: el plazo
+    vence al final del día. Lo decide el código, nunca el modelo."""
+    return (date.fromisoformat(fecha) if isinstance(fecha, str) else fecha) < hoy
+
+
 def fechas_ica(anio: int, periodicidad: Periodicidad) -> list[str]:
     """Fechas límite (ISO) de la declaración del ICA del año; `AnioSinDatosError` si no hay."""
     plazos = calendario(anio)
@@ -130,24 +136,3 @@ def fechas_predial(anio: int) -> dict[str, Any]:
 def fuente_del_calendario(anio: int) -> str:
     """Norma de la que salen los plazos del año (p. ej. la Resolución SDH-000195 de 2025)."""
     return str(cargar_datos(f"calendario/{anio}.yaml", anio, "calendario")["fuente"])
-
-
-def dias_hasta(fecha: date | str, hoy: date) -> int:
-    """Días que faltan desde hoy hasta la fecha (0 si es hoy; negativo si ya pasó). Lo calcula el
-    código para que el modelo no diga «mañana» o «en una semana» por su cuenta (G4 de la corrida
-    2)."""
-    destino = date.fromisoformat(fecha) if isinstance(fecha, str) else fecha
-    return (destino - hoy).days
-
-
-def respecto_a_hoy(fecha: date | str, hoy: date) -> str:
-    """La fecha con relación a hoy, lista para copiar: «hoy», «mañana», «en N días» o «hace N
-    días». El modelo la copia tal cual en lugar de hacer la cuenta (G4 de la corrida 2)."""
-    dias = dias_hasta(fecha, hoy)
-    if dias == 0:
-        return "hoy"
-    if dias == 1:
-        return "mañana"
-    if dias > 1:
-        return f"en {dias} días"
-    return "hace 1 día" if dias == -1 else f"hace {-dias} días"

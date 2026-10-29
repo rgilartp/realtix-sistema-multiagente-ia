@@ -5,7 +5,7 @@ referencias aprobadas de B6 (IPU-10, IPU-11, ICA-05) y con `usuarios_prueba.yaml
 """
 
 import json
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -15,6 +15,7 @@ import yaml
 from langchain_core.messages import AIMessage, ToolMessage
 
 from src.agents.agente import (
+    EXPRESIONES_RELATIVAS,
     FORMATO_SALIDA,
     ConfigAgente,
     SalidaAgente,
@@ -126,7 +127,7 @@ def test_el_prompt_del_orquestador_lleva_la_regla_de_categorias_del_conjunto() -
 def test_los_prompts_de_los_agentes_llevan_las_reglas_comunes() -> None:
     for nombre in ("ipu", "ica", "general"):
         prompt = prompt_de_agente(nombre)
-        assert prompt.version.endswith("+comun.v3")
+        assert prompt.version.endswith("+comun.v4")
         texto = prompt.texto
         assert "Cita la norma y el artículo" in texto
         assert "Di siempre de qué año gravable hablas" in texto
@@ -392,7 +393,7 @@ def test_este_anio_y_los_plazos_salen_del_reloj_del_turno(adaptador) -> None:
         return resultado["descuento_aun_vigente"], modelo.texto_enviado()
 
     vigente, enviado = descuento("2026-03-01T09:00:00-05:00")
-    assert vigente and "Fecha de hoy: 1 de marzo de 2026" in enviado
+    assert vigente and "Fecha de la consulta: 1 de marzo de 2026 (no la menciones" in enviado
     vencido, enviado = descuento(RELOJ_ESCENARIOS)
     assert not vencido and "año gravable en curso: 2026" in enviado
     assert anio_de_la_consulta("¿y en 2027?", hoy_del_turno(None, Dependencias(adaptador))) == 2027
@@ -674,8 +675,8 @@ def test_ica_08_regimen_por_la_periodicidad_y_fecha_de_la_declaracion_anual(adap
     assert situacion["periodicidad_registrada"] == "anual"
     assert {r["regimen"] for r in regimen["reglas"]} == {"comun_anual", "preferencial"}
     assert {r["periodicidad"] for r in regimen["reglas"]} == {"anual"}
-    assert [(f["fecha"], f["ya_paso"]) for f in fechas["fechas_limite_declaracion"]] == [
-        ("26 de febrero de 2027", False)
+    assert fechas["fechas_limite_declaracion"] == [
+        {"fecha": "26 de febrero de 2027", "ya_paso": False}
     ]
     guion = [pide(("regimen_ica", {"anio": 2026, "periodicidad": "bimestral"})), final("Común.")]
     _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Régimen bimestral", U04, [P04])
@@ -852,54 +853,12 @@ def test_el_modelo_sabe_que_notas_agrega_el_sistema_y_salen_una_sola_vez(adaptad
 )
 def test_el_prompt_general_no_inventa_donde_se_hace_un_tramite() -> None:
     prompt = prompt_de_agente("general")
-    assert prompt.version == "v2+comun.v3"
+    assert prompt.version == "v2+comun.v4"
     texto = " ".join(prompt.texto.split())
     assert "No digas dónde, cómo ni por qué canal se hace un trámite" in texto
     # Como el manual: el botón o sus palabras (una oferta suelta no lleva la marca que escala).
     assert "con el botón «Hablar con un funcionario» o con sus palabras" in texto
     assert "di lo que hacen y lo que no hacen" not in texto  # zona gris de A8, quitada
-
-
-# -- Fechas relativas calculadas por código (G4 de la corrida 2) -------------------------------
-
-
-@pytest.mark.unit
-@pytest.mark.req("RF-ICA-03 · Fechas de declaración", "RF-IPU-04 · Plazos y descuentos")
-def test_las_herramientas_de_fechas_dan_la_frase_respecto_a_hoy(adaptador) -> None:
-    """El modelo no calcula «mañana»: cada fecha trae, calculada por código, la frase que la
-    relaciona con hoy («hoy», «mañana», «en N días» o «hace N días»), y los prompts del IPU y del
-    ICA piden copiarla tal cual y solo cuando la respuesta relaciona la fecha con hoy."""
-    from src.services.calendario_tributario import dias_hasta, respecto_a_hoy
-
-    hoy = date(2091, 3, 10)  # fechas inventadas
-    assert dias_hasta("2091-03-11", hoy) == 1 and dias_hasta("2091-03-01", hoy) == -9
-    assert [
-        respecto_a_hoy(f, hoy)
-        for f in ("2091-03-10", "2091-03-11", "2091-03-18", "2091-03-09", "2091-03-01")
-    ] == ["hoy", "mañana", "en 8 días", "hace 1 día", "hace 9 días"]
-    guion = [pide(("fechas_ica", {"anio": 2026})), final("Fechas.")]
-    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", U04, [P04])
-    (fechas,) = resultados_de_herramientas(modelo)
-    for f in fechas["fechas_limite_declaracion"]:
-        assert f["ya_paso"] == f["respecto_a_hoy"].startswith("hace")
-    guion = [pide(("fechas_predial", {"anio": 2026})), final("Plazos.")]
-    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos", U03, [P03])
-    (plazos,) = resultados_de_herramientas(modelo)
-    assert plazos["respecto_a_hoy"]["pago_sin_descuento"].startswith("hace")  # ya pasó
-    assert all(set(c) == {"fecha", "respecto_a_hoy"} for c in plazos["spac_cuotas"])
-    assert "dias_que_faltan" not in json.dumps(plazos)  # sin cuentas sueltas para el modelo
-    guion = [pide(("estado_cuenta_predial", {})), final("Cuenta.")]
-    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Cuenta", U04, [P04])
-    (predial,) = resultados_de_herramientas(modelo)
-    assert all("fecha_limite_pago_respecto_a_hoy" in o for o in predial["obligaciones"])
-    guion = [pide(("mi_situacion_ica", {})), final("ICA.")]
-    _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "ICA", U04, [P04])
-    (ica,) = resultados_de_herramientas(modelo)
-    assert all(isinstance(o["fecha_limite_pago_respecto_a_hoy"], str) for o in ica["obligaciones"])
-    for nombre in ("ipu", "ica"):
-        texto = " ".join(prompt_de_agente(nombre).texto.split())
-        assert "cópiala tal cual, sin cambiarla ni hacer tú la cuenta" in texto
-        assert "No digas cuántos días faltan si nadie lo preguntó" in texto
 
 
 # -- Tarifas y umbrales por año sin sesión (F7 de la corrida 1) ---------------------------------
@@ -1143,3 +1102,187 @@ def test_el_texto_de_fuera_de_alcance_depende_de_la_marca(adaptador) -> None:
         )
         assert r["respuesta_final"] == esperado
         assert "datos personales" in esperado  # el canal también los atiende (manual de la OVT)
+
+
+# -- Fechas por código: la relación de cada fecha con hoy la decide el código ------------------
+
+
+def _alrededor(iso: str) -> list[tuple[str, bool]]:
+    """El reloj del turno el día antes, el mismo día y el día después de una fecha, y si ya pasó."""
+    dia = date.fromisoformat(iso)
+    return [(f"{(dia + timedelta(days=d)).isoformat()}T10:00:00-05:00", d > 0) for d in (-1, 0, 1)]
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
+def test_cada_fecha_del_predial_trae_si_ya_paso_el_dia_antes_el_mismo_dia_y_el_despues(
+    adaptador,
+) -> None:
+    """Las fechas salen de `datos/` (no de un escenario); una fecha igual a hoy no ha pasado."""
+    from src.services.calendario_tributario import fechas_predial
+
+    plazos = fechas_predial(2026)
+
+    def plazos_a(ahora: str) -> dict[str, Any]:
+        guion = [pide(("fechas_predial", {"anio": 2026})), final("Plazos.")]
+        _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos", ahora=ahora)
+        (datos,) = resultados_de_herramientas(modelo)
+        return datos
+
+    for ahora, paso in _alrededor(plazos["pronto_pago"]):
+        assert plazos_a(ahora)["descuento_aun_vigente"] is not paso
+    for ahora, paso in _alrededor(plazos["sin_descuento"]):
+        assert plazos_a(ahora)["plazo_sin_descuento_ya_paso"] is paso
+    for ahora, paso in _alrededor(plazos["facturas_a_mas_tardar"]):
+        assert plazos_a(ahora)["facturas_plazo_ya_paso"] is paso
+    for ahora, paso in _alrededor(plazos["spac_declaracion_inicial"]):
+        assert plazos_a(ahora)["spac_declaracion_inicial_ya_paso"] is paso
+    for i, cuota in enumerate(plazos["spac_cuotas"]):
+        for ahora, paso in _alrededor(cuota):
+            datos = plazos_a(ahora)
+            assert datos["spac_cuotas"][i]["ya_paso"] is paso
+            # Las cuotas anteriores ya pasaron y las siguientes no.
+            assert all(c["ya_paso"] for c in datos["spac_cuotas"][:i])
+            assert not any(c["ya_paso"] for c in datos["spac_cuotas"][i + 1 :])
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-ICA-03 · Fechas de declaración")
+def test_cada_fecha_del_ica_trae_si_ya_paso_el_dia_antes_el_mismo_dia_y_el_despues(
+    adaptador,
+) -> None:
+    from src.services.calendario_tributario import fechas_ica
+
+    for periodicidad in ("bimestral", "anual"):
+        for i, limite in enumerate(fechas_ica(2026, periodicidad)):
+            for ahora, paso in _alrededor(limite):
+                pedido = {"anio": 2026, "periodicidad": periodicidad}
+                guion = [pide(("fechas_ica", pedido)), final(".")]
+                _, _, modelo = correr(AGENTE_ICA, adaptador, guion, "Fechas", ahora=ahora)
+                (datos,) = resultados_de_herramientas(modelo)
+                assert datos["fechas_limite_declaracion"][i]["ya_paso"] is paso
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-ICA-03 · Fechas de declaración")
+def test_los_prompts_tienen_la_regla_de_fechas_y_no_las_frases_respecto_a_hoy() -> None:
+    for nombre in ("ipu", "ica"):
+        prompt = prompt_de_agente(nombre)
+        texto = " ".join(prompt.texto.split())
+        assert prompt.version.endswith("+comun.v4")
+        assert "Fechas y plazos: da siempre la fecha exacta (día, mes y año)." in texto
+        assert "No relaciones ninguna fecha con el día de la consulta" in texto
+        assert "no digas cuál es la fecha de hoy" in texto and "«aún no vence»" in texto
+        assert "llama la herramienta de fechas de tu tema" in texto
+        assert "No digas en la respuesta qué herramientas o fragmentos usaste." in texto
+        # Siguen las reglas de la obligación vencida y del descuento vencido.
+        assert "Si una obligación está vencida a la fecha de hoy, dilo claramente." in texto
+        assert "no lo presentes como disponible" in texto
+        assert "respecto_a_hoy" not in texto  # el #50 se revirtió
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_una_fecha_relativa_a_hoy_provoca_una_sola_reescritura(adaptador) -> None:
+    for segunda, suficiencia in (
+        ("La cuota vence el 2 de octubre de 2026; aún no vence.", "completa"),
+        ("La cuota vence pasado mañana.", "parcial"),
+    ):
+        guion = [
+            pide(("fechas_predial", {"anio": 2026})),
+            final("La cuota vence mañana, el 2 de octubre de 2026."),
+            final(segunda),
+        ]
+        modelo = ModeloFalso(guion)
+        deps = dependencias(adaptador, modelo, modo_evaluacion=True)
+        respuesta, _ = ejecutar_agente(
+            AGENTE_IPU,
+            deps,
+            estado("¿Cuándo es la cuota?"),
+            configuracion_de_hilo("c", RELOJ_ESCENARIOS),
+        )
+        assert len(modelo.llamadas) == 3 and respuesta["reescrituras"] == 1
+        observacion = modelo.llamadas[-1][0][-1].content
+        assert observacion == EXPRESIONES_RELATIVAS.format(expresiones="mañana")
+        assert respuesta["suficiencia"] == suficiencia
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-05 · Citación de la norma", "RF-IPU-04 · Plazos y descuentos")
+def test_cita_sin_fuente_y_fecha_relativa_van_en_una_sola_reescritura(adaptador) -> None:
+    guion = [
+        pide(("fechas_predial", {"anio": 2026})),
+        final("Venció hace 3 días (Ley 900 de 2091, art. 7)."),
+        final("Venció el 10 de julio de 2026; ya venció."),
+    ]
+    modelo = ModeloFalso(guion)
+    deps = dependencias(adaptador, modelo, modo_evaluacion=True)
+    respuesta, _ = ejecutar_agente(
+        AGENTE_IPU, deps, estado("¿Ya venció?"), configuracion_de_hilo("c", RELOJ_ESCENARIOS)
+    )
+    assert len(modelo.llamadas) == 3 and respuesta["reescrituras"] == 1
+    observacion = modelo.llamadas[-1][0][-1].content
+    assert "ley 900 de 2091, art. 7" in observacion and "hace 3 días" in observacion
+    assert respuesta["suficiencia"] == "completa"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
+def test_un_plazo_legal_o_la_hora_no_provocan_reescritura(adaptador) -> None:
+    guion = [
+        pide(("fechas_predial", {"anio": 2026})),
+        final("Se responde dentro de los 10 días hábiles; atiendo desde las 8:00 a. m."),
+    ]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Plazos")
+    assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "completa"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
+def test_la_fecha_limite_de_pago_de_cada_obligacion_trae_si_ya_paso(adaptador) -> None:
+    from src.services.calendario_tributario import ya_paso
+
+    guion = [pide(("estado_cuenta_predial", {})), final("Cuenta.")]
+    _, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Cuenta", U03, [P03])
+    (cuenta,) = resultados_de_herramientas(modelo)
+    hoy = date.fromisoformat(RELOJ_ESCENARIOS[:10])
+    for o in cuenta["obligaciones"]:
+        assert isinstance(o["fecha_limite_pago_ya_paso"], bool)
+    assert any(o["fecha_limite_pago_ya_paso"] for o in cuenta["obligaciones"])
+    assert not ya_paso(hoy, hoy)
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos", "RF-GEN-03 · Respuesta sustentada en fuentes")
+def test_hoy_y_las_referencias_internas_provocan_la_reescritura(adaptador) -> None:
+    guion = [
+        pide(("fechas_predial", {"anio": 2026})),
+        final("No necesito consultar herramientas: según el fragmento [1], hoy vence."),
+        final("El plazo vence el 10 de julio de 2091; aún no vence."),
+    ]
+    modelo = ModeloFalso(guion)
+    deps = dependencias(adaptador, modelo, modo_evaluacion=True)
+    respuesta, _ = ejecutar_agente(
+        AGENTE_IPU, deps, estado("¿Cuándo vence?"), configuracion_de_hilo("c", RELOJ_ESCENARIOS)
+    )
+    assert len(modelo.llamadas) == 3 and respuesta["reescrituras"] == 1
+    observacion = modelo.llamadas[-1][0][-1].content
+    assert observacion == EXPRESIONES_RELATIVAS.format(
+        expresiones="consultar herramientas; fragmento [1]; hoy"
+    )
+    assert respuesta["suficiencia"] == "completa"
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-IPU-04 · Plazos y descuentos")
+def test_sin_reescritura_si_no_corresponde_o_si_es_la_aclaracion_de_la_actividad(adaptador) -> None:
+    no_corresponde = final("Mañana te digo.", suficiencia="no_corresponde", cobertura=0.0)
+    guion = [AIMessage(content="No es de mi tema."), no_corresponde]
+    respuesta, _, modelo = correr(AGENTE_IPU, adaptador, guion, "Otra cosa")
+    assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "no_corresponde"
+    args = {"ciiu": "0000", "ingresos": 1_000_000, "anio": 2026, "periodicidad": "anual"}
+    guion = [pide(("estimar_ica", args)), final("Mañana me confirmas el código CIIU.")]
+    respuesta, _, modelo = correr(
+        AGENTE_ICA, adaptador, guion, "ICA de la actividad 0000", U04, [P04]
+    )
+    assert len(modelo.llamadas) == 2 and respuesta["suficiencia"] == "aclaracion"
