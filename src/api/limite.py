@@ -1,4 +1,5 @@
-"""Límite de peticiones por IP en los puntos de acceso que llaman modelos (chat y documento).
+"""Límite de peticiones por IP en los puntos de acceso que llaman modelos (chat y documento) y en el
+botón de escalamiento, que registra un caso en la bandeja (auditoría de seguridad).
 
 Por seguridad y gasto: 10 por minuto y 200 por día por IP (`LIMITE_PETICIONES_POR_MINUTO` y
 `LIMITE_PETICIONES_POR_DIA`), en ventanas móviles y en la memoria del proceso; con dos réplicas,

@@ -1,4 +1,4 @@
-"""Límite de peticiones por IP en chat y documento (seguridad y gasto; src/api/limite.py)."""
+"""Límite de peticiones por IP en chat, documento y escalamiento (src/api/limite.py)."""
 
 import pytest
 
@@ -64,11 +64,36 @@ def test_chat_y_documento_responden_429_con_un_mensaje_claro(datos_sinteticos) -
         ).status_code
         == 200
     )
-    # El botón del funcionario y la salud no llaman modelos: no tienen límite.
+    # El botón registra un caso: cuenta en la misma ventana. La salud no tiene límite.
     boton = cliente.post(
         "/api/v1/escalamiento", json={"id_conversacion": "conv-limite"}, headers=ip
     )
-    assert boton.status_code != 429 and cliente.get("/health").status_code != 429
+    assert boton.status_code == 429 and cliente.get("/health").status_code != 429
+
+
+def _boton(cliente, conv: str, **cabeceras: str):
+    return cliente.post("/api/v1/escalamiento", json={"id_conversacion": conv}, headers=cabeceras)
+
+
+@pytest.mark.unit
+@pytest.mark.req(*REQ, "RF-ESC-02 · Activación del escalamiento")
+def test_el_boton_de_escalamiento_tiene_el_mismo_limite(datos_sinteticos) -> None:
+    """Auditoría de seguridad: el botón crea un caso por conversación; sin límite, cualquiera
+    podía llenar la bandeja con ids distintos."""
+    sin_modo = configuracion(limite_peticiones_por_minuto=2, modo_evaluacion=False)
+    cliente, _ = armar(datos_sinteticos, settings=sin_modo)
+    ip = {"X-Forwarded-For": "203.0.113.9"}
+    codigos = [_boton(cliente, f"conv-boton-{i}", **ip).status_code for i in range(3)]
+    assert codigos == [200, 200, 429]
+    r = _boton(cliente, "conv-boton-9", **ip)
+    assert r.json() == {"detalle": MENSAJE_POR_MINUTO} and int(r.headers["Retry-After"]) >= 1
+    # Con el modo de evaluación y X-Escenario-Id, no cuenta (riesgo aceptado de esa ventana).
+    cliente, _ = armar(datos_sinteticos, settings=configuracion(limite_peticiones_por_minuto=1))
+    exentas = {
+        _boton(cliente, f"conv-eval-{i}", **{"X-Escenario-Id": "ESC-01", **ip}).status_code
+        for i in range(3)
+    }
+    assert exentas == {200}
 
 
 @pytest.mark.unit
