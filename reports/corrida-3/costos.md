@@ -13,7 +13,7 @@ Con los tokens reales y los precios de `src/integrations/costos.py` (ecuación 9
 | Sistema (R4) | 0,0432 |
 | Juez (R4) | 0,0902 |
 | Componentes: enrutamiento | 0,6784 |
-| Componentes: agentes | 0,0718 |
-| Componentes: juez | 0,8602 |
+| Componentes: agentes | 0,0693 |
+| Componentes: juez | 1,2169 |
 | RAGAS (OpenAI) | 1,6477 |
-| Total | 12,4715 |
+| Total | 12,8256 |

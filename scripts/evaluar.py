@@ -181,6 +181,7 @@ def correr_componentes(
         correr_agente,
         escenarios_de_agente,
         metricas_de_enrutamiento,
+        settings_de_componentes,
     )
     from src.evaluacion.escenarios import cargar_enrutamiento
 
@@ -190,9 +191,10 @@ def correr_componentes(
     propios = escenarios_de_agente([e for e in escenarios if e["grupo"] in _GRUPOS_PRINCIPALES])
     corridos = {a["escenario"] for a in leer_resultados(ruta_agentes)}
     if evaluar:
+        from src.config import cargar_configuracion
         from src.container import Contenedor
 
-        deps = Contenedor().deps
+        deps = Contenedor(settings_de_componentes(cargar_configuracion())).deps
 
         def guardar_consulta(fila: dict[str, Any]) -> None:
             _agregar(ruta, fila)

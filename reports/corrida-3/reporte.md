@@ -102,7 +102,7 @@ Verificaciones de código superadas: 100,0 %. Veredictos del juez: correcta, 6; 
 | ocr | 20 | 100,0 % | 100,0 % | 100,0 % |
 | fuera_de_alcance | 20 | 100,0 % | 100,0 % | 100,0 % |
 
-Agentes directo contra su nodo: 11 de 34 correctos o parciales sin alucinación (32,4 %).
+Agentes directo contra su nodo: 30 de 34 correctos o parciales sin alucinación (88,2 %).
 
 ## RAGAS
 
