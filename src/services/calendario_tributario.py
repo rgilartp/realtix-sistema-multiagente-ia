@@ -92,9 +92,11 @@ def regimen_ica(
 
 
 def regla_de_la_periodicidad(anio: int, periodicidad: Periodicidad) -> tuple[str, str]:
-    """La regla que define la periodicidad del ICA del año, con su fuente, tal como está en
-    `datos/regimenes_ica.yaml` (la misma que entrega `regimen_ica`). Para el modelo, que la copia
-    en lugar de explicarla con sus palabras. `AnioSinDatosError` si no hay datos del año."""
+    """La regla que define la periodicidad del ICA del año, con su fuente, la misma que entrega
+    `regimen_ica` con `datos/regimenes_ica.yaml`: en 2026, el texto de cada régimen tal como está
+    en los datos; desde 2027, la regla general del art. 26 del Acuerdo 1084 que arma
+    `regimen_ica` con el umbral de los datos (es la misma para las dos periodicidades). Para el
+    modelo, que la copia en lugar de explicarla. `AnioSinDatosError` si no hay datos del año."""
     reglas = [regimen_ica(anio, r) for r in regimenes_posibles(anio, periodicidad)]
     nombres = {"comun_bimestral": "régimen común bimestral", "comun_anual": "régimen común anual",
                "preferencial": "régimen preferencial"}  # fmt: skip

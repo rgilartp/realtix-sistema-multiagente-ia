@@ -43,7 +43,12 @@ from src.services.ica import (
 PERIODICIDAD = {"type": "string", "enum": ["anual", "bimestral"]}
 
 
-def _regla(datos: dict[str, Any], anio: int, periodicidad: str | None) -> tuple[str, ...]:
+def _regla(
+    datos: dict[str, Any],
+    anio: int,
+    periodicidad: str | None,
+    clave: str = "regla_de_la_periodicidad",
+) -> tuple[str, ...]:
     """Agrega la regla que define la periodicidad (la de `datos/`), para que el modelo la copie y
     no la explique con sus palabras; devuelve su fuente."""
     if periodicidad not in ("anual", "bimestral"):
@@ -52,9 +57,19 @@ def _regla(datos: dict[str, Any], anio: int, periodicidad: str | None) -> tuple[
         regla, fuente = regla_de_la_periodicidad(anio, periodicidad)  # type: ignore[arg-type]
     except AnioSinDatosError:
         return ()
-    datos["regla_de_la_periodicidad"] = regla
+    datos[clave] = regla
     datos["fuente_de_la_regla"] = fuente
     return (fuente,)
+
+
+def _sin_repetir_norma(fuentes: tuple[str, ...]) -> tuple[str, ...]:
+    """Las fuentes sin repetir una norma que ya está (con otros artículos) en una anterior."""
+    salida: list[str] = []
+    for f in fuentes:
+        norma = f.split(", art")[0]
+        if not any(s.split(", art")[0] == norma for s in salida):
+            salida.append(f)
+    return tuple(salida)
 
 
 def _situacion(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
@@ -286,6 +301,10 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             "fechas_limite_declaracion": fechas_de(periodicidad),
         }
         regla = _regla(datos, anio, periodicidad)
+        if info.get("periodicidad_registrada"):  # la pedida no es la registrada: van las dos
+            regla += _regla(
+                datos, anio, info["periodicidad_registrada"], "regla_de_la_periodicidad_registrada"
+            )
     else:
         regla = ()
         datos["periodicidad"] = "no se conoce: van las fechas de las dos, cada una con la suya"
@@ -293,7 +312,7 @@ def _fechas(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
             {"periodicidad": cual, "fechas_limite_declaracion": fechas_de(cual)}
             for cual in ("anual", "bimestral")
         ]
-    return Resultado(datos, fuentes=(fuente_del_calendario(anio), *regla))
+    return Resultado(datos, fuentes=_sin_repetir_norma((fuente_del_calendario(anio), *regla)))
 
 
 def _tarifa(contexto: Contexto, argumentos: dict[str, Any]) -> Resultado:
