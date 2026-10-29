@@ -8,9 +8,11 @@
 | Latencias de la corrida 1 | `reports/corrida-1/latencias.png` | `scripts/evaluar.py` |
 | Matriz de confusión del sistema, corrida 1 | `reports/corrida-1/matriz_confusion.png` | ídem |
 | Matriz de confusión de componentes, corrida 1 | `reports/corrida-1/matriz_confusion_componentes.png` | ídem |
-| Latencias de la corrida 2 | `reports/corrida-2/latencias.png` (PR #48) | ídem |
-| Matriz de confusión del sistema, corrida 2 | `reports/corrida-2/matriz_confusion.png` (PR #48) | ídem |
-| Figuras de la corrida 3 | **PENDIENTE (corrida 3)** | B16 |
+| Latencias de la corrida 2 | `reports/corrida-2/latencias.png` | ídem |
+| Matriz de confusión del sistema, corrida 2 | `reports/corrida-2/matriz_confusion.png` | ídem |
+| Latencias de la corrida 3 (la que se reporta) | `reports/corrida-3/latencias.png` | ídem (B16) |
+| Matriz de confusión del sistema, corrida 3 | `reports/corrida-3/matriz_confusion.png` | ídem (B16) |
+| Matriz de confusión de componentes, corrida 3 | `reports/corrida-3/matriz_confusion_componentes.png` | ídem (B16) |
 
 ## Capturas de la interfaz (B11)
 
@@ -30,5 +32,20 @@ Límites de estas capturas (`docs/capturas/README.md`), que el documento debe re
 Por eso no se presentan como resultados: las de métricas y la de una respuesta con fuentes se toman
 en B16.
 
-**PENDIENTE (corrida 3):** las capturas definitivas con el sistema congelado de B16 (lista y guion
-en el PR de preparación de B16).
+## Capturas definitivas (B16)
+
+En `docs/capturas/definitivas/`, a 1280 y 390 px, tomadas después de la corrida 3 contra el sistema
+desplegado sin modo de evaluación, con el sistema real (no la API simulada). Las 24 de B11 no se
+repitieron, porque la interfaz no cambió desde que se tomaron. Pies de figura sugeridos
+(`docs/capturas/definitivas/README.md`):
+
+| Captura | Pie de figura |
+|---|---|
+| `widget_respuesta_normas_1280.png` y `_390.png` | Respuesta del sistema multiagente de IA a una consulta conceptual sobre el impuesto predial, con sus citas y la lista de fuentes, en escritorio y en celular |
+| `consola_metricas_final_1280.png` y `_390.png` | Consola de administración con el registro acumulado del despliegue (670 turnos, 89 conversaciones escaladas, latencias p50 de 5.475 ms y p95 de 10.648 ms) |
+
+La matriz de confusión de la consola aparece vacía («turnos etiquetados: 0») porque la imagen de
+producción no trae los escenarios, que son las etiquetas; la matriz de la corrida 3 es la figura de
+`reports/corrida-3/matriz_confusion.png`. Las cifras de la consola son del historial del despliegue
+(corridas 1, 2 y 3 y las verificaciones), no solo de la corrida 3. La consola muestra «v0.9.0», la
+versión que declara el código evaluado (`d3dab00`); la etiqueta `v1.0.0` marca la entrega.
