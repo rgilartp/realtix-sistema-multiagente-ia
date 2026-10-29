@@ -117,6 +117,19 @@ def test_el_viernes_13_de_noviembre_tras_las_5_pm_abre_el_martes_17_a_las_8() ->
 
 @pytest.mark.unit
 @pytest.mark.req("RNF-07 · Aviso fuera de horario")
+@pytest.mark.parametrize(
+    ("dia", "apertura"),
+    [(8, "lunes 9 de noviembre"), (1, "martes 3 de noviembre")],  # domingos; el lunes 2 es festivo
+)
+def test_el_aviso_nombra_el_dia_de_la_semana_con_su_fecha(dia: int, apertura: str) -> None:
+    # Las verificaciones de HOR-01 y HOR-02 buscan «día fecha de mes»: el día suelto no basta,
+    # porque el aviso siempre dice «de lunes a viernes».
+    aviso = Horario().aviso_fuera_de_horario(_hora(dia, 10, 0))
+    assert f"Vuelvo a atender el {apertura} de 2026 a las 8:00 a. m." in aviso
+
+
+@pytest.mark.unit
+@pytest.mark.req("RNF-07 · Aviso fuera de horario")
 def test_antes_de_abrir_el_mismo_dia_y_el_reloj_inyectado() -> None:
     reloj = RelojFijo(_hora(12, 6, 30))
     h = Horario(reloj=reloj)

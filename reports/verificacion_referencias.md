@@ -2,7 +2,7 @@
 
 Generado por `scripts/verificar_referencias.py`; no se edita a mano. Cada fuente esperada existe en la base y cada cifra coincide con `datos/`, con el usuario de prueba y el adaptador, con el texto de la norma citada o con una operación de cifras verificadas.
 
-Escenarios revisados: 65. Cifras verificadas: 167. Escenarios con algo sin resolver: 0.
+Escenarios revisados: 65. Cifras verificadas: 171. Escenarios con algo sin resolver: 0.
 
 ## Detalle
 
@@ -48,6 +48,7 @@ Escenarios revisados: 65. Cifras verificadas: 167. Escenarios con algo sin resol
 | ICA-08 | 391 UVT | usuario U12 y adaptador |
 | ICA-09 | 1 de enero de 2027 | datos/ |
 | ICA-09 | 391 UVT | datos/ |
+| ICA-09 | 1.933 UVT | datos/ |
 | IPU-01 | 10 de julio de 2026 | usuario U03 y adaptador |
 | IPU-01 | $2.135.000 | usuario U03 y adaptador |
 | IPU-01 | 2.135.000 | usuario U03 y adaptador |
@@ -68,6 +69,9 @@ Escenarios revisados: 65. Cifras verificadas: 167. Escenarios con algo sin resol
 | IPU-03 | 1.904.760 | usuario U03 y adaptador |
 | IPU-03 | 1.814.058 | usuario U03 y adaptador |
 | IPU-04 | 16 por mil | datos/ |
+| IPU-04 | 1 por mil | datos/ |
+| IPU-04 | 33 por mil | datos/ |
+| IPU-04 | 135 SMMLV | datos/ |
 | IPU-06 | 1 por mil | datos/ |
 | IPU-06 | 3 por mil | datos/ |
 | IPU-06 | 107 SMMLV | datos/ |
@@ -75,6 +79,8 @@ Escenarios revisados: 65. Cifras verificadas: 167. Escenarios con algo sin resol
 | IPU-06 | 16 SMMLV | datos/ |
 | IPU-06 | $28.014.480 | datos/ |
 | IPU-06 | $1.750.905 | datos/ |
+| IPU-06 | $187.346.835 | datos/ |
+| IPU-06 | $236.372.175 | datos/ |
 | IPU-06 | 28.014.480 | datos/ |
 | IPU-07 | 17 de abril de 2026 | datos/ |
 | IPU-07 | 10 % | datos/ |
@@ -124,21 +130,18 @@ Escenarios revisados: 65. Cifras verificadas: 167. Escenarios con algo sin resol
 | MULTI-02 | $2.583.000 | usuario U12 y adaptador |
 | MULTI-02 | $410.000.000 | usuario U12 y adaptador |
 | MULTI-02 | 2.583.000 | usuario U12 y adaptador |
-| OCR-01 | 10 % | datos/ |
 | OCR-01 | $350.000.000 | usuario U03 y adaptador |
 | OCR-01 | $2.135.000 | usuario U03 y adaptador |
 | OCR-01 | $213.500 | usuario U03 y adaptador |
 | OCR-01 | 350.000.000 | usuario U03 y adaptador |
 | OCR-01 | 2.135.000 | usuario U03 y adaptador |
 | OCR-01 | 213.500 | usuario U03 y adaptador |
-| OCR-02 | 5,9 por mil | usuario U01 y adaptador |
 | OCR-02 | $280.000.000 | usuario U01 y adaptador |
 | OCR-02 | $1.652.000 | usuario U01 y adaptador |
 | OCR-02 | $165.200 | usuario U01 y adaptador |
 | OCR-02 | 280.000.000 | usuario U01 y adaptador |
 | OCR-02 | 1.652.000 | usuario U01 y adaptador |
 | OCR-02 | 165.200 | usuario U01 y adaptador |
-| OCR-03 | 12 por mil | usuario U06 y adaptador |
 | OCR-03 | $50.000.000 | usuario U06 y adaptador |
 | OCR-03 | $600.000 | usuario U06 y adaptador |
 | OCR-03 | $60.000 | usuario U06 y adaptador |
@@ -166,6 +169,7 @@ Escenarios revisados: 65. Cifras verificadas: 167. Escenarios con algo sin resol
 | CAD-02 | 12 por mil | usuario U04 y adaptador |
 | CAD-02 | 15 % | normas citadas |
 | CAD-02 | 391 UVT | datos/ |
+| CAD-02 | 1.933 UVT | datos/ |
 | CAD-02 | $250.000.000 | mensajes del contribuyente |
 | CAD-02 | $3.450.000 | usuario U04 y adaptador |
 | CAD-02 | $3.000.000 | normas citadas |

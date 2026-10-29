@@ -43,24 +43,28 @@ verificaciones_codigo:
   valor: 391 UVT
 - tipo: no_contiene_valor
   valor: 19.471.409
-respuesta_referencia: 'Parte 1 (ICA-07): U04 es régimen común con declaración bimestral. Las fechas de
-  2026 son el 10 de abril, el 12 de junio, el 21 de agosto, el 9 de octubre y el 11 de diciembre de 2026,
-  y el 12 de febrero de 2027 (Resolución SDH-000195 de 2025, art. 1). La próxima es el 9 de octubre de
-  2026. Parte 2 (ICA-05): Para la actividad 5611 la tarifa de 2026 es 13,8 por mil (Acuerdo 65 de 2002,
-  art. 3, en su texto vigente en 2026): $250.000.000 × 13,8 / 1.000 = $3.450.000 por bimestre, como los
-  de U04, para los bimestres 1 a 5 de 2026. Desde el bimestre 6 de 2026 rige la tarifa del Acuerdo 1084
-  de 2026, art. 21, de 12 por mil para esa actividad: $250.000.000 × 12 / 1.000 = $3.000.000. Es una estimación
-  no vinculante. La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, Decreto
+respuesta_referencia: >-
+  Parte 1 (ICA-07): U04 es régimen común con declaración bimestral. Las fechas de 2026 son el 10 de abril,
+  el 12 de junio, el 21 de agosto, el 9 de octubre y el 11 de diciembre de 2026, y el 12 de febrero de
+  2027 (Resolución SDH-000195 de 2025, art. 1). La próxima es el 9 de octubre de 2026. Parte 2 (ICA-05):
+  Para la actividad 5611 la tarifa de 2026 es 13,8 por mil (Acuerdo 65 de 2002, art. 3, en su texto
+  vigente en 2026): $250.000.000 × 13,8 / 1.000 = $3.450.000 por bimestre, como los de U04, para los
+  bimestres 1 a 5 de 2026. Desde el bimestre 6 de 2026 rige la tarifa del Acuerdo 1084 de 2026, art. 21,
+  de 12 por mil para esa actividad: $250.000.000 × 12 / 1.000 = $3.000.000. Es una estimación no
+  vinculante. La estimación no incluye el complementario de avisos y tableros (15 % del impuesto, Decreto
   352 de 2002, art. 59) ni la sobretasa bomberil, que se suman cuando aplican. Parte 3 (ICA-09): A partir
   del 1 de enero de 2027 pertenecen al régimen común los contribuyentes cuyo impuesto a cargo en el año
-  inmediatamente anterior supera 391 UVT, y declaran y pagan cada dos meses; pertenecen al régimen preferencial
-  los de hasta 391 UVT, y declaran una vez al año. Quien realiza por primera vez actividades gravadas
-  queda en el preferencial durante el primer año (Acuerdo 1084 de 2026, art. 26). El umbral no se da en
-  pesos porque el valor de 2027 aún no se ha publicado.'
+  inmediatamente anterior supera 391 UVT, y declaran y pagan cada dos meses; pertenecen al régimen
+  preferencial los de hasta 391 UVT, y declaran y pagan una vez al año (Acuerdo 1084 de 2026, art. 26, y
+  su parágrafo 2). Los del régimen preferencial con ingresos netos del año inferiores a 1.933 UVT no
+  presentan declaración, y su impuesto es igual a lo que les retuvieron (parágrafo 3). Quien realiza por
+  primera vez actividades gravadas queda en el preferencial durante el primer año (parágrafo 1). El umbral
+  se expresa en UVT; la Secretaría Distrital de Hacienda aún no ha fijado su valor en pesos para 2027.
 fuentes_esperadas:
 - Resolución SDH-000195 de 2025, art. 1
 - datos/calendario/2026.yaml
 - Acuerdo 65 de 2002, art. 3
+- Resolución SDH-000265 de 2021, art. 1
 - Acuerdo 1084 de 2026, art. 21
 - datos/tarifas/ica_2026.yaml
 - datos/tarifas/ica_2027.yaml

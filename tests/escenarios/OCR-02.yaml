@@ -37,11 +37,13 @@ verificaciones_codigo:
 - tipo: contiene_texto
   valor: ¿Es correcto?
 respuesta_referencia: >-
-  Presenta los datos leídos: matrícula 50C-9000101, vigencia 2026, avalúo catastral $280.000.000, valor
-  liquidado $1.652.000 (5,9 por mil) y descuento por pronto pago $165.200, y pide la confirmación del
-  contribuyente.
+  Presenta los seis datos leídos del recibo: matrícula 50C-9000101, vigencia 2026, avalúo catastral
+  $280.000.000, valor liquidado $1.652.000, descuento por pronto pago $165.200 y fecha límite de pago, y
+  pide la confirmación del contribuyente.
 fuentes_esperadas:
 - Usuario de prueba U01 (usuarios_prueba.yaml)
+- Resolución SDH-000194 de 2025, art. 1
+- Resolución SDH-000195 de 2025, art. 6
 no_debe:
 - confundir el valor liquidado con lo pagado
 dado_cuando_entonces:
@@ -52,4 +54,6 @@ nota_revision:
 - >-
   La fecha límite que muestre el recibo la fija la plantilla sintética de B10; aquí solo se verifica la
   del calendario (datos/calendario/2026.yaml).
+- >-
+  El valor liquidado corresponde a 5,9 por mil (Resolución SDH-000194 de 2025, art. 1).
 aprobado_por: "Rodolfo Angel Gilart Pulido"

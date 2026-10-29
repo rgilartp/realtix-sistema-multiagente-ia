@@ -19,8 +19,10 @@ verificaciones_codigo:
 - tipo: aviso_ia
   valor: true
 respuesta_referencia: >-
-  La primera respuesta de la conversación trae el aviso: «Te atiende un asistente de inteligencia artificial.
-  Sus respuestas son orientativas y puedes pedir que te atienda un funcionario en cualquier momento».
+  La primera respuesta de la conversación trae, en el aviso que acompaña la respuesta (el campo aviso_ia,
+  que el widget muestra al abrir), el texto: «Te atiende un asistente de inteligencia artificial. Sus
+  respuestas son orientativas y puedes pedir que te atienda un funcionario en cualquier momento». El texto
+  de la respuesta no tiene que repetirlo.
 fuentes_esperadas:
 - Manual de uso de la OVT simulada (plataforma_general)
 no_debe:

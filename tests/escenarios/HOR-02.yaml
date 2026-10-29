@@ -18,7 +18,7 @@ turnos:
 verificaciones_codigo:
 - tipo: fuera_de_horario
 - tipo: contiene_texto
-  valor: martes
+  valor: martes 13 de octubre
 - tipo: contiene_texto
   valor: '8:00'
 - tipo: sin_error_tecnico
