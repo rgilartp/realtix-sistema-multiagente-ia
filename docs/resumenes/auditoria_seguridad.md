@@ -105,17 +105,17 @@ medición.
 |---|---|---|
 | 1 | Las acciones de la CI van por etiqueta | Fijadas por SHA de commit, con la versión en un comentario |
 | 2 | El binario de gitleaks se verifica con el `checksums.txt` del mismo release | Se verifica contra un SHA-256 fijado en el repositorio (el valor coincide con el `checksums.txt` y con el digest del release) |
-| 4 | `deploy/preparar_servidor.sh` da de alta la clave GPG de Docker sin verificar su huella | Verifica la huella publicada por Docker en su documentación (`9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88`), que coincide con la clave que sirve hoy, antes de darla de alta. No se ejecutó: el servidor ya está preparado |
+| 4 | `deploy/preparar_servidor.sh` da de alta la clave GPG de Docker sin verificar su huella | Exige que el archivo traiga una sola clave principal, con la huella que Docker publicó en una versión anterior de su guía de instalación (`9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88`) y que coincide con la clave que sirve hoy, antes de darla de alta. No se ejecutó: el servidor ya está preparado |
 
 ### Verificadas (4)
 
-Se comprobó que no hay un afectado en el sistema tal como está.
+Se comprobó que no hay un afectado en el sistema tal como está, o que el cambio no se puede aplicar.
 
 | # | Nota | Verificación |
 |---|---|---|
+| 5 | URL `http://` de secretariasenado.gov.co en `scripts/curaduria/fuentes.yaml` | Se comprobó con HEAD que el sitio no responde por https (sin respuesta en el puerto 443; por http, sí). Las 7 URL (6 distintas) quedan en http, con un comentario en el archivo; no se descargó ni se convirtió nada. Queda un riesgo si se vuelve a descargar: `scripts/curaduria/descargar.py` sigue redirecciones sobre http; los textos ya se verificaron en la curaduría (B2). `knowledge_base/normativa_ipu/fuentes.yaml` tiene las mismas URL (fuera del alcance de la auditoría) |
 | 14 | La IP del límite es la última de `X-Forwarded-For` | Correcto con Caddy directo, que es el despliegue (`tests/test_despliegue.py` exige que Caddy no confíe en proxies; `tests/test_limite.py` prueba la IP). Un balanceador delante o IPv6 no aplican hoy |
 | 21 | Compose pasa `LANGSMITH_*` al contenedor | Prueba local sin red: con el trazador del sistema, LangChain no agrega el suyo sin anonimizador, tampoco en los hilos (pista 4) |
-| 5 | URL `http://` de secretariasenado.gov.co en `scripts/curaduria/fuentes.yaml` | Se comprobó con HEAD que el sitio no responde por https (sin respuesta en el puerto 443; por http, sí). Las 7 URL (6 distintas) quedan en http, con un comentario en el archivo; no se descargó ni se convirtió nada |
 | 23 | `rechazo_previo` es un prefiltro por regex | La garantía es `verificar_predio_propio` en el adaptador, con pruebas de regresión de predio ajeno e inexistente en las herramientas, el OCR y la API |
 
 ### Trabajo futuro (16)
