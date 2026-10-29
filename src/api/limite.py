@@ -67,7 +67,7 @@ def ip_del_cliente(request: Request) -> str:
 
 
 def limitar_peticiones(request: Request, evaluacion: Evaluacion) -> None:
-    """Dependencia de los puntos de acceso que llaman modelos."""
+    """Dependencia de los puntos de acceso que llaman modelos y del botón de escalamiento."""
     if evaluacion.escenario_id is not None:  # modo de evaluación (ADR-16): no cuenta
         return
     if (rechazo := request.app.state.limitador.registrar(ip_del_cliente(request))) is not None:

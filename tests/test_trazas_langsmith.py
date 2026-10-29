@@ -76,7 +76,7 @@ def _modelo() -> GenericFakeChatModel:
 
 
 def _contiene_nombre(carga: bytes) -> bool:
-    return NOMBRE.encode() in carga or NOMBRE.encode("unicode_escape") in carga
+    return NOMBRE.encode() in carga  # la carga va en UTF-8 sin escapar (lo prueba la fila anterior)
 
 
 @pytest.mark.unit

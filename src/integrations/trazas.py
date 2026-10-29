@@ -30,7 +30,7 @@ MASCARA_NOMBRE = "[NOMBRE]"
 MASCARA_IMAGEN = "[IMAGEN]"
 # Una imagen en una traza: una URL de datos o una cadena en base64 larga (el bloque del recibo).
 IMAGEN_EN_DATOS = re.compile(r"\s*data:image/", re.IGNORECASE)
-BASE64_LARGO = re.compile(r"[A-Za-z0-9+/\r\n]{1000,}={0,2}\s*")
+BASE64_LARGO = re.compile(r"\s*[A-Za-z0-9+/\r\n]{1000,}={0,2}\s*")
 PROHIBIDOS_EN_METADATOS = frozenset({"contribuyente_id", "id_contribuyente", "nombre"})
 # Documentos con tipo: CC-1000000003, NIT-9000000012, NIT 900.123.456-7, cédula 1.020.304.050.
 CON_TIPO = re.compile(r"\b(?:CC|CE|TI|PA|NIT)[-\s:]*\d[\d.]{5,}(?:-\d)?", re.IGNORECASE)
@@ -128,8 +128,9 @@ class AnonimizadorDeTrazas(Anonimizador):
     def texto(self, valor: str) -> str:
         if IMAGEN_EN_DATOS.match(valor) or BASE64_LARGO.fullmatch(valor):
             return MASCARA_IMAGEN
-        valor = NOMBRE_DECLARADO.sub(lambda m: m.group(1) + MASCARA_NOMBRE, valor)
-        return super().texto(valor)
+        # Primero los documentos, como con `para_modelos=True`: «soy CC-…» no deja la cifra.
+        valor = super().texto(valor)
+        return NOMBRE_DECLARADO.sub(lambda m: m.group(1) + MASCARA_NOMBRE, valor)
 
 
 def metadatos_de_traza(

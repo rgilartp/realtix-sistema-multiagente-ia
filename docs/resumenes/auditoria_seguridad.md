@@ -47,18 +47,26 @@ Las validó una revisión externa contra el código; se corrigieron en el PR `fi
      200 por día); el docstring de `src/api/limite.py` lo dice.
    - **Pruebas:** la tercera petición con un límite de 2 recibe 429 con el mensaje y `Retry-After`; con
      el modo de evaluación y `X-Escenario-Id`, no cuenta.
+   - **Riesgo aceptado:** el botón comparte la cuenta diaria (200) con el chat, así que quien la agote
+     no puede pedir un funcionario por el botón hasta el día siguiente, aunque el aviso de IA dice «en
+     cualquier momento». El widget muestra el mensaje del 429.
 3. **`X-Escenario-Id` en el modo de evaluación** quita el límite por IP.
    - **Riesgo aceptado**, ya documentado en `src/api/limite.py`: el modo de evaluación solo se
      enciende durante una corrida (A9), y al terminar se despliega sin él y se comprueba desde afuera.
-     Mientras está encendido, las cabeceras de prueba (`X-Reloj-Simulado`, `X-Falla-Inyectada`) ya
-     permiten lo mismo. Un secreto para el modo de evaluación queda como refuerzo futuro.
+     Mientras está encendido, cualquiera podría usar esa cabecera, igual que ya puede usar
+     `X-Reloj-Simulado` o `X-Falla-Inyectada`. Un secreto para el modo de evaluación queda como
+     refuerzo futuro.
 4. **Trazas de LangSmith con la imagen del recibo y los nombres declarados** (`src/integrations/trazas.py`).
-   - **Era la causa** de que las trazas del incidente de datos reales de la usabilidad guardaran la
-     imagen: el anonimizador de las trazas no enmascaraba imágenes ni los nombres que el usuario
-     escribe («me llamo…»).
+   - **Era la causa** de que las trazas del incidente de datos reales de la usabilidad
+     (`docs/resumenes/b15.md`, punto 9) guardaran la imagen: el anonimizador de las trazas no
+     enmascaraba imágenes ni los nombres que el usuario escribe («me llamo…»). La prueba sin red de
+     abajo lo muestra con el anonimizador anterior.
    - **Corregida:** `AnonimizadorDeTrazas`, solo para LangSmith, cambia por «[IMAGEN]» las cadenas que
      son imágenes (las que empiezan por `data:image/` y las cadenas en base64 de 1.000 caracteres o
-     más) y enmascara los nombres declarados. Es una subclase: `Anonimizador`, que usan el juez, el
+     más, también con espacios delante) y enmascara los nombres declarados, después de los documentos
+     (así «soy CC-…» no deja la cifra a la vista). Una imagen en base64 de menos de 1.000 caracteres
+     (unos 750 bytes) o metida dentro de un texto más largo no se reconoce; el recibo pesa decenas de
+     KB y va en su propio bloque. Es una subclase: `Anonimizador`, que usan el juez, el
      clasificador y los agentes (`para_modelos=True`), no cambia, y la huella del juez sigue siendo
      la misma (`afecd5c1…`), porque incluye el código de esa clase.
    - **Pruebas sin red** (`tests/test_trazas_langsmith.py`), con las peticiones HTTP del cliente de
@@ -79,7 +87,9 @@ El perfil rápido dejó cuatro áreas sin revisar. Una revisión externa las cub
 - **Las marcas del clasificador** (`solicitud_explicita`, `consulta_personal` y las demás) cambian la
   ruta del turno, pero no dan acceso a datos: el código exige la sesión y la propiedad del predio
   (`verificar_predio_propio`), y un adjunto sin sesión siempre pide iniciarla.
-- **`/health`** es síncrono y queda acotado por el pool de hilos del servidor.
+- **`/health`** es síncrono y queda acotado por el pool de hilos del servidor. Cada sonda con tiempo
+  máximo (`con_tiempo_y_reintento`) puede dejar un hilo atrasado vivo (`shutdown(wait=False)`); queda
+  como refuerzo futuro, con las notas de disponibilidad.
 - **La curaduría** (`scripts/curaduria/convertir.py` y los demás) **y el evaluador**
   (`src/evaluacion/`, `scripts/evaluar.py`) son herramientas locales de los autores, fuera del
   sistema publicado.
@@ -122,7 +132,7 @@ Se comprobó que no hay un afectado en el sistema tal como está.
 | Tokens y secretos | — | Un secreto para el modo de evaluación (pista 3) | Exige un secreto nuevo en el servidor y en el evaluador |
 | Diseño de la OVT simulada | 16 | Tokens de sesión sin credencial, sin revocación, `aud` ni `jti` | Es el diseño de la OVT simulada, con usuarios sintéticos |
 | Disponibilidad de `/health` | 8 | `/health` publica la versión y el estado de cada dependencia | Cambia el código medido justo antes de la corrida final (el monitor solo necesita el estado) |
-| Disponibilidad de `/health` | 11 | La conversión de un PDF no tiene tiempo máximo | Cambia el código medido justo antes de la corrida final |
+| Disponibilidad del documento | 11 | La conversión de un PDF no tiene tiempo máximo | Cambia el código medido justo antes de la corrida final |
 | Código medido | 9 | Primera petición de una conversación sin atomicidad (comprobar y luego crear) | Cambia el código medido justo antes de la corrida final; la ventana es mínima con ids aleatorios |
 | Código medido | 10 | `GET /mensajes` distingue 404 de 403 | Cambia el código medido justo antes de la corrida final; inocuo con ids aleatorios |
 | Código medido | 12 | Una herramienta devuelve el texto del error al modelo | Cambia el código medido justo antes de la corrida final; el texto solo trae los argumentos del turno |

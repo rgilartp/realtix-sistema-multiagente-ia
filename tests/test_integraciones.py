@@ -241,6 +241,11 @@ def test_las_trazas_quitan_imagenes_y_nombres_y_lo_de_los_modelos_no_cambia(
     assert trazas[0]["text"] == "Hola, me llamo [NOMBRE]"
     assert trazas[1]["source"]["data"] == "[IMAGEN]" == trazas[2]["image_url"]["url"]
     assert AnonimizadorDeTrazas().texto("CC-1000000003") == "[DOCUMENTO]"  # lo de antes sigue
+    # Un nombre declarado no deja a la vista el documento que lo sigue (revisión independiente).
+    for texto in ("soy CC-1000000003", "Soy 1020304050", "Soy Ana Pérez CC 1000000003"):
+        enmascarado = AnonimizadorDeTrazas().texto(texto)
+        assert "[DOCUMENTO]" in enmascarado and not any(c.isdigit() for c in enmascarado)
+    assert AnonimizadorDeTrazas().texto(" " + datos) == "[IMAGEN]"  # con espacio delante
     largo = "El avalúo catastral es la base gravable del impuesto predial. " * 30
     assert AnonimizadorDeTrazas().texto(largo) == largo  # un texto largo no es una imagen
     modelos = Anonimizador(para_modelos=True)(entrada)["messages"][0][0]["content"]
