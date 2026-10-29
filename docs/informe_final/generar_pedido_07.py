@@ -101,10 +101,10 @@ def escenarios_csv(escenarios: dict[str, dict[str, Any]]) -> list[dict[str, Any]
                 "tokens_salida_sonnet": ts.get(SONNET, {}).get("salida", 0),
                 "tokens_entrada_haiku": ts.get(HAIKU, {}).get("entrada", 0),
                 "tokens_salida_haiku": ts.get(HAIKU, {}).get("salida", 0),
-                "costo_usd": f"{costo(ts):.6f}",
+                "costo_usd": f"{costo(ts):.7f}",
                 "escalo": si_no(escalo),
                 "superado_estricto": si_no(c["superado_estricto"]),
-                "costo_juez_usd": f"{costo(c['tokens_juez']):.6f}",
+                "costo_juez_usd": f"{costo(c['tokens_juez']):.7f}",
             }
         )
     assert all(set(c["tokens_sistema"]) <= {SONNET, HAIKU} for c in calificados)
@@ -113,21 +113,19 @@ def escenarios_csv(escenarios: dict[str, dict[str, Any]]) -> list[dict[str, Any]
 
 def ragas_csv(escenarios: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
     vigentes = {c["id_conversacion"] for c in leer_jsonl(CORRIDA / "calificados.jsonl")}
-    # Como `scripts/evaluar.py`: vale la fila completa de cada ensayo vigente; las 4 con una métrica
-    # vacía se volvieron a evaluar y su segunda fila es la que cuenta.
-    hechos = {
-        r["id_conversacion"]: r
-        for r in leer_jsonl(CORRIDA / "ragas.jsonl")
-        if r["id_conversacion"] in vigentes and all(r.get(m) is not None for m in METRICAS_RAGAS)
-    }
+    filas = leer_jsonl(CORRIDA / "ragas.jsonl")
+    assert len({r["id_conversacion"] for r in filas}) == len(filas)
+    assert all(r["id_conversacion"] in vigentes for r in filas)
+    # Como `scripts/evaluar.py`: los promedios solo usan los casos con las cuatro métricas.
     return [
         {
             "escenario": r["escenario"],
             "ensayo": r["ensayo"],
-            **{m: f"{r[m]:.4f}" for m in METRICAS_RAGAS},
+            **{m: "" if r[m] is None else f"{r[m]:.4f}" for m in METRICAS_RAGAS},
             "con_sesion": si_no(bool(escenarios[r["escenario"]].get("sesion"))),
+            "en_promedio": si_no(all(r[m] is not None for m in METRICAS_RAGAS)),
         }
-        for r in hechos.values()
+        for r in filas
     ]
 
 
@@ -217,6 +215,7 @@ def usuarios_csv() -> list[dict[str, Any]]:
                 "evaluador": letra,
                 **{f"p{n}": respuestas[n] for n in range(1, 11)},
                 "puntaje_sus": f"{Decimal(suma) * Decimal('2.5'):.1f}",
+                "tipo": "evaluación interna de los autores (ADR-21), sin usuarios externos",
             }
         )
     return filas
@@ -239,6 +238,7 @@ def base_conocimiento_csv() -> list[dict[str, Any]]:
                     "norma": fuente["norma"],
                     "url": " ; ".join(url) if isinstance(url, list) else url,
                     "mes_consulta": fuente.get("mes_consulta", ""),
+                    "origen": " ".join(str(fuente.get("origen") or "").split()),
                     "fragmentos": por_archivo[f"{coleccion}/{fuente['archivo']}"],
                 }
             )
@@ -258,10 +258,11 @@ def verificar(esc, rag, cal, heu, usu, base) -> None:
         por_conjunto[f"Sistema ({f['conjunto']})"] += Decimal(f["costo_usd"])
         por_conjunto[f"Juez ({f['conjunto']})"] += Decimal(f["costo_juez_usd"])
     for clave, valor in por_conjunto.items():
-        assert abs(valor - Decimal(metricas["costos"][clave])) < Decimal("0.00001"), clave
-    assert len(rag) == metricas["ragas"]["casos"]
+        assert valor == Decimal(metricas["costos"][clave]), (clave, valor)
+    completos = [f for f in rag if f["en_promedio"] == "sí"]
+    assert len(completos) == metricas["ragas"]["casos"]
     for m in METRICAS_RAGAS:
-        promedio = sum(float(f[m]) for f in rag) / len(rag)
+        promedio = sum(float(f[m]) for f in completos) / len(completos)
         assert abs(promedio - metricas["ragas"]["promedios"][m]) < 1e-3, m
     kappa = json.loads((RAIZ / "reports/calibracion/kappa.json").read_text(encoding="utf-8"))
     aprobada = {"correcta", "parcialmente correcta"}  # como `calibracion.aprobada`

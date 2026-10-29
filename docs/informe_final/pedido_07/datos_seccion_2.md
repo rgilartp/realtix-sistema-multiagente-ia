@@ -96,7 +96,7 @@ Además, 75 obligaciones de IPU están en el SPAC (pago por cuotas), y las de IC
 | Tamaño máximo del archivo | 5 MB en la API; Caddy corta el cuerpo a 6 MB en `/api/v1/chat/documento` y a 64 KB en el resto de `/api`; el widget reduce las fotos a un lado largo de 2.000 px en JPEG antes de subirlas | `src/config.py`, `src/api/chat.py`, `docs/resumenes/b13.md`, `web/src/widget/fotos.js` |
 | Límite de píxeles | 25.000.000 por imagen (`Image.MAX_IMAGE_PIXELS`); al modelo va a 1.000 × 2.000 px como máximo y a 3,5 MB en PNG; el PDF, a 150 ppp y 2.500 px por lado como máximo; lado corto mínimo de 800 px para no marcarla como de baja resolución | `src/agents/vision.py`, `src/services/documentos.py` |
 | Mensaje | 2.000 caracteres como máximo | `src/api/esquemas.py` |
-| Límite de peticiones | 10 por minuto y 200 por día por IP (chat y documento) | `src/config.py` |
+| Límite de peticiones | 10 por minuto y 200 por día por IP (chat, documento y escalamiento) | `src/config.py`, `src/api/chat.py`, `src/api/escalamiento.py` |
 | Horario | Lunes a viernes no festivos, de 8:00 (incluida) a 17:00 (excluida), hora de Bogotá (`America/Bogota`) | `src/config.py`, `src/services/horario.py` |
 | Festivos | Los de Colombia de la biblioteca `holidays` 0.106, con los trasladados por la Ley Emiliani | `src/services/horario.py`, `pyproject.toml` |
 
@@ -109,9 +109,10 @@ Además, 75 obligaciones de IPU están en el SPAC (pago por cuotas), y las de IC
   registro, y LangSmith guarda las trazas (el plan gratuito, 14 días). Si el registro falla, el
   turno sigue (`src/store/tablas.py`, `src/api/turno.py`, `docs/decisiones/ADR-11-registro-de-interacciones.md`).
 - **D6 (ADR-12, mensajes nuevos en una conversación escalada):** los agentes ya no responden. Cada
-  mensaje nuevo se guarda en el caso, a cualquier hora, y la API contesta con `interlocutor:
-  "sistema"` y el aviso «Tu caso ya está registrado para un funcionario. Guardé tu mensaje en el
-  caso para que lo vea.» (`src/api/turno.py`, `docs/decisiones/ADR-12-modo-humano.md`).
+  mensaje nuevo se guarda en el caso, a cualquier hora. Dentro del horario, la API contesta con
+  `interlocutor: "sistema"` y el aviso «Tu caso ya está registrado para un funcionario. Guardé tu
+  mensaje en el caso para que lo vea.»; fuera de él, con el aviso de fuera de horario
+  (`src/api/turno.py`, `docs/decisiones/ADR-12-modo-humano.md`).
 
 ## 6. Escalamiento y aviso de IA
 
@@ -187,7 +188,7 @@ Estructura (archivos versionados por carpeta, `git ls-files`):
 | `scripts/` | 35 | Curaduría, ingesta, evaluación, trazabilidad y utilidades |
 | `web/` | 29 | OVT simulada, widget y consola |
 | `deploy/` | 8 | Caddyfile, guía y scripts de despliegue |
-| `docs/` | 167 | Especificación, adenda, ADR, resúmenes, informe y capturas |
+| `docs/` | 180 | Especificación, adenda, ADR, resúmenes, informe (con este paquete) y capturas |
 | `reports/` | 476 | Resultados de las corridas y de las verificaciones |
 
 Pruebas por tipo (`pytest.txt`):
@@ -214,7 +215,11 @@ Integración continua (`.github/workflows/`):
   - **Web (compilación y Playwright):** contraste WCAG de los dos modos, compilación con Vite y
     las pruebas de Playwright en Chromium contra la API simulada.
 - `monitor.yml`: `/health` por HTTPS cada 15 minutos en el horario hábil. GitHub registra 7
-  ejecuciones (6 programadas, 1 de ellas fallida, y 1 manual). La disponibilidad se calculó con el
-  monitor del servidor (`reports/no_funcionales/disponibilidad.md`).
+  ejecuciones (`gh run list --workflow monitor.yml`): 1 manual, antes de B15, y 6 programadas, 1 de
+  ellas fallida, todas después de empezar B15. GitHub no lanzó las demás ejecuciones programadas.
+  Por eso la disponibilidad se calculó con el monitor del servidor
+  (`reports/no_funcionales/disponibilidad.md`). El reporte (secciones 6 y 12) y los capítulos 4 y 5
+  dicen que el monitor de GitHub Actions «nunca corrió»: antes de B15 es cierto, pero después
+  corrió esas 6 veces; ese texto no se cambió en este paquete.
 
 El repositorio es **privado** en GitHub (`gh repo view`).
