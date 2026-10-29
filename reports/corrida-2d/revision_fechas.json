@@ -1,0 +1,27 @@
+{
+  "respuestas_revisadas": 73,
+  "con_hallazgos": [
+    {
+      "escenario": "CAD-01",
+      "turno": 3,
+      "relativas": [],
+      "referencias_internas": [],
+      "futura_dada_por_vencida": [
+        "las cuotas del spac son el 5 de junio de 2026 y el 14 de agosto de 2026 (ya pasaron), el 2 de octubre de 2026 (aun no vence) y el 4 de diciembre de 2026 (aun no vence). como la obligacion de 2026 de t"
+      ],
+      "pasada_dada_por_pendiente": [
+        "las cuotas del spac son el 5 de junio de 2026 y el 14 de agosto de 2026 (ya pasaron), el 2 de octubre de 2026 (aun no vence) y el 4 de diciembre de 2026 (aun no vence). como la obligacion de 2026 de t"
+      ]
+    },
+    {
+      "escenario": "CAD-02",
+      "turno": 2,
+      "relativas": [],
+      "referencias_internas": [],
+      "futura_dada_por_vencida": [
+        "segun tu cuenta, tu saldo pendiente del ica 2026 es de $3.450.000, con fecha limite de pago el 9 de octubre de 2026, y ninguna obligacion esta vencida a la fecha de consulta. esta es una estimacion in"
+      ],
+      "pasada_dada_por_pendiente": []
+    }
+  ]
+}
