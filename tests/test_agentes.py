@@ -393,7 +393,7 @@ def test_este_anio_y_los_plazos_salen_del_reloj_del_turno(adaptador) -> None:
         return resultado["descuento_aun_vigente"], modelo.texto_enviado()
 
     vigente, enviado = descuento("2026-03-01T09:00:00-05:00")
-    assert vigente and "Fecha de hoy: 1 de marzo de 2026" in enviado
+    assert vigente and "Fecha de la consulta: 1 de marzo de 2026 (no la menciones" in enviado
     vencido, enviado = descuento(RELOJ_ESCENARIOS)
     assert not vencido and "año gravable en curso: 2026" in enviado
     assert anio_de_la_consulta("¿y en 2027?", hoy_del_turno(None, Dependencias(adaptador))) == 2027

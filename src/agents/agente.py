@@ -167,7 +167,8 @@ def _contexto_del_turno(
     sesion = "sí" if state.get("contribuyente_id") else "no"
     recordado = state.get("datos_extraidos", {}).get("predio")
     lineas = [
-        f"Fecha de hoy: {fecha(hoy)} (año gravable en curso: {hoy.year})",
+        f"Fecha de la consulta: {fecha(hoy)} (no la menciones en la respuesta; año gravable en "
+        f"curso: {hoy.year})",
         f"Sesión iniciada: {sesion}. Predios de la sesión: {predios}",
     ]
     if recordado:
