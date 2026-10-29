@@ -30,6 +30,7 @@ from src.services.calendario_tributario import (
     regla_de_la_periodicidad,
     ya_paso,
 )
+from src.services.citas import citas_sin_fuente, extraer_citas
 from src.services.errores import AnioSinDatosError, DatoNoPublicadoError
 from src.services.ica import (
     EstimacionICA,
@@ -58,16 +59,16 @@ def _regla(
     except AnioSinDatosError:
         return ()
     datos[clave] = regla
-    datos["fuente_de_la_regla"] = fuente
+    datos[clave.replace("regla_de_la_periodicidad", "fuente_de_la_regla")] = fuente
     return (fuente,)
 
 
 def _sin_repetir_norma(fuentes: tuple[str, ...]) -> tuple[str, ...]:
-    """Las fuentes sin repetir una norma que ya está (con otros artículos) en una anterior."""
+    """Las fuentes sin una cita cuyos artículos ya cubre una anterior («Resolución SDH-000195 de
+    2025, art. 1» después de «…, arts. 1 y 3 a 6»), con el mismo verificador de las citas."""
     salida: list[str] = []
     for f in fuentes:
-        norma = f.split(", art")[0]
-        if not any(s.split(", art")[0] == norma for s in salida):
+        if not (extraer_citas(f) and not citas_sin_fuente(f, salida)):
             salida.append(f)
     return tuple(salida)
 
