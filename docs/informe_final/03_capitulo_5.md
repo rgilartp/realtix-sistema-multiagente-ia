@@ -324,6 +324,9 @@ y 15 sin calificar):
 - la disponibilidad entró como la evidencia de RNF-06 · Horario de atención (sección 6.7 de la
   especificación).
 
+Solo siguen sin resultado 6 pruebas con embeddings reales (evidencia de RF-IPU-01, RF-ICA-01 y
+RF-GEN-01). No cambian la nota, porque esos tres ya valen 0 por sus escenarios.
+
 El análisis está en `docs/reporte_de_pruebas.md`, sección 11.
 
 - **Los 14 con 0.** A trece los bajaron nueve escenarios del principal, casi siempre por la
