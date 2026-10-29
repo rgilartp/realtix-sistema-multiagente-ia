@@ -1,29 +1,23 @@
-# Sondas de fechas por código: análisis de la ronda 2 (PARADA)
+# Repetición única (ronda 3 de las sondas de fechas): análisis
 
-Ronda 2, con la regla nueva de Rodolfo (no relacionar fechas con el día de la consulta), el
-verificador que suma «hoy» y las referencias internas, y la verificación de las sondas corregida
-(`sondas.yaml` y `sondas.py`, fijados antes de correr). La ronda 1 está en `ronda1/`.
+Con el código congelado de los PR #72 y #73 y la regla fijada antes de correr
+(`regla_ronda3.md`). Rondas anteriores en `ronda1/` y `ronda2/`.
 
-Antes de correr, sin llamar modelos, la verificación corregida marcó en las respuestas guardadas de
-la ronda 1 la 4.2 («que es hoy, 9 de julio de 2026») y la 11.1 («consultar herramientas»,
-«fragmento [1]» y «hoy»), como pidió Rodolfo.
+**Resultado: sin PARADA.** La verificación automática dio 30 de 34 (`resumen.md`); las 4 señaladas
+se leyeron y ninguna es un error real del sistema:
 
-**Resultado: 32 de 34** (`resumen.md`). La regla pedía todas: PARADA. Costo: US$0,33.
-
-Ninguna de las 34 respuestas trae «hoy» ni otra expresión relativa al día de la consulta, ni una
-referencia interna; ninguna da por vencida una fecha que no ha llegado.
-
-| Respuesta | Qué pasó | ¿Error del sistema? |
+| Respuesta | Qué dice | Lectura |
 |---|---|---|
-| 11.2 (facturas, 4 de mayo) | No llamó la herramienta de fechas (respondió con un fragmento) y dijo «La fecha de expedición ya llegó», en la oración siguiente a la fecha y con palabras que no son «ya venció» | Sí: no siguió la regla de llamar la herramienta y decidió por su cuenta que la fecha pasó (acertó) |
-| 15.2 (ICA bimestral, 13 de octubre) | Lista las seis fechas en una sola oración, cada una con «(ya venció)» o «(aún no vence)», todas correctas según `ya_paso`. La verificación juzga por oración y no puede atribuir cada marca a su fecha | No: limitación de la verificación (la respuesta es correcta) |
+| 07.2 (1 de octubre) | «la Cuota 1 venció el 5 de junio de 2026, la Cuota 2 venció el 14 de agosto de 2026, la Cuota 3 vence el 2 de octubre de 2026 y la Cuota 4 vence el 4 de diciembre de 2026» | Estados correctos; la verificación no separa varias fechas en una oración |
+| 08.2 (2 de octubre) | «2 de octubre de 2026 (aún no vence)», con las anteriores «(ya venció)» | Estados correctos (una fecha igual a la consulta no ha pasado); misma limitación |
+| 11.1 (4 de mayo) | «el pago sin descuento vence el 10 de julio de 2026, y el descuento por pronto pago ya venció el 17 de abril de 2026» | Estados correctos; misma limitación |
+| 11.2 (4 de mayo) | Da la fecha (30 de abril de 2026) y dice que no puede confirmar si las facturas se expidieron; no afirma ningún estado | Sin error: no llamó la herramienta y no dio un estado |
 
-Además:
-
-- 4 de 34 respuestas no llamaron la herramienta de fechas, todas de la pregunta de las facturas
-  (10.1, 10.2, 11.1 y 11.2): respondieron con el fragmento de la Resolución SDH-000195 de 2025,
-  art. 4. Las otras tres pasaron.
-- 23 de 34 respuestas tuvieron la reescritura del verificador (por citas o por expresiones
-  relativas, el registro no distingue): el modelo todavía escribe «hoy» o similares en el primer
-  intento, y el verificador lo corrige. Cada reescritura suma una llamada al modelo (más latencia y
-  costo).
+- (a) Ninguna respuesta relaciona una fecha con el día de la consulta; (b) ninguna trae una
+  referencia interna; (c) ningún estado de fecha equivocado.
+- Respuestas que no llamaron la herramienta de fechas: **2 de 34** (10.2 y 11.2, la pregunta de
+  las facturas). La 10.2 acertó; la 11.2 no dio estado.
+- Reescrituras del verificador: **9 de 34** (en la ronda 2 fueron 23), después de cambiar «Fecha de
+  hoy» por «Fecha de la consulta (no la menciones en la respuesta)».
+- Latencia del servidor: p50 de 6.018 ms, p95 de 8.537 ms y máxima de 8.759 ms.
+- Costo: US$0,31.

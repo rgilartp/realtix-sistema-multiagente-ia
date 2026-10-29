@@ -1,0 +1,53 @@
+# Sondas de fechas (plan de Rodolfo): preguntas nuevas, que no copian ningún escenario, con el reloj
+# simulado a las 10:00 a. m. de cada día (todos hábiles). Verificaciones por código, sin juez; cada
+# combinación corre 2 veces. Las fechas esperadas salen de datos/calendario/2026.yaml y de la base
+# sintética. Fijadas antes de correr:
+# - `fecha`: la fecha exacta que la respuesta debe traer (día y mes; el año, si `exigir_anio`).
+# - `vencida`: si la respuesta debe decir que ya venció (true), que no (false) o ninguna de las dos
+#   cosas, porque no se pregunta (null). Si la fecha esperada es anterior al reloj y `vencida` no es
+#   false, la oración de esa fecha dice «ya venció» o equivalente; si es igual o posterior, no.
+# - Ninguna fecha igual o posterior al día de la consulta aparece como vencida, ninguna anterior como
+#   pendiente, y no hay «hoy» ni otras expresiones relativas al día de la consulta ni referencias
+#   internas («fragmento [n]», «consultar herramientas»).
+# - «La oración de la fecha» incluye la siguiente si la retoma («Ese plazo ya venció.», «Como …»).
+# Ronda 2 (decisión de Rodolfo): la sonda 12 de la ronda 1 («¿Ya se me venció la declaración anual
+# del ICA de 2026?», sin sesión) estaba mal redactada: una pregunta personal sin sesión recibe, por
+# diseño, el aviso de iniciar sesión (2 de 2 en la ronda 1). Se reemplaza por la de abajo.
+sondas:
+  - pregunta: "¿Todavía alcanzo a pagar el predial con el descuento por pronto pago?"
+    sesion: null
+    casos:
+      - {dia: "2026-04-16", fecha: "2026-04-17", vencida: false}
+      - {dia: "2026-04-17", fecha: "2026-04-17", vencida: false}
+      - {dia: "2026-04-20", fecha: "2026-04-17", vencida: true}
+  - pregunta: "¿Hasta qué día puedo pagar el predial de este año sin descuento?"
+    sesion: null
+    casos:
+      - {dia: "2026-07-09", fecha: "2026-07-10", vencida: null}
+      - {dia: "2026-07-10", fecha: "2026-07-10", vencida: null}
+      - {dia: "2026-07-14", fecha: "2026-07-10", vencida: null}
+  - pregunta: "¿Cuándo es la próxima cuota del SPAC del predial?"
+    sesion: null
+    casos:
+      - {dia: "2026-10-01", fecha: "2026-10-02", vencida: null}
+      - {dia: "2026-10-02", fecha: "2026-10-02", vencida: null}
+      - {dia: "2026-10-05", fecha: "2026-12-04", vencida: null}
+  - pregunta: "¿Ya expidieron las facturas del predial de este año?"
+    sesion: null
+    casos:
+      - {dia: "2026-04-29", fecha: "2026-04-30", vencida: null}
+      - {dia: "2026-05-04", fecha: "2026-04-30", vencida: null}
+  - pregunta: "¿Cuándo vence la declaración anual del ICA de 2026?"
+    sesion: null
+    casos:
+      - {dia: "2026-10-01", fecha: "2027-02-26", vencida: null, exigir_anio: true}
+  - pregunta: "¿Cuándo vence mi próxima declaración del ICA?"
+    sesion: U04  # ICA bimestral
+    casos:
+      - {dia: "2026-10-08", fecha: "2026-10-09", vencida: null}
+      - {dia: "2026-10-09", fecha: "2026-10-09", vencida: null}
+      - {dia: "2026-10-13", fecha: "2026-12-11", vencida: null}
+  - pregunta: "¿Mi predial de 2026 ya está vencido?"
+    casos:
+      - {sesion: U03, dia: "2026-10-01", fecha: "2026-07-10", vencida: true}  # un predio, 2026 sin pagar
+      - {sesion: U01, dia: "2026-10-01", fecha: "2026-07-10", vencida: false}  # un predio, al día
