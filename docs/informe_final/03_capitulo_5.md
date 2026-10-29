@@ -209,8 +209,8 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
 
 - **Frente a la meta de RNF-16 · Tasa de respuestas correctas (85 %):** la estimación puntual (90,0 %)
   la supera; el límite inferior de Wilson (79,9 %), no.
-- **No superados** (con algún ensayo fallido; la causa de cada uno, en `docs/reporte_de_pruebas.md`,
-  sección 9):
+- **No superados** (con algún ensayo fallido; la causa y la familia de MAST de cada ensayo, en
+  `reports/corrida-3/fallas.md`, y el análisis, en `docs/reporte_de_pruebas.md`, sección 9):
   - 0 de 3: GEN-02 (transfiere a un funcionario en vez de responder) e IPU-14 (niega un alivio de
     intereses), que fallan desde la corrida 1, e IPU-13 (la recuperación no trae el artículo con el
     plazo);
@@ -219,9 +219,26 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
   - 2 de 3: ICA-04, ICA-07 e IPU-04 (una afirmación sin fuente en un ensayo).
   - Por la familia de MAST, predominan la verificación de la tarea (generación sin fuente o
     incompleta) y el diseño del sistema (enrutamiento y recuperación). Ninguna falla es de acceso a
-    datos. En R1, siete de
-  las diez variantes tuvieron algún ensayo fallido: las paráfrasis cambian la clasificación o la
-  búsqueda y la respuesta deja de cubrir lo esencial (`docs/reporte_de_pruebas.md`, sección 9).
+    datos.
+- **R1 · Generalización.** Siete de las diez variantes tuvieron algún ensayo fallido. Los autores
+  revisaron uno por uno los 17 ensayos no superados:
+  - 3 (VAR-01): la variante admite otra lectura; el sistema respondió la expedición de la factura y
+    los plazos de pago, con las fechas correctas, y omitió la causación y el periodo gravable;
+  - 2 (VAR-03): la pregunta en primera persona se tomó como personal y el sistema pidió iniciar
+    sesión sin dar el plazo general, como dispone RF-AUT-04 · Aviso de sesión requerida;
+  - 6: solo falló la verificación de texto heredada del escenario de origen; el juez las calificó
+    como parcialmente correctas y sin alucinación (en VAR-06, la misma omisión de su origen, IPU-13);
+  - 6: errores del sistema (afirmaciones sin fuente, un plazo vencido dicho en presente, una
+    conclusión omitida y un fragmento atribuido a otro artículo).
+
+  El juez aceptó 19 de los 30 ensayos y las verificaciones de código pasaron en 15. La tasa oficial
+  sigue siendo 43,3 %: el desglose la explica, no la reemplaza (`docs/reporte_de_pruebas.md`,
+  sección 9).
+- **Mecanismo interno en la respuesta.** En 8 de las 225 conversaciones, la respuesta nombra el
+  mecanismo interno («según la herramienta», «los fragmentos», «las normas que me entregaron»), algo
+  que la regla común prohíbe. El verificador sin modelo solo detecta dos formas de decirlo. No cambia
+  ningún dato; ampliar el verificador queda como trabajo futuro (`docs/reporte_de_pruebas.md`,
+  sección 12).
 - **Pruebas no funcionales** (`reports/no_funcionales/README.md`): 8 de 8 fallas inyectadas escalaron
   sin errores técnicos (RNF-08 · Tiempos de espera y degradación); con dos réplicas, una conversación
   continuó en la otra (RNF-02 · Escalamiento horizontal); los volúmenes persistieron al reiniciar y al
@@ -264,10 +281,25 @@ IA (ADR-21; `docs/usabilidad/rodolfo/` y `docs/usabilidad/dayanna/`):
 ## 5.11 Matriz de trazabilidad
 
 Con la corrida 3 y la suite (761 pruebas superadas), el cumplimiento global fue de 74,0 % (50 de los
-65 requerimientos calificados: 37 con 100 % y 13 con 0 %; los otros 15 sin evidencia calificable en
-una corrida o en la suite) (`reports/trazabilidad.md` y `.csv`). La calificación es mecánica: un
-requerimiento vale 0 si falla algún ensayo de alguno de sus escenarios, más estricta con 3 ensayos
-que con 1 (83,3 % de 48 en la corrida 2).
+65 requerimientos calificados: 37 con 100 % y 13 con 0 %) (`reports/trazabilidad.md` y `.csv`). La
+calificación es mecánica: un requerimiento vale 0 si falla algún ensayo de alguno de sus escenarios,
+más estricta con 3 ensayos que con 1 (83,3 % de 48 en la corrida 2). La regla y el script no se
+cambiaron; el análisis está en `docs/reporte_de_pruebas.md`, sección 11.
+
+- **Los 13 con 0** los bajaron nueve escenarios del principal, casi siempre por la generación y no
+  por la función que nombra el requerimiento. RF-AUT-01 · Verificación de identidad bajó por ICA-04,
+  ICA-07 e IPU-15, que fallaron por la generación: los de acceso (ACC-01 a ACC-03) pasaron 3 de 3.
+  RF-SYS-06 · Aviso de interacción con IA (provisional) y RF-UI-03 · Identificación del interlocutor
+  bajaron por AIA-01, que falló por la clasificación y por un escalamiento innecesario, aunque el
+  aviso de IA salió en los tres ensayos. RF-GEN-01 · Consultas transversales y RF-GEN-03 · Respuesta
+  sustentada en fuentes bajaron por GEN-02; los de IPU, por IPU-04, IPU-13, IPU-14 e IPU-15; los de
+  ICA, por ICA-04, ICA-07 y MULTI-03, y RF-ORQ-03 · Consultas multiagente, por MULTI-03.
+- **Los 15 sin calificar** tienen sus demás evidencias en verde. A diez les falta el resultado de
+  una prueba de Playwright, que corre en la integración continua pero no entra al reporte de pytest
+  con el que se arma la matriz. A los otros cinco les falta el de una prueba con modelos reales, que
+  la suite omite porque gasta tokens. RNF-01 · Tiempo de respuesta sí se midió en la corrida: 54 de
+  54 turnos sin fragmentos y 120 de 120 con RAG dentro de la meta. Los escenarios de OCR, con el
+  modelo de visión real, se superaron en los tres ensayos.
 
 ## 5.12 Comparación con Bahçeci y colaboradores
 

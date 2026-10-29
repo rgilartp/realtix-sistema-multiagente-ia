@@ -216,7 +216,13 @@ la lista de usuarios de prueba se ajustó al modo oscuro (PR #57) y el widget su
 personales debajo del aviso de IA (PR #58). Los dos autores aplicaron las tareas, el SUS y la
 evaluación heurística, cada uno por su lado (`docs/usabilidad/rodolfo/` y `docs/usabilidad/dayanna/`):
 SUS de 80,0 (Rodolfo) y 97,5 (Dayanna), con un promedio de 88,75, y 6 problemas de gravedad 2 a 4,
-todos atendidos antes de la corrida 3 (PR #57, #59, #60 y, en parte, #64; sección 5.10).
+todos atendidos antes de la corrida 3 (PR #57, #59, #60 y, en parte, #64; sección 5.10). Las capturas
+definitivas (`docs/capturas/definitivas/`) se tomaron después de la corrida 3, contra el sistema sin
+modo de evaluación: la respuesta del widget a una consulta sobre normas, con su lista de fuentes, y
+la consola con las métricas acumuladas del despliegue. La matriz de la consola aparece vacía porque la
+imagen de producción no trae los escenarios que la etiquetan; la de la corrida 3 está en
+`reports/corrida-3/`. Las 24 capturas de B11 (`docs/capturas/`) siguen vigentes, porque la interfaz
+no cambió desde que se tomaron.
 
 ## 4.8 Observabilidad
 
