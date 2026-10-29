@@ -1,0 +1,46 @@
+Pruebas automáticas del sistema multiagente de IA (pedido 07)
+
+Código: rama docs/pedido-07 sobre main (4d5d04e). El código del sistema es igual al evaluado
+(d3dab00): git diff d3dab00 4d5d04e sobre src/agents, src/services, src/api, src/data, src/store,
+src/integrations, web, datos, knowledge_base, deploy, pyproject.toml y uv.lock no muestra cambios.
+
+1. Suite de pytest, sin pruebas reales
+   Comando: env -u REALTIX_PRUEBAS_REALES uv run pytest -q
+   (con PostgreSQL y Chroma de Compose en local; sin llamadas a modelos ni a embeddings reales)
+
+   Resumen de la salida:
+   763 passed, 10 skipped in 128.54s (0:02:08)
+
+   Omitidas (10), con el motivo que da pytest -rs:
+   - 3 con modelos reales: tests/test_humo_modelos.py (1) y tests/test_ocr.py (2)
+     («Gasta tokens reales» y «Usa el modelo de visión real: REALTIX_PRUEBAS_REALES=1»);
+   - 6 con embeddings reales: tests/test_recuperacion.py, una por consulta
+     («Usa embeddings reales: REALTIX_PRUEBAS_REALES=1»);
+   - 1 que compara las tarifas del IPU de 2026 con el PDF de la resolución de rangos
+     (tests/test_curaduria_revision.py): se omite en esta copia porque el PDF no se versiona.
+     En reports/junit/pytest.xml sí corrió y pasó (allí son 9 omitidas).
+
+   Pruebas recolectadas, por marca (pytest --collect-only -m …): 773 en total
+   - unit: 758
+   - integration: 14
+   - sin marca: 1 (tests/test_datos_campos.py::test_hay_archivos_de_datos)
+
+2. Integración continua en main (4d5d04e, trabajo «Ganchos, secretos y pruebas»)
+   Comando: uv run pytest -q --cov=src --cov=scripts --cov-report=term
+   Resultado: 763 passed, 10 skipped
+   Cobertura de sentencias: 81 % (8.433 sentencias, 1.567 sin cubrir)
+   - src: 92,4 % (6.622 sentencias, 504 sin cubrir)
+   - scripts: 41,3 % (1.811 sentencias, 1.063 sin cubrir)
+
+3. reports/junit/playwright.xml (Playwright, Chromium)
+   31 pruebas: 27 superadas, 0 fallidas, 0 con error y 4 omitidas.
+   Las 4 omitidas son las de web/tests/capturas_reales.spec.js (métricas reales de la consola y
+   respuesta sobre normas, cada una a 1280 y 390 px): necesitan el sistema desplegado y el token
+   de administrador, y se corrieron aparte para las capturas definitivas (B16).
+
+4. reports/junit/pytest_modelos_reales.xml (una vez, con REALTIX_PRUEBAS_REALES=1)
+   3 pruebas: 3 superadas, 0 fallidas, 0 con error y 0 omitidas.
+   - tests.test_humo_modelos::test_humo_con_modelos_reales
+   - tests.test_ocr::test_exactitud_por_campo_y_rechazos_con_el_modelo_real
+   - tests.test_ocr::test_recibos_apaisados_y_foto_con_el_modelo_real
+   Las 6 con embeddings reales no se corrieron (ADR-27).
