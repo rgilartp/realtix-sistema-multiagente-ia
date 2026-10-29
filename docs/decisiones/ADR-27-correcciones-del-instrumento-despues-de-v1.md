@@ -2,7 +2,7 @@
 
 **Estado:** aceptada, octubre de 2026 (Rodolfo aprobó las correcciones que pidió una revisión externa
 con un asistente de IA después de la corrida 3; PR #76). **Fuente:** `docs/reporte_de_pruebas.md`
-(secciones 5, 6, 11 y 12), ADR-24 (A5) y ADR-25 (F1). No modifica la especificación ni la adenda.
+(secciones 5, 6, 10, 11 y 12), ADR-24 (A5) y ADR-25 (F1). No modifica la especificación ni la adenda.
 
 ## Contexto
 
