@@ -6,6 +6,7 @@ cada una como propiedad perezosa.
 """
 
 from functools import cached_property, lru_cache
+from threading import Lock
 from typing import Any
 
 from langchain_anthropic import ChatAnthropic
@@ -28,6 +29,8 @@ class Contenedor:
 
     def __init__(self, settings: Settings | None = None) -> None:
         self._settings = settings
+        self._chroma: Any = None
+        self._candado_chroma = Lock()
 
     @cached_property
     def settings(self) -> Settings:
@@ -65,10 +68,19 @@ class Contenedor:
         )
 
     def cliente_chroma(self) -> Any:
-        """Cliente HTTP del Chroma de Compose (se crea al primer uso)."""
-        import chromadb
+        """Cliente HTTP del Chroma de Compose, uno solo por proceso (se crea al primer uso).
 
-        return chromadb.HttpClient(host=self.settings.chroma_host, port=self.settings.chroma_port)
+        `/health` lo pide en cada chequeo: un cliente nuevo por llamada dejaba abiertas sus
+        conexiones y agotaba los descriptores del proceso en unas dos horas (502 del proxy).
+        """
+        with self._candado_chroma:  # `/health` y el primer turno pueden pedirlo a la vez
+            if self._chroma is None:
+                import chromadb
+
+                self._chroma = chromadb.HttpClient(
+                    host=self.settings.chroma_host, port=self.settings.chroma_port
+                )
+            return self._chroma
 
     @cached_property
     def recuperador(self) -> Recuperador:

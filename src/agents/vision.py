@@ -3,7 +3,8 @@
 Una sola llamada a Haiku 5.5 (`MODELO_OCR`) con la imagen y la salida en `json_schema`: si es un
 recibo predial, si se puede leer y los seis campos de RF-OCR-02 tal como aparecen (nunca el nombre
 del propietario). Un PDF se convierte en imagen (primera página) con pypdfium2. La imagen se envía
-con un ancho máximo de 1.000 px, que basta para leer la plantilla y gasta menos tokens.
+con un ancho máximo de 1.000 px, que basta para leer la plantilla y gasta menos tokens, y un alto
+máximo de 2.000 px; en PNG o, si así pesa demasiado (una foto), en JPEG.
 """
 
 import base64
@@ -22,6 +23,8 @@ from src.integrations.modelos import texto_de_respuesta
 from src.integrations.robustez import con_tiempo_y_reintento
 
 ANCHO_MAXIMO = 1000
+ALTO_MAXIMO = 2000
+BYTES_MAXIMOS_PNG = 3_500_000  # en base64 queda por debajo de los 5 MB por imagen de la API
 ESCALA_PDF = 150 / 72  # unos 150 ppp, como la plantilla
 LADO_MAXIMO_PDF = 2500
 
@@ -67,17 +70,26 @@ def abrir_documento(ruta: str | Path, tipo: str) -> Image.Image:
         return imagen.convert("RGB")
 
 
-def png_base64(imagen: Image.Image, ancho_maximo: int = ANCHO_MAXIMO) -> str:
-    if imagen.width > ancho_maximo:
-        alto = round(imagen.height * ancho_maximo / imagen.width)
-        imagen = imagen.resize((ancho_maximo, alto), Image.Resampling.LANCZOS)
+def imagen_para_el_modelo(imagen: Image.Image) -> tuple[str, str]:
+    """El tipo y la imagen en base64, reducida si hace falta: ancho de 1.000 px y alto de 2.000 px
+    como máximo; en PNG, o en JPEG si el PNG pesa demasiado (una foto)."""
+    escala = min(1.0, ANCHO_MAXIMO / imagen.width, ALTO_MAXIMO / imagen.height)
+    if escala < 1:
+        tamano = (max(1, round(imagen.width * escala)), max(1, round(imagen.height * escala)))
+        imagen = imagen.resize(tamano, Image.Resampling.LANCZOS)
     salida = io.BytesIO()
     imagen.save(salida, "PNG", optimize=True)
-    return base64.b64encode(salida.getvalue()).decode("ascii")
+    tipo = "image/png"
+    if salida.tell() > BYTES_MAXIMOS_PNG:
+        salida = io.BytesIO()
+        imagen.convert("RGB").save(salida, "JPEG", quality=85)
+        tipo = "image/jpeg"
+    return tipo, base64.b64encode(salida.getvalue()).decode("ascii")
 
 
 def leer_documento(modelo: BaseChatModel, imagen: Image.Image, timeout_s: float) -> SalidaOCR:
     """Lectura estructurada del documento (con tiempo máximo y un reintento)."""
+    tipo, datos = imagen_para_el_modelo(imagen)
     mensajes = [
         SystemMessage(cargar_prompt("ocr").texto),
         HumanMessage(
@@ -87,8 +99,8 @@ def leer_documento(modelo: BaseChatModel, imagen: Image.Image, timeout_s: float)
                     "type": "image",
                     "source": {
                         "type": "base64",
-                        "media_type": "image/png",
-                        "data": png_base64(imagen),
+                        "media_type": tipo,
+                        "data": datos,
                     },
                 },  # fmt: skip
             ]

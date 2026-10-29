@@ -1,11 +1,13 @@
 """Recibos del predial: legibilidad, validación de los campos y contraste con la cuenta (RF-OCR-02 a
 RF-OCR-04). Sin LangGraph ni modelos.
 
-- **Legibilidad (antes del modelo):** baja resolución, recorte y desenfoque se detectan por código y
-  el documento se rechaza sin gastar una llamada. Los umbrales están calibrados con la plantilla
-  sintética (RF-OCR-06): lado corto de 800 px, proporción A4 con un margen del 15 % y la varianza
-  de los bordes (un recibo legible da unos 1.970, uno desenfocado unos 180). Con fotos reales
-  habría que calibrarlos de nuevo.
+- **Problemas del documento (después de que el modelo diga si es un recibo):** si no es un recibo
+  predial, solo eso. Si lo es, la baja resolución y el desenfoque se detectan por código. La
+  proporción solo suma «recortado» cuando además faltan campos: un recibo apaisado completo no
+  está recortado. Los umbrales están calibrados con la plantilla sintética (RF-OCR-06): lado
+  corto de 800 px, proporción A4 con un margen del 15 % y la varianza de los bordes (un recibo
+  legible da unos 1.970, uno desenfocado unos 180). Con fotos reales habría que calibrarlos de
+  nuevo.
 - **Campos:** los seis de RF-OCR-02, normalizados (matrícula, vigencia, pesos y fecha). Uno que
   falta o no tiene el formato esperado hace el documento ilegible o incompleto.
 - **Confirmación (RF-OCR-03):** solo un «sí» o un «no» claros, con palabras completas; una pregunta
@@ -43,17 +45,33 @@ def nitidez(imagen: Image.Image) -> float:
     return float(ImageStat.Stat(gris.filter(ImageFilter.FIND_EDGES)).var[0])
 
 
-def problemas_de_legibilidad(imagen: Image.Image) -> list[Problema]:
-    """Los problemas que se ven sin leer el documento, en el orden en que se informan."""
-    problemas: list[Problema] = []
-    proporcion = imagen.height / imagen.width
-    if abs(proporcion - PROPORCION_A4) / PROPORCION_A4 > MARGEN_PROPORCION:
-        problemas.append("recortado")
+def problemas_de_calidad(imagen: Image.Image) -> list[Problema]:
+    """Baja resolución o desenfoque, que se ven sin leer el documento."""
     if min(imagen.size) < LADO_CORTO_MINIMO:
-        problemas.append("baja_resolucion")
-    elif nitidez(imagen) < NITIDEZ_MINIMA:  # una imagen pequeña ya se informa por resolución
-        problemas.append("desenfocado")
-    return problemas
+        return ["baja_resolucion"]
+    if nitidez(imagen) < NITIDEZ_MINIMA:  # una imagen pequeña ya se informa por resolución
+        return ["desenfocado"]
+    return []
+
+
+def fuera_de_proporcion(imagen: Image.Image) -> bool:
+    """La proporción se aleja más del 15 % de la de un A4 vertical."""
+    proporcion = imagen.height / imagen.width
+    return abs(proporcion - PROPORCION_A4) / PROPORCION_A4 > MARGEN_PROPORCION
+
+
+def problemas_del_documento(
+    imagen: Image.Image, es_recibo: bool, faltan_campos: bool
+) -> list[Problema]:
+    """Los problemas que explican el rechazo, en el orden en que se informan (RF-OCR-04).
+
+    Primero el tipo, que decide el modelo: si no es un recibo predial, solo «no_es_recibo». Después,
+    «recortado» si la proporción no es la de un A4 y además faltan campos, y la baja resolución o el
+    desenfoque."""
+    if not es_recibo:
+        return ["no_es_recibo"]
+    recorte: list[Problema] = ["recortado"] if faltan_campos and fuera_de_proporcion(imagen) else []
+    return recorte + problemas_de_calidad(imagen)
 
 
 @dataclass(frozen=True)

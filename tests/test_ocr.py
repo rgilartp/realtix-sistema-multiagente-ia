@@ -23,12 +23,15 @@ from src.data.generar.recibos import (
     recibos_del_conjunto,
     textos_del_documento,
 )
+from src.data.generar.recibos_apaisados import dibujar_apaisado, foto_que_no_es_recibo, recortar
 from src.services import notas
 from src.services.documentos import (
     CamposRecibo,
     a_fecha,
     a_pesos,
-    problemas_de_legibilidad,
+    fuera_de_proporcion,
+    problemas_de_calidad,
+    problemas_del_documento,
     validar_campos,
 )
 from tests.modelo_falso import ModeloFalso, salida
@@ -99,6 +102,26 @@ def test_sin_logos_ni_marcas_reales(recibos) -> None:
         texto = _normalizado(" ".join(textos_del_documento(recibo)))
         for marca in MARCAS_PROHIBIDAS:
             assert marca not in texto, (recibo.nombre, marca)
+    # Tampoco los textos fijos del recibo apaisado: sus literales, sin las docstrings.
+    import ast
+
+    import src.data.generar.recibos_apaisados as apaisado
+
+    arbol = ast.parse(Path(apaisado.__file__).read_text(encoding="utf-8"))
+    docstrings = {
+        id(n.body[0].value)
+        for n in ast.walk(arbol)
+        if isinstance(n, (ast.Module, ast.FunctionDef))
+        and n.body
+        and isinstance(n.body[0], ast.Expr)
+    }
+    literales = [
+        n.value
+        for n in ast.walk(arbol)
+        if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in docstrings
+    ]
+    fijos = _normalizado(" ".join(literales))
+    assert "recibo sintetico" in fijos and not [m for m in MARCAS_PROHIBIDAS if m in fijos]
     # La imagen solo tiene los colores de la plantilla (texto, líneas y bandas): sin logos.
     colores = imagen_de(recibos["recibo_valido_U03"]).convert("RGB").getcolors(maxcolors=4096)
     assert colores is not None and len(colores) < 4096
@@ -110,21 +133,52 @@ def test_sin_logos_ni_marcas_reales(recibos) -> None:
 @pytest.mark.unit
 @pytest.mark.req("RF-OCR-04 · Rechazo de documentos ilegibles")
 @pytest.mark.parametrize(
-    ("nombre", "problemas"),
+    ("nombre", "calidad", "fuera"),
     [
-        ("recibo_valido_U03", []),
-        ("documento_otro_tipo", []),  # legible: el tipo lo decide el modelo
-        ("recibo_desenfocado_U03", ["desenfocado"]),
-        ("recibo_baja_resolucion_U03", ["baja_resolucion"]),
-        ("recibo_solo_recortado_U03", ["recortado"]),
-        ("recibo_recortado_U03", ["recortado", "baja_resolucion"]),
+        ("recibo_valido_U03", [], False),
+        ("documento_otro_tipo", [], False),  # legible: el tipo lo decide el modelo
+        ("recibo_desenfocado_U03", ["desenfocado"], False),
+        ("recibo_baja_resolucion_U03", ["baja_resolucion"], False),
+        ("recibo_solo_recortado_U03", [], True),
+        ("recibo_recortado_U03", ["baja_resolucion"], True),
     ],
 )
-def test_legibilidad_por_codigo(recibos, archivos, nombre, problemas) -> None:
-    assert problemas_de_legibilidad(imagen_de(recibos[nombre])) == problemas
+def test_calidad_y_proporcion_por_codigo(recibos, archivos, nombre, calidad, fuera) -> None:
+    imagen = imagen_de(recibos[nombre])
+    assert problemas_de_calidad(imagen) == calidad and fuera_de_proporcion(imagen) is fuera
     # El PDF se lee como imagen y da lo mismo.
     pdf = abrir_documento(archivos[nombre]["pdf"], "application/pdf")
-    assert problemas_de_legibilidad(pdf) == problemas
+    assert problemas_de_calidad(pdf) == calidad and fuera_de_proporcion(pdf) is fuera
+
+
+@pytest.fixture(scope="module")
+def apaisados(recibos, tmp_path_factory) -> dict[str, Path]:
+    """Recibos con un formato más realista (apaisados y por secciones) y una foto sin recibo."""
+    completo = dibujar_apaisado(recibos["recibo_valido_U03"])
+    destino = tmp_path_factory.mktemp("apaisados")
+    rutas = {}
+    for nombre, imagen in (("completo", completo), ("recortado", recortar(completo)),
+                           ("foto", foto_que_no_es_recibo())):  # fmt: skip
+        rutas[nombre] = destino / f"{nombre}.png"
+        imagen.save(rutas[nombre])
+    return rutas
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OCR-04 · Rechazo de documentos ilegibles")
+def test_primero_el_tipo_y_la_proporcion_solo_con_campos_faltantes(recibos, apaisados) -> None:
+    completo, recortado, foto = (Image.open(apaisados[n]).convert("RGB")
+                                 for n in ("completo", "recortado", "foto"))  # fmt: skip
+    # Un recibo apaisado completo no está recortado, aunque no sea un A4 vertical.
+    assert fuera_de_proporcion(completo) and problemas_del_documento(completo, True, False) == []
+    assert problemas_del_documento(recortado, True, True) == ["recortado"]
+    # Una foto que no es un recibo lo dice, aunque por código parezca desenfocada.
+    assert problemas_de_calidad(foto) and problemas_del_documento(foto, False, True) == [
+        "no_es_recibo"
+    ]
+    # En un A4 vertical, que falten campos no es un recorte.
+    vertical = imagen_de(recibos["recibo_valido_U03"])
+    assert problemas_del_documento(vertical, True, True) == []
 
 
 @pytest.mark.unit
@@ -230,15 +284,40 @@ def test_en_el_modo_de_evaluacion_el_contraste_reporta_sus_datos_y_notas(
         ("recibo_baja_resolucion_U03", "baja resolución"),
     ],
 )
-def test_ocr_04_y_05_rechazo_por_codigo_sin_llamar_al_modelo(
+def test_ocr_04_y_05_rechazo_con_el_motivo_despues_del_tipo(
     api_ocr, archivos, nombre, debe_decir
 ) -> None:
     cliente, _, modelo = api_ocr
+    # El modelo reconoce el recibo, aunque le falten datos (el recorte quita los de abajo).
+    modelo.respuestas = [lectura({**CAMPOS_U03, "fecha_limite": None, "descuento": None})]
     r = subir(cliente, archivos[nombre]["png"], f"conv-{nombre}").json()
     assert (
         r["estado"] == "aclaracion" and debe_decir in r["respuesta"] and "nuevo" in r["respuesta"]
     )
-    assert "2.135.000" not in r["respuesta"] and modelo.llamadas == []
+    assert "2.135.000" not in r["respuesta"] and len(modelo.llamadas) == 1
+
+
+@pytest.mark.unit
+@pytest.mark.req("RF-OCR-04 · Rechazo de documentos ilegibles", "RF-OCR-02 · Extracción de campos")
+def test_recibo_apaisado_completo_recortado_y_foto_que_no_es_recibo(api_ocr, apaisados) -> None:
+    cliente, _, modelo = api_ocr
+    modelo.respuestas = [
+        lectura(),
+        lectura({**CAMPOS_U03, "fecha_limite": None}),
+        lectura({k: None for k in CAMPOS_U03}, es_recibo_predial=False, legible=False),
+    ]
+    completo = subir(cliente, apaisados["completo"], "conv-apaisado").json()
+    assert "Estos son los datos que leí" in completo["respuesta"]
+    assert "recortado" not in completo["respuesta"]
+    recortado = subir(cliente, apaisados["recortado"], "conv-apaisado-recortado").json()
+    assert "recortado" in recortado["respuesta"] and "no es un recibo" not in recortado["respuesta"]
+    foto = subir(cliente, apaisados["foto"], "conv-foto").json()
+    assert "no es un recibo" in foto["respuesta"]
+    assert "recortado" not in foto["respuesta"] and "desenfocad" not in foto["respuesta"]
+    # Si el modelo lee valores a medias pero ve el recorte, también cuenta como recortado.
+    modelo.respuestas = [lectura({**CAMPOS_U03, "fecha_limite": "10/0"}, problemas=["recortado"])]
+    a_medias = subir(cliente, apaisados["recortado"], "conv-a-medias").json()
+    assert "recortado" in a_medias["respuesta"]
 
 
 @pytest.mark.unit
@@ -383,7 +462,7 @@ def test_el_esquema_no_pide_el_nombre_del_propietario_ni_razonamiento() -> None:
     nombres = [*esquema["properties"], *esquema["$defs"]["CamposOCR"]["properties"]]
     for prohibido in ("propietario", "nombre", "razon", "reasoning"):
         assert not any(prohibido in n for n in nombres)
-    assert problemas_de_legibilidad(Image.new("RGB", (400, 566), "white")) == ["baja_resolucion"]
+    assert problemas_de_calidad(Image.new("RGB", (400, 566), "white")) == ["baja_resolucion"]
 
 
 # -- Con el modelo de visión real (REALTIX_PRUEBAS_REALES=1) -------------------------------------
@@ -410,3 +489,28 @@ def test_exactitud_por_campo_y_rechazos_con_el_modelo_real(recibos, archivos) ->
     resumen = reporte["resumen"]
     assert resumen["exactitud_total"] >= 0.95, resumen
     assert resumen["rechazos_correctos"] == resumen["rechazos"], resumen
+
+
+@pytest.mark.integration
+@pytest.mark.skipif(
+    os.environ.get("REALTIX_PRUEBAS_REALES") != "1",
+    reason="Usa el modelo de visión real: REALTIX_PRUEBAS_REALES=1",
+)
+@pytest.mark.req("RF-OCR-04 · Rechazo de documentos ilegibles", "RF-OCR-05 · Modelo de visión")
+def test_recibos_apaisados_y_foto_con_el_modelo_real(apaisados) -> None:
+    from src.agents.nodes.ocr import leer_recibo
+    from src.container import Contenedor
+
+    contenedor = Contenedor()
+    leidos = {
+        nombre: leer_recibo(
+            contenedor.modelo("ocr"),
+            abrir_documento(ruta, "image/png"),
+            contenedor.settings.timeout_modelo_s,
+        )  # fmt: skip
+        for nombre, ruta in apaisados.items()
+    }
+    campos, problemas = leidos["completo"]
+    assert campos is not None and campos.como_texto()["matricula"] == "50C-9000301", problemas
+    assert leidos["recortado"][0] is None and "recortado" in leidos["recortado"][1]
+    assert leidos["foto"] == (None, ["no_es_recibo"])

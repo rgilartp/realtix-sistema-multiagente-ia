@@ -128,18 +128,20 @@ siempre `./deploy/desplegar.sh` sin la opción al terminar.
 
 - **Estado y registros:**
   ```bash
-  docker compose --env-file .env --env-file deploy/servidor.env ps
-  docker compose --env-file .env --env-file deploy/servidor.env logs --tail 50 backend
+  docker compose -f docker-compose.yml -f deploy/compose.servidor.yml --env-file .env --env-file deploy/servidor.env ps
+  docker compose -f docker-compose.yml -f deploy/compose.servidor.yml --env-file .env --env-file deploy/servidor.env logs --tail 50 backend
   ```
 - **Dos réplicas** (RNF-02):
   ```bash
-  docker compose --env-file .env --env-file deploy/servidor.env up -d --wait --scale backend=2
+  docker compose -f docker-compose.yml -f deploy/compose.servidor.yml --env-file .env --env-file deploy/servidor.env up -d --wait --scale backend=2
   ```
 - **Monitor:** `.github/workflows/monitor.yml` revisa `/health` cada 15 minutos en el horario
   hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá), con la variable `DOMINIO` del repositorio.
   Fuera del horario no corre, para no agotar los 2.000 minutos mensuales de GitHub Actions del
   plan gratuito. La disponibilidad sale de `gh run list --workflow monitor.yml`. Si la instancia
   se apaga en horario hábil, el monitor falla y esas horas cuentan como no disponibles.
+- **Chroma en el servidor:** no publica puerto; solo lo alcanza el backend por la red de Compose
+  (`deploy/compose.servidor.yml`, ADR-26). Sus avisos de seguridad no tienen versión corregida.
 - **Apagar para ahorrar créditos:** EC2 → Detener instancia. Al encenderla, actualiza DuckDNS
   (paso 2); Compose arranca solo (`restart: unless-stopped`).
 - **Si el SSH falla:** casi siempre es la IP de tu casa. Actualiza la regla de SSH de `tg2-web`.
