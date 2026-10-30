@@ -258,8 +258,9 @@ R3, R4, los componentes, RAGAS y la revisión de trazas, con el juez v3 de la ca
     ninguna falla: 490 de 490 chequeos en 40,8 horas y 135 de 135 en horario hábil, incluida toda la
     corrida 3.
   - **Alcance del registro.** Con unos 160 chequeos en horario hábil, cada uno pesa más de medio
-    punto. Antes de B15 no hay datos, porque el monitor de GitHub Actions nunca corrió. El chequeo
-    sale del mismo servidor.
+    punto. Antes de B15 no hay registro de disponibilidad: el monitor de GitHub Actions no tuvo
+    ninguna ejecución programada antes de B15 (solo 1 manual); después, hasta el cierre de B17,
+    tuvo solo 6 (1 fallida), muy pocas para medirla. El chequeo sale del mismo servidor.
   - En la matriz, la disponibilidad es la evidencia de RNF-06 · Horario de atención, que vale 0
     (`reports/no_funcionales/disponibilidad.md`; `docs/reporte_de_pruebas.md`, sección 6).
 - **Agentes contra su nodo.** Los componentes corrían sin el modo de evaluación, así que el juez solo

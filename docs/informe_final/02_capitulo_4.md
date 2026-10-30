@@ -265,15 +265,15 @@ ejecuciones de los escenarios con recibo traía la imagen (`reports/corrida-2c/a
 
 **Qué se construyó.** El sistema multiagente de IA se empaquetó en contenedores y se desplegó en una
 instancia EC2 m7i-flex.large con Docker Compose (ADR-10), detrás de un proxy Caddy con HTTPS
-automático y DuckDNS (ADR-09), cabeceras de seguridad y límites de tamaño. La imagen del backend se construyó
-en varias etapas, sin secretos ni privilegios; la configuración no secreta se versionó y los
-secretos quedaron en un archivo de entorno (`docs/resumenes/b13.md`). Como GitHub nunca disparó el
-flujo programado que revisaba `/health`, el monitor de disponibilidad pasó al crontab del servidor,
-cada 5 minutos; su primer chequeo encontró un 502 por una fuga de conexiones en `/health`, que se
-corrigió (PR #54; `docs/resumenes/b15.md`). Los avisos de seguridad de las dependencias se
-atendieron con certifi actualizado y Chroma sin puerto publicado en el servidor (PR #56, ADR-26), y
-los puntos de acceso que llaman modelos y el botón de escalamiento tienen un límite por dirección IP
-(10 por minuto y 200 por día; PR #61 y #69).
+automático y DuckDNS (ADR-09), cabeceras de seguridad y límites de tamaño. La imagen del backend se
+construyó en varias etapas, sin secretos ni privilegios; la configuración no secreta se versionó y
+los secretos quedaron en un archivo de entorno (`docs/resumenes/b13.md`). Como GitHub no disparó
+antes de B15 el flujo programado que revisaba `/health` (solo hubo 1 ejecución manual), el monitor
+de disponibilidad pasó al crontab del servidor, cada 5 minutos; su primer chequeo encontró un 502
+por una fuga de conexiones en `/health`, que se corrigió (PR #54; `docs/resumenes/b15.md`). Los
+avisos de seguridad de las dependencias se atendieron con certifi actualizado y Chroma sin puerto
+publicado en el servidor (PR #56, ADR-26), y los puntos de acceso que llaman modelos y el botón de
+escalamiento tienen un límite por dirección IP (10 por minuto y 200 por día; PR #61 y #69).
 
 Una auditoría de seguridad rápida y estática, hecha por un asistente de IA (Claude Code, con 12
 subagentes de revisión; no son agentes del sistema) y sin ejecutar ataques, no confirmó
@@ -292,9 +292,9 @@ RNF-15 · Volúmenes persistentes.
 (`docs/resumenes/b13.md`). En B15, una conversación continuó en la otra réplica, y el corpus, las
 conversaciones y los casos persistieron después de reiniciar y de recrear los contenedores
 (`reports/no_funcionales/corrida-2/`); en la corrida 3 se repitieron con el mismo resultado
-(`reports/no_funcionales/`). El monitor de `/health`
-pasó al crontab del servidor, cada 5 minutos, porque el de GitHub Actions nunca corrió; la
-disponibilidad que mide está en la sección 5.8.
+(`reports/no_funcionales/`). Desde que empezó B15 y hasta el cierre de B17, el flujo de GitHub
+Actions tuvo solo 6 ejecuciones programadas (1 fallida); la disponibilidad que mide el monitor del
+servidor está en la sección 5.8.
 
 ## 4.10 Evaluación antes de la corrida final
 

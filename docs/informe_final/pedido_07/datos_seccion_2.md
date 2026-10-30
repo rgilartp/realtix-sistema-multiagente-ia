@@ -214,12 +214,10 @@ Integración continua (`.github/workflows/`):
     el historial y pytest con cobertura, con PostgreSQL 16 y Chroma 1.5.9 como servicios;
   - **Web (compilación y Playwright):** contraste WCAG de los dos modos, compilación con Vite y
     las pruebas de Playwright en Chromium contra la API simulada.
-- `monitor.yml`: `/health` por HTTPS cada 15 minutos en el horario hábil. GitHub registra 7
-  ejecuciones (`gh run list --workflow monitor.yml`): 1 manual, antes de B15, y 6 programadas, 1 de
-  ellas fallida, todas después de empezar B15. GitHub no lanzó las demás ejecuciones programadas.
-  Por eso la disponibilidad se calculó con el monitor del servidor
-  (`reports/no_funcionales/disponibilidad.md`). El reporte (secciones 6 y 12) y los capítulos 4 y 5
-  dicen que el monitor de GitHub Actions «nunca corrió»: antes de B15 es cierto, pero después
-  corrió esas 6 veces; ese texto no se cambió en este paquete.
+- `monitor.yml`: `/health` por HTTPS cada 15 minutos en el horario hábil. Al cierre de B17, GitHub
+  registra 7 ejecuciones (`gh run list --workflow monitor.yml`): 1 manual, antes de B15, y 6
+  programadas, 1 de ellas fallida, todas después de empezar B15. GitHub no lanzó las demás
+  ejecuciones programadas. Por eso la disponibilidad se calculó con el monitor del servidor
+  (`reports/no_funcionales/disponibilidad.md`).
 
 El repositorio es **privado** en GitHub (`gh repo view`).
