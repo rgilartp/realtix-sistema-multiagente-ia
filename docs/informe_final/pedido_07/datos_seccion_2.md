@@ -218,8 +218,6 @@ Integración continua (`.github/workflows/`):
   ejecuciones (`gh run list --workflow monitor.yml`): 1 manual, antes de B15, y 6 programadas, 1 de
   ellas fallida, todas después de empezar B15. GitHub no lanzó las demás ejecuciones programadas.
   Por eso la disponibilidad se calculó con el monitor del servidor
-  (`reports/no_funcionales/disponibilidad.md`). El reporte (secciones 6 y 12) y los capítulos 4 y 5
-  dicen que el monitor de GitHub Actions «nunca corrió»: antes de B15 es cierto, pero después
-  corrió esas 6 veces; ese texto no se cambió en este paquete.
+  (`reports/no_funcionales/disponibilidad.md`).
 
 El repositorio es **privado** en GitHub (`gh repo view`).

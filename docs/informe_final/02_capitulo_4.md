@@ -293,7 +293,8 @@ RNF-15 · Volúmenes persistentes.
 conversaciones y los casos persistieron después de reiniciar y de recrear los contenedores
 (`reports/no_funcionales/corrida-2/`); en la corrida 3 se repitieron con el mismo resultado
 (`reports/no_funcionales/`). El monitor de `/health`
-pasó al crontab del servidor, cada 5 minutos, porque el de GitHub Actions nunca corrió; la
+pasó al crontab del servidor, cada 5 minutos, porque el de GitHub Actions no tuvo ninguna
+ejecución programada antes de B15 (solo 1 manual), y después solo 6 (1 fallida); la
 disponibilidad que mide está en la sección 5.8.
 
 ## 4.10 Evaluación antes de la corrida final

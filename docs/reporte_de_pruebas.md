@@ -159,7 +159,8 @@ se reporta tal cual. Su causa completa:
   Eso incluye toda la corrida 3, con los 30 chequeos del commit `d3dab00`.
 - **El registro es corto.** Con unos 160 chequeos en horario hábil, cada uno pesa más de medio punto
   (0,64 puntos). El periodo se fijó antes de medir, así que la cifra se reporta tal cual. Antes de
-  B15 no hay datos, porque el monitor de GitHub Actions nunca corrió.
+  B15 no hay datos: el monitor de GitHub Actions no tuvo ninguna ejecución programada antes de
+  B15 (solo 1 manual), y después solo 6 (1 fallida).
 - **El chequeo sale del mismo servidor.** Mide el proxy y el backend, no la red externa.
 
 La disponibilidad es la prueba de RNF-06 · Horario de atención según la sección 6.7, y la matriz de
@@ -353,8 +354,8 @@ tres ensayos.
 ## 12. Impedimentos, riesgos y lecciones (cierre CTFL v4.0.1)
 
 - **Impedimentos y cómo se resolvieron:**
-  - El monitor programado de GitHub Actions nunca corrió: el monitor pasó al crontab del servidor
-    (B15).
+  - El monitor de GitHub Actions no tuvo ninguna ejecución programada antes de B15 (solo 1
+    manual), y después solo 6 (1 fallida): el monitor pasó al crontab del servidor (B15).
   - Un 502 por una fuga de conexiones en `/health` (PR #54).
   - Avisos de seguridad de las dependencias (PR #56, ADR-26).
   - Un recibo real cargado en una prueba manual: se borró y se corrigió su causa en las trazas
