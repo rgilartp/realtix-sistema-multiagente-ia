@@ -142,7 +142,9 @@ siempre `./deploy/desplegar.sh` sin la opción al terminar.
   y el commit desplegado (`docs/resumenes/b15.md`, punto 6).
   `reports/no_funcionales/disponibilidad.py` calcula la cifra en el horario hábil
   (`reports/no_funcionales/disponibilidad.md`). Si la instancia está apagada, no hay chequeos y
-  esas horas no entran en el cálculo.
+  esas horas no entran en el cálculo. La cifra oficial usa el registro hasta el cierre de B16:
+  volver a correr el script sobrescribe `salud.log`, `disponibilidad.json` y `disponibilidad.md`
+  en `reports/no_funcionales/` y cambia la cifra.
 - **Monitor de GitHub Actions:** `.github/workflows/monitor.yml` revisa `/health` cada 15 minutos
   en el horario hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá), con la variable `DOMINIO` del
   repositorio. Fuera del horario no corre, para no agotar los 2.000 minutos mensuales de GitHub

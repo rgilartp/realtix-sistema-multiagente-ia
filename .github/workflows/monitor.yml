@@ -1,12 +1,12 @@
 name: Monitor de /health
 
 # RNF-06 · Horario de atención: revisa /health del despliegue cada 15 minutos dentro del horario
-# hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá, UTC-5), desde el despliegue (B13) hasta el
-# cierre de las pruebas. La disponibilidad dentro del horario hábil se calcula en B15 y B16 con el
-# historial de ejecuciones (`gh run list --workflow monitor.yml`). Fuera del horario no corre: el
-# repositorio es privado y el plan gratuito de GitHub tiene 2.000 minutos al mes; cada 15 minutos
-# todo el día serían unos 2.880 y dejarían sin minutos a la CI. Los festivos sí se revisan (se
-# descuentan al calcular la disponibilidad). El dominio es la variable del repositorio DOMINIO.
+# hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá, UTC-5), desde el despliegue (B13). Fuera del
+# horario no corre: el repositorio es privado y el plan gratuito de GitHub tiene 2.000 minutos al
+# mes; cada 15 minutos todo el día serían unos 2.880 y dejarían sin minutos a la CI. El dominio es
+# la variable del repositorio DOMINIO. GitHub lanzó el schedule muy pocas veces (PR #79): desde
+# B15, la disponibilidad sale del monitor del servidor (deploy/README.md). El flujo sigue activo
+# hasta que se apague el servidor, después de la sustentación.
 
 on:
   schedule:
