@@ -135,11 +135,22 @@ siempre `./deploy/desplegar.sh` sin la opción al terminar.
   ```bash
   docker compose -f docker-compose.yml -f deploy/compose.servidor.yml --env-file .env --env-file deploy/servidor.env up -d --wait --scale backend=2
   ```
-- **Monitor:** `.github/workflows/monitor.yml` revisa `/health` cada 15 minutos en el horario
-  hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá), con la variable `DOMINIO` del repositorio.
-  Fuera del horario no corre, para no agotar los 2.000 minutos mensuales de GitHub Actions del
-  plan gratuito. La disponibilidad sale de `gh run list --workflow monitor.yml`. Si la instancia
-  se apaga en horario hábil, el monitor falla y esas horas cuentan como no disponibles.
+- **Monitor del servidor (RNF-06 · Horario de atención):** desde B15, la disponibilidad sale de
+  aquí. Una línea del crontab del usuario del despliegue, sin `sudo`, corre cada 5 minutos, todos
+  los días, `~/monitor_salud/chequeo.sh`, que consulta `/health` por HTTPS y escribe en
+  `~/monitor_salud/salud.log`, fuera del repositorio, la hora UTC, el código HTTP, el tiempo en ms
+  y el commit desplegado (`docs/resumenes/b15.md`, punto 6).
+  `reports/no_funcionales/disponibilidad.py` calcula la cifra en el horario hábil
+  (`reports/no_funcionales/disponibilidad.md`). Si la instancia está apagada, no hay chequeos y
+  esas horas no entran en el cálculo. La cifra oficial usa el registro hasta el cierre de B16:
+  volver a correr el script sobrescribe `salud.log`, `disponibilidad.json` y `disponibilidad.md`
+  en `reports/no_funcionales/` y cambia la cifra.
+- **Monitor de GitHub Actions:** `.github/workflows/monitor.yml` revisa `/health` cada 15 minutos
+  en el horario hábil (lunes a viernes, de 8:00 a 16:45 en Bogotá), con la variable `DOMINIO` del
+  repositorio. Fuera del horario no corre, para no agotar los 2.000 minutos mensuales de GitHub
+  Actions del plan gratuito. Sigue activo, pero GitHub lanzó su `schedule` muy pocas veces
+  (PR #79), así que no se usa para la disponibilidad. Se desactiva cuando se apague el servidor,
+  después de la sustentación: `gh workflow disable monitor.yml`.
 - **Chroma en el servidor:** no publica puerto; solo lo alcanza el backend por la red de Compose
   (`deploy/compose.servidor.yml`, ADR-26). Sus avisos de seguridad no tienen versión corregida.
 - **Apagar para ahorrar créditos:** EC2 → Detener instancia. Al encenderla, actualiza DuckDNS
